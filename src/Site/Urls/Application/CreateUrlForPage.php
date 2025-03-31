@@ -57,7 +57,7 @@ class CreateUrlForPage
             $siteLocale = $site->locale;
 
             app()->setLocale($siteLocale);
-            $slugs[$locale] = Str::slug($resource->getPageTitle($model));
+            $slugs[$siteLocale] = Str::slug($resource->getPageTitle($model));
         }
 
         // Reset locale

@@ -47,9 +47,7 @@ trait CreateAssistant
         View::share('model', $model);
         View::share('resource', $this->resource);
 
-        View::share('forms', Layout::make($this->resource->fields($model))
-            ->model($model));
-        //            ->fillFields($this, $model));
+        View::share('layout', Layout::make($this->resource->fields($model))->model($model));
 
         return $this->resource->getCreatePageView();
     }
