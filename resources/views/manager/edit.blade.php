@@ -36,7 +36,6 @@
     @endforeach
 
     <x-slot name="sidebar">
-
         @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
             {{ $component->displayAsTransparentForm()->render() }}
         @endforeach

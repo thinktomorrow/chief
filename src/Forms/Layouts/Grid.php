@@ -12,5 +12,5 @@ class Grid extends Component
 
     protected string $view = 'chief-form::layouts.grid';
 
-    protected string $previewView = 'chief-form::layouts.default-window';
+    protected string $previewView = 'chief-form::previews.layouts.grid';
 }

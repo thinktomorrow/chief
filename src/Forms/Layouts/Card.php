@@ -14,7 +14,7 @@ class Card extends Component
 
     protected string $view = 'chief-form::layouts.card';
 
-    protected string $previewView = 'chief-form::layouts.default-window';
+    protected string $previewView = 'chief-form::layouts.default';
 
     public function __construct(?string $key = null)
     {

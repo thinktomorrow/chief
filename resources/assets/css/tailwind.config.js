@@ -6,17 +6,13 @@ module.exports = {
         'resources/assets/**/*.js',
         'resources/assets/**/*.vue',
         'resources/assets/css/components/redactor.scss',
-        'src/Forms/resources/**/*.blade.php',
-        'src/Forms/Layouts/**/*.php',
-        'src/Forms/Concerns/**/*.php',
-        'src/Fragments/resources/**/*.blade.php',
+        'src/Assets/App/resources/**/*.blade.php',
+        'src/Forms/UI/views/**/*.blade.php',
         'src/Fragments/UI/views/**/*.blade.php',
-        'src/Sites/UI/views/**/*.blade.php',
-        'src/Table/resources/**/*.blade.php',
         'src/Plugins/**/resources/**/*.blade.php',
         'src/Plugins/HotSpots/views/**/*.blade.php',
-        'src/Assets/App/resources/**/*.blade.php',
-        'src/Table/**/*.{blade.php,php}',
+        'src/Sites/UI/views/**/*.blade.php',
+        'src/Table/UI/**/*.blade.php',
     ],
     theme: {
         screens: {
@@ -92,7 +88,7 @@ module.exports = {
             },
         },
         fontFamily: {
-            display: ['Inter Tight', 'Helvetica', 'Arial', 'sans-serif'],
+            display: ['Ronzino', 'Inter Tight', 'Helvetica', 'Arial', 'sans-serif'],
             body: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
         },
         fontSize: {

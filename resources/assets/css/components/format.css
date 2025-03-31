@@ -49,7 +49,7 @@
     .h1-tracking,
     .h2-tracking,
     .h3-tracking {
-        letter-spacing: theme('letterSpacing.normal');
+        letter-spacing: theme('letterSpacing.tight');
     }
 
     .h4-tracking,
