@@ -16,13 +16,13 @@
         <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
             @csrf
 
-            <x-chief-form::fields not-tagged="edit,not-on-create" />
+            @foreach ($layout->filterByNotTagged(['edit', 'not-on-create'])->getComponents() as $component)
+                {{ $component->displayAsInlineForm()->render() }}
+            @endforeach
 
             <x-chief::button data-slot="form-group" type="submit" variant="blue">Aanmaken</x-chief::button>
         </form>
     </x-chief::window>
 
-    @push('custom-scripts')
-        @include('chief::templates.page._partials.editor-script')
-    @endpush
+    @include('chief::templates.page._partials.editor-script')
 </x-chief::page.template>

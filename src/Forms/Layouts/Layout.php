@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Layouts;
 
 use InvalidArgumentException;
+use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
@@ -13,6 +14,7 @@ use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 
 class Layout implements HasTaggedComponents
 {
+    use HasFields;
     use HasModel;
     use WithTaggedComponents;
 

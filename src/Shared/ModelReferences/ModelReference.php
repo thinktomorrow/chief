@@ -60,11 +60,16 @@ final class ModelReference implements Wireable
             throw new CannotInstantiateModelReference('['.$className.'] does not exist as a class.');
         }
 
-        if ($this->refersToStaticObject()) {
+        if (! $this->hasValidId() || $this->refersToStaticObject()) {
             return app()->make($className, $attributes);
         }
 
-        $model = $className::withoutGlobalScopes()->findOrFail($this->id);
+        $model = $className::withoutGlobalScopes()->find($this->id);
+
+        if (! $model) {
+            throw new CannotInstantiateModelReference('['.$className.'] with id ['.$this->id.'] does not exist.');
+        }
+
         $model->fill($attributes);
 
         return $model;
@@ -125,6 +130,11 @@ final class ModelReference implements Wireable
     public function is(string $modelReferenceString): bool
     {
         return $this->get() === $modelReferenceString || $this->getShort() === $modelReferenceString;
+    }
+
+    private function hasValidId(): bool
+    {
+        return (bool) $this->id;
     }
 
     private function refersToStaticObject(): bool
