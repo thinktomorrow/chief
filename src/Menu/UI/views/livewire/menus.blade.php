@@ -17,28 +17,28 @@
                 </x-chief::window.tabs.item>
             @endforeach
 
-            <x-chief::window.tabs.item wire:click="editMenus">
+            <x-chief::window.tabs.item wire:click="addMenu">
                 <x-chief::icon.plus-sign class="size-5" />
             </x-chief::window.tabs.item>
         </x-chief::window.tabs>
     </x-slot>
 
-    <x-slot name="badges">
-        {{-- TODO: use active context instead --}}
-        @foreach ($menu->locales as $locale)
-            <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
-        @endforeach
-    </x-slot>
-
-    <x-slot name="actions">
-        <x-chief::button wire:click="editMenus" variant="grey" size="sm">
-            <x-chief::icon.settings />
-        </x-chief::button>
-    </x-slot>
-
     @foreach ($menus as $menu)
         <div wire:key="menu-tab-content-{{ $menu->id }}">
             @if ($menu->id === $activeMenuId)
+
+                <x-slot name="badges">
+                    @foreach ($menu->locales as $locale)
+                        <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
+                    @endforeach
+                </x-slot>
+
+                <x-slot name="actions">
+                    <x-chief::button wire:click="editMenu({{ $menu->id }})" variant="grey" size="sm">
+                        <x-chief::icon.settings />
+                    </x-chief::button>
+                </x-slot>
+
                 <livewire:chief-wire::table
                     :key="'table-'.$menu->id"
                     :table="$this->getMenuTable($menu->id)"
@@ -48,5 +48,6 @@
         </div>
     @endforeach
 
-    <livewire:chief-wire::edit-menus :type="$type" />
+    <livewire:chief-wire::add-menu :type="$type" />
+    <livewire:chief-wire::edit-menu :type="$type" />
 </x-chief::window>

@@ -213,7 +213,7 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->json('active_sites')->nullable();
-            $table->json('sites')->nullable();
+            $table->json('locales')->nullable();
             $table->string('title')->nullable();
             $table->unsignedSmallInteger('order')->default(0);
             $table->timestamps();

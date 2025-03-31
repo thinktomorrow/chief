@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Menu\App\Actions;
 
 use Thinktomorrow\Chief\Menu\Menu;
 
-class SaveMenus
+class SaveMenusOld
 {
     private MenuApplication $menuApplication;
 

@@ -16,7 +16,7 @@ class MenuApplication
     {
         $model = Menu::create([
             'type' => $command->getType(),
-            'sites' => $command->getSites(),
+            'locales' => $command->getLocales(),
             'title' => $command->getTitle(),
         ]);
 
@@ -30,7 +30,7 @@ class MenuApplication
         $model = Menu::findorFail($command->getMenuId());
 
         $model->update([
-            'sites' => $command->getSites(),
+            'locales' => $command->getLocales(),
             'title' => $command->getTitle(),
         ]);
 
@@ -48,17 +48,27 @@ class MenuApplication
 
     /**
      * Delete the menu but only if there is still a menu of this type left.
+     * Also, a menu cannot be deleted if it is still in use by a site.
      */
     public function safeDelete(DeleteMenu $command): void
     {
         $model = Menu::findorFail($command->getMenuId());
 
-        if (Menu::where('type', $model->type)->count() <= 1) {
-            throw new SafeMenuDeletionProtection('Cannot delete the last menu of this type ['.$model->type.'].');
-        }
+        $this->preventUnsafeDeletion($model);
 
         $model->delete();
 
         event(new MenuDeleted((string) $model->id));
+    }
+
+    private function preventUnsafeDeletion(Menu $model): void
+    {
+        if (count($model->getActiveSiteLocales()) > 0) {
+            throw new SafeMenuDeletionProtection('Cannot delete menu ['.$model->type.', id: '.$model->id.'] that is still in use by a site.');
+        }
+
+        if (Menu::where('type', $model->type)->count() <= 1) {
+            throw new SafeMenuDeletionProtection('Cannot delete the last menu of this type ['.$model->type.'].');
+        }
     }
 }

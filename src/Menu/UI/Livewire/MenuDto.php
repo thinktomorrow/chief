@@ -2,17 +2,16 @@
 
 namespace Thinktomorrow\Chief\Menu\UI\Livewire;
 
-use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuType;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class MenuDto implements Wireable
 {
     public function __construct(
         public readonly string $id,
         public readonly string $type,
+        public readonly string $typeTitle,
         public readonly string $title,
         public readonly array $locales,
         public readonly array $activeSites,
@@ -25,21 +24,10 @@ class MenuDto implements Wireable
         return new static(
             id: $menu->id,
             type: $menu->type,
+            typeTitle: MenuType::find($menu->type)->getLabel(),
             title: $menu->title,
-            // TODO(ben): fix
-            locales: (array) $menu->sites,
+            locales: $menu->getSiteLocales(),
             activeSites: $menu->getActiveSiteLocales(),
-        );
-    }
-
-    public static function makeDefault(string $type, int $order): self
-    {
-        return new static(
-            id: 'new-'.Str::random(),
-            type: $type,
-            title: MenuType::find($type)->getLabel().' #'.$order,
-            locales: ChiefLocales::locales(),
-            activeSites: [],
         );
     }
 
@@ -48,6 +36,7 @@ class MenuDto implements Wireable
         return [
             'id' => $this->id,
             'type' => $this->type,
+            'typeTitle' => $this->typeTitle,
             'title' => $this->title,
             'locales' => $this->locales,
             'activeSites' => $this->activeSites,
@@ -59,6 +48,7 @@ class MenuDto implements Wireable
         return new static(
             id: $value['id'],
             type: $value['type'],
+            typeTitle: $value['typeTitle'],
             title: $value['title'],
             locales: $value['locales'],
             activeSites: $value['activeSites'],

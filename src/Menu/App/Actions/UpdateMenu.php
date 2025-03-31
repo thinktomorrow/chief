@@ -6,14 +6,14 @@ class UpdateMenu
 {
     private string $menuId;
 
-    private array $sites;
+    private array $locales;
 
     private ?string $title;
 
-    public function __construct(string $menuId, array $sites, ?string $title = null)
+    public function __construct(string $menuId, array $locales, ?string $title = null)
     {
         $this->menuId = $menuId;
-        $this->sites = $sites;
+        $this->locales = $locales;
         $this->title = $title;
     }
 
@@ -22,9 +22,9 @@ class UpdateMenu
         return $this->menuId;
     }
 
-    public function getSites(): array
+    public function getLocales(): array
     {
-        return $this->sites;
+        return $this->locales;
     }
 
     public function getTitle(): ?string
