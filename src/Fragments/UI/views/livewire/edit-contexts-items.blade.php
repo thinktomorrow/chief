@@ -2,7 +2,7 @@
     $context = $this->contexts->first();
 @endphp
 
-<div wire:key="menu-{{ $context->id }}">
+<div wire:key="context-{{ $context->id }}">
     {{-- TODO: show if creating second context --}}
     <x-chief::callout data-slot="form-group" variant="blue" title="Wat is een paginaopbouw?">
         <x-slot name="icon">
@@ -42,26 +42,5 @@
         />
     </x-chief::form.fieldset>
 
-    {{-- TODO: show if editing existing context (but not if only context left) --}}
-    <x-chief::callout data-slot="form-group" variant="red" title="Paginaopbouw verwijderen">
-        <x-slot name="icon">
-            <x-chief::icon.solid.alert />
-        </x-slot>
 
-        <div class="space-y-2">
-            <p>
-                Als je deze paginaopbouw verwijdert, moet je een andere opbouw koppelen aan de volgende sites:
-                eduplay.be/fr.
-            </p>
-
-            <p>Daarnaast worden ook alle fragmenten die enkel gebruikt worden in deze paginaopbouw, verwijderd.</p>
-
-            <div>
-                <x-chief::button variant="outline-red" x-on:click="$wire.deleteContext('{{ $context->id  }}')">
-                    <x-chief::icon.delete />
-                    <span>Verwijder paginaopbouw</span>
-                </x-chief::button>
-            </div>
-        </div>
-    </x-chief::callout>
 </div>

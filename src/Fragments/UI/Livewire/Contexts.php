@@ -19,9 +19,7 @@ class Contexts extends Component
     {
         $this->modelReference = $model->modelReference()->get();
 
-        $this->activeContextId = (is_null($activeContextId))
-            ? $this->getContexts()->first()?->id
-            : $activeContextId;
+        $this->resetActiveContext($activeContextId);
     }
 
     /** @return Collection<ContextDto> */
@@ -43,14 +41,31 @@ class Contexts extends Component
         $this->activeContextId = $contextId;
     }
 
-    public function editContexts(): void
+    public function addContext(): void
     {
-        $this->dispatch('open-edit-contexts')->to('chief-wire::edit-contexts');
+        $this->dispatch('open-add-context')->to('chief-wire::add-context');
+    }
+
+    public function editContext(string $contextId): void
+    {
+        $this->dispatch('open-edit-context', [
+            'contextId' => $contextId,
+        ])->to('chief-wire::edit-context');
     }
 
     public function onContextsUpdated(): void
     {
         // The contexts are automatically updated in the view
+
+        // If the active context is deleted, reset the active context
+        $this->resetActiveContext();
+    }
+
+    private function resetActiveContext(?string $activeContextId = null): void
+    {
+        $this->activeContextId = (is_null($activeContextId))
+            ? $this->getContexts()->first()?->id
+            : $activeContextId;
     }
 
     public function render()
