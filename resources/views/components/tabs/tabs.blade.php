@@ -7,73 +7,32 @@
 
 @props([
     'activeTab' => null,
+    'dispatchTab' => true,
     'listenForExternalTab' => false,
+    'reference' => null,
     'showNav' => true,
     'showTabs' => true,
-    'dispatchTab' => true,
-    'reference' => null,
     'size' => 'xs',
     'wireIgnore' => false,
 ])
 
 <div
     x-cloak
-    {{ $wireIgnore ? 'wire:ignore' : 'wire:ignore.self' }}
-    data-slot="tabs"
-    x-data="{
-        activeTab: null,
-        showNav: @js($showNav),
-        showTabs: @js($showTabs),
-        tabs: [],
-        init: function () {
-            this.tabs = Array.from(this.$refs.tabs.children).map((node) => ({
-                'id': node.getAttribute('data-tab-id'),
-                'label': node.getAttribute('data-tab-label'),
-            }))
-
-            this.activeTab =
-                @js($activeTab) || (this.tabs.length > 0 ? this.tabs[0].id : null)
-
-            this.repositionTabMarker()
-        },
-        listenForExternalTab: function (e) {
-            if (! @js($listenForExternalTab)) return
-
-            if (this.activeTab === e.detail.id) return
-
-            // Check if this tabs accepts the given external tab
-            this.tabs.forEach(({ id }) => {
-                if (id === e.detail.id) {
-                    this.activeTab = e.detail.id
-                }
-            })
-
-            this.repositionTabMarker()
-        },
-        showTab: function (id) {
-            this.activeTab = id
-
-            if (! @js($dispatchTab)) return
-
-            this.$dispatch('chieftab', { id: id, reference: '{{ $reference }}' })
-
-            this.repositionTabMarker()
-        },
-        repositionTabMarker: function () {
-            this.$nextTick(() => {
-                const tabElement = Array.from(
-                    this.$root.querySelectorAll(`[role='tablist'] [role='tab']`),
-                ).find((tab) => tab.getAttribute('aria-selected') === 'true')
-
-                if (! tabElement) return
-
-                this.$refs.tabMarker.style.width = tabElement.offsetWidth + 'px'
-                this.$refs.tabMarker.style.left = tabElement.offsetLeft + 'px'
-            })
-        },
-    }"
-    x-on:chieftab.window="listenForExternalTab"
-    {{ $attributes }}
+    x-data="tabs({
+                activeTab: @js($activeTab),
+                dispatchTab: @js($dispatchTab),
+                shouldListenForExternalTab: @js($listenForExternalTab),
+                reference: @js($reference),
+                showNav: @js($showNav),
+                showTabs: @js($showTabs),
+            })"
+    {{
+        $attributes->merge([
+            'data-slot' => 'tabs',
+            'wire:ignore' => $wireIgnore,
+            'wire:ignore.self' => ! $wireIgnore,
+        ])
+    }}
     :class="{
         '{{
             match ($size) {
