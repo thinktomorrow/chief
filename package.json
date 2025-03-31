@@ -36,7 +36,6 @@
     },
     "dependencies": {
         "@floating-ui/dom": "^1.5.1",
-        "axios": "^1.2.2",
         "choices.js": "^10.2.0",
         "core-js": "^3.21.1",
         "cross-env": "^7.0.3",

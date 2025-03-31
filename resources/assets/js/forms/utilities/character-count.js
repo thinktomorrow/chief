@@ -1,5 +1,3 @@
-import EventBus from '../../utilities/EventBus';
-
 const characterCount = (container, characterCountEl) => {
     const formFieldId = characterCountEl.getAttribute('data-character-count');
     const formField = container.querySelector(`#${formFieldId.replaceAll('.', '\\.')}`);
@@ -32,18 +30,6 @@ const initCharacterCount = (selector = '[data-character-count]') => {
     // Scan triggers on initial pageload
     Array.from(document.querySelectorAll(selector)).forEach((el) => {
         characterCount(document, el);
-    });
-
-    EventBus.subscribe('chief-form-refreshed', (data) => {
-        Array.from(data.element.querySelectorAll(selector)).forEach((el) => {
-            characterCount(data.element, el);
-        });
-    });
-
-    EventBus.subscribe('sidebarPanelActivated', (data) => {
-        Array.from(data.panel.el.querySelectorAll(selector)).forEach((el) => {
-            characterCount(data.panel.el, el);
-        });
     });
 };
 

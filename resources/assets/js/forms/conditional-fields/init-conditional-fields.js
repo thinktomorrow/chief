@@ -1,4 +1,3 @@
-import EventBus from '../../utilities/EventBus';
 import InputFieldTrigger from './InputFieldTrigger';
 import RadioFieldTrigger from './RadioFieldTrigger';
 import CheckboxFieldTrigger from './CheckboxFieldTrigger';
@@ -55,10 +54,6 @@ const initConditionalFieldsInContainer = (
 
 const initConditionalFields = () => {
     initConditionalFieldsInContainer(document);
-
-    EventBus.subscribe('sidebarPanelActivated', (e) => {
-        initConditionalFieldsInContainer(e.panel.el);
-    });
 };
 
 export { initConditionalFieldsInContainer, initConditionalFields };

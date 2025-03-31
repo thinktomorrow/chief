@@ -1,5 +1,4 @@
 import Sortable from 'sortablejs';
-import EventBus from '../utilities/EventBus';
 import SortableToggle from './sortable-toggle';
 
 /**
@@ -130,8 +129,6 @@ SortableGroup.prototype._init = function () {
                                     detail: { type: 'success', content: 'Nieuwe sortering bewaard.', duration: 2000 },
                                 })
                             );
-
-                            EventBus.publish('sortableStored');
                         })
                         .catch((error) => {
                             window.dispatchEvent(
@@ -143,8 +140,6 @@ SortableGroup.prototype._init = function () {
                                     },
                                 })
                             );
-
-                            EventBus.publish('sortableStored');
 
                             console.error(error);
                         });

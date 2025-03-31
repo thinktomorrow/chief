@@ -53,20 +53,20 @@
                         () => {
                             isLoading = true
                             status = null
-                            window.axios
-                                .post('{{ route('chief.back.sitemap.generate') }}', {
-                                    _method: 'POST',
-                                })
-                                .then((response) => {
-                                    isLoading = false
-                                    status = 'success'
 
-                                    window.location.reload()
-                                })
-                                .catch((errors) => {
-                                    isLoading = false
-                                    status = 'error'
-                                })
+                            fetch('{{ route('chief.back.sitemap.generate') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                },
+                            }).then((response) => {
+                                isLoading = false
+                                status = 'success'
+                                window.location.reload()
+                            }).catch((errors) => {
+                                isLoading = false
+                                status = 'error'
+                            })
                         }
                     "
                 >

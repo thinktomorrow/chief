@@ -1,4 +1,8 @@
 import Sortable from 'sortablejs';
+import sortableDirective from '../alpine-directives/sortable';
+import initSortable from './sortable-init';
+
+initSortable('[data-sortable]');
 
 window.Sortable = Sortable;
 
@@ -14,3 +18,5 @@ window.Livewire.directive('sortable', ({ el }) => {
         dragClass: 'bg-white',
     });
 });
+
+window.Alpine.directive('sortable', sortableDirective);
