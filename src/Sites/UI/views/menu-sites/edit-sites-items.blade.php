@@ -6,18 +6,10 @@
                     <div class="mt-[0.1875rem] flex items-center gap-2">
                         <p class="text-sm/6 font-medium text-grey-500">{{ $site->url }}</p>
                     </div>
-
-                    <x-chief::button
-                        x-on:click="$wire.deleteSite('{{ $site->locale }}')"
-                        variant="outline-red"
-                        size="sm"
-                    >
-                        <x-chief::icon.delete />
-                    </x-chief::button>
                 </div>
 
                 <x-chief::form.fieldset rule="menu">
-                    <x-chief::form.label for="menu">Menuopbouw</x-chief::form.label>
+                    <x-chief::form.label for="menu">Menu</x-chief::form.label>
                     <x-chief::form.input.select id="menu" wire:model="form.{{ $site->locale }}.menu">
                         @foreach ($menus as $menu)
                             <option wire:key="menu-option-{{ $menu->id }}" value="{{ $menu->id }}">
