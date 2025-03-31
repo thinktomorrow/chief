@@ -17,7 +17,6 @@
 /* General */
 @import './general/base';
 @import './general/animations';
-@import './general/utilities';
 
 /* Tailwind utilities */
 @import 'tailwindcss/utilities';

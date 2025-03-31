@@ -1,9 +1,0 @@
-<x-chief-form::window
-    :title="$getTitle()"
-    :edit-url="$getWindowAction()"
-    :refresh-url="$getRefreshUrl()"
-    :tags="$getTagsAsString()"
-    :variant="$getLayout()->variant()"
->
-    @include($getPreviewView())
-</x-chief-form::window>
