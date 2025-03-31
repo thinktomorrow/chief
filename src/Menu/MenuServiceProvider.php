@@ -9,7 +9,8 @@ use Livewire\Livewire;
 use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
-use Thinktomorrow\Chief\Menu\UI\Livewire\EditMenus;
+use Thinktomorrow\Chief\Menu\UI\Livewire\AddMenu;
+use Thinktomorrow\Chief\Menu\UI\Livewire\EditMenu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\Menus;
 
 class MenuServiceProvider extends ServiceProvider
@@ -21,7 +22,8 @@ class MenuServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('chief-menu', __DIR__.'/UI/views');
 
         Livewire::component('chief-wire::menus', Menus::class);
-        Livewire::component('chief-wire::edit-menus', EditMenus::class);
+        Livewire::component('chief-wire::add-menu', AddMenu::class);
+        Livewire::component('chief-wire::edit-menu', EditMenu::class);
 
         // Menu events
         Event::listen(MenuItemCreated::class, [ProjectModelData::class, 'onMenuItemCreated']);

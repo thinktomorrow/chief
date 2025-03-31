@@ -25,7 +25,7 @@ class EditContext extends Component
 
     public bool $cannotBeDeleted = false;
 
-    public bool $cannotBeDeletedBecauseOfLastContextLeft = false;
+    public bool $cannotBeDeletedBecauseOfLastLeft = false;
 
     public bool $cannotBeDeletedBecauseOfConnectedToSite = false;
 
@@ -66,7 +66,7 @@ class EditContext extends Component
 
     public function close()
     {
-        $this->reset(['form', 'context', 'cannotBeDeleted', 'cannotBeDeletedBecauseOfLastContextLeft', 'cannotBeDeletedBecauseOfConnectedToSite']);
+        $this->reset(['form', 'context', 'cannotBeDeleted', 'cannotBeDeletedBecauseOfLastLeft', 'cannotBeDeletedBecauseOfConnectedToSite']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -78,7 +78,7 @@ class EditContext extends Component
             $this->context->id,
         ));
 
-        $this->dispatch($this->modelReference.'-contexts-updated');
+        $this->dispatch($this->modelReference.'-context-deleted', ['contextId' => $this->context->id]);
 
         $this->close();
     }
@@ -119,7 +119,7 @@ class EditContext extends Component
         $contexts = app(ContextRepository::class)->getByOwner($this->context->ownerReference);
 
         if ($contexts->count() < 2) {
-            $this->cannotBeDeletedBecauseOfLastContextLeft = true;
+            $this->cannotBeDeletedBecauseOfLastLeft = true;
             $this->cannotBeDeleted = true;
         }
 

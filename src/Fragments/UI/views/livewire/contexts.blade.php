@@ -35,7 +35,7 @@
 
                 <x-slot name="actions">
                     <x-chief::button wire:click="editContext({{ $context->id }})" variant="grey" size="sm">
-                        <x-chief::icon.settings /> {{ $context->id }}
+                        <x-chief::icon.settings />
                     </x-chief::button>
                 </x-slot>
 

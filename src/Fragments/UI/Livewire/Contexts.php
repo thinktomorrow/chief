@@ -33,6 +33,8 @@ class Contexts extends Component
     {
         return [
             $this->modelReference.'-contexts-updated' => 'onContextsUpdated',
+            $this->modelReference.'-context-deleted' => 'onContextDeleted',
+
         ];
     }
 
@@ -56,7 +58,10 @@ class Contexts extends Component
     public function onContextsUpdated(): void
     {
         // The contexts are automatically updated in the view
+    }
 
+    public function onContextDeleted(): void
+    {
         // If the active context is deleted, reset the active context
         $this->resetActiveContext();
     }

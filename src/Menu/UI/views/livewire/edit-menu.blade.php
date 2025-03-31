@@ -1,4 +1,4 @@
-<x-chief::dialog.modal wired size="sm" title="Paginaopbouw aanpassen">
+<x-chief::dialog.modal wired size="sm" title="Bewerk menu">
     @if ($isOpen)
 
         <x-chief::form.fieldset rule="form.title">
@@ -7,7 +7,7 @@
         </x-chief::form.fieldset>
 
         <x-chief::form.fieldset rule="form.locales">
-            <x-chief::form.label for="locales">Welke talen wens je te gebruiken in deze fragmenten?
+            <x-chief::form.label for="locales">Welke talen wens je te gebruiken in deze items?
             </x-chief::form.label>
 
             <x-chief::multiselect
@@ -25,7 +25,7 @@
         </x-slot>
 
         @if($cannotBeDeleted)
-            <x-chief::callout data-slot="form-group" variant="red" title="Paginaopbouw kan niet verwijderd worden">
+            <x-chief::callout data-slot="form-group" variant="red" title="Menuopbouw kan niet verwijderd worden">
                 <x-slot name="icon">
                     <x-chief::icon.solid.alert />
                 </x-slot>
@@ -33,8 +33,9 @@
                 <div class="space-y-2">
                     @if($cannotBeDeletedBecauseOfLastLeft)
                         <p>
-                            Deze opbouw is de enige opbouw die nog bestaat voor deze pagina. Je kan de laatste
-                            paginaopbouw niet verwijderen.
+                            Deze opbouw is de enige opbouw die nog bestaat voor {{ $menu->typeTitle }}. Je kan het
+                            laatste menu
+                            niet verwijderen.
                         </p>
                     @elseif($cannotBeDeletedBecauseOfConnectedToSite)
                         <p>
@@ -46,18 +47,18 @@
                 </div>
             </x-chief::callout>
         @else
-            <x-chief::callout data-slot="form-group" variant="red" title="Paginaopbouw verwijderen">
+            <x-chief::callout data-slot="form-group" variant="red" title="Menuopbouw verwijderen">
                 <x-slot name="icon">
                     <x-chief::icon.solid.alert />
                 </x-slot>
 
                 <div class="space-y-2">
-                    <p>Opgelet. Alle fragmenten in deze paginaopbouw worden ook verwijderd.</p>
+                    <p>Opgelet. Alle items in dit menu worden ook verwijderd.</p>
 
                     <div>
-                        <x-chief::button variant="outline-red" x-on:click="$wire.deleteContext()">
+                        <x-chief::button variant="outline-red" x-on:click="$wire.deleteMenu()">
                             <x-chief::icon.delete />
-                            <span>Verwijder paginaopbouw</span>
+                            <span>Verwijder menu</span>
                         </x-chief::button>
                     </div>
                 </div>
