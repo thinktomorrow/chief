@@ -109,7 +109,7 @@
     @endforeach
 
     @if (count($tags) > 0)
-        <div class="flex justify-center gap-6 text-center">
+        <div data-slot="window" class="flex justify-center gap-6 text-center">
             <x-chief::button href="{{ route('chief.taggroups.create') }}" variant="grey" size="sm">
                 <x-chief::icon.plus-sign />
                 <span>Groep toevoegen</span>

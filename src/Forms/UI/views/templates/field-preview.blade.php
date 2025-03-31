@@ -7,9 +7,9 @@
 >
     @if ($getLabel())
         <td class="@lg:table-cell block align-top">
-            <x-chief::form.label class="mt-0.5 text-sm/5 font-normal text-grey-500 @lg:max-w-48">
+            <p class="@lg:max-w-48 mt-0.5 text-sm/5 font-medium text-grey-500">
                 {{ ucfirst($getLabel()) }}
-            </x-chief::form.label>
+            </p>
         </td>
     @endif
 
