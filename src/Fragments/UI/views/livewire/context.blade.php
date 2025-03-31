@@ -3,6 +3,8 @@
         wire:ignore.self
         x-sortable
         x-sortable-group="{{ 'group-' . $context->id }}"
+        x-sortable-ghost-class="fragment-sort-ghost"
+        x-sortable-drag-class="fragment-sort-drag"
         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
         class="border-y border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
     >

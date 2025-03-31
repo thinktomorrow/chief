@@ -2,6 +2,18 @@
     data-slot="fragment"
     wire:key="{{ 'context-fragment-' . $fragment->getId() }}"
     x-sortable-item="{{ $fragment->fragmentId }}"
+    @class([
+        '[&.fragment-sort-ghost]:rounded-md',
+        '[&.fragment-sort-ghost]:bg-grey-50',
+        '[&.fragment-sort-ghost]:px-4',
+        '[&.fragment-sort-ghost]:-mx-4',
+        '[&.fragment-sort-ghost]:shadow',
+        '[&.fragment-sort-ghost]:shadow-grey-500/10',
+        '[&.fragment-sort-drag>*]:bg-white',
+        '[&.fragment-sort-drag>*]:px-4',
+        '[&.fragment-sort-drag>*]:rounded-lg',
+        '[&.fragment-sort-drag>[data-slot=add-fragment-button]]:hidden',
+    ])
 >
     <div class="space-y-3 py-4">
         <div class="flex items-start justify-end gap-3">

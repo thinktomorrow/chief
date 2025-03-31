@@ -13,7 +13,7 @@
         </td>
     @endif
 
-    <td class="@lg:table-cell block">
+    <td class="@lg:table-cell block align-top">
         @if (! $hasLocales())
             @include($getPreviewView())
         @elseif (count($getLocales()) == 1)

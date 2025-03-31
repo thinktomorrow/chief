@@ -52,6 +52,8 @@
                     wire:ignore.self
                     x-sortable
                     x-sortable-group="{{ 'group-fragment-' . $fragment->fragmentId }}"
+                    x-sortable-ghost-class="fragment-sort-ghost"
+                    x-sortable-drag-class="fragment-sort-drag"
                     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
                     class="rounded-xl border border-grey-100 px-4 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
                 >

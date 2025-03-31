@@ -3,7 +3,7 @@
     $parentId ??= null;
 @endphp
 
-<div class="pointer-events-none relative">
+<div data-slot="add-fragment-button" class="pointer-events-none relative">
     <div class="absolute z-[1] flex h-8 w-full justify-center">
         <x-chief::button
             x-on:click="$wire.addFragment({{ $order }}, '{{ $parentId }}')"
