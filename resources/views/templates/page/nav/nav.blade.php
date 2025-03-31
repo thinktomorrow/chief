@@ -34,7 +34,9 @@
             {{-- Mobile Chief title --}}
             <div class="flex items-center justify-start lg:hidden">
                 <div data-mobile-navigation-toggle class="shrink-0 cursor-pointer rounded-md p-2 hover:bg-grey-50">
-                    <svg class="body-dark h-6 w-6"><use xlink:href="#icon-arrow-long-left"></use></svg>
+                    <svg class="body-dark h-6 w-6">
+                        <use xlink:href="#icon-arrow-long-left"></use>
+                    </svg>
                 </div>
 
                 <a
@@ -49,15 +51,15 @@
             <div>
                 @include('chief::templates.page.nav.nav-project')
                 @include('chief::templates.page.nav.nav-general')
-                @include('chief::templates.page.nav.nav-settings')
             </div>
         </div>
 
         <div>
+            @include('chief::templates.page.nav.nav-settings')
             @include('chief::templates.page.nav.nav-user')
 
             <p class="mt-3 px-2 text-xs text-grey-400">
-                Chief v{{ \Composer\InstalledVersions::getVersion('thinktomorrow/chief') }}
+                Je gebruikt momenteel Chief versie {{ \Composer\InstalledVersions::getVersion('thinktomorrow/chief') }}
             </p>
         </div>
     </div>
