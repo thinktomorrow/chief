@@ -5,23 +5,18 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use DeepCopy\DeepCopy;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
-use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
-use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
-use Thinktomorrow\Chief\Managers\Manager;
 
-class Repeat extends Component implements Field, HasComponents, HasTaggedComponents
+class Repeat extends Component implements Field, HasTaggedComponents
 {
-    use WithComponents;
     use WithTaggedComponents;
 
-    protected string $view = 'chief-form::fields.repeat.repeat';
+    protected string $view = 'chief-form::fields.repeat';
 
-    protected string $previewView = 'chief-form::fields.repeat.repeat-window';
+    protected string $previewView = 'chief-form::previews.fields.repeat';
 
     /**
      * Provide the repeated components so that they are easily presented in
@@ -61,21 +56,4 @@ class Repeat extends Component implements Field, HasComponents, HasTaggedCompone
 
         return $clonedComponents;
     }
-
-    public function fill(Manager $manager, Model $model): void
-    {
-        $this->endpoint($manager->route('repeat-section', [$this->getKey(), $model->id]));
-    }
-
-    //    public function sectionView(string $view): static
-    //    {
-    //        $this->sectionView = $view;
-    //
-    //        return $this;
-    //    }
-    //
-    //    public function getSectionView(): string
-    //    {
-    //        return $this->sectionView;
-    //    }
 }

@@ -22,7 +22,7 @@ class Text extends Component implements Field
 
     public function getView(): string
     {
-        if ($this->hasRedactorOptions() && ! $this->getEditInSidebar()) {
+        if ($this->hasRedactorOptions()) {
             return $this->viewWithRedactor;
         }
 

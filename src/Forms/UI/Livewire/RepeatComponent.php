@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
 use Livewire\Component;
-use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 
 class RepeatComponent extends Component
@@ -43,7 +43,7 @@ class RepeatComponent extends Component
 
     public function prepareFormComponent($component, string $index): void
     {
-        if (! $component instanceof Fields\Field) {
+        if (! $component instanceof Field) {
             if ($component instanceof HasComponents) {
                 foreach ($component->getComponents() as $nestedComponent) {
                     $this->prepareFormComponent($nestedComponent, $index);

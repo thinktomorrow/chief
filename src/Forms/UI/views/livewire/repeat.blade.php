@@ -7,6 +7,7 @@
     x-sortable-group="{{ 'group-' . $elementId }}"
     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
 >
+
     @foreach ($form as $index => $values)
         <!-- repeat section -->
         <div wire:key="{{ $elementId . '-' . $index }}" x-sortable-item="{{ $index }}">
