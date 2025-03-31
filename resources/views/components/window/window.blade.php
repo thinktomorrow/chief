@@ -33,7 +33,7 @@
                 'rounded-xl' => ! $tabs,
                 'rounded-b-xl rounded-tr-xl' => $tabs,
                 match ($variant) {
-                    'white' => 'border border-grey-100 bg-white p-4 shadow-md shadow-grey-500/10',
+                    'card' => 'border border-grey-100 bg-white p-4 shadow-md shadow-grey-500/10',
                     'transparent' => 'p-4',
                     default => 'border border-grey-100 bg-white p-4 shadow-md shadow-grey-500/10',
                 },

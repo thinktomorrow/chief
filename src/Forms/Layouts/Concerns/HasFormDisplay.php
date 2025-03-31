@@ -17,9 +17,9 @@ trait HasFormDisplay
         return $this->setFormDisplay('window');
     }
 
-    public function displayAsBlankForm(): static
+    public function displayAsTransparentForm(): static
     {
-        return $this->setFormDisplay('blank');
+        return $this->setFormDisplay('transparent');
     }
 
     public function displayAsInlineForm(): static
