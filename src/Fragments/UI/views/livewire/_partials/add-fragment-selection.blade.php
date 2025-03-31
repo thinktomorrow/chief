@@ -21,7 +21,7 @@
     wire:key="add-fragment-tabs-{{ Str::random() }}"
     active-tab="{{ $this->showExisting() ? 'existing' : 'new' }}"
     :show-nav="false"
-    :listen-for-external-tab="true"
+    :should-listen-for-external-tab="true"
 >
     <x-chief::tabs.tab wire:key="add-fragment-tab-new-{{ Str::random() }}" tab-id="new">
         @include('chief-fragments::livewire._partials.add-fragment-new')

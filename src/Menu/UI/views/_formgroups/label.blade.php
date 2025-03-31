@@ -10,7 +10,7 @@
     </x-chief::form.description>
 
     @if (count(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()) > 1)
-        <x-chief::tabs :listen-for-external-tab="true">
+        <x-chief::tabs :should-listen-for-external-tab="true">
             @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}">
                     <x-chief::form.fieldset :rule="'trans.' . $locale . '.label'">

@@ -4,11 +4,13 @@ import './tables/index';
 
 /* Alpine directives */
 import copyDirective from './alpine-directives/copy';
+import dialog from './alpine-directives/dialog';
 import dropdown from './alpine-directives/dropdown';
 import multiselectDirective from './alpine-directives/multiselect';
 import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 import selectlist from './alpine-directives/selectlist';
 import tabs from './alpine-directives/tabs';
+
 /* Utilities */
 import initAnimatedToggle from './utilities/animated-toggle';
 
@@ -19,6 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* Register Alpine directives */
+window.Alpine.data('dialog', dialog);
 window.Alpine.data('dropdown', dropdown);
 window.Alpine.data('selectlist', selectlist);
 window.Alpine.data('tabs', tabs);

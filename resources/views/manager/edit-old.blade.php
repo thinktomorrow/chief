@@ -12,7 +12,7 @@
             @endif
 
             @if (count(config('chief.locales')) > 1)
-                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3 mt-1">
+                <x-chief::tabs :should-listen-for-external-tab="true" class="-mb-3 mt-1">
                     @foreach (config('chief.locales') as $locale)
                         <x-chief::tabs.tab tab-id="{{ $locale }}"></x-chief::tabs.tab>
                     @endforeach

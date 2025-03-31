@@ -97,10 +97,11 @@ Replaced old renderFragment() and renderAdminFragment() methods with new render(
 
 ### Form livewire component
 
-- Removed: `Form::action()`, `Form::windowAction()`;  `Form::refreshUrl()` and `Form::redirectAfterSubmit()` methods.
+- Removed: `Form::action()`, `Form::windowAction()`; `Form::refreshUrl()` and `Form::redirectAfterSubmit()` methods.
 - Removed: `Field::editInSidebar()` and `Field::editInline()` methods.
 - Removed: `Form::windowContainerView()` and `Form::previewView()`. Just use `Form::view()` instead.
 - Removed: Form `ProtectAgainstFill` trait.
+- Removed: Obsolete form and sidebar scripts
 
 ### New glossary
 

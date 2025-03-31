@@ -1,14 +1,7 @@
-{{--
-    reference: Reference of this tabs, context that is passed with the event for finetuning listeners
-    wireIgnore:
-    - true: wire:ignore - Needed for file inputs else they have their state removed ...
-    - false: wire:ignore.self - Needed wire:modeling for everything else...
---}}
-
 @props([
     'activeTab' => null,
     'dispatchTab' => true,
-    'listenForExternalTab' => false,
+    'shouldListenForExternalTab' => false,
     'reference' => null,
     'showNav' => true,
     'showTabs' => true,
@@ -16,12 +9,19 @@
     'wireIgnore' => false,
 ])
 
+{{--
+    reference: Reference of this tabs, context that is passed with the event for finetuning listeners
+    wireIgnore:
+    - true: wire:ignore - Needed for file inputs else they have their state removed ...
+    - false: wire:ignore.self - Needed wire:modeling for everything else...
+--}}
+
 <div
     x-cloak
     x-data="tabs({
                 activeTab: @js($activeTab),
                 dispatchTab: @js($dispatchTab),
-                shouldListenForExternalTab: @js($listenForExternalTab),
+                shouldListenForExternalTab: @js($shouldListenForExternalTab),
                 reference: @js($reference),
                 showNav: @js($showNav),
                 showTabs: @js($showTabs),
