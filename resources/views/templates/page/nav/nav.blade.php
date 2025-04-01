@@ -14,7 +14,7 @@
     data-mobile-navigation
     class="fixed inset-0 hidden animate-slide-in-nav max-lg:z-10 max-lg:bg-white lg:static lg:block lg:animate-none"
 >
-    <div class="flex select-none flex-col justify-between gap-y-9 px-6 py-6">
+    <div class="flex select-none flex-col justify-between gap-y-9 py-6 pl-6">
         <div class="space-y-9">
             {{-- Desktop Chief title --}}
             <div class="hidden items-center justify-start lg:flex">
