@@ -7,7 +7,7 @@
 
 <div x-data="{ isOpen: false }" class="group">
     <div class="cursor-pointer rounded-lg hover:bg-grey-100">
-        <div class="flex justify-between gap-3 px-2">
+        <div class="flex items-start justify-between gap-3 px-2">
             <div class="flex grow gap-2">
                 @isset($icon)
                     @isset($url)
@@ -32,25 +32,40 @@
                     <a
                         href="{{ $url }}"
                         title="{!! $label !!}"
-                        class="inline-block w-full py-1.5 text-sm/6 text-grey-700 group-hover:text-grey-950 lg:w-36"
+                        class="inline-block w-full py-1.5 text-sm/6 text-grey-700 group-hover:text-grey-950"
                         {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
                     >
                         {!! $label !!}
                     </a>
                 @else
-                    <span class="inline-block w-full py-1.5 text-sm/6 text-grey-700 group-hover:text-grey-950 lg:w-36">
+                    <span class="inline-block w-full py-1.5 text-sm/6 text-grey-700 group-hover:text-grey-950">
                         {!! $label !!}
                     </span>
                 @endisset
             </div>
 
             @if (! $slot->isEmpty())
-                <div class="mt-2.5 shrink-0">
-                    <div x-on:click="isOpen = !isOpen" class="flex items-center justify-center">
-                        <x-chief::icon.chevron-left class="size-4 text-grey-700" x-show="!isOpen" />
-                        <x-chief::icon.chevron-down class="size-4 text-grey-700" x-show="isOpen" />
-                    </div>
-                </div>
+                <x-chief::button
+                    type="button"
+                    size="sm"
+                    variant="transparent"
+                    x-show="!isOpen"
+                    x-on:click="isOpen = true"
+                    class="mt-[0.1875rem] shrink-0"
+                >
+                    <x-chief::icon.chevron-left />
+                </x-chief::button>
+
+                <x-chief::button
+                    type="button"
+                    size="sm"
+                    variant="transparent"
+                    x-show="isOpen"
+                    x-on:click="isOpen = false"
+                    class="mt-[0.1875rem] shrink-0"
+                >
+                    <x-chief::icon.chevron-down />
+                </x-chief::button>
             @endif
         </div>
     </div>
