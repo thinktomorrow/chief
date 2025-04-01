@@ -26,6 +26,7 @@ use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
+use Thinktomorrow\Chief\Fragments\App\Actions\CreateFirstContextForPage;
 use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragmentMetadata;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
@@ -188,6 +189,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Managed model events
         Event::listen(ManagedModelCreated::class, [CreateUrlForPage::class, 'onManagedModelCreated']);
+        Event::listen(ManagedModelCreated::class, [CreateFirstContextForPage::class, 'onManagedModelCreated']);
         Event::listen(ManagedModelUrlUpdated::class, [TriggerPageChangedEvent::class, 'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [ProjectModelData::class, 'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [PropagateUrlChange::class, 'onManagedModelUrlUpdated']);
