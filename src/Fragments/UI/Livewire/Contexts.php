@@ -55,9 +55,10 @@ class Contexts extends Component
         ])->to('chief-wire::edit-context');
     }
 
-    public function onContextsUpdated(): void
+    public function onContextsUpdated(string $contextId): void
     {
         // The contexts are automatically updated in the view
+        $this->activeContextId = $contextId;
     }
 
     public function onContextDeleted(): void

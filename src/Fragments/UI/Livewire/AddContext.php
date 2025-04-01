@@ -55,13 +55,15 @@ class AddContext extends Component
             'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
         ]);
 
-        app(ContextApplication::class)->create(new CreateContext(
+        $contextId = app(ContextApplication::class)->create(new CreateContext(
             ModelReference::fromString($this->modelReference),
             $this->form['locales'] ?? [],
             $this->form['title'] ?? null
         ));
 
-        $this->dispatch($this->modelReference.'-contexts-updated');
+        $this->dispatch($this->modelReference.'-contexts-updated', ...[
+            'contextId' => $contextId,
+        ]);
 
         $this->close();
     }

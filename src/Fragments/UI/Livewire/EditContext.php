@@ -99,7 +99,9 @@ class EditContext extends Component
             $this->form['title'] ?? null
         ));
 
-        $this->dispatch($this->modelReference.'-contexts-updated');
+        $this->dispatch($this->modelReference.'-contexts-updated', ...[
+            'contextId' => $this->context->id,
+        ]);
 
         $this->close();
     }
