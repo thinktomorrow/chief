@@ -1,11 +1,11 @@
 <?php
 
-namespace Fields\Validation;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Validation;
 
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationNames;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
 
-class FieldValidationNamesTest extends TestCase
+class ValidationNamesTest extends TestCase
 {
     /** @test */
     public function it_can_get_the_rules()

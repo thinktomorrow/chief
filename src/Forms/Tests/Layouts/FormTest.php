@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Tests;
+namespace Thinktomorrow\Chief\Forms\Tests\Layouts;
 
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
+use Thinktomorrow\Chief\Forms\Tests\TestCase;
 
 class FormTest extends TestCase
 {

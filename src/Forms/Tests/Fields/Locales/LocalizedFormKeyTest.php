@@ -9,13 +9,13 @@ class LocalizedFormKeyTest extends TestCase
 {
     public function test_it_returns_the_default_localized_format()
     {
-        $this->assertEquals('trans.nl.xxx', FieldName::make()->get('xxx', 'nl'));
+        $this->assertEquals('xxx.nl', FieldName::make()->get('xxx', 'nl'));
     }
 
     public function test_it_returns_the_matrix_of_different_locales()
     {
         $this->assertEquals(
-            ['trans.nl.xxx', 'trans.en.xxx'],
+            ['nl' => 'xxx.nl', 'en' => 'xxx.en'],
             FieldName::make()->matrix('xxx', ['nl', 'en'])
         );
     }
@@ -23,7 +23,7 @@ class LocalizedFormKeyTest extends TestCase
     public function test_it_returns_the_key_with_brackets()
     {
         $this->assertEquals(
-            'trans[nl][xxx]',
+            'xxx[nl]',
             FieldName::make()
                 ->bracketed()
                 ->get('xxx', 'nl')
@@ -58,7 +58,7 @@ class LocalizedFormKeyTest extends TestCase
     public function test_it_can_replace_a_placeholder_value_in_the_key()
     {
         $this->assertEquals(
-            'trans.nl.foobar',
+            'foobar.nl',
             FieldName::make()
                 ->replace('key', 'foobar')
                 ->get(':key', 'nl')
@@ -80,10 +80,10 @@ class LocalizedFormKeyTest extends TestCase
     {
         $this->assertEquals(
             [
-                'trans.nl.foobar',
-                'trans.fr.foobar',
+                'nl' => 'trans.nl.foobar',
+                'fr' => 'trans.fr.foobar',
             ],
-            FieldName::make()->matrix('foobar', ['nl', 'fr'])
+            FieldName::make()->template('trans.:locale.:name')->matrix('foobar', ['nl', 'fr'])
         );
     }
 }

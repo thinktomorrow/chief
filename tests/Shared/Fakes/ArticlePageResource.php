@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Resource\PageResourceDefault;
 class ArticlePageResource implements PageResource
 {
     use PageResourceDefault;
+    use WithCustomFieldDefinitions;
 
     public static function modelClassName(): string
     {
@@ -29,15 +30,15 @@ class ArticlePageResource implements PageResource
         return 'custom';
     }
 
-    public function fields($model): iterable
+    private function defaultFields($model): iterable
     {
         yield Text::make('title')->required()->rules(['min:4']);
         yield Text::make('custom')
             ->rules(['required'])
             ->validationAttribute('custom attribute')
             ->validationMessages(['custom.required' => 'custom error for :attribute']);
-        yield Text::make('title_trans')->locales(['nl', 'en']);
-        yield Text::make('content_trans')->locales(['nl', 'en'])->rules(FallbackLocaleRequiredRule::RULE);
+        yield Text::make('title_trans')->locales();
+        yield Text::make('content_trans')->locales()->rules(FallbackLocaleRequiredRule::RULE);
 
         yield File::make('thumb');
         yield File::make('thumb_enhanced')->items([

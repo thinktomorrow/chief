@@ -18,11 +18,10 @@ trait HasName
     public function getName(?string $locale = null): string
     {
         return $this->getFieldName()->get($this->name, $locale);
+    }
 
-        //        if ($locale) {
-        //            return $this->getFieldName()->get($this->name, $locale);
-        //        }
-        //
-        //        return $this->name;
+    public function getRawName(): string
+    {
+        return $this->name;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fields\Validation;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Validation;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -47,8 +47,8 @@ class ValidateFileTest extends ChiefTestCase
                 ],
             ],
         ]);
-
         $response->assertSessionHasErrors('files.thumb.nl');
+        $response->assertSessionHasErrors('files.thumb.en');
 
         $this->assertCount(0, $this->model->assets('thumb'));
     }

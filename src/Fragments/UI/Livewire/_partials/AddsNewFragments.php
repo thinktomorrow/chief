@@ -36,11 +36,12 @@ trait AddsNewFragments
     {
         $fragment = $this->getFragment();
 
-        $forms = Layout::make($fragment->fields($fragment))
+        $layout = Layout::make($fragment->fields($fragment))
             ->filterByNotTagged(['edit', 'not-on-create']) // TODO: make consistent tags...
+            ->setScopedLocales($this->context->locales)
             ->getComponents();
 
-        return collect($forms)->map(fn ($form) => $form->getComponents())->flatten();
+        return collect($layout)->map(fn ($form) => $form->getComponents())->flatten();
     }
 
     public function save()
@@ -48,6 +49,7 @@ trait AddsNewFragments
         // Validation is done via create fragment command
         $fragmentId = app(CreateFragment::class)->handle(
             $this->fragmentKey,
+            $this->context->locales,
             $this->form,
             [],
         );

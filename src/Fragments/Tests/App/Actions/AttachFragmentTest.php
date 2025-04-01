@@ -89,7 +89,7 @@ class AttachFragmentTest extends ChiefTestCase
         $this->assertEquals(1, $fragments[1]->getFragmentModel()->pivot->order);
     }
 
-    public function test_attaching_fragment_on_contexts_owned_by_same_owner_is_not_considered_shared()
+    public function test_attaching_fragment_on_contexts_owned_by_same_owner_is_also_considered_shared()
     {
         [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class);
 
@@ -97,6 +97,6 @@ class AttachFragmentTest extends ChiefTestCase
         FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
 
         $this->assertEquals(1, FragmentModel::count());
-        $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
+        $this->assertTrue(FragmentModel::find($fragment->getFragmentId())->isShared());
     }
 }

@@ -6,6 +6,7 @@ use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\CreateContext;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class CreateFirstContextForPage
 {
@@ -27,7 +28,7 @@ class CreateFirstContextForPage
 
         $this->contextApplication->create(new CreateContext(
             $event->modelReference,
-            $model->getSiteLocales(),
+            ChiefLocales::locales(),
             'Paginaopbouw'
         ));
 

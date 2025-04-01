@@ -12,6 +12,8 @@ class ValidationParameters
 {
     private Validatable&LocalizedField $source;
 
+    private array $locales = [];
+
     private bool $multiple = false;
 
     private \Closure $mapKeysCallback;
@@ -19,6 +21,12 @@ class ValidationParameters
     final private function __construct(Validatable&LocalizedField $source)
     {
         $this->source = $source;
+
+        if ($source->hasLocales()) {
+            $scopedLocales = $source->getScopedLocales();
+            $this->locales = ! empty($scopedLocales) ? $scopedLocales : $source->getLocales();
+        }
+
         $this->mapKeysCallback = fn ($key) => $key;
     }
 
@@ -47,7 +55,7 @@ class ValidationParameters
     {
         if (! $attribute = $this->source->getValidationAttribute()) {
             $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getName();
-            $attribute .= ($this->source->hasLocales() && count($this->source->getLocales()) > 1) ? ' :locale' : '';
+            $attribute .= (count($this->locales) && count($this->source->getLocales()) > 1) ? ' :locale' : '';
         }
 
         return $this->createEntryForEachLocale($attribute);
@@ -71,15 +79,14 @@ class ValidationParameters
             }
         }
 
-        if (! $this->source->hasLocales()) {
+        if (! count($this->locales)) {
             return [
                 call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName())) => $value,
             ];
         }
-
         $keys = $this->source->getFieldName()
             ->dotted()
-            ->matrix($this->source->getName(), $this->source->getLocales());
+            ->matrix($this->source->getRawName(), $this->locales);
 
         if ($this->multiple) {
             foreach ($keys as $i => $key) {
@@ -95,7 +102,7 @@ class ValidationParameters
             ? array_fill_keys($keys, $value)
             : array_combine(
                 $keys,
-                FieldName::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
+                FieldName::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->locales))
             );
     }
 

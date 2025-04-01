@@ -19,19 +19,21 @@ class UpdateFragment
         $this->validator = $validator;
     }
 
-    public function handle(string $contextId, string $fragmentId, array $data, array $files)
+    public function handle(string $contextId, string $fragmentId, array $scopedLocales, array $data, array $files)
     {
         $fragment = $this->repository->find($fragmentId);
 
-        $forms = Layout::make($fragment->fields($fragment))
-            ->model($fragment->getFragmentModel());
+        $fields = Layout::make($fragment->fields($fragment))
+            ->model($fragment->getFragmentModel())
+            ->setScopedLocales($scopedLocales)
+            ->getFields();
 
-        $this->validator->handle($forms->getFields(), $data);
+        $this->validator->handle($fields, $data);
 
         // Save Fragment values
         app($fragment->getSaveFieldsClass())->save(
             $fragment->getFragmentModel(),
-            $forms->getFields(),
+            $fields,
             $data,
             $files
         );

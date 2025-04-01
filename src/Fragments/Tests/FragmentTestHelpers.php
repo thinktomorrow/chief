@@ -81,11 +81,13 @@ class FragmentTestHelpers
     {
         $fragmentKey = $fragmentClass::resourceKey();
 
+        $scopedLocales = [];
+
         if ($register && ! app(Registry::class)->exists($fragmentKey)) {
             chiefRegister()->fragment($fragmentClass);
         }
 
-        return (new $fragmentClass)->setFragmentModel(FragmentModel::find(app(CreateFragment::class)->handle($fragmentKey, $data)));
+        return (new $fragmentClass)->setFragmentModel(FragmentModel::find(app(CreateFragment::class)->handle($fragmentKey, $scopedLocales, $data)));
     }
 
     public static function attachFragment($contextId, $fragmentId, ?string $parentFragmentId = null, $order = 0, array $data = []): void

@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
+use Illuminate\Validation\ValidationException;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -20,6 +22,7 @@ class CreateFragmentTest extends ChiefTestCase
     {
         $fragmentId = app(CreateFragment::class)->handle(
             SnippetStub::resourceKey(),
+            [],
             ['title' => 'bar'],
             []
         );
@@ -34,11 +37,12 @@ class CreateFragmentTest extends ChiefTestCase
     {
         $fragmentId = app(CreateFragment::class)->handle(
             SnippetStub::resourceKey(),
+            [],
             [
                 'title' => 'bar',
-                'trans' => [
-                    'nl' => ['title_trans' => 'nl titel'],
-                    'en' => ['title_trans' => 'en title'],
+                'title_trans' => [
+                    'nl' => 'nl titel',
+                    'en' => 'en title',
                 ],
             ],
             []
@@ -53,5 +57,72 @@ class CreateFragmentTest extends ChiefTestCase
 
         app()->setLocale('en');
         $this->assertEquals('en title', $model->title_trans);
+    }
+
+    public function test_it_only_validates_fragment_scoped_locales()
+    {
+        SnippetStub::setFieldsDefinition(function () {
+            return [
+                Text::make('title_trans')->locales()->required(),
+            ];
+        });
+
+        $catched = false;
+
+        try {
+            $fragmentId = app(CreateFragment::class)->handle(
+                SnippetStub::resourceKey(),
+                ['nl', 'fr'],
+                [
+                    'title' => 'bar',
+                    'title_trans' => [
+                        'nl' => '',
+                        'fr' => '',
+                        'en' => '',
+                    ],
+                ],
+                []
+            );
+        } catch (ValidationException $e) {
+
+            $catched = true;
+
+            $this->assertEquals([
+                'title_trans.nl' => ['The title_trans NL field is required.'],
+                'title_trans.fr' => ['The title_trans FR field is required.'],
+            ], $e->errors());
+        }
+
+        $this->assertTrue($catched);
+
+    }
+
+    public function test_it_saves_scoped_locales_but_still_saves_other_locales()
+    {
+        SnippetStub::setFieldsDefinition(function () {
+            return [
+                Text::make('title_trans')->locales()->required(),
+            ];
+        });
+
+        $fragmentId = app(CreateFragment::class)->handle(
+            SnippetStub::resourceKey(),
+            ['nl', 'fr'],
+            [
+                'title' => 'bar',
+                'title_trans' => [
+                    'nl' => 'title nl',
+                    'fr' => 'title fr',
+                    'en' => 'title en',
+                ],
+            ],
+            []
+        );
+
+        $model = FragmentModel::find($fragmentId);
+
+        $this->assertEquals('title nl', $model->dynamic('title_trans', 'nl'));
+        $this->assertEquals('title fr', $model->dynamic('title_trans', 'fr'));
+        $this->assertEquals('title en', $model->dynamic('title_trans', 'en'));
     }
 }

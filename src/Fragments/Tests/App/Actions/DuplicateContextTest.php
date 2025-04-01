@@ -6,6 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
@@ -43,7 +44,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(1, ContextModel::count());
         $this->assertEquals(1, FragmentModel::count());
 
-        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
+        app(ContextApplication::class)->duplicate(new DuplicateContext($this->context->id, $this->owner2));
 
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
@@ -51,7 +52,7 @@ class DuplicateContextTest extends ChiefTestCase
 
     public function test_fragments_will_be_duplicated()
     {
-        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'en');
+        app(ContextApplication::class)->duplicate(new DuplicateContext($this->context->id, $this->owner2));
 
         $originalContext = app(ContextRepository::class)->getByOwner($this->owner->modelReference())->first();
         $duplicatedContext = app(ContextRepository::class)->getByOwner($this->owner2->modelReference())->first();
@@ -73,7 +74,7 @@ class DuplicateContextTest extends ChiefTestCase
 
         app(AddAsset::class)->handle($this->fragment->getFragmentModel(), $asset, 'xxx', 'nl', 2, ['foo' => 'bar']);
 
-        app(DuplicateContext::class)->handle($this->context->id, $this->owner2, 'nl');
+        app(ContextApplication::class)->duplicate(new DuplicateContext($this->context->id, $this->owner2));
 
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
@@ -99,7 +100,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->assertEquals(1, ContextModel::count());
         $this->assertEquals(2, FragmentModel::count());
 
-        app(DuplicateContext::class)->handle($this->context->id, $this->owner2);
+        app(ContextApplication::class)->duplicate(new DuplicateContext($this->context->id, $this->owner2));
 
         $this->assertEquals(2, ContextModel::count());
         $this->assertEquals(4, FragmentModel::count());

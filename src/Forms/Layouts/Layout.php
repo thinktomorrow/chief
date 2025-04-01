@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Layouts\Concerns\SetsScopedLocales;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 
@@ -16,6 +17,7 @@ class Layout implements HasTaggedComponents
 {
     use HasFields;
     use HasModel;
+    use SetsScopedLocales;
     use WithTaggedComponents;
 
     final private function __construct(array $components)
@@ -51,49 +53,6 @@ class Layout implements HasTaggedComponents
 
         return $self;
     }
-
-    //    private function eachForm(callable $logic): self
-    //    {
-    //        foreach ($this->components as $form) {
-    //            call_user_func($logic, $form);
-    //        }
-    //
-    //        return $this;
-    //    }
-    //
-    //    public function fillModel(Model $model): self
-    //    {
-    //        return $this->eachForm(fn ($form) => $form->fillModel($model));
-    //    }
-    //
-    //    /**
-    //     * Default form composition with model prefills and action urls.
-    //     */
-    //    public function fill(Manager $manager, Model $model): self
-    //    {
-    //        return $this->eachForm(fn ($form) => $form->fill($manager, $model));
-    //    }
-    //
-    //    public function fillFields(Manager $manager, Model $model): self
-    //    {
-    //        return $this->eachForm(fn ($form) => $form->fillFields($manager, $model));
-    //    }
-
-    //    public function get()
-    //    {
-    //        return $this->components;
-    //    }
-
-    //    public function has(string $formId): bool
-    //    {
-    //        foreach ($this->components as $form) {
-    //            if ($form->getId() == $formId) {
-    //                return true;
-    //            }
-    //        }
-    //
-    //        return false;
-    //    }
 
     public function hasForm(string $formId): bool
     {

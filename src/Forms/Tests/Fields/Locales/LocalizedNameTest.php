@@ -1,6 +1,6 @@
 <?php
 
-namespace Fields\Locales;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Locales;
 
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Forms\Fields\File;
@@ -42,7 +42,7 @@ class LocalizedNameTest extends TestCase
 
         $bracketedNames = $this->localizedField->getBracketedLocalizedNames();
 
-        $this->assertSame(['title[nl]', 'title[fr]'], $bracketedNames);
+        $this->assertSame(['nl' => 'title[nl]', 'fr' => 'title[fr]'], $bracketedNames);
     }
 
     public function test_it_generates_dotted_localized_names(): void
@@ -51,7 +51,7 @@ class LocalizedNameTest extends TestCase
 
         $dottedNames = $this->localizedField->getDottedLocalizedNames();
 
-        $this->assertSame(['title.nl', 'title.fr'], $dottedNames);
+        $this->assertSame(['nl' => 'title.nl', 'fr' => 'title.fr'], $dottedNames);
     }
 
     public function test_it_generates_bracketed_localized_names_from_multiple_locales(): void
@@ -60,7 +60,7 @@ class LocalizedNameTest extends TestCase
 
         $bracketedNames = $this->localizedField->getBracketedLocalizedNames();
 
-        $this->assertSame(['title[nl]', 'title[nl-be]', 'title[fr]'], $bracketedNames);
+        $this->assertSame(['nl' => 'title[nl]', 'nl-be' => 'title[nl-be]', 'fr' => 'title[fr]'], $bracketedNames);
     }
 
     public function test_it_generates_dotted_localized_names_from_multiple_locales(): void
@@ -69,7 +69,7 @@ class LocalizedNameTest extends TestCase
 
         $dottedNames = $this->localizedField->getDottedLocalizedNames();
 
-        $this->assertSame(['title.nl', 'title.nl-be', 'title.fr'], $dottedNames);
+        $this->assertSame(['nl' => 'title.nl', 'nl-be' => 'title.nl-be', 'fr' => 'title.fr'], $dottedNames);
     }
 
     public function test_when_localized_it_uses_a_localized_format_for_the_name()
@@ -78,9 +78,17 @@ class LocalizedNameTest extends TestCase
 
         $this->assertEquals('title', $component->getId());
         $this->assertEquals('title', $component->getName());
+        $this->assertEquals('title[nl]', $component->getName('nl'));
+        $this->assertEquals('title[fr]', $component->getName('fr'));
+        $this->assertEquals('title', $component->getColumnName());
+    }
+
+    public function test_when_localized_it_uses_a_custom_localized_format_for_the_name()
+    {
+        $component = Text::make('title')->setFieldNameTemplate('trans.:locale.:name')->locales(['nl', 'fr']);
+
         $this->assertEquals('trans[nl][title]', $component->getName('nl'));
         $this->assertEquals('trans[fr][title]', $component->getName('fr'));
-        $this->assertEquals('title', $component->getColumnName());
     }
 
     public function test_when_files_are_localized_a_specific_localized_format_is_used()
@@ -88,7 +96,7 @@ class LocalizedNameTest extends TestCase
         $component = File::make('image')->locales(['nl', 'fr']);
 
         $this->assertEquals('image', $component->getId());
-        $this->assertEquals('image', $component->getName());
+        $this->assertEquals('files[image]', $component->getName());
         $this->assertEquals('files[image][nl]', $component->getName('nl'));
         $this->assertEquals('files[image][fr]', $component->getName('fr'));
         $this->assertEquals('image', $component->getColumnName());
@@ -100,7 +108,7 @@ class LocalizedNameTest extends TestCase
             ->locales(['nl', 'fr'])
             ->name('custom-title-:locale');
 
-        $this->assertEquals('custom-title-:locale', $field->getName());
+        $this->assertEquals('custom-title-', $field->getName());
         $this->assertEquals('custom-title-nl', $field->getName('nl'));
         $this->assertEquals('custom-title-fr', $field->getName('fr'));
     }
@@ -109,9 +117,10 @@ class LocalizedNameTest extends TestCase
     {
         $field = Text::make('title')
             ->locales(['nl', 'fr'])
+            ->setFieldNameTemplate('trans.:locale.:name')
             ->name('custom-title');
 
-        $this->assertEquals('custom-title', $field->getName());
+        $this->assertEquals('trans[custom-title]', $field->getName());
         $this->assertEquals('trans[nl][custom-title]', $field->getName('nl'));
         $this->assertEquals('trans[fr][custom-title]', $field->getName('fr'));
     }
@@ -122,8 +131,8 @@ class LocalizedNameTest extends TestCase
             ->locales(['nl', 'fr']);
 
         $this->assertEquals([
-            'trans.nl.title',
-            'trans.fr.title',
+            'nl' => 'title.nl',
+            'fr' => 'title.fr   ',
         ], $field->getLocalizedKeys());
     }
 
@@ -134,8 +143,8 @@ class LocalizedNameTest extends TestCase
             ->locales(['nl', 'fr']);
 
         $this->assertEquals([
-            'title.nl',
-            'title.fr',
+            'nl' => 'title.nl',
+            'fr' => 'title.fr',
         ], $field->getLocalizedKeys());
     }
 
@@ -145,8 +154,8 @@ class LocalizedNameTest extends TestCase
             ->locales(['nl', 'fr']);
 
         $this->assertEquals([
-            'trans[nl][title]',
-            'trans[fr][title]',
+            'nl' => 'title[nl]',
+            'fr' => 'title[fr]',
         ], $field->getBracketedLocalizedNames());
     }
 
@@ -158,8 +167,8 @@ class LocalizedNameTest extends TestCase
             ->locales(['nl', 'fr']);
 
         $this->assertEquals([
-            'foobar[nl]',
-            'foobar[fr]',
+            'nl' => 'foobar[nl]',
+            'fr' => 'foobar[fr]',
         ], $field->getBracketedLocalizedNames());
     }
 
@@ -170,8 +179,8 @@ class LocalizedNameTest extends TestCase
             ->locales(['nl', 'fr']);
 
         $this->assertEquals([
-            'trans.nl.foobar',
-            'trans.fr.foobar',
+            'nl' => 'foobar.nl',
+            'fr' => 'foobar.fr',
         ], $field->getDottedLocalizedNames());
     }
 }

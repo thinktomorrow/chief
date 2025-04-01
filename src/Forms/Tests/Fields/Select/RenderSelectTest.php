@@ -1,6 +1,6 @@
 <?php
 
-namespace Fields\Select;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Select;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Thinktomorrow\Chief\Forms\Fields\Select;

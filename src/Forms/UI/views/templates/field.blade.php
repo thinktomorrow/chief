@@ -46,12 +46,20 @@
         @endforeach
     @else
         <x-chief::tabs :should-listen-for-external-tab="true" :wire-ignore="$wireIgnoredTabs">
-            @foreach ($getLocales() as $locale)
+            @foreach ($getScopedLocales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}">
                     @include($getView(), ['component' => $component, 'locale' => $locale])
                     @include('chief-form::fields._partials.charactercount')
                 </x-chief::tabs.tab>
             @endforeach
+
+
+            {{--            @foreach ($getDormantLocales() as $locale)--}}
+            {{--                <x-chief::tabs.tab tab-id="{{ $locale }}">--}}
+            {{--                    @include($getView(), ['component' => $component, 'locale' => $locale])--}}
+            {{--                    @include('chief-form::fields._partials.charactercount')--}}
+            {{--                </x-chief::tabs.tab>--}}
+            {{--            @endforeach--}}
         </x-chief::tabs>
     @endif
 

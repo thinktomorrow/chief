@@ -9,15 +9,18 @@ use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\WithCustomFieldDefinitions;
 
 class SnippetStub extends BaseFragment implements Fragment
 {
+    use WithCustomFieldDefinitions;
+
     public static function resourceKey(): string
     {
         return 'snippet-stub';
     }
 
-    public function fields($model): iterable
+    private function defaultFields(): iterable
     {
         yield Text::make('title');
         yield Text::make('title_trans')->locales();

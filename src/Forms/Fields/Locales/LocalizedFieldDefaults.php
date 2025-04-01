@@ -12,6 +12,8 @@ trait LocalizedFieldDefaults
 {
     protected array $locales = [];
 
+    protected array $scopedLocales = [];
+
     public function locales(?array $locales = null): static
     {
         $this->locales = ($locales === null)
@@ -19,8 +21,12 @@ trait LocalizedFieldDefaults
             : $locales;
 
         $this->whenModelIsSet(function ($model, $field) use ($locales) {
+
+            // TODO: if model is fragment, set the locales of the fragment context
+            // And set all locales to any locales that are set on the fragment context
+
             if ($model instanceof BelongsToSites && ($locales === null)) {
-                $field->locales = ChiefLocales::verifiedLocales($model->getSiteLocales());
+                $field->setScopedLocales(ChiefLocales::verifiedLocales($model->getSiteLocales()));
             }
         });
 
@@ -37,13 +43,49 @@ trait LocalizedFieldDefaults
         return count($this->locales) > 0;
     }
 
+    public function getScopedLocales(): array
+    {
+        return $this->scopedLocales;
+    }
+
+    public function setScopedLocales(array $scopedLocales): static
+    {
+        $this->scopedLocales = $scopedLocales;
+
+        return $this;
+    }
+
+    public function getDormantLocales(): array
+    {
+        return array_values(array_diff($this->locales, $this->scopedLocales));
+    }
+
+    /**
+     * Get the fallback locale for the given locale.
+     */
+    public function getFallbackLocale(string $locale): ?string
+    {
+        $fallbackLocales = array_filter(ChiefLocales::fallbackLocales(), fn ($fallbackLocale) => in_array($fallbackLocale, $this->getLocales()));
+
+        return $fallbackLocales[$locale] ?? null;
+    }
+
+    /**
+     * Check if the locale has its own value set. This is used to
+     * present the field in the admin with the correct tabs.
+     */
+    public function hasOwnLocaleValue(string $locale): bool
+    {
+        return ! is_null($this->getValue($locale));
+    }
+
     /**
      * Grouped locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
      * This is used to determine the tabs shown in the admin for the field.
      */
     public function getLocaleGroups(): array
     {
-        $localesWithOwnValue = array_filter($this->locales, fn ($locale) => ! is_null($this->getValue($locale)));
+        $localesWithOwnValue = array_filter($this->locales, fn ($locale) => $this->hasOwnLocaleValue($locale));
 
         return ChiefLocales::localeGroups($this->locales, $localesWithOwnValue);
     }

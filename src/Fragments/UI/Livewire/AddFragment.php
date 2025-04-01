@@ -18,17 +18,17 @@ class AddFragment extends Component
     use AddsNewFragments;
     use ShowsAsDialog;
 
-    public ?string $parentComponentId; // parent livewire component id
+    public ContextDto $context;
 
-    public string $contextId;
+    public ?string $parentComponentId; // parent livewire component id
 
     public ?string $parentId = null; // parent fragment id
 
     public ?int $insertAfterOrder = null;
 
-    public function mount(string $contextId, ?string $parentComponentId = null)
+    public function mount(ContextDto $context, ?string $parentComponentId = null)
     {
-        $this->contextId = $contextId;
+        $this->context = $context;
         $this->parentComponentId = $parentComponentId;
     }
 
@@ -78,7 +78,7 @@ class AddFragment extends Component
             $fragment = app(FragmentRepository::class)->find($this->parentId);
             $allowedFragments = $fragment->allowedFragments();
         } else {
-            $owner = app(ContextOwnerRepository::class)->findOwner($this->contextId);
+            $owner = app(ContextOwnerRepository::class)->findOwner($this->context->id);
             $allowedFragments = $owner->allowedFragments();
         }
 
@@ -91,7 +91,7 @@ class AddFragment extends Component
         $order = $this->insertAfterOrder + 1;
 
         app(AttachFragment::class)->handle(
-            $this->contextId,
+            $this->context->id,
             $fragmentId,
             $this->parentId,
             $order,
@@ -99,7 +99,7 @@ class AddFragment extends Component
 
         $eventPayload = [
             'fragmentId' => $fragmentId,
-            'contextId' => $this->contextId,
+            'contextId' => $this->context->id,
             'parentId' => $this->parentId,
             'order' => $order,
         ];

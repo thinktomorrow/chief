@@ -1,6 +1,6 @@
 <?php
 
-namespace Fields\ValidationRules;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\ValidationRules;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

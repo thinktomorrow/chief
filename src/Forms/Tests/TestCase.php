@@ -22,6 +22,12 @@ class TestCase extends OrchestraTestCase
 
         // Set nl as default locale for testing env
         config()->set('app.fallback_locale', 'nl');
+
+        config()->set('chief.sites', [
+            ['locale' => 'en', 'fallback_locale' => null],
+            ['locale' => 'nl', 'fallback_locale' => 'en', 'primary' => true], // First is primary
+            ['locale' => 'fr', 'fallback_locale' => 'nl'],
+        ]);
     }
 
     protected function tearDown(): void

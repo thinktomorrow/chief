@@ -6,13 +6,9 @@ namespace Thinktomorrow\Chief\Fragments\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Thinktomorrow\Chief\Sites\Locales\Localized;
-use Thinktomorrow\Chief\Sites\Locales\LocalizedDefaults;
 
-final class ContextModel extends Model implements Localized
+final class ContextModel extends Model
 {
-    use LocalizedDefaults;
-
     public $table = 'contexts';
 
     public $guarded = [];

@@ -43,7 +43,7 @@
 
     <livewire:chief-fragments::add-fragment
         :key="$context->id . '-add-fragment'"
-        :context-id="$context->id"
+        :context="$context"
         :parent-component-id="$this->getId()"
     />
 </div>

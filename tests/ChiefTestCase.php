@@ -26,6 +26,9 @@ use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\PageWithAssets;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
@@ -94,6 +97,10 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function tearDown(): void
     {
+        SnippetStub::resetFieldsDefinition();
+        ArticlePageResource::resetFieldsDefinition();
+        PageWithAssets::resetFieldsDefinition();
+
         // Clear out any memoized values
         Memoize::clear();
 

@@ -3,11 +3,10 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\Sites\Locales\LocalizedDefaults;
 
 trait BelongsToActiveSitesDefaults
 {
-    use LocalizedDefaults;
+    //    use LocalizedDefaults;
 
     /**
      * This method is called on an Eloquent model to initialize the localized defaults.

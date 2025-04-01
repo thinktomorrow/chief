@@ -66,7 +66,7 @@ class ContextApplication
     public function duplicate(DuplicateContext $command): void
     {
         $sourceContext = $this->contextRepository->find($command->getSourceContextId());
-        $targetContext = $this->contextRepository->create($command->getTargetModel(), $sourceContext->getSiteLocales());
+        $targetContext = $this->contextRepository->create($command->getTargetModel()->modelReference(), $sourceContext->locales);
 
         /** @var FragmentModel $fragment */
         foreach ($sourceContext->rootFragments as $index => $fragment) {
