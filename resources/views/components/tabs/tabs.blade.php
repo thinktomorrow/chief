@@ -7,6 +7,7 @@
     'showTabs' => true,
     'size' => 'xs',
     'wireIgnore' => false,
+    'actions' => [],
 ])
 
 {{--
@@ -44,60 +45,69 @@
         }}': showNav && showTabs
     }"
 >
-    <div
-        x-show="showNav"
-        @class([
-            'inline-block bg-grey-100',
-            match ($size) {
-                'xs' => 'rounded-[0.4375rem]',
-                'sm' => 'rounded-[0.5625rem]',
-                'base' => 'rounded-[0.6875rem]',
-                default => 'rounded-[0.4375rem]',
-            },
-        ])
-    >
-        <nav aria-label="Tabs" role="tablist" class="relative flex items-start justify-start border border-transparent">
-            <div
-                x-ref="tabMarker"
-                x-show="activeTab"
-                @class([
-                    'btn btn-outline-white absolute left-0 font-normal ring-0 transition-all duration-150 ease-out',
-                    match ($size) {
-                        'xs' => 'btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
-                        'sm' => 'btn-sm py-[0.3125rem] *:h-[1.125rem]',
-                        'base' => 'btn-base py-[0.4375rem] *:h-5',
-                        default => 'btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
-                    },
-                ])
+    <div x-show="showNav" class="flex items-start justify-between gap-2">
+        <div
+            @class([
+                'inline-block bg-grey-100',
+                match ($size) {
+                    'xs' => 'rounded-[0.4375rem]',
+                    'sm' => 'rounded-[0.5625rem]',
+                    'base' => 'rounded-[0.6875rem]',
+                    default => 'rounded-[0.4375rem]',
+                },
+            ])
+        >
+            <nav
+                aria-label="Tabs"
+                role="tablist"
+                class="relative flex items-start justify-start border border-transparent"
             >
-                <span data-slot="tab-marker-content"></span>
-            </div>
-
-            <template x-for="(tab, index) in tabs" :key="tab.id">
-                <button
-                    type="button"
-                    :key="tab.id"
-                    role="tab"
-                    x-on:click.prevent="showTab(tab.id)"
-                    x-html="tab.label"
-                    x-bind:aria-controls="tab.id"
-                    x-bind:aria-selected="tab.id === activeTab"
+                <div
+                    x-ref="tabMarker"
+                    x-show="activeTab"
                     @class([
-                        'btn relative font-normal shadow-none',
+                        'btn btn-outline-white absolute left-0 font-normal ring-0 transition-all duration-150 ease-out',
                         match ($size) {
-                            'xs' => 'btn-xs px-2 text-sm/[1.125rem]',
-                            'sm' => 'btn-sm py-[0.3125rem]',
-                            'base' => 'btn-base py-[0.4375rem]',
-                            default => 'btn-xs px-2 text-sm/[1.125rem]',
+                            'xs' => 'btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
+                            'sm' => 'btn-sm py-[0.3125rem] *:h-[1.125rem]',
+                            'base' => 'btn-base py-[0.4375rem] *:h-5',
+                            default => 'btn-xs px-2 text-sm/[1.125rem] *:h-[1.125rem]',
                         },
                     ])
-                    :class="{
+                >
+                    <span data-slot="tab-marker-content"></span>
+                </div>
+
+                <template x-for="(tab, index) in tabs" :key="tab.id">
+                    <button
+                        type="button"
+                        :key="tab.id"
+                        role="tab"
+                        x-on:click.prevent="showTab(tab.id)"
+                        x-html="tab.label"
+                        x-bind:aria-controls="tab.id"
+                        x-bind:aria-selected="tab.id === activeTab"
+                        @class([
+                            'btn relative font-normal shadow-none',
+                            match ($size) {
+                                'xs' => 'btn-xs px-2 text-sm/[1.125rem]',
+                                'sm' => 'btn-sm py-[0.3125rem]',
+                                'base' => 'btn-base py-[0.4375rem]',
+                                default => 'btn-xs px-2 text-sm/[1.125rem]',
+                            },
+                        ])
+                        :class="{
                         'text-grey-950': tab.id === activeTab,
                         'text-grey-700': tab.id !== activeTab,
                     }"
-                ></button>
-            </template>
-        </nav>
+                    ></button>
+                </template>
+            </nav>
+        </div>
+
+        @if ($actions)
+            {{ $actions }}
+        @endif
     </div>
 
     <div x-show="showTabs" x-ref="tabs">

@@ -14,6 +14,7 @@
             'grey' => 'dropdown-item-grey',
             'red' => 'dropdown-item-red',
             'orange' => 'dropdown-item-orange',
+            'blue' => 'dropdown-item-blue',
             'light-blue' => 'dropdown-item-light-blue',
             'green' => 'dropdown-item-green',
             default => 'dropdown-item-grey',

@@ -60,7 +60,7 @@
                     </div>
 
                     @if ($hasFallbackLocale)
-                        <div class="mt-2 flex items-start gap-1">
+                        <div data-slot="hint" class="flex items-start gap-1">
                             <p class="mt-0.5 text-sm text-grey-500">Fallback locale overschreven</p>
 
                             <x-chief::button
@@ -69,7 +69,7 @@
                                 variant="transparent"
                                 x-on:click="$dispatch('open-dialog', { 'id': 'fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}' })"
                             >
-                                <x-chief::icon.solid.information-diamond />
+                                <x-chief::icon.information-circle />
                             </x-chief::button>
                         </div>
 
