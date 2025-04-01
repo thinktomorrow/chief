@@ -1,0 +1,3 @@
+[data-slot='form-preview'] + [data-slot='form-preview'] {
+    @apply mt-3 border-t border-grey-100 pt-3;
+}

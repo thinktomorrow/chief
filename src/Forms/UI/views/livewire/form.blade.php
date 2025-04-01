@@ -5,17 +5,9 @@
         </x-chief::button>
     </x-slot>
 
-    <div class="@container">
-        <table class="w-full">
-            <tbody
-                @class(['divide-y divide-grey-100', '@lg:[&>*:not(:first-child)>td]:pt-3 @lg:[&>*:not(:last-child)>td]:pb-3'])
-            >
-                @foreach ($this->getComponents() as $childComponent)
-                    {{ $childComponent->renderPreview() }}
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+    @foreach ($this->getComponents() as $childComponent)
+        {{ $childComponent->renderPreview() }}
+    @endforeach
 
     <livewire:chief-wire::edit-form
         :key="'edit-form-'.$this->getId()"
