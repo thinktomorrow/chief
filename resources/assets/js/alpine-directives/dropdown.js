@@ -3,6 +3,7 @@ import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/d
 
 const dropdown = (config) => ({
     placement: config.placement,
+    offset: config.offset,
     init() {
         window.addEventListener('dialog-opened', (e) => {
             if (this.$el.id === e.detail.id) {
@@ -16,7 +17,7 @@ const dropdown = (config) => ({
             computePosition(reference, this.$el, {
                 placement: this.placement,
                 middleware: [
-                    offset(8), // Space between referenceEl and floatingEl
+                    offset(this.offset), // Space between referenceEl and floatingEl
                     flip(), // Flip floatingEl to the other side of the referenceEl if it overflows
                     shift({ padding: 8 }), // Shift floatingEl to the side if it overflows
                 ],

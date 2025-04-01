@@ -50,7 +50,7 @@
                         {{
                             $sidebar->attributes->merge([
                                 'role' => 'sidebar',
-                                'class' => 'w-full shrink-0 md:w-64 lg:w-80 xl:w-96 2xl:w-[26rem]',
+                                'class' => 'w-full shrink-0 md:w-80 xl:w-96 2xl:w-[26rem]',
                             ])
                         }}
                     >

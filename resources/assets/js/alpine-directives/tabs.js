@@ -9,7 +9,7 @@ const Tabs = (config) => ({
     init() {
         this.tabs = Array.from(this.$refs.tabs.children).map((node) => ({
             id: node.getAttribute('data-tab-id'),
-            label: node.getAttribute('data-tab-label'),
+            label: JSON.parse(node.getAttribute('data-tab-label')),
         }));
 
         if (!this.activeTab) {
