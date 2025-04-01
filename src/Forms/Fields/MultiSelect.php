@@ -30,7 +30,7 @@ class MultiSelect extends Component implements Field
         parent::__construct($key);
 
         $this->prepForSaving(function ($value) {
-            return $this->allowMultiple() ? $value : (is_array($value) && count($value) ? reset($value) : null);
+            return $this->allowMultiple() ? $value : (is_array($value) && count($value) ? reset($value) : $value);
         });
     }
 
