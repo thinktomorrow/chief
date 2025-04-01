@@ -1,26 +1,18 @@
 <div>
+    <div class="flex items-start justify-stretch gap-3">
+        @foreach ($this->getComponents() as $childComponent)
+            {{ $childComponent->label('')->renderPreview() }}
+        @endforeach
 
-    <div class="flex justify-start gap-2 items-center">
-
-        <div class="">
-            <table class="w-full">
-                <tbody
-                    @class(['divide-y divide-grey-100', '@lg:[&>*:not(:first-child)_td]:pt-3 @lg:[&>*:not(:last-child)_td]:pb-3'])
-                >
-                @foreach ($this->getComponents() as $childComponent)
-                    {{ $childComponent->label('')->renderPreview() }}
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-
-        <div>
-            <x-chief::button wire:click="editForm" title="Aanpassen" size="sm" variant="grey">
-                <x-chief::icon.quill-write />
-            </x-chief::button>
-        </div>
-
-
+        <x-chief::button
+            wire:click="editForm"
+            title="Aanpassen"
+            size="sm"
+            variant="grey"
+            class="mt-[0.4375rem] shrink-0"
+        >
+            <x-chief::icon.quill-write />
+        </x-chief::button>
     </div>
 
     <livewire:chief-wire::edit-form
@@ -29,5 +21,4 @@
         :form-component="$form"
         :parent-component-id="$this->getId()"
     />
-
 </div>

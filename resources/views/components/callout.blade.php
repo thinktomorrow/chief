@@ -40,7 +40,7 @@
             </p>
         @endif
 
-        <div data-slot="content" class="prose">
+        <div data-slot="content" class="prose-format prose-editor">
             {{ $slot }}
         </div>
     </div>
