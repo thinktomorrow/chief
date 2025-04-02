@@ -46,7 +46,7 @@
                                 </x-chief::form.fieldset>
                             </div>
 
-                            <div class="w-full sm:w-1/2">
+                            <div @class(['w-full', 'sm:w-1/2' => count($contexts) > 1])>
                                 <x-chief::form.fieldset rule="status">
                                     <x-chief::form.label for="status">Status</x-chief::form.label>
                                     <x-chief::form.input.select
