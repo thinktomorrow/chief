@@ -72,3 +72,8 @@ customOptions['callbacks'] = {
 
 window.Redactor(el, customOptions);
 ```
+
+### Field Tags
+
+To exclude fields to show up on a model create page, use the `not-on-model-create` tag on the field.
+The former `not-on-create` tag is used to exclude on both models and fragments.

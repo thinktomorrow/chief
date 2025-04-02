@@ -78,7 +78,7 @@ trait CreateAssistant
         $fields = Layout::make($this->resource->fields($model))
             ->model($model)
             ->getFields()
-            ->filterByNotTagged(['edit', 'not-on-model-create']);
+            ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']);
 
         $this->fieldValidator()->handle($fields, $request->all());
 

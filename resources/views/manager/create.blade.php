@@ -16,7 +16,7 @@
         <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
             @csrf
 
-            @foreach ($layout->filterByNotTagged(['edit', 'not-on-model-create'])->getComponents() as $component)
+            @foreach ($layout->filterByNotTagged(['not-on-model-create', 'not-on-create'])->getComponents() as $component)
                 {{ $component->displayAsInlineForm()->render() }}
             @endforeach
 

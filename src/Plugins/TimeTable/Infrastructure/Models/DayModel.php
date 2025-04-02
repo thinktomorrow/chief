@@ -36,10 +36,10 @@ class DayModel extends Model
         yield Card::make()->title('Uurschema (voor- en namiddag)')
             ->description('Een leeg veld geeft aan dat je gesloten bent')->items([
                 Grid::make()->columns(2)->items([
-                    Time::make('slots[0][from]')->step(1 * 60)->columnName('slots.0.from')->tag('not-on-model-create')->default('08:30'),
-                    Time::make('slots[0][until]')->step(1 * 60)->columnName('slots.0.until')->tag('not-on-model-create')->default('12:00'),
-                    Time::make('slots[1][from]')->step(1 * 60)->columnName('slots.1.from')->tag('not-on-model-create')->default('13:00'),
-                    Time::make('slots[1][until]')->step(1 * 60)->columnName('slots.1.until')->tag('not-on-model-create')->default('17:00'),
+                    Time::make('slots[0][from]')->step(1 * 60)->columnName('slots.0.from')->tag(['not-on-model-create', 'not-on-create'])->default('08:30'),
+                    Time::make('slots[0][until]')->step(1 * 60)->columnName('slots.0.until')->tag(['not-on-model-create', 'not-on-create'])->default('12:00'),
+                    Time::make('slots[1][from]')->step(1 * 60)->columnName('slots.1.from')->tag(['not-on-model-create', 'not-on-create'])->default('13:00'),
+                    Time::make('slots[1][until]')->step(1 * 60)->columnName('slots.1.until')->tag(['not-on-model-create', 'not-on-create'])->default('17:00'),
                 ]),
 
                 Checkbox::make('closed')
@@ -52,7 +52,7 @@ class DayModel extends Model
 
         yield Text::make('content')
             ->setFieldNameTemplate('content.:locale')
-            ->tag('not-on-model-create')
+            ->tag(['not-on-model-create', 'not-on-create'])
             ->label('Eigen tekst')
             ->value($model->data['content'] ?? [])
             ->locales()
