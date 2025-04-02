@@ -94,7 +94,7 @@
 
                 <livewire:chief-fragments::add-fragment
                     :key="$fragment->getId() . '-add-fragment'"
-                    :context-id="$context->id"
+                    :context="$context"
                     :parent-component-id="$this->getId()"
                 />
             </x-chief::form.fieldset>
