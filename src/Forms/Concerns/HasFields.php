@@ -20,6 +20,16 @@ trait HasFields
 
     public function getComponentsWithoutForms(): Collection
     {
-        return collect($this->components)->filter(fn ($component) => ! $component instanceof Form);
+        $components = collect();
+
+        foreach ($this->components as $component) {
+            if ($component instanceof Form) {
+                $components->push(...$component->getComponents());
+            } else {
+                $components->push($component);
+            }
+        }
+
+        return $components;
     }
 }

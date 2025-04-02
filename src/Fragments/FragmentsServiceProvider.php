@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\UI\Components\Fragments;
-use Thinktomorrow\Chief\Fragments\UI\Components\SidebarFragment;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\AddContext;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\AddFragment;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
