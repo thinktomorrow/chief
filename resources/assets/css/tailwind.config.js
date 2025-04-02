@@ -111,7 +111,7 @@ module.exports = {
             animation: {
                 'slide-in-nav': 'slideInNavigation 400ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in': 'popIn 200ms cubic-bezier(0.83, 0, 0.17, 1)',
-                'pop-in-tag': 'popIn 100ms cubic-bezier(0.83, 0, 0.17, 1)',
+                'pop-in-badge': 'popIn 100ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'pop-in-out': 'popInOut 2000ms cubic-bezier(0.83, 0, 0.17, 1)',
                 'dialog-pop-in': 'dialogPopIn 100ms ease-out',
                 'dialog-fade-in': 'dialogFadeIn 100ms ease-out',
