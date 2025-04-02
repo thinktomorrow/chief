@@ -3,7 +3,7 @@
         @if ($addingSites)
             @include('chief-sites::_partials.adding-sites')
         @else
-            @include('chief-sites::site-links..editing-sites')
+            @include('chief-sites::site-links.editing-sites')
         @endif
     @endif
 </x-chief::dialog.drawer>

@@ -46,7 +46,7 @@
                                 </x-chief::form.fieldset>
                             </div>
 
-                            <div class="w-full lg:w-1/2">
+                            <div class="w-full sm:w-1/2">
                                 <x-chief::form.fieldset rule="status">
                                     <x-chief::form.label for="status">Status</x-chief::form.label>
                                     <x-chief::form.input.select
@@ -66,7 +66,7 @@
                             </div>
 
                             @if (count($contexts) > 1)
-                                <div class="w-full lg:w-1/2">
+                                <div class="w-full sm:w-1/2">
                                     <x-chief::form.fieldset rule="context">
                                         <x-chief::form.label for="context">Context</x-chief::form.label>
                                         <x-chief::form.input.select
