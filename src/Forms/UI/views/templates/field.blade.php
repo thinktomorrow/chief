@@ -22,14 +22,13 @@
 
     $wireIgnoredTabs = $component instanceof \Thinktomorrow\Chief\Forms\Fields\File;
 
-
     $scopedLocales = [];
 
-    foreach($getScopedLocales() as $_locale) {
+    foreach ($getScopedLocales() as $_locale) {
         $scopedLocales[$_locale] = \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($_locale)->shortName;
     }
 
-    foreach($getDormantLocales() as $_locale) {
+    foreach ($getDormantLocales() as $_locale) {
         $scopedLocales[$_locale] = '<span class="text-grey-300">' . \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($_locale)->shortName . '</span>';
     }
 @endphp
@@ -58,9 +57,7 @@
     @else
         <x-chief::tabs :should-listen-for-external-tab="true" :wire-ignore="$wireIgnoredTabs">
             @foreach ($scopedLocales as $locale => $localeName)
-
-                <x-chief::tabs.tab tab-id="{{ $locale }}"
-                                   tab-label="{!! $localeName !!}">
+                <x-chief::tabs.tab tab-id="{{ $locale }}" tab-label="{!! $localeName !!}">
                     <div data-slot="control">
                         @include($getView(), ['component' => $component, 'locale' => $locale])
                         @include('chief-form::fields._partials.charactercount')
@@ -71,10 +68,11 @@
                             $fallbackLocaleName = \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($fallbackLocale)->shortName;
                         @endphp
 
-                        @if(!$hasOwnLocaleValue($locale))
+                        @if (! $hasOwnLocaleValue($locale))
                             <div data-slot="hint" class="flex items-start gap-1">
-                                <p class="mt-0.5 text-sm text-grey-500">De {{ $fallbackLocaleName }} versie
-                                    wordt getoond op de {{ $localeName }} site</p>
+                                <p class="mt-0.5 text-sm text-grey-500">
+                                    De {{ $fallbackLocaleName }} versie wordt getoond op de {{ $localeName }} site
+                                </p>
 
                                 <x-chief::button
                                     type="button"
@@ -103,15 +101,15 @@
                             </x-chief::dialog.dropdown>
                         @else
                             <div data-slot="hint" class="flex items-start gap-1">
-                                <p class="mt-0.5 text-sm text-grey-500">Verwijder de tekst om opnieuw
-                                    de {{ $fallbackLocaleName }} versie te gebruiken.</p>
+                                <p class="mt-0.5 text-sm text-grey-500">
+                                    Verwijder de tekst om opnieuw de {{ $fallbackLocaleName }} versie te gebruiken.
+                                </p>
                             </div>
                         @endif
                     @endif
                 </x-chief::tabs.tab>
             @endforeach
         </x-chief::tabs>
-
     @endif
 
     @if ($hasLocales())
