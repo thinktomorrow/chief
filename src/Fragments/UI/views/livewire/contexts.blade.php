@@ -23,26 +23,27 @@
         </x-chief::window.tabs>
     </x-slot>
 
-    @foreach ($contexts as $context)
-        <div wire:key="context-tab-content-{{ $context->id }}" class="-mb-4">
-            @if ($context->id === $activeContextId)
+    <div class="-mb-4">
+        @foreach ($contexts as $context)
+            <div wire:key="context-tab-content-{{ $context->id }}">
+                @if ($context->id === $activeContextId)
+                    <x-slot name="badges">
+                        @foreach ($context->locales as $locale)
+                            <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
+                        @endforeach
+                    </x-slot>
 
-                <x-slot name="badges">
-                    @foreach ($context->locales as $locale)
-                        <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
-                    @endforeach
-                </x-slot>
+                    <x-slot name="actions">
+                        <x-chief::button wire:click="editContext({{ $context->id }})" variant="grey" size="sm">
+                            <x-chief::icon.settings />
+                        </x-chief::button>
+                    </x-slot>
 
-                <x-slot name="actions">
-                    <x-chief::button wire:click="editContext({{ $context->id }})" variant="grey" size="sm">
-                        <x-chief::icon.settings />
-                    </x-chief::button>
-                </x-slot>
-
-                <livewire:chief-fragments::context :key="$context->id" :context="$context" />
-            @endif
-        </div>
-    @endforeach
+                    <livewire:chief-fragments::context :key="$context->id" :context="$context" />
+                @endif
+            </div>
+        @endforeach
+    </div>
 
     <livewire:chief-wire::add-context :model-reference="$modelReference" />
     <livewire:chief-wire::edit-context :model-reference="$modelReference" />
