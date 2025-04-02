@@ -18,10 +18,8 @@
         </div>
     </x-chief::window>
 
-    <div>
-        <x-chief::button href="{{ route('chief.back.logout') }}" title="Uitloggen">
-            <x-chief::icon.logout />
-            <span>Uitloggen</span>
-        </x-chief::button>
-    </div>
+    <x-chief::button data-slot="window" href="{{ route('chief.back.logout') }}" title="Uitloggen">
+        <x-chief::icon.logout />
+        <span>Uitloggen</span>
+    </x-chief::button>
 </x-chief::page.template>
