@@ -14,18 +14,20 @@ trait LocalizedFieldDefaults
 
     protected array $scopedLocales = [];
 
+    protected array $dormantLocales = [];
+
     public function locales(?array $locales = null): static
     {
         $this->locales = ($locales === null)
             ? ChiefLocales::locales()
             : $locales;
 
-        $this->whenModelIsSet(function ($model, $field) use ($locales) {
+        $this->whenModelIsSet(function ($model, $field) {
 
             // TODO: if model is fragment, set the locales of the fragment context
             // And set all locales to any locales that are set on the fragment context
 
-            if ($model instanceof BelongsToSites && ($locales === null)) {
+            if ($model instanceof BelongsToSites && empty($this->scopedLocales)) {
                 $field->setScopedLocales(ChiefLocales::verifiedLocales($model->getSiteLocales()));
             }
         });
@@ -45,7 +47,12 @@ trait LocalizedFieldDefaults
 
     public function getScopedLocales(): array
     {
-        return $this->scopedLocales;
+        if (empty($this->scopedLocales)) {
+            return $this->getLocales();
+        }
+
+        // Use the sequence of locales as defined in the sites config
+        return array_values(array_filter(ChiefLocales::locales(), fn ($locale) => in_array($locale, $this->scopedLocales)));
     }
 
     public function setScopedLocales(array $scopedLocales): static
@@ -57,15 +64,26 @@ trait LocalizedFieldDefaults
 
     public function getDormantLocales(): array
     {
-        return array_values(array_diff($this->locales, $this->scopedLocales));
+        return $this->dormantLocales;
+    }
+
+    public function setDormantLocales(array $dormantLocales): static
+    {
+        $this->dormantLocales = $dormantLocales;
+
+        return $this;
     }
 
     /**
      * Get the fallback locale for the given locale.
+     * Prefer the scope if any
      */
     public function getFallbackLocale(string $locale): ?string
     {
-        $fallbackLocales = array_filter(ChiefLocales::fallbackLocales(), fn ($fallbackLocale) => in_array($fallbackLocale, $this->getLocales()));
+        // Account for shared fragments which might have dormant locales
+        $locales = array_merge($this->getScopedLocales(), $this->getDormantLocales());
+
+        $fallbackLocales = array_filter(ChiefLocales::fallbackLocales(), fn ($fallbackLocale) => in_array($fallbackLocale, $locales));
 
         return $fallbackLocales[$locale] ?? null;
     }

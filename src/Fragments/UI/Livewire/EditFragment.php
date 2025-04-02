@@ -15,6 +15,8 @@ use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragment;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithNullifyEmptyValues;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class EditFragment extends Component
 {
@@ -22,6 +24,7 @@ class EditFragment extends Component
     use InteractsWithFields;
     use ShowsAsDialog;
     use WithFragments;
+    use WithNullifyEmptyValues;
 
     // parent livewire component id
     public string $parentComponentId;
@@ -90,11 +93,17 @@ class EditFragment extends Component
 
     public function getFields(): Collection
     {
-        $forms = Layout::make($this->fragment->fields)
+        $layout = Layout::make($this->fragment->fields)
             ->model($this->fragment->getFragmentModel())
-            ->getComponents();
+            ->setScopedLocales($this->context->locales);
 
-        return collect($forms)->map(fn ($form) => $form->getComponents())->flatten();
+        if ($this->fragment->isShared) {
+            $layout->setDormantLocales(
+                array_values(array_diff(ChiefLocales::locales(), $this->context->locales))
+            );
+        }
+
+        return collect($layout->getComponents())->map(fn ($form) => $form->getComponents())->flatten();
     }
 
     public function deleteFragment(): void
@@ -145,11 +154,18 @@ class EditFragment extends Component
 
     public function save()
     {
+        /**
+         * Nullify empty string values so that they are stored as null in the database and
+         * not as empty strings. This is important for the fallback locale mechanism.
+         */
+        $form = $this->recursiveNullifyEmptyValues($this->form);
+
         // Validation is done via the update command
         app(UpdateFragment::class)->handle(
             $this->fragment->contextId,
             $this->fragment->fragmentId,
-            $this->form,
+            $this->context->locales,
+            $form,
             [],
         );
 

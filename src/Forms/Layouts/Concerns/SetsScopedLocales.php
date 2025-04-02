@@ -12,4 +12,13 @@ trait SetsScopedLocales
 
         return $this;
     }
+
+    public function setDormantLocales(array $locales): self
+    {
+        foreach ($this->getAllFields() as $field) {
+            $field->setDormantLocales($locales);
+        }
+
+        return $this;
+    }
 }
