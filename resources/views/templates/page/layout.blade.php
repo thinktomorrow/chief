@@ -47,7 +47,6 @@
         </main>
 
         @include('chief::templates.page._partials.notifications')
-        @include('chief::templates.page._partials.sidebar')
         @include('chief::templates.page._partials.symbols')
         @include('chief::templates.page._partials.refresh-modal')
 

@@ -22,7 +22,7 @@
             </x-chief::button>
 
             <div class="mt-[0.1875rem] flex grow flex-wrap items-start gap-1.5">
-                <h3 class="text-base/6 font-medium text-grey-800">
+                <h3 class="font-display text-lg/6 font-medium text-grey-950">
                     {{ ucfirst($fragment->label) }}
                 </h3>
 

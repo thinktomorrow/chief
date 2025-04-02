@@ -23,7 +23,7 @@
     >
         <div
             @class([
-                'text-nowrap px-2 py-1 text-base/5 font-medium',
+                'text-nowrap px-2 py-1 font-display text-base/5 font-medium',
                 'text-grey-950' => $active,
                 'rounded-[0.625rem] text-grey-500 group-hover:bg-grey-100 group-hover:text-grey-700' => ! $active,
             ])
