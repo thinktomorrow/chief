@@ -1,6 +1,6 @@
 <div
     data-slot="form-group"
-    {{ $attributes->merge($getCustomAttributes())->class(['rounded-lg p-6', $getLayoutType()->cardClass()]) }}
+    {{ $attributes->merge($getCustomAttributes())->class(['rounded-lg p-6', $getLayoutVariant()->cardClass()]) }}
 >
     <div x-data="{ open: {{ $isCollapsed() ? 'false' : 'true' }} }" class="space-y-6">
         <div class="flex items-start justify-between">

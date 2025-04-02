@@ -57,9 +57,7 @@ class FragmentDto implements Wireable
 
     private static function composeFields(Fragment $fragment): Collection
     {
-        return collect(Layout::make($fragment->fields($fragment))
-            ->getComponents())->map(fn ($form) => $form->getComponents())
-            ->flatten();
+        return Layout::make($fragment->fields($fragment))->getComponentsWithoutForms();
     }
 
     private static function composeSharedFragmentDtos(string $fragmentId)

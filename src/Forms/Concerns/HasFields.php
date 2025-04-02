@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Forms\Concerns;
 
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 
 trait HasFields
 {
@@ -14,5 +16,10 @@ trait HasFields
     public function getAllFields(): Fields
     {
         return Fields::make($this->components);
+    }
+
+    public function getComponentsWithoutForms(): Collection
+    {
+        return collect($this->components)->filter(fn ($component) => ! $component instanceof Form);
     }
 }

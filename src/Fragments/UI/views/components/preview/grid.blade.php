@@ -18,7 +18,7 @@
         @forelse ($items as $fragment)
             <x-chief-fragments::preview.column width="{{ '1/' . $columns }}">
                 <x-chief-fragments::preview.card>
-                    {!! $fragment->renderAdminFragment($model, $loop, ['nested' => true]) !!}
+                    {!! $fragment->with(['nested' => true])->renderInAdmin() !!}
                 </x-chief-fragments::preview.card>
             </x-chief-fragments::preview.column>
         @empty
