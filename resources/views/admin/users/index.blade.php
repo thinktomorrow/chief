@@ -15,25 +15,31 @@
             @foreach ($users as $user)
                 <div class="flex items-start justify-between py-4">
                     <div class="space-y-1">
-                        <div class="space-x-1">
+                        <div class="flex items-start gap-2">
                             @if (! chiefAdmin()->can('update-user') || ($user->hasRole('developer') && ! chiefAdmin()->hasRole('developer')))
-                                <span class="body-dark font-medium">
+                                <span class="body-dark font-medium leading-5">
                                     {{ ucfirst($user->firstname) }} {{ ucfirst($user->lastname) }}
                                 </span>
                             @else
                                 <a
                                     href="{{ route('chief.back.users.edit', $user->id) }}"
                                     title="Aanpassen"
-                                    class="body-dark font-medium"
+                                    class="body-dark font-medium leading-5"
                                 >
                                     {{ ucfirst($user->firstname) }} {{ ucfirst($user->lastname) }}
                                 </a>
                             @endif
 
-                            {!! $user->present()->enabledAsLabel() !!}
+                            @php
+                                $badge = $user->present()->getStateBadge();
+                            @endphp
+
+                            <x-chief::badge variant="{{ $badge['variant'] }}" size="xs">
+                                {{ $badge['label'] }}
+                            </x-chief::badge>
                         </div>
 
-                        <div class="text-grey-400">
+                        <div class="text-sm text-grey-400">
                             {{ ucfirst(implode(', ', $user->roleNames())) }}
                         </div>
                     </div>
