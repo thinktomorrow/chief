@@ -26,7 +26,6 @@
     @foreach ($menus as $menu)
         <div wire:key="menu-tab-content-{{ $menu->id }}">
             @if ($menu->id === $activeMenuId)
-
                 <x-slot name="badges">
                     @foreach ($menu->locales as $locale)
                         <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>

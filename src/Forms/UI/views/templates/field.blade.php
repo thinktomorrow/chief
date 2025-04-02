@@ -80,11 +80,13 @@
                                     type="button"
                                     size="xs"
                                     variant="transparent"
+                                    tabindex="-1"
                                     x-on:click="$dispatch('open-dialog', { 'id': 'fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}' })"
                                 >
                                     <x-chief::icon.information-circle />
                                 </x-chief::button>
                             </div>
+                        </div>
 
                             <x-chief::dialog.dropdown
                                 id="fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}"

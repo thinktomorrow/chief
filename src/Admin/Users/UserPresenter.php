@@ -18,20 +18,32 @@ class UserPresenter
         $this->user = $user;
     }
 
-    public function enabledAsLabel(): string
+    public function getStateBadge(): array
     {
         // Avoid showing enabled state if there is an invitation pending
         if ($this->user->invitation->last()) {
             $state = $this->user->invitation->last()->getState(InvitationState::KEY);
             if ($state == InvitationState::pending) {
-                return '<span class="label label-xs label-info">Uitgenodigd</span>';
+                return [
+                    'label' => 'Uitgenodigd',
+                    'variant' => 'blue',
+                ];
             } elseif ($state == InvitationState::denied) {
-                return '<span class="label label-xs label-error">Geblokkeerd</span>';
+                return [
+                    'label' => 'Geblokkeerd',
+                    'variant' => 'red',
+                ];
             }
         }
 
         return $this->user->isEnabled()
-            ? '<span class="label label-xs label-success">Actief</span>'
-            : '<span class="label label-xs label-error">Geblokkeerd</span>';
+            ? [
+                'label' => 'Actief',
+                'variant' => 'green',
+            ]
+            : [
+                'label' => 'Geblokkeerd',
+                'variant' => 'red',
+            ];
     }
 }

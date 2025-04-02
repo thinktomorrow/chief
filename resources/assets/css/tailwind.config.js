@@ -9,6 +9,7 @@ module.exports = {
         'src/Assets/App/resources/**/*.blade.php',
         'src/Forms/UI/views/**/*.blade.php',
         'src/Fragments/UI/views/**/*.blade.php',
+        'src/Menu/UI/views/**/*.blade.php',
         'src/Plugins/**/resources/**/*.blade.php',
         'src/Plugins/HotSpots/views/**/*.blade.php',
         'src/Sites/UI/views/**/*.blade.php',

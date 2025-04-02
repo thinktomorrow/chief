@@ -6,8 +6,14 @@
                 $user->fullname
             ]"
         >
-            <x-slot name="actions">
-                {!! $user->present()->enabledAsLabel() !!}
+            <x-slot name="actions" class="items-center">
+                @php
+                    $badge = $user->present()->getStateBadge();
+                @endphp
+
+                <x-chief::badge variant="{{ $badge['variant'] }}" size="sm">
+                    {{ $badge['label'] }}
+                </x-chief::badge>
 
                 @if ($user->isEnabled())
                     <x-chief::button form="updateForm" type="submit" variant="blue">

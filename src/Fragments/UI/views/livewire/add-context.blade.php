@@ -1,6 +1,5 @@
 <x-chief::dialog.modal wired size="sm" title="Voeg een paginaopbouw toe">
     @if ($isOpen)
-
         {{-- TODO: show if creating second context --}}
         <x-chief::callout data-slot="form-group" variant="blue" title="Wat is een paginaopbouw?">
             <x-slot name="icon">
@@ -27,13 +26,18 @@
         </x-chief::form.fieldset>
 
         <x-chief::form.fieldset rule="form.locales">
-            <x-chief::form.label for="locales">Welke talen wens je te gebruiken in deze fragmenten?
+            <x-chief::form.label for="locales">
+                Welke talen wens je te gebruiken in deze fragmenten?
             </x-chief::form.label>
 
             <x-chief::multiselect
                 wire:model="form.locales"
                 :multiple="true"
                 :options="$this->getAvailableLocales()"
+                x-on:click="(e) => {
+                    // Scroll to bottom of modal content so the multiselect dropdown is fully visible
+                    e.target.closest(`[data-slot='content']`).scrollTo({top:9999, behavior: 'smooth'})
+                }"
             />
         </x-chief::form.fieldset>
 

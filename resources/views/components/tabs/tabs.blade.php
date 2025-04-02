@@ -83,6 +83,7 @@
                         type="button"
                         :key="tab.id"
                         role="tab"
+                        tabindex="-1"
                         x-on:click.prevent="showTab(tab.id)"
                         x-html="tab.label"
                         x-bind:aria-controls="tab.id"
