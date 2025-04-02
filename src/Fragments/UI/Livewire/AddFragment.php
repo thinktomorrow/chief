@@ -46,6 +46,12 @@ class AddFragment extends Component
         $this->insertAfterOrder = $values['order'];
 
         $this->isOpen = true;
+
+        $this->dispatch('form-dialog-opened', ...[
+            'componentId' => $this->getId(),
+            'parentComponentId' => $this->parentComponentId,
+            'contextId' => $this->context->id,
+        ]);
     }
 
     public function close()

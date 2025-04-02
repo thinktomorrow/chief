@@ -65,13 +65,6 @@ class EditFragment extends Component
          * From then on we can use the form object to access the values
          */
         $this->injectFormValues($this->getFields());
-
-        $this->dispatch('form-dialog-opened', ...[
-            'componentId' => $this->getId(),
-            'parentComponentId' => $this->parentComponentId,
-            'contextId' => $this->fragment->contextId,
-            'fragmentId' => $this->fragment->fragmentId,
-        ]);
     }
 
     private function composeFragmentDto(string $fragmentId): FragmentDto

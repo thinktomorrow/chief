@@ -60,8 +60,13 @@ document.addEventListener('form-dialog-opened', (event) => {
         loadRedactorInstances(dialogEl);
     }, 0);
 });
+```
 
-// Add following snippet to the redactor options in your project editor file (resources/views/vendor/chief/editors/redactor/editor.blade.php) to allow sync between redactor content and livewire wire:model.
+Add following snippet to the redactor options in your project editor file (
+resources/views/vendor/chief/editors/redactor/editor.blade.php) to allow sync between redactor content and livewire
+wire:model.
+
+```php
 customOptions['callbacks'] = {
     changed: function(e) {
         let content = this.source.getCode();
@@ -73,7 +78,7 @@ customOptions['callbacks'] = {
 window.Redactor(el, customOptions);
 ```
 
-### Field Tags
+### Replace Field Tag not-on-create with not-on-model-create
 
 To exclude fields to show up on a model create page, use the `not-on-model-create` tag on the field.
 The former `not-on-create` tag is used to exclude on both models and fragments.

@@ -30,6 +30,12 @@ trait AddsNewFragments
         $this->injectFormValues($this->getFields());
 
         $this->showCreate = true;
+
+        $this->dispatch('form-dialog-opened', ...[
+            'componentId' => $this->getId(),
+            'parentComponentId' => $this->parentComponentId,
+            'contextId' => $this->context->id,
+        ]);
     }
 
     public function getFields(): Collection
