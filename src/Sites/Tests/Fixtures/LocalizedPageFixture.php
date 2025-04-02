@@ -22,7 +22,7 @@ class LocalizedPageFixture extends Model implements Page
     {
         Schema::create('localized_pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->json('sites')->nullable();
+            $table->json('locales')->nullable();
             $table->json('values')->nullable(); // dynamic attributes
             $table->timestamps();
         });

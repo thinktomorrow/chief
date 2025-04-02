@@ -21,6 +21,17 @@
     }
 
     $wireIgnoredTabs = $component instanceof \Thinktomorrow\Chief\Forms\Fields\File;
+
+
+    $scopedLocales = [];
+
+    foreach($getScopedLocales() as $_locale) {
+        $scopedLocales[$_locale] = \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($_locale)->shortName;
+    }
+
+    foreach($getDormantLocales() as $_locale) {
+        $scopedLocales[$_locale] = '<span class="text-grey-300">' . \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($_locale)->shortName . '</span>';
+    }
 @endphp
 
 <x-chief::form.fieldset :attributes="$attributes">
@@ -46,66 +57,62 @@
         @endforeach
     @else
         <x-chief::tabs :should-listen-for-external-tab="true" :wire-ignore="$wireIgnoredTabs">
-            {{-- TODO: add getDormantLocales() when requested... --}}
-            @foreach ($getScopedLocales() as $locale)
-                @php
-                    $fallbackLocale = 'EN';
-                    $hasFallbackLocale = $loop->first;
-                    $activeFallbackLocale = false;
-                @endphp
+            @foreach ($scopedLocales as $locale => $localeName)
 
-                <x-chief::tabs.tab tab-id="{{ $locale }}">
+                <x-chief::tabs.tab tab-id="{{ $locale }}"
+                                   tab-label="{!! $localeName !!}">
                     <div data-slot="control">
                         @include($getView(), ['component' => $component, 'locale' => $locale])
                         @include('chief-form::fields._partials.charactercount')
                     </div>
 
-                    @if ($hasFallbackLocale)
-                        <div data-slot="hint" class="flex items-start gap-1">
-                            <p class="mt-0.5 text-sm text-grey-500">Fallback locale overschreven</p>
+                    @if ($fallbackLocale = $getFallbackLocale($locale))
+                        @php
+                            $fallbackLocaleName = \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($fallbackLocale)->shortName;
+                        @endphp
 
-                            <x-chief::button
-                                type="button"
-                                size="xs"
-                                variant="transparent"
-                                tabindex="-1"
-                                x-on:click="$dispatch('open-dialog', { 'id': 'fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}' })"
-                            >
-                                <x-chief::icon.information-circle />
-                            </x-chief::button>
+                        @if(!$hasOwnLocaleValue($locale))
+                            <div data-slot="hint" class="flex items-start gap-1">
+                                <p class="mt-0.5 text-sm text-grey-500">De {{ $fallbackLocaleName }} versie
+                                    wordt getoond op de {{ $localeName }} site</p>
+
+                                <x-chief::button
+                                    type="button"
+                                    size="xs"
+                                    variant="transparent"
+                                    tabindex="-1"
+                                    x-on:click="$dispatch('open-dialog', { 'id': 'fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}' })"
+                                >
+                                    <x-chief::icon.information-circle />
+                                </x-chief::button>
+                            </div>
                         </div>
 
-                        <x-chief::dialog.dropdown
-                            id="fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}"
-                            :offset="4"
-                            placement="bottom-center"
-                        >
-                            <div class="max-w-sm space-y-3 px-3 py-1.5">
-                                <div class="space-y-1">
-                                    <p class="body-dark text-sm font-medium">Wat is een fallback locale?</p>
-
-                                    <p class="text-sm text-grey-500">
-                                        Een fallback locale is een locale die gebruikt wordt als de huidige locale niet
-                                        ingevuld is.
-                                    </p>
+                            <x-chief::dialog.dropdown
+                                id="fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}"
+                                :offset="4"
+                                placement="bottom-center"
+                            >
+                                <div class="max-w-sm space-y-3 px-3 py-1.5">
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-grey-500">
+                                            Een leeg veld betekent dat de {{ $fallbackLocaleName }} versie wordt
+                                            getoond. Vul hier iets in om een eigen {{ $localeName }} versie te tonen.
+                                        </p>
+                                    </div>
                                 </div>
-
-                                <x-chief::callout size="sm" variant="grey" title="Fallback locale resetten">
-                                    <p class="text-sm text-grey-500">
-                                        Je hebt de fallback locale van deze locale overschreven. Je kunt deze
-                                        terugzetten naar de fallback locale als je wil.
-                                    </p>
-
-                                    <x-chief::button type="button" size="sm" variant="outline-white" class="mt-2">
-                                        Gebruik fallback locale
-                                    </x-chief::button>
-                                </x-chief::callout>
+                            </x-chief::dialog.dropdown>
+                        @else
+                            <div data-slot="hint" class="flex items-start gap-1">
+                                <p class="mt-0.5 text-sm text-grey-500">Verwijder de tekst om opnieuw
+                                    de {{ $fallbackLocaleName }} versie te gebruiken.</p>
                             </div>
-                        </x-chief::dialog.dropdown>
+                        @endif
                     @endif
                 </x-chief::tabs.tab>
             @endforeach
         </x-chief::tabs>
+
     @endif
 
     @if ($hasLocales())

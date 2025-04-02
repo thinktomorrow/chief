@@ -3,11 +3,10 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
+use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 trait BelongsToSitesDefaults
 {
-    //    use LocalizedDefaults;
-
     /**
      * This method is called on an Eloquent model to initialize the localized defaults.
      */
@@ -18,7 +17,7 @@ trait BelongsToSitesDefaults
 
     public function getSiteLocales(): array
     {
-        return $this->locales ?? [];
+        return ($this->locales && ! empty($this->locales)) ? $this->locales : ChiefLocales::locales();
     }
 
     public function setSiteLocales(array $locales): void

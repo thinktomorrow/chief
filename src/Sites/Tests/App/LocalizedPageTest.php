@@ -14,6 +14,12 @@ class LocalizedPageTest extends ChiefTestCase
     {
         parent::setUp();
 
+        config()->set('chief.sites', [
+            ['locale' => 'nl', 'fallback_locale' => null, 'primary' => true], // First is primary
+            ['locale' => 'fr', 'fallback_locale' => 'nl'],
+            ['locale' => 'en', 'fallback_locale' => 'fr'],
+        ]);
+
         LocalizedPageFixture::migrateUp();
 
         $this->model = new LocalizedPageFixture;
@@ -27,7 +33,17 @@ class LocalizedPageTest extends ChiefTestCase
         $this->model->fresh();
 
         $this->assertEquals(['nl', 'en'], $this->model->getSiteLocales());
-        $this->assertEquals(['nl', 'en'], $this->model->getLocales());
+    }
+
+    public function test_it_has_all_site_locales_when_no_locales_are_present(): void
+    {
+        $this->model->setSiteLocales([]);
+        $this->model->save();
+
+        $this->model->fresh();
+
+        $this->assertEquals(['nl', 'fr', 'en'], $this->model->getSiteLocales());
+
     }
 
     public function test_it_can_get_localized_value()

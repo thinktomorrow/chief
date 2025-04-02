@@ -44,6 +44,8 @@ interface LocalizedField
      */
     public function getDormantLocales(): array;
 
+    public function setDormantLocales(array $dormantLocales): static;
+
     /**
      * Get the active fallback locale for the given locale.
      */
