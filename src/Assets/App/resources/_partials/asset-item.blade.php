@@ -9,7 +9,7 @@
 <div class="space-y-3">
     <div
         @class([
-            'group relative aspect-square overflow-hidden rounded-lg bg-grey-100 p-[1px]',
+            'group relative aspect-square overflow-hidden rounded-xl bg-grey-100 p-[1px]',
             'cursor-pointer hover:ring-1 hover:ring-inset' => ! $disabled,
             'hover:ring-grey-400' => ! $active,
             'shadow-md ring-1 ring-inset ring-primary-500' => $active,
@@ -19,13 +19,13 @@
             <img
                 src="{{ $asset->getUrl('thumb') }}"
                 alt="{{ $asset->getFileName() }}"
-                class="h-full w-full rounded-lg object-contain"
+                class="h-full w-full rounded-xl object-contain"
             />
         @elseif ($asset instanceof ExternalAssetContract)
             <img
                 src="{{ $asset->getPreviewUrl('thumb') }}"
                 alt="{{ $asset->getFileName() }}"
-                class="h-full w-full rounded-lg object-contain"
+                class="h-full w-full rounded-xl object-contain"
             />
 
             <div class="absolute bottom-0 left-0 right-0 flex items-center justify-center p-1">
@@ -42,10 +42,11 @@
 
         @if ($withActions)
             <div
-                class="pointer-events-none absolute inset-0 hidden flex-wrap items-center justify-center gap-1.5 bg-black/25 p-1 group-hover:flex"
+                class="pointer-events-none absolute inset-0 hidden flex-wrap items-center justify-center gap-1 bg-black/25 p-1 group-hover:flex"
             >
                 <x-chief::button
                     variant="grey"
+                    size="sm"
                     aria-label="Bewerk bestand"
                     wire:click="openAssetEdit('{{ $asset->id }}')"
                     class="pointer-events-auto"
@@ -55,6 +56,7 @@
 
                 <x-chief::button
                     variant="grey"
+                    size="sm"
                     aria-label="Verwijder bestand"
                     wire:click="deleteAsset('{{ $asset->id }}')"
                     class="pointer-events-auto"
@@ -65,6 +67,7 @@
                 @if ($asset instanceof ExternalAssetContract)
                     <x-chief::button
                         variant="grey"
+                        size="sm"
                         href="{{ $asset->getUrl() }}"
                         title="Bekijk op platform"
                         target="_blank"
@@ -74,7 +77,7 @@
                         <x-chief::icon.link-square />
                     </x-chief::button>
                 @else
-                    <x-chief::button variant="grey" href="{{ $asset->getUrl() }}" title="Download" download>
+                    <x-chief::button size="sm" variant="grey" href="{{ $asset->getUrl() }}" title="Download" download>
                         <x-chief::icon.download />
                     </x-chief::button>
                 @endif
