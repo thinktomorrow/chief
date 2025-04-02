@@ -11,11 +11,13 @@
 
 <x-chief::dialog :wired="isset($wired)">
     <div {{ $attributes->class(['fixed inset-0 z-50']) }}>
-        <div class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-primary-100/10 backdrop-blur-[2px]"></div>
+        <div
+            x-on:click.stop="close()"
+            class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-primary-100/10 backdrop-blur-[2px]"
+        ></div>
 
         <div class="pointer-events-none relative flex h-full w-full animate-slide-in-nav justify-end p-2">
             <div
-                x-on:click.outside.stop="close()"
                 @class([
                     'pointer-events-auto flex w-full flex-col rounded-xl bg-white/95 shadow-md ring-1 ring-grey-100 backdrop-blur-md',
                     'xs:w-sm' => $size === 'sm',
