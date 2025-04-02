@@ -86,7 +86,6 @@
                                     <x-chief::icon.information-circle />
                                 </x-chief::button>
                             </div>
-                        </div>
 
                             <x-chief::dialog.dropdown
                                 id="fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}"

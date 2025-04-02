@@ -18,6 +18,7 @@ use Thinktomorrow\Chief\App\Console\ImportRedirects;
 use Thinktomorrow\Chief\App\Console\ProjectMenuCommand;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\Plugins\Upgrade\Commands\UpgradeFrom9To10Command;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
@@ -52,6 +53,7 @@ class ConsoleServiceProvider extends ServiceProvider
             'command.chief:view',
             'command.chief:project-menu',
             'command.chief:import-redirects',
+            'command.chief:upgrade-from-9-to-10',
         ]);
 
         // Bind our commands to the container
@@ -68,6 +70,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->app->bind('command.chief:developer', CreateDeveloper::class);
         $this->app->bind('command.chief:project-menu', ProjectMenuCommand::class);
         $this->app->bind('command.chief:import-redirects', ImportRedirects::class);
+        $this->app->bind('command.chief:upgrade-from-9-to-10', UpgradeFrom9To10Command::class);
     }
 
     public function register()
