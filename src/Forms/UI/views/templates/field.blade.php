@@ -46,7 +46,7 @@
         @endforeach
     @else
         <x-chief::tabs :should-listen-for-external-tab="true" :wire-ignore="$wireIgnoredTabs">
-{{--     TODO: add getDormantLocales() when requested...       --}}
+            {{-- TODO: add getDormantLocales() when requested... --}}
             @foreach ($getScopedLocales() as $locale)
                 @php
                     $fallbackLocale = 'EN';
@@ -68,6 +68,7 @@
                                 type="button"
                                 size="xs"
                                 variant="transparent"
+                                tabindex="-1"
                                 x-on:click="$dispatch('open-dialog', { 'id': 'fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}' })"
                             >
                                 <x-chief::icon.information-circle />

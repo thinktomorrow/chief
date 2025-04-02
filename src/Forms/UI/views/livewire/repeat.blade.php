@@ -13,7 +13,14 @@
             x-sortable-item="{{ $index }}"
             class="flex items-start gap-3 p-4"
         >
-            <x-chief::button x-sortable-handle size="sm" variant="outline-white" title="herschikken" class="shrink-0">
+            <x-chief::button
+                x-sortable-handle
+                tabindex="-1"
+                size="sm"
+                variant="outline-white"
+                title="herschikken"
+                class="shrink-0"
+            >
                 <x-chief::icon.drag-drop-vertical />
             </x-chief::button>
 
@@ -27,7 +34,13 @@
                 @endforeach
             </div>
 
-            <x-chief::button size="sm" variant="outline-red" class="shrink-0" wire:click="removeSection({{ $index }})">
+            <x-chief::button
+                tabindex="-1"
+                size="sm"
+                variant="outline-red"
+                class="shrink-0"
+                wire:click="removeSection({{ $index }})"
+            >
                 <x-chief::icon.delete />
             </x-chief::button>
         </div>
