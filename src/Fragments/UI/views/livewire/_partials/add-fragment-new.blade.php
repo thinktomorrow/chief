@@ -1,6 +1,6 @@
-<div class="columns-2 gap-6 space-y-4">
+<div class="-my-2 columns-2 gap-6">
     @forelse ($this->getAllowedFragmentsGrouped() as $category => $fragmentsByCategory)
-        <div class="inline-block space-y-1">
+        <div class="inline-block w-full space-y-1 py-2">
             <p class="text-sm/6 font-normal text-grey-500">
                 @if ($category)
                     {{ ucfirst($category) }}
