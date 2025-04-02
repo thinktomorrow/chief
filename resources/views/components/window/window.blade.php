@@ -69,14 +69,14 @@
 
                 @if ($actions)
                     <div
-                        wire:loading.remove
+                        wire:loading.remove.delay
                         {{ $actions->attributes->class(['ml-auto flex shrink-0 items-start gap-1.5']) }}
                     >
                         {!! $actions !!}
                     </div>
                 @endif
 
-                <div wire:loading class="ml-auto shrink-0">
+                <div wire:loading.delay class="ml-auto shrink-0">
                     <x-chief::icon.loading class="m-[0.3125rem] size-5 shrink-0 animate-spin text-grey-400" />
                 </div>
             </div>
