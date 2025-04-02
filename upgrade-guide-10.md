@@ -6,7 +6,7 @@ You can run the upgrade command to facilitate the upgrade process.
   0.10
 - Next install the chief 0.10 package
 
-```bash 
+```bash
 composer require "chief/chief:^0.10"
 ```
 
@@ -22,7 +22,7 @@ php artisan chief:upgrade-from-9-to-10
   running
   the following migration:
 
-```php 
+```php
 Schema::table('pages', function (Blueprint $table) {
     $table->json('locales')->nullable();
 });
@@ -34,7 +34,7 @@ use getFragments() function instead of @fragments.
 This directive does not make use of the component rendering of fragments.
 Best to loop the fragments in the view like:
 
-```php 
+```php
 @foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
 ```
 
@@ -82,3 +82,16 @@ window.Redactor(el, customOptions);
 
 To exclude fields to show up on a model create page, use the `not-on-model-create` tag on the field.
 The former `not-on-create` tag is used to exclude on both models and fragments.
+
+### Fragments
+
+#### View paths
+
+Previously, fragments had a private `$baseViewPath` and `$viewPath` variable to set the front-end view paths. The back-end view path was defined by a function named `renderAdminFragments`, which returned a view.
+
+Now, they are both defined as protected class variables, like so:
+
+```php
+  protected $adminViewPath = 'back.fragments.text';
+  protected $viewPath = 'theme::fragments.text';
+```
