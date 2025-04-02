@@ -33,17 +33,17 @@ class FieldPresets
                     ->label('Titel')
                     ->locales()
                     ->characterCount(66)
-                    ->tag(['seo', 'not-on-create']),
+                    ->tag(['seo', 'not-on-model-create']),
                 Textarea::make('seo_content')
                     ->label('Omschrijving')
                     ->description('Korte omschrijving in zoekmachines.')
                     ->locales()
                     ->characterCount(160)
-                    ->tag(['seo', 'not-on-create']),
+                    ->tag(['seo', 'not-on-model-create']),
                 Image::make('seo_image')
                     ->label('Afbeelding')
                     ->locales()
-                    ->tag(['seo', 'not-on-create']),
+                    ->tag(['seo', 'not-on-model-create']),
             ]);
     }
 }

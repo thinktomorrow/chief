@@ -31,6 +31,6 @@ class FieldPresets
             ->value($model->getTags()->map(fn (TagRead $tag) => $tag->getTagId())->all())
             ->save(function ($_model, $field, $input) {
                 app(TaggableRepository::class)->syncTags($_model->getMorphClass(), [$_model->getKey()], (array) ($input['tags'] ?? []));
-            })->tag('not-on-create');
+            })->tag('not-on-model-create');
     }
 }

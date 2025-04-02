@@ -18,12 +18,13 @@ composer require "chief/chief:^0.10"
 php artisan chief:upgrade-from-9-to-10
 ```
 
-- Make sure that all your resources have a sites column in the database. You can add it manually by creating and running
+- Make sure that all your resources have a locales column in the database. You can add it manually by creating and
+  running
   the following migration:
 
 ```php 
 Schema::table('pages', function (Blueprint $table) {
-    $table->json('sites')->nullable();
+    $table->json('locales')->nullable();
 });
 ```
 

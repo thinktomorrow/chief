@@ -94,18 +94,6 @@ abstract class BaseFragment extends Component implements Fragment
         return FragmentKey::fromClass(static::class)->getKey();
     }
 
-    // TODO: adjust for new component rendering... (remove parameters, return view instead of string)
-    //    public function renderAdminFragment($owner, $loop, $viewData = [])
-    //    {
-    //        return $this->render()->render();
-    //    }
-
-    // TODO: adjust for new component rendering... (remove parameters, return view instead of string)
-    //    public function renderFragment($owner, $loop, $viewData = []): string
-    //    {
-    //        return $this->render()->render();
-    //    }
-
     public function hasFragmentModel(): bool
     {
         return isset($this->fragmentModel);
@@ -114,11 +102,6 @@ abstract class BaseFragment extends Component implements Fragment
     public function setFragmentModel(FragmentModel $fragmentModel): Fragment
     {
         $this->fragmentModel = $fragmentModel;
-
-        // FragmentModel has the site ids -> locales mapping ...
-        // If specific locales are given, we'll respect it.
-
-        //        $this->fragmentModel->setDynamicLocaleFallback($this->dynamicLocaleFallback());
 
         return $this;
     }

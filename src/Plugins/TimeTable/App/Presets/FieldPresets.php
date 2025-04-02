@@ -19,7 +19,7 @@ class FieldPresets
                 MultiSelect::make('timetable_id')
                     ->options(fn () => app(TimeTableReadRepository::class)->getAllTimeTablesForSelect())
                     ->fieldPreviewView('chief-timetable::fields.timetable-window')
-                    ->tag('not-on-create'),
+                    ->tag('not-on-model-create'),
             ]);
     }
 }

@@ -85,6 +85,8 @@ class UpgradeFrom9To10Command extends BaseCommand
             'Thinktomorrow\Chief\Forms\Form;' => 'Thinktomorrow\Chief\Forms\Layouts\Form;',
             'Thinktomorrow\Chief\Forms\Form::' => 'Thinktomorrow\Chief\Forms\Layouts\Form::',
             '->windowView(' => '->previewView(',
+            'Fragment, HasBookmark' => 'Fragment', // HasBookmark already included
+            'use Thinktomorrow\Chief\Fragments\HasBookmark;' => '',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,
