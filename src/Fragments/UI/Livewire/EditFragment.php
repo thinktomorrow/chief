@@ -103,7 +103,7 @@ class EditFragment extends Component
             );
         }
 
-        return collect($layout->getComponents())->map(fn ($form) => $form->getComponents())->flatten();
+        return $layout->getComponentsWithoutForms();
     }
 
     public function deleteFragment(): void
