@@ -28,7 +28,6 @@
                     </x-chief::button>
 
                     <x-chief::dialog.dropdown id="fragment-actions-{{ $fragment->getId() }}">
-                        {{--                        @include('chief-fragments::livewire._partials.locale-fragment-actions')--}}
                         @include('chief-fragments::livewire._partials.status-fragment-actions')
                         @include('chief-fragments::livewire._partials.delete-fragment-action')
                     </x-chief::dialog.dropdown>
@@ -102,8 +101,8 @@
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
-                <x-chief::button wire:click="save" variant="blue" class="shrink-0">Bewaren</x-chief::button>
-                <x-chief::button wire:click="close" class="shrink-0">Annuleer</x-chief::button>
+                <x-chief::button wire:click="save" variant="blue">Bewaren</x-chief::button>
+                <x-chief::button wire:click="close">Annuleer</x-chief::button>
             </x-chief::dialog.drawer.footer>
         </x-slot>
     @endif
