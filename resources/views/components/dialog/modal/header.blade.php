@@ -10,7 +10,7 @@
     <header {{ $attributes->class(['flex items-start justify-between gap-4 p-4']) }}>
         <div class="mt-[0.1875rem] space-y-2">
             @if ($title)
-                <h2 class="font-display text-lg/6 font-semibold text-grey-950">
+                <h2 class="font-display text-xl/6 font-semibold text-grey-950">
                     {{ $title }}
                 </h2>
             @endif
