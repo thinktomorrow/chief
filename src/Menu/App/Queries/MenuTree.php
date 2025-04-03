@@ -14,7 +14,7 @@ class MenuTree
      */
     public static function bySite(string $site, string $type): NodeCollection
     {
-        $menu = Menu::bySite($site)->where('type', $type)->first();
+        $menu = Menu::bySiteLocale($site)->where('type', $type)->first();
 
         if (! $menu) {
             return new NodeCollection;

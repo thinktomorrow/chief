@@ -18,7 +18,7 @@ class SaveMenuSites
             // If the menu id is null, we use the default menu for this site.
             if (is_null($menuId)) {
 
-                $defaultMenu->addActiveSite($site);
+                $defaultMenu->addActiveSiteLocale($site);
                 $defaultMenu->save();
 
                 // Cleanup all other active sites for this menu
@@ -28,7 +28,7 @@ class SaveMenuSites
             }
 
             $menu = Menu::findOrFail($menuId);
-            $menu->addActiveSite($site);
+            $menu->addActiveSiteLocale($site);
             $menu->save();
 
             // Cleanup all other active sites for this menu
@@ -38,10 +38,10 @@ class SaveMenuSites
 
     private function removeActiveSite(string $site, array $whitelistedMenuIds = []): void
     {
-        $menus = Menu::byActiveSite($site)->whereNotIn('id', $whitelistedMenuIds)->get();
+        $menus = Menu::byActiveSiteLocale($site)->whereNotIn('id', $whitelistedMenuIds)->get();
 
         foreach ($menus as $menu) {
-            $menu->removeActiveSite($site);
+            $menu->removeActiveSiteLocale($site);
             $menu->save();
         }
     }

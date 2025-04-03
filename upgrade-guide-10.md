@@ -87,7 +87,8 @@ The former `not-on-create` tag is used to exclude on both models and fragments.
 
 #### View paths
 
-Previously, fragments had a private `$baseViewPath` and `$viewPath` variable to set the front-end view paths. The back-end view path was defined by a function named `renderAdminFragments`, which returned a view.
+Previously, fragments had a private `$baseViewPath` and `$viewPath` variable to set the front-end view paths. The
+back-end view path was defined by a function named `renderAdminFragments`, which returned a view.
 
 Now, they are both defined as protected class variables, like so:
 
@@ -95,3 +96,22 @@ Now, they are both defined as protected class variables, like so:
   protected $adminViewPath = 'back.fragments.text';
   protected $viewPath = 'theme::fragments.text';
 ```
+
+### Chief config
+
+The locales config is no longer used.
+Add the sites config to your config file. This is a new config value used to determine the sites for your project.
+You can reference the config file in the chief package as a starting point.
+
+Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()::locales()`.
+
+### Fragments render in views
+
+On the front-end, replace the @fragments with:
+
+```
+@foreach (getFragments() as $fragment)
+    {!! $fragment->with(['page' => $model])->render() !!}
+@endforeach
+```
+
