@@ -26,8 +26,6 @@ class MenuItem extends Model implements BelongsToSites, Node, ReferableModel, Tr
     use NodeDefaults;
     use ReferableModelDefault;
 
-    //    private ?string $locale = null;
-
     public $dynamicKeys = [
         'label', 'url', 'owner_label',
     ];

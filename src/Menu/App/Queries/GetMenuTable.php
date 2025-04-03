@@ -24,8 +24,10 @@ class GetMenuTable
                     ->label('Label')
                     ->items(function ($model) {
                         return $model->getLabel();
+                    })->link(function ($model) {
+                        return route('chief.back.menuitem.edit', $model->getKey());
                     }),
-                ColumnText::make('url')
+                ColumnText::make('link')
                     ->label('Link')
                     ->items(function ($model) {
                         return $model->getUrl();
@@ -34,8 +36,12 @@ class GetMenuTable
                     ->link(function ($model) {
                         return $model->getUrl();
                     }),
-                ColumnBadge::make('ownerLabel')->label('Pagina')->items(function ($model) {
-                    return $model->getOwnerLabel();
+                ColumnBadge::make('type')->label('Type')->items(function ($model) {
+                    return match ($model->type) {
+                        'internal' => 'Interne pagina',
+                        'custom' => 'Eigen link',
+                        default => 'Geen link',
+                    };
                 }),
                 ColumnBadge::make('status')
                     ->label('Status')
@@ -62,7 +68,8 @@ class GetMenuTable
                     ->link(function ($model) {
                         return route('chief.back.menuitem.edit', $model->getKey());
                     })
-                    ->iconEdit(),
+                    ->iconEdit()
+                    ->variant('grey'),
             ])->sorters([
                 TreeSort::default(),
             ]);
