@@ -29,11 +29,13 @@
                         <thead>
                             <tr class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4">
                                 {{-- This header contains the checkbox to select/deselect all items. It will only show if bulk actions are available --}}
-                                <th x-show="showCheckboxes" scope="col" class="w-5">
-                                    <div class="flex items-center">
-                                        <x-chief::form.input.checkbox x-ref="tableHeaderCheckbox" />
-                                    </div>
-                                </th>
+                                @if ($this->hasAnyBulkActions())
+                                    <th scope="col" class="w-5">
+                                        <div class="flex items-center">
+                                            <x-chief::form.input.checkbox x-ref="tableHeaderCheckbox" />
+                                        </div>
+                                    </th>
+                                @endif
 
                                 @foreach ($this->getHeaders() as $header)
                                     {{ $header }}

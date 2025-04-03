@@ -97,15 +97,7 @@ Now, they are both defined as protected class variables, like so:
   protected $viewPath = 'theme::fragments.text';
 ```
 
-### Chief config
-
-The locales config is no longer used.
-Add the sites config to your config file. This is a new config value used to determine the sites for your project.
-You can reference the config file in the chief package as a starting point.
-
-Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()::locales()`.
-
-### Fragments render in views
+#### Rendering fragments in views
 
 On the front-end, replace the @fragments with:
 
@@ -115,3 +107,16 @@ On the front-end, replace the @fragments with:
 @endforeach
 ```
 
+### Chief config
+
+The locales config is no longer used.
+Add the sites config to your config file. This is a new config value used to determine the sites for your project.
+You can reference the config file in the chief package as a starting point.
+
+Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()::locales()`.
+
+### Plugins
+
+#### Forms
+
+- Upgrade the back views so they use the new page template and components

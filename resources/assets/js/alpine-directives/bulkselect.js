@@ -8,6 +8,9 @@ const Bulkselect = (config) => ({
     hasSelectionAcrossPages: false,
 
     init() {
+        // If the table header checkbox is not found, don't do anything
+        if (!this.$refs.tableHeaderCheckbox) return;
+
         this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
             if (event.target.checked) {
                 const checkboxes = document.querySelectorAll('[data-table-row-checkbox]');
