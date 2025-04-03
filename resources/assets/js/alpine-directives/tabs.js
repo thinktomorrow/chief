@@ -21,6 +21,12 @@ const Tabs = (config) => ({
         window.addEventListener('chieftab', (e) => {
             this.listenForExternalTab(e);
         });
+
+        this.onVisible(this.$root, () => {
+            this.$nextTick(() => {
+                this.repositionTabMarker();
+            });
+        });
     },
     listenForExternalTab(e) {
         if (!this.shouldListenForExternalTab) return;
@@ -56,6 +62,17 @@ const Tabs = (config) => ({
             this.$refs.tabMarker.style.width = `${tabElement.offsetWidth}px`;
             this.$refs.tabMarker.style.left = `${tabElement.offsetLeft}px`;
         });
+    },
+    // Src: https://stackoverflow.com/questions/1462138/event-listener-for-when-element-becomes-visible#answer-66394121
+    onVisible(element, callback) {
+        new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.intersectionRatio > 0) {
+                    callback(element);
+                    observer.disconnect();
+                }
+            });
+        }).observe(element);
     },
 });
 
