@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Sites;
 
+use Illuminate\Database\Eloquent\Builder;
+
 interface BelongsToActiveSites
 {
     /** All sites where this model is active in. */
@@ -9,9 +11,13 @@ interface BelongsToActiveSites
 
     public function setActiveSiteLocales(array $locales): void;
 
-    public function addActiveSite(string $site): void;
+    public function addActiveSiteLocale(string $site): void;
 
-    public function removeActiveSite(string $site): void;
+    public function removeActiveSiteLocale(string $site): void;
 
-    public function hasActiveSite($site): bool;
+    public function hasActiveSiteLocale($site): bool;
+
+    public function scopeByActiveSiteLocale(Builder $query, string $site): void;
+
+    public function scopeByActiveSiteLocaleOrNone(Builder $query, string $site): void;
 }

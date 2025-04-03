@@ -52,7 +52,7 @@ class MenuSites extends Component
 
     public function findActiveMenu(string $site): ?MenuDto
     {
-        return $this->menus->first(fn ($menu) => $menu->hasActiveSite($site));
+        return $this->menus->first(fn ($menu) => $menu->hasActiveSiteLocale($site));
     }
 
     public function render()
