@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire\Sites;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
 
 class Sites extends Component
 {
@@ -12,7 +12,7 @@ class Sites extends Component
 
     public string $modelReference;
 
-    public function mount(BelongsToSites&ReferableModel $model)
+    public function mount(HasSiteLocales&ReferableModel $model)
     {
         $this->modelReference = $model->modelReference()->get();
     }

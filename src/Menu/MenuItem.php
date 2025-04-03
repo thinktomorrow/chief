@@ -12,17 +12,17 @@ use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
-use Thinktomorrow\Chief\Sites\BelongsToSitesDefaults;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasSiteLocalesDefaults;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\NodeDefaults;
 
-class MenuItem extends Model implements BelongsToSites, Node, ReferableModel, TreeResource
+class MenuItem extends Model implements HasSiteLocales, Node, ReferableModel, TreeResource
 {
-    use BelongsToSitesDefaults;
     use HasDynamicAttributes;
+    use HasSiteLocalesDefaults;
     use NodeDefaults;
     use ReferableModelDefault;
 

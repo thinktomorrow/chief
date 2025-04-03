@@ -58,7 +58,7 @@ final class ChiefResponse
     {
         $model = self::findModel($urlRecord);
 
-        ActiveContextId::setIfNeeded($urlRecord->context_id, $model);
+        ActiveContextId::setOrDefault($urlRecord->context_id, $model);
 
         return $model->response();
     }

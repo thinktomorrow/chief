@@ -2,7 +2,7 @@
     $sites = $this->getSites();
 @endphp
 
-<x-chief::window title="Sites">
+<x-chief::window title="Status">
     <x-slot name="actions">
         <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
@@ -21,9 +21,9 @@
                 <div class="flex items-start justify-between gap-2">
                     <p class="text-sm/5 text-grey-700">{{ $site->name }}</p>
 
-                    @if ($activeMenu = $this->findActiveMenu($site->locale))
+                    @if ($activeContext = $this->findActiveContext($site->locale))
                         <x-chief::badge>
-                            <span>{{ $activeMenu->title }}</span>
+                            <span>{{ $activeContext->title }}</span>
                         </x-chief::badge>
                     @endif
                 </div>
@@ -31,5 +31,5 @@
         @endforeach
     </div>
 
-    <livewire:chief-wire::menu-edit-sites key="menu-edit-sites-{{ $type }}" :type="$type" />
+    <livewire:chief-wire::edit-site-contexts key="edit-site-links" :model-reference="$modelReference" />
 </x-chief::window>

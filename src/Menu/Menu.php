@@ -6,14 +6,15 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Thinktomorrow\Chief\Sites\BelongsToActiveSitesDefaults;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
-use Thinktomorrow\Chief\Sites\BelongsToSitesDefaults;
+use Thinktomorrow\Chief\Sites\HasActiveSites;
+use Thinktomorrow\Chief\Sites\HasActiveSitesDefaults;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasSiteLocalesDefaults;
 
-class Menu extends Model implements BelongsToSites
+class Menu extends Model implements HasActiveSites, HasSiteLocales
 {
-    use BelongsToActiveSitesDefaults;
-    use BelongsToSitesDefaults;
+    use HasActiveSitesDefaults;
+    use HasSiteLocalesDefaults;
 
     public $guarded = [];
 

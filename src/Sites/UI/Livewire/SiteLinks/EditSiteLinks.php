@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Site\Urls\Application\CreateUrl;
 use Thinktomorrow\Chief\Site\Urls\Application\DeleteUrl;
 use Thinktomorrow\Chief\Site\Urls\Application\UpdateUrl;
 use Thinktomorrow\Chief\Site\Urls\LinkStatus;
-use Thinktomorrow\Chief\Sites\Actions\SaveModelSites;
+use Thinktomorrow\Chief\Sites\Actions\SaveSiteLocales;
 use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\WithAddingSites;
 
 class EditSiteLinks extends Component
@@ -110,7 +110,7 @@ class EditSiteLinks extends Component
 
         $locales = collect($this->form)->reject(fn ($values) => ! $values)->keys()->toArray();
 
-        app(SaveModelSites::class)->handle($model, $locales);
+        app(SaveSiteLocales::class)->handle($model, $locales);
 
         foreach ($this->form as $locale => $values) {
 

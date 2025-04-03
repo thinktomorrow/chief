@@ -63,7 +63,7 @@ class MenuApplication
 
     private function preventUnsafeDeletion(Menu $model): void
     {
-        if (count($model->getActiveSiteLocales()) > 0) {
+        if (count($model->getActiveSites()) > 0) {
             throw new SafeMenuDeletionProtection('Cannot delete menu ['.$model->type.', id: '.$model->id.'] that is still in use by a site.');
         }
 

@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuType;
 use Thinktomorrow\Chief\Menu\UI\Livewire\MenuDto;
 use Thinktomorrow\Chief\Sites\Actions\SaveMenuSites;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts\WithSites;
 
 class EditMenuSites extends Component
 {

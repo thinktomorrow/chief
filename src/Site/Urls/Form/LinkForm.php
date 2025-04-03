@@ -7,9 +7,9 @@ namespace Thinktomorrow\Chief\Site\Urls\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
 use Thinktomorrow\Url\Root;
 
 final class LinkForm
@@ -37,7 +37,7 @@ final class LinkForm
         // TODO: remove this one...
         return ChiefSites::all();
 
-        return $this->model instanceof BelongsToSites
+        return $this->model instanceof HasSiteLocales
             ? ChiefSites::all()->filterByLocales($this->model->getSiteLocales())
             : ChiefSites::all();
     }

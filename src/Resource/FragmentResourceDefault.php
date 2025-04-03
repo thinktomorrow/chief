@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Resource;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
 
 trait FragmentResourceDefault
 {
@@ -43,7 +43,7 @@ trait FragmentResourceDefault
         return view('chief::manager.windows.fragments.edit');
     }
 
-    public function saveLocales(BelongsToSites $model, array $locales): void
+    public function saveLocales(HasSiteLocales $model, array $locales): void
     {
         $model->setLocales($locales);
         $model->save();

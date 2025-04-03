@@ -7,7 +7,7 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Sites\Actions\SaveModelSites;
+use Thinktomorrow\Chief\Sites\Actions\SaveSiteLocales;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
@@ -99,7 +99,7 @@ class EditSites extends Component
 
         $locales = collect($this->form)->reject(fn ($values) => ! $values)->keys()->toArray();
 
-        app(SaveModelSites::class)->handle($model, $locales);
+        app(SaveSiteLocales::class)->handle($model, $locales);
 
         $this->dispatch('sites-updated')
             ->to('chief-wire::sites');

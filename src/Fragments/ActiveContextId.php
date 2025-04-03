@@ -13,7 +13,7 @@ class ActiveContextId
         self::$activeContextId = (string) $activeContextId;
     }
 
-    public static function setIfNeeded(null|string|int $activeContextId, $model): void
+    public static function setOrDefault(null|string|int $activeContextId, $model): void
     {
         if ($activeContextId) {
             self::set($activeContextId);

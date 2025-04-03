@@ -4,18 +4,17 @@
 
 <div wire:key="context-{{ $context->id }}">
     {{-- TODO: show if creating second context --}}
-    <x-chief::callout data-slot="form-group" variant="blue" title="Wat is een paginaopbouw?">
+    <x-chief::callout data-slot="form-group" variant="blue" title="Voeg een pagina inhoud toe">
         <x-slot name="icon">
             <x-chief::icon.solid.information-diamond />
         </x-slot>
 
         <div class="space-y-2">
             <p>
-                Een paginaopbouw bepaalt hoe de structuur van je pagina eruitziet. Het definieert de manier waarop
-                content wordt weergegeven op verschillende sites.
+                Met een extra inhoud kan je de structuur van je pagina aanpassen per site.
             </p>
 
-            <p>In een paginaopbouw kun je:</p>
+            <p>Met een extra pagina inhoud kan je:</p>
 
             <ul class="">
                 <li>De volgorde van secties bepalen</li>

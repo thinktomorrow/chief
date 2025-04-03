@@ -11,7 +11,9 @@ use Thinktomorrow\Chief\Fragments\App\ContextActions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\UpdateContext;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Sites\HasSiteContexts;
 use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class EditContext extends Component
@@ -126,6 +128,13 @@ class EditContext extends Component
         }
 
         if (UrlRecord::where('context_id', $this->context->id)->exists()) {
+            $this->cannotBeDeletedBecauseOfConnectedToSite = true;
+            $this->cannotBeDeleted = true;
+        }
+
+        $model = ModelReference::fromString($this->modelReference)->instance();
+
+        if ($model instanceof HasSiteContexts && $model->hasSiteContext($this->context->id)) {
             $this->cannotBeDeletedBecauseOfConnectedToSite = true;
             $this->cannotBeDeleted = true;
         }

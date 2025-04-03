@@ -4,7 +4,10 @@ namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
 
-interface BelongsToSites
+/**
+ * Model that have links that refer to site and context. Like pages.
+ */
+interface HasSiteLocales
 {
     /** All sites where this model is active in. */
     public function getSiteLocales(): array;

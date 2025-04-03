@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Sites;
 use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
-trait BelongsToSitesDefaults
+trait HasSiteLocalesDefaults
 {
     /**
      * This method is called on an Eloquent model to initialize the localized defaults.
      */
-    public function initializeBelongsToSitesDefaults(): void
+    public function initializeHasSiteLocalesDefaults(): void
     {
         $this->mergeCasts(['locales' => 'array']);
     }

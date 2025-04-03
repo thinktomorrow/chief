@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\Sites\Actions;
 
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
 use Thinktomorrow\Chief\Sites\Events\ModelSitesUpdated;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
 
-class SaveModelSites
+class SaveSiteLocales
 {
-    public function handle(BelongsToSites&ReferableModel $model, array $locales): void
+    public function handle(HasSiteLocales&ReferableModel $model, array $locales): void
     {
         $previousState = $model->getSiteLocales();
 

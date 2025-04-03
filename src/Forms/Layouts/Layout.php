@@ -48,10 +48,24 @@ class Layout implements HasTaggedComponents
                 continue;
             }
 
+            self::protectAgainstNestedForms($component);
+
             $self = $self->add($component);
         }
 
         return $self;
+    }
+
+    /** Check if there aren't any nested forms - which is not supported */
+    private static function protectAgainstNestedForms($component): void
+    {
+        if ($component instanceof Form) {
+            foreach ($component->getComponents() as $nestedComponent) {
+                if ($nestedComponent instanceof Form) {
+                    throw new InvalidArgumentException('Nested forms are not supported. Nested form ['.$nestedComponent->getKey().'] found inside Form ['.$component->getKey().'].');
+                }
+            }
+        }
     }
 
     public function hasForm(string $formId): bool

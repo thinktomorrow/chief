@@ -6,7 +6,7 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Sites\BelongsToSites;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
 
 class SiteLinks extends Component
 {
@@ -14,7 +14,7 @@ class SiteLinks extends Component
 
     public string $modelReference;
 
-    public function mount(Visitable&BelongsToSites&ReferableModel&ContextOwner $model)
+    public function mount(Visitable&HasSiteLocales&ReferableModel&ContextOwner $model)
     {
         $this->modelReference = $model->modelReference()->get();
     }

@@ -23,7 +23,7 @@ class ContextDto implements Wireable
     {
         return new static(
             $context->id,
-            $context->title ?? 'Default',
+            $context->title ?? 'Inhoud',
             $ownerReference,
             $ownerLabel,
             $ownerAdminUrl,

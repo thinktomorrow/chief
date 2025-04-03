@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire\MenuSites;
+namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Sites\ChiefSite;

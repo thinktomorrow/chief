@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\MenuDto;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts\WithSites;
 
 class MenuSites extends Component
 {
@@ -52,7 +53,7 @@ class MenuSites extends Component
 
     public function findActiveMenu(string $site): ?MenuDto
     {
-        return $this->menus->first(fn ($menu) => $menu->hasActiveSiteLocale($site));
+        return $this->menus->first(fn ($menu) => $menu->hasActiveSite($site));
     }
 
     public function render()

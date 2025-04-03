@@ -14,7 +14,7 @@
             @endif
 
             <x-slot name="actions">
-                @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
+                @if ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales)
                     <livewire:chief-wire::site-tabs :model="$model" />
                 @endif
 
@@ -40,9 +40,11 @@
             {{ $component->displayAsTransparentForm()->render() }}
         @endforeach
 
-        @if ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
+        @if ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
             <livewire:chief-wire::site-links :model="$model" />
-        @elseif ($model instanceof \Thinktomorrow\Chief\Sites\BelongsToSites)
+        @elseif ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteContexts)
+            <livewire:chief-wire::site-contexts :model="$model" />
+        @elseif ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales)
             <livewire:chief-wire::sites :model="$model" />
         @endif
 

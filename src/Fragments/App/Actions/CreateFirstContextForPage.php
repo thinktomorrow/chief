@@ -29,7 +29,7 @@ class CreateFirstContextForPage
         $this->contextApplication->create(new CreateContext(
             $event->modelReference,
             ChiefLocales::locales(),
-            'Paginaopbouw'
+            'Inhoud'
         ));
 
     }
