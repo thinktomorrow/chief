@@ -22,10 +22,10 @@
             @endif
         </div>
 
-        @if (count($components = $getComponents()) > 0)
+        @if (count($getComponents()) > 0)
             <div x-show="open" x-transition class="space-y-6">
-                @foreach ($components as $childComponent)
-                    {{ $childComponent }}
+                @foreach ($getComponents() as $_component)
+                    {{ $_component }}
                 @endforeach
             </div>
         @endif
