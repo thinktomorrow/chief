@@ -14,5 +14,5 @@ class Checkbox extends Component implements Field
 
     protected string $view = 'chief-form::fields.checkbox';
 
-    protected string $previewView = 'chief-form::previews.fields.select';
+    protected string $previewView = 'chief-form::previews.fields.checkbox';
 }

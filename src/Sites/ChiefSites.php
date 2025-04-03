@@ -59,6 +59,16 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
     }
 
+    public function getNames(): array
+    {
+        return $this->toCollection()->mapWithKeys(fn ($site) => [$site->locale => $site->name])->toArray();
+    }
+
+    public function getShortNames(): array
+    {
+        return $this->toCollection()->mapWithKeys(fn ($site) => [$site->locale => $site->shortName])->toArray();
+    }
+
     public function toArray(): array
     {
         return array_map(fn (ChiefSite $site) => $site->toArray(), $this->sites);

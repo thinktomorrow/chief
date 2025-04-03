@@ -14,5 +14,5 @@ class Radio extends Component implements Field
 
     protected string $view = 'chief-form::fields.radio';
 
-    protected string $previewView = 'chief-form::previews.fields.select';
+    protected string $previewView = 'chief-form::previews.fields.radio';
 }

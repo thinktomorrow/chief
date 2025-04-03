@@ -17,7 +17,8 @@ trait HasVariantMapping
             $this->variantMapResolvers[] = function ($rawValue, ColumnItem $columnItem) use ($variantMapResolver) {
 
                 if (is_scalar($rawValue)) {
-                    return $variantMapResolver[strtolower($rawValue)] ?? $rawValue;
+                    // Check for both capitalized and lowercased keys
+                    return $variantMapResolver[strtolower($rawValue)] ?? ($variantMapResolver[$rawValue] ?? $rawValue);
                 }
 
                 return $rawValue;
