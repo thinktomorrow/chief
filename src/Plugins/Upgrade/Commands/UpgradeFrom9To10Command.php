@@ -84,6 +84,7 @@ class UpgradeFrom9To10Command extends BaseCommand
             'LocalizedFormKey' => 'LocalizedFieldName',
             'Thinktomorrow\Chief\Forms\Form;' => 'Thinktomorrow\Chief\Forms\Layouts\Form;',
             'Thinktomorrow\Chief\Forms\Form::' => 'Thinktomorrow\Chief\Forms\Layouts\Form::',
+            'use Thinktomorrow\Chief\Forms\Form' => 'use Thinktomorrow\Chief\Forms\Layouts\Form',
             '->windowView(' => '->previewView(',
             'Fragment, HasBookmark' => 'Fragment', // HasBookmark already included
             'use Thinktomorrow\Chief\Fragments\HasBookmark;' => '',

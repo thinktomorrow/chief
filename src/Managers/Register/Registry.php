@@ -62,7 +62,7 @@ final class Registry
         $resource = $this->findResourceByModel($modelClass);
 
         if (! $resource instanceof TreeResource || ! $resource instanceof Resource) {
-            throw new MissingTreeResource('Class ['.$modelClass.'] should implement '.TreeResource::class.'.');
+            throw new MissingTreeResource('Class ['.$resource::class.'] should implement '.TreeResource::class.'.');
         }
 
         return $resource;
