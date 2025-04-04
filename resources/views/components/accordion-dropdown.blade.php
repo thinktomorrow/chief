@@ -1,59 +1,56 @@
 @props([
-    'size' => 'base',
-    'variant' => 'grey',
     'title' => null,
+    'description' => null,
+    'collapsible' => true,
+    'isOpen' => true,
 ])
 
-{{--
-    Options
-    - size: base, sm, xs
-    - variant: grey, blue, red, orange, green, outline-white
-    - edge-to-edge: true, false
-    
-    Thoughts:
-    - Header instead of title? For badges etc.
-    - Other icon than chevron?
-    - Make it so when you click the header/chevron, other toggles close (optional)
-    - Maybe better to have a different styling for this?
---}}
-
 <div
-    x-data="{ isOpen: false }"
-    {{
-        $attributes->class([
-            'callout',
-            match ($size) {
-                'base' => 'callout-base',
-                'sm' => 'callout-sm',
-                'xs' => 'callout-xs',
-                default => 'callout-base',
-            },
-            match ($variant) {
-                'blue' => 'callout-blue',
-                'red' => 'callout-red',
-                'orange' => 'callout-orange',
-                'green' => 'callout-green',
-                'grey' => 'callout-grey',
-                'outline-white' => 'callout-outline-white',
-                default => 'callout-blue',
-            },
-        ])
-    }}
+    x-data="{
+        accordionDropdownIsCollapsible: {{ $collapsible ? 'true' : 'false' }},
+        accordionDropdownIsOpen: {{ $isOpen ? 'true' : 'false' }},
+    }"
+    {{ $attributes->class('divide-y divide-black/5 rounded-xl bg-grey-50') }}
 >
-    <div class="grow">
-        @if ($title)
-            <p data-slot="title">
-                {{ $title }}
-            </p>
-        @endif
+    <div class="flex items-start justify-between gap-2 px-4 py-3.5">
+        <div class="mt-[0.1875rem] space-y-1.5">
+            @if ($title)
+                <p class="font-display text-lg/6 font-medium text-grey-900">
+                    {{ $title }}
+                </p>
+            @endif
 
-        <div data-slot="content" class="prose" x-show="isOpen">
+            @if ($description)
+                <p class="text-base/6 text-grey-500">
+                    {{ $description }}
+                </p>
+            @endif
+        </div>
+
+        @if ($collapsible)
+            <x-chief::button
+                x-on:click="accordionDropdownIsOpen = !accordionDropdownIsOpen"
+                size="sm"
+                variant="transparent"
+                class="shrink-0"
+            >
+                <span data-slot="icon">
+                    <x-chief::icon.chevron-left x-show="!accordionDropdownIsOpen" />
+                    <x-chief::icon.chevron-down x-show="accordionDropdownIsOpen" />
+                </span>
+            </x-chief::button>
+        @endif
+    </div>
+
+    @if ($slot->isNotEmpty())
+        <div
+            x-show="
+                (accordionDropdownIsCollapsible && accordionDropdownIsOpen) ||
+                    ! accordionDropdownIsCollapsible
+            "
+            class="px-4 py-3.5"
+        >
             {{ $slot }}
         </div>
-    </div>
-
-    <div data-slot="icon-container" x-on:click="isOpen = !isOpen">
-        <x-chief::icon.chevron-left x-show="!isOpen" />
-        <x-chief::icon.chevron-down x-show="isOpen" />
-    </div>
+    @endif
 </div>
