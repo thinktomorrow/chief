@@ -25,7 +25,6 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 /**
  * Default field settings are overriden mostly because values of file inputs
@@ -50,7 +49,7 @@ class File extends Component implements Field, HasComponents
     public function __construct(string $key)
     {
         parent::__construct($key);
-        $this->locales([ChiefLocales::primaryLocale()]);
+        $this->locales([ChiefSites::primaryLocale()]);
         $this->setFieldNameTemplate('files.:name.:locale');
 
         $this->uploadButtonLabel('Bestand opladen');

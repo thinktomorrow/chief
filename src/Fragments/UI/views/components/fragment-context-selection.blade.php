@@ -18,7 +18,7 @@
 
     <x-chief::dialog wired title="Op welke taalversies toont dit fragment" size="xs">
         <div class="block space-y-4 px-4 py-2 text-sm text-grey-700" tabindex="-1">
-            @foreach (ChiefLocales::locales() as $locale)
+            @foreach (ChiefSites::locales() as $locale)
                 <x-chief::form.fieldset class="w-64">
                     <div class="flex items-start gap-2">
                         <x-chief::form.input.checkbox

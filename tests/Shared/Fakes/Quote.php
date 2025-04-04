@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class Quote extends BaseFragment implements Fragment, HasAsset
@@ -40,6 +39,6 @@ class Quote extends BaseFragment implements Fragment, HasAsset
 
     protected function getDynamicLocales(): array
     {
-        return ChiefLocales::locales();
+        return ChiefSites::locales();
     }
 }

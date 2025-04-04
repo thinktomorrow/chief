@@ -1,9 +1,9 @@
 @php
     // Assets always expect a locale. We enforce this even when locales are missing
     use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
-    use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
+    use Thinktomorrow\Chief\Sites\ChiefSites;
 
-    $locale ??= ChiefLocales::primaryLocale();
+    $locale ??= ChiefSites::primaryLocale();
 
     // Check if component is used inside a parent Livewire component (such as AddFragment)
     $insideComponent = isset($this) && method_exists($this, 'getId');

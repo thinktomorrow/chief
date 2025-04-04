@@ -16,7 +16,6 @@ use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithNullifyEmptyValues;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class EditFragment extends Component
 {
@@ -99,7 +98,7 @@ class EditFragment extends Component
 
         if ($this->fragment->isShared) {
             $layout->setDormantLocales(
-                array_values(array_diff(ChiefLocales::locales(), $this->context->locales))
+                array_values(array_diff(ChiefSites::locales(), $this->context->locales))
             );
         }
 

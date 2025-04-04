@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Site\Urls\Application\ResaveUrlSlug;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class PropagateUrlChange
 {
@@ -23,7 +22,7 @@ class PropagateUrlChange
 
     public function __construct(Registry $registry, ResaveUrlSlug $resaveUrlSlug)
     {
-        $this->locales = ChiefLocales::locales();
+        $this->locales = ChiefSites::locales();
         $this->registry = $registry;
         $this->resaveUrlSlug = $resaveUrlSlug;
     }

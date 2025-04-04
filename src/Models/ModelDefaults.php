@@ -6,7 +6,6 @@ use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\UsesSimpleState;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait ModelDefaults
@@ -18,17 +17,17 @@ trait ModelDefaults
 
     protected function getDynamicLocales(): array
     {
-        return ChiefLocales::locales();
+        return ChiefSites::locales();
     }
 
     protected function getDynamicFallbackLocales(): array
     {
-        return ChiefLocales::fallbackLocales();
+        return ChiefSites::fallbackLocales();
     }
 
     protected function getAssetFallbackLocales(): array
     {
-        return ChiefLocales::fallbackLocales();
+        return ChiefSites::fallbackLocales();
     }
 
     public function viewKey(): string

@@ -12,7 +12,6 @@ use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 final class FragmentModel extends Model implements FragmentResource, HasAsset, ReferableModel
@@ -116,16 +115,16 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
 
     protected function getDynamicLocales(): array
     {
-        return ChiefLocales::locales();
+        return ChiefSites::locales();
     }
 
     protected function getDynamicFallbackLocales(): array
     {
-        return ChiefLocales::fallbackLocales();
+        return ChiefSites::fallbackLocales();
     }
 
     protected function getAssetFallbackLocales(): array
     {
-        return ChiefLocales::fallbackLocales();
+        return ChiefSites::fallbackLocales();
     }
 }

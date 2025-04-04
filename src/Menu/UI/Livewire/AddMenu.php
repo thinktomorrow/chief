@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Menu\App\Actions\CreateMenu;
 use Thinktomorrow\Chief\Menu\App\Actions\MenuApplication;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class AddMenu extends Component
 {
@@ -33,7 +32,7 @@ class AddMenu extends Component
     {
         $this->isOpen = true;
 
-        $this->form['locales'] = ChiefLocales::locales();
+        $this->form['locales'] = ChiefSites::locales();
     }
 
     public function close()
@@ -72,6 +71,6 @@ class AddMenu extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefLocales::locales());
+        return PairOptions::toPairs(ChiefSites::locales());
     }
 }

@@ -59,6 +59,11 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return array_map(fn (ChiefSite $site) => $site->locale, $this->sites);
     }
 
+    public function getPrimaryLocale(): ?string
+    {
+        return $this->getPrimarySite()->locale;
+    }
+
     public function getNames(): array
     {
         return $this->toCollection()->mapWithKeys(fn ($site) => [$site->locale => $site->name])->toArray();
@@ -103,9 +108,45 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return self::$cachedSites = self::fromConfig();
     }
 
-    public function getPrimaryLocale(): ?string
+    public static function locales(): array
     {
-        return $this->getPrimarySite()->locale;
+        static $locales;
+
+        if ($locales) {
+            return $locales;
+        }
+
+        return $locales = self::all()->getLocales();
+    }
+
+    /**
+     * Verify that passed locales are present in the sites config.
+     */
+    public static function verifiedLocales(array $locales): array
+    {
+        return self::all()->filterByLocales($locales)->getLocales();
+    }
+
+    public static function fallbackLocales(): array
+    {
+        $fallbackLocales = [];
+
+        foreach (self::all() as $site) {
+            $fallbackLocales[$site->locale] = $site->fallbackLocale;
+        }
+
+        return $fallbackLocales;
+    }
+
+    public static function primaryLocale(): string
+    {
+        static $primaryFieldLocale;
+
+        if ($primaryFieldLocale) {
+            return $primaryFieldLocale;
+        }
+
+        return $primaryFieldLocale = self::all()->getPrimaryLocale();
     }
 
     private function getPrimarySite(): ChiefSite

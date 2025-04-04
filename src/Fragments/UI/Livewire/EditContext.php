@@ -14,7 +14,6 @@ use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Sites\HasSiteContexts;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class EditContext extends Component
 {
@@ -115,7 +114,7 @@ class EditContext extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefLocales::locales());
+        return PairOptions::toPairs(ChiefSites::locales());
     }
 
     private function setDeletionFlags(): void

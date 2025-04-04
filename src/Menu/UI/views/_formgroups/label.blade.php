@@ -1,6 +1,5 @@
 @php
-    use Thinktomorrow\Chief\Sites\ChiefSites;
-@endphp
+    @endphp
 
 <x-chief::form.fieldset>
     <x-chief::form.label required>Label</x-chief::form.label>
@@ -9,9 +8,9 @@
         Dit is de tekst die wordt getoond in het menu. Kies een korte, duidelijke term.
     </x-chief::form.description>
 
-    @if (count(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()) > 1)
+    @if (count(\Thinktomorrow\Chief\Sites\ChiefSites::locales()) > 1)
         <x-chief::tabs :should-listen-for-external-tab="true">
-            @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
+            @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}">
                     <x-chief::form.fieldset :rule="'trans.' . $locale . '.label'">
                         <x-chief::form.input.text
@@ -25,7 +24,7 @@
             @endforeach
         </x-chief::tabs>
     @else
-        @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
+        @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
             <x-chief::form.fieldset :rule="'trans.' . $locale . '.label'">
                 <x-chief::form.input.text
                     name="trans[label][{{ $locale }}]"

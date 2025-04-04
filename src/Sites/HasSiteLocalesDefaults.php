@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 trait HasSiteLocalesDefaults
 {
@@ -17,7 +16,7 @@ trait HasSiteLocalesDefaults
 
     public function getSiteLocales(): array
     {
-        return ($this->locales && ! empty($this->locales)) ? $this->locales : ChiefLocales::locales();
+        return ($this->locales && ! empty($this->locales)) ? $this->locales : ChiefSites::locales();
     }
 
     public function setSiteLocales(array $locales): void

@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Menu\App\Actions\DeleteMenu;
 use Thinktomorrow\Chief\Menu\App\Actions\MenuApplication;
 use Thinktomorrow\Chief\Menu\App\Actions\UpdateMenu;
 use Thinktomorrow\Chief\Menu\Menu;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class EditMenu extends Component
 {
@@ -109,7 +108,7 @@ class EditMenu extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefLocales::locales());
+        return PairOptions::toPairs(ChiefSites::locales());
     }
 
     private function setDeletionFlags(): void

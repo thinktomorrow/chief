@@ -88,6 +88,8 @@ class UpgradeFrom9To10Command extends BaseCommand
             '->windowView(' => '->previewView(',
             'Fragment, HasBookmark' => 'Fragment', // HasBookmark already included
             'use Thinktomorrow\Chief\Fragments\HasBookmark;' => '',
+            'config(\'chief.locales\')` => `\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
+            'config(\'chief.locales\',[])` => `\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,

@@ -113,7 +113,7 @@ The locales config is no longer used.
 Add the sites config to your config file. This is a new config value used to determine the sites for your project.
 You can reference the config file in the chief package as a starting point.
 
-Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()::locales()`.
+Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\ChiefSites::locales()`.
 
 ### Plugins
 

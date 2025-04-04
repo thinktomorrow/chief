@@ -46,9 +46,9 @@
             </div>
 
             <div x-cloak x-show="type == 'custom'">
-                @if (count(\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales()) > 1)
+                @if (count(\Thinktomorrow\Chief\Sites\ChiefSites::locales()) > 1)
                     <x-chief::tabs :should-listen-for-external-tab="true">
-                        @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
+                        @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
                             <x-chief::tabs.tab tab-id="{{ $locale }}">
                                 <x-chief::form.fieldset :rule="'trans' . $locale . 'url'">
                                     <x-chief::form.input.text
@@ -62,7 +62,7 @@
                         @endforeach
                     </x-chief::tabs>
                 @else
-                    @foreach (\Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales() as $locale)
+                    @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
                         <x-chief::form.fieldset :rule="'trans' . $locale . 'url'">
                             <x-chief::form.input.text
                                 id="trans-url-{{ $locale }}"

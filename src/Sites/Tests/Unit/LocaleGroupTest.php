@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Sites\Tests\Unit;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class LocaleGroupTest extends TestCase
 {
@@ -30,7 +29,7 @@ class LocaleGroupTest extends TestCase
             'nl' => null,
             'fr-be' => 'fr',
             'fr' => null,
-        ], ChiefLocales::fallbackLocales());
+        ], ChiefSites::fallbackLocales());
     }
 
     public function test_it_can_group_locales_by_fallback(): void

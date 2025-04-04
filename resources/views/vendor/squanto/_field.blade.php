@@ -1,6 +1,5 @@
 @php
     use Thinktomorrow\Chief\Sites\ChiefSites;
-    use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 @endphp
 
 <x-chief::form.preview
@@ -15,7 +14,7 @@
             @endphp
 
             <div class="flex w-full gap-2">
-                @if (count(ChiefLocales::locales()) > 1)
+                @if (count(ChiefSites::locales()) > 1)
                     <div class="flex w-8 shrink-0 items-center justify-center rounded-lg bg-grey-50 p-2">
                         <span class="text-xs font-medium uppercase text-grey-500">{{ $locale }}</span>
                     </div>

@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class ContextDto implements Wireable
 {
@@ -39,7 +38,7 @@ class ContextDto implements Wireable
             $ownerReference,
             $ownerLabel,
             $ownerAdminUrl,
-            ChiefLocales::locales(),
+            ChiefSites::locales(),
         );
     }
 

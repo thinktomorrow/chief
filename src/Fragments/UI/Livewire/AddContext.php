@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\CreateContext;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 class AddContext extends Component
 {
@@ -34,7 +33,7 @@ class AddContext extends Component
     {
         $this->isOpen = true;
 
-        $this->form['locales'] = ChiefLocales::locales();
+        $this->form['locales'] = ChiefSites::locales();
     }
 
     public function close()
@@ -75,6 +74,6 @@ class AddContext extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefLocales::locales());
+        return PairOptions::toPairs(ChiefSites::locales());
     }
 }

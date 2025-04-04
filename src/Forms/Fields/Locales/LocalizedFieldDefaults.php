@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Sites\HasSiteLocales;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 
 trait LocalizedFieldDefaults
 {
@@ -19,7 +18,7 @@ trait LocalizedFieldDefaults
     public function locales(?array $locales = null): static
     {
         $this->locales = ($locales === null)
-            ? ChiefLocales::locales()
+            ? ChiefSites::locales()
             : $locales;
 
         $this->whenModelIsSet(function ($model, $field) {
@@ -28,7 +27,7 @@ trait LocalizedFieldDefaults
             // And set all locales to any locales that are set on the fragment context
 
             if ($model instanceof HasSiteLocales && empty($this->scopedLocales)) {
-                $field->setScopedLocales(ChiefLocales::verifiedLocales($model->getSiteLocales()));
+                $field->setScopedLocales(ChiefSites::verifiedLocales($model->getSiteLocales()));
             }
         });
 
@@ -52,7 +51,7 @@ trait LocalizedFieldDefaults
         }
 
         // Use the sequence of locales as defined in the sites config
-        return array_values(array_filter(ChiefLocales::locales(), fn ($locale) => in_array($locale, $this->scopedLocales)));
+        return array_values(array_filter(ChiefSites::locales(), fn ($locale) => in_array($locale, $this->scopedLocales)));
     }
 
     public function setScopedLocales(array $scopedLocales): static
@@ -83,7 +82,7 @@ trait LocalizedFieldDefaults
         // Account for shared fragments which might have dormant locales
         $locales = array_merge($this->getScopedLocales(), $this->getDormantLocales());
 
-        $fallbackLocales = array_filter(ChiefLocales::fallbackLocales(), fn ($fallbackLocale) => in_array($fallbackLocale, $locales));
+        $fallbackLocales = array_filter(ChiefSites::fallbackLocales(), fn ($fallbackLocale) => in_array($fallbackLocale, $locales));
 
         return $fallbackLocales[$locale] ?? null;
     }
@@ -105,7 +104,7 @@ trait LocalizedFieldDefaults
     {
         $localesWithOwnValue = array_filter($this->locales, fn ($locale) => $this->hasOwnLocaleValue($locale));
 
-        return ChiefLocales::localeGroups($this->locales, $localesWithOwnValue);
+        return ChiefSites::localeGroups($this->locales, $localesWithOwnValue);
     }
 
     public function getLocalizedKeys(): array

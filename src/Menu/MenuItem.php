@@ -148,7 +148,7 @@ class MenuItem extends Model implements HasSiteLocales, Node, ReferableModel, Tr
 
     public function getDynamicLocales(): array
     {
-        return \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales();
+        return \Thinktomorrow\Chief\Sites\ChiefSites::locales();
     }
 
     public function getId()

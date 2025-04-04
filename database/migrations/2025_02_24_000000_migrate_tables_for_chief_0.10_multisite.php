@@ -63,7 +63,7 @@ return new class extends Migration
 
     private function insertDefaultContextLocales(): void
     {
-        $locales = \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales();
+        $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
 
         DB::table('contexts')->update(['locales' => json_encode($locales)]);
     }
@@ -225,7 +225,7 @@ return new class extends Migration
         foreach ($menuTypes as $type => $values) {
             $label = ucfirst($values['label']);
             app(\Thinktomorrow\Chief\Menu\App\Actions\MenuApplication::class)->create(
-                new \Thinktomorrow\Chief\Menu\App\Actions\CreateMenu($type, \Thinktomorrow\Chief\Sites\Locales\ChiefLocales::locales(), $label));
+                new \Thinktomorrow\Chief\Menu\App\Actions\CreateMenu($type, \Thinktomorrow\Chief\Sites\ChiefSites::locales(), $label));
         }
 
         Schema::table('menu_items', function (Blueprint $table) {

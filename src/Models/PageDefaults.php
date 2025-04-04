@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
 use Thinktomorrow\Chief\Sites\HasSiteLocalesDefaults;
-use Thinktomorrow\Chief\Sites\Locales\ChiefLocales;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait PageDefaults
@@ -27,17 +26,17 @@ trait PageDefaults
 
     protected function getDynamicLocales(): array
     {
-        return ChiefLocales::locales();
+        return ChiefSites::locales();
     }
 
     protected function getDynamicFallbackLocales(): array
     {
-        return ChiefLocales::fallbackLocales();
+        return ChiefSites::fallbackLocales();
     }
 
     protected function getAssetFallbackLocales(): array
     {
-        return ChiefLocales::fallbackLocales();
+        return ChiefSites::fallbackLocales();
     }
 
     public function viewKey(): string
