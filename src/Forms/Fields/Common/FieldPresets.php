@@ -14,13 +14,16 @@ class FieldPresets
 {
     public static function pagetitle(?Field $field = null): iterable
     {
-        yield Form::make('pagetitle')->displayAsCompactForm()->items([
-            $field ?? Text::make('title')
-                ->label('Titel')
-                ->locales()
-                ->previewView('chief-form::previews.fields.text-as-pagetitle')
-                ->required(),
-        ]);
+        yield Form::make('pagetitle')
+            ->title('Titel')
+            ->displayAsCompactForm()
+            ->items([
+                $field ?? Text::make('title')
+                    ->label('Titel')
+                    ->locales()
+                    ->previewView('chief-form::previews.fields.text-as-pagetitle')
+                    ->required(),
+            ]);
     }
 
     public static function seo(): iterable

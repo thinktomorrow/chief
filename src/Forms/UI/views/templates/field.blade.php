@@ -116,8 +116,8 @@
                                     </p>
 
                                     <p class="text-sm text-grey-500">
-                                        Als je een specifieke vertaling in het '{{ $localName }}' wil gebruiken, vul je
-                                        dit veld gewoon in.
+                                        Als je een specifieke vertaling in het '{{ $localeName }}' wil gebruiken, vul
+                                        je dit veld gewoon in.
                                     </p>
                                 @else
                                     <p class="text-sm text-grey-500">

@@ -11,11 +11,7 @@
         @endphp
 
         <x-slot name="header">
-            <x-chief::dialog.drawer.header
-                :title="ucfirst($fragment->label)"
-                subtitle="id: {{ $this->getId() }} parent: {{ $this->parentComponentId }}"
-                :badges="$badges"
-            >
+            <x-chief::dialog.drawer.header :title="ucfirst($fragment->label)" :badges="$badges">
                 <div class="flex items-start gap-2">
                     <x-chief::button
                         variant="outline-white"

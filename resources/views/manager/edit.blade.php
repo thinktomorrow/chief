@@ -1,4 +1,14 @@
-<x-chief::page.template :title="$resource->getPageTitle($model)">
+@php
+    $hasAnyAsideTopComponents = count($layout->filterByPosition('aside-top')->getComponents()) > 0;
+    $hasSiteLinks = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
+    $hasSiteContexts = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteContexts;
+    $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales;
+    $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
+
+    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasSiteContexts || $hasSites || $hasAnyAsideComponents;
+@endphp
+
+<x-chief::page.template :title="$resource->getPageTitle($model)" :container="$showSidebar ? '2xl' : 'lg'">
     <x-slot name="header">
         <x-chief::page.header
             :title="$resource->getPageTitle($model)"
@@ -35,23 +45,25 @@
         {{ $component->render() }}
     @endforeach
 
-    <x-slot name="sidebar">
-        @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
-            {{ $component->displayAsTransparentForm()->render() }}
-        @endforeach
+    @if ($showSidebar)
+        <x-slot name="sidebar">
+            @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
+                {{ $component->displayAsTransparentForm()->render() }}
+            @endforeach
 
-        @if ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable)
-            <livewire:chief-wire::site-links :model="$model" />
-        @elseif ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteContexts)
-            <livewire:chief-wire::site-contexts :model="$model" />
-        @elseif ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales)
-            <livewire:chief-wire::sites :model="$model" />
-        @endif
+            @if ($hasSiteLinks)
+                <livewire:chief-wire::site-links :model="$model" />
+            @elseif ($hasSiteContexts)
+                <livewire:chief-wire::site-contexts :model="$model" />
+            @elseif ($hasSites)
+                <livewire:chief-wire::sites :model="$model" />
+            @endif
 
-        @foreach ($layout->filterByPosition('aside')->getComponents() as $component)
-            {{ $component->displayAsTransparentForm()->render() }}
-        @endforeach
-    </x-slot>
+            @foreach ($layout->filterByPosition('aside')->getComponents() as $component)
+                {{ $component->displayAsTransparentForm()->render() }}
+            @endforeach
+        </x-slot>
+    @endif
 
     @include('chief::templates.page._partials.editor-script')
 </x-chief::page.template>

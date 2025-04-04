@@ -13,18 +13,6 @@ enum LayoutVariant: string
     case warning = 'warning';
     case error = 'error';
 
-    public function cardClass(): string
-    {
-        return match ($this) {
-            self::none => '',
-            self::default => 'bg-grey-50 border border-grey-100',
-            self::success => 'bg-green-50 border border-green-100',
-            self::info => 'bg-blue-50 border border-blue-100',
-            self::warning => 'bg-orange-50 border border-orange-100',
-            self::error => 'bg-red-50 border border-red-100',
-        };
-    }
-
     public function labelClass(): string
     {
         return match ($this) {
