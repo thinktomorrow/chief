@@ -4,7 +4,7 @@
             <div class="space-y-3">
                 <div class="flex items-start justify-between gap-2">
                     <div class="mt-[0.1875rem] flex items-center gap-2">
-                        <p class="text-sm/6 font-medium text-grey-500">{{ $site->site->url }}</p>
+                        <p class="text-sm/6 font-medium text-grey-500">{{ $site->url->url }}</p>
 
                         <x-chief::badge variant="green" size="sm">
                             {{ $site->status->value }}
@@ -32,12 +32,17 @@
                 </div>
 
                 @if (! $this->queuedForDeletion($site->locale))
+                    {{-- @dd($site) --}}
                     <div>
                         <div class="row-start-start gutter-2">
                             <div class="w-full">
                                 <x-chief::form.fieldset rule="slug">
                                     <x-chief::form.label for="slug" required>Slug</x-chief::form.label>
-                                    <x-chief::form.input.prepend-append :prepend="$site->site->url">
+                                    <x-chief::form.input.prepend-append>
+                                        <x-slot name="prepend">
+                                            <x-chief::icon.home class="size-5" />
+                                        </x-slot>
+
                                         <x-chief::form.input.text
                                             id="slug"
                                             wire:model="form.{{ $site->locale }}.slug"
@@ -68,7 +73,7 @@
                             @if (count($contexts) > 1)
                                 <div class="w-full sm:w-1/2">
                                     <x-chief::form.fieldset rule="context">
-                                        <x-chief::form.label for="context">Context</x-chief::form.label>
+                                        <x-chief::form.label for="context">Versie pagina opbouw</x-chief::form.label>
                                         <x-chief::form.input.select
                                             id="context"
                                             wire:model="form.{{ $site->locale }}.context"

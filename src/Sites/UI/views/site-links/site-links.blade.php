@@ -42,14 +42,15 @@
                     </div>
 
                     <div class="flex items-start justify-between gap-2">
-                        <x-chief::link href="{{ $site->url?->url }}" title="{{ $site->url?->slug }}" class="leading-5">
-                            {{ $site->url?->slug }}
+                        <x-chief::link href="{{ $site->url?->url }}" title="{{ $site->url?->slug }}">
+                            <span>{{ $site->url?->slug }}</span>
+                            <x-chief::icon.link-square />
                         </x-chief::link>
 
                         @if ($site->contextId)
-                            <span class="inline-flex gap-0.5 text-sm/5 text-grey-500">
+                            <span class="my-0.5 inline-flex gap-0.5 text-sm/5 text-grey-500">
                                 <x-chief::icon.link class="my-0.5 size-4" />
-                                {{ $site->contextTitle }}
+                                {{ $site->contextTitle ?? 'Inhoud' }}
                             </span>
                         @endif
                     </div>

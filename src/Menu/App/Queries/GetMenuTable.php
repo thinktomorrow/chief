@@ -30,7 +30,7 @@ class GetMenuTable
                 ColumnText::make('link')
                     ->label('Link')
                     ->items(function ($model) {
-                        return $model->getUrl();
+                        return teaser($model->getUrl(), 48, '...');
                     })
                     ->openInNewTab()
                     ->link(function ($model) {
