@@ -14,6 +14,7 @@
                 '[&_[data-slot=label]+[data-slot=control]]:mt-2',
                 '[&_[data-slot=label]+[data-slot=description]]:mt-1',
                 '[&_[data-slot=label]+[data-slot=tabs]]:mt-1.5',
+                '[&_[data-slot=hint]+[data-slot=hint]]:mt-1',
             ])
         }}
     >
