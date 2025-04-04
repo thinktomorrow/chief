@@ -58,12 +58,6 @@ interface LocalizedField
     public function hasOwnLocaleValue(string $locale): bool;
 
     /**
-     * Group locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
-     * This is used to determine the tabs shown in the admin for the field.
-     */
-    public function getLocaleGroups(): array;
-
-    /**
      * Get all the localized keys for this field in bracketed format
      * e.g. ['name[nl]', 'name[en]']
      */

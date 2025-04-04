@@ -6,6 +6,7 @@ use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\CreateContext;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class CreateFirstContextForPage
 {

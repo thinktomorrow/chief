@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Site\Visitable\VisitableDefaults;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasSiteLocalesDefaults;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 

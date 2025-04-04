@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Models\Page;
 use Thinktomorrow\Chief\Models\PageDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page

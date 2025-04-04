@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasSiteLocales;
 
 trait LocalizedFieldDefaults
@@ -94,17 +95,6 @@ trait LocalizedFieldDefaults
     public function hasOwnLocaleValue(string $locale): bool
     {
         return ! is_null($this->getValue($locale));
-    }
-
-    /**
-     * Grouped locales by fallback logic. E.g. ['nl' => ['nl', 'en'], 'fr' => ['fr', 'fr-be']]
-     * This is used to determine the tabs shown in the admin for the field.
-     */
-    public function getLocaleGroups(): array
-    {
-        $localesWithOwnValue = array_filter($this->locales, fn ($locale) => $this->hasOwnLocaleValue($locale));
-
-        return ChiefSites::localeGroups($this->locales, $localesWithOwnValue);
     }
 
     public function getLocalizedKeys(): array

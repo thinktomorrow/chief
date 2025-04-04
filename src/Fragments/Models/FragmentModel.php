@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\FragmentResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 final class FragmentModel extends Model implements FragmentResource, HasAsset, ReferableModel

@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Menu\App\Actions\DeleteMenu;
 use Thinktomorrow\Chief\Menu\App\Actions\MenuApplication;
 use Thinktomorrow\Chief\Menu\App\Actions\UpdateMenu;
 use Thinktomorrow\Chief\Menu\Menu;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class EditMenu extends Component
 {

@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Menu\App\Actions\CreateMenu;
 use Thinktomorrow\Chief\Menu\App\Actions\MenuApplication;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class AddMenu extends Component
 {

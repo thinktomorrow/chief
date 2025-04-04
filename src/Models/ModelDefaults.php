@@ -6,6 +6,7 @@ use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\ManagedModels\States\SimpleState\UsesSimpleState;
 use Thinktomorrow\Chief\Resource\ResourceKeyFormat;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 trait ModelDefaults
