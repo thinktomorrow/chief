@@ -3,8 +3,10 @@
         <x-chief::callout :title="$site->site->name" wire:key="{{ $site->locale }}" variant="outline-white">
             <div class="space-y-3">
                 <div class="flex items-start justify-between gap-2">
-                    <div class="mt-[0.1875rem] flex items-center gap-2">
-                        <p class="text-sm/6 font-medium text-grey-500">{{ $site->url->url }}</p>
+                    <div class="mt-[0.1875rem] flex items-start gap-2">
+                        @if ($site->url)
+                            <p class="my-0.5 text-sm/5 font-medium text-grey-500">{{ $site->url->url }}</p>
+                        @endif
 
                         <x-chief::badge variant="green" size="sm">
                             {{ $site->status->value }}
