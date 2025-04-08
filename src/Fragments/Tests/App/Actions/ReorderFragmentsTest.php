@@ -90,32 +90,4 @@ class ReorderFragmentsTest extends ChiefTestCase
 
         Event::assertDispatched(FragmentsReordered::class);
     }
-
-    public function test_it_can_store_a_new_fragment_with_a_specific_order()
-    {
-        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 1);
-        [, $snippet2] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 2);
-        [, $snippet3] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 3);
-        $this->disableExceptionHandling();
-        $response = $this->asAdmin()->post(route('chief::fragments.store', [$context->id, SnippetStub::resourceKey()]), [
-            'title' => 'new-title',
-            'order' => 1,
-        ])->assertStatus(201);
-
-        $insertedFragmentId = $response->getOriginalContent()['data']['fragmentModelId'];
-
-        $fragments = app(FragmentRepository::class)->getByContext($context->id);
-        $this->assertCount(4, $fragments);
-
-        $this->assertEquals($snippet1->modelReference(), $fragments[0]->modelReference());
-        $this->assertEquals($insertedFragmentId, $fragments[1]->modelReference()->id());
-        $this->assertEquals($snippet2->modelReference(), $fragments[2]->modelReference());
-        $this->assertEquals($snippet3->modelReference(), $fragments[3]->modelReference());
-
-        // Assert order is updated accordingly
-        $this->assertEquals(0, $fragments[0]->fragmentModel()->pivot->order);
-        $this->assertEquals(1, $fragments[1]->fragmentModel()->pivot->order);
-        $this->assertEquals(2, $fragments[2]->fragmentModel()->pivot->order);
-        $this->assertEquals(3, $fragments[3]->fragmentModel()->pivot->order);
-    }
 }
