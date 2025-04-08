@@ -28,6 +28,9 @@
         <testsuite name="sites">
             <directory suffix="Test.php">./src/Sites/Tests</directory>
         </testsuite>
+        <testsuite name="urls">
+            <directory suffix="Test.php">./src/Urls/Tests</directory>
+        </testsuite>
         <testsuite name="plugins">
             <directory suffix="Test.php">./src/Plugins</directory>
         </testsuite>

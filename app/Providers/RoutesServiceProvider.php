@@ -16,7 +16,7 @@ use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
-use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 
 class RoutesServiceProvider extends ServiceProvider
 {

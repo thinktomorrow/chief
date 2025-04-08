@@ -22,6 +22,11 @@ class Contexts extends Component
         $this->resetActiveContext($activeContextId);
     }
 
+    public function showTabs(): bool
+    {
+        return count($this->getContexts()) > 1;
+    }
+
     /** @return Collection<ContextDto> */
     public function getContexts(): Collection
     {

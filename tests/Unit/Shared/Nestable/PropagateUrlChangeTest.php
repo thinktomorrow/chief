@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class PropagateUrlChangeTest extends ChiefTestCase
 {

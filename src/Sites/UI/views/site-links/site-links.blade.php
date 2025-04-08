@@ -4,7 +4,7 @@
     $model = \Thinktomorrow\Chief\Shared\ModelReferences\ModelReference::fromString($this->modelReference)->instance();
 @endphp
 
-<x-chief::window title="Status">
+<x-chief::window title="Links">
     <x-slot name="actions">
         @if ($model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page'))
             @foreach ($model->getStateKeys() as $stateKey)
@@ -12,7 +12,7 @@
             @endforeach
         @endif
 
-        <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
+        <x-chief::button wire:click="edit" size="sm" variant="grey" title="Links aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
         </x-chief::button>
     </x-slot>
@@ -30,30 +30,24 @@
                     <div class="flex items-start justify-between gap-2">
                         <p class="text-sm/5 text-grey-700">{{ $site->site->name }}</p>
 
-                        <x-chief::badge
-                            :variant="match($site->status->value) {
-                                'online' => 'green',
-                                'offline' => 'grey',
-                                default => 'grey',
-                            }"
-                        >
-                            {{ $site->status->value }}
+                        @php
+                            [$stateLabel, $stateVariant] = $site->status->influenceByModelState($model);
+                        @endphp
+
+                        <x-chief::badge :variant="$stateVariant">
+                            {{ $stateLabel }}
                         </x-chief::badge>
+
                     </div>
 
-                    <div class="flex items-start justify-between gap-2">
-                        <x-chief::link href="{{ $site->url?->url }}" title="{{ $site->url?->slug }}">
-                            <span>{{ $site->url?->slug }}</span>
-                            <x-chief::icon.link-square />
-                        </x-chief::link>
-
-                        @if ($site->contextId)
-                            <span class="my-0.5 inline-flex gap-0.5 text-sm/5 text-grey-500">
-                                <x-chief::icon.link class="my-0.5 size-4" />
-                                {{ $site->contextTitle ?? 'Inhoud' }}
-                            </span>
-                        @endif
-                    </div>
+                    @if($site->url)
+                        <div class="flex items-start justify-between gap-2">
+                            <x-chief::link size="xs" href="{{ $site->url->url }}" title="{{ $site->url->slug }}">
+                                <span>{{ $site->url->url }}</span>
+                                <x-chief::icon.link-square />
+                            </x-chief::link>
+                        </div>
+                    @endif
                 </div>
             @endforeach
         </div>

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
@@ -151,37 +152,34 @@ class ComposeFieldLines
     {
         $lines = new LinesCollection;
 
-        /** @var Fragment[] $fragment */
-        $fragments = app(FragmentRepository::class)->getByOwner($model instanceof Fragment ? $model->getFragmentModel() : $model);
+        $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
 
-        foreach ($fragments as $fragment) {
+        foreach ($contexts as $context) {
+            /** @var Fragment[] $fragment */
+            $fragments = app(FragmentRepository::class)->getByContext($context->id);
 
-            if ($this->ignoreOfflineFragments && $fragment->getFragmentModel()->isOffline()) {
-                continue;
-            }
+            foreach ($fragments as $fragment) {
 
-            // Shared fragments are only exported once to reduce translation lines
-            // First time we encounter a shared fragment, we add it to the ignored list
-            if ($fragment->getFragmentModel()->isShared()) {
-                if (in_array($fragment->getFragmentModel()->id, $this->ignoredFragments)) {
+                if ($this->ignoreOfflineFragments && $fragment->getFragmentModel()->isOffline()) {
                     continue;
-                } else {
-                    $this->ignoredFragments[] = $fragment->getFragmentModel()->id;
                 }
-            }
 
-            $lines = $lines->merge(
-                $this->extractFieldValues(
-                    $this->registry->resource($fragment::resourceKey()),
-                    $fragment,
-                    $locales
-                )
-            );
+                // Shared fragments are only exported once to reduce translation lines
+                // First time we encounter a shared fragment, we add it to the ignored list
+                if ($fragment->getFragmentModel()->isShared()) {
+                    if (in_array($fragment->getFragmentModel()->id, $this->ignoredFragments)) {
+                        continue;
+                    } else {
+                        $this->ignoredFragments[] = $fragment->getFragmentModel()->id;
+                    }
+                }
 
-            // Nested fragments
-            if ($fragment instanceof FragmentsOwner) {
                 $lines = $lines->merge(
-                    $this->addFragmentFieldValues($fragment, $locales)
+                    $this->extractFieldValues(
+                        $this->registry->resource($fragment::resourceKey()),
+                        $fragment,
+                        $locales
+                    )
                 );
             }
         }

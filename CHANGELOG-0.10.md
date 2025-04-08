@@ -59,8 +59,7 @@ class Image extends BaseFragment
 - Removed class `FragmentAssistant`.
 - Removed trait `Thinktomorrow\Chief\ManagedModels\Assistants\ModelDefaults`. Use
   `Thinktomorrow\Chief\Models\ModelDefaults`.
-- Removed interface `Thinktomorrow\Chief\ManagedModels\Assistants\ShowsPageState`. Use
-  `Thinktomorrow\Chief\Models\ShowsPageState`.
+- Removed interface `Thinktomorrow\Chief\ManagedModels\Assistants\ShowsPageState`.
 - Removed interface `Thinktomorrow\Chief\ManagedModels\Presets\Fragment`. Replaced by new interface
   `Thinktomorrow\Chief\Fragments\Fragment`.
 - Moved interface`Thinktomorrow\Chief\Fragments\Assistants\HasBookmark` to

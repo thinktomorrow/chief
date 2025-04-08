@@ -53,7 +53,7 @@ trait HasValueMapping
                     if ($model->urls->isNotEmpty()) {
                         return 'gepubliceerd';
                     } else {
-                        return 'gepubliceerd (link ontbreekt)';
+                        return 'gepubliceerd zonder links';
                     }
                 }
             }

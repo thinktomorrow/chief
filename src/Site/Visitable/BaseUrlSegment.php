@@ -38,4 +38,19 @@ class BaseUrlSegment
         // so we'll want to return it in case the base segment is not added.
         return $slugWithBaseSegment ?: '/';
     }
+
+    public static function strip(string $slug, string $baseUrlSegment): string
+    {
+        // If this is a '/' slug, it indicates the homepage for this locale. In this case,
+        // we wont be trimming the slash
+        if ($slug === '/') {
+            return $slug;
+        }
+
+        if ($baseUrlSegment && strpos($slug, $baseUrlSegment) === 0) {
+            return trim(substr($slug, strlen($baseUrlSegment)), '/');
+        }
+
+        return $slug;
+    }
 }

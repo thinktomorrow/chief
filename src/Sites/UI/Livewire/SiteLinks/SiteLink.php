@@ -3,9 +3,11 @@
 namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
 
 use Livewire\Wireable;
-use Thinktomorrow\Chief\Site\Urls\LinkStatus;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\SiteDto;
+use Thinktomorrow\Chief\Urls\App\Queries\GetBaseUrls;
+use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
 class SiteLink implements Wireable
 {
@@ -16,11 +18,12 @@ class SiteLink implements Wireable
         public readonly SiteDto $site,
         public readonly ?LinkUrl $url,
         public readonly LinkStatus $status,
+        public readonly array $baseUrls = [], // Per locale
     ) {
         //
     }
 
-    public static function empty(string $locale): self
+    public static function empty(Visitable $model, string $locale): self
     {
         $site = ChiefSites::all()->find($locale);
 
@@ -31,6 +34,7 @@ class SiteLink implements Wireable
             site: SiteDto::fromConfig($site),
             url: null,
             status: LinkStatus::offline,
+            baseUrls: app(GetBaseUrls::class)->get($model)
         );
     }
 
@@ -43,6 +47,7 @@ class SiteLink implements Wireable
             'site' => $this->site->toLivewire(),
             'url' => $this->url?->toArray(),
             'status' => $this->status->value,
+            'baseUrls' => $this->baseUrls,
         ];
     }
 
@@ -55,6 +60,7 @@ class SiteLink implements Wireable
             site: SiteDto::fromLivewire($value['site']),
             url: ($value['url'] ? LinkUrl::fromArray($value['url']) : null),
             status: LinkStatus::from($value['status']),
+            baseUrls: $value['baseUrls'] ?? [],
         );
     }
 }

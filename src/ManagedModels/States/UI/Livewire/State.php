@@ -24,6 +24,7 @@ class State extends Component
     {
         return [
             'model-state-updated' => 'onModelStateUpdated',
+            'site-links-updated' => 'onModelStateUpdated',
         ];
     }
 

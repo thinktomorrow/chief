@@ -20,15 +20,6 @@
 
                     <p class="leading-5 text-grey-500">{{ $site->url }}</p>
                 </div>
-
-                <div class="flex items-start justify-start gap-1">
-                    <p class="leading-5 text-grey-500">{{ $site->locale }}</p>
-
-                    @if ($site->fallbackLocale)
-                        <x-chief::icon.link class="my-0.5 size-4" />
-                        <p class="leading-5 text-grey-500">{{ $site->fallbackLocale }}</p>
-                    @endif
-                </div>
             </div>
         </label>
     @endforeach

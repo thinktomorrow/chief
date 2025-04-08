@@ -20,7 +20,6 @@ trait PageDefaults
     use HasSiteLocalesDefaults;
     use InteractsWithAssets;
     use ReferableModelDefault;
-    use ShowsPageState;
     use UsesPageState;
     use Viewable;
     use VisitableDefaults;

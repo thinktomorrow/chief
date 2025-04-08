@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Fragments\HasBookmark;
 use Thinktomorrow\Chief\Models\ModelDefaults;
 use Thinktomorrow\Chief\Models\Page;
 use Thinktomorrow\Chief\Models\PageDefaults;
-use Thinktomorrow\Chief\Models\ShowsPageState;
 use Thinktomorrow\Chief\Plugins\Upgrade\ListProjectFiles;
 use Thinktomorrow\Chief\Plugins\Upgrade\ReplaceTextInFile;
 
@@ -90,12 +89,14 @@ class UpgradeFrom9To10Command extends BaseCommand
             'use Thinktomorrow\Chief\Fragments\HasBookmark;' => '',
             'config(\'chief.locales\')` => `\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
             'config(\'chief.locales\',[])` => `\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
+            'Thinktomorrow\Chief\Site\Urls\UrlHelper' => 'Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper',
+            'Thinktomorrow\Chief\Site\Urls\UrlRecord' => 'Thinktomorrow\Chief\Urls\Models\UrlRecord',
+            '\Thinktomorrow\Chief\Site\Urls\ChiefResponse' => '\Thinktomorrow\Chief\Urls\ChiefResponse',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,
             'Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults' => PageDefaults::class,
             'Thinktomorrow\Chief\ManagedModels\Assistants\ModelDefaults' => ModelDefaults::class,
-            'Thinktomorrow\Chief\ManagedModels\Assistants\ShowsPageState' => ShowsPageState::class,
         ];
 
         /** @var \SplFileInfo $file */
@@ -115,6 +116,7 @@ class UpgradeFrom9To10Command extends BaseCommand
             'renderFragment(' => 'The following files have the old renderFragment method. This method has been removed in Chief 0.10. Please replace it with render().',
             'editInSidebar()' => 'The following files have the old Form::editInSidebar method. This method has been removed in Chief 0.10. Please remove it.',
             'showAsBlank()' => 'The following files have the old Form::showAsBlank method. This method has been removed in Chief 0.10. Please remove it.',
+            'ShowsPageState' => 'Trait ShowsPageState is removed. Please remove it from your model.',
         ];
 
         $allClean = true;

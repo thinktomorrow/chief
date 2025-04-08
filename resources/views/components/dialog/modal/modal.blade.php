@@ -13,7 +13,7 @@
     >
         <div
             x-on:click.stop="close()"
-            class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-primary-100/10 backdrop-blur-[2px]"
+            class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-black/25 backdrop-blur-[2px]"
         ></div>
 
         <div class="container pointer-events-none relative inline-flex max-w-screen-2xl justify-center">

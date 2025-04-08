@@ -10,24 +10,28 @@ use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ContextDto implements Wireable
 {
+    const DEFAULT_TITLE = 'Inhoud';
+
     public function __construct(
         public string $id,
-        public string $title,
+        public ?string $title,
         public ModelReference $ownerReference,
         public string $ownerLabel,
         public string $ownerAdminUrl,
         public array $locales = [],
+        public array $activeSites = [],
     ) {}
 
-    public static function fromContext(ContextModel $context, ModelReference $ownerReference, string $ownerLabel, string $ownerAdminUrl): self
+    public static function fromContext(ContextModel $model, ModelReference $ownerReference, string $ownerLabel, string $ownerAdminUrl): self
     {
         return new static(
-            $context->id,
-            $context->title ?? 'Inhoud',
+            $model->id,
+            $model->title ?? self::DEFAULT_TITLE,
             $ownerReference,
             $ownerLabel,
             $ownerAdminUrl,
-            $context->locales ?? [],
+            $model->locales ?? [],
+            $model->active_sites ?? [],
         );
     }
 
@@ -35,11 +39,12 @@ class ContextDto implements Wireable
     {
         return new static(
             'new-'.Str::random(),
-            '',
+            null,
             $ownerReference,
             $ownerLabel,
             $ownerAdminUrl,
             ChiefSites::locales(),
+            [],
         );
     }
 
@@ -52,6 +57,7 @@ class ContextDto implements Wireable
             'ownerLabel' => $this->ownerLabel,
             'ownerAdminUrl' => $this->ownerAdminUrl,
             'locales' => $this->locales,
+            'activeSites' => $this->activeSites,
         ];
     }
 
@@ -64,6 +70,7 @@ class ContextDto implements Wireable
             $value['ownerLabel'],
             $value['ownerAdminUrl'],
             $value['locales'],
+            $value['activeSites'] ?? [],
         );
     }
 }

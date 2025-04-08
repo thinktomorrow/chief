@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
+use Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper;
 
 trait ArchiveAssistant
 {

@@ -51,7 +51,7 @@
                 </x-slot>
 
                 <div class="space-y-2">
-                    <p>Opgelet. Alle fragmenten in deze paginaopbouw worden ook verwijderd.</p>
+                    <p>Opgelet. Alle fragmenten worden ook verwijderd.</p>
 
                     <div>
                         <x-chief::button variant="outline-red" x-on:click="$wire.deleteContext()">

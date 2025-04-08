@@ -9,12 +9,14 @@ use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\ContextDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Site\Urls\Application\CreateUrl;
-use Thinktomorrow\Chief\Site\Urls\Application\DeleteUrl;
-use Thinktomorrow\Chief\Site\Urls\Application\UpdateUrl;
-use Thinktomorrow\Chief\Site\Urls\LinkStatus;
 use Thinktomorrow\Chief\Sites\Actions\SaveSiteLocales;
 use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\WithAddingSites;
+use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\DeleteUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\UpdateUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
+use Thinktomorrow\Chief\Urls\App\ValidationRules\UniqueUrlSlugRule;
+use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
 class EditSiteLinks extends Component
 {
@@ -29,6 +31,10 @@ class EditSiteLinks extends Component
 
     /** @var Collection<ContextDto> */
     public Collection $contexts;
+
+    public array $deletionQueue = [];
+
+    public array $redirectDeletionQueue = [];
 
     public function mount(string $modelReference)
     {
@@ -63,7 +69,7 @@ class EditSiteLinks extends Component
 
     public function close()
     {
-        $this->reset(['form', 'sites', 'addingLocales']);
+        $this->reset(['form', 'sites', 'addingLocales', 'deletionQueue', 'redirectDeletionQueue']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -72,7 +78,7 @@ class EditSiteLinks extends Component
     public function saveAddingSites(): void
     {
         $addedSiteLinks = collect($this->addingLocales)->map(function ($locale) {
-            return SiteLink::empty($locale);
+            return SiteLink::empty(ModelReference::fromString($this->modelReference)->instance(), $locale);
         });
 
         $this->sites = $this->sites->merge($addedSiteLinks);
@@ -87,26 +93,17 @@ class EditSiteLinks extends Component
         return LinkStatus::options();
     }
 
-    public function deleteSite(string $locale): void
-    {
-        $form = $this->form;
-
-        $this->form[$locale] = null;
-    }
-
-    public function undoDeleteSite(string $locale): void
-    {
-        $this->initialFormValues();
-    }
-
     public function save()
     {
-        //        $this->validate([
-        //            'form.*.slug' => 'required',
-        //            'form.*.status' => 'required',
-        //        ]);
-
         $model = ModelReference::fromString($this->modelReference)->instance();
+
+        $this->validate([
+            'form.*.slug' => ['required', new UniqueUrlSlugRule($model, $model)],
+            'form.*.status' => 'required',
+        ], [
+            'form.*.slug.required' => 'Gelieve een link in te geven',
+            'form.*.status.required' => 'Status is verplicht',
+        ]);
 
         $locales = collect($this->form)->reject(fn ($values) => ! $values)->keys()->toArray();
 
@@ -117,39 +114,27 @@ class EditSiteLinks extends Component
             $siteLink = $this->sites->first(fn ($siteLink) => $siteLink->locale == $locale);
             $urlRecordExists = $siteLink->url && $siteLink->url->id;
 
-            if (! $values || ! $values['slug']) {
+            if ($urlRecordExists && in_array($locale, $this->deletionQueue)) {
+                app(UrlApplication::class)->delete(new DeleteUrl($siteLink->url->id));
 
-                if ($urlRecordExists) {
-                    app(DeleteUrl::class)->handle($siteLink->url->id);
-                }
-
-                // If slug is empty and no url record exists, we can skip this one
                 continue;
             }
 
             if ($urlRecordExists) {
-                app(UpdateUrl::class)->handle(
-                    $siteLink->url->id,
-                    $values['slug'],
-                    $values['context'],
-                    LinkStatus::from($values['status'])
-                );
+                app(UrlApplication::class)->update(new UpdateUrl($siteLink->url->id, $values['slug'], $values['status']));
 
                 continue;
             }
 
-            // Create
-            app(CreateUrl::class)->handle(
-                $model,
-                $locale,
-                $values['slug'],
-                $values['context'],
-                LinkStatus::from($values['status'])
-            );
+            app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), $locale, $values['slug'], $values['status']));
         }
 
-        $this->dispatch('site-links-updated')
-            ->to('chief-wire::site-links');
+        // Handle removing redirects ...
+        foreach ($this->redirectDeletionQueue as $recordId) {
+            app(UrlApplication::class)->delete(new DeleteUrl($recordId));
+        }
+
+        $this->dispatch('site-links-updated');
 
         $this->close();
     }
@@ -159,9 +144,34 @@ class EditSiteLinks extends Component
         return view('chief-sites::site-links.edit-site-links');
     }
 
+    public function deleteSite(string $locale): void
+    {
+        $this->deletionQueue[] = $locale;
+    }
+
+    public function undoDeleteSite(string $locale): void
+    {
+        $this->deletionQueue = collect($this->deletionQueue)->reject(fn ($value) => $value == $locale)->toArray();
+    }
+
     public function queuedForDeletion(string $locale): bool
     {
-        return ! isset($this->form[$locale]) || ! $this->form[$locale];
+        return array_search($locale, $this->deletionQueue) !== false;
+    }
+
+    public function deleteRedirect(string $recordId): void
+    {
+        $this->redirectDeletionQueue[] = $recordId;
+    }
+
+    public function undoDeleteRedirect(string $recordId): void
+    {
+        $this->redirectDeletionQueue = collect($this->redirectDeletionQueue)->reject(fn ($value) => $value == $recordId)->toArray();
+    }
+
+    public function redirectQueuedForDeletion(string $recordId): bool
+    {
+        return array_search($recordId, $this->redirectDeletionQueue) !== false;
     }
 
     private function initialFormValues()
@@ -174,7 +184,7 @@ class EditSiteLinks extends Component
             }
 
             $this->form[$siteLink->locale] = [
-                'slug' => $siteLink->url?->slug,
+                'slug' => $siteLink->url?->slugWithoutBaseUrlSegment,
                 'status' => $siteLink->status->value,
                 'context' => $siteLink->contextId,
             ];

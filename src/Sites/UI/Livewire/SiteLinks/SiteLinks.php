@@ -23,6 +23,7 @@ class SiteLinks extends Component
     {
         return [
             'site-links-updated' => 'onSiteLinksUpdated',
+            'model-state-updated' => 'onSiteLinksUpdated',
         ];
     }
 

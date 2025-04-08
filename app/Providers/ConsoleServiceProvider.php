@@ -14,11 +14,11 @@ use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
 use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
-use Thinktomorrow\Chief\App\Console\ImportRedirects;
 use Thinktomorrow\Chief\App\Console\ProjectMenuCommand;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\Plugins\Upgrade\Commands\UpgradeFrom9To10Command;
+use Thinktomorrow\Chief\Urls\App\Commands\ImportRedirects;
 
 class ConsoleServiceProvider extends ServiceProvider
 {

@@ -8,6 +8,7 @@ class LinkUrl
         public readonly string $id,
         public readonly string $url,
         public readonly string $slug,
+        public readonly string $slugWithoutBaseUrlSegment,
     ) {
         //
     }
@@ -18,6 +19,7 @@ class LinkUrl
             'id' => $this->id,
             'url' => $this->url,
             'slug' => $this->slug,
+            'slugWithoutBaseUrlSegment' => $this->slugWithoutBaseUrlSegment,
         ];
     }
 
@@ -27,6 +29,7 @@ class LinkUrl
             id: $data['id'],
             url: $data['url'],
             slug: $data['slug'],
+            slugWithoutBaseUrlSegment: $data['slugWithoutBaseUrlSegment'],
         );
     }
 }

@@ -84,7 +84,7 @@ return [
          * Use the following route snippet as a starting point:
          *
          *      Route::get('{slug?}', function($slug = '/'){
-         *          return \Thinktomorrow\Chief\Site\Urls\ChiefResponse::fromSlug($slug);
+         *          return \Thinktomorrow\Chief\Urls\ChiefResponse::fromSlug($slug);
          *      })->name('pages.show')->where('slug', '(.*)?');
          */
         'autoload' => env('CHIEF_ROUTE_AUTOLOAD', true),

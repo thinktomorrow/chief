@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\MenuLinkType;
 use Thinktomorrow\Chief\Menu\Tree\PrepareMenuItemsForAdminSelect;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
+use Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper;
 
 class MenuItemController extends Controller
 {

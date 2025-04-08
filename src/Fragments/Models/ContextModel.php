@@ -6,16 +6,22 @@ namespace Thinktomorrow\Chief\Fragments\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Thinktomorrow\Chief\Sites\HasActiveSites;
+use Thinktomorrow\Chief\Sites\HasActiveSitesDefaults;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasSiteLocalesDefaults;
 
-final class ContextModel extends Model
+final class ContextModel extends Model implements HasActiveSites, HasSiteLocales
 {
+    use HasActiveSitesDefaults;
+    use HasSiteLocalesDefaults;
+
     public $table = 'contexts';
 
     public $guarded = [];
 
     public $casts = [
         'id' => 'string',
-        'locales' => 'array',
     ];
 
     public function findFragmentModel($fragmentId): ?FragmentModel

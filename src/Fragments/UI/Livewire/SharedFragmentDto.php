@@ -6,7 +6,7 @@ use Livewire\Wireable;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
-class SharedFragmentDto implements Wireable
+readonly class SharedFragmentDto implements Wireable
 {
     public function __construct(
         public string $fragmentId,

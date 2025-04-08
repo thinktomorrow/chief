@@ -30,21 +30,20 @@ return new class extends Migration
             $this->insertDefaultContextLocales();
             $this->changeModelReferencesToKeyFormat();
             $this->copyContextFragmentLookupToTree();
-            $this->addActiveContextIdToUrl();
             $this->changeStateAccordingToOwnerState();
 
             return;
         }
 
         Schema::table('contexts', function (Blueprint $table) {
-            $table->json('locales')->after('owner_id')->nullable();
+            $table->json('active_sites')->after('owner_id')->nullable();
+            $table->json('locales')->after('active_sites')->nullable();
             $table->string('title')->nullable();
         });
 
         // DO MIGRATION
         // TODO: migration expand to different contexts per locale
         // TODO: migrate active context ids to each url db record.
-        $this->addActiveContextToUrl();
         $this->addStateToUrls();
         $this->changeFragmentIdColumnToChar();
         $this->removeSoftDeletion();
@@ -54,7 +53,6 @@ return new class extends Migration
         $this->insertDefaultContextLocales();
         $this->changeModelReferencesToKeyFormat();
         $this->copyContextFragmentLookupToTree();
-        $this->addActiveContextIdToUrl();
         $this->changeStateAccordingToOwnerState();
         $this->addSitesToMenuItems();
     }
@@ -65,15 +63,9 @@ return new class extends Migration
     {
         $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
 
-        DB::table('contexts')->update(['locales' => json_encode($locales)]);
-    }
-
-    public function addActiveContextToUrl(): void
-    {
-        Schema::table('chief_urls', function (Blueprint $table) {
-            $table->unsignedBigInteger('context_id')->nullable()->after('id');
-            $table->foreign('context_id')->references('id')->on('contexts')->nullOnDelete();
-        });
+        DB::table('contexts')->update([
+            'locales' => json_encode($locales),
+        ]);
     }
 
     public function addStateToUrls(): void
@@ -85,13 +77,13 @@ return new class extends Migration
 
     public function changeStateAccordingToOwnerState(): void
     {
-        $records = \Thinktomorrow\Chief\Site\Urls\UrlRecord::all();
+        $records = \Thinktomorrow\Chief\Urls\Models\UrlRecord::all();
 
         foreach ($records as $record) {
             $owner = $record->model;
 
             if ($owner && $owner->inOnlineState()) {
-                $record->status = \Thinktomorrow\Chief\Site\Urls\LinkStatus::online->value;
+                $record->status = \Thinktomorrow\Chief\Urls\Models\LinkStatus::online->value;
                 $record->save();
             }
         }
@@ -132,25 +124,6 @@ return new class extends Migration
 
             $table->unique(['context_id', 'parent_id', 'child_id']);
         });
-    }
-
-    private function addActiveContextIdToUrl(): void
-    {
-        // Get all contexts of all pages
-        $contextRows = DB::table('contexts')->whereNot('owner_type', 'fragmentmodel')->get();
-
-        foreach ($contextRows as $contextRow) {
-            $urlRecords = DB::table('chief_urls')
-                ->where('model_type', $contextRow->owner_type)
-                ->where('model_id', $contextRow->owner_id)
-                ->get();
-
-            foreach ($urlRecords as $urlRecord) {
-                DB::table('chief_urls')->where('id', $urlRecord->id)->update([
-                    'context_id' => $contextRow->id,
-                ]);
-            }
-        }
     }
 
     private function copyContextFragmentLookupToTree(): void

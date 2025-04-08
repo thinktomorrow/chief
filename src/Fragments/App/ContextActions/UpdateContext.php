@@ -10,12 +10,15 @@ final class UpdateContext
 
     private array $locales;
 
+    private array $activeSites;
+
     private ?string $title;
 
-    public function __construct(string $contextId, array $locales, ?string $title = null)
+    public function __construct(string $contextId, array $locales, array $activeSites, ?string $title = null)
     {
         $this->contextId = $contextId;
         $this->locales = $locales;
+        $this->activeSites = $activeSites;
         $this->title = $title;
     }
 
@@ -27,6 +30,11 @@ final class UpdateContext
     public function getLocales(): array
     {
         return $this->locales;
+    }
+
+    public function getActiveSites(): array
+    {
+        return $this->activeSites;
     }
 
     public function getTitle(): ?string

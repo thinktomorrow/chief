@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 
 class AttachFragmentTest extends ChiefTestCase
 {
@@ -27,7 +27,7 @@ class AttachFragmentTest extends ChiefTestCase
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
         $this->context = FragmentTestHelpers::findOrCreateContext($this->owner);
-        $this->fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $this->context->id);
+        $this->fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $this->context->id);
     }
 
     public function test_a_context_can_attach_a_root_fragment()
@@ -46,7 +46,7 @@ class AttachFragmentTest extends ChiefTestCase
     public function test_a_context_can_attach_an_fragment_with_a_given_order()
     {
         $context = FragmentTestHelpers::createContext($this->owner);
-        $otherFragmentId = FragmentTestHelpers::createFragment(Quote::class)->getFragmentId();
+        $otherFragmentId = FragmentTestHelpers::createFragment(Hero::class)->getFragmentId();
 
         $this->asAdmin()
             ->post(route('chief::fragments.attach-root', [$context->id, $this->fragment->getFragmentModel()->id]).'?order=0')
@@ -65,7 +65,7 @@ class AttachFragmentTest extends ChiefTestCase
     public function test_a_fragment_can_attach_a_nested_fragment()
     {
         $parentFragmentId = $this->fragment->getFragmentId();
-        $otherFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
+        $otherFragmentId = app(CreateFragment::class)->handle(Hero::resourceKey(), []);
 
         $this->asAdmin()
             ->post(route('chief::fragments.attach', [$this->context->id, $otherFragmentId, $parentFragmentId]))
@@ -92,8 +92,8 @@ class AttachFragmentTest extends ChiefTestCase
     public function test_it_cannot_add_a_fragment_twice()
     {
         $parentFragmentId = $this->fragment->getFragmentId();
-        $parentFragmentId2 = FragmentTestHelpers::createAndAttachFragment(Quote::class, $this->context->id)->getFragmentId();
-        $otherFragmentId = app(CreateFragment::class)->handle(Quote::resourceKey(), []);
+        $parentFragmentId2 = FragmentTestHelpers::createAndAttachFragment(Hero::class, $this->context->id)->getFragmentId();
+        $otherFragmentId = app(CreateFragment::class)->handle(Hero::resourceKey(), []);
 
         $this->asAdmin()
             ->post(route('chief::fragments.attach', [$this->context->id, $otherFragmentId, $parentFragmentId]))

@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Controllers;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 
 class SelectFragmentTest extends ChiefTestCase
 {
@@ -29,7 +29,7 @@ class SelectFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_select_existing()
     {
-        FragmentTestHelpers::createContextAndAttachFragment($this->owner, Quote::class);
+        FragmentTestHelpers::createContextAndAttachFragment($this->owner, Hero::class);
         $context2 = FragmentTestHelpers::createContext(ArticlePage::create());
 
         $this->asAdmin()
@@ -50,7 +50,7 @@ class SelectFragmentTest extends ChiefTestCase
 
     public function test_admin_can_view_the_fragment_select_existing_and_ignores_already_selected_ones()
     {
-        [$context] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, Quote::class);
+        [$context] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, Hero::class);
 
         $this->asAdmin()
             ->get(route('chief::fragments.existing', [$context->id]))

@@ -7,8 +7,8 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\File;
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Sites\ChiefSites;
@@ -22,9 +22,9 @@ class Quote extends BaseFragment implements Fragment, HasAsset
 
     public function fields($model): iterable
     {
-        yield Fields\Text::make('title')->rules('min:4');
-        yield Fields\Text::make('title_trans')->locales(['nl', 'en']);
-        yield Fields\Text::make('custom')
+        yield Text::make('title')->rules('min:4');
+        yield Text::make('title_trans')->locales(['nl', 'en']);
+        yield Text::make('custom')
             ->required()
             ->validationMessages(['required' => 'custom error for :attribute'])
             ->validationAttribute('custom attribute')

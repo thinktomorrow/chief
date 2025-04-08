@@ -15,9 +15,9 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Site\Urls\LinkStatus;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper;
+use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
 class PageStateConfig implements StateAdminConfig
 {
@@ -139,7 +139,7 @@ class PageStateConfig implements StateAdminConfig
     {
         return match ($statefulContract->getState($this->getStateKey())) {
             PageState::draft => '<p>De pagina staat momenteel in draft. Klik op publiceren om de pagina online te zetten.</p>',
-            PageState::published => '<p>De pagina is momenteel gepubliceerd. Klik op offline halen om de pagina offline te zetten.</p>',
+            PageState::published => '<p>De pagina is momenteel gepubliceerd. Zet terug in draft om de pagina offline te zetten.</p>',
             PageState::archived => '<p>De pagina is momenteel gearchiveerd. Klik op herstellen om de pagina terug online te zetten.</p>',
             default => null,
         };

@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 
 use function auth;
 use function route;
@@ -16,7 +16,7 @@ class EditFragmentTest extends ChiefTestCase
 {
     private ArticlePage $owner;
 
-    private Quote $fragment;
+    private Hero $fragment;
 
     private ContextModel $context;
 
@@ -27,7 +27,7 @@ class EditFragmentTest extends ChiefTestCase
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
         $this->context = FragmentTestHelpers::createContext($this->owner);
-        $this->fragment = FragmentTestHelpers::createAndAttachFragment(Quote::class, $this->context->id);
+        $this->fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $this->context->id);
     }
 
     public function test_admin_can_view_the_fragment_edit_form()

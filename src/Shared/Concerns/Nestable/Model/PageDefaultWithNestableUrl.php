@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
 
 use Thinktomorrow\Chief\Models\PageDefaults;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Urls\App\Listeners\PropagateUrlChange;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 trait PageDefaultWithNestableUrl
 {

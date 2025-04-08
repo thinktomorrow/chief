@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Listeners;
 
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
-use Thinktomorrow\Chief\Site\Urls\Application\RedirectUrl;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Urls\App\Actions\Redirects\AddRedirect;
+use Thinktomorrow\Chief\Urls\App\Actions\Redirects\RedirectApplication;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class PropagateArchivedUrl
 {
@@ -27,7 +28,7 @@ class PropagateArchivedUrl
             if ($targetRecord = $targetRecords->first(function ($record) use ($urlRecord) {
                 return $record->locale == $urlRecord->locale && ! $record->isRedirect();
             })) {
-                app(RedirectUrl::class)->handle($urlRecord, $targetRecord);
+                app(RedirectApplication::class)->addRedirect(new AddRedirect($urlRecord->id, $targetRecord->id));
             }
         }
 

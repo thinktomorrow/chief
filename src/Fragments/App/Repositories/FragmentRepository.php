@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentCollection;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 final class FragmentRepository
 {
@@ -103,21 +102,5 @@ final class FragmentRepository
         }
 
         return $nextId;
-    }
-
-    /**
-     * @deprecated use GetByContext instead
-     */
-    public function getByOwner(ReferableModel $owner): Collection
-    {
-        throw new \Exception('No more usage of FragmentRepository::getByOwner');
-        //
-        //        if (! $context = $this->contextRepository->findByOwner($owner)) {
-        //            return collect();
-        //        }
-        //
-        //        return $context->fragments()
-        //            ->get()
-        //            ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel));
     }
 }

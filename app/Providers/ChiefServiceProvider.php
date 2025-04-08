@@ -51,10 +51,11 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\MenuServiceProvider;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
-use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
 use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
+use Thinktomorrow\Chief\Urls\App\Listeners\CreateFirstPageUrls;
+use Thinktomorrow\Chief\Urls\App\Listeners\PropagateUrlChange;
+use Thinktomorrow\Chief\Urls\UrlsServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 
@@ -72,6 +73,7 @@ class ChiefServiceProvider extends ServiceProvider
         SquantoServiceProvider::class,
         RoutesServiceProvider::class,
         FragmentsServiceProvider::class,
+        UrlsServiceProvider::class,
         MenuServiceProvider::class,
         SquantoManagerServiceProvider::class,
         AssetsServiceProvider::class,
@@ -108,6 +110,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
+        (new UrlsServiceProvider($this->app))->bootAdmin();
         (new FragmentsServiceProvider($this->app))->bootAdmin();
         (new MenuServiceProvider($this->app))->bootAdmin();
         (new TableServiceProvider($this->app))->boot();
@@ -135,6 +138,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->bootChiefAuth();
 
+        (new UrlsServiceProvider($this->app))->boot();
         (new FragmentsServiceProvider($this->app))->boot();
         (new MenuServiceProvider($this->app))->boot();
     }
@@ -188,7 +192,7 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(InviteAccepted::class, EnableUser::class.'@onAcceptingInvite');
 
         // Managed model events
-        Event::listen(ManagedModelCreated::class, [CreateUrlForPage::class, 'onManagedModelCreated']);
+        Event::listen(ManagedModelCreated::class, [CreateFirstPageUrls::class, 'onManagedModelCreated']);
         Event::listen(ManagedModelCreated::class, [CreateFirstContextForPage::class, 'onManagedModelCreated']);
         Event::listen(ManagedModelUrlUpdated::class, [TriggerPageChangedEvent::class, 'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [ProjectModelData::class, 'onManagedModelUrlUpdated']);
@@ -241,6 +245,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new SitesServiceProvider($this->app))->register();
         (new StatesServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
+        (new UrlsServiceProvider($this->app))->register();
         (new FragmentsServiceProvider($this->app))->register();
         (new MenuServiceProvider($this->app))->register();
 

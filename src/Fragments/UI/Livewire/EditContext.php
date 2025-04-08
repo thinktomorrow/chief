@@ -12,9 +12,9 @@ use Thinktomorrow\Chief\Fragments\App\ContextActions\UpdateContext;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasSiteContexts;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class EditContext extends Component
 {

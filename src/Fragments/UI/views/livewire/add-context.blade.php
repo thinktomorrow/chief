@@ -1,39 +1,40 @@
-<x-chief::dialog.modal wired size="sm" title="Voeg een inhoud toe">
+<x-chief::dialog.modal wired size="sm" title="Voeg extra tab met fragmenten toe"
+                       subtitle="Je kan meerdere tabs met fragmenten beheren. Zo kan je specifieke fragmenten per site voorzien.">
     @if ($isOpen)
         <x-chief::form.fieldset rule="form.title">
             <x-chief::form.label for="title">Titel</x-chief::form.label>
             <x-chief::form.input.text id="title" wire:model="form.title" />
         </x-chief::form.fieldset>
 
-        <x-chief::form.fieldset rule="form.locales">
-            <x-chief::form.label for="locales">
-                Welke talen wens je te gebruiken in deze fragmenten?
-            </x-chief::form.label>
+        <x-chief::form.fieldset x-data="{showField: false}" rule="form.locales">
+            <x-chief::button x-show="!showField" x-on:click="showField = true">
+                <x-chief::icon.plus-sign class="size-5" />
+                <span>Fragmenten in een specifieke taal voorzien?</span>
+            </x-chief::button>
 
-            <x-chief::multiselect
-                wire:model="form.locales"
-                :multiple="true"
-                :options="$this->getAvailableLocales()"
-                x-on:click="(e) => {
+            <div x-show="showField">
+
+                <x-chief::form.label for="locales">
+                    Geef hier de taalversies op die je wil voorzien.
+                </x-chief::form.label>
+
+                <x-chief::form.description>
+                    Dit is enkel nodig als je fragmenten in een specifieke taal wil voorzien.
+                </x-chief::form.description>
+
+                <x-chief::multiselect
+                    wire:model="form.locales"
+                    :multiple="true"
+                    :options="$this->getAvailableLocales()"
+                    x-on:click="(e) => {
                     // Scroll to bottom of modal content so the multiselect dropdown is fully visible
                     e.target.closest(`[data-slot='content']`).scrollTo({top:9999, behavior: 'smooth'})
                 }"
-            />
-        </x-chief::form.fieldset>
-
-        <x-chief::callout data-slot="form-group" variant="blue">
-            <x-slot name="icon">
-                <x-chief::icon.solid.information-diamond />
-            </x-slot>
-
-            <div class="space-y-2">
-                <p>
-                    Je kan meerdere inhouden naast elkaar beheren. Zo kan je een paginaopbouw per site voorzien. Of een
-                    variatie in teksten, afbeeldingen of volgorde
-                    van fragmenten.
-                </p>
+                />
             </div>
-        </x-chief::callout>
+
+
+        </x-chief::form.fieldset>
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>

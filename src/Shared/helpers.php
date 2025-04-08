@@ -4,6 +4,9 @@
  * Wrapper around the dd helper from Symfony. This function provides the file from where the
  * dd function has been called so you won't be in the dark when finding it again.
  */
+
+use Thinktomorrow\Chief\Fragments\Models\FragmentCollection;
+
 if (! function_exists('trap')) {
     function trap($var, ...$moreVars): void
     {
@@ -32,8 +35,16 @@ if (! function_exists('chiefAdmin')) {
 if (! function_exists('getFragments')) {
     function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\Models\FragmentCollection
     {
+        if (! $contextId && \Thinktomorrow\Chief\Fragments\ActiveContextId::exists()) {
+            $contextId = \Thinktomorrow\Chief\Fragments\ActiveContextId::get();
+        }
+
+        if (! $contextId) {
+            return new FragmentCollection;
+        }
+
         return app(\Thinktomorrow\Chief\Fragments\App\Queries\GetFragments::class)->get(
-            $contextId ?: app(\Thinktomorrow\Chief\Fragments\ActiveContextId::class)->get()
+            $contextId
         );
     }
 }

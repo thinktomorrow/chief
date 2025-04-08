@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Sites\Tests\UI;
 
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
+use Thinktomorrow\Chief\Urls\App\Actions\SaveUrlSlugs;
 
 class SiteLinksBoxTest extends ChiefTestCase
 {

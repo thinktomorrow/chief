@@ -9,6 +9,14 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class ContextRepository
 {
+    public function findBySite(ModelReference $modelReference, string $site): ?ContextModel
+    {
+        return ContextModel::byActiveSite($site)
+            ->where('owner_type', $modelReference->shortClassName())
+            ->where('owner_id', $modelReference->id())
+            ->first();
+    }
+
     public function getByOwner(ModelReference $modelReference): \Illuminate\Support\Collection
     {
         return ContextModel::where('owner_type', $modelReference->shortClassName())
@@ -19,11 +27,13 @@ class ContextRepository
 
     public function getDefaultContextId(ModelReference $modelReference): ?string
     {
-        return (string) ContextModel::where('owner_type', $modelReference->shortClassName())
+        $contextId = ContextModel::where('owner_type', $modelReference->shortClassName())
             ->where('owner_id', $modelReference->id())
             ->orderBy('created_at', 'ASC')
             ->select('id')
             ->first()?->id;
+
+        return $contextId ? (string) $contextId : null;
     }
 
     public function find(string $contextId): ContextModel
@@ -31,12 +41,13 @@ class ContextRepository
         return ContextModel::with('owner')->findOrFail($contextId);
     }
 
-    public function create(ModelReference $ownerReference, array $locales, ?string $title = null): ContextModel
+    public function create(ModelReference $ownerReference, array $locales, array $activeSites, ?string $title = null): ContextModel
     {
         return ContextModel::create([
             'owner_type' => $ownerReference->shortClassName(),
             'owner_id' => $ownerReference->id(),
             'locales' => $locales,
+            'active_sites' => $activeSites,
             'title' => $title,
         ]);
     }
@@ -48,6 +59,13 @@ class ContextRepository
             ->select(['contexts.*'])
             ->with('owner')
             ->get();
+    }
+
+    public function countContexts(ModelReference $modelReference): int
+    {
+        return ContextModel::where('owner_type', $modelReference->shortClassName())
+            ->where('owner_id', $modelReference->id())
+            ->count();
     }
 
     public function countFragments(string $fragmentId): int

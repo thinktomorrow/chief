@@ -10,9 +10,9 @@ trait HasLayoutVariant
 {
     protected LayoutVariant $layoutVariant = LayoutVariant::none;
 
-    public function layoutType(string $variant): static
+    public function layoutVariant(string|LayoutVariant $variant): static
     {
-        $this->layoutVariant = LayoutVariant::from($variant);
+        $this->layoutVariant = $variant instanceof LayoutVariant ? $variant : LayoutVariant::from($variant);
 
         return $this;
     }

@@ -8,18 +8,26 @@ use Illuminate\Support\Collection;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use Thinktomorrow\AssetLibrary\AssetContract;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class ImageSitemapXml
 {
     /** @var Sitemap */
     private $sitemap;
 
-    public function __construct()
+    private ContextRepository $contextRepository;
+
+    private FragmentRepository $fragmentRepository;
+
+    public function __construct(ContextRepository $contextRepository, FragmentRepository $fragmentRepository)
     {
         $this->reset();
+
+        $this->contextRepository = $contextRepository;
+        $this->fragmentRepository = $fragmentRepository;
     }
 
     private function reset(): void
@@ -36,7 +44,7 @@ class ImageSitemapXml
         return $this->generateXml($models, $locale);
     }
 
-    private function generateXml(Collection $models, $locale): string
+    private function generateXml(Collection $models, string $locale): string
     {
         foreach ($models as $model) {
             $urlTag = Url::create($model->url($locale));
@@ -68,11 +76,16 @@ class ImageSitemapXml
         });
     }
 
-    private function getAssetsFromModel(Visitable $model, $locale): Collection
+    private function getAssetsFromModel(Visitable $model, string $locale): Collection
     {
         $assets = $model->assets(null, $locale);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($model)->reject(function ($fragment) {
+        if (! $context = $this->contextRepository->findBySite($model->modelReference(), $locale)) {
+
+            return $assets;
+        }
+
+        $fragments = $this->fragmentRepository->getByContext($context->id)->reject(function ($fragment) {
             return $fragment->getFragmentModel()->isOffline();
         });
 

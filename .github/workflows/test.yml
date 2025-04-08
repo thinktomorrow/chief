@@ -50,5 +50,8 @@ jobs:
       - name: Execute table tests
         run: vendor/bin/phpunit --testsuite table
 
+      - name: Execute urls tests
+        run: vendor/bin/phpunit --testsuite urls
+
       - name: Execute sites tests
         run: vendor/bin/phpunit --testsuite sites
