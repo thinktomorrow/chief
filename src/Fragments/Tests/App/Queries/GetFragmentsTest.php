@@ -68,4 +68,21 @@ class GetFragmentsTest extends ChiefTestCase
 
         $this->assertCount(0, $fragments);
     }
+
+    public function test_fragments_can_be_rendered_with_fallback_locale()
+    {
+        $context = FragmentTestHelpers::createContext($this->owner);
+
+        FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id, null, 0, ['title_trans' => ['en' => 'foobar EN'], 'custom' => 'foobar']);
+
+        $this->assertEquals("THIS IS SNIPPET STUB VIEW foobar EN\n", $this->owner->renderView());
+    }
+
+    public function test_fragments_can_be_rendered_by_locale()
+    {
+        $context = FragmentTestHelpers::createContext($this->owner);
+        FragmentTestHelpers::createAndAttachFragment(Quote::class, $context->id, null, 0, ['title_trans' => ['en' => 'foobar EN'], 'custom' => 'foobar']);
+
+        $this->assertEquals("THIS IS SNIPPET STUB VIEW foobar\n", $this->owner->renderView());
+    }
 }

@@ -24,7 +24,6 @@
 
 - action tests
 - query tests
-- controller tests
 - UI tests
 - Domain tests
 

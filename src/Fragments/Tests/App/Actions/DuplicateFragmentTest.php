@@ -99,4 +99,26 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertEquals($originalFragmentAsset->pivot->type, $duplicatedFragmentAsset->pivot->type);
         $this->assertEquals($originalFragmentAsset->pivot->locale, $duplicatedFragmentAsset->pivot->locale);
     }
+
+    public function test_nested_fragments_are_also_duplicated()
+    {
+        $targetContext = FragmentTestHelpers::createContext($this->owner);
+
+        // Create nested fragment
+        $nestedFragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $this->context->id, $this->fragment->getFragmentId());
+
+        app(DuplicateFragment::class)->handle(
+            $this->fragment->getFragmentModel(),
+            $this->context->id,
+            $targetContext->id,
+            null,
+            1
+        );
+
+        $this->assertEquals(4, FragmentModel::count());
+        $this->assertCount(2, $this->context->fragments()->get());
+        $this->assertCount(2, $targetContext->fragments()->get());
+
+        $this->assertNotEquals($this->fragment->getFragmentId(), $targetContext->fragments()->first()->getFragmentId());
+    }
 }
