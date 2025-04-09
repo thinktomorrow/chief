@@ -64,7 +64,7 @@ final class ChiefResponse
 
         $model = self::findModel($urlRecord);
 
-        ActiveContextId::setOrDefault($urlRecord->context_id, $model);
+        ActiveContextId::setForSite($urlRecord->site, $model);
 
         return $model->response();
     }

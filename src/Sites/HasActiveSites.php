@@ -19,4 +19,6 @@ interface HasActiveSites
     public function hasActiveSite($site): bool;
 
     public function scopeByActiveSite(Builder $query, string $site): void;
+
+    public function scopeByActiveSiteOrNone(Builder $query, string $site): void;
 }

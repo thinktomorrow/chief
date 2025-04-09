@@ -13,19 +13,14 @@ class ActiveContextId
         self::$activeContextId = (string) $activeContextId;
     }
 
-    public static function setOrDefault(null|string|int $activeContextId, $model): void
+    public static function setForSite(string $site, $model): void
     {
-        if ($activeContextId) {
-            self::set($activeContextId);
-
+        if (! $model instanceof ContextOwner) {
             return;
         }
 
-        // Use the default context if none is set explicitly for this site link
-        if ($model instanceof ContextOwner) {
-            if ($defaultContextId = app(ContextRepository::class)->getDefaultContextId($model->modelReference())) {
-                self::set($defaultContextId);
-            }
+        if ($contextId = app(ContextRepository::class)->guessContextIdForSite($model->modelReference(), $site)) {
+            self::set($contextId);
         }
     }
 

@@ -38,4 +38,13 @@ trait HasActiveSitesDefaults
     {
         $query->whereJsonContains($this->getTable().'.active_sites', $site);
     }
+
+    public function scopeByActiveSiteOrNone(Builder $query, string $site): void
+    {
+        $query->when($site, fn ($q) => $q->where(function ($q) use ($site) {
+            $q->whereJsonContains($this->getTable().'.active_sites', $site)
+                ->orWhereNull($this->getTable().'.active_sites')
+                ->orWhereJsonLength($this->getTable().'.active_sites', '=', 0);
+        }));
+    }
 }

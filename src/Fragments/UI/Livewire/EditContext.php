@@ -63,6 +63,7 @@ class EditContext extends Component
         $this->form = [
             'title' => $this->context->title,
             'locales' => $this->context->locales,
+            'active_sites' => $this->context->activeSites,
         ];
     }
 
@@ -98,10 +99,11 @@ class EditContext extends Component
         app(ContextApplication::class)->update(new UpdateContext(
             $this->context->id,
             $this->form['locales'] ?? [],
+            $this->form['active_sites'] ?? [],
             $this->form['title'] ?? null
         ));
 
-        $this->dispatch($this->modelReference.'-contexts-updated', ...[
+        $this->dispatch($this->modelReference.'-contexts-updated', [
             'contextId' => $this->context->id,
         ]);
 

@@ -25,9 +25,10 @@ class ContextRepository
             ->get();
     }
 
-    public function getDefaultContextId(ModelReference $modelReference): ?string
+    public function guessContextIdForSite(ModelReference $modelReference, string $site): ?string
     {
-        $contextId = ContextModel::where('owner_type', $modelReference->shortClassName())
+        $contextId = ContextModel::byActiveSiteOrNone($site)
+            ->where('owner_type', $modelReference->shortClassName())
             ->where('owner_id', $modelReference->id())
             ->orderBy('created_at', 'ASC')
             ->select('id')

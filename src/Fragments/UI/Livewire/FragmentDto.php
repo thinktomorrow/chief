@@ -26,7 +26,7 @@ class FragmentDto implements Wireable
         public bool $isOnline,
         public bool $isShared,
         public string $bookmark,
-        public array $urls, // Front end urls for this fragment per locale
+        public array $urls, // Frontend urls for this fragment per locale
         public ContextDto $context,
         public Collection $fields,
         public Collection $sharedFragmentDtos,

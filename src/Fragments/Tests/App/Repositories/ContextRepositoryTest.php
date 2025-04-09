@@ -98,14 +98,14 @@ class ContextRepositoryTest extends ChiefTestCase
     {
         $context1 = $this->contextRepository->create($this->owner->modelReference(), []);
         $context2 = $this->contextRepository->create($this->owner->modelReference(), []);
-        $defaultId = $this->contextRepository->getDefaultContextId($this->owner->modelReference());
+        $defaultId = $this->contextRepository->guessContextIdForSite($this->owner->modelReference());
 
         $this->assertEquals($context1->id, $defaultId);
     }
 
     public function test_it_returns_null_for_default_context_id_if_none_exist()
     {
-        $defaultId = $this->contextRepository->getDefaultContextId($this->owner->modelReference());
+        $defaultId = $this->contextRepository->guessContextIdForSite($this->owner->modelReference());
         $this->assertNull($defaultId);
     }
 

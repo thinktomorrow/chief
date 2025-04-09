@@ -28,4 +28,9 @@ class Hero extends BaseFragment
     {
         return 'hero';
     }
+
+    public function adminViewPath(): string
+    {
+        return 'fragments.hero-preview';
+    }
 }
