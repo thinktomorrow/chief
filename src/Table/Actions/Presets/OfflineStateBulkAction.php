@@ -12,7 +12,7 @@ class OfflineStateBulkAction extends Action
     public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'unpublish'): static
     {
         return static::make('offline-state-bulk')
-            ->label('Zet offline')
+            ->label('Zet terug in draft')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
                 $modelIds = $data['items'];
                 $failedModelIds = [];
@@ -33,7 +33,7 @@ class OfflineStateBulkAction extends Action
 
                 return true;
             })
-            ->notifyOnSuccess('De selectie staat offline!')
-            ->notifyOnFailure('Er is iets misgegaan bij het offline plaatsen.');
+            ->notifyOnSuccess('De selectie staat in draft!')
+            ->notifyOnFailure('Er is iets misgegaan bij het in draft zetten.');
     }
 }

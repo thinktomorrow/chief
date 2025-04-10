@@ -18,6 +18,7 @@ use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
+use Thinktomorrow\Chief\Table\Columns\Presets\LinksColumnBadge;
 use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
 use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
 use Thinktomorrow\Chief\Table\Sorters\Sort;
@@ -59,6 +60,7 @@ class PageTable extends Table
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
                 })->tease(64, '...'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
+                LinksColumnBadge::makeDefault(),
                 ColumnDate::make('updated_at')
                     ->label('Aangepast')
                     ->format('d/m/Y H:i'),
