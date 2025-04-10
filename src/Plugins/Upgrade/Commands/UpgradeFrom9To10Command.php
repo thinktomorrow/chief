@@ -87,11 +87,12 @@ class UpgradeFrom9To10Command extends BaseCommand
             '->windowView(' => '->previewView(',
             'Fragment, HasBookmark' => 'Fragment', // HasBookmark already included
             'use Thinktomorrow\Chief\Fragments\HasBookmark;' => '',
-            'config(\'chief.locales\')` => `\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
-            'config(\'chief.locales\',[])` => `\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
+            'config(\'chief.locales\')' => '\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
+            'config(\'chief.locales\',[])' => '\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
             'Thinktomorrow\Chief\Site\Urls\UrlHelper' => 'Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper',
             'Thinktomorrow\Chief\Site\Urls\UrlRecord' => 'Thinktomorrow\Chief\Urls\Models\UrlRecord',
-            '\Thinktomorrow\Chief\Site\Urls\ChiefResponse' => '\Thinktomorrow\Chief\Urls\ChiefResponse',
+            'Thinktomorrow\Chief\Site\Urls\ChiefResponse' => 'Thinktomorrow\Chief\Urls\ChiefResponse',
+            'Thinktomorrow\Chief\Urls\Models\UrlRecordNotFound' => 'Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,
