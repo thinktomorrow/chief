@@ -63,7 +63,7 @@ class EditMenuSites extends Component
     {
         app(SaveMenuSites::class)->handle(MenuType::find($this->type), $this->form);
 
-        $this->dispatch('sites-updated')
+        $this->dispatch('site-selection-updated')
             ->to('chief-wire::menu-sites');
 
         $this->close();

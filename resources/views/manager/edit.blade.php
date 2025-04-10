@@ -25,7 +25,7 @@
 
             <x-slot name="actions">
                 @if ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales)
-                    <livewire:chief-wire::site-tabs :model="$model" />
+                    <livewire:chief-wire::site-toggle :model="$model" />
                 @endif
 
                 @include('chief::manager._partials.edit-actions')
@@ -56,7 +56,7 @@
             @elseif ($hasSiteContexts)
                 <livewire:chief-wire::site-contexts :model="$model" />
             @elseif ($hasSites)
-                <livewire:chief-wire::sites :model="$model" />
+                <livewire:chief-wire::site-selection :model="$model" />
             @endif
 
             @foreach ($layout->filterByPosition('aside')->getComponents() as $component)

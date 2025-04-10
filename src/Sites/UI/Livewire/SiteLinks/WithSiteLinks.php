@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\SiteDto;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 use Thinktomorrow\Chief\Urls\App\Queries\GetBaseUrls;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;

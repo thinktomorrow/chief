@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Sites\Actions\SaveSiteLocales;
-use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\WithAddingSites;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\DeleteUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UpdateUrl;

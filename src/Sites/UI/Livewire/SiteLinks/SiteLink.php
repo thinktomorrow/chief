@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\SiteDto;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 use Thinktomorrow\Chief\Urls\App\Queries\GetBaseUrls;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 

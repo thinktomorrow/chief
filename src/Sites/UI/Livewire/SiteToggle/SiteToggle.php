@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire;
+namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -9,9 +9,9 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasSiteLocales;
-use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\SiteDto;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 
-class SiteTabs extends Component
+class SiteToggle extends Component
 {
     public ModelReference $modelReference;
 
@@ -28,6 +28,7 @@ class SiteTabs extends Component
     {
         return [
             'site-links-updated' => 'onSiteLinksUpdated',
+            'site-selection-updated' => 'onSiteLinksUpdated',
         ];
     }
 
@@ -40,7 +41,7 @@ class SiteTabs extends Component
 
     public function render()
     {
-        return view('chief-sites::site-tabs');
+        return view('chief-sites::site-toggle');
     }
 
     private function getSites(HasSiteLocales $model): Collection

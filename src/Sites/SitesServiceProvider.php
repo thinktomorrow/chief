@@ -12,9 +12,9 @@ use Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts\EditSiteContexts;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts\SiteContexts;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\EditSiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
-use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\EditSites;
-use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\Sites;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteTabs;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\EditSiteSelection;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\SiteSelection;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\SiteToggle;
 
 class SitesServiceProvider extends ServiceProvider
 {
@@ -22,13 +22,21 @@ class SitesServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-sites', __DIR__.'/UI/views');
 
-        Livewire::component('chief-wire::site-tabs', SiteTabs::class);
+        Livewire::component('chief-wire::site-toggle', SiteToggle::class);
+
+        // Site & link management for visitable model
         Livewire::component('chief-wire::site-links', SiteLinks::class);
         Livewire::component('chief-wire::edit-site-links', EditSiteLinks::class);
-        Livewire::component('chief-wire::sites', Sites::class);
-        Livewire::component('chief-wire::edit-sites', EditSites::class);
+
+        // Site selection for non-visitable model (model without links)
+        Livewire::component('chief-wire::site-selection', SiteSelection::class);
+        Livewire::component('chief-wire::edit-site-selection', EditSiteSelection::class);
+
+        // Menu site mgmt
         Livewire::component('chief-wire::menu-sites', MenuSites::class);
         Livewire::component('chief-wire::menu-edit-sites', EditMenuSites::class);
+
+        // Who the f*** are you?!
         Livewire::component('chief-wire::site-contexts', SiteContexts::class);
         Livewire::component('chief-wire::edit-site-contexts', EditSiteContexts::class);
     }

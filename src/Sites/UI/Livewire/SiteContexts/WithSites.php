@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\SiteDto;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 
 trait WithSites
 {

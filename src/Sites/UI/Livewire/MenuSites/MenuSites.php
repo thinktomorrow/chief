@@ -26,7 +26,7 @@ class MenuSites extends Component
     public function getListeners()
     {
         return [
-            'sites-updated' => 'onSitesUpdated',
+            'site-selection-updated' => 'onSitesUpdated',
             $this->type.'-menus-updated' => 'onMenusUpdated',
         ];
     }
