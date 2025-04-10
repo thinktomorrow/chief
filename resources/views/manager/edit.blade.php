@@ -1,11 +1,10 @@
 @php
     $hasAnyAsideTopComponents = count($layout->filterByPosition('aside-top')->getComponents()) > 0;
     $hasSiteLinks = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
-    $hasSiteContexts = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteContexts;
     $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales;
     $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
 
-    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasSiteContexts || $hasSites || $hasAnyAsideComponents;
+    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasSites || $hasAnyAsideComponents;
 @endphp
 
 <x-chief::page.template :title="$resource->getPageTitle($model)" :container="$showSidebar ? '2xl' : 'lg'">
@@ -53,8 +52,6 @@
 
             @if ($hasSiteLinks)
                 <livewire:chief-wire::site-links :model="$model" />
-            @elseif ($hasSiteContexts)
-                <livewire:chief-wire::site-contexts :model="$model" />
             @elseif ($hasSites)
                 <livewire:chief-wire::site-selection :model="$model" />
             @endif

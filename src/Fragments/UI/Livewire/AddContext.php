@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\CreateContext;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -39,6 +38,7 @@ class AddContext extends Component
         $this->isOpen = true;
 
         $this->form['locales'] = ChiefSites::locales();
+        $this->form['active_sites'] = [];
     }
 
     public function close()
@@ -62,7 +62,7 @@ class AddContext extends Component
         $contextId = app(ContextApplication::class)->create(new CreateContext(
             ModelReference::fromString($this->modelReference),
             $this->form['locales'] ?? [],
-            [], // No active sites on creation...
+            [], // No active sites on adding new context
             $this->form['title'] ?? null
         ));
 
@@ -80,6 +80,6 @@ class AddContext extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefSites::all()->filterByLocales($this->modelLocales)->toCollection()->pluck('shortName', 'locale')->all());
+        return ChiefSites::all()->filterByLocales($this->modelLocales)->toCollection()->pluck('shortName', 'locale')->all();
     }
 }

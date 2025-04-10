@@ -17,7 +17,7 @@
                     fragmenten tab live voor deze taal
                     </span>
                 @else
-                    Deze versie live tonen
+                    Zet deze versie live
                     <x-chief::button
                         type="button"
                         size="xs"

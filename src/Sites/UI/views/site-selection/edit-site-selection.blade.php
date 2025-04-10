@@ -2,7 +2,7 @@
     wired
     size="sm"
     title="Op welke sites wil je deze content zichtbaar maken?"
-    :edge-to-edge="true"
+    :edge-to-edge="false"
 >
     @if ($isOpen)
         <x-chief::form.fieldset class="w-full space-y-3">

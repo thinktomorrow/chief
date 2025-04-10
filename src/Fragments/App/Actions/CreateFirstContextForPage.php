@@ -29,6 +29,7 @@ class CreateFirstContextForPage
         $this->contextApplication->create(new CreateContext(
             $event->modelReference,
             ChiefSites::locales(),
+            ChiefSites::locales(),
             'Inhoud'
         ));
 

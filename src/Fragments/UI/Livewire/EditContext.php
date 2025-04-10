@@ -64,7 +64,7 @@ class EditContext extends Component
     {
         $this->form = [
             'title' => $this->context->title,
-            'locales' => $this->context->locales,
+            'locales' => array_values(array_unique(array_merge($this->context->locales, $this->context->activeSites))), // In case of missing locales, the locales should always contain the active sites as well.
             'active_sites' => $this->context->activeSites,
         ];
     }

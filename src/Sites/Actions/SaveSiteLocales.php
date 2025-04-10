@@ -12,7 +12,7 @@ class SaveSiteLocales
     {
         $previousState = $model->getSiteLocales();
 
-        $model->setSiteLocales($locales);
+        $model->setSiteLocales(array_values(array_unique($locales)));
         $model->save();
 
         event(new ModelSitesUpdated($model->modelReference(), $model->getSiteLocales(), $previousState));

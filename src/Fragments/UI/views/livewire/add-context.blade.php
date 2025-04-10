@@ -7,36 +7,7 @@
         </x-chief::form.fieldset>
 
         @if(count($this->getAvailableLocales()) > 1)
-
-            <x-chief::form.fieldset wire:ignore x-data="{showField: false}" rule="form.locales">
-                <x-chief::link x-show="!showField" x-on:click="showField = true">
-                    <span>Wil je deze fragment gebruiken voor specifieke site(s)?</span>
-                </x-chief::button>
-
-                <div x-show="showField">
-
-                    <x-chief::form.label for="locales">
-                        Site selectie
-                    </x-chief::form.label>
-
-                    <x-chief::form.description>
-                        Deze fragmenten worden opgemaakt voor de site(s):
-                    </x-chief::form.description>
-
-                    <x-chief::multiselect
-                        wire:model="form.locales"
-                        :multiple="true"
-                        :options="$this->getAvailableLocales()"
-                        x-on:click="(e) => {
-                    // Scroll to bottom of modal content so the multiselect dropdown is fully visible
-                    e.target.closest(`[data-slot='content']`).scrollTo({top:9999, behavior: 'smooth'})
-                }"
-                    />
-                </div>
-
-
-            </x-chief::form.fieldset>
-
+            @include('chief-fragments::livewire._partials.add-context-locales')
         @endif
 
         <x-slot name="footer">

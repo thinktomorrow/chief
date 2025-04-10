@@ -44,7 +44,7 @@ class PropagateUrlChange
      * When a nestable url gets saved, we'll make sure that all
      * underlying children will have their urls updated.
      */
-    private function handle(Nestable&Visitable $model, ?Model $formerParent = null): void
+    public function handle(Nestable&Visitable $model, ?Model $formerParent = null): void
     {
         $parentModel = $model->getParent();
 
