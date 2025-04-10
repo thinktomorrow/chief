@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\MenuDto;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts\WithSites;
 
 class MenuSites extends Component
 {

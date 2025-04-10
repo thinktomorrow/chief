@@ -8,8 +8,6 @@ use Livewire\Livewire;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
 use Thinktomorrow\Chief\Sites\UI\Livewire\MenuSites\EditMenuSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\MenuSites\MenuSites;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts\EditSiteContexts;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteContexts\SiteContexts;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\EditSiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\EditSiteSelection;
@@ -35,10 +33,6 @@ class SitesServiceProvider extends ServiceProvider
         // Menu site mgmt
         Livewire::component('chief-wire::menu-sites', MenuSites::class);
         Livewire::component('chief-wire::menu-edit-sites', EditMenuSites::class);
-
-        // Who the f*** are you?!
-        Livewire::component('chief-wire::site-contexts', SiteContexts::class);
-        Livewire::component('chief-wire::edit-site-contexts', EditSiteContexts::class);
     }
 
     public function register()
