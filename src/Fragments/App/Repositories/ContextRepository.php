@@ -27,10 +27,10 @@ class ContextRepository
 
     public function guessContextIdForSite(ModelReference $modelReference, string $site): ?string
     {
+        // So filled active_sites are first before the empty ones
         $contextId = ContextModel::byActiveSiteOrNone($site)
             ->where('owner_type', $modelReference->shortClassName())
             ->where('owner_id', $modelReference->id())
-            ->orderBy('created_at', 'ASC')
             ->select('id')
             ->first()?->id;
 

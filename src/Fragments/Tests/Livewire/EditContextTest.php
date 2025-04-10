@@ -47,14 +47,14 @@ class EditContextTest extends \Thinktomorrow\Chief\Tests\ChiefTestCase
             ->call('open', ['contextId' => $this->context->id])
             ->set('form.title', 'Updated Title')
             ->set('form.locales', ['nl', 'en'])
-            ->set('form.active_sites', ['site-1'])
+            ->set('form.active_sites', ['en'])
             ->call('save')
-            ->assertDispatched($this->model->modelReference()->get().'-contexts-updated', ['contextId' => $this->context->id]);
+            ->assertDispatched($this->model->modelReference()->get().'-contexts-updated', ...['contextId' => $this->context->id]);
 
         $this->context->refresh();
         $this->assertSame('Updated Title', $this->context->title);
         $this->assertSame(['nl', 'en'], $this->context->getSiteLocales());
-        $this->assertSame(['site-1'], $this->context->getActiveSites());
+        $this->assertSame(['en'], $this->context->getActiveSites());
     }
 
     public function test_it_can_delete_the_context()

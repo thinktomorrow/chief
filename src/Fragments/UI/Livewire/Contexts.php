@@ -8,12 +8,15 @@ use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class Contexts extends Component
 {
     public string $modelReference;
 
     public ?string $activeContextId = null;
+
+    private ?Collection $contexts = null;
 
     public function mount(ReferableModel&ContextOwner $model, ?string $activeContextId = null)
     {
@@ -30,7 +33,11 @@ class Contexts extends Component
     /** @return Collection<ContextDto> */
     public function getContexts(): Collection
     {
-        return app(ComposeLivewireDto::class)
+        if ($this->contexts) {
+            return $this->contexts;
+        }
+
+        return $this->contexts = app(ComposeLivewireDto::class)
             ->getContextsByOwner(ModelReference::fromString($this->modelReference));
     }
 
@@ -41,6 +48,17 @@ class Contexts extends Component
             $this->modelReference.'-context-deleted' => 'onContextDeleted',
 
         ];
+    }
+
+    public function getUnassignedActiveSites(): array
+    {
+        $activeSites = ChiefSites::locales();
+
+        $this->getContexts()->each(function (ContextDto $context) use (&$activeSites) {
+            $activeSites = array_diff($activeSites, $context->activeSites);
+        });
+
+        return $activeSites;
     }
 
     public function showContext(string $contextId): void

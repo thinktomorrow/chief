@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Fragments\Tests\App\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
-use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -18,8 +17,6 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
 
     private ContextOwnerRepository $contextOwnerRepository;
 
-    private ContextRepository $contextRepository;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,7 +25,6 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
         chiefRegister()->fragment(Hero::class);
 
         $this->contextOwnerRepository = app(ContextOwnerRepository::class);
-        $this->contextRepository = app(ContextRepository::class);
     }
 
     public function test_it_returns_empty_when_no_contexts_have_fragment()
@@ -38,7 +34,7 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
 
     public function test_it_can_get_owner_by_fragment()
     {
-        $context = $this->contextRepository->create($this->owner->modelReference(), []);
+        $context = FragmentTestHelpers::createContext($this->owner);
         $fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id);
 
         $owners = $this->contextOwnerRepository->getOwnersByFragment($fragment->getFragmentId());
@@ -50,8 +46,8 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
     public function test_it_returns_unique_owners_across_multiple_contexts()
     {
         $owner2 = ArticlePage::create([]);
-        $context1 = $this->contextRepository->create($this->owner->modelReference(), []);
-        $context2 = $this->contextRepository->create($owner2->modelReference(), []);
+        $context1 = FragmentTestHelpers::createContext($this->owner);
+        $context2 = FragmentTestHelpers::createContext($owner2);
 
         $fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context1->id);
         app(AttachRootFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
@@ -65,8 +61,8 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
 
     public function test_it_ignores_duplicate_owner_across_contexts()
     {
-        $context1 = $this->contextRepository->create($this->owner->modelReference(), []);
-        $context2 = $this->contextRepository->create($this->owner->modelReference(), []);
+        $context1 = FragmentTestHelpers::createContext($this->owner);
+        $context2 = FragmentTestHelpers::createContext($this->owner);
 
         $fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context1->id);
         app(AttachRootFragment::class)->handle($context2->id, $fragment->getFragmentId(), 1, []);
@@ -80,8 +76,8 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
     public function test_it_can_get_all_context_owners()
     {
         $owner2 = ArticlePage::create([]);
-        $this->contextRepository->create($this->owner->modelReference(), []);
-        $this->contextRepository->create($owner2->modelReference(), []);
+        FragmentTestHelpers::createContext($this->owner);
+        FragmentTestHelpers::createContext($owner2);
 
         $owners = $this->contextOwnerRepository->getAllOwners();
 
@@ -102,7 +98,7 @@ class ContextOwnerRepositoryTest extends ChiefTestCase
 
     public function test_it_can_find_owner_by_context_id()
     {
-        $context = $this->contextRepository->create($this->owner->modelReference(), []);
+        $context = FragmentTestHelpers::createContext($this->owner);
         $owner = $this->contextOwnerRepository->findOwner($context->id);
 
         $this->assertEquals($this->owner->id, $owner->id);

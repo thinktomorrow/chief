@@ -119,6 +119,6 @@ class DuplicateFragmentTest extends ChiefTestCase
         $this->assertCount(2, $this->context->fragments()->get());
         $this->assertCount(2, $targetContext->fragments()->get());
 
-        $this->assertNotEquals($this->fragment->getFragmentId(), $targetContext->fragments()->first()->getFragmentId());
+        $this->assertNotEquals($this->fragment->getFragmentId(), $targetContext->fragments()->first()->id);
     }
 }

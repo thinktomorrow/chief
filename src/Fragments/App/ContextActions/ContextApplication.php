@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Exceptions\SafeContextDeleteException;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Sites\Actions\SyncActiveSites;
 
 class ContextApplication
 {
@@ -16,11 +17,14 @@ class ContextApplication
 
     private DetachFragment $detachFragment;
 
-    public function __construct(DuplicateFragment $duplicateFragment, ContextRepository $contextRepository, DetachFragment $detachFragment)
+    private SyncActiveSites $syncActiveSites;
+
+    public function __construct(DuplicateFragment $duplicateFragment, ContextRepository $contextRepository, DetachFragment $detachFragment, SyncActiveSites $syncActiveSites)
     {
         $this->duplicateFragment = $duplicateFragment;
         $this->contextRepository = $contextRepository;
         $this->detachFragment = $detachFragment;
+        $this->syncActiveSites = $syncActiveSites;
     }
 
     public function create(CreateContext $command): string
@@ -30,6 +34,11 @@ class ContextApplication
             $command->getLocales(),
             $command->getActiveSites(),
             $command->getTitle()
+        );
+
+        $this->syncActiveSites->handle(
+            $context,
+            $this->contextRepository->getByOwner($context->owner->modelReference())->reject(fn ($c) => $c->id == $context->id)
         );
 
         return (string) $context->id;
@@ -44,6 +53,11 @@ class ContextApplication
             'locales' => $command->getLocales(),
             'active_sites' => $command->getActiveSites(),
         ]);
+
+        $this->syncActiveSites->handle(
+            $context,
+            $this->contextRepository->getByOwner($context->owner->modelReference())->reject(fn ($c) => $c->id == $context->id)
+        );
     }
 
     public function delete(DeleteContext $command): void

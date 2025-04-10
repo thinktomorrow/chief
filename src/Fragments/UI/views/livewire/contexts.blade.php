@@ -6,15 +6,29 @@
 
     <x-slot name="tabs">
         <x-chief::window.tabs>
-            @foreach ($contexts as $context)
+            @foreach ($contexts as $i => $context)
                 <x-chief::window.tabs.item
                     aria-controls="{{ $context->id }}"
                     aria-selected="{{ $context->id === $activeContextId }}"
-                    wire:key="menu-tabs-{{ $context->id }}"
+                    wire:key="context-tabs-{{ $context->id }}"
                     wire:click.prevent="showContext('{{ $context->id }}')"
                     :active="$context->id === $activeContextId"
                 >
                     {{ $context->title }}
+
+                    @if($i == 0)
+                        @foreach($this->getUnassignedActiveSites() as $unassignedSite)
+                            <x-chief::badge
+                                variant="grey"
+                                size="xs">{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($unassignedSite)->shortName }}</x-chief::badge>
+                        @endforeach
+                    @endif
+
+                    @foreach($context->activeSites as $site)
+                        <x-chief::badge
+                            variant="grey"
+                            size="xs">{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}</x-chief::badge>
+                    @endforeach
                 </x-chief::window.tabs.item>
             @endforeach
 
@@ -29,12 +43,6 @@
             <div wire:key="context-tab-content-{{ $context->id }}">
                 @if ($context->id === $activeContextId)
                     @if($this->showTabs())
-                        <x-slot name="badges">
-                            @foreach ($context->locales as $locale)
-                                <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
-                            @endforeach
-                        </x-slot>
-
                         <x-slot name="actions">
                             <x-chief::button wire:click="editContext({{ $context->id }})" variant="grey" size="sm">
                                 <x-chief::icon.settings />

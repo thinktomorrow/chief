@@ -6,48 +6,19 @@
             <x-chief::form.input.text id="title" wire:model="form.title" />
         </x-chief::form.fieldset>
 
-        <x-chief::form.fieldset x-data="{showField: false}" rule="form.active_sites">
-            <x-chief::button x-show="!showField" x-on:click="showField = true">
-                <span>Deze fragmenten op een specifieke site tonen</span>
-            </x-chief::button>
-
-            <div x-show="showField">
-
-                <x-chief::form.label for="active_sites">
-                    Site
-                </x-chief::form.label>
-
-                <x-chief::form.description>
-                    Deze fragmenten tab zal worden getoond op de geselecteerde sites
-                </x-chief::form.description>
-
-                <x-chief::multiselect
-                    wire:model="form.active_sites"
-                    :multiple="true"
-                    :options="$this->getAvailableLocales()"
-                    x-on:click="(e) => {
-                    // Scroll to bottom of modal content so the multiselect dropdown is fully visible
-                    e.target.closest(`[data-slot='content']`).scrollTo({top:9999, behavior: 'smooth'})
-                }"
-                />
-            </div>
-
-
-        </x-chief::form.fieldset>
-
-        <x-chief::form.fieldset x-data="{showField: false}" rule="form.locales">
-            <x-chief::button x-show="!showField" x-on:click="showField = true">
-                <span>Fragmenten in een specifieke taal voorzien?</span>
+        <x-chief::form.fieldset wire:ignore x-data="{showField: false}" rule="form.locales">
+            <x-chief::link x-show="!showField" x-on:click="showField = true">
+                <span>Wil je deze fragment gebruiken voor specifieke site(s)?</span>
             </x-chief::button>
 
             <div x-show="showField">
 
                 <x-chief::form.label for="locales">
-                    Geef hier de taalversies op die je wil voorzien.
+                    Site selectie
                 </x-chief::form.label>
 
                 <x-chief::form.description>
-                    Dit is enkel nodig als je fragmenten in een specifieke taal wil voorzien.
+                    Deze fragmenten worden opgemaakt voor de site(s):
                 </x-chief::form.description>
 
                 <x-chief::multiselect

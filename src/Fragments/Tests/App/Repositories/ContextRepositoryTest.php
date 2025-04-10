@@ -53,16 +53,18 @@ class ContextRepositoryTest extends ChiefTestCase
 
     public function test_it_can_create_context()
     {
-        $this->contextRepository->create($this->owner->modelReference(), []);
+        FragmentTestHelpers::createContext($this->owner);
         $this->assertCount(1, $this->contextRepository->getByOwner($this->owner->modelReference()));
     }
 
     public function test_it_can_create_context_with_locales()
     {
-        $this->contextRepository->create($this->owner->modelReference(), ['nl', 'fr']);
-        $locales = $this->contextRepository->getByOwner($this->owner->modelReference())->first()->locales;
+        $this->contextRepository->create($this->owner->modelReference(), ['nl', 'fr'], ['nl']);
 
-        $this->assertEquals(['nl', 'fr'], $locales);
+        $context = $this->contextRepository->getByOwner($this->owner->modelReference())->first();
+
+        $this->assertEquals(['nl', 'fr'], $context->locales);
+        $this->assertEquals(['nl'], $context->active_sites);
     }
 
     public function test_it_can_find_context_by_site()
@@ -88,7 +90,7 @@ class ContextRepositoryTest extends ChiefTestCase
 
     public function test_it_can_find_context_by_id()
     {
-        $context = $this->contextRepository->create($this->owner->modelReference(), []);
+        $context = FragmentTestHelpers::createContext($this->owner);
         $found = $this->contextRepository->find($context->id);
 
         $this->assertEquals($context->id, $found->id);
@@ -96,22 +98,31 @@ class ContextRepositoryTest extends ChiefTestCase
 
     public function test_it_can_get_default_context_id()
     {
-        $context1 = $this->contextRepository->create($this->owner->modelReference(), []);
-        $context2 = $this->contextRepository->create($this->owner->modelReference(), []);
-        $defaultId = $this->contextRepository->guessContextIdForSite($this->owner->modelReference());
+        $context1 = FragmentTestHelpers::createContext($this->owner);
+        $context2 = FragmentTestHelpers::createContext($this->owner);
+        $defaultId = $this->contextRepository->guessContextIdForSite($this->owner->modelReference(), 'nl');
 
         $this->assertEquals($context1->id, $defaultId);
     }
 
-    public function test_it_returns_null_for_default_context_id_if_none_exist()
+    public function test_it_can_get_context_id_for_active_site()
     {
-        $defaultId = $this->contextRepository->guessContextIdForSite($this->owner->modelReference());
+        $context1 = FragmentTestHelpers::createContext($this->owner);
+        $context2 = FragmentTestHelpers::createContext($this->owner, [], ['fr']);
+        $defaultId = $this->contextRepository->guessContextIdForSite($this->owner->modelReference(), 'fr');
+
+        $this->assertEquals($context2->id, $defaultId);
+    }
+
+    public function test_it_returns_null_for_default_context_id_if_no_context_exists()
+    {
+        $defaultId = $this->contextRepository->guessContextIdForSite($this->owner->modelReference(), 'nl');
         $this->assertNull($defaultId);
     }
 
     public function test_it_can_get_all_contexts_for_a_fragment()
     {
-        $context = $this->contextRepository->create($this->owner->modelReference(), []);
+        $context = FragmentTestHelpers::createContext($this->owner);
         $fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id, null, 0, ['custom' => 'foobar']);
 
         $contexts = $this->contextRepository->getContextsByFragment($fragment->getFragmentId());
@@ -127,8 +138,8 @@ class ContextRepositoryTest extends ChiefTestCase
 
     public function test_it_can_count_contexts()
     {
-        $this->contextRepository->create($this->owner->modelReference(), []);
-        $this->contextRepository->create($this->owner->modelReference(), []);
+        FragmentTestHelpers::createContext($this->owner);
+        FragmentTestHelpers::createContext($this->owner);
 
         $count = $this->contextRepository->countContexts($this->owner->modelReference());
 
@@ -137,7 +148,7 @@ class ContextRepositoryTest extends ChiefTestCase
 
     public function test_it_can_count_fragments_for_a_given_fragment_id()
     {
-        $context = $this->contextRepository->create($this->owner->modelReference(), []);
+        $context = FragmentTestHelpers::createContext($this->owner);
         $fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id, null, 0, ['custom' => 'foobar']);
 
         $count = $this->contextRepository->countFragments($fragment->getFragmentId());

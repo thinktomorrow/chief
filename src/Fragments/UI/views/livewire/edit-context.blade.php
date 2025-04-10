@@ -5,17 +5,7 @@
             <x-chief::form.input.text id="title" wire:model="form.title" />
         </x-chief::form.fieldset>
 
-        <x-chief::form.fieldset rule="form.locales">
-            <x-chief::form.label for="locales">
-                Welke talen wens je te gebruiken in deze fragmenten?
-            </x-chief::form.label>
-
-            <x-chief::multiselect
-                wire:model="form.locales"
-                :multiple="true"
-                :options="$this->getAvailableLocales()"
-            />
-        </x-chief::form.fieldset>
+        @include('chief-fragments::livewire._partials.edit-context-locales')
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>

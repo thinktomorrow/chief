@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 trait HasSiteLocalesDefaults
 {
@@ -36,5 +37,21 @@ trait HasSiteLocalesDefaults
                 ->orWhereNull($this->getTable().'.locales')
                 ->orWhereJsonLength($this->getTable().'.locales', '=', 0);
         }));
+
+        if (DB::getDriverName() === 'sqlite') {
+            $query->orderByRaw("
+            CASE
+                WHEN locales IS NULL OR locales = '[]' THEN 1
+                ELSE 0
+            END
+        ");
+        } else {
+            $query->orderByRaw('
+            CASE
+                WHEN JSON_TYPE(locales) IS NULL OR JSON_LENGTH(locales) = 0 THEN 1
+                ELSE 0
+            END
+        ');
+        }
     }
 }

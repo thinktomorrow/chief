@@ -58,6 +58,7 @@ class AddContext extends Component
         $contextId = app(ContextApplication::class)->create(new CreateContext(
             ModelReference::fromString($this->modelReference),
             $this->form['locales'] ?? [],
+            [], // No active sites on creation...
             $this->form['title'] ?? null
         ));
 
@@ -75,6 +76,11 @@ class AddContext extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefSites::locales());
+        return PairOptions::toPairs(ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all());
+    }
+
+    public function getAvailableSites(): array
+    {
+        return PairOptions::toPairs(ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all());
     }
 }

@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\UpdateContext;
@@ -14,7 +13,6 @@ use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasSiteContexts;
-use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class EditContext extends Component
 {
@@ -89,12 +87,15 @@ class EditContext extends Component
     public function save()
     {
         $this->validate([
-            'form.locales' => 'required|array|min:1',
+            'form.locales' => ['required', 'array', 'min:1'],
             'form.title' => 'required',
         ], [
-            'form.locales.required' => 'Voeg minstens één taal toe. Dit bepaalt in welke talen je de fragmenten moet invullen.',
+            'form.locales.required' => 'Duid minstens één site aan. Dit bepaalt in welke talen je de fragmenten kan invullen.',
             'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
         ]);
+
+        // Active sites can only consist of the locales that are selected
+        $this->form['active_sites'] = array_values(array_intersect($this->form['locales'], $this->form['active_sites']));
 
         app(ContextApplication::class)->update(new UpdateContext(
             $this->context->id,
@@ -103,7 +104,7 @@ class EditContext extends Component
             $this->form['title'] ?? null
         ));
 
-        $this->dispatch($this->modelReference.'-contexts-updated', [
+        $this->dispatch($this->modelReference.'-contexts-updated', ...[
             'contextId' => $this->context->id,
         ]);
 
@@ -117,7 +118,12 @@ class EditContext extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefSites::locales());
+        return ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all();
+    }
+
+    public function getAvailableSites(): array
+    {
+        return ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all();
     }
 
     private function setDeletionFlags(): void
@@ -129,7 +135,7 @@ class EditContext extends Component
             $this->cannotBeDeleted = true;
         }
 
-        if (UrlRecord::where('context_id', $this->context->id)->exists()) {
+        if (count($this->context->activeSites) > 0) {
             $this->cannotBeDeletedBecauseOfConnectedToSite = true;
             $this->cannotBeDeleted = true;
         }

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 trait HasActiveSitesDefaults
 {
@@ -46,5 +47,21 @@ trait HasActiveSitesDefaults
                 ->orWhereNull($this->getTable().'.active_sites')
                 ->orWhereJsonLength($this->getTable().'.active_sites', '=', 0);
         }));
+
+        if (DB::getDriverName() === 'sqlite') {
+            $query->orderByRaw("
+            CASE
+                WHEN active_sites IS NULL OR active_sites = '[]' THEN 1
+                ELSE 0
+            END
+        ");
+        } else {
+            $query->orderByRaw('
+            CASE
+                WHEN JSON_TYPE(active_sites) IS NULL OR JSON_LENGTH(active_sites) = 0 THEN 1
+                ELSE 0
+            END
+        ');
+        }
     }
 }

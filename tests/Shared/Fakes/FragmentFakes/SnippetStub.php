@@ -40,9 +40,4 @@ class SnippetStub extends BaseFragment implements Fragment
     {
         return 'snippet_stub';
     }
-
-    public function dynamicLocaleFallback(): ?string
-    {
-        return 'en';
-    }
 }

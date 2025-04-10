@@ -73,4 +73,9 @@ class ContextDto implements Wireable
             $value['activeSites'] ?? [],
         );
     }
+
+    public function hasSpecificLocales(): bool
+    {
+        return count(\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($this->locales)) < count(\Thinktomorrow\Chief\Sites\ChiefSites::locales());
+    }
 }
