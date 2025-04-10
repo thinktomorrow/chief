@@ -4,6 +4,12 @@
 
 <x-chief::window title="Sitekeuze">
     <x-slot name="actions">
+        @if ($model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page'))
+            @foreach ($model->getStateKeys() as $stateKey)
+                <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+            @endforeach
+        @endif
+        
         <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
         </x-chief::button>

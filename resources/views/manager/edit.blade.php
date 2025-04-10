@@ -2,9 +2,10 @@
     $hasAnyAsideTopComponents = count($layout->filterByPosition('aside-top')->getComponents()) > 0;
     $hasSiteLinks = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
     $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales;
+    $hasStates = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page') && count($model->getStateKeys()) > 0;
     $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
 
-    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasSites || $hasAnyAsideComponents;
+    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasSites || $hasStates || $hasAnyAsideComponents;
 @endphp
 
 <x-chief::page.template :title="$resource->getPageTitle($model)" :container="$showSidebar ? '2xl' : 'lg'">
@@ -54,6 +55,12 @@
                 <livewire:chief-wire::site-links :model="$model" />
             @elseif ($hasSites)
                 <livewire:chief-wire::site-selection :model="$model" />
+            @elseif ($hasStates)
+                <x-chief::window title="Status">
+                    @foreach ($model->getStateKeys() as $stateKey)
+                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                    @endforeach
+                </x-chief::window>
             @endif
 
             @foreach ($layout->filterByPosition('aside')->getComponents() as $component)
