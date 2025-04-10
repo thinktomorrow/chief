@@ -74,8 +74,14 @@ class ContextDto implements Wireable
         );
     }
 
-    public function hasSpecificLocales(): bool
+    public function addActiveSites(array $activeSites): void
     {
-        return count(\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($this->locales)) < count(\Thinktomorrow\Chief\Sites\ChiefSites::locales());
+        $this->activeSites = array_merge($this->activeSites, $activeSites);
     }
+
+    //    public function hasSpecificLocales(): bool
+    //    {
+    //        return count(\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($this->locales)) < count(\Thinktomorrow\Chief\Sites\ChiefSites::locales());
+    //    }
+
 }

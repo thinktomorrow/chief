@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
+use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -76,10 +77,10 @@ class SimpleStateConfig implements StateAdminConfig
     {
         switch ($statefulContract->getState($this->getStateKey())) {
             case SimpleState::online:
-                return 'Online';
+                return 'Gepubliceerd';
 
             case SimpleState::offline:
-                return 'Offline';
+                return 'Draft';
 
             case SimpleState::deleted:
                 return 'Verwijderd';
@@ -93,17 +94,32 @@ class SimpleStateConfig implements StateAdminConfig
     {
         switch ($transitionKey) {
             case 'publish':
-                return 'Zet online';
+                return 'Publiceer';
 
             case 'unpublish':
-                return 'Haal offline';
+                return 'Zet in draft';
 
             case 'delete':
-                return 'verwijder';
+                return 'Verwijder';
 
             default:
                 return $transitionKey;
         }
+    }
+
+    public function getStateVariant(StatefulContract $statefulContract): string
+    {
+        return $this->getVariantForState($statefulContract->getState($this->getStateKey()));
+    }
+
+    private function getVariantForState(State $state): string
+    {
+        return match ($state) {
+            SimpleState::online => 'outline-blue',
+            SimpleState::offline => 'outline-orange',
+            SimpleState::deleted => 'outline-red',
+            default => 'outline-blue',
+        };
     }
 
     public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string

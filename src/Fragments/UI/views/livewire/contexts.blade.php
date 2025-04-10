@@ -16,18 +16,10 @@
                 >
                     {{ $context->title }}
 
-                    @if($i == 0)
-                        @foreach($this->getUnassignedActiveSites() as $unassignedSite)
-                            <x-chief::badge
-                                variant="grey"
-                                size="xs">{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($unassignedSite)->shortName }}</x-chief::badge>
-                        @endforeach
-                    @endif
-
                     @foreach($context->activeSites as $site)
                         <x-chief::badge
                             variant="grey"
-                            size="xs">{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}</x-chief::badge>
+                            size="xs">{{ count($modelLocales) > 1 ? \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName : 'live' }}</x-chief::badge>
                     @endforeach
                 </x-chief::window.tabs.item>
             @endforeach
@@ -56,6 +48,6 @@
         @endforeach
     </div>
 
-    <livewire:chief-wire::add-context :model-reference="$modelReference" />
-    <livewire:chief-wire::edit-context :model-reference="$modelReference" />
+    <livewire:chief-wire::add-context :model-reference="$modelReference" :model-locales="$modelLocales" />
+    <livewire:chief-wire::edit-context :model-reference="$modelReference" :model-locales="$modelLocales" />
 </x-chief::window>

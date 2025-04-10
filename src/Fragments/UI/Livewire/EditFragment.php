@@ -78,7 +78,7 @@ class EditFragment extends Component
     {
         return FragmentDto::fromFragment(
             app(FragmentRepository::class)->findInContext($fragmentId, $this->context->id),
-            app(ComposeLivewireDto::class)->getContext($this->context->id)
+            app(ComposeLivewireDto::class)->getContext($this->context->ownerReference, $this->context->id)
         );
     }
 

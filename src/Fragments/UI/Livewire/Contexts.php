@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
 
 class Contexts extends Component
 {
@@ -18,9 +19,13 @@ class Contexts extends Component
 
     private ?Collection $contexts = null;
 
+    public array $modelLocales;
+
     public function mount(ReferableModel&ContextOwner $model, ?string $activeContextId = null)
     {
         $this->modelReference = $model->modelReference()->get();
+
+        $this->modelLocales = $model instanceof HasSiteLocales ? $model->getSiteLocales() : ChiefSites::locales();
 
         $this->resetActiveContext($activeContextId);
     }
@@ -46,19 +51,8 @@ class Contexts extends Component
         return [
             $this->modelReference.'-contexts-updated' => 'onContextsUpdated',
             $this->modelReference.'-context-deleted' => 'onContextDeleted',
-
+            'site-links-updated' => 'onSiteLinksUpdated',
         ];
-    }
-
-    public function getUnassignedActiveSites(): array
-    {
-        $activeSites = ChiefSites::locales();
-
-        $this->getContexts()->each(function (ContextDto $context) use (&$activeSites) {
-            $activeSites = array_diff($activeSites, $context->activeSites);
-        });
-
-        return $activeSites;
     }
 
     public function showContext(string $contextId): void
@@ -82,6 +76,12 @@ class Contexts extends Component
     {
         // The contexts are automatically updated in the view
         $this->activeContextId = $contextId;
+    }
+
+    public function onSiteLinksUpdated(): void
+    {
+        // The links are automatically updated in the view
+        // because the getContexts method is called again.
     }
 
     public function onContextDeleted(): void

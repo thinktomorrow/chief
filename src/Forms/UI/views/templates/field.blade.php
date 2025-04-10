@@ -82,58 +82,37 @@
                             $fallbackLocaleName = \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($fallbackLocale)->shortName;
                         @endphp
 
-                        <div data-slot="hint" class="flex flex-wrap items-center gap-1">
-                            <p class="text-sm text-grey-500">
-                                Als dit veld leeg blijft, dan wordt de vertaling uit het '{{ $fallbackLocaleName }}'
-                                overgenomen.
-                            </p>
+                        @if(! $hasOwnLocaleValue($locale))
+                            <div data-slot="hint" class="flex flex-wrap items-center gap-1">
+                                <p class="text-sm text-grey-500">
+                                    De '{{ $fallbackLocaleName }}' inhoud wordt getoond op de site als dit veld leeg is
+                                </p>
 
-                            <x-chief::button
-                                type="button"
-                                size="xs"
-                                variant="transparent"
-                                tabindex="-1"
-                                x-on:click="$dispatch('open-dialog', { 'id': 'fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}' })"
-                            >
-                                <x-chief::icon.information-circle />
-                            </x-chief::button>
-                        </div>
-
-                        <x-chief::dialog.dropdown
-                            id="fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}"
-                            :offset="4"
-                            placement="bottom-center"
-                        >
-                            <div class="max-w-sm space-y-2 px-3 py-1.5">
-                                <p class="text-base/5 font-medium text-grey-700">Gebruik van een terugvaltaal</p>
-
-                                @if (! $hasOwnLocaleValue($locale))
-                                    <p class="text-sm text-grey-500">
-                                        Wanneer een veld in het '{{ $localeName }}' leeg blijft, wordt automatisch de
-                                        inhoud van het '{{ $fallbackLocaleName }}' gebruikt. Dit zorgt ervoor dat er
-                                        altijd een tekst beschikbaar is, zelfs als er geen specifieke vertaling is
-                                        ingevuld.
-                                    </p>
-
-                                    <p class="text-sm text-grey-500">
-                                        Als je een specifieke vertaling in het '{{ $localeName }}' wil gebruiken, vul
-                                        je dit veld gewoon in.
-                                    </p>
-                                @else
-                                    <p class="text-sm text-grey-500">
-                                        Wanneer een veld in het '{{ $localeName }}' leeg blijft, wordt automatisch de
-                                        inhoud van het '{{ $fallbackLocaleName }}' gebruikt. Dit zorgt ervoor dat er
-                                        altijd een tekst beschikbaar is, zelfs als er geen specifieke vertaling is
-                                        ingevuld.
-                                    </p>
-
-                                    <p class="text-sm text-grey-500">
-                                        Als je hier de vertaling uit het '{{ $fallbackLocaleName }}' wil gebruiken,
-                                        laat je dit veld weer leeg.
-                                    </p>
-                                @endif
+                                <x-chief::button
+                                    type="button"
+                                    size="xs"
+                                    variant="transparent"
+                                    tabindex="-1"
+                                    x-on:click="$dispatch('open-dialog', { 'id': 'fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}' })"
+                                >
+                                    <x-chief::icon.information-circle />
+                                </x-chief::button>
                             </div>
-                        </x-chief::dialog.dropdown>
+
+                            <x-chief::dialog.dropdown
+                                id="fallback-locale-dropdown-{{ $getId() }}-{{ $locale }}"
+                                :offset="4"
+                                placement="bottom-center"
+                            >
+                                <div class="max-w-sm space-y-2 px-3 py-1.5">
+                                    <p class="text-sm text-grey-500">
+                                        Als je het {{ $localeName }} veld niet invult, zal de {{ $fallbackLocaleName }}
+                                        inhoud worden getoond op de {{ $localeName }} site.
+                                    </p>
+                                </div>
+                            </x-chief::dialog.dropdown>
+                        @endif
+
                     @endif
                 </x-chief::tabs.tab>
             @endforeach

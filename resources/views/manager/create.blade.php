@@ -17,7 +17,12 @@
             @csrf
 
             @foreach ($layout->filterByNotTagged(['not-on-model-create', 'not-on-create'])->getComponents() as $component)
-                {{ $component->displayAsInlineForm()->render() }}
+                @if($component instanceof \Thinktomorrow\Chief\Forms\Layouts\Form)
+                    {{ $component->displayAsInlineForm()->render() }}
+                @else
+                    {{ $component->render() }}
+                @endif
+
             @endforeach
 
             <x-chief::button data-slot="form-group" type="submit" variant="blue">Aanmaken</x-chief::button>

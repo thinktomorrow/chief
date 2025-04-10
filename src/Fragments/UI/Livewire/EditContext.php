@@ -29,9 +29,13 @@ class EditContext extends Component
 
     public bool $cannotBeDeletedBecauseOfConnectedToSite = false;
 
-    public function mount(string $modelReference)
+    public array $modelLocales;
+
+    public function mount(string $modelReference, array $modelLocales)
     {
         $this->modelReference = $modelReference;
+
+        $this->modelLocales = $modelLocales;
     }
 
     public function getListeners()
@@ -43,7 +47,7 @@ class EditContext extends Component
 
     public function open($values = [])
     {
-        $this->context = app(ComposeLivewireDto::class)->getContext($values['contextId']);
+        $this->context = app(ComposeLivewireDto::class)->getContext(ModelReference::fromString($this->modelReference), $values['contextId']);
 
         $this->setDeletionFlags();
 
@@ -118,12 +122,7 @@ class EditContext extends Component
 
     public function getAvailableLocales(): array
     {
-        return ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all();
-    }
-
-    public function getAvailableSites(): array
-    {
-        return ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all();
+        return ChiefSites::all()->filterByLocales($this->modelLocales)->toCollection()->pluck('shortName', 'locale')->all();
     }
 
     private function setDeletionFlags(): void

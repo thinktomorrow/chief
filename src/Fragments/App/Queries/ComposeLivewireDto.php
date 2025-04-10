@@ -10,6 +10,8 @@ use Thinktomorrow\Chief\Fragments\UI\Livewire\ContextDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\SharedFragmentDto;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasSiteLocales;
 
 class ComposeLivewireDto
 {
@@ -23,26 +25,18 @@ class ComposeLivewireDto
         $this->registry = $registry;
     }
 
-    public function getContext(string $contextId): ContextDto
+    public function getContext(ModelReference $modelReference, string $contextId): ContextDto
     {
-        $context = $this->contextRepository->find($contextId);
-        $owner = $context->owner;
-        $ownerResource = $this->registry->findResourceByModel($owner::class);
-
-        return ContextDto::fromContext(
-            $context,
-            $owner->modelReference(),
-            $ownerResource->getPageTitle($owner),
-            $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
-        );
+        // We fetch from the entire context stack so our site references are correct
+        return $this->getContextsByOwner($modelReference)
+            ->first(fn ($context) => $context->id === $contextId);
     }
 
     /** @return Collection<ContextDto> */
     public function getContextsByOwner(ModelReference $modelReference): Collection
     {
-        return $this->contextRepository->getByOwner($modelReference)
+        $collection = $this->contextRepository->getByOwner($modelReference)
             ->map(function ($context) {
-
                 $owner = $context->owner;
                 $ownerResource = $this->registry->findResourceByModel($owner::class);
 
@@ -53,6 +47,25 @@ class ComposeLivewireDto
                     $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
                 );
             });
+
+        $model = $modelReference->instance();
+        $modelLocales = $model instanceof HasSiteLocales ? $model->getSiteLocales() : ChiefSites::locales();
+
+        $this->setUnassignedActiveSitesToPrimaryContext($collection, $modelLocales);
+
+        return $collection;
+
+    }
+
+    private function setUnassignedActiveSitesToPrimaryContext(Collection $contexts, array $availableSites): void
+    {
+        $activeSites = $availableSites;
+
+        $contexts->each(function (ContextDto $context) use (&$activeSites) {
+            $activeSites = array_diff($activeSites, $context->activeSites);
+        });
+
+        $contexts->first()->addActiveSites($activeSites);
     }
 
     public function composeEmptyContext(ModelReference $modelReference): ContextDto

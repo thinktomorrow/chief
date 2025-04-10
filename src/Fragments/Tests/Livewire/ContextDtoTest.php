@@ -29,7 +29,7 @@ class ContextDtoTest extends ChiefTestCase
     public function test_it_can_get_context_dto()
     {
         $context = FragmentTestHelpers::findOrCreateContext($this->owner, ['nl', 'fr'], ['fr'], 'context title');
-        $dto = $this->composer->getContext($context->id);
+        $dto = $this->composer->getContext($this->owner->modelReference(), $context->id);
 
         $this->assertInstanceOf(ContextDto::class, $dto);
         $this->assertEquals($context->id, $dto->id);

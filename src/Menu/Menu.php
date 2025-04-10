@@ -8,13 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Thinktomorrow\Chief\Sites\HasActiveSites;
 use Thinktomorrow\Chief\Sites\HasActiveSitesDefaults;
-use Thinktomorrow\Chief\Sites\HasSiteLocales;
-use Thinktomorrow\Chief\Sites\HasSiteLocalesDefaults;
 
-class Menu extends Model implements HasActiveSites, HasSiteLocales
+class Menu extends Model implements HasActiveSites
 {
     use HasActiveSitesDefaults;
-    use HasSiteLocalesDefaults;
 
     public $guarded = [];
 

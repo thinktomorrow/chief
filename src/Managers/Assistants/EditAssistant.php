@@ -65,19 +65,6 @@ trait EditAssistant
         View::share('resource', $this->resource);
         View::share('layout', Layout::make($this->resource->fields($model))->model($model));
 
-        // Find or create the context... TODO: this should be something to do elsewhere?
-
-        //        $stateConfigs = [];
-        //
-        //        if ($model instanceof StatefulContract) {
-        //            $stateConfigs = collect($model->getStateKeys())
-        //                ->map(fn (string $stateKey) => $model->getStateConfig($stateKey))
-        //                ->filter(fn ($stateConfig) => $stateConfig instanceof StateAdminConfig)
-        //                ->all();
-        //        }
-        //
-        //        View::share('stateConfigs', $stateConfigs);
-
         return $this->resource->getPageView();
     }
 

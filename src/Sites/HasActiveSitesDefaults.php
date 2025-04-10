@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 trait HasActiveSitesDefaults
 {
+    use HasSiteLocalesDefaults;
+
     /**
      * This method is called on an Eloquent model to initialize the localized defaults.
      */

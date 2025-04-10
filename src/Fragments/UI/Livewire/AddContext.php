@@ -18,9 +18,13 @@ class AddContext extends Component
 
     public string $modelReference;
 
-    public function mount(string $modelReference)
+    public array $modelLocales;
+
+    public function mount(string $modelReference, array $modelLocales)
     {
         $this->modelReference = $modelReference;
+
+        $this->modelLocales = $modelLocales;
     }
 
     public function getListeners()
@@ -76,11 +80,6 @@ class AddContext extends Component
 
     public function getAvailableLocales(): array
     {
-        return PairOptions::toPairs(ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all());
-    }
-
-    public function getAvailableSites(): array
-    {
-        return PairOptions::toPairs(ChiefSites::all()->toCollection()->pluck('shortName', 'locale')->all());
+        return PairOptions::toPairs(ChiefSites::all()->filterByLocales($this->modelLocales)->toCollection()->pluck('shortName', 'locale')->all());
     }
 }

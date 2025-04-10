@@ -60,7 +60,7 @@ class PageTable extends Table
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
                 })->tease(64, '...'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
-                LinksColumnBadge::makeDefault(),
+                ...((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class) ? [LinksColumnBadge::makeDefault()] : []),
                 ColumnDate::make('updated_at')
                     ->label('Aangepast')
                     ->format('d/m/Y H:i'),

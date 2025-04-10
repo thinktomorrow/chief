@@ -6,8 +6,6 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\ContextDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Sites\Actions\SaveSiteLocales;
 use Thinktomorrow\Chief\Sites\UI\Livewire\Sites\WithAddingSites;
@@ -29,9 +27,6 @@ class EditSiteLinks extends Component
 
     public Collection $sites;
 
-    /** @var Collection<ContextDto> */
-    public Collection $contexts;
-
     public array $deletionQueue = [];
 
     public array $redirectDeletionQueue = [];
@@ -39,7 +34,6 @@ class EditSiteLinks extends Component
     public function mount(string $modelReference)
     {
         $this->modelReference = $modelReference;
-        $this->contexts = app(ComposeLivewireDto::class)->getContextsByOwner(ModelReference::fromString($modelReference));
     }
 
     public function getListeners()
@@ -105,7 +99,10 @@ class EditSiteLinks extends Component
             'form.*.status.required' => 'Status is verplicht',
         ]);
 
-        $locales = collect($this->form)->reject(fn ($values) => ! $values)->keys()->toArray();
+        $locales = collect($this->form)
+            ->reject(fn ($values) => ! $values)
+            ->reject(fn ($value, $key) => in_array($key, $this->deletionQueue))
+            ->keys()->toArray();
 
         app(SaveSiteLocales::class)->handle($model, $locales);
 

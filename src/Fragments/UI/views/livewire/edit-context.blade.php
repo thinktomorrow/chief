@@ -5,7 +5,11 @@
             <x-chief::form.input.text id="title" wire:model="form.title" />
         </x-chief::form.fieldset>
 
-        @include('chief-fragments::livewire._partials.edit-context-locales')
+        @if(count($this->getAvailableLocales()) > 1)
+            @include('chief-fragments::livewire._partials.edit-context-locales')
+        @else
+            @include('chief-fragments::livewire._partials.edit-context-single-locale')
+        @endif
 
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
@@ -23,13 +27,13 @@
                 <div class="space-y-2">
                     @if ($cannotBeDeletedBecauseOfLastLeft)
                         <p>
-                            Deze opbouw is de enige opbouw die nog bestaat voor deze pagina. Je kan de laatste
-                            paginaopbouw niet verwijderen.
+                            Deze fragmenten zijn de enigen die nog bestaat voor deze pagina. Je kan de laatste
+                            tab niet verwijderen.
                         </p>
                     @elseif ($cannotBeDeletedBecauseOfConnectedToSite)
                         <p>
-                            Deze opbouw is nog gekoppeld aan één of meerdere sites. Verwijder eerst de koppeling om deze
-                            opbouw te verwijderen.
+                            Deze fragmenten staan live op één of meerdere sites. Verwijder eerst de koppeling om deze
+                            fragmenten te verwijderen.
                         </p>
                     @endif
                 </div>
