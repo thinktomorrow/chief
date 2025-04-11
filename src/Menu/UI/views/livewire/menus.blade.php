@@ -1,52 +1,29 @@
 @php
-    $menus = $this->getMenus();
+    $items = $this->getItems();
 @endphp
 
 <x-chief::window title="Menu items">
-    <x-slot name="tabs">
-        <x-chief::window.tabs>
-            @foreach ($menus as $menu)
-                <x-chief::window.tabs.item
-                    aria-controls="{{ $menu->id }}"
-                    aria-selected="{{ $menu->id === $activeMenuId }}"
-                    wire:key="menu-tabs-{{ $menu->id }}"
-                    wire:click.prevent="showMenu('{{ $menu->id }}')"
-                    :active="$menu->id === $activeMenuId"
-                >
-                    {{ $menu->title }}
-                </x-chief::window.tabs.item>
-            @endforeach
 
-            <x-chief::window.tabs.item wire:click="addMenu">
-                <x-chief::icon.plus-sign class="size-5" />
-            </x-chief::window.tabs.item>
-        </x-chief::window.tabs>
+    <x-slot name="tabs">
+        @include('chief-fragments::livewire.tabitems.nav')
     </x-slot>
 
-    @foreach ($menus as $menu)
-        <div wire:key="menu-tab-content-{{ $menu->id }}">
-            @if ($menu->id === $activeMenuId)
-                <x-slot name="badges">
-                    @foreach ($menu->locales as $locale)
-                        <x-chief::badge size="sm">{{ $locale }}</x-chief::badge>
-                    @endforeach
-                </x-slot>
+    <div class="-mb-4">
+        @foreach ($items as $item)
+            <div wire:key="menu-tab-content-{{ $item->id }}">
+                @if ($item->id === $activeItemId)
+                    @include('chief-fragments::livewire.tabitems.actions')
 
-                <x-slot name="actions">
-                    <x-chief::button wire:click="editMenu({{ $menu->id }})" variant="grey" size="sm">
-                        <x-chief::icon.settings />
-                    </x-chief::button>
-                </x-slot>
+                    <livewire:chief-wire::table
+                        :key="'table-'.$item->getId()"
+                        :table="$this->getMenuTable($item->getId())"
+                        variant="transparent"
+                    />
+                @endif
+            </div>
+        @endforeach
+    </div>
 
-                <livewire:chief-wire::table
-                    :key="'table-'.$menu->id"
-                    :table="$this->getMenuTable($menu->id)"
-                    variant="transparent"
-                />
-            @endif
-        </div>
-    @endforeach
-
-    <livewire:chief-wire::add-menu :type="$type" />
-    <livewire:chief-wire::edit-menu :type="$type" />
+    <livewire:chief-wire::add-menu :type="$type" :locales="$locales" />
+    <livewire:chief-wire::edit-menu :type="$type" :locales="$locales" />
 </x-chief::window>

@@ -8,12 +8,15 @@ class CreateMenu
 
     private array $locales;
 
+    private array $activeSites;
+
     private ?string $title;
 
-    public function __construct(string $type, array $locales, ?string $title = null)
+    public function __construct(string $type, array $locales, array $activeSites, ?string $title = null)
     {
         $this->type = $type;
         $this->locales = $locales;
+        $this->activeSites = $activeSites;
         $this->title = $title;
     }
 
@@ -25,6 +28,11 @@ class CreateMenu
     public function getLocales(): array
     {
         return $this->locales;
+    }
+
+    public function getActiveSites(): array
+    {
+        return $this->activeSites;
     }
 
     public function getTitle(): ?string

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithNullifyEmptyValues;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class EditFragment extends Component

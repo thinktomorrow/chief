@@ -2,22 +2,19 @@
 
 namespace Thinktomorrow\Chief\Menu\UI\Livewire;
 
-use Illuminate\Support\Str;
 use Livewire\Wireable;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\TabItem;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuType;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 
-class MenuDto implements TabItem, Wireable
+class MenuDto implements Wireable
 {
     public function __construct(
         public readonly string $id,
         public readonly string $type,
         public readonly string $typeTitle,
-        public readonly ?string $title,
+        public readonly string $title,
         public readonly array $locales,
-        public array $activeSites,
+        public readonly array $activeSites,
     ) {
         //
     }
@@ -58,45 +55,8 @@ class MenuDto implements TabItem, Wireable
         );
     }
 
-    public static function empty(string $type): static
+    public function hasActiveSite(string $site): bool
     {
-        return new static(
-            id: 'new-'.Str::random(),
-            type: $type,
-            typeTitle: MenuType::find($type)->getLabel(),
-            title: null,
-            locales: ChiefSites::locales(),
-            activeSites: [],
-        );
-    }
-
-    public function addActiveSites(array $activeSites): void
-    {
-        $this->activeSites = array_merge($this->activeSites, $activeSites);
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function getLocales(): array
-    {
-        return $this->locales;
-    }
-
-    public function getActiveSites(): array
-    {
-        return $this->activeSites;
-    }
-
-    public function exists(): bool
-    {
-        return ! Str::startsWith($this->id, 'new-');
+        return in_array($site, $this->activeSites);
     }
 }

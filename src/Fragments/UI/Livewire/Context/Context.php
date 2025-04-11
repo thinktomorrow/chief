@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;

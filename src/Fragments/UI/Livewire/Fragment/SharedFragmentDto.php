@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment;
 
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;

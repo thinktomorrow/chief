@@ -1,0 +1,110 @@
+<?php
+
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems;
+
+use Illuminate\Support\Collection;
+use Livewire\Component;
+use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+use Thinktomorrow\Chief\Sites\ChiefSites;
+
+abstract class EditItem extends Component
+{
+    use HasForm;
+    use ShowsAsDialog;
+    use WithSafeDeletion;
+
+    public TabItem $item;
+
+    public array $locales;
+
+    protected function mountEditItem(array $locales)
+    {
+        $this->locales = $locales;
+    }
+
+    public function getListeners()
+    {
+        return [
+            'open-edit-item' => 'open',
+        ];
+    }
+
+    abstract protected function getItemById(string $itemId): TabItem;
+
+    public function open($values = [])
+    {
+        $this->item = $this->getItemById($values['itemId']);
+
+        $this->setDeletionFlags();
+
+        /**
+         * Inject all field values in the Livewire form object
+         * From then on we can use the form object to access the values
+         */
+        $this->initialFormValues();
+
+        $this->isOpen = true;
+    }
+
+    private function initialFormValues(): void
+    {
+        $this->form = [
+            'title' => $this->item->getTitle(),
+            'locales' => array_values(array_unique(array_merge($this->item->getLocales(), $this->item->getActiveSites()))), // In case of missing locales, the locales should always contain the active sites as well.
+            'active_sites' => $this->item->getActiveSites(),
+        ];
+    }
+
+    public function close()
+    {
+        $this->reset(['form', 'item', 'cannotBeDeleted', 'cannotBeDeletedBecauseOfLastLeft', 'cannotBeDeletedBecauseOfConnectedToSite']);
+        $this->resetErrorBag();
+
+        $this->isOpen = false;
+    }
+
+    public function deleteItem(): void
+    {
+        $this->handleDeleteItem();
+
+        $this->dispatch($this->modelReference.'-context-deleted', ['contextId' => $this->context->id]);
+
+        $this->close();
+    }
+
+    abstract protected function handleDeleteItem(): void;
+
+    abstract protected function handleUpdateItem(): void;
+
+    public function save()
+    {
+        $this->validate([
+            'form.locales' => ['required', 'array', 'min:1'],
+            'form.title' => 'required',
+        ], [
+            'form.locales.required' => 'Duid minstens één site aan. Dit bepaalt in welke talen je de fragmenten kan invullen.',
+            'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
+        ]);
+
+        // Active sites can only consist of the locales that are selected
+        $this->form['active_sites'] = array_values(array_intersect($this->form['locales'], $this->form['active_sites']));
+
+        $this->handleUpdateItem();
+
+        $this->dispatch('item-updated', ...[
+            'itemId' => $this->item->id,
+        ]);
+
+        $this->close();
+    }
+
+    abstract public function getItem(): TabItem;
+
+    abstract public function getItemModels(): Collection;
+
+    public function getAvailableLocales(): array
+    {
+        return ChiefSites::all()->filterByLocales($this->locales)->toCollection()->pluck('shortName', 'locale')->all();
+    }
+}

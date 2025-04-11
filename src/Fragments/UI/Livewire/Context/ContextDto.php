@@ -1,24 +1,25 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 
 use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\TabItem;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
-class ContextDto implements Wireable
+class ContextDto implements TabItem, Wireable
 {
     const DEFAULT_TITLE = 'Inhoud';
 
     public function __construct(
-        public string $id,
-        public ?string $title,
-        public ModelReference $ownerReference,
-        public string $ownerLabel,
-        public string $ownerAdminUrl,
-        public array $locales = [],
+        public readonly string $id,
+        public readonly ?string $title,
+        public readonly ModelReference $ownerReference,
+        public readonly string $ownerLabel,
+        public readonly string $ownerAdminUrl,
+        public readonly array $locales = [],
         public array $activeSites = [],
     ) {}
 
@@ -79,9 +80,28 @@ class ContextDto implements Wireable
         $this->activeSites = array_merge($this->activeSites, $activeSites);
     }
 
-    //    public function hasSpecificLocales(): bool
-    //    {
-    //        return count(\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($this->locales)) < count(\Thinktomorrow\Chief\Sites\ChiefSites::locales());
-    //    }
+    public function getId(): string
+    {
+        return $this->id;
+    }
 
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function getLocales(): array
+    {
+        return $this->locales;
+    }
+
+    public function getActiveSites(): array
+    {
+        return $this->activeSites;
+    }
+
+    public function exists(): bool
+    {
+        return ! Str::startsWith($this->id, 'new-');
+    }
 }

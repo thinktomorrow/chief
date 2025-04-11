@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Tests\Livewire;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\ContextDto;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;

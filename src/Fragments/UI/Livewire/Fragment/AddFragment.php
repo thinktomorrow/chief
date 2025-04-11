@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\AddsExistingFragments;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\AddsNewFragments;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 
 class AddFragment extends Component
 {

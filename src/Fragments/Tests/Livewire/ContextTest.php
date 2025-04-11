@@ -7,8 +7,8 @@ use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\ContextDto;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\Context;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 

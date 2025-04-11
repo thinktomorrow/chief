@@ -9,16 +9,30 @@ use Thinktomorrow\Chief\Menu\Events\MenuDeleted;
 use Thinktomorrow\Chief\Menu\Events\MenuUpdated;
 use Thinktomorrow\Chief\Menu\Exceptions\SafeMenuDeletionProtection;
 use Thinktomorrow\Chief\Menu\Menu;
+use Thinktomorrow\Chief\Sites\Actions\SyncActiveSites;
 
 class MenuApplication
 {
+    private SyncActiveSites $syncActiveSites;
+
+    public function __construct(SyncActiveSites $syncActiveSites)
+    {
+        $this->syncActiveSites = $syncActiveSites;
+    }
+
     public function create(CreateMenu $command): string
     {
         $model = Menu::create([
             'type' => $command->getType(),
             'locales' => $command->getLocales(),
+            'active_sites' => $command->getActiveSites(),
             'title' => $command->getTitle(),
         ]);
+
+        $this->syncActiveSites->handle(
+            $model,
+            Menu::where('type', $command->getType())->get()->reject(fn ($c) => $c->id == $model->id)
+        );
 
         event(new MenuCreated((string) $model->id));
 
@@ -31,8 +45,14 @@ class MenuApplication
 
         $model->update([
             'locales' => $command->getLocales(),
+            'active_sites' => $command->getActiveSites(),
             'title' => $command->getTitle(),
         ]);
+
+        $this->syncActiveSites->handle(
+            $model,
+            Menu::where('type', $model->type)->get()->reject(fn ($c) => $c->id == $model->id)
+        );
 
         event(new MenuUpdated((string) $model->id));
     }

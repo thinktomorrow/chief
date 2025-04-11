@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\AddContext;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\AddFragment;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\Contexts;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\EditContext;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\EditFragment;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\AddContext;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\Context;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\Contexts;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\EditContext;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\AddFragment;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\EditFragment;
 
 class FragmentsServiceProvider extends ServiceProvider
 {

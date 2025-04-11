@@ -6,9 +6,12 @@ namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\ContextDto;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\SharedFragmentDto;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\SharedFragmentDto;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\TabItem;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Menu\Menu;
+use Thinktomorrow\Chief\Menu\UI\Livewire\MenuDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasSiteLocales;
@@ -57,15 +60,30 @@ class ComposeLivewireDto
 
     }
 
-    private function setUnassignedActiveSitesToPrimaryContext(Collection $contexts, array $availableSites): void
+    public function getMenu(string $type, string $menuId): MenuDto
+    {
+        return $this->getMenus($type)->first(fn ($menu) => $menu->getId() === $menuId);
+    }
+
+    public function getMenus(string $type): Collection
+    {
+        $collection = Menu::where('type', $type)->get()
+            ->map(fn ($menu) => MenuDto::fromModel($menu));
+
+        $this->setUnassignedActiveSitesToPrimaryContext($collection, ChiefSites::locales());
+
+        return $collection;
+    }
+
+    private function setUnassignedActiveSitesToPrimaryContext(Collection $items, array $availableSites): void
     {
         $activeSites = $availableSites;
 
-        $contexts->each(function (ContextDto $context) use (&$activeSites) {
-            $activeSites = array_diff($activeSites, $context->activeSites);
+        $items->each(function (TabItem $item) use (&$activeSites) {
+            $activeSites = array_diff($activeSites, $item->getActiveSites());
         });
 
-        $contexts->first()->addActiveSites($activeSites);
+        $items->first()->addActiveSites($activeSites);
     }
 
     public function composeEmptyContext(ModelReference $modelReference): ContextDto

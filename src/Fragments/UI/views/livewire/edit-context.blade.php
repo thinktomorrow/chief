@@ -1,4 +1,4 @@
-<x-chief::dialog.modal wired size="sm" title="Paginaopbouw aanpassen">
+<x-chief::dialog.modal wired size="sm" title="Fragmenten aanpassen">
     @if ($isOpen)
         <x-chief::form.fieldset rule="form.title">
             <x-chief::form.label for="title">Titel</x-chief::form.label>
@@ -6,9 +6,9 @@
         </x-chief::form.fieldset>
 
         @if(count($this->getAvailableLocales()) > 1)
-            @include('chief-fragments::livewire._partials.edit-context-locales')
+            @include('chief-fragments::livewire.tabitems.item-locales')
         @else
-            @include('chief-fragments::livewire._partials.edit-context-single-locale')
+            @include('chief-fragments::livewire.tabitems.item-single-locale')
         @endif
 
         <x-slot name="footer">
@@ -18,43 +18,6 @@
             </x-chief::dialog.modal.footer>
         </x-slot>
 
-        @if ($cannotBeDeleted)
-            <x-chief::callout data-slot="form-group" variant="red" title="Paginaopbouw kan niet verwijderd worden">
-                <x-slot name="icon">
-                    <x-chief::icon.solid.alert />
-                </x-slot>
-
-                <div class="space-y-2">
-                    @if ($cannotBeDeletedBecauseOfLastLeft)
-                        <p>
-                            Deze fragmenten zijn de enigen die nog bestaat voor deze pagina. Je kan de laatste
-                            tab niet verwijderen.
-                        </p>
-                    @elseif ($cannotBeDeletedBecauseOfConnectedToSite)
-                        <p>
-                            Deze fragmenten staan live op één of meerdere sites. Verwijder eerst de koppeling om deze
-                            fragmenten te verwijderen.
-                        </p>
-                    @endif
-                </div>
-            </x-chief::callout>
-        @else
-            <x-chief::callout data-slot="form-group" variant="red" title="Paginaopbouw verwijderen">
-                <x-slot name="icon">
-                    <x-chief::icon.solid.alert />
-                </x-slot>
-
-                <div class="space-y-2">
-                    <p>Opgelet. Alle fragmenten worden ook verwijderd.</p>
-
-                    <div>
-                        <x-chief::button variant="outline-red" x-on:click="$wire.deleteContext()">
-                            <x-chief::icon.delete />
-                            <span>Verwijder paginaopbouw</span>
-                        </x-chief::button>
-                    </div>
-                </div>
-            </x-chief::callout>
-        @endif
+        @include('chief-fragments::livewire.tabitems.safe-delete')
     @endif
 </x-chief::dialog.modal>

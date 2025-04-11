@@ -9,8 +9,5 @@
     </x-slot>
 
     <livewire:chief-wire::menus :type="$type" :active-menu-id="$activeMenuId" />
-
-    <x-slot name="sidebar">
-        <livewire:chief-wire::menu-sites :type="$type" />
-    </x-slot>
+    
 </x-chief::page.template>

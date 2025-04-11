@@ -1,53 +1,25 @@
 @php
-    $contexts = $this->getContexts();
+    $items = $this->getItems();
 @endphp
 
 <x-chief::window title="Fragmenten">
 
     <x-slot name="tabs">
-        <x-chief::window.tabs>
-            @foreach ($contexts as $i => $context)
-                <x-chief::window.tabs.item
-                    aria-controls="{{ $context->id }}"
-                    aria-selected="{{ $context->id === $activeContextId }}"
-                    wire:key="context-tabs-{{ $context->id }}"
-                    wire:click.prevent="showContext('{{ $context->id }}')"
-                    :active="$context->id === $activeContextId"
-                >
-                    {{ $context->title }}
-
-                    @foreach($context->activeSites as $site)
-                        <x-chief::badge
-                            variant="grey"
-                            size="xs">{{ count($modelLocales) > 1 ? \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName : 'live' }}</x-chief::badge>
-                    @endforeach
-                </x-chief::window.tabs.item>
-            @endforeach
-
-            <x-chief::window.tabs.item wire:click="addContext">
-                <x-chief::icon.plus-sign class="size-5" />
-            </x-chief::window.tabs.item>
-        </x-chief::window.tabs>
+        @include('chief-fragments::livewire.tabitems.nav')
     </x-slot>
 
     <div class="-mb-4">
-        @foreach ($contexts as $context)
-            <div wire:key="context-tab-content-{{ $context->id }}">
-                @if ($context->id === $activeContextId)
-                    @if($this->showTabs())
-                        <x-slot name="actions">
-                            <x-chief::button wire:click="editContext({{ $context->id }})" variant="grey" size="sm">
-                                <x-chief::icon.settings />
-                            </x-chief::button>
-                        </x-slot>
-                    @endif
+        @foreach ($items as $item)
+            <div wire:key="context-tab-content-{{ $item->id }}">
+                @if ($item->id === $activeItemId)
+                    @include('chief-fragments::livewire.tabitems.actions')
 
-                    <livewire:chief-fragments::context :key="$context->id" :context="$context" />
+                    <livewire:chief-fragments::context :key="$item->id" :context="$item" />
                 @endif
             </div>
         @endforeach
     </div>
 
-    <livewire:chief-wire::add-context :model-reference="$modelReference" :model-locales="$modelLocales" />
-    <livewire:chief-wire::edit-context :model-reference="$modelReference" :model-locales="$modelLocales" />
+    <livewire:chief-wire::add-context :model-reference="$modelReference" :locales="$locales" />
+    <livewire:chief-wire::edit-context :model-reference="$modelReference" :locales="$locales" />
 </x-chief::window>

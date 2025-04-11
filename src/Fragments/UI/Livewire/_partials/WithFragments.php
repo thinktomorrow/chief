@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\FragmentDto;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\FragmentDto;
 
 trait WithFragments
 {

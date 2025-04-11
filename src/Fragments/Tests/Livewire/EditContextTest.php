@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Fragments\Domain\Context\Context;
 use Thinktomorrow\Chief\Fragments\Exceptions\SafeContextDeleteException;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\EditContext;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\EditContext;
 
 class EditContextTest extends \Thinktomorrow\Chief\Tests\ChiefTestCase
 {

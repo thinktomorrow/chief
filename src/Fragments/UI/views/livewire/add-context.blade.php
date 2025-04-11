@@ -7,7 +7,7 @@
         </x-chief::form.fieldset>
 
         @if(count($this->getAvailableLocales()) > 1)
-            @include('chief-fragments::livewire._partials.add-context-locales')
+            @include('chief-fragments::livewire.tabitems.item-locales')
         @endif
 
         <x-slot name="footer">

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
+namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment;
 
 use Illuminate\Support\Collection;
 use Livewire\Wireable;
@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 
 class FragmentDto implements Wireable
 {
