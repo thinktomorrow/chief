@@ -37,9 +37,9 @@ trait InteractsWithGroupedForms
             ->mapWithKeys(function ($index) {
 
                 $components = collect($this->getComponents())->map(function ($component) use ($index) {
-                    $component->id(LivewireFieldName::getWithoutPrefix($component->getId(), null, $this->composeGroupIndex($index))); // For error rule matching
-                    $component->key(LivewireFieldName::getWithoutPrefix($component->getKey(), null, $this->composeGroupIndex($index)));
-                    $component->name(FieldNameHelpers::replaceDotsByBrackets(LivewireFieldName::getWithoutPrefix($component->getName(), null, $this->composeGroupIndex($index))));
+                    $component->id(LivewireFieldName::get($component->getId(), $this->composeGroupIndex($index))); // For error rule matching
+                    $component->key(LivewireFieldName::get($component->getKey(), $this->composeGroupIndex($index)));
+                    $component->name(FieldNameHelpers::replaceDotsByBrackets(LivewireFieldName::get($component->getName(), $this->composeGroupIndex($index))));
 
                     return $component;
                 });

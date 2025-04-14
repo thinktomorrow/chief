@@ -58,10 +58,10 @@ class RepeatComponent extends Component
 
     public function addSection(): void
     {
-        // Get all entries from last section and use it for a new (empty) entry
-        $firstEntry = $this->form[0];
+        // Get all entries from first section and use it for a new (empty) entry
+        $section = $this->form[0];
 
-        $this->form[] = $this->clearValues($firstEntry);
+        $this->form[] = $this->clearValues($section);
     }
 
     public function removeSection(int $index): void

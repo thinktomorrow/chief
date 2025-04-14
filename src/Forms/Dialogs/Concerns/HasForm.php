@@ -92,7 +92,7 @@ trait HasForm
 
     /**
      * Available listener for when file upload component is updated,
-     * and dispatches an files-updated event. You can add it as:
+     * and dispatches a files-updated event. You can add it as:
      *
      * public function getListeners() {
      *      return ['files-updated' => 'onfilesUpdated'];

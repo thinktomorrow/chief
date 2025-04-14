@@ -31,21 +31,37 @@ trait InteractsWithFields
     {
         if ($component->hasLocales()) {
             foreach ($component->getDottedLocalizedNames() as $locale => $name) {
-
-                $value = ($component instanceof Repeat)
-                    ? ($component->getValue($locale) ?: [[]])
+                $value = ($component instanceof Repeat && $this->isEmptyRepeatValue($component->getValue($locale)))
+                    ? $this->composeEmptyRepeatValue($component, $locale)
                     : $component->getValue($locale);
 
                 $this->injectFormValue($name, $value);
             }
         } else {
-
-            $value = ($component instanceof Repeat)
-                ? ($component->getValue() ?: [[]])
+            $value = ($component instanceof Repeat && $this->isEmptyRepeatValue($component->getValue()))
+                ? $this->composeEmptyRepeatValue($component)
                 : $component->getValue();
 
             $this->injectFormValue($component->getName(), $value);
         }
+    }
+
+    private function composeEmptyRepeatValue(Repeat $component, ?string $locale = null): array
+    {
+        $emptyValue = [[]];
+
+        foreach ($component->getComponents() as $nestedComponent) {
+            if ($nestedComponent instanceof Repeat) {
+                $emptyValue[0][$nestedComponent->getName()] = $this->composeEmptyRepeatValue($nestedComponent, $locale);
+            }
+        }
+
+        return $emptyValue;
+    }
+
+    private function isEmptyRepeatValue($value): bool
+    {
+        return empty($value) || $value === [[]] || $value === [null];
     }
 
     private function injectFormValue(string $key, $value): void

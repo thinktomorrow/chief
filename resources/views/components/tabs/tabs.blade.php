@@ -80,8 +80,8 @@
 
                 <template x-for="(tab, index) in tabs" :key="tab.id">
                     <button
-                        type="button"
                         :key="tab.id"
+                        type="button"
                         role="tab"
                         tabindex="-1"
                         x-on:click.prevent="showTab(tab.id)"
