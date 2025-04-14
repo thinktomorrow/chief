@@ -1,4 +1,9 @@
+@php
+    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+@endphp
+
 <x-chief::form.input.range
+    wire:model.change="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"
     placeholder="{{ $getPlaceholder($locale ?? null) }}"

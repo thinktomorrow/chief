@@ -3,7 +3,7 @@
 @endphp
 
 <x-chief::form.input.select
-    wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+    wire:model.change="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
     :multiple="$allowMultiple()"
