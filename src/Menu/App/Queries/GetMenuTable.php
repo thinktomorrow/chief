@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Menu\App\Queries;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\RowAction;
+use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Sorters\TreeSort;
@@ -27,22 +28,28 @@ class GetMenuTable
                     })->link(function ($model) {
                         return route('chief.back.menuitem.edit', $model->getKey());
                     }),
-                ColumnText::make('link')
-                    ->label('Link')
-                    ->items(function ($model) {
-                        return teaser($model->getUrl(), 48, '...');
-                    })
-                    ->openInNewTab()
-                    ->link(function ($model) {
-                        return $model->getUrl();
+                Column::items([
+                    ColumnBadge::make('type')->label('Type')->items(function ($model) {
+                        return match ($model->type) {
+                            'internal' => 'Pagina',
+                            'custom' => 'Eigen link',
+                            default => 'Geen link',
+                        };
                     }),
-                ColumnBadge::make('type')->label('Type')->items(function ($model) {
-                    return match ($model->type) {
-                        'internal' => 'Interne pagina',
-                        'custom' => 'Eigen link',
-                        default => 'Geen link',
-                    };
-                }),
+                    ColumnText::make('link')
+                        ->label('Link')
+                        ->items(function ($model) {
+                            if ($model->type === 'nolink') {
+                                return null;
+                            }
+
+                            return teaser($model->getUrl(), 48, '...');
+                        })
+                        ->openInNewTab()
+                        ->link(function ($model) {
+                            return $model->getUrl();
+                        }),
+                ]),
                 ColumnBadge::make('status')
                     ->label('Status')
                     ->items(function ($model) {

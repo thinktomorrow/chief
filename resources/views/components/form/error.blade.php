@@ -5,9 +5,9 @@
 @if ($rule)
     @if ($errors->any())
         @error($rule)
-            <x-chief::callout data-slot="error" size="sm" variant="red" class="px-2.5 py-1">
-                {{ ucfirst($message) }}
-            </x-chief::callout>
+        <x-chief::callout data-slot="error" size="sm" variant="red" class="px-2.5 py-1">
+            {!! ucfirst($message) !!}
+        </x-chief::callout>
         @enderror
     @endif
 

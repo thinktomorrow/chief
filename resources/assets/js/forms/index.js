@@ -11,5 +11,5 @@ document.addEventListener('form-dialog-opened', () => {
     setTimeout(() => {
         initConditionalFields();
         initCharacterCount();
-    }, 0);
+    }, 200);
 });

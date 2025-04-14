@@ -15,8 +15,8 @@ class PrepareMenuItemsForAdminSelect
         $collection = $items;
 
         if ($model) {
-            $collection = $collection->prune(function (MenuItem $node) use ($model) {
-                return ! in_array($model->id, $node->pluckAncestorNodes('id'));
+            $collection = $collection->remove(function (MenuItem $node) use ($model) {
+                return $node->getNodeId() == $model->id;
             });
         }
 

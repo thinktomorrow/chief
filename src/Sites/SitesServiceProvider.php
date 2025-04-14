@@ -6,8 +6,6 @@ use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
-use Thinktomorrow\Chief\Sites\UI\Livewire\MenuSites\EditMenuSites;
-use Thinktomorrow\Chief\Sites\UI\Livewire\MenuSites\MenuSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\EditSiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\EditSiteSelection;
@@ -29,10 +27,6 @@ class SitesServiceProvider extends ServiceProvider
         // Site selection for non-visitable model (model without links)
         Livewire::component('chief-wire::site-selection', SiteSelection::class);
         Livewire::component('chief-wire::edit-site-selection', EditSiteSelection::class);
-
-        // Menu site mgmt
-        Livewire::component('chief-wire::menu-sites', MenuSites::class);
-        Livewire::component('chief-wire::menu-edit-sites', EditMenuSites::class);
     }
 
     public function register()

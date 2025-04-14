@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Urls\App\ValidationRules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Urls\Models\UrlRecord;
@@ -36,7 +37,14 @@ class UniqueUrlSlugRule implements ValidationRule
                 'ignoredModel' => $this->ignoredModel,
             ]);
 
-            $fail('De \''.$value.'\' link wordt al door een andere pagina gebruikt.');
+            // All this effort to get the other model reference in the error message
+            $other = UrlRecord::findBySlug($slug, $locale);
+            $otherModel = $other->model;
+            $ownerResource = app(Registry::class)->findResourceByModel($otherModel::class);
+            $otherAdminUrl = app(Registry::class)->findManagerByModel($otherModel::class)->route('edit', $otherModel);
+            $otherModelTitle = $ownerResource->getPageTitle($otherModel);
+
+            $fail('De \''.$slug.'\' link wordt al door <a class="link underline" href="'.$otherAdminUrl.'" target="_blank">'.$otherModelTitle.'</a> gebruikt.');
         }
     }
 }
