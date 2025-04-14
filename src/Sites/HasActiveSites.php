@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Model that keeps reference to which sites it is active.
  */
-interface HasActiveSites extends HasSiteLocales
+interface HasActiveSites extends HasAllowedSites
 {
     /** All sites where this model is active in. */
     public function getActiveSites(): array;

@@ -19,7 +19,7 @@ class ContextDto implements TabItem, Wireable
         public readonly ModelReference $ownerReference,
         public readonly string $ownerLabel,
         public readonly string $ownerAdminUrl,
-        public readonly array $locales = [],
+        public readonly array $allowedSites = [],
         public array $activeSites = [],
     ) {}
 
@@ -31,7 +31,7 @@ class ContextDto implements TabItem, Wireable
             $ownerReference,
             $ownerLabel,
             $ownerAdminUrl,
-            $model->locales ?? [],
+            $model->allowed_sites ?? [],
             $model->active_sites ?? [],
         );
     }
@@ -57,7 +57,7 @@ class ContextDto implements TabItem, Wireable
             'ownerReference' => $this->ownerReference->get(),
             'ownerLabel' => $this->ownerLabel,
             'ownerAdminUrl' => $this->ownerAdminUrl,
-            'locales' => $this->locales,
+            'allowedSites' => $this->allowedSites,
             'activeSites' => $this->activeSites,
         ];
     }
@@ -70,7 +70,7 @@ class ContextDto implements TabItem, Wireable
             ModelReference::fromString($value['ownerReference']),
             $value['ownerLabel'],
             $value['ownerAdminUrl'],
-            $value['locales'],
+            $value['allowedSites'],
             $value['activeSites'] ?? [],
         );
     }
@@ -90,9 +90,9 @@ class ContextDto implements TabItem, Wireable
         return $this->title;
     }
 
-    public function getLocales(): array
+    public function getAllowedSites(): array
     {
-        return $this->locales;
+        return $this->allowedSites;
     }
 
     public function getActiveSites(): array

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->json('allowed_sites')->nullable();
             $table->json('active_sites')->nullable();
-            $table->json('locales')->nullable();
             $table->string('title')->nullable();
             $table->unsignedSmallInteger('order')->default(0);
             $table->timestamps();
@@ -98,8 +98,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('owner_type');
             $table->char('owner_id', 36); // account for integer ids as well as uuids
+            $table->json('allowed_sites')->nullable();
             $table->json('active_sites')->nullable();
-            $table->json('locales')->nullable();
             $table->string('title')->nullable();
             $table->timestamps();
         });
@@ -118,7 +118,6 @@ return new class extends Migration
             $table->unsignedBigInteger('context_id');
             $table->char('parent_id', 36)->nullable(); // Root fragments have no parent
             $table->char('child_id', 36);
-            $table->json('sites')->nullable();
             $table->unsignedSmallInteger('order')->default(0);
 
             $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');

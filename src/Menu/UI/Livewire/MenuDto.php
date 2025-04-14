@@ -29,7 +29,7 @@ class MenuDto implements TabItem, Wireable
             type: $menu->type,
             typeTitle: MenuType::find($menu->type)->getLabel(),
             title: $menu->title,
-            locales: $menu->getSiteLocales(),
+            locales: $menu->getAllowedSites(),
             activeSites: $menu->getActiveSites(),
         );
     }
@@ -85,7 +85,7 @@ class MenuDto implements TabItem, Wireable
         return $this->title;
     }
 
-    public function getLocales(): array
+    public function getAllowedSites(): array
     {
         return $this->locales;
     }

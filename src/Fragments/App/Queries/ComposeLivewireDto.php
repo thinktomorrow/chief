@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\MenuDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class ComposeLivewireDto
 {
@@ -52,7 +52,7 @@ class ComposeLivewireDto
             });
 
         $model = $modelReference->instance();
-        $modelLocales = $model instanceof HasSiteLocales ? $model->getSiteLocales() : ChiefSites::locales();
+        $modelLocales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
 
         $this->setUnassignedActiveSitesToPrimaryContext($collection, $modelLocales);
 

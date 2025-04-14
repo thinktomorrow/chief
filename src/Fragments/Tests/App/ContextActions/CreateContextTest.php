@@ -21,7 +21,7 @@ class CreateContextTest extends ChiefTestCase
             'title' => 'my title',
             'owner_type' => $owner->modelReference()->shortClassName(),
             'owner_id' => $owner->id,
-            'locales' => json_encode(['nl', 'en']),
+            'allowed_sites' => json_encode(['nl', 'en']),
             'active_sites' => json_encode(['default']),
         ]);
     }

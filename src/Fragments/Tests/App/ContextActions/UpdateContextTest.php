@@ -20,7 +20,7 @@ class UpdateContextTest extends ChiefTestCase
         $this->assertDatabaseHas('contexts', [
             'id' => $context->id,
             'title' => 'Updated title',
-            'locales' => json_encode(['nl']),
+            'allowed_sites' => json_encode(['nl']),
             'active_sites' => json_encode(['default']),
         ]);
     }

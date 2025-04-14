@@ -26,7 +26,7 @@ class MenuDto implements Wireable
             type: $menu->type,
             typeTitle: MenuType::find($menu->type)->getLabel(),
             title: $menu->title,
-            locales: $menu->getSiteLocales(),
+            locales: $menu->getAllowedSites(),
             activeSites: $menu->getActiveSites(),
         );
     }

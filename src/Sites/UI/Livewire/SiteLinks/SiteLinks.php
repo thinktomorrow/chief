@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
 use Livewire\Component;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
-use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class SiteLinks extends Component
 {
@@ -13,7 +13,7 @@ class SiteLinks extends Component
 
     public string $modelReference;
 
-    public function mount(Visitable&HasSiteLocales&ReferableModel $model)
+    public function mount(Visitable&HasAllowedSites&ReferableModel $model)
     {
         $this->modelReference = $model->modelReference()->get();
     }

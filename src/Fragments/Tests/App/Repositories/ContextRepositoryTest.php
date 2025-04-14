@@ -63,7 +63,7 @@ class ContextRepositoryTest extends ChiefTestCase
 
         $context = $this->contextRepository->getByOwner($this->owner->modelReference())->first();
 
-        $this->assertEquals(['nl', 'fr'], $context->locales);
+        $this->assertEquals(['nl', 'fr'], $context->allowed_sites);
         $this->assertEquals(['nl'], $context->active_sites);
     }
 

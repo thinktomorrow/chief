@@ -8,7 +8,7 @@ interface TabItem
 
     public function getTitle(): ?string;
 
-    public function getLocales(): array;
+    public function getAllowedSites(): array;
 
     public function getActiveSites(): array;
 

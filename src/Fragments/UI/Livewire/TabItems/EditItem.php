@@ -27,7 +27,13 @@ abstract class EditItem extends Component
     {
         return [
             'open-edit-item' => 'open',
+            'allowed-sites-updated' => 'onAllowedSitesUpdated',
         ];
+    }
+
+    public function onAllowedSitesUpdated(array $allowedSites): void
+    {
+        $this->locales = $allowedSites;
     }
 
     abstract protected function getItemById(string $itemId): TabItem;
@@ -51,7 +57,7 @@ abstract class EditItem extends Component
     {
         $this->form = [
             'title' => $this->item->getTitle(),
-            'locales' => array_values(array_unique(array_merge($this->item->getLocales(), $this->item->getActiveSites()))), // In case of missing locales, the locales should always contain the active sites as well.
+            'locales' => array_values(array_unique(array_merge($this->item->getAllowedSites(), $this->item->getActiveSites()))), // In case of missing locales, the locales should always contain the active sites as well.
             'active_sites' => $this->item->getActiveSites(),
         ];
     }
@@ -68,7 +74,7 @@ abstract class EditItem extends Component
     {
         $this->handleDeleteItem();
 
-        $this->dispatch($this->modelReference.'-context-deleted', ['contextId' => $this->context->id]);
+        $this->dispatch('item-deleted', ['itemId' => $this->item->getId()]);
 
         $this->close();
     }

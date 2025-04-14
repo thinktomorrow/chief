@@ -10,16 +10,16 @@ final class CreateContext
 {
     private ModelReference $modelReference;
 
-    private array $locales;
+    private array $allowedSites;
 
     private array $activeSites;
 
     private ?string $title;
 
-    public function __construct(ModelReference $modelReference, array $locales, array $activeSites, ?string $title = null)
+    public function __construct(ModelReference $modelReference, array $allowedSites, array $activeSites, ?string $title = null)
     {
         $this->modelReference = $modelReference;
-        $this->locales = $locales;
+        $this->allowedSites = $allowedSites;
         $this->activeSites = $activeSites;
         $this->title = $title;
     }
@@ -29,9 +29,9 @@ final class CreateContext
         return $this->modelReference;
     }
 
-    public function getLocales(): array
+    public function getAllowedSites(): array
     {
-        return $this->locales;
+        return $this->allowedSites;
     }
 
     public function getActiveSites(): array

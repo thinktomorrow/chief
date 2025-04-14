@@ -37,7 +37,7 @@ class EditContextTest extends \Thinktomorrow\Chief\Tests\ChiefTestCase
             ->assertSet('isOpen', true)
             ->assertSet('context.id', $this->context->id)
             ->assertSet('form.title', $this->context->title)
-            ->assertSet('form.locales', $this->context->getSiteLocales())
+            ->assertSet('form.locales', $this->context->getAllowedSites())
             ->assertSet('form.active_sites', $this->context->getActiveSites());
     }
 
@@ -53,7 +53,7 @@ class EditContextTest extends \Thinktomorrow\Chief\Tests\ChiefTestCase
 
         $this->context->refresh();
         $this->assertSame('Updated Title', $this->context->title);
-        $this->assertSame(['nl', 'en'], $this->context->getSiteLocales());
+        $this->assertSame(['nl', 'en'], $this->context->getAllowedSites());
         $this->assertSame(['en'], $this->context->getActiveSites());
     }
 

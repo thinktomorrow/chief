@@ -23,14 +23,20 @@ abstract class AddItem extends Component
     {
         return [
             'open-add-item' => 'open',
+            'allowed-sites-updated' => 'onAllowedSitesUpdated',
         ];
+    }
+
+    public function onAllowedSitesUpdated(array $allowedSites): void
+    {
+        $this->locales = $allowedSites;
     }
 
     public function open($values = [])
     {
         $this->isOpen = true;
 
-        $this->form['locales'] = ChiefSites::locales();
+        $this->form['locales'] = $this->locales;
         $this->form['active_sites'] = [];
     }
 

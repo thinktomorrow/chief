@@ -24,7 +24,7 @@ class LocalizedPageTest extends ChiefTestCase
 
         $this->model = new LocalizedPageFixture;
 
-        $this->model->setSiteLocales(['nl', 'en']);
+        $this->model->setAllowedSites(['nl', 'en']);
         $this->model->save();
     }
 
@@ -32,17 +32,17 @@ class LocalizedPageTest extends ChiefTestCase
     {
         $this->model->fresh();
 
-        $this->assertEquals(['nl', 'en'], $this->model->getSiteLocales());
+        $this->assertEquals(['nl', 'en'], $this->model->getAllowedSites());
     }
 
     public function test_it_has_all_site_locales_when_no_locales_are_present(): void
     {
-        $this->model->setSiteLocales([]);
+        $this->model->setAllowedSites([]);
         $this->model->save();
 
         $this->model->fresh();
 
-        $this->assertEquals(['nl', 'fr', 'en'], $this->model->getSiteLocales());
+        $this->assertEquals(['nl', 'fr', 'en'], $this->model->getAllowedSites());
 
     }
 
@@ -148,7 +148,7 @@ class LocalizedPageTest extends ChiefTestCase
             ['locale' => 'nl', 'fallback_locale' => null],
         ]);
 
-        $this->model->setSiteLocales(['nl', 'en', 'fr']);
+        $this->model->setAllowedSites(['nl', 'en', 'fr']);
         $this->model->save();
 
         $this->model->setDynamic('title', 'Nederlandse titel', 'nl');

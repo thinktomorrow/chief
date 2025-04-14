@@ -37,7 +37,7 @@
             wire:model="form.{{ $context->id  }}.locales"
             :multiple="true"
             :options="$this->getAvailableLocales()"
-            :selection="old('locales', $context->locales)"
+            :selection="old('locales', $context->allowedSites)"
         />
     </x-chief::form.fieldset>
 

@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 trait LocalizedFieldDefaults
 {
@@ -27,8 +27,8 @@ trait LocalizedFieldDefaults
             // TODO: if model is fragment, set the locales of the fragment context
             // And set all locales to any locales that are set on the fragment context
 
-            if ($model instanceof HasSiteLocales && empty($this->scopedLocales)) {
-                $field->setScopedLocales(ChiefSites::verifiedLocales($model->getSiteLocales()));
+            if ($model instanceof HasAllowedSites && empty($this->scopedLocales)) {
+                $field->setScopedLocales(ChiefSites::verifiedLocales($model->getAllowedSites()));
             }
         });
 

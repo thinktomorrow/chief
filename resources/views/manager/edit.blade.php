@@ -1,7 +1,7 @@
 @php
     $hasAnyAsideTopComponents = count($layout->filterByPosition('aside-top')->getComponents()) > 0;
-    $hasSiteLinks = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
-    $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales;
+    $hasSiteLinks = $model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
+    $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites;
     $hasStates = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page') && count($model->getStateKeys()) > 0;
     $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
 
@@ -24,7 +24,7 @@
             @endif
 
             <x-slot name="actions">
-                @if ($model instanceof \Thinktomorrow\Chief\Sites\HasSiteLocales)
+                @if ($model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites)
                     <livewire:chief-wire::site-toggle :model="$model" />
                 @endif
 

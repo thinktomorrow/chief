@@ -31,7 +31,7 @@ class ContextApplication
     {
         $context = $this->contextRepository->create(
             $command->getModelReference(),
-            $command->getLocales(),
+            $command->getAllowedSites(),
             $command->getActiveSites(),
             $command->getTitle()
         );
@@ -50,7 +50,7 @@ class ContextApplication
 
         $context->update([
             'title' => $command->getTitle(),
-            'locales' => $command->getLocales(),
+            'allowed_sites' => $command->getAllowedSites(),
             'active_sites' => $command->getActiveSites(),
         ]);
 
@@ -81,12 +81,21 @@ class ContextApplication
     public function duplicate(DuplicateContext $command): void
     {
         $sourceContext = $this->contextRepository->find($command->getSourceContextId());
-        $targetContext = $this->contextRepository->create($command->getTargetModel()->modelReference(), $sourceContext->getSiteLocales(), $sourceContext->getActiveSites(), ($sourceContext->title ? $sourceContext->title.' (copy)' : null));
+        $targetContext = $this->contextRepository->create($command->getTargetModel()->modelReference(), $sourceContext->getAllowedSites(), $sourceContext->getActiveSites(), ($sourceContext->title ? $sourceContext->title.' (copy)' : null));
 
         /** @var FragmentModel $fragment */
         foreach ($sourceContext->rootFragments as $index => $fragment) {
             $this->duplicateFragment->handle($fragment, $sourceContext->id, $targetContext->id, null, $index);
         }
+    }
+
+    public function removeActiveSite(RemoveActiveSite $command): void
+    {
+        $this->contextRepository
+            ->getByOwner($command->getModelReference())
+            ->filter(fn ($context) => $context->hasActiveSite($command->getSite()))
+            ->each(fn ($context) => $context->removeActiveSite($command->getSite()))
+            ->each(fn ($context) => $context->save());
     }
 
     /**

@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 
 class SiteToggle extends Component
@@ -17,7 +17,7 @@ class SiteToggle extends Component
 
     public Collection $sites;
 
-    public function mount(HasSiteLocales&ReferableModel $model)
+    public function mount(HasAllowedSites&ReferableModel $model)
     {
         $this->modelReference = $model->modelReference();
 
@@ -28,7 +28,7 @@ class SiteToggle extends Component
     {
         return [
             'site-links-updated' => 'onSiteLinksUpdated',
-            'site-selection-updated' => 'onSiteLinksUpdated',
+            'allowed-sites-updated' => 'onSiteLinksUpdated',
         ];
     }
 
@@ -44,10 +44,10 @@ class SiteToggle extends Component
         return view('chief-sites::site-toggle');
     }
 
-    private function getSites(HasSiteLocales $model): Collection
+    private function getSites(HasAllowedSites $model): Collection
     {
         return ChiefSites::all()
-            ->filterByLocales($model->getSiteLocales())
+            ->filterByLocales($model->getAllowedSites())
             ->toCollection()
             ->map(fn (ChiefSite $site) => SiteDto::fromConfig($site));
     }

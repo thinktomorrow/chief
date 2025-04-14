@@ -8,16 +8,16 @@ final class UpdateContext
 {
     private string $contextId;
 
-    private array $locales;
+    private array $allowedSites;
 
     private array $activeSites;
 
     private ?string $title;
 
-    public function __construct(string $contextId, array $locales, array $activeSites, ?string $title = null)
+    public function __construct(string $contextId, array $allowedSites, array $activeSites, ?string $title = null)
     {
         $this->contextId = $contextId;
-        $this->locales = $locales;
+        $this->allowedSites = $allowedSites;
         $this->activeSites = $activeSites;
         $this->title = $title;
     }
@@ -27,9 +27,9 @@ final class UpdateContext
         return $this->contextId;
     }
 
-    public function getLocales(): array
+    public function getAllowedSites(): array
     {
-        return $this->locales;
+        return $this->allowedSites;
     }
 
     public function getActiveSites(): array

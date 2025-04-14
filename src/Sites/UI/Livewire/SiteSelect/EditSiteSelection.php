@@ -7,7 +7,7 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Sites\Actions\SaveSiteLocales;
+use Thinktomorrow\Chief\Sites\Actions\SaveAllowedSites;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class EditSiteSelection extends Component
@@ -52,9 +52,9 @@ class EditSiteSelection extends Component
     {
         $model = ModelReference::fromString($this->modelReference)->instance();
 
-        app(SaveSiteLocales::class)->handle($model, $this->form['locales']);
+        app(SaveAllowedSites::class)->handle($model, $this->form['locales']);
 
-        $this->dispatch('site-selection-updated');
+        $this->dispatch('allowed-sites-updated', ...['allowedSites' => $this->form['locales']]);
 
         $this->close();
     }
@@ -68,7 +68,7 @@ class EditSiteSelection extends Component
     {
         $model = ModelReference::fromString($this->modelReference)->instance();
 
-        $this->form['locales'] = ChiefSites::all()->filterByLocales($model->getSiteLocales())->getLocales();
+        $this->form['locales'] = ChiefSites::all()->filterByLocales($model->getAllowedSites())->getLocales();
     }
 
     public function getAvailableSites(): Collection

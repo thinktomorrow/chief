@@ -1,5 +1,8 @@
 @php
     $sites = $this->getSites();
+    
+    // TODO(ben): Is there a better way to get the model here?
+    $model = \Thinktomorrow\Chief\Shared\ModelReferences\ModelReference::fromString($this->modelReference)->instance();
 @endphp
 
 <x-chief::window title="Sitekeuze">
@@ -9,7 +12,7 @@
                 <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
             @endforeach
         @endif
-        
+
         <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
         </x-chief::button>

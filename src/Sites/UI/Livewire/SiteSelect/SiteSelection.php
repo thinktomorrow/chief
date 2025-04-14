@@ -8,14 +8,14 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 
 class SiteSelection extends Component
 {
     public string $modelReference;
 
-    public function mount(HasSiteLocales&ReferableModel $model)
+    public function mount(HasAllowedSites&ReferableModel $model)
     {
         $this->modelReference = $model->modelReference()->get();
     }
@@ -23,7 +23,7 @@ class SiteSelection extends Component
     public function getListeners()
     {
         return [
-            'site-selection-updated' => 'onSitesUpdated',
+            'allowed-sites-updated' => 'onSitesUpdated',
         ];
     }
 
@@ -47,7 +47,7 @@ class SiteSelection extends Component
     {
         $model = ModelReference::fromString($this->modelReference)->instance();
 
-        return ChiefSites::all()->filterByLocales($model->getSiteLocales())->toCollection()
+        return ChiefSites::all()->filterByLocales($model->getAllowedSites())->toCollection()
             ->map(fn (ChiefSite $site) => SiteDto::fromConfig($site));
     }
 }

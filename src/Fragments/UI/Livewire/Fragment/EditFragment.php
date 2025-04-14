@@ -96,11 +96,11 @@ class EditFragment extends Component
     {
         $layout = Layout::make($this->fragment->fields)
             ->model($this->fragment->getFragmentModel())
-            ->setScopedLocales($this->context->locales);
+            ->setScopedLocales($this->context->allowedSites);
 
         if ($this->fragment->isShared) {
             $layout->setDormantLocales(
-                array_values(array_diff(ChiefSites::locales(), $this->context->locales))
+                array_values(array_diff(ChiefSites::locales(), $this->context->allowedSites))
             );
         }
 
@@ -165,7 +165,7 @@ class EditFragment extends Component
         app(UpdateFragment::class)->handle(
             $this->fragment->contextId,
             $this->fragment->fragmentId,
-            $this->context->locales,
+            $this->context->allowedSites,
             $form,
             [],
         );

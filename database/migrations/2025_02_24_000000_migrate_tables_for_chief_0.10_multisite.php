@@ -37,7 +37,7 @@ return new class extends Migration
 
         Schema::table('contexts', function (Blueprint $table) {
             $table->json('active_sites')->after('owner_id')->nullable();
-            $table->json('locales')->after('active_sites')->nullable();
+            $table->json('allowed_sites')->after('active_sites')->nullable();
             $table->string('title')->nullable();
         });
 
@@ -61,10 +61,10 @@ return new class extends Migration
 
     private function insertDefaultContextLocales(): void
     {
-        $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
+        $sites = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
 
         DB::table('contexts')->update([
-            'locales' => json_encode($locales),
+            'allowed_sites' => json_encode($sites),
         ]);
     }
 
@@ -115,7 +115,6 @@ return new class extends Migration
             $table->unsignedBigInteger('context_id');
             $table->char('parent_id', 36)->nullable(); // Root fragments have no parent
             $table->char('child_id', 36);
-            $table->json('locales')->nullable();
             $table->unsignedSmallInteger('order')->default(0);
 
             $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');
@@ -185,8 +184,8 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->json('allowed_sites')->nullable();
             $table->json('active_sites')->nullable();
-            $table->json('locales')->nullable();
             $table->string('title')->nullable();
             $table->unsignedSmallInteger('order')->default(0);
             $table->timestamps();
@@ -241,6 +240,6 @@ return new class extends Migration
 
     private function columnSchemaIsAlreadyAltered(): bool
     {
-        return Schema::hasColumn('contexts', 'locales');
+        return Schema::hasColumn('contexts', 'allowed_sites');
     }
 };

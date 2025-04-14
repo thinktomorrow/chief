@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\Items;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\HasSiteLocales;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class Contexts extends Items
 {
@@ -22,7 +22,7 @@ class Contexts extends Items
     {
         $this->modelReference = $model->modelReference()->get();
 
-        $locales = $model instanceof HasSiteLocales ? $model->getSiteLocales() : ChiefSites::locales();
+        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
 
         $this->mountItems($locales, $activeContextId);
     }

@@ -42,12 +42,12 @@ class ContextRepository
         return ContextModel::with('owner')->findOrFail($contextId);
     }
 
-    public function create(ModelReference $ownerReference, array $locales, array $activeSites, ?string $title = null): ContextModel
+    public function create(ModelReference $ownerReference, array $allowedSites, array $activeSites, ?string $title = null): ContextModel
     {
         return ContextModel::create([
             'owner_type' => $ownerReference->shortClassName(),
             'owner_id' => $ownerReference->id(),
-            'locales' => $locales,
+            'allowed_sites' => $allowedSites,
             'active_sites' => $activeSites,
             'title' => $title,
         ]);

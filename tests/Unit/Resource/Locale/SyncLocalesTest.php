@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\Resource\Locale;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Sites\Actions\AddSite;
 use Thinktomorrow\Chief\Sites\Actions\RemoveLocale;
-use Thinktomorrow\Chief\Sites\Actions\SaveSiteLocales;
+use Thinktomorrow\Chief\Sites\Actions\SaveAllowedSites;
 use Thinktomorrow\Chief\Sites\Events\ModelSitesUpdated;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -18,7 +18,7 @@ class SyncLocalesTest extends ChiefTestCase
         $page = $this->setUpAndCreateArticle();
         $resource = new LocaleRepositoryStub;
 
-        app(SaveSiteLocales::class)->handle($page, ['nl', 'fr', 'en']);
+        app(SaveAllowedSites::class)->handle($page, ['nl', 'fr', 'en']);
 
         $this->assertEquals(['nl', 'fr', 'en'], $page->refresh()->locales);
         $this->assertEquals(['nl', 'fr', 'en'], $resource->getLocales($page));
@@ -29,7 +29,7 @@ class SyncLocalesTest extends ChiefTestCase
                 $event->previousState == [];
         });
 
-        app(SaveSiteLocales::class)->handle($page, ['nl']);
+        app(SaveAllowedSites::class)->handle($page, ['nl']);
 
         $this->assertEquals(['nl'], $page->refresh()->locales);
         $this->assertEquals(['nl'], $resource->getLocales($page));
@@ -50,7 +50,7 @@ class SyncLocalesTest extends ChiefTestCase
 
         config()->set('chief.locales.admin', ['fr', 'nl', 'en']);
 
-        app(SaveSiteLocales::class)->handle($page, ['nl', 'fr', 'en']);
+        app(SaveAllowedSites::class)->handle($page, ['nl', 'fr', 'en']);
 
         $this->assertEquals(['fr', 'nl', 'en'], $page->refresh()->locales);
         $this->assertEquals(['fr', 'nl', 'en'], $resource->getLocales($page));

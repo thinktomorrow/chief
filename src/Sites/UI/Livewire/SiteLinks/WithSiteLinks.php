@@ -33,7 +33,7 @@ trait WithSiteLinks
         $siteLinks = collect();
 
         $model = $this->getModel();
-        $sites = ChiefSites::all()->filterByLocales($model->getSiteLocales());
+        $sites = ChiefSites::all()->filterByLocales($model->getAllowedSites());
         $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
         $activeRecords = $model->urls;
 

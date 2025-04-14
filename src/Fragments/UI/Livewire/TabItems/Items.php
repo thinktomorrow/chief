@@ -31,6 +31,7 @@ abstract class Items extends Component
             'item-updated' => 'onItemUpdated',
             'item-deleted' => 'onItemDeleted',
             'site-links-updated' => 'onSitesUpdated',
+            'allowed-sites-updated' => 'onSitesUpdated',
         ];
     }
 
