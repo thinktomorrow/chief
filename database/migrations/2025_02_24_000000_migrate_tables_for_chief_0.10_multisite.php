@@ -197,7 +197,7 @@ return new class extends Migration
         foreach ($menuTypes as $type => $values) {
             $label = ucfirst($values['label']);
             app(\Thinktomorrow\Chief\Menu\App\Actions\MenuApplication::class)->create(
-                new \Thinktomorrow\Chief\Menu\App\Actions\CreateMenu($type, \Thinktomorrow\Chief\Sites\ChiefSites::locales(), $label));
+                new \Thinktomorrow\Chief\Menu\App\Actions\CreateMenu($type, \Thinktomorrow\Chief\Sites\ChiefSites::locales(), \Thinktomorrow\Chief\Sites\ChiefSites::locales(), $label));
         }
 
         Schema::table('menu_items', function (Blueprint $table) {
