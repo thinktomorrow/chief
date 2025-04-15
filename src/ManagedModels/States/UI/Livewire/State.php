@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class State extends Component
 {
-    use WIthStateConfig;
+    use WithStateConfig;
 
     public string $stateKey;
 
