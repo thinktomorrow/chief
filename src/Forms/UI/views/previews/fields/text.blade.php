@@ -1,6 +1,6 @@
 <p class="body body-dark">
-    @if(($value = $getValue($locale ?? null)) && is_string($value))
-        {{ teaser($value, 120, '...') }}
+    @if(!is_null(($value = $getValue($locale ?? null))))
+        {{ is_string($value) ? teaser($value, 120, '...') : $value }}
     @else
         ...
     @endif
