@@ -73,7 +73,7 @@ class DuplicateModel
     {
         // Default when title is no dynamic field
         if (! public_method_exists($model, 'dynamic') || ! $model->isDynamic($titleKey)) {
-            $copiedModel->$titleKey = '[Copy] '.$model->$titleKey;
+            $copiedModel->$titleKey = $model->$titleKey.' [Copy]';
 
             return;
         }
@@ -85,9 +85,9 @@ class DuplicateModel
         if ($isTitleLocalized) {
             $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
             $defaultLocale = reset($locales);
-            $copiedModel->setDynamic($titleKey, '[Copy] '.$model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)), $defaultLocale);
+            $copiedModel->setDynamic($titleKey, $model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)).' [Copy]', $defaultLocale);
         } else {
-            $copiedModel->setDynamic($titleKey, '[Copy] '.$model->$titleKey);
+            $copiedModel->setDynamic($titleKey, $model->$titleKey.' [Copy]');
         }
     }
 }

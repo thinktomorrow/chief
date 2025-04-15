@@ -29,7 +29,7 @@ class DuplicatePageTest extends ChiefTestCase
 
         // 'custom' is the title attribute in this test
         $this->assertEquals(
-            str_replace($this->source->custom, '[Copy] '.$this->source->custom, $this->source->values),
+            str_replace($this->source->custom, $this->source->custom.' [Copy]', $this->source->values),
             $copiedModel->values
         );
 

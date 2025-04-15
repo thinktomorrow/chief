@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems;
 
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
@@ -36,11 +37,13 @@ abstract class AddItem extends Component
     {
         $this->isOpen = true;
 
-        $this->form['locales'] = $this->locales;
+        $this->form['locales'] = [];
         $this->form['active_sites'] = [];
     }
 
     abstract public function getItem(): TabItem;
+
+    abstract public function getItems(): Collection;
 
     public function close()
     {
@@ -54,10 +57,10 @@ abstract class AddItem extends Component
     {
         $this->validate([
             'form.locales' => 'required|array|min:1',
-            'form.title' => 'required',
+            //            'form.title' => 'required',
         ], [
-            'form.locales.required' => 'Voeg minstens één taal toe. Dit bepaalt in welke talen je de fragmenten moet invullen.',
-            'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
+            'form.locales.required' => 'Voeg minstens één site toe waarvoor je de inhoud wilt voorzien.',
+            //            'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
         ]);
 
         $itemId = $this->createOnSave();
@@ -73,6 +76,6 @@ abstract class AddItem extends Component
 
     public function getAvailableLocales(): array
     {
-        return ChiefSites::all()->filterByLocales($this->locales)->toCollection()->pluck('shortName', 'locale')->all();
+        return ChiefSites::all()->filterByLocales($this->locales)->toCollection()->pluck('name', 'locale')->all();
     }
 }

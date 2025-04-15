@@ -78,7 +78,7 @@ class ContextApplication
         $this->delete($command);
     }
 
-    public function duplicate(DuplicateContext $command): void
+    public function duplicate(DuplicateContext $command): string
     {
         $sourceContext = $this->contextRepository->find($command->getSourceContextId());
         $targetContext = $this->contextRepository->create($command->getTargetModel()->modelReference(), $sourceContext->getAllowedSites(), $sourceContext->getActiveSites(), ($sourceContext->title ? $sourceContext->title.' (copy)' : null));
@@ -87,6 +87,8 @@ class ContextApplication
         foreach ($sourceContext->rootFragments as $index => $fragment) {
             $this->duplicateFragment->handle($fragment, $sourceContext->id, $targetContext->id, null, $index);
         }
+
+        return $targetContext->id;
     }
 
     public function removeActiveSite(RemoveActiveSite $command): void

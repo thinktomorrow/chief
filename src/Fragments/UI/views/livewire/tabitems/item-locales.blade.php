@@ -1,5 +1,5 @@
 <x-chief::form.fieldset rule="form.locales">
-    <x-chief::form.label>Op welke sites wil je deze tab gebruiken?</x-chief::form.label>
+    <x-chief::form.label>Voor welke site wil je content toevoegen?</x-chief::form.label>
 
     <div class="pt-3 divide-y divide-grey-200">
         @foreach($this->getAvailableLocales() as $locale => $name)
@@ -17,7 +17,8 @@
                         />
 
                         <x-chief::form.label for="item-locales-{{ $locale }}" class="body-dark body leading-5" unset>
-                            {{ $name }}
+                            <strong>{{ $name }}</strong>
+                            - {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($locale)->url }}
                         </x-chief::form.label>
                     </div>
 
@@ -25,7 +26,8 @@
                         <div class="flex items-start justify-end gap-2">
                             @if(in_array($locale, $this->getItem()->getActiveSites()))
                                 <span class="text-xs text-right">
-                                    <strong>Deze versie wordt momenteel live getoond.</strong><br>Om dit te wijzigen zet je een andere tab live voor {{ $name }}
+                                    <strong>Deze versie wordt momenteel live getoond.</strong><br>Om dit te wijzigen zet je een andere
+                                fragmenten tab live voor deze taal
                                 </span>
                             @else
                                 <x-chief::form.input.checkbox
