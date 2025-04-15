@@ -6,16 +6,16 @@ class CreateMenu
 {
     private string $type;
 
-    private array $locales;
+    private array $allowedSites;
 
     private array $activeSites;
 
     private ?string $title;
 
-    public function __construct(string $type, array $locales, array $activeSites, ?string $title = null)
+    public function __construct(string $type, array $allowedSites, array $activeSites, ?string $title = null)
     {
         $this->type = $type;
-        $this->locales = $locales;
+        $this->allowedSites = $allowedSites;
         $this->activeSites = $activeSites;
         $this->title = $title;
     }
@@ -25,9 +25,9 @@ class CreateMenu
         return $this->type;
     }
 
-    public function getLocales(): array
+    public function getAllowedSites(): array
     {
-        return $this->locales;
+        return $this->allowedSites;
     }
 
     public function getActiveSites(): array

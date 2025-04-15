@@ -24,7 +24,7 @@ class MenuApplication
     {
         $model = Menu::create([
             'type' => $command->getType(),
-            'locales' => $command->getLocales(),
+            'allowed_sites' => $command->getAllowedSites(),
             'active_sites' => $command->getActiveSites(),
             'title' => $command->getTitle(),
         ]);
@@ -44,7 +44,7 @@ class MenuApplication
         $model = Menu::findorFail($command->getMenuId());
 
         $model->update([
-            'locales' => $command->getLocales(),
+            'allowed_sites' => $command->getAllowedSites(),
             'active_sites' => $command->getActiveSites(),
             'title' => $command->getTitle(),
         ]);
