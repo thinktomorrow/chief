@@ -52,6 +52,7 @@ class ComposeLivewireDto
             });
 
         $model = $modelReference->instance();
+
         $modelLocales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
 
         $this->setUnassignedActiveSitesToPrimaryContext($collection, $modelLocales);

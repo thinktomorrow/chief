@@ -21,6 +21,9 @@ class ContextDtoTest extends ChiefTestCase
         parent::setUp();
 
         $this->owner = $this->setUpAndCreateArticle();
+        $this->owner->setAllowedSites(['nl', 'fr']);
+        $this->owner->save();
+
         chiefRegister()->fragment(Hero::class);
 
         $this->composer = app(ComposeLivewireDto::class);
@@ -29,6 +32,7 @@ class ContextDtoTest extends ChiefTestCase
     public function test_it_can_get_context_dto()
     {
         $context = FragmentTestHelpers::findOrCreateContext($this->owner, ['nl', 'fr'], ['fr'], 'context title');
+
         $dto = $this->composer->getContext($this->owner->modelReference(), $context->id);
 
         $this->assertInstanceOf(ContextDto::class, $dto);
@@ -37,7 +41,28 @@ class ContextDtoTest extends ChiefTestCase
         $this->assertEquals($this->owner->modelReference(), $dto->ownerReference);
         $this->assertEquals('http://localhost/admin/article_page/'.$this->owner->getKey().'/edit', $dto->ownerAdminUrl);
         $this->assertEquals(['nl', 'fr'], $dto->allowedSites);
-        $this->assertEquals(['fr'], $dto->activeSites);
+        $this->assertEqualsCanonicalizing(['nl', 'fr'], $dto->activeSites);
+    }
+
+    public function test_default_context_has_all_unassigned_active_sites()
+    {
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner, ['nl', 'fr'], ['fr'], 'context title');
+
+        $dto = $this->composer->getContext($this->owner->modelReference(), $context->id);
+        $this->assertEquals(['nl', 'fr'], $dto->allowedSites);
+        $this->assertEqualsCanonicalizing(['nl', 'fr'], $dto->activeSites);
+    }
+
+    public function test_it_keeps_assigned_active_sites_to_their_context()
+    {
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner, ['nl', 'fr'], [], 'context title');
+        $context2 = FragmentTestHelpers::createContext($this->owner, ['nl', 'fr'], ['fr'], 'context title 2');
+
+        $dto = $this->composer->getContext($this->owner->modelReference(), $context->id);
+        $dto2 = $this->composer->getContext($this->owner->modelReference(), $context2->id);
+
+        $this->assertEqualsCanonicalizing(['nl'], $dto->activeSites); // Nl is added to the default context...
+        $this->assertEquals(['fr'], $dto2->activeSites); // ... but not to the other context
     }
 
     public function test_it_can_get_contexts_by_owner()

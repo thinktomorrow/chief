@@ -13,7 +13,6 @@ use Thinktomorrow\Chief\Models\Page;
 use Thinktomorrow\Chief\Models\PageDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
@@ -33,10 +32,6 @@ class ArticlePage extends Model implements Page
 
     public $guarded = [];
 
-    public $casts = [
-        'locales' => 'array',
-    ];
-
     public $dynamicKeys = [
         'title', 'custom', 'title_trans', 'content_trans', 'seo_title', 'seo_description', 'title_sanitized', 'title_sanitized_trans',
     ];
@@ -45,7 +40,7 @@ class ArticlePage extends Model implements Page
     {
         Schema::create('article_pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->json('locales')->nullable();
+            $table->json('allowed_sites')->nullable();
             $table->string('title')->nullable();
             $table->string('current_state')->default(PageState::draft->getValueAsString());
             $table->json('values')->nullable(); // dynamic attributes
@@ -68,10 +63,5 @@ class ArticlePage extends Model implements Page
     public function viewKey(): string
     {
         return 'article_page';
-    }
-
-    protected function getDynamicLocales(): array
-    {
-        return ChiefSites::locales();
     }
 }

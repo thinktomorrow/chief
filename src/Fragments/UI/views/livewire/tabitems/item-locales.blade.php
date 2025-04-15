@@ -25,8 +25,7 @@
                         <div class="flex items-start justify-end gap-2">
                             @if(in_array($locale, $this->getItem()->getActiveSites()))
                                 <span class="text-xs text-right">
-                                    <strong>Deze versie wordt momenteel live getoond.</strong><br>Om dit te wijzigen zet je een andere
-                                fragmenten tab live voor deze taal
+                                    <strong>Deze versie wordt momenteel live getoond.</strong><br>Om dit te wijzigen zet je een andere tab live voor {{ $name }}
                                 </span>
                             @else
                                 <x-chief::form.input.checkbox
