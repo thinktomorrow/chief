@@ -49,7 +49,8 @@
                 @if (count(\Thinktomorrow\Chief\Sites\ChiefSites::locales()) > 1)
                     <x-chief::tabs :should-listen-for-external-tab="true">
                         @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
-                            <x-chief::tabs.tab tab-id="{{ $locale }}">
+                            <x-chief::tabs.tab tab-id="{{ $locale }}"
+                                               tab-label="{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($locale)->shortName }}">
                                 <x-chief::form.fieldset :rule="'trans' . $locale . 'url'">
                                     <x-chief::form.input.text
                                         id="trans-url-{{ $locale }}"
