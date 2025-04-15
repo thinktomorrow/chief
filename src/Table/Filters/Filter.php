@@ -66,17 +66,4 @@ abstract class Filter extends Component
     {
         return new static($key);
     }
-
-    //    protected function viewData(): array
-    //    {
-    //        return [
-    //            'id' => $this->queryKey,
-    //            'name' => $this->queryKey,
-    //            'label' => $this->label,
-    //            'description' => $this->description,
-    //            'value' => $this->getValue(),
-    //            'placeholder' => $this->placeholder,
-    //            'default' => $this->default,
-    //        ];
-    //    }
 }
