@@ -10,7 +10,7 @@ class SiteFilter extends ButtonGroupFilter
 {
     public static function makeDefault(): self
     {
-        return static::make('allowed_sites')
+        return static::make('site')
             ->label('Site')
             ->query(function ($query, $value) {
                 return $query->byAllowedSiteOrNone($value);

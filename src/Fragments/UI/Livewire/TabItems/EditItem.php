@@ -62,6 +62,16 @@ abstract class EditItem extends Component
         ];
     }
 
+    public function addActiveSite(string $locale): void
+    {
+        $this->form['active_sites'][] = $locale;
+    }
+
+    public function removeActiveSite(string $locale): void
+    {
+        $this->form['active_sites'] = array_values(array_diff($this->form['active_sites'], [$locale]));
+    }
+
     public function close()
     {
         $this->reset(['form', 'item', 'cannotBeDeleted', 'cannotBeDeletedBecauseOfLastLeft', 'cannotBeDeletedBecauseOfConnectedToSite']);

@@ -10,7 +10,7 @@ class SitesColumnBadge extends ColumnBadge
 {
     public static function makeDefault(): static
     {
-        return static::make('sites')->label('Sites')->items(function (HasAllowedSites $model) {
+        return static::make('sites')->label('Site')->items(function (HasAllowedSites $model) {
 
             $items = [];
 

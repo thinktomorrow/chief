@@ -58,12 +58,12 @@ class PageTable extends Table
             ->filters([
                 ...((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) ? [SiteFilter::makeDefault($resourceKey)->primary()] : []),
                 TitleFilter::makeDefault(),
-                OnlineStateFilter::makeDefault()->secondary(),
+                OnlineStateFilter::makeDefault()->tertiary(),
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) use ($resourceKey) {
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
-                })->tease(64, '...'),
+                })->tease(54, '...'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),

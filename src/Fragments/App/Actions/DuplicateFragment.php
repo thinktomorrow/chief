@@ -50,7 +50,7 @@ class DuplicateFragment
         $this->attachFragment->handle($targetContextId, $duplicatedFragmentModel->id, $parentFragmentId, $index);
 
         foreach ($fragmentModel->assetRelation()->get() as $asset) {
-            $this->addAsset->handle($duplicatedFragmentModel, $asset, $asset->pivot->type, $asset->pivot->locale, $asset->pivot->order, $asset->pivot->data);
+            $this->addAsset->handle($duplicatedFragmentModel, $asset, $asset->pivot->type, $asset->pivot->locale, $asset->pivot->order, $asset->pivot->data ?? []);
         }
 
         event(new FragmentDuplicated($fragmentModel->id, $duplicatedFragmentModel->id, $sourceContextId, $targetContextId));

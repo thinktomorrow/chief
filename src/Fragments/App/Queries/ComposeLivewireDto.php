@@ -84,7 +84,7 @@ class ComposeLivewireDto
             $activeSites = array_diff($activeSites, $item->getActiveSites());
         });
 
-        $items->first()->addActiveSites($activeSites);
+        $items->first()?->addActiveSites($activeSites);
     }
 
     public function composeEmptyContext(ModelReference $modelReference): ContextDto
