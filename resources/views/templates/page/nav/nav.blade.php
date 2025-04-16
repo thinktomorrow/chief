@@ -19,18 +19,26 @@
 >
     <div class="space-y-9">
         {{-- Desktop Chief title --}}
-        <div class="hidden items-center justify-start lg:flex">
-            <div class="shrink-0 p-2">
-                <x-chief::icon.quill-write class="size-6 text-grey-400" />
+        <div>
+            <div class="hidden items-center justify-start lg:flex">
+                <div class="shrink-0 p-2">
+                    <x-chief::icon.quill-write class="size-6 text-grey-400" />
+                </div>
+
+                <a
+                    href="{{ route('chief.back.dashboard') }}"
+                    title="Ga naar Dashboard"
+                    class="block w-full py-2 text-sm leading-6 text-grey-700 hover:text-grey-950"
+                >
+                    {{ config('app.client', 'Chief') }}
+                </a>
+
             </div>
 
-            <a
-                href="{{ route('chief.back.dashboard') }}"
-                title="Ga naar Dashboard"
-                class="block w-full py-2 text-sm leading-6 text-grey-700 hover:text-grey-950"
-            >
-                {{ config('app.client', 'Chief') }}
-            </a>
+            <div class="w-full">
+                <livewire:chief-wire::site-toggle />
+            </div>
+
         </div>
 
         {{-- Mobile Chief title --}}

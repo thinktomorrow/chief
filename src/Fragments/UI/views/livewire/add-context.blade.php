@@ -2,10 +2,6 @@
                        subtitle="Je kan meerdere tabs met fragmenten beheren. Zo kan je specifieke fragmenten per site voorzien.">
     @if ($isOpen)
 
-        @if(count($this->getAvailableLocales()) > 1)
-            @include('chief-fragments::livewire.tabitems.item-locales')
-        @endif
-
         <x-chief::form.fieldset class="pt-3">
             <x-chief::form.label>Hoe wil je starten?</x-chief::form.label>
 
@@ -44,6 +40,10 @@
                 </div>
             </div>
         </x-chief::form.fieldset>
+
+        @if(count($this->getAvailableLocales()) > 1)
+            @include('chief-fragments::livewire.tabitems.item-locales')
+        @endif
 
         {{--        <x-chief::form.fieldset rule="form.title">--}}
         {{--            <x-chief::form.label for="title">Titel</x-chief::form.label>--}}

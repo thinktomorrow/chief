@@ -87,7 +87,7 @@ class EditFormComponent extends Component
         app(UpdateForm::class)->handle(
             $this->modelReference,
             $this->formComponent->getId(),
-            $this->form,
+            $this->prepareForSaving($this->form),
             [],
         );
 

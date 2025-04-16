@@ -25,7 +25,13 @@
 
             <x-slot name="actions">
                 @if ($model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites)
-                    <livewire:chief-wire::site-toggle :model="$model" />
+                    <livewire:chief-wire::model-site-toggle :model="$model" />
+                @endif
+
+                @if ($hasStates)
+                    @foreach ($model->getStateKeys() as $stateKey)
+                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                    @endforeach
                 @endif
 
                 @include('chief::manager._partials.edit-actions')
@@ -55,12 +61,6 @@
                 <livewire:chief-wire::site-links :model="$model" />
             @elseif ($hasSites)
                 <livewire:chief-wire::site-selection :model="$model" />
-            @elseif ($hasStates)
-                <x-chief::window title="Status">
-                    @foreach ($model->getStateKeys() as $stateKey)
-                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
-                    @endforeach
-                </x-chief::window>
             @endif
 
             @foreach ($layout->filterByPosition('aside')->getComponents() as $component)

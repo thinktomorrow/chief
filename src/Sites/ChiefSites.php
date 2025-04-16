@@ -64,6 +64,16 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return $this->getPrimarySite()->locale;
     }
 
+    public static function shortName(string $site): string
+    {
+        return self::all()->find($site)->shortName;
+    }
+
+    public static function name(string $site): string
+    {
+        return self::all()->find($site)->name;
+    }
+
     public function getNames(): array
     {
         return $this->toCollection()->mapWithKeys(fn ($site) => [$site->locale => $site->name])->toArray();
@@ -125,6 +135,15 @@ class ChiefSites implements \Countable, \IteratorAggregate
     public static function verifiedLocales(array $locales): array
     {
         return self::all()->filterByLocales($locales)->getLocales();
+    }
+
+    public static function verify(mixed $locale): bool
+    {
+        if (! is_string($locale)) {
+            return false;
+        }
+
+        return in_array($locale, self::locales());
     }
 
     public static function fallbackLocales(): array

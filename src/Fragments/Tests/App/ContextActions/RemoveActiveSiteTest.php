@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\Tests\App\ContextActions;
 
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
-use Thinktomorrow\Chief\Fragments\App\ContextActions\RemoveActiveSite;
+use Thinktomorrow\Chief\Fragments\App\ContextActions\SyncAllowedSites;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -19,8 +19,8 @@ class RemoveActiveSiteTest extends ChiefTestCase
             'active_sites' => json_encode(['default', 'site-b']),
         ]);
 
-        $command = new RemoveActiveSite($owner->modelReference(), 'site-b');
-        app(ContextApplication::class)->removeActiveSite($command);
+        $command = new SyncAllowedSites($owner->modelReference(), 'site-b');
+        app(ContextApplication::class)->syncAllowedSites($command);
 
         $this->assertDatabaseHas('contexts', [
             'id' => $context->id,
@@ -33,8 +33,8 @@ class RemoveActiveSiteTest extends ChiefTestCase
         $owner = $this->setUpAndCreateArticle();
         $context = FragmentTestHelpers::createContext($owner, [], ['default']);
 
-        $command = new RemoveActiveSite($owner->modelReference(), 'non-existent-site');
-        app(ContextApplication::class)->removeActiveSite($command);
+        $command = new SyncAllowedSites($owner->modelReference(), 'non-existent-site');
+        app(ContextApplication::class)->syncAllowedSites($command);
 
         $this->assertDatabaseHas('contexts', [
             'id' => $context->id,

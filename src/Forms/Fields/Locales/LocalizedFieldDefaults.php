@@ -55,6 +55,11 @@ trait LocalizedFieldDefaults
         return array_values(array_filter(ChiefSites::locales(), fn ($locale) => in_array($locale, $this->scopedLocales)));
     }
 
+    public function getScopedLocale(): ?string
+    {
+        return $this->getScopedLocales()[0] ?? null;
+    }
+
     public function setScopedLocales(array $scopedLocales): static
     {
         $this->scopedLocales = $scopedLocales;

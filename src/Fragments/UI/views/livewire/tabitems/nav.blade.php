@@ -9,9 +9,9 @@
         >
             {{ $item->getTitle() }}
 
-            @foreach($item->getActiveSites() as $site)
+            @foreach($item->getAllowedSites() as $site)
                 <x-chief::badge
-                    variant="grey"
+                    variant="{{ $site == $this->scopedLocale ? 'blue' : (in_array($site, $item->getActiveSites()) ? 'grey' : 'outline-transparent') }}"
                     size="xs">{{ count($locales) > 1 ? \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName : 'live' }}</x-chief::badge>
             @endforeach
         </x-chief::window.tabs.item>

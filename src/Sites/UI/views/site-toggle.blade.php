@@ -1,13 +1,16 @@
 <div class="flex justify-end gap-2">
     @if (count($sites) > 1)
-        <x-chief::tabs :should-listen-for-external-tab="true" size="base" :show-tabs="false">
+        <div>
             @foreach ($sites as $site)
-                <x-chief::tabs.tab
-                    wire:key="{{ $site->locale }}"
-                    tab-id="{{ $site->locale }}"
-                    tab-label="{{ $site->shortName }}"
-                />
+                <x-chief::badge
+                    wire:click="set('scopedLocale', '{{ $site->locale }}')"
+                    variant="{{ $site->locale == $scopedLocale ? 'blue' : 'outline-transparent' }}"
+                    class="cursor-pointer"
+                    size="sm"
+                >
+                    {{ $site->shortName }}
+                </x-chief::badge>
             @endforeach
-        </x-chief::tabs>
+        </div>
     @endif
 </div>

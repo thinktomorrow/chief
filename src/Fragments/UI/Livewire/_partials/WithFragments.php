@@ -7,11 +7,14 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\FragmentDto;
 
 trait WithFragments
 {
     public Collection $fragments;
+
+    public ?string $scopedLocale = null;
 
     private function getListenersWithFragments()
     {
@@ -21,6 +24,7 @@ trait WithFragments
             'fragment-added-'.$this->getId() => 'onFragmentAdded',
             'fragment-deleting-'.$this->getId() => 'onFragmentDeleting',
             'request-refresh' => '$refresh',
+            'scoped-to-locale' => 'onScopedToLocale',
         ];
     }
 
@@ -83,6 +87,13 @@ trait WithFragments
         $this->refreshFragments();
     }
 
+    public function onScopedToLocale(string $locale): void
+    {
+        $this->scopedLocale = $locale;
+
+        $this->refreshFragments();
+    }
+
     public function reorder($fragmentIds)
     {
         app(ReorderFragments::class)->handle($this->context->id, $fragmentIds, isset($this->fragment) ? $this->fragment->fragmentId : null);
@@ -105,7 +116,7 @@ trait WithFragments
         );
 
         $this->fragments = collect($fragmentCollection->all())
-            ->map(fn ($fragment) => FragmentDto::fromFragment($fragment, $this->context));
+            ->map(fn ($fragment) => $this->composeFragmentDtoInScopedLocale($fragment));
     }
 
     /**
@@ -124,9 +135,23 @@ trait WithFragments
         // Update given fragment in the fragment collection
         foreach ($this->fragments as $i => $fragment) {
             if ($fragment->fragmentId === ($formerFragmentId ?: $fragmentId)) {
-                $this->fragments[$i] = FragmentDto::fromFragment($updatedFragment, $this->context);
+                $this->fragments[$i] = $this->composeFragmentDtoInScopedLocale($updatedFragment);
             }
         }
+    }
+
+    private function composeFragmentDtoInScopedLocale(Fragment $fragment): FragmentDto
+    {
+        $localeReference = app()->getLocale();
+        app()->setLocale($this->scopedLocale ?? $localeReference);
+
+        $result = FragmentDto::fromFragment($fragment, $this->context);
+
+        if ($localeReference !== app()->getLocale()) {
+            app()->setLocale($localeReference);
+        }
+
+        return $result;
     }
 
     private function findFragment(string $fragmentId): FragmentDto

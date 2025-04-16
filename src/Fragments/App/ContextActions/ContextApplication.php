@@ -91,13 +91,22 @@ class ContextApplication
         return $targetContext->id;
     }
 
-    public function removeActiveSite(RemoveActiveSite $command): void
+    public function syncAllowedSites(SyncAllowedSites $command): void
     {
         $this->contextRepository
             ->getByOwner($command->getModelReference())
-            ->filter(fn ($context) => $context->hasActiveSite($command->getSite()))
-            ->each(fn ($context) => $context->removeActiveSite($command->getSite()))
-            ->each(fn ($context) => $context->save());
+            ->each(fn ($context) => $context->setAllowedSites($command->getAllowedSites()))
+            ->each(fn ($context) => $context->save())
+            ->each(function ($context) use ($command) {
+
+                $removedSites = array_diff($context->getActiveSites(), $command->getAllowedSites());
+
+                foreach ($removedSites as $removedSite) {
+                    $context->removeActiveSite($removedSite);
+                }
+
+                $context->save();
+            });
     }
 
     /**

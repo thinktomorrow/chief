@@ -31,6 +31,12 @@ interface LocalizedField
     public function hasLocales(): bool;
 
     /**
+     * Get the locale for current scope. This is used to render the field
+     * in the locale where the admin is currently working in.
+     */
+    public function getScopedLocale(): ?string;
+
+    /**
      * Locales in which the field should be presented to the admin.
      * These are the active locales of the page / fragment.
      */

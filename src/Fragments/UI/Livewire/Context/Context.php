@@ -11,9 +11,16 @@ class Context extends Component
 
     public ContextDto $context;
 
-    public function mount(ContextDto $context)
+    public function mount(ContextDto $context, ?string $scopedLocale = null)
     {
         $this->context = $context;
+
+        if (! $scopedLocale) {
+            $this->scopedLocale = count($context->getActiveSites()) > 0
+                ? $context->getActiveSites()[0]
+                : $context->getActiveSites()[0];
+        }
+
         $this->refreshFragments();
     }
 

@@ -53,13 +53,13 @@
     @if (! $hasLocales())
         @include($getView())
         @include('chief-form::fields._partials.charactercount')
-    @elseif (count($getLocales()) == 1)
-        @foreach ($getLocales() as $locale)
+    @elseif (count($scopedLocales) == 1)
+        @foreach ($scopedLocales as $locale => $localeName)
             @include($getView(), ['component' => $component, 'locale' => $locale])
             @include('chief-form::fields._partials.charactercount')
         @endforeach
     @else
-        <x-chief::tabs :should-listen-for-external-tab="true" :wire-ignore="$wireIgnoredTabs">
+        <x-chief::tabs :should-listen-for-external-tab="false" :wire-ignore="$wireIgnoredTabs">
             @foreach ($scopedLocales as $locale => $localeName)
                 <x-chief::tabs.tab tab-id="{{ $locale }}" tab-label="{!! $localeName !!}">
                     <div data-slot="control">

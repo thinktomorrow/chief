@@ -11,6 +11,8 @@ abstract class Items extends Component
 
     public array $locales;
 
+    public ?string $scopedLocale = null;
+
     public ?string $activeItemId = null;
 
     protected function mountItems(array $locales, ?string $activeItemId = null)
@@ -32,6 +34,7 @@ abstract class Items extends Component
             'item-deleted' => 'onItemDeleted',
             'site-links-updated' => 'onSitesUpdated',
             'allowed-sites-updated' => 'onSitesUpdated',
+            'scoped-to-locale' => 'onScopedToLocale',
         ];
     }
 
@@ -56,6 +59,20 @@ abstract class Items extends Component
     {
         // The links are automatically updated in the view
         // because the getItems method is called again.
+    }
+
+    public function onScopedToLocale(string $locale): void
+    {
+        $this->scopedLocale = $locale;
+
+        // Show the context for the scoped locale
+        foreach ($this->getItems() as $item) {
+            if (in_array($locale, $item->getActiveSites())) {
+                $this->activeItemId = $item->getId();
+
+                return;
+            }
+        }
     }
 
     public function onItemDeleted(): void

@@ -14,6 +14,8 @@ class FormComponent extends Component
 
     public Form $form;
 
+    public ?string $scopedLocale = null;
+
     public function mount(ModelReference $modelReference, \Thinktomorrow\Chief\Forms\Layouts\Form $form)
     {
         $this->modelReference = $modelReference;
@@ -24,6 +26,7 @@ class FormComponent extends Component
     {
         return [
             'form-updated-'.$this->getId() => 'onFormUpdated',
+            'scoped-to-locale' => 'onScopedToLocale',
         ];
     }
 
@@ -38,6 +41,10 @@ class FormComponent extends Component
 
         $layout = Layout::make($resource->fields($model));
 
+        if ($this->scopedLocale) {
+            $layout->setScopedLocales([$this->scopedLocale]);
+        }
+
         return $layout->findForm($this->form->getId())
             ->model($model)
             ->getComponents();
@@ -51,6 +58,11 @@ class FormComponent extends Component
     public function onFormUpdated(): void
     {
         // Refresh is done automatically by livewire when this method is called
+    }
+
+    public function onScopedToLocale($locale): void
+    {
+        $this->scopedLocale = $locale;
     }
 
     public function render()

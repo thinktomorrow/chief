@@ -10,7 +10,8 @@ use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\EditSiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\EditSiteSelection;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\SiteSelection;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\SiteToggle;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\GlobalSiteToggle;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\ModelSiteToggle;
 
 class SitesServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,8 @@ class SitesServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-sites', __DIR__.'/UI/views');
 
-        Livewire::component('chief-wire::site-toggle', SiteToggle::class);
+        Livewire::component('chief-wire::site-toggle', GlobalSiteToggle::class);
+        Livewire::component('chief-wire::model-site-toggle', ModelSiteToggle::class);
 
         // Site & link management for visitable model
         Livewire::component('chief-wire::site-links', SiteLinks::class);

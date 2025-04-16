@@ -1,5 +1,5 @@
 @php
-    $selected = (array) $getActiveValue($locale ?? null);
+    $selected = (array) $getValueOrFallback($locale ?? null);
 @endphp
 
 @if (count($selected) > 0)
