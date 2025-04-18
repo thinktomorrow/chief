@@ -16,14 +16,6 @@
         <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
             @csrf
 
-            @foreach ($layout->filterByTagged(['pagetitle'])->getComponents() as $component)
-                @if($component instanceof \Thinktomorrow\Chief\Forms\Layouts\Form)
-                    {{ $component->displayAsInlineForm()->render() }}
-                @else
-                    {{ $component->render() }}
-                @endif
-            @endforeach
-
             <x-chief::form.fieldset class="w-full space-y-3">
                 <x-chief::form.label for="allowed_sites" required>Op welke sites wil je de nieuwe pagina tonen?
                 </x-chief::form.label>
@@ -56,7 +48,7 @@
                 @endforeach
             </x-chief::form.fieldset>
 
-            @foreach ($layout->filterByNotTagged(['pagetitle', 'not-on-model-create', 'not-on-create'])->getComponents() as $component)
+            @foreach ($layout->filterByNotTagged(['not-on-model-create', 'not-on-create'])->getComponents() as $component)
                 @if($component instanceof \Thinktomorrow\Chief\Forms\Layouts\Form)
                     {{ $component->displayAsInlineForm()->render() }}
                 @else

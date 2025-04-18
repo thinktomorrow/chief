@@ -72,7 +72,6 @@ class TableComponent extends Component
 
     public function onScopedToLocale($locale)
     {
-        // Show results in the correct locale
         // Filter result by site...
         foreach ($this->getFilters() as $filter) {
             if ($filter instanceof SiteFilter) {
@@ -82,8 +81,6 @@ class TableComponent extends Component
                 $this->dispatch($this->getFiltersUpdatedEvent());
             }
         }
-
-        //        dd($this->getFilters());
     }
 
     public function getTable(): Table

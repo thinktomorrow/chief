@@ -48,7 +48,8 @@ trait LocalizedFieldDefaults
     public function getScopedLocales(): array
     {
         if (empty($this->scopedLocales)) {
-            return $this->getLocales();
+            return [];
+            //            return $this->getLocales();
         }
 
         // Use the sequence of locales as defined in the sites config

@@ -60,7 +60,7 @@
 
                                         <p class="text-sm text-grey-500">
                                             Wanneer je deze versie live zet, wordt ze onmiddellijk getoond op
-                                            de {{ $name }} site. De tab die momenteel live staat, komt dan offline te
+                                            de {{ $name }} site. De versie die momenteel live staat, komt dan offline te
                                             staan.
                                         </p>
                                     </div>

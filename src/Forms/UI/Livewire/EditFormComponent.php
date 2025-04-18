@@ -4,11 +4,12 @@ namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
+use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class EditFormComponent extends Component
@@ -83,12 +84,11 @@ class EditFormComponent extends Component
 
     public function save()
     {
-        // TODO: validation
-        app(UpdateForm::class)->handle(
+        app(ModelApplication::class)->updateForm(new UpdateForm(
             $this->modelReference,
             $this->formComponent->getId(),
-            $this->prepareForSaving($this->form),
-            [],
+            $this->form,
+            [])
         );
 
         $this->dispatch('form-updated-'.$this->parentComponentId, ...[

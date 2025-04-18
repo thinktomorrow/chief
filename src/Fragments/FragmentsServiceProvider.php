@@ -43,8 +43,5 @@ class FragmentsServiceProvider extends ServiceProvider
         Livewire::component('chief-fragments::context', Context::class);
         Livewire::component('chief-fragments::add-fragment', AddFragment::class);
         Livewire::component('chief-fragments::edit-fragment', EditFragment::class);
-
-        Blade::component(SidebarFragment::class, 'chief-fragments::sidebar');
-        Blade::component(Fragments::class, 'chief-fragments::index');
     }
 }

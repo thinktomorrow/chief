@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
+namespace Thinktomorrow\Chief\Urls\UI\Livewire\Links;
 
 class LinkUrl
 {

@@ -33,7 +33,7 @@ class ModelSiteToggle extends Component
     public function getListeners()
     {
         return [
-            'site-links-updated' => 'onSiteLinksUpdated',
+            'links-updated' => 'onSiteLinksUpdated',
             'allowed-sites-updated' => 'onSiteLinksUpdated',
             'global-scoped-to-locale' => 'onScopedToLocale',
         ];

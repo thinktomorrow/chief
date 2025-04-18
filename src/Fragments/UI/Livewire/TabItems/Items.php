@@ -32,7 +32,7 @@ abstract class Items extends Component
         return [
             'item-updated' => 'onItemUpdated',
             'item-deleted' => 'onItemDeleted',
-            'site-links-updated' => 'onSitesUpdated',
+            'links-updated' => 'onSitesUpdated',
             'allowed-sites-updated' => 'onSitesUpdated',
             'scoped-to-locale' => 'onScopedToLocale',
         ];

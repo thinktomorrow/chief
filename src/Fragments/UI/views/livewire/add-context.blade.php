@@ -1,43 +1,44 @@
-<x-chief::dialog.modal wired size="sm" title="Voeg tab toe"
-                       subtitle="Je kan meerdere tabs met fragmenten beheren. Zo kan je specifieke fragmenten per site voorzien.">
+<x-chief::dialog.modal wired size="sm" title="Voeg versie toe"
+                       subtitle="Je kan meerdere versies beheren. Zo kan je specifieke fragmenten per site voorzien.">
     @if ($isOpen)
 
         <x-chief::form.fieldset class="pt-3">
             <x-chief::form.label>Hoe wil je starten?</x-chief::form.label>
 
-            <div>
-                <div class="space-y-3">
-                    <div class="flex items-start gap-2">
-                        <x-chief::form.input.radio
-                            id="duplicate-from-no"
-                            wire:model.change="form.duplicate_from"
-                            value="0"
-                        />
+            <div class="mt-3"
+            ">
+            <div class="space-y-3">
+                <div class="flex items-start gap-2">
+                    <x-chief::form.input.radio
+                        id="duplicate-from-no"
+                        wire:model.change="form.duplicate_from"
+                        value="0"
+                    />
 
-                        <x-chief::form.label for="duplicate-from-no" class="body-dark body leading-5" unset>
-                            Start met een lege tab
-                        </x-chief::form.label>
-                    </div>
-                    <div class="flex items-start gap-2">
-                        <x-chief::form.input.radio
-                            id="duplicate-from-yes"
-                            wire:model.change="form.duplicate_from"
-                            value="1"
-                        />
-
-                        <x-chief::form.label for="duplicate-from-yes" class="body-dark body leading-5" unset>
-                            Dupliceer de tabinhoud van:
-
-                            <x-chief::form.input.select wire:model.change="form.duplicate_from_item_id">
-                                @foreach ($this->getItems() as $item)
-                                    <option wire:key="duplicate-from-item-{{ $item->id }}" value="{{ $item->getId() }}">
-                                        {{ $item->getTitle() }}
-                                    </option>
-                                @endforeach
-                            </x-chief::form.input.select>
-                        </x-chief::form.label>
-                    </div>
+                    <x-chief::form.label for="duplicate-from-no" class="body-dark body leading-5" unset>
+                        Start met een lege inhoud
+                    </x-chief::form.label>
                 </div>
+                <div class="flex items-start gap-2">
+                    <x-chief::form.input.radio
+                        id="duplicate-from-yes"
+                        wire:model.change="form.duplicate_from"
+                        value="1"
+                    />
+
+                    <x-chief::form.label for="duplicate-from-yes" class="body-dark body leading-5" unset>
+                        Dupliceer een versie:
+
+                        <x-chief::form.input.select wire:model.change="form.duplicate_from_item_id">
+                            @foreach ($this->getItems() as $item)
+                                <option wire:key="duplicate-from-item-{{ $item->id }}" value="{{ $item->getId() }}">
+                                    {{ $item->getTitle() }}
+                                </option>
+                            @endforeach
+                        </x-chief::form.input.select>
+                    </x-chief::form.label>
+                </div>
+            </div>
             </div>
         </x-chief::form.fieldset>
 

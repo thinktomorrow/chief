@@ -57,10 +57,12 @@
                 {{ $component->displayAsTransparentForm()->render() }}
             @endforeach
 
-            @if ($hasSiteLinks)
-                <livewire:chief-wire::site-links :model="$model" />
-            @elseif ($hasSites)
+            @if ($hasSites)
                 <livewire:chief-wire::site-selection :model="$model" />
+            @endif
+
+            @if ($hasSiteLinks)
+                <livewire:chief-wire::links :model="$model" />
             @endif
 
             @foreach ($layout->filterByPosition('aside')->getComponents() as $component)

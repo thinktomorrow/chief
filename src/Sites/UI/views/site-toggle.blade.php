@@ -1,5 +1,5 @@
 <div class="flex justify-end gap-2">
-    @if (count($sites) > 1)
+    @if (count($sites) > 0)
         <div>
             @foreach ($sites as $site)
                 <x-chief::badge

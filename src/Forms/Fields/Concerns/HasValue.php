@@ -100,7 +100,7 @@ trait HasValue
                 if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumnName())) {
 
                     if ($withLocaleFallback) {
-                        //                        return $model->localizedDynamic($this->getColumnName(), $locale);
+                        return $model->localizedDynamic($this->getColumnName(), $locale);
                     }
 
                     return $model->dynamic($this->getColumnName(), $locale, $this->getDefault($locale));

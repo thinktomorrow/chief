@@ -31,13 +31,22 @@
 
             <x-chief::dialog.dropdown id="table-tertiary-actions" placement="bottom-start">
                 @foreach ($this->getTertiaryActions() as $action)
-                    <x-chief-table::action.dropdown.item :action="$action" variant="grey" />
+                    <x-chief-table::action.dropdown.item
+                        :action="$action"
+                        wire:click="applyAction('{{ $action->getKey() }}')"
+                        variant="grey"
+                    />
                 @endforeach
             </x-chief::dialog.dropdown>
         @endif
 
         @foreach ($this->getPrimaryActions() as $action)
-            <x-chief-table::action.button :action="$action" size="base" variant="blue" />
+            <x-chief-table::action.button
+                :action="$action"
+                wire:click="applyAction('{{ $action->getKey() }}')"
+                size="base"
+                variant="blue"
+            />
         @endforeach
     </div>
 </div>

@@ -6,10 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initCharacterCount();
 });
 
-document.addEventListener('form-dialog-opened', () => {
+document.addEventListener('form-dialog-opened', (event) => {
     // Next tick my friend... next tick
     setTimeout(() => {
-        initConditionalFields();
+        const dialogEl = event.detail.componentId
+            ? document.querySelector(`[wire\\:id="${event.detail.componentId}"]`)
+            : document;
+        console.log(dialogEl);
+        initConditionalFields(dialogEl);
         initCharacterCount();
     }, 0);
 });

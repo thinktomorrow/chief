@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
+namespace Thinktomorrow\Chief\Urls\UI\Livewire\Links;
 
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
@@ -26,7 +26,7 @@ trait WithAddingSites
     /** @return ChiefSite[] */
     public function getNonAddedSites(): array
     {
-        $locales = $this->sites->map(fn ($site) => $site->locale)->toArray();
+        $locales = $this->links->map(fn ($site) => $site->locale)->toArray();
 
         return ChiefSites::all()->rejectByLocales($locales)->get();
     }

@@ -18,7 +18,7 @@ class Context extends Component
         if (! $scopedLocale) {
             $this->scopedLocale = count($context->getActiveSites()) > 0
                 ? $context->getActiveSites()[0]
-                : $context->getAllowedSites()[0];
+                : (count($context->getAllowedSites()) > 0 ? $context->getAllowedSites()[0] : null);
         }
 
         $this->refreshFragments();

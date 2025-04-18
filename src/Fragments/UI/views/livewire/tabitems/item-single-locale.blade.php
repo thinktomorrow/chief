@@ -13,11 +13,11 @@
                                  unset>
                 @if(in_array($locale, $form['active_sites']))
                     <span>
-                        <strong>Deze versie wordt momenteel live getoond.</strong><br>Om dit te wijzigen zet je een andere
-                    tab live voor deze taal
+                        <strong>Deze versie wordt gebruikt door de {{ $name }} site.</strong><br>Om dit te wijzigen wijs je een andere
+                                versie toe aan de {{ $name }} site.
                     </span>
                 @else
-                    Zet deze versie live
+                    Gebruik deze versie voor de {{ $name }} site
                     <x-chief::button
                         type="button"
                         size="xs"
@@ -40,8 +40,8 @@
                     <p class="text-base/5 font-medium text-grey-700">Live zetten</p>
 
                     <p class="text-sm text-grey-500">
-                        Wanneer je deze tab live zet, wordt ze onmiddellijk getoond op
-                        de {{ $name }} site. De tab die momenteel live staat, komt dan offline te
+                        Wanneer je deze versie live zet, wordt ze onmiddellijk getoond op
+                        de {{ $name }} site. De versie die momenteel live staat, komt dan offline te
                         staan.
                     </p>
                 </div>
