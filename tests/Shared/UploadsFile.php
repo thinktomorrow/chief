@@ -13,9 +13,9 @@ trait UploadsFile
             'files' => $payload,
             'title' => 'title value',
             'custom' => 'custom value',
-            'trans' => [
-                'nl' => ['content_trans' => 'content nl'],
-                'en' => ['content_trans' => 'content en'],
+            'content_trans' => [
+                'nl' => 'content nl',
+                'en' => 'content en',
             ],
         ]);
     }
