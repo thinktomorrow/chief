@@ -2,15 +2,17 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Export;
 
-use Thinktomorrow\Chief\Fragments\Actions\PutFragmentOffline;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\ComposeFieldLines;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ComposeFieldLinesTest extends TestCase
 {
     public function test_it_can_export_localized_model_fields()
     {
+        $this->disableExceptionHandling();
         $article = $this->setUpAndCreateArticle(['title_trans' => ['nl' => 'title article nl', 'en' => 'title article en'], 'content_trans' => ['nl' => 'content article nl']]);
         $resource = app(Registry::class)->resource('article_page');
 
@@ -101,7 +103,8 @@ class ComposeFieldLinesTest extends TestCase
     {
         $article = $this->setUpAndCreateArticle([]);
         $resource = app(Registry::class)->resource('article_page');
-        $this->setUpAndCreateSnippet($article, 0, true, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
+
+        FragmentTestHelpers::createContextAndAttachFragment($article, SnippetStub::class, null, 0, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
 
         $composeLines = app(ComposeFieldLines::class)
             ->ignoreEmptyValues()
@@ -116,10 +119,11 @@ class ComposeFieldLinesTest extends TestCase
     {
         $article = $this->setUpAndCreateArticle([]);
         $resource = app(Registry::class)->resource('article_page');
-        $snippet = $this->setUpAndCreateSnippet($article, 0, true, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
-        app(PutFragmentOffline::class)->handle($snippet->getFragmentModel()->id);
 
-        $this->assertTrue($snippet->getFragmentModel()->fresh()->isOffline());
+        [, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($article, SnippetStub::class, null, 0, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
+
+        app(\Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline::class)->handle($fragment->getFragmentId());
+        $this->assertTrue($fragment->getFragmentModel()->fresh()->isOffline());
 
         $composeLines = app(ComposeFieldLines::class)
             ->ignoreEmptyValues()

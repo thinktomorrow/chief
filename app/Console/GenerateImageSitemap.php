@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Console;
 
 use Thinktomorrow\Chief\Site\Sitemap\ImageSitemapXmlFile;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class GenerateImageSitemap extends BaseCommand
 {
@@ -24,7 +25,7 @@ class GenerateImageSitemap extends BaseCommand
 
     public function handle(): void
     {
-        $locales = config('chief.locales');
+        $locales = ChiefSites::locales();
 
         foreach ($locales as $locale) {
             $filepath = public_path('image-sitemap-'.$locale.'.xml');

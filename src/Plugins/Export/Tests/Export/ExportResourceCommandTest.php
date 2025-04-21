@@ -3,14 +3,37 @@
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Export;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
+use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ExportResourceCommandTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config()->set('chief.sites', [
+            ['locale' => 'nl'],
+            ['locale' => 'en'],
+        ]);
+
+        ChiefSites::clearCache();
+    }
+
+    protected function tearDown(): void
+    {
+        ChiefSites::clearCache();
+
+        parent::tearDown();
+    }
+
     public function test_it_can_export_resource()
     {
         $article = $this->setUpAndCreateArticle(['title' => 'article title', 'content_trans' => ['nl' => 'content article nl', 'en' => 'content article en']]);
-        $this->setUpAndCreateSnippet($article, 0, true, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
+
+        FragmentTestHelpers::createContextAndAttachFragment($article, SnippetStub::class, null, 0, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
 
         $this->artisan('chief:export-resource article_page --include-static');
 

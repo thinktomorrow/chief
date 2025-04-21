@@ -121,13 +121,7 @@ class ChiefSites implements \Countable, \IteratorAggregate
 
     public static function locales(): array
     {
-        static $locales;
-
-        if ($locales) {
-            return $locales;
-        }
-
-        return $locales = self::all()->getLocales();
+        return self::all()->getLocales();
     }
 
     /**
@@ -160,13 +154,7 @@ class ChiefSites implements \Countable, \IteratorAggregate
 
     public static function primaryLocale(): string
     {
-        static $primaryFieldLocale;
-
-        if ($primaryFieldLocale) {
-            return $primaryFieldLocale;
-        }
-
-        return $primaryFieldLocale = self::all()->getPrimaryLocale();
+        return self::all()->getPrimaryLocale();
     }
 
     public static function getLocaleScope(): string

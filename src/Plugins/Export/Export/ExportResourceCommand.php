@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ExportResourceCommand extends BaseCommand
 {
@@ -25,10 +26,10 @@ class ExportResourceCommand extends BaseCommand
     {
         /** @var resource $resource */
         $resource = app(Registry::class)->resource($this->argument('resource'));
-        $locales = $this->option('locales') ? explode(',', $this->option('locales')) : config('chief.locales');
+        $locales = $this->option('locales') ? explode(',', $this->option('locales')) : ChiefSites::locales();
 
-        if (count(array_intersect($locales, config('chief.locales'))) !== count($locales)) {
-            $this->error('One of passed locales "'.$this->option('locales').'" is not found as Chief locale. Available locales are: '.implode(',', config('chief.locales')));
+        if (count(array_intersect($locales, ChiefSites::locales())) !== count($locales)) {
+            $this->error('One of passed locales "'.$this->option('locales').'" is not found as Chief locale. Available locales are: '.implode(',', ChiefSites::locales()));
 
             return;
         }
