@@ -7,16 +7,14 @@ use Thinktomorrow\Chief\Forms\Tests\TestCase;
 
 class ValidationNamesTest extends TestCase
 {
-    /** @test */
-    public function it_can_get_the_rules()
+    public function test_it_can_get_the_rules()
     {
         $instance = ValidationNames::fromFormat('rulekey');
 
         $this->assertEquals(['rulekey'], $instance->get());
     }
 
-    /** @test */
-    public function it_can_replace_placeholder_value_in_the_key()
+    public function test_it_can_replace_placeholder_value_in_the_key()
     {
         $instance = ValidationNames::fromFormat(':key')
             ->replace('key', ['foo', 'bar']);
@@ -27,8 +25,7 @@ class ValidationNamesTest extends TestCase
         ], $instance->get());
     }
 
-    /** @test */
-    public function it_can_replace_multiple_placeholder_values_in_the_key()
+    public function test_it_can_replace_multiple_placeholder_values_in_the_key()
     {
         $instance = ValidationNames::fromFormat('file.:locale.:key')
             ->replace('key', ['foo', 'bar', 'baz'])
@@ -44,8 +41,7 @@ class ValidationNamesTest extends TestCase
         ], $instance->get());
     }
 
-    /** @test */
-    public function if_placeholder_replacements_are_empty_it_leaves_the_key_intact()
+    public function test_if_placeholder_replacements_are_empty_it_leaves_the_key_intact()
     {
         $instance = ValidationNames::fromFormat('title')
             ->replace('locale', []);
@@ -55,8 +51,7 @@ class ValidationNamesTest extends TestCase
         ], $instance->get());
     }
 
-    /** @test */
-    public function it_ignores_empty_translations_that_dont_belong_to_the_default_locale()
+    public function test_it_ignores_empty_translations_that_dont_belong_to_the_default_locale()
     {
         $instance = ValidationNames::fromFormat('trans.:locale.:key')
             ->replace('key', ['foo', 'bar'])
@@ -78,8 +73,7 @@ class ValidationNamesTest extends TestCase
         ], $instance->get());
     }
 
-    /** @test */
-    public function it_removes_any_keys_that_are_marked_for_removal()
+    public function test_it_removes_any_keys_that_are_marked_for_removal()
     {
         $instance = ValidationNames::fromFormat('files.:key')
             ->replace('key', ['foo', 'detach'])
@@ -90,8 +84,7 @@ class ValidationNamesTest extends TestCase
         ], $instance->get());
     }
 
-    /** @test */
-    public function it_can_use_a_wildcard_for_removal()
+    public function test_it_can_use_a_wildcard_for_removal()
     {
         $instance = ValidationNames::fromFormat(':key')
             ->replace('key', ['foo', 'bar', 'bor'])
@@ -102,8 +95,7 @@ class ValidationNamesTest extends TestCase
         ], $instance->get());
     }
 
-    /** @test */
-    public function it_can_expand_the_names_for_given_locales()
+    public function test_it_can_expand_the_names_for_given_locales()
     {
         $instance = ValidationNames::fromFormat('trans.:locale.:key')
             ->replace('key', ['foo', 'bar'])
