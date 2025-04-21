@@ -61,4 +61,9 @@ class InvitationStateConfig implements StateConfig
     {
         return $statefulContract->getState($this->getStateKey())->getValueAsString();
     }
+
+    public function getStateVariant(StatefulContract $statefulContract): string
+    {
+        return 'outline-blue';
+    }
 }

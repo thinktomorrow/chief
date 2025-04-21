@@ -34,7 +34,7 @@ class UrlApplication
         $slug = $this->composeSlug($model, $site, $slug);
 
         if ($this->force) {
-            $this->deleteIdenticalRecordsOfModel($model, $site, $slug);
+            $this->deleteIdenticalRecordsOfModel($model, $site, $slug, null);
             $this->deleteIdenticalRecordsOfOtherModels($model, $site, $slug);
         } else {
             $this->assertSlugDoesNotExistsAsActiveUrl($site, $slug);

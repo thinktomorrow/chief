@@ -12,7 +12,7 @@ class SiteDto implements Wireable
         public readonly ?string $fallbackLocale,
         public readonly string $name,
         public readonly string $shortName,
-        public readonly string $url,
+        public readonly ?string $url,
         public readonly bool $isActive,
         public readonly bool $isPrimary,
     ) {

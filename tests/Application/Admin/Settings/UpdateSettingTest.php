@@ -23,6 +23,7 @@ class UpdateSettingTest extends ChiefTestCase
 
     public function test_update_a_setting()
     {
+        $this->disableExceptionHandling();
         Setting::create([
             'key' => 'app_name',
             'value' => 'old app_name',

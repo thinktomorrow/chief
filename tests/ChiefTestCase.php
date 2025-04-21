@@ -92,6 +92,13 @@ abstract class ChiefTestCase extends OrchestraTestCase
         // Set nl as default locale for testing env
         config()->set('app.fallback_locale', 'nl');
 
+        config()->set('chief.sites', [
+            ['locale' => 'nl'],
+            ['locale' => 'en'],
+        ]);
+
+        ChiefSites::clearCache();
+
         $this->app['view']->addLocation(__DIR__.'/Shared/stubs/views');
     }
 
