@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Fields\Common\ResolveIterables;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\Layouts\Concerns\SetsScopedLocales;
+use Thinktomorrow\Chief\Forms\Layouts\Concerns\WithLocalizedFields;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 
@@ -17,7 +17,7 @@ class Layout implements HasTaggedComponents
 {
     use HasFields;
     use HasModel;
-    use SetsScopedLocales;
+    use WithLocalizedFields;
     use WithTaggedComponents;
 
     final private function __construct(array $components)

@@ -12,7 +12,7 @@
             @if(count($locales) > 1)
                 @foreach($item->getAllowedSites() as $site)
                     <x-chief::badge
-                        variant="{{ $site == $this->scopedLocale ? 'blue' : (in_array($site, $item->getActiveSites()) ? 'grey' : 'outline-transparent') }}"
+                        variant="{{ $site == \Thinktomorrow\Chief\Sites\ChiefSites::getLocaleScope() ? 'blue' : (in_array($site, $item->getActiveSites()) ? 'grey' : 'outline-transparent') }}"
                         size="xs">{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}</x-chief::badge>
                 @endforeach
             @endif

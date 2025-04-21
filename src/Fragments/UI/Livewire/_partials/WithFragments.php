@@ -14,7 +14,7 @@ trait WithFragments
 {
     public Collection $fragments;
 
-    public ?string $scopedLocale = null;
+    public string $scopedLocale;
 
     private function getListenersWithFragments()
     {
@@ -32,6 +32,8 @@ trait WithFragments
     {
         $this->dispatch('open-'.$this->getId(), [
             'fragmentId' => $fragmentId,
+            'locales' => $this->context->allowedSites,
+            'scopedLocale' => $this->scopedLocale,
         ])->to('chief-fragments::edit-fragment');
     }
 
@@ -40,6 +42,8 @@ trait WithFragments
         $this->dispatch('open-'.$this->getId(), [
             'order' => $order,
             'parentId' => $parentId,
+            'locales' => $this->context->allowedSites,
+            'scopedLocale' => $this->scopedLocale,
         ])->to('chief-fragments::add-fragment');
     }
 
@@ -143,7 +147,7 @@ trait WithFragments
     private function composeFragmentDtoInScopedLocale(Fragment $fragment): FragmentDto
     {
         $localeReference = app()->getLocale();
-        app()->setLocale($this->scopedLocale ?? $localeReference);
+        app()->setLocale($this->scopedLocale);
 
         $result = FragmentDto::fromFragment($fragment, $this->context);
 

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Thinktomorrow\Chief\Admin\Users\LocaleScope;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
@@ -12,7 +13,7 @@ class GlobalSiteToggle extends Component
 {
     public Collection $sites;
 
-    public ?string $scopedLocale = null;
+    public string $scopedLocale;
 
     public function mount()
     {
@@ -20,7 +21,7 @@ class GlobalSiteToggle extends Component
 
         $this->scopedLocale = (request()->input('site') && ChiefSites::verify(request()->input('site')))
             ? request()->input('site')
-            : $this->sites->first()?->locale;
+            : (ChiefSites::getLocaleScope() ?: $this->sites->first()?->locale);
     }
 
     public function getListeners()
@@ -33,6 +34,8 @@ class GlobalSiteToggle extends Component
 
     public function updatedScopedLocale()
     {
+        app(LocaleScope::class)->set($this->scopedLocale);
+
         $this->dispatch('scoped-to-locale', ...['locale' => $this->scopedLocale]);
         $this->dispatch('global-scoped-to-locale', ...['locale' => $this->scopedLocale]);
     }

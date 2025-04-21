@@ -24,10 +24,6 @@
             @endif
 
             <x-slot name="actions">
-                @if ($model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites)
-                    <livewire:chief-wire::model-site-toggle :model="$model" />
-                @endif
-
                 @if ($hasStates)
                     @foreach ($model->getStateKeys() as $stateKey)
                         <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
@@ -38,6 +34,10 @@
             </x-slot>
         </x-chief::page.header>
     </x-slot>
+
+    @if ($model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites)
+        <livewire:chief-wire::model-site-toggle :model="$model" />
+    @endif
 
     @foreach ($layout->filterByPosition('main')->exclude('pagetitle')->getComponents() as $component)
         {{ $component->render() }}

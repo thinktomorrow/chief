@@ -33,7 +33,7 @@ final class CreateFragment
 
         $fields = Layout::make($fragment->fields($fragment))
             ->model($fragment->getFragmentModel())
-            ->setScopedLocales($scopedLocales)
+            ->setScopedLocale($scopedLocales)
             ->getFields()
             ->filterByNotTagged(['edit', 'not-on-create']);
 

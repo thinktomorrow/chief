@@ -24,8 +24,7 @@ class ValidationParameters
         $this->source = $source;
 
         if ($source->hasLocales()) {
-            $scopedLocales = $source->getScopedLocales();
-            $this->locales = ! empty($scopedLocales) ? $scopedLocales : $source->getLocales();
+            $this->locales = $source->getLocales();
         }
 
         $this->mapKeysCallback = fn ($key) => $key;

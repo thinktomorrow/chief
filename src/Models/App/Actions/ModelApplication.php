@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class ModelApplication
@@ -44,7 +43,7 @@ class ModelApplication
 
         $fields = Layout::make($resource->fields($model))
             ->model($model)
-            ->setScopedLocales($model instanceof HasAllowedSites ? $command->getAllowedSites() : ChiefSites::locales())
+            ->setLocales($command->getLocales())
             ->getFields()
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']);
 
@@ -58,7 +57,7 @@ class ModelApplication
         );
 
         if ($model instanceof HasAllowedSites) {
-            $model->update(['allowed_sites' => $command->getAllowedSites()]);
+            $model->update(['allowed_sites' => $command->getLocales()]);
         }
 
         event(new ManagedModelCreated($model->modelReference()));
@@ -80,7 +79,7 @@ class ModelApplication
         $fields = Layout::make($resource->fields($model))
             ->findForm($command->getFormId())
             ->model($model)
-            ->setScopedLocales($model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales())
+            ->setLocales($command->getLocales())
             ->getFields();
 
         $this->fieldValidator->handle($fields, $input);

@@ -17,7 +17,7 @@ class ModelSiteToggle extends Component
 
     public Collection $sites;
 
-    public ?string $scopedLocale = null;
+    public string $scopedLocale;
 
     public function mount(HasAllowedSites&ReferableModel $model)
     {
@@ -27,7 +27,7 @@ class ModelSiteToggle extends Component
 
         $this->scopedLocale = (request()->input('site') && ChiefSites::verify(request()->input('site')))
             ? request()->input('site')
-            : $this->sites->first()?->locale;
+            : (ChiefSites::getLocaleScope() ?: $this->sites->first()?->locale);
     }
 
     public function getListeners()

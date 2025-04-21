@@ -6,16 +6,16 @@ class CreateModel
 {
     private string $modelClass;
 
-    private array $allowedSites;
+    private array $locales;
 
     private array $input;
 
     private array $files;
 
-    public function __construct(string $modelClass, array $allowedSites, array $input, array $files = [])
+    public function __construct(string $modelClass, array $locales, array $input, array $files = [])
     {
         $this->modelClass = $modelClass;
-        $this->allowedSites = $allowedSites;
+        $this->locales = $locales;
         $this->input = $input;
         $this->files = $files;
     }
@@ -25,9 +25,9 @@ class CreateModel
         return $this->modelClass;
     }
 
-    public function getAllowedSites(): array
+    public function getLocales(): array
     {
-        return $this->allowedSites;
+        return $this->locales;
     }
 
     public function getInput(): array

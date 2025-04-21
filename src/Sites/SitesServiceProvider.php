@@ -8,6 +8,7 @@ use Livewire\Livewire;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\EditSiteSelection;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\SiteSelection;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\FragmentSiteToggle;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\GlobalSiteToggle;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\ModelSiteToggle;
 
@@ -19,6 +20,7 @@ class SitesServiceProvider extends ServiceProvider
 
         Livewire::component('chief-wire::site-toggle', GlobalSiteToggle::class);
         Livewire::component('chief-wire::model-site-toggle', ModelSiteToggle::class);
+        Livewire::component('chief-wire::fragment-site-toggle', FragmentSiteToggle::class);
 
         // Site selection for non-visitable model (model without links)
         Livewire::component('chief-wire::site-selection', SiteSelection::class);

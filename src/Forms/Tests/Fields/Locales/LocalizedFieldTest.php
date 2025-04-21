@@ -77,7 +77,7 @@ class LocalizedFieldTest extends TestCase
 
         $this->localizedField->setScopedLocales($scopedLocales);
 
-        $this->assertEquals($scopedLocales, $this->localizedField->getScopedLocales());
+        $this->assertEquals($scopedLocales, $this->localizedField->getLocales());
     }
 
     public function test_it_can_get_dormant_locales(): void

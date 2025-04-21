@@ -8,15 +8,18 @@ class UpdateForm
 {
     private ModelReference $modelReference;
 
+    private array $locales;
+
     private string $formId;
 
     private array $input;
 
     private array $files;
 
-    public function __construct(ModelReference $modelReference, string $formId, array $input, array $files = [])
+    public function __construct(ModelReference $modelReference, array $locales, string $formId, array $input, array $files = [])
     {
         $this->modelReference = $modelReference;
+        $this->locales = $locales;
         $this->formId = $formId;
         $this->input = $input;
         $this->files = $files;
@@ -25,6 +28,11 @@ class UpdateForm
     public function getModelReference(): ModelReference
     {
         return $this->modelReference;
+    }
+
+    public function getLocales(): array
+    {
+        return $this->locales;
     }
 
     public function getFormId(): string

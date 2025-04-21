@@ -16,12 +16,8 @@ interface LocalizedField
 
     /**
      * All the locales where the field should be used in.
-     *
-     * This includes both:
-     * - Scoped Locales:    Locales in which the field should be presented to the admin in the given context.
-     * - Dormant Locales:   Additional locales where the field should be used in but not in the
-     *                      given context. This is useful for fields that are shared in
-     *                      multiple contexts and should be localized differently.
+     * This are the locales in which the field should
+     * be presented to the admin.
      */
     public function getLocales(): array;
 
@@ -30,27 +26,31 @@ interface LocalizedField
      */
     public function hasLocales(): bool;
 
+    public function setLocales(array $locales): static;
+
     /**
      * Get the locale for current scope. This is used to render the field
      * in the locale where the admin is currently working in.
      */
-    public function getScopedLocale(): ?string;
+    //    public function getScopedLocale(): ?string;
+    //
+    //    public function setScopedLocale(?string $locale): static;
 
     /**
      * Locales in which the field should be presented to the admin.
      * These are the active locales of the page / fragment.
      */
-    public function getScopedLocales(): array;
+    //    public function getScopedLocales(): array;
 
-    public function setScopedLocales(array $scopedLocales): static;
-
-    /**
-     * The locales that are not scoped to the given context.
-     * E.g. locales of shared field not used here but in other context.
-     */
-    public function getDormantLocales(): array;
-
-    public function setDormantLocales(array $dormantLocales): static;
+    //    public function setScopedLocales(array $scopedLocales): static;
+    //
+    //    /**
+    //     * The locales that are not scoped to the given context.
+    //     * E.g. locales of shared field not used here but in other context.
+    //     */
+    //    public function getDormantLocales(): array;
+    //
+    //    public function setDormantLocales(array $dormantLocales): static;
 
     /**
      * Get the active fallback locale for the given locale.

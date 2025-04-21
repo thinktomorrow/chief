@@ -1,1 +1,4 @@
-<livewire:chief-wire::form :model-reference="$getModel()->modelReference()" :form="$component" />
+<livewire:chief-wire::form
+    :model="$getModel()"
+    :form="$component"
+/>

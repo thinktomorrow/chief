@@ -11,24 +11,21 @@ class Context extends Component
 
     public ContextDto $context;
 
-    public function mount(ContextDto $context, ?string $scopedLocale = null)
+    public function mount(ContextDto $context, string $scopedLocale)
     {
         $this->context = $context;
 
-        if (! $scopedLocale) {
-            $this->scopedLocale = count($context->getActiveSites()) > 0
-                ? $context->getActiveSites()[0]
-                : (count($context->getAllowedSites()) > 0 ? $context->getAllowedSites()[0] : null);
-        }
-
         $this->refreshFragments();
+
+        $this->scopedLocale = $scopedLocale;
     }
 
     public function getListeners()
     {
         return array_merge(
             $this->getListenersWithFragments(),
-            []
+            [
+            ]
         );
     }
 

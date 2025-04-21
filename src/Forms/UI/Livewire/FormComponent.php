@@ -7,6 +7,9 @@ use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class FormComponent extends Component
 {
@@ -14,12 +17,14 @@ class FormComponent extends Component
 
     public Form $form;
 
-    public ?string $scopedLocale = null;
+    public string $scopedLocale;
 
-    public function mount(ModelReference $modelReference, \Thinktomorrow\Chief\Forms\Layouts\Form $form)
+    public function mount(ReferableModel $model, \Thinktomorrow\Chief\Forms\Layouts\Form $form)
     {
-        $this->modelReference = $modelReference;
+        $this->modelReference = $model->modelReference();
         $this->form = $form;
+
+        $this->scopedLocale = ChiefSites::getLocaleScope();
     }
 
     public function getListeners()
@@ -39,20 +44,22 @@ class FormComponent extends Component
         $model = $this->modelReference->instance();
         $resource = app(Registry::class)->findResourceByModel($model::class);
 
-        $layout = Layout::make($resource->fields($model));
-
-        if ($this->scopedLocale) {
-            $layout->setScopedLocales([$this->scopedLocale]);
-        }
-
-        return $layout->findForm($this->form->getId())
+        return Layout::make($resource->fields($model))
+            ->findForm($this->form->getId())
             ->model($model)
+            ->setScopedLocale($this->scopedLocale)
             ->getComponents();
     }
 
     public function editForm(): void
     {
-        $this->dispatch('open-'.$this->getId())->to('chief-wire::edit-form');
+        $model = $this->modelReference->instance();
+        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+
+        $this->dispatch('open-'.$this->getId(), [
+            'locales' => $locales,
+            'scopedLocale' => $this->scopedLocale,
+        ])->to('chief-wire::edit-form');
     }
 
     public function onFormUpdated(): void

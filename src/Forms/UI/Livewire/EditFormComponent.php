@@ -25,6 +25,10 @@ class EditFormComponent extends Component
 
     public Form $formComponent;
 
+    public array $locales = [];
+
+    public ?string $scopedLocale = null;
+
     public function mount(ModelReference $modelReference, \Thinktomorrow\Chief\Forms\Layouts\Form $formComponent, string $parentComponentId)
     {
         $this->modelReference = $modelReference;
@@ -44,6 +48,9 @@ class EditFormComponent extends Component
     {
         $this->isOpen = true;
 
+        $this->locales = $values['locales'];
+        $this->scopedLocale = $values['scopedLocale'];
+
         /**
          * Inject all field values in the Livewire form object
          * From then on we can use the form object to access the values
@@ -60,7 +67,7 @@ class EditFormComponent extends Component
     // TODO(ben): this also closes parent dialogs
     public function close()
     {
-        $this->reset(['form']);
+        $this->reset(['form', 'locales', 'scopedLocale']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -75,9 +82,8 @@ class EditFormComponent extends Component
         $model = $this->modelReference->instance();
         $resource = app(Registry::class)->findResourceByModel($model::class);
 
-        $layout = Layout::make($resource->fields($model));
-
-        return $layout->findForm($this->formComponent->getId())
+        return Layout::make($resource->fields($model))
+            ->findForm($this->formComponent->getId())
             ->model($model)
             ->getComponents();
     }
@@ -86,6 +92,7 @@ class EditFormComponent extends Component
     {
         app(ModelApplication::class)->updateForm(new UpdateForm(
             $this->modelReference,
+            [$this->scopedLocale],
             $this->formComponent->getId(),
             $this->form,
             [])

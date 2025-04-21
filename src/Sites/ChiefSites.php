@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use ArrayIterator;
+use Thinktomorrow\Chief\Admin\Users\LocaleScope;
 use Traversable;
 
 class ChiefSites implements \Countable, \IteratorAggregate
@@ -166,6 +167,11 @@ class ChiefSites implements \Countable, \IteratorAggregate
         }
 
         return $primaryFieldLocale = self::all()->getPrimaryLocale();
+    }
+
+    public static function getLocaleScope(): string
+    {
+        return app(LocaleScope::class)->get() ?: self::primaryLocale();
     }
 
     private function getPrimarySite(): ChiefSite

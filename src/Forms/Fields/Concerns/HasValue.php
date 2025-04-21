@@ -94,7 +94,6 @@ trait HasValue
     private function defaultEloquentValueResolver(): Closure
     {
         return function ($model, ?string $locale = null, bool $withLocaleFallback = false) {
-
             if ($locale && $this->hasLocales()) {
 
                 if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumnName())) {
