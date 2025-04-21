@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
+use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
 use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -25,7 +26,7 @@ final class ValidateFormTest extends ChiefTestCase
         chiefRegister()->resource(ArticlePageResource::class);
 
         $this->model = ArticlePage::create([
-            'locales' => ['nl', 'fr'],
+            'allowed_sites' => ['nl', 'fr'],
         ]);
     }
 
@@ -43,16 +44,19 @@ final class ValidateFormTest extends ChiefTestCase
 
         try {
             // ModelReference $modelReference, string $formId, array $data, array $files
-            app(UpdateForm::class)->handle($this->model->modelReference(), 'main', [
-                'title_trans' => ['nl' => '', 'fr' => null, 'en' => ''],
-            ], []);
+            app(ModelApplication::class)->updateForm(new UpdateForm(
+                $this->model->modelReference(),
+                ['nl', 'en'],
+                'main',
+                ['title_trans' => ['nl' => '', 'en' => '']], []
+            ));
         } catch (ValidationException $e) {
 
             $catched = true;
 
             $this->assertEquals([
-                'title_trans.nl' => ['The title_trans NL field is required.'],
-                'title_trans.fr' => ['The title_trans FR field is required.'],
+                'title_trans.nl' => ['The nl title_trans field is required.'],
+                'title_trans.en' => ['The en title_trans field is required.'],
             ], $e->errors());
         }
 
@@ -79,13 +83,9 @@ final class ValidateFormTest extends ChiefTestCase
         $params = [
             'title' => 'title updated',
             'custom' => 'custom updated',
-            'trans' => [
-                'nl' => [
-                    'content_trans' => 'content_trans nl updated',
-                ],
-                'en' => [
-                    'content_trans' => 'content_trans en updated',
-                ],
+            'content_trans' => [
+                'nl' => 'content nl updated',
+                'en' => 'content en updated',
             ],
         ];
 
@@ -113,8 +113,8 @@ final class ValidateFormTest extends ChiefTestCase
     {
         $this->assertValidation(
             new ArticlePage,
-            'trans.nl.content_trans',
-            $this->payload(['trans.nl.content_trans' => '', 'trans.en.content_trans' => '']),
+            'content_trans.nl',
+            $this->payload(['content_trans.nl' => '', 'content_trans.en' => '']),
             $this->manager($this->model)->route('edit', $this->model),
             $this->manager($this->model)->route('update', $this->model),
             1,
@@ -126,8 +126,8 @@ final class ValidateFormTest extends ChiefTestCase
     {
         $this->assertValidation(
             new ArticlePage,
-            'trans.nl.content_trans',
-            $this->payload(['trans.nl.content_trans' => null]),
+            'content_trans.nl',
+            $this->payload(['content_trans.nl' => null]),
             $this->manager($this->model)->route('edit', $this->model),
             $this->manager($this->model)->route('update', $this->model),
             1,
@@ -138,7 +138,7 @@ final class ValidateFormTest extends ChiefTestCase
     public function test_a_non_default_translatable_field_is_not_validated_if_entire_translation_is_empty()
     {
         $response = $this->actingAs($this->developer(), 'chief')
-            ->put($this->manager($this->model)->route('update', $this->model), $this->payload(['trans.en.content_trans' => '']));
+            ->put($this->manager($this->model)->route('update', $this->model), $this->payload(['content_trans.en' => '']));
 
         $this->assertNull(session('errors'));
     }

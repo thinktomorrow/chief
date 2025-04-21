@@ -11,12 +11,6 @@ trait LocalizedFieldDefaults
 {
     protected array $locales = [];
 
-    //    protected ?string $scopedLocale = null;
-    //
-    //    protected array $scopedLocales = [];
-    //
-    //    protected array $dormantLocales = [];
-
     public function locales(?array $locales = null): static
     {
         $this->locales = ($locales === null)
@@ -52,48 +46,6 @@ trait LocalizedFieldDefaults
 
         return $this;
     }
-
-    //    public function getScopedLocales(): array
-    //    {
-    //        if (empty($this->scopedLocales)) {
-    //            return [];
-    //            //            return $this->getLocales();
-    //        }
-    //
-    //        // Use the sequence of locales as defined in the sites config
-    //        return array_values(array_filter(ChiefSites::locales(), fn ($locale) => in_array($locale, $this->scopedLocales)));
-    //    }
-
-    //    public function getScopedLocale(): ?string
-    //    {
-    //        return $this->scopedLocale;
-    //    }
-    //
-    //    public function setScopedLocale(?string $locale): static
-    //    {
-    //        $this->scopedLocale = $locale;
-    //
-    //        return $this;
-    //    }
-
-    //    public function setScopedLocales(array $scopedLocales): static
-    //    {
-    //        $this->scopedLocales = $scopedLocales;
-    //
-    //        return $this;
-    //    }
-    //
-    //    public function getDormantLocales(): array
-    //    {
-    //        return $this->dormantLocales;
-    //    }
-    //
-    //    public function setDormantLocales(array $dormantLocales): static
-    //    {
-    //        $this->dormantLocales = $dormantLocales;
-    //
-    //        return $this;
-    //    }
 
     /**
      * Get the fallback locale for the given locale.

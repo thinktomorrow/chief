@@ -132,7 +132,7 @@ class LocalizedNameTest extends TestCase
 
         $this->assertEquals([
             'nl' => 'title.nl',
-            'fr' => 'title.fr   ',
+            'fr' => 'title.fr',
         ], $field->getLocalizedKeys());
     }
 

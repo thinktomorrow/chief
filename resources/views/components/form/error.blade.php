@@ -3,7 +3,7 @@
 ])
 
 @if ($rule)
-    @if ($errors->any())
+    @if (isset($errors) && $errors->any())
         @error($rule)
         <x-chief::callout data-slot="error" size="sm" variant="red" class="px-2.5 py-1">
             {!! ucfirst($message) !!}
