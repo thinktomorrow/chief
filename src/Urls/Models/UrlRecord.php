@@ -180,4 +180,9 @@ class UrlRecord extends Model
     {
         return $this->status === LinkStatus::offline->value;
     }
+
+    public function changeStatus(LinkStatus $status): void
+    {
+        $this->status = $status->value;
+    }
 }

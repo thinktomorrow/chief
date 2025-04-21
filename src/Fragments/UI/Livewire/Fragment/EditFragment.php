@@ -15,9 +15,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragment;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithNullifyEmptyValues;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
-use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class EditFragment extends Component
 {
@@ -25,7 +23,6 @@ class EditFragment extends Component
     use InteractsWithFields;
     use ShowsAsDialog;
     use WithFragments;
-    use WithNullifyEmptyValues;
 
     // parent livewire component id
     public string $parentComponentId;
@@ -33,6 +30,10 @@ class EditFragment extends Component
     public ContextDto $context;
 
     public ?FragmentDto $fragment = null;
+
+    public array $locales;
+
+    public string $scopedLocale;
 
     public function mount(ContextDto $context, string $parentComponentId)
     {
@@ -48,6 +49,7 @@ class EditFragment extends Component
                 'open-'.$this->parentComponentId => 'open',
                 'request-refresh' => '$refresh',
                 'files-updated' => 'onFilesUpdated',
+                'fragment-scoped-to-locale' => 'onScopedToLocale',
             ]
         );
     }
@@ -55,6 +57,8 @@ class EditFragment extends Component
     public function open($values = [])
     {
         $this->fragment = $this->composeFragmentDto($values['fragmentId']);
+        $this->locales = $values['locales'];
+        $this->scopedLocale = $values['scopedLocale'];
 
         // Load any child fragments
         $this->refreshFragments();
@@ -73,6 +77,8 @@ class EditFragment extends Component
             'contextId' => $this->context->id,
             'fragmentId' => $this->fragment->fragmentId,
         ]);
+
+        //        $this->dispatch('chieftab', ...['id' => $this->scopedLocale]);
     }
 
     private function composeFragmentDto(string $fragmentId): FragmentDto
@@ -95,14 +101,11 @@ class EditFragment extends Component
     public function getFields(): Collection
     {
         $layout = Layout::make($this->fragment->fields)
-            ->model($this->fragment->getFragmentModel())
-            ->setScopedLocales($this->context->allowedSites);
+            ->model($this->fragment->getFragmentModel());
 
-        if ($this->fragment->isShared) {
-            $layout->setDormantLocales(
-                array_values(array_diff(ChiefSites::locales(), $this->context->allowedSites))
-            );
-        }
+        //        if (! $this->fragment->isShared) {
+        //            //            $layout->setScopedLocale($this->scopedLocale);
+        //        }
 
         return $layout->getComponentsWithoutForms();
     }
@@ -155,18 +158,12 @@ class EditFragment extends Component
 
     public function save()
     {
-        /**
-         * Nullify empty string values so that they are stored as null in the database and
-         * not as empty strings. This is important for the fallback locale mechanism.
-         */
-        $form = $this->recursiveNullifyEmptyValues($this->form);
-
         // Validation is done via the update command
         app(UpdateFragment::class)->handle(
             $this->fragment->contextId,
             $this->fragment->fragmentId,
             $this->context->allowedSites,
-            $form,
+            $this->form,
             [],
         );
 

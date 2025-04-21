@@ -40,7 +40,14 @@ trait HasValue
         return $this->hasPrepareValue() ? $this->getPrepareValue()($value) : $value;
     }
 
-    private function getRawValue(?string $locale = null): mixed
+    public function getValueOrFallback(?string $locale = null): mixed
+    {
+        $value = $this->getRawValue($locale, true);
+
+        return $this->hasPrepareValue() ? $this->getPrepareValue()($value) : $value;
+    }
+
+    private function getRawValue(?string $locale = null, bool $withLocaleFallback = false): mixed
     {
         if (! $this->valueGiven) {
             if (! $this->getModel()) {
@@ -51,7 +58,7 @@ trait HasValue
                 return data_get($this->getModel(), $this->getColumnName(), $this->getDefault($locale));
             }
 
-            return $this->defaultEloquentValueResolver()($this->getModel(), $locale);
+            return $this->defaultEloquentValueResolver()($this->getModel(), $locale, $withLocaleFallback);
         }
 
         // Check if it is a closure
@@ -86,11 +93,15 @@ trait HasValue
      */
     private function defaultEloquentValueResolver(): Closure
     {
-        return function ($model, $locale = null) {
+        return function ($model, ?string $locale = null, bool $withLocaleFallback = false) {
             if ($locale && $this->hasLocales()) {
 
                 if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumnName())) {
-                    //                    return $model->localizedDynamic($this->getColumnName(), $locale);
+
+                    if ($withLocaleFallback) {
+                        return $model->localizedDynamic($this->getColumnName(), $locale);
+                    }
+
                     return $model->dynamic($this->getColumnName(), $locale, $this->getDefault($locale));
                 }
 

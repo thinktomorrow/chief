@@ -20,6 +20,7 @@ class FieldPresets
             ->items([
                 $field ?? Text::make('title')
                     ->label('Titel')
+                    ->tag('pagetitle')
                     ->locales()
                     ->previewView('chief-form::previews.fields.text-as-pagetitle')
                     ->required(),

@@ -6,11 +6,11 @@ use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\EditSiteLinks;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\EditSiteSelection;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\SiteSelection;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\SiteToggle;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\FragmentSiteToggle;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\GlobalSiteToggle;
+use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\ModelSiteToggle;
 
 class SitesServiceProvider extends ServiceProvider
 {
@@ -18,11 +18,9 @@ class SitesServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-sites', __DIR__.'/UI/views');
 
-        Livewire::component('chief-wire::site-toggle', SiteToggle::class);
-
-        // Site & link management for visitable model
-        Livewire::component('chief-wire::site-links', SiteLinks::class);
-        Livewire::component('chief-wire::edit-site-links', EditSiteLinks::class);
+        Livewire::component('chief-wire::site-toggle', GlobalSiteToggle::class);
+        Livewire::component('chief-wire::model-site-toggle', ModelSiteToggle::class);
+        Livewire::component('chief-wire::fragment-site-toggle', FragmentSiteToggle::class);
 
         // Site selection for non-visitable model (model without links)
         Livewire::component('chief-wire::site-selection', SiteSelection::class);

@@ -4,11 +4,12 @@ namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
+use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class EditFormComponent extends Component
@@ -23,6 +24,10 @@ class EditFormComponent extends Component
     public ModelReference $modelReference;
 
     public Form $formComponent;
+
+    public array $locales = [];
+
+    public ?string $scopedLocale = null;
 
     public function mount(ModelReference $modelReference, \Thinktomorrow\Chief\Forms\Layouts\Form $formComponent, string $parentComponentId)
     {
@@ -43,6 +48,9 @@ class EditFormComponent extends Component
     {
         $this->isOpen = true;
 
+        $this->locales = $values['locales'];
+        $this->scopedLocale = $values['scopedLocale'];
+
         /**
          * Inject all field values in the Livewire form object
          * From then on we can use the form object to access the values
@@ -59,7 +67,7 @@ class EditFormComponent extends Component
     // TODO(ben): this also closes parent dialogs
     public function close()
     {
-        $this->reset(['form']);
+        $this->reset(['form', 'locales', 'scopedLocale']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -74,21 +82,20 @@ class EditFormComponent extends Component
         $model = $this->modelReference->instance();
         $resource = app(Registry::class)->findResourceByModel($model::class);
 
-        $layout = Layout::make($resource->fields($model));
-
-        return $layout->findForm($this->formComponent->getId())
+        return Layout::make($resource->fields($model))
+            ->findForm($this->formComponent->getId())
             ->model($model)
             ->getComponents();
     }
 
     public function save()
     {
-        // TODO: validation
-        app(UpdateForm::class)->handle(
+        app(ModelApplication::class)->updateForm(new UpdateForm(
             $this->modelReference,
+            [$this->scopedLocale],
             $this->formComponent->getId(),
             $this->form,
-            [],
+            [])
         );
 
         $this->dispatch('form-updated-'.$this->parentComponentId, ...[

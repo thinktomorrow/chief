@@ -4,18 +4,23 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire\_partials;
 
 trait WithNullifyEmptyValues
 {
-    private function recursiveNullifyEmptyValues(array $form): array
+    private function nullifyEmptyValues(array $form): array
     {
-        return collect($form)->map(function ($field) {
-            if (is_array($field)) {
-                return $this->recursiveNullifyEmptyValues($field);
+        foreach ($form as $key => $value) {
+            if (is_array($value)) {
+                $form[$key] = $this->nullifyEmptyValues($value);
             }
 
-            if ($field === '') {
-                return null;
+            if ($this->isEmptyValue($value)) {
+                $form[$key] = null;
             }
+        }
 
-            return $field;
-        })->toArray();
+        return $form;
+    }
+
+    private function isEmptyValue($value): bool
+    {
+        return empty($value) || $value === [[]] || $value === [null];
     }
 }

@@ -118,6 +118,7 @@ class UpgradeFrom9To10Command extends BaseCommand
             'editInSidebar()' => 'The following files have the old Form::editInSidebar method. This method has been removed in Chief 0.10. Please remove it.',
             'showAsBlank()' => 'The following files have the old Form::showAsBlank method. This method has been removed in Chief 0.10. Please remove it.',
             'ShowsPageState' => 'Trait ShowsPageState is removed. Please remove it from your model.',
+            'getInstanceAttributes' => 'Method getInstanceAttributes is removed. Please replace it with getAttributesOnCreate(). It also does not need to return a nested array. Just return the attributes array.',
         ];
 
         $allClean = true;

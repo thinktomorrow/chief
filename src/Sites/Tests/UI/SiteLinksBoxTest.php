@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Sites\Tests\UI;
 
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks\SiteLinks;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Urls\App\Actions\SaveUrlSlugs;
+use Thinktomorrow\Chief\Urls\UI\Livewire\Links\Links;
 
 class SiteLinksBoxTest extends ChiefTestCase
 {
@@ -14,7 +14,7 @@ class SiteLinksBoxTest extends ChiefTestCase
     {
         $model = $this->setUpAndCreateArticle();
 
-        $instance = Livewire::test(SiteLinks::class, [
+        $instance = Livewire::test(Links::class, [
             'resourceKey' => ArticlePageResource::resourceKey(),
             'model' => $model,
         ]);
@@ -27,7 +27,7 @@ class SiteLinksBoxTest extends ChiefTestCase
         $model = $this->setUpAndCreateArticle(['sites' => ['nl', 'fr']]);
         (new SaveUrlSlugs)->handle($model, ['nl' => 'test-nl', 'fr' => 'test-fr']);
 
-        $instance = Livewire::test(SiteLinks::class, [
+        $instance = Livewire::test(Links::class, [
             'resourceKey' => ArticlePageResource::resourceKey(),
             'model' => $model,
         ]);

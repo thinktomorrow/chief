@@ -24,6 +24,7 @@ class SaveFields
 
         /** @var Field $field */
         foreach ($fields->all() as $field) {
+
             // Custom save of the values
             if ($field->hasSave()) {
                 continue;
@@ -90,6 +91,10 @@ class SaveFields
     private function localizedValueCallable($model, $field, $input): Closure
     {
         return function ($locale, $key, $value) use ($model, $field, $input) {
+            if (! is_string($locale)) {
+                dd($locale, $key, $value);
+
+            }
 
             if ($key !== $field->getColumnName()) {
                 return;

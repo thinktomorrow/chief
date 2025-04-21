@@ -6,15 +6,10 @@ namespace Thinktomorrow\Chief\Forms\Fields\Locales;
 
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Sites\ChiefSites;
-use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 trait LocalizedFieldDefaults
 {
     protected array $locales = [];
-
-    protected array $scopedLocales = [];
-
-    protected array $dormantLocales = [];
 
     public function locales(?array $locales = null): static
     {
@@ -22,15 +17,15 @@ trait LocalizedFieldDefaults
             ? ChiefSites::locales()
             : $locales;
 
-        $this->whenModelIsSet(function ($model, $field) {
-
-            // TODO: if model is fragment, set the locales of the fragment context
-            // And set all locales to any locales that are set on the fragment context
-
-            if ($model instanceof HasAllowedSites && empty($this->scopedLocales)) {
-                $field->setScopedLocales(ChiefSites::verifiedLocales($model->getAllowedSites()));
-            }
-        });
+        //        $this->whenModelIsSet(function ($model, $field) {
+        //
+        //            // TODO: if model is fragment, set the locales of the fragment context
+        //            // And set all locales to any locales that are set on the fragment context
+        //
+        //            if ($model instanceof HasAllowedSites) {
+        //                $field->setLocales(ChiefSites::verifiedLocales($model->getAllowedSites()));
+        //            }
+        //        });
 
         return $this;
     }
@@ -45,31 +40,9 @@ trait LocalizedFieldDefaults
         return count($this->locales) > 0;
     }
 
-    public function getScopedLocales(): array
+    public function setLocales(array $locales): static
     {
-        if (empty($this->scopedLocales)) {
-            return $this->getLocales();
-        }
-
-        // Use the sequence of locales as defined in the sites config
-        return array_values(array_filter(ChiefSites::locales(), fn ($locale) => in_array($locale, $this->scopedLocales)));
-    }
-
-    public function setScopedLocales(array $scopedLocales): static
-    {
-        $this->scopedLocales = $scopedLocales;
-
-        return $this;
-    }
-
-    public function getDormantLocales(): array
-    {
-        return $this->dormantLocales;
-    }
-
-    public function setDormantLocales(array $dormantLocales): static
-    {
-        $this->dormantLocales = $dormantLocales;
+        $this->locales = $locales;
 
         return $this;
     }
@@ -80,10 +53,7 @@ trait LocalizedFieldDefaults
      */
     public function getFallbackLocale(string $locale): ?string
     {
-        // Account for shared fragments which might have dormant locales
-        $locales = array_merge($this->getScopedLocales(), $this->getDormantLocales());
-
-        $fallbackLocales = array_filter(ChiefSites::fallbackLocales(), fn ($fallbackLocale) => in_array($fallbackLocale, $locales));
+        $fallbackLocales = array_filter(ChiefSites::fallbackLocales(), fn ($fallbackLocale) => in_array($fallbackLocale, $this->getLocales()));
 
         return $fallbackLocales[$locale] ?? null;
     }

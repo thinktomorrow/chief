@@ -11,25 +11,43 @@ use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 
-class SiteToggle extends Component
+class ModelSiteToggle extends Component
 {
     public ModelReference $modelReference;
 
     public Collection $sites;
+
+    public string $scopedLocale;
 
     public function mount(HasAllowedSites&ReferableModel $model)
     {
         $this->modelReference = $model->modelReference();
 
         $this->sites = $this->getSites($model);
+
+        $this->scopedLocale = (request()->input('site') && ChiefSites::verify(request()->input('site')))
+            ? request()->input('site')
+            : (ChiefSites::getLocaleScope() ?: $this->sites->first()?->locale);
     }
 
     public function getListeners()
     {
         return [
-            'site-links-updated' => 'onSiteLinksUpdated',
+            'links-updated' => 'onSiteLinksUpdated',
             'allowed-sites-updated' => 'onSiteLinksUpdated',
+            'global-scoped-to-locale' => 'onScopedToLocale',
         ];
+    }
+
+    public function updatedScopedLocale()
+    {
+        $this->dispatch('model-scoped-to-locale', ...['locale' => $this->scopedLocale]);
+        $this->dispatch('scoped-to-locale', ...['locale' => $this->scopedLocale]);
+    }
+
+    public function onScopedToLocale($locale)
+    {
+        $this->scopedLocale = $locale;
     }
 
     public function onSiteLinksUpdated(): void

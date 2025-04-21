@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
+namespace Thinktomorrow\Chief\Urls\UI\Livewire\Links;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
-trait WithSiteLinks
+trait WithLinks
 {
     private ?Visitable $model = null;
 
@@ -28,38 +28,47 @@ trait WithSiteLinks
         return $this->model = ModelReference::fromString($this->modelReference)->instance();
     }
 
-    private function getSiteLinks(): Collection
+    private function getLinks(): Collection
     {
-        $siteLinks = collect();
+        $links = collect();
 
         $model = $this->getModel();
         $sites = ChiefSites::all()->filterByLocales($model->getAllowedSites());
         $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
         $activeRecords = $model->urls;
 
+        /** @var UrlRecord $record */
+        foreach ($activeRecords as $record) {
+
+            $site = ChiefSites::all()->find($record->site);
+
+            $status = LinkStatus::from($record->status);
+            [$stateLabel, $stateVariant] = $status->influenceByModelState($model);
+
+            $links->push(new LinkDto(
+                $site->locale,
+                $record->context_id,
+                $record->context_id ? $contexts->first(fn ($context) => $context->id == $record->context_id)?->title : null,
+                SiteDto::fromConfig($site),
+                new LinkUrl($record->id, $model->url($site->locale), $record->slug, BaseUrlSegment::strip($record->slug, $model->baseUrlSegment($site->locale))),
+                $status,
+                $stateLabel,
+                $stateVariant,
+                app(GetBaseUrls::class)->get($model),
+            ));
+        }
+
         /** @var ChiefSite $site */
         foreach ($sites as $site) {
 
-            // Get current url for this site...
-            $activeRecord = $activeRecords->filter(fn ($record) => $record->site == $site->locale)->first();
-
-            if (! $activeRecord) {
+            if ($links->contains(fn ($link) => $link->locale == $site->locale)) {
                 continue;
             }
 
-            $siteLinks->push(new SiteLink(
-                $site->locale,
-                $activeRecord->context_id,
-                $activeRecord->context_id ? $contexts->first(fn ($context) => $context->id == $activeRecord->context_id)?->title : null,
-                SiteDto::fromConfig($site),
-                new LinkUrl($activeRecord->id, $model->url($site->locale), $activeRecord->slug, BaseUrlSegment::strip($activeRecord->slug, $model->baseUrlSegment($site->locale))),
-                LinkStatus::from($activeRecord->status),
-                app(GetBaseUrls::class)->get($model),
-            ));
-
+            $links->push(LinkDto::empty($model, $site->locale));
         }
 
-        return $siteLinks;
+        return $links;
     }
 
     private function getRedirects(): Collection
@@ -71,13 +80,18 @@ trait WithSiteLinks
         return $redirects->map(function (UrlRecord $record) use ($model) {
             $site = ChiefSites::all()->find($record->site);
 
-            return new SiteLink(
+            $status = LinkStatus::from($record->status);
+            [$stateLabel, $stateVariant] = $status->influenceByModelState($model);
+
+            return new LinkDto(
                 $record->site,
                 null,
                 null,
                 SiteDto::fromConfig($site),
                 new LinkUrl($record->id, $model->resolveUrl($record->site, [$record->slug]), $record->slug, BaseUrlSegment::strip($record->slug, $model->baseUrlSegment($site->locale))),
-                LinkStatus::from($record->status),
+                $status,
+                $stateLabel,
+                $stateVariant,
                 [],
             );
         });

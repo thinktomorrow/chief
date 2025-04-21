@@ -3,98 +3,92 @@
 namespace Thinktomorrow\Chief\Forms\Tests\Fields;
 
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Forms\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class FieldsTest extends TestCase
 {
-    /** @test */
-    public function it_accepts_fields()
+    public function test_it_accepts_fields()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $this->assertCount(2, $fields);
     }
 
-    /** @test */
-    public function it_can_check_if_there_is_any_field()
+    public function test_it_can_check_if_there_is_any_field()
     {
         $this->assertFalse(Fields::make([])->any());
         $this->assertTrue(Fields::make([])->isEmpty());
 
         $fields = Fields::make([
-            Fields\Text::make('xxx'),
+            Text::make('xxx'),
         ]);
 
         $this->assertTrue($fields->any());
         $this->assertFalse($fields->isEmpty());
     }
 
-    /** @test */
-    public function it_can_return_all_fields()
+    public function test_it_can_return_all_fields()
     {
         $fields = Fields::make($values = [
-            'xxx' => Fields\Text::make('xxx'),
-            'yyy' => Fields\Text::make('yyy'),
+            'xxx' => Text::make('xxx'),
+            'yyy' => Text::make('yyy'),
         ]);
 
         $this->assertEquals(collect($values), $fields->all());
     }
 
-    /** @test */
-    public function it_can_return_the_first_field()
+    public function test_it_can_return_the_first_field()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $this->assertEquals($values[0], $fields->first());
     }
 
-    /** @test */
-    public function it_can_find_a_field_by_key()
+    public function test_it_can_find_a_field_by_key()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $this->assertEquals($values[1], $fields->find('yyy'));
     }
 
-    /** @test */
-    public function a_field_not_found_by_key_throws_exception()
+    public function test_a_field_not_found_by_key_throws_exception()
     {
         $this->expectException(\InvalidArgumentException::class);
 
         $fields = Fields::make([
-            Fields\Text::make('xxx'),
+            Text::make('xxx'),
         ]);
 
         $fields->find('unknown');
     }
 
-    /** @test */
-    public function it_can_return_all_keys()
+    public function test_it_can_return_all_keys()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $this->assertEquals(['xxx', 'yyy'], $fields->keys());
     }
 
-    /** @test */
-    public function it_can_filter_fields_by_key()
+    public function test_it_can_filter_fields_by_key()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $this->assertEquals(collect([
@@ -102,12 +96,11 @@ class FieldsTest extends TestCase
         ]), $fields->keyed(['xxx'])->all());
     }
 
-    /** @test */
-    public function it_can_filter_fields_by_closure()
+    public function test_it_can_filter_fields_by_closure()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $this->assertEquals(collect([
@@ -117,25 +110,23 @@ class FieldsTest extends TestCase
         })->all());
     }
 
-    /** @test */
-    public function it_can_filter_fields_by_tag()
+    public function test_it_can_filter_fields_by_tag()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx')->tag('foobar'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx')->tag('foobar'),
+            Text::make('yyy'),
         ]);
 
         $this->assertEquals(collect([
             'xxx' => $values[0],
-        ]), $fields->tagged('foobar')->all());
+        ]), $fields->filterByTagged('foobar')->all());
     }
 
-    /** @test */
-    public function it_can_filter_fields_not_belonging_by_tag()
+    public function test_it_can_filter_fields_not_belonging_by_tag()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy')->tag('foobar'),
+            Text::make('xxx'),
+            Text::make('yyy')->tag('foobar'),
         ]);
 
         $this->assertEquals(collect([
@@ -143,25 +134,23 @@ class FieldsTest extends TestCase
         ]), $fields->filterByNotTagged('foobar')->all());
     }
 
-    /** @test */
-    public function it_can_filter_by_untagged_fields()
+    public function test_it_can_filter_by_untagged_fields()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy')->tag('foobar'),
+            Text::make('xxx'),
+            Text::make('yyy')->tag('foobar'),
         ]);
 
         $this->assertEquals(collect([
             'xxx' => $values[0],
-        ]), $fields->untagged()->all());
+        ]), $fields->filterByUntagged()->all());
     }
 
-    /** @test */
-    public function it_can_add_a_model_instance_to_each_field()
+    public function test_it_can_add_a_model_instance_to_each_field()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $fields = $fields->model($articlePage = new ArticlePage);
@@ -171,12 +160,11 @@ class FieldsTest extends TestCase
         }
     }
 
-    /** @test */
-    public function it_can_remove_by_key()
+    public function test_it_can_remove_by_key()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $fields = $fields->remove('xxx');
@@ -185,12 +173,11 @@ class FieldsTest extends TestCase
         $this->assertEquals($values[1], $fields->first());
     }
 
-    /** @test */
-    public function it_can_remove_by_keys()
+    public function test_it_can_remove_by_keys()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $fields = $fields->remove(['xxx', 'yyy', 'zzz']);
@@ -198,12 +185,11 @@ class FieldsTest extends TestCase
         $this->assertCount(0, $fields->all());
     }
 
-    /** @test */
-    public function it_can_remove_by_callable()
+    public function test_it_can_remove_by_callable()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $fields = $fields->remove(fn ($field) => $field->getId() == 'xxx');
@@ -212,17 +198,16 @@ class FieldsTest extends TestCase
         $this->assertEquals($values[1], $fields->first());
     }
 
-    /** @test */
-    public function it_can_merge_two_fields_objects()
+    public function test_it_can_merge_two_fields_objects()
     {
         $fields = Fields::make([
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $fields2 = Fields::make([
-            Fields\Text::make('aaa'),
-            Fields\Text::make('bbb'),
+            Text::make('aaa'),
+            Text::make('bbb'),
         ]);
 
         $mergedFields = $fields->merge($fields2);
@@ -231,16 +216,15 @@ class FieldsTest extends TestCase
         $this->assertEquals(['xxx', 'yyy', 'aaa', 'bbb'], $mergedFields->keys());
     }
 
-    /** @test */
-    public function similar_keys_are_overwritten_with_the_latter()
+    public function test_similar_keys_are_overwritten_with_the_latter()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $fields2 = Fields::make($values2 = [
-            Fields\Textarea::make('xxx'),
+            Textarea::make('xxx'),
         ]);
 
         $mergedFields = $fields->merge($fields2);
@@ -250,19 +234,18 @@ class FieldsTest extends TestCase
         $this->assertEquals(['xxx', 'yyy'], $mergedFields->keys());
 
         // Assert the first input is overwritten
-        $this->assertInstanceOf(Fields\Textarea::class, $mergedFields->first());
+        $this->assertInstanceOf(Textarea::class, $mergedFields->first());
     }
 
-    /** @test */
-    public function similar_keys_are_overwritten_with_the_latter_when_setting_custom_key()
+    public function test_similar_keys_are_overwritten_with_the_latter_when_setting_custom_key()
     {
         $fields = Fields::make($values = [
-            Fields\Text::make('xxx'),
-            Fields\Text::make('yyy'),
+            Text::make('xxx'),
+            Text::make('yyy'),
         ]);
 
         $fields2 = Fields::make($values2 = [
-            Fields\Textarea::make('aaa')->key('xxx'),
+            Textarea::make('aaa')->key('xxx'),
         ]);
 
         $mergedFields = $fields->merge($fields2);
@@ -272,6 +255,6 @@ class FieldsTest extends TestCase
         $this->assertEquals(['xxx', 'yyy'], $mergedFields->keys());
 
         // Assert the first input is overwritten
-        $this->assertInstanceOf(Fields\Textarea::class, $mergedFields->find('xxx'));
+        $this->assertInstanceOf(Textarea::class, $mergedFields->find('xxx'));
     }
 }

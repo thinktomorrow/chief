@@ -28,7 +28,7 @@
 <x-slot name="footer">
     <x-chief::dialog.modal.footer>
         <x-chief::button
-            x-data
+            x-data="{}"
             x-on:click="$wire.saveState('{{ $transitionInConfirm->key }}')"
             variant="{{ $transitionInConfirm->variant }}"
         >

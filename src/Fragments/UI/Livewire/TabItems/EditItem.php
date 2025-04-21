@@ -57,9 +57,19 @@ abstract class EditItem extends Component
     {
         $this->form = [
             'title' => $this->item->getTitle(),
-            'locales' => array_values(array_unique(array_merge($this->item->getAllowedSites(), $this->item->getActiveSites()))), // In case of missing locales, the locales should always contain the active sites as well.
+            'locales' => $this->locales,
             'active_sites' => $this->item->getActiveSites(),
         ];
+    }
+
+    public function addActiveSite(string $locale): void
+    {
+        $this->form['active_sites'][] = $locale;
+    }
+
+    public function removeActiveSite(string $locale): void
+    {
+        $this->form['active_sites'] = array_values(array_diff($this->form['active_sites'], [$locale]));
     }
 
     public function close()

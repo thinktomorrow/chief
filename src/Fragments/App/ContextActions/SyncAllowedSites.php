@@ -6,16 +6,16 @@ namespace Thinktomorrow\Chief\Fragments\App\ContextActions;
 
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
-final class RemoveActiveSite
+final class SyncAllowedSites
 {
     private ModelReference $modelReference;
 
-    private string $site;
+    private array $allowedSites;
 
-    public function __construct(ModelReference $modelReference, string $site)
+    public function __construct(ModelReference $modelReference, array $allowedSites)
     {
         $this->modelReference = $modelReference;
-        $this->site = $site;
+        $this->allowedSites = $allowedSites;
     }
 
     public function getModelReference(): ModelReference
@@ -23,8 +23,8 @@ final class RemoveActiveSite
         return $this->modelReference;
     }
 
-    public function getSite(): string
+    public function getAllowedSites(): array
     {
-        return $this->site;
+        return $this->allowedSites;
     }
 }

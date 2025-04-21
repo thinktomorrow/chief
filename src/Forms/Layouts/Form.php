@@ -6,13 +6,13 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 
 use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Concerns\HasFormDisplay;
-use Thinktomorrow\Chief\Forms\Layouts\Concerns\SetsScopedLocales;
+use Thinktomorrow\Chief\Forms\Layouts\Concerns\WithLocalizedFields;
 
 class Form extends Component
 {
     use HasFields;
     use HasFormDisplay;
-    use SetsScopedLocales;
+    use WithLocalizedFields;
 
     protected string $view = 'chief-form::layouts.form';
 

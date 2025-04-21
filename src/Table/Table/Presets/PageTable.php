@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Table\Table\Presets;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\EditModelAction;
@@ -19,7 +20,10 @@ use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Columns\Presets\LinksColumnBadge;
+use Thinktomorrow\Chief\Table\Columns\Presets\SiteLinksColumnBadge;
+use Thinktomorrow\Chief\Table\Columns\Presets\SitesColumnBadge;
 use Thinktomorrow\Chief\Table\Filters\Presets\OnlineStateFilter;
+use Thinktomorrow\Chief\Table\Filters\Presets\SiteFilter;
 use Thinktomorrow\Chief\Table\Filters\Presets\TitleFilter;
 use Thinktomorrow\Chief\Table\Sorters\Sort;
 use Thinktomorrow\Chief\Table\Table;
@@ -52,15 +56,18 @@ class PageTable extends Table
                 DuplicateModelAction::makeDefault($resourceKey)->tertiary(),
             ])
             ->filters([
+                ...((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) ? [SiteFilter::makeDefault($resourceKey)->primary()] : []),
                 TitleFilter::makeDefault(),
-                OnlineStateFilter::makeDefault()->primary(),
+                OnlineStateFilter::makeDefault()->tertiary(),
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) use ($resourceKey) {
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
-                })->tease(64, '...'),
+                })->tease(54, '...'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
-                ...((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class) ? [LinksColumnBadge::makeDefault()] : []),
+                ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
+                ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
+                ...(((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),
                 ColumnDate::make('updated_at')
                     ->label('Aangepast')
                     ->format('d/m/Y H:i'),

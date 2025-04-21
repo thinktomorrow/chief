@@ -1,5 +1,5 @@
 <p class="body body-dark">
-    @if($value = $getValue($locale ?? null))
+    @if($value = $getValueOrFallback($locale ?? null))
         {{ teaser($value, 120, '...') }}
     @else
         ...

@@ -35,8 +35,7 @@ class FieldAttributesTest extends TestCase
         ];
     }
 
-    /** @test */
-    public function it_has_default_attributes()
+    public function test_it_has_default_attributes()
     {
         foreach ($this->classes as $class) {
             /** @var Field $component */
@@ -44,13 +43,17 @@ class FieldAttributesTest extends TestCase
 
             $this->assertEquals('xxx', $component->getKey());
             $this->assertEquals('xxx', $component->getId());
-            $this->assertEquals('xxx', $component->getName());
             $this->assertEquals('xxx', $component->getColumnName());
+
+            if ($component instanceof File) {
+                $this->assertEquals('files[xxx]', $component->getName());
+            } else {
+                $this->assertEquals('xxx', $component->getName());
+            }
         }
     }
 
-    /** @test */
-    public function it_can_use_key_with_brackets()
+    public function test_it_can_use_key_with_brackets()
     {
         $component = Text::make('form[title]');
 

@@ -18,9 +18,11 @@ const Tabs = (config) => ({
 
         this.repositionTabMarker();
 
-        window.addEventListener('chieftab', (e) => {
-            this.listenForExternalTab(e);
-        });
+        if (this.shouldListenForExternalTab) {
+            window.addEventListener('chieftab', (e) => {
+                this.listenForExternalTab(e);
+            });
+        }
 
         this.onVisible(this.$root, () => {
             this.$nextTick(() => {

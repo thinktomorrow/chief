@@ -6,6 +6,12 @@
     {!! $this->getContent() !!}
 </x-slot>
 
+<x-slot name="footer">
+    <x-chief::dialog.modal.footer>
+        <x-chief::button type="button" wire:click.prevent="close">Annuleer</x-chief::button>
+    </x-chief::dialog.modal.footer>
+</x-slot>
+
 <div class="space-y-6">
     <div class="space-y-3">
         @foreach ($this->getTransitions() as $transition)

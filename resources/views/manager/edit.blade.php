@@ -24,14 +24,20 @@
             @endif
 
             <x-slot name="actions">
-                @if ($model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites)
-                    <livewire:chief-wire::site-toggle :model="$model" />
+                @if ($hasStates)
+                    @foreach ($model->getStateKeys() as $stateKey)
+                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                    @endforeach
                 @endif
 
                 @include('chief::manager._partials.edit-actions')
             </x-slot>
         </x-chief::page.header>
     </x-slot>
+
+    @if ($model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites)
+        <livewire:chief-wire::model-site-toggle :model="$model" />
+    @endif
 
     @foreach ($layout->filterByPosition('main')->exclude('pagetitle')->getComponents() as $component)
         {{ $component->render() }}
@@ -51,16 +57,12 @@
                 {{ $component->displayAsTransparentForm()->render() }}
             @endforeach
 
-            @if ($hasSiteLinks)
-                <livewire:chief-wire::site-links :model="$model" />
-            @elseif ($hasSites)
+            @if ($hasSites)
                 <livewire:chief-wire::site-selection :model="$model" />
-            @elseif ($hasStates)
-                <x-chief::window title="Status">
-                    @foreach ($model->getStateKeys() as $stateKey)
-                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
-                    @endforeach
-                </x-chief::window>
+            @endif
+
+            @if ($hasSiteLinks)
+                <livewire:chief-wire::links :model="$model" />
             @endif
 
             @foreach ($layout->filterByPosition('aside')->getComponents() as $component)

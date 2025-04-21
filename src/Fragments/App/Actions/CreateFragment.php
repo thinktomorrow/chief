@@ -22,7 +22,7 @@ final class CreateFragment
         $this->validator = $validator;
     }
 
-    public function handle(string $fragmentKey, array $scopedLocales, array $input, array $files = []): string
+    public function handle(string $fragmentKey, array $locales, array $input, array $files = []): string
     {
         $fragmentModel = FragmentModel::create([
             'id' => $this->fragmentRepository->nextId(),
@@ -33,7 +33,7 @@ final class CreateFragment
 
         $fields = Layout::make($fragment->fields($fragment))
             ->model($fragment->getFragmentModel())
-            ->setScopedLocales($scopedLocales)
+            ->setLocales($locales)
             ->getFields()
             ->filterByNotTagged(['edit', 'not-on-create']);
 

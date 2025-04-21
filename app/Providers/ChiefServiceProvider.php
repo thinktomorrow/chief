@@ -50,6 +50,7 @@ use Thinktomorrow\Chief\ManagedModels\States\StatesServiceProvider;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\MenuServiceProvider;
+use Thinktomorrow\Chief\Models\ModelsServiceProvider;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
@@ -73,6 +74,7 @@ class ChiefServiceProvider extends ServiceProvider
         SquantoServiceProvider::class,
         RoutesServiceProvider::class,
         FragmentsServiceProvider::class,
+        ModelsServiceProvider::class,
         UrlsServiceProvider::class,
         MenuServiceProvider::class,
         SquantoManagerServiceProvider::class,
@@ -112,6 +114,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new FormsServiceProvider($this->app))->boot();
         (new UrlsServiceProvider($this->app))->bootAdmin();
         (new FragmentsServiceProvider($this->app))->bootAdmin();
+        (new ModelsServiceProvider($this->app))->bootAdmin();
         (new MenuServiceProvider($this->app))->bootAdmin();
         (new TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
@@ -140,6 +143,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new UrlsServiceProvider($this->app))->boot();
         (new FragmentsServiceProvider($this->app))->boot();
+        (new ModelsServiceProvider($this->app))->boot();
         (new MenuServiceProvider($this->app))->boot();
     }
 
@@ -247,6 +251,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoServiceProvider($this->app))->register();
         (new UrlsServiceProvider($this->app))->register();
         (new FragmentsServiceProvider($this->app))->register();
+        (new ModelsServiceProvider($this->app))->register();
         (new MenuServiceProvider($this->app))->register();
 
         if ($this->app->make(AdminEnvironment::class)->check(request())) {

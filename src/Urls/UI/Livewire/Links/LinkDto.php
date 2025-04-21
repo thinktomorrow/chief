@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteLinks;
+namespace Thinktomorrow\Chief\Urls\UI\Livewire\Links;
 
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 use Thinktomorrow\Chief\Urls\App\Queries\GetBaseUrls;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
-class SiteLink implements Wireable
+class LinkDto implements Wireable
 {
     public function __construct(
         public readonly string $locale,
@@ -17,7 +17,9 @@ class SiteLink implements Wireable
         public readonly ?string $contextTitle,
         public readonly SiteDto $site,
         public readonly ?LinkUrl $url,
-        public readonly LinkStatus $status,
+        public LinkStatus $status,
+        public readonly string $stateLabel,
+        public readonly string $stateVariant,
         public readonly array $baseUrls = [], // Per locale
     ) {
         //
@@ -27,6 +29,8 @@ class SiteLink implements Wireable
     {
         $site = ChiefSites::all()->find($locale);
 
+        [$stateLabel, $stateVariant] = LinkStatus::offline->influenceByModelState($model);
+
         return new static(
             locale: $locale,
             contextId: null,
@@ -34,6 +38,8 @@ class SiteLink implements Wireable
             site: SiteDto::fromConfig($site),
             url: null,
             status: LinkStatus::offline,
+            stateLabel: $stateLabel,
+            stateVariant: $stateVariant,
             baseUrls: app(GetBaseUrls::class)->get($model)
         );
     }
@@ -47,6 +53,8 @@ class SiteLink implements Wireable
             'site' => $this->site->toLivewire(),
             'url' => $this->url?->toArray(),
             'status' => $this->status->value,
+            'stateLabel' => $this->stateLabel,
+            'stateVariant' => $this->stateVariant,
             'baseUrls' => $this->baseUrls,
         ];
     }
@@ -60,7 +68,14 @@ class SiteLink implements Wireable
             site: SiteDto::fromLivewire($value['site']),
             url: ($value['url'] ? LinkUrl::fromArray($value['url']) : null),
             status: LinkStatus::from($value['status']),
+            stateLabel: $value['stateLabel'] ?? '',
+            stateVariant: $value['stateVariant'] ?? '',
             baseUrls: $value['baseUrls'] ?? [],
         );
+    }
+
+    public function changeStatus(LinkStatus $status): void
+    {
+        $this->status = $status;
     }
 }

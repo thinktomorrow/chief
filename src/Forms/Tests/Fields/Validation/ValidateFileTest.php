@@ -83,7 +83,7 @@ class ValidateFileTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb.en');
-        $this->assertStringContainsString('thumb EN is verplicht.', session()->get('errors')->first('files.thumb.en'));
+        $this->assertStringContainsString('en thumb is verplicht.', session()->get('errors')->first('files.thumb.en'));
 
         $this->assertCount(0, $this->model->assets('thumb'));
     }
@@ -248,7 +248,7 @@ class ValidateFileTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb.nl');
-        $this->assertStringContainsString('thumb NL is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.thumb.nl'));
+        $this->assertStringContainsString('nl thumb is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.thumb.nl'));
 
         $this->assertCount(0, $this->model->assets('thumb'));
     }
@@ -282,7 +282,7 @@ class ValidateFileTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb.nl');
-        $this->assertStringContainsString('thumb NL is te klein en dient groter te zijn dan', session()->get('errors')->first('files.thumb.nl'));
+        $this->assertStringContainsString('nl thumb is te klein en dient groter te zijn dan', session()->get('errors')->first('files.thumb.nl'));
 
         $this->assertCount(0, $this->model->assets('thumb'));
     }
@@ -316,7 +316,7 @@ class ValidateFileTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb.nl');
-        $this->assertStringContainsString('thumb NL is niet het juiste bestandstype', session()->get('errors')->first('files.thumb.nl'));
+        $this->assertStringContainsString('nl thumb is niet het juiste bestandstype', session()->get('errors')->first('files.thumb.nl'));
 
         $this->assertCount(0, $this->model->assets('thumb'));
     }

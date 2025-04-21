@@ -3,6 +3,11 @@
 namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
+use Thinktomorrow\Chief\Forms\Fields\Html;
+use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
@@ -15,10 +20,10 @@ class ComposeFieldLines
     private Registry $registry;
 
     private array $textFields = [
-        Fields\Text::class,
-        Fields\Textarea::class,
-        Fields\Html::class,
-        Fields\Repeat::class,
+        Text::class,
+        Textarea::class,
+        Html::class,
+        Repeat::class,
     ];
 
     private LinesCollection $lines;
@@ -108,7 +113,7 @@ class ComposeFieldLines
         $lines->push(new InfoLine([]));
     }
 
-    private function extractFieldValues($resource, $model, array $locales): LinesCollection
+    private function extractFieldValues(Resource $resource, $model, array $locales): LinesCollection
     {
         $lines = new LinesCollection;
 
@@ -127,7 +132,7 @@ class ComposeFieldLines
         return $lines;
     }
 
-    private function extractRepeatField(Resource $resource, $model, Fields\Repeat $field, array $locales): LinesCollection
+    private function extractRepeatField(Resource $resource, $model, Repeat $field, array $locales): LinesCollection
     {
         $lines = new LinesCollection;
 
@@ -176,7 +181,7 @@ class ComposeFieldLines
 
                 $lines = $lines->merge(
                     $this->extractFieldValues(
-                        $this->registry->resource($fragment::resourceKey()),
+                        $fragment, // Fragment is resource
                         $fragment,
                         $locales
                     )
@@ -187,7 +192,7 @@ class ComposeFieldLines
         return $lines;
     }
 
-    private function addFieldLines($resource, $model, $field, array $locales): LinesCollection
+    private function addFieldLines(Resource $resource, $model, $field, array $locales): LinesCollection
     {
         $lines = new LinesCollection;
 
@@ -195,7 +200,7 @@ class ComposeFieldLines
             return $lines;
         }
 
-        if ($field instanceof Fields\Repeat) {
+        if ($field instanceof Repeat) {
             return $lines->merge($this->extractRepeatField($resource, $model, $field, $locales));
         }
 
@@ -222,7 +227,7 @@ class ComposeFieldLines
 
         $lines->push(new FieldLine(
             $model->modelReference()->get(),
-            Fields\FieldName\FieldNameHelpers::replaceBracketsByDots($field->getName()),
+            FieldNameHelpers::replaceBracketsByDots($field->getName()),
             $this->modelLabel,
             ucfirst($resource->getLabel()),
             $fieldLabel,

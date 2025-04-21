@@ -8,19 +8,9 @@ trait HasView
 
     protected string $previewView;
 
-    //    protected bool $editInSidebar = false;
-    //
-    //    public function getEditInSidebar(): bool
-    //    {
-    //        return $this->editInSidebar;
-    //    }
-
     public function getView(): string
     {
         return $this->view;
-        //        return ($this->editInSidebar && isset($this->previewView))
-        //            ? $this->previewView
-        //            : $this->view;
     }
 
     public function setView(string $view): static
@@ -41,22 +31,4 @@ trait HasView
     {
         return $this->previewView;
     }
-
-    //    public function editInSidebar(?string $previewView = null): static
-    //    {
-    //        $this->editInSidebar = true;
-    //
-    //        if ($previewView) {
-    //            $this->previewView($previewView);
-    //        }
-    //
-    //        return $this;
-    //    }
-    //
-    //    public function editInline(): static
-    //    {
-    //        $this->editInSidebar = false;
-    //
-    //        return $this;
-    //    }
 }

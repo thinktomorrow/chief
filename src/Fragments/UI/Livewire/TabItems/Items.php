@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 abstract class Items extends Component
 {
@@ -13,11 +14,13 @@ abstract class Items extends Component
 
     public ?string $activeItemId = null;
 
+    public string $scopedLocale;
+
     protected function mountItems(array $locales, ?string $activeItemId = null)
     {
         $this->locales = $locales;
 
-        $this->resetActiveItem($activeItemId);
+        $this->onScopedToLocale(ChiefSites::getLocaleScope());
     }
 
     public function showTabs(): bool
@@ -30,8 +33,9 @@ abstract class Items extends Component
         return [
             'item-updated' => 'onItemUpdated',
             'item-deleted' => 'onItemDeleted',
-            'site-links-updated' => 'onSitesUpdated',
+            'links-updated' => 'onSitesUpdated',
             'allowed-sites-updated' => 'onSitesUpdated',
+            'scoped-to-locale' => 'onScopedToLocale',
         ];
     }
 
@@ -56,6 +60,20 @@ abstract class Items extends Component
     {
         // The links are automatically updated in the view
         // because the getItems method is called again.
+    }
+
+    public function onScopedToLocale(string $locale): void
+    {
+        $this->scopedLocale = $locale;
+
+        // Show the context for the scoped locale
+        foreach ($this->getItems() as $item) {
+            if (in_array($locale, $item->getActiveSites())) {
+                $this->resetActiveItem($item->getId());
+
+                return;
+            }
+        }
     }
 
     public function onItemDeleted(): void

@@ -18,7 +18,7 @@ class RenderMultiSelectTest extends ChiefTestCase
     public function test_it_can_render_the_field_view()
     {
         $component = MultiSelect::make('xxx');
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_the_localized_field_view()
@@ -26,18 +26,18 @@ class RenderMultiSelectTest extends ChiefTestCase
         $component = MultiSelect::make('xxx')
             ->setFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'en']);
-        $this->assertStringContainsString('name="xxx[nl]', $component->toHtml());
-        $this->assertStringContainsString('name="xxx[en]', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx.nl"', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx.en"', $component->toHtml());
     }
 
     public function test_it_can_render_field_window()
     {
-        $component = MultiSelect::make('xxx')->editInSidebar()
+        $component = MultiSelect::make('xxx')
             ->options(['foobar'])
             ->value('foobar');
 
-        $this->assertStringContainsString('foobar', $component->toHtml());
-        $this->assertStringNotContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('foobar', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_pairs()
@@ -48,12 +48,12 @@ class RenderMultiSelectTest extends ChiefTestCase
             ['value' => 'three', 'label' => 'drie'],
             ['value' => 'four', 'label' => 'vier'],
         ]);
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_pairs_window()
     {
-        $component = MultiSelect::make('xxx')->editInSidebar()
+        $component = MultiSelect::make('xxx')
             ->options([
                 ['value' => 'one', 'label' => 'een'],
                 ['value' => 'two', 'label' => 'twee'],
@@ -62,8 +62,8 @@ class RenderMultiSelectTest extends ChiefTestCase
             ])
             ->value('two');
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringNotContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_grouped_options_field()
@@ -81,12 +81,12 @@ class RenderMultiSelectTest extends ChiefTestCase
             ->value('twee');
 
         $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_grouped_options_window()
     {
-        $component = MultiSelect::make('xxx')->editInSidebar()
+        $component = MultiSelect::make('xxx')
             ->options([
                 ['label' => 'first group', 'options' => [
                     ['value' => 'one', 'label' => 'een'],
@@ -96,9 +96,9 @@ class RenderMultiSelectTest extends ChiefTestCase
                     ['value' => 'three', 'label' => 'drie'],
                 ]],
             ])
-            ->value('twee');
+            ->value('two');
 
-        $this->assertStringContainsString('twee', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_the_multiple_select_field()
@@ -109,7 +109,7 @@ class RenderMultiSelectTest extends ChiefTestCase
 
     public function test_it_can_render_multiple_select_window()
     {
-        $component = MultiSelect::make('xxx')->editInSidebar()
+        $component = MultiSelect::make('xxx')
             ->multiple()
             ->options([
                 ['value' => 'one', 'label' => 'een'],
@@ -118,8 +118,8 @@ class RenderMultiSelectTest extends ChiefTestCase
             ])
             ->value(['two', 'three']);
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('drie', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringContainsString('drie', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_multiple_grouped_options_field()
@@ -139,12 +139,12 @@ class RenderMultiSelectTest extends ChiefTestCase
 
         $this->assertStringContainsString('twee', $component->toHtml());
         $this->assertStringContainsString('drie', $component->toHtml());
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_multiple_grouped_options_window()
     {
-        $component = MultiSelect::make('xxx')->editInSidebar()
+        $component = MultiSelect::make('xxx')
             ->multiple()
             ->options([
                 ['label' => 'first group', 'options' => [
@@ -157,7 +157,7 @@ class RenderMultiSelectTest extends ChiefTestCase
             ])
             ->value(['two', 'three']);
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('drie', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringContainsString('drie', $component->renderPreview()->render());
     }
 }

@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnItem;
+use Thinktomorrow\Chief\Table\Filters\Presets\SiteFilter;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
@@ -65,7 +66,21 @@ class TableComponent extends Component
         return [
             'dialogSaved-'.$this->getId() => 'onActionDialogSaved',
             'requestRefresh' => '$refresh',
+            'scoped-to-locale' => 'onScopedToLocale',
         ];
+    }
+
+    public function onScopedToLocale($locale)
+    {
+        // Filter result by site...
+        foreach ($this->getFilters() as $filter) {
+            if ($filter instanceof SiteFilter) {
+                $this->filters[$filter->getKey()] = $locale;
+
+                // Allow Alpine to listen to this event
+                $this->dispatch($this->getFiltersUpdatedEvent());
+            }
+        }
     }
 
     public function getTable(): Table

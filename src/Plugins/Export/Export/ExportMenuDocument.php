@@ -55,7 +55,7 @@ class ExportMenuDocument implements FromCollection, WithColumnFormatting, WithCo
 
         return [
             encrypt($row->id),
-            $row->menu_type,
+            $row->menu->type.($row->menu->title ? ': '.$row->menu->title : ''),
             $row->type,
             ...$values,
         ];

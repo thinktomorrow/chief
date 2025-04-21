@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use ArrayIterator;
+use Thinktomorrow\Chief\Admin\Users\LocaleScope;
 use Traversable;
 
 class ChiefSites implements \Countable, \IteratorAggregate
@@ -64,6 +65,16 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return $this->getPrimarySite()->locale;
     }
 
+    public static function shortName(string $site): string
+    {
+        return self::all()->find($site)->shortName;
+    }
+
+    public static function name(string $site): string
+    {
+        return self::all()->find($site)->name;
+    }
+
     public function getNames(): array
     {
         return $this->toCollection()->mapWithKeys(fn ($site) => [$site->locale => $site->name])->toArray();
@@ -110,13 +121,7 @@ class ChiefSites implements \Countable, \IteratorAggregate
 
     public static function locales(): array
     {
-        static $locales;
-
-        if ($locales) {
-            return $locales;
-        }
-
-        return $locales = self::all()->getLocales();
+        return self::all()->getLocales();
     }
 
     /**
@@ -125,6 +130,15 @@ class ChiefSites implements \Countable, \IteratorAggregate
     public static function verifiedLocales(array $locales): array
     {
         return self::all()->filterByLocales($locales)->getLocales();
+    }
+
+    public static function verify(mixed $locale): bool
+    {
+        if (! is_string($locale)) {
+            return false;
+        }
+
+        return in_array($locale, self::locales());
     }
 
     public static function fallbackLocales(): array
@@ -140,13 +154,12 @@ class ChiefSites implements \Countable, \IteratorAggregate
 
     public static function primaryLocale(): string
     {
-        static $primaryFieldLocale;
+        return self::all()->getPrimaryLocale();
+    }
 
-        if ($primaryFieldLocale) {
-            return $primaryFieldLocale;
-        }
-
-        return $primaryFieldLocale = self::all()->getPrimaryLocale();
+    public static function getLocaleScope(): string
+    {
+        return app(LocaleScope::class)->get() ?: self::primaryLocale();
     }
 
     private function getPrimarySite(): ChiefSite

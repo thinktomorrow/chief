@@ -8,6 +8,7 @@
     x-data="{
         activeRadio: null,
         repositionOptionMarker(optionElement) {
+
             const radioInput = optionElement.querySelector('input')
 
             if (! radioInput.checked) return

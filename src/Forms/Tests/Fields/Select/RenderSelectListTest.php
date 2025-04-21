@@ -18,7 +18,7 @@ class RenderSelectListTest extends ChiefTestCase
     public function test_it_can_render_the_field_view()
     {
         $component = SelectList::make('xxx');
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_the_localized_field_view()
@@ -26,18 +26,18 @@ class RenderSelectListTest extends ChiefTestCase
         $component = SelectList::make('xxx')
             ->setFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'en']);
-        $this->assertStringContainsString('name="xxx[nl]', $component->toHtml());
-        $this->assertStringContainsString('name="xxx[en]', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx.nl"', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx.en"', $component->toHtml());
     }
 
     public function test_it_can_render_field_window()
     {
-        $component = SelectList::make('xxx')->editInSidebar()
+        $component = SelectList::make('xxx')
             ->options(['foobar'])
             ->value('foobar');
 
-        $this->assertStringContainsString('foobar', $component->toHtml());
-        $this->assertStringNotContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('foobar', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_pairs()
@@ -48,12 +48,12 @@ class RenderSelectListTest extends ChiefTestCase
             ['value' => 'three', 'label' => 'drie'],
             ['value' => 'four', 'label' => 'vier'],
         ]);
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_pairs_window()
     {
-        $component = SelectList::make('xxx')->editInSidebar()
+        $component = SelectList::make('xxx')
             ->options([
                 ['value' => 'one', 'label' => 'een'],
                 ['value' => 'two', 'label' => 'twee'],
@@ -62,13 +62,13 @@ class RenderSelectListTest extends ChiefTestCase
             ])
             ->value('two');
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringNotContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_closure_as_option()
     {
-        $component = SelectList::make('xxx')->editInSidebar()
+        $component = SelectList::make('xxx')
             ->options(function () {
                 return [
                     ['value' => 'one', 'label' => 'een'],
@@ -78,8 +78,8 @@ class RenderSelectListTest extends ChiefTestCase
                 ];
             })->value('two');
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringNotContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_grouped_options_field()
@@ -97,12 +97,12 @@ class RenderSelectListTest extends ChiefTestCase
             ->value('twee');
 
         $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_grouped_options_window()
     {
-        $component = SelectList::make('xxx')->editInSidebar()
+        $component = SelectList::make('xxx')
             ->options([
                 ['label' => 'first group', 'options' => [
                     ['value' => 'one', 'label' => 'een'],
@@ -112,9 +112,9 @@ class RenderSelectListTest extends ChiefTestCase
                     ['value' => 'three', 'label' => 'drie'],
                 ]],
             ])
-            ->value('twee');
+            ->value('two');
 
-        $this->assertStringContainsString('twee', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_the_multiple_select_field()
@@ -125,7 +125,7 @@ class RenderSelectListTest extends ChiefTestCase
 
     public function test_it_can_render_multiple_select_window()
     {
-        $component = SelectList::make('xxx')->editInSidebar()
+        $component = SelectList::make('xxx')
             ->multiple()
             ->options([
                 ['value' => 'one', 'label' => 'een'],
@@ -134,8 +134,8 @@ class RenderSelectListTest extends ChiefTestCase
             ])
             ->value(['two', 'three']);
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('drie', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringContainsString('drie', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_multiple_grouped_options_field()
@@ -155,12 +155,12 @@ class RenderSelectListTest extends ChiefTestCase
 
         $this->assertStringContainsString('twee', $component->toHtml());
         $this->assertStringContainsString('drie', $component->toHtml());
-        $this->assertStringContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_multiple_grouped_options_window()
     {
-        $component = SelectList::make('xxx')->editInSidebar()
+        $component = SelectList::make('xxx')
             ->multiple()
             ->options([
                 ['label' => 'first group', 'options' => [
@@ -173,7 +173,7 @@ class RenderSelectListTest extends ChiefTestCase
             ])
             ->value(['two', 'three']);
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('drie', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringContainsString('drie', $component->renderPreview()->render());
     }
 }

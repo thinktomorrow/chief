@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Plugins\Export\Export;
 use Illuminate\Database\Eloquent\Collection;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ExportMenuCommand extends BaseCommand
 {
@@ -20,13 +21,14 @@ class ExportMenuCommand extends BaseCommand
     public function handle(): void
     {
         $models = MenuItem::query()
+            ->with('menu')
             ->where('status', 'online')
-            ->orderBy('menu_type')
+            ->orderBy('menu_id')
             ->get();
 
         $models = $this->sortModels($models);
 
-        (new ExportMenuDocument($models, config('chief.locales')))
+        (new ExportMenuDocument($models, ChiefSites::locales()))
             ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-menu-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished export. File available at: storage/app/'.$filepath);
@@ -34,7 +36,7 @@ class ExportMenuCommand extends BaseCommand
 
     private function sortModels(Collection $models): Collection
     {
-        // Sort the models by menu type, parent and order
+        // Sort the models by menu, parent and order
         return $models->map(function ($item) use ($models) {
             $item->grouped_order = $item->order.'000';
             if ($item->parent_id) {
@@ -44,7 +46,7 @@ class ExportMenuCommand extends BaseCommand
             return $item;
         })
             ->sortBy(function ($item) {
-                return $item->menu_type.'-'.$item->grouped_order;
+                return $item->menu_id.'-'.$item->grouped_order;
             });
     }
 }

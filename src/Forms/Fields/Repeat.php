@@ -26,7 +26,7 @@ class Repeat extends Component implements Field, HasTaggedComponents
     {
         $components = [];
 
-        foreach ($this->getActiveValue($locale) ?? [[]] as $index => $values) {
+        foreach ($this->getValueOrFallback($locale) ?? [[]] as $index => $values) {
             $components[] = $this->getRepeatSection($index, $values, $locale);
         }
 

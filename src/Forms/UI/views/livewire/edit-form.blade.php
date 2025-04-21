@@ -8,6 +8,8 @@
             />
         </x-slot>
 
+        @include('chief-form::livewire._partials.edit-form-tabs')
+
         @foreach ($this->getComponents() as $childComponent)
             {{ $childComponent->render() }}
         @endforeach

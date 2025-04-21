@@ -14,7 +14,8 @@
                 @if ($item->id === $activeItemId)
                     @include('chief-fragments::livewire.tabitems.actions')
 
-                    <livewire:chief-fragments::context :key="$item->id" :context="$item" />
+                    <livewire:chief-fragments::context :key="$item->id" :context="$item"
+                                                       :scoped-locale="$scopedLocale" />
                 @endif
             </div>
         @endforeach

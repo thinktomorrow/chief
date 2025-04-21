@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Sites\Actions;
 
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
-use Thinktomorrow\Chief\Fragments\App\ContextActions\RemoveActiveSite;
+use Thinktomorrow\Chief\Fragments\App\ContextActions\SyncAllowedSites;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\Events\ModelSitesUpdated;
@@ -25,13 +25,9 @@ class SaveAllowedSites
         $model->setAllowedSites(array_values(array_unique($locales)));
         $model->save();
 
-        // If the model is a context owner, we must also update context active_sites / enabled_sites
-        $removedLocales = array_diff($previousState, $locales);
-
+        // If the model is a context owner, we must also update context active_sites / allowed_sites
         if ($model instanceof ContextOwner) {
-            foreach ($removedLocales as $removedLocale) {
-                $this->contextApplication->removeActiveSite(new RemoveActiveSite($model->modelReference(), $removedLocale));
-            }
+            $this->contextApplication->syncAllowedSites(new SyncAllowedSites($model->modelReference(), $model->getAllowedSites()));
         }
 
         event(new ModelSitesUpdated($model->modelReference(), $model->getAllowedSites(), $previousState));

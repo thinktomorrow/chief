@@ -25,6 +25,8 @@ interface Field extends HasTags, LocalizedField, Validatable
 
     public function getName(?string $locale = null): string;
 
+    public function getRawName(): string;
+
     public function label(string $label): static;
 
     public function getLabel(): ?string;

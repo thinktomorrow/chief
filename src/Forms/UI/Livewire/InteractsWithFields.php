@@ -59,6 +59,22 @@ trait InteractsWithFields
         return $emptyValue;
     }
 
+    //    private function prepareForSaving(array $form): array
+    //    {
+    //        foreach ($form as $key => $value) {
+    //            if (is_array($value)) {
+    //                $form[$key] = $this->prepareForSaving($value);
+    //            }
+    //
+    //            if ($this->isEmptyRepeatValue($value)) {
+    //                $form[$key] = null;
+    //            }
+    //        }
+    //
+    //        return $form;
+    //    }
+    //
+
     private function isEmptyRepeatValue($value): bool
     {
         return empty($value) || $value === [[]] || $value === [null];
