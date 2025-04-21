@@ -54,7 +54,7 @@ class ValidationParameters
     public function getAttributes(): array
     {
         if (! $attribute = $this->source->getValidationAttribute()) {
-            $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getName();
+            $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getRawName();
             $attribute = (count($this->locales) && count($this->source->getLocales()) > 1) ? ':locale '.$attribute : $attribute;
         }
 
@@ -88,6 +88,7 @@ class ValidationParameters
                 call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName())) => $value,
             ];
         }
+
         $keys = $this->source->getFieldName()
             ->dotted()
             ->matrix($this->source->getRawName(), $this->locales);
