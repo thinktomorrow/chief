@@ -80,7 +80,7 @@
 
                 @if (count($files) > 1 && $allowMultiple())
                     <x-chief::button wire:sortable.handle size="sm" variant="grey">
-                        <x-chief::icon.drag-drop-vertical />
+                        <x-chief::icon.drag-drop-arrows />
                     </x-chief::button>
                 @endif
 

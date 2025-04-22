@@ -17,34 +17,32 @@
         'select-none flex-col justify-between gap-y-9 overflow-y-auto py-6 pl-6 lg:sticky lg:top-0',
     ])
 >
-    <div class="space-y-9">
+    <div class="space-y-6">
         {{-- Desktop Chief title --}}
-        <div>
-            <div class="hidden items-center justify-start lg:flex">
-                <div class="shrink-0 p-2">
-                    <x-chief::icon.quill-write class="size-6 text-grey-400" />
-                </div>
-
-                <a
-                    href="{{ route('chief.back.dashboard') }}"
-                    title="Ga naar Dashboard"
-                    class="block w-full py-2 text-sm leading-6 text-grey-700 hover:text-grey-950"
-                >
-                    {{ config('app.client', 'Chief') }}
-                </a>
-
+        <div class="hidden items-center justify-start lg:flex">
+            <div class="shrink-0 p-2">
+                <x-chief::icon.quill-write class="size-6 text-grey-400" />
             </div>
 
-            <div class="w-full">
-                <livewire:chief-wire::site-toggle />
-            </div>
-
+            <a
+                href="{{ route('chief.back.dashboard') }}"
+                title="Ga naar Dashboard"
+                class="block w-full py-2 text-sm leading-6 text-grey-700 hover:text-grey-950"
+            >
+                {{ config('app.client', 'Chief') }}
+            </a>
         </div>
+
+        {{--
+            <div class="w-full">
+            <livewire:chief-wire::site-toggle />
+            </div>
+        --}}
 
         {{-- Mobile Chief title --}}
         <div class="flex items-center justify-start lg:hidden">
             <div data-mobile-navigation-toggle class="shrink-0 cursor-pointer rounded-md p-2 hover:bg-grey-50">
-                <svg class="body-dark h-6 w-6">
+                <svg class="body-dark size-6">
                     <use xlink:href="#icon-arrow-long-left"></use>
                 </svg>
             </div>

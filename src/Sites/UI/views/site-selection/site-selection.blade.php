@@ -2,7 +2,7 @@
     $sites = $this->getSites();
 @endphp
 
-<x-chief::window title="Sitekeuze">
+<x-chief::window title="Sites">
     <x-slot name="actions">
         <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
             <x-chief::icon.quill-write />
@@ -12,7 +12,7 @@
     @if (count($sites) > 0)
         <div class="space-y-1">
             @foreach ($sites as $site)
-                <x-chief::badge wire:key="site-{{ $site->locale }}">
+                <x-chief::badge wire:key="site-{{ $site->locale }}" size="sm">
                     {{ $site->name }}
                 </x-chief::badge>
             @endforeach

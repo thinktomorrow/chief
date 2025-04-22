@@ -9,13 +9,18 @@
         >
             {{ $item->getTitle() }}
 
-            @if(count($locales) > 1)
-                @foreach($item->getAllowedSites() as $site)
-                    <x-chief::badge
-                        variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
-                        size="xs">{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}</x-chief::badge>
+            {{--
+                @if (count($locales) > 1)
+                @foreach ($item->getAllowedSites() as $site)
+                <x-chief::badge
+                variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
+                size="xs"
+                >
+                {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}
+                </x-chief::badge>
                 @endforeach
-            @endif
+                @endif
+            --}}
         </x-chief::window.tabs.item>
     @endforeach
 

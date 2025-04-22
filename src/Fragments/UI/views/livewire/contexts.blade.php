@@ -3,6 +3,22 @@
 @endphp
 
 <x-chief::window title="Fragmenten">
+    <x-slot name="badges">
+        @php
+            $item = $items->first(fn ($item) => $item->id === $activeItemId);
+        @endphp
+
+        @if (count($locales) > 1)
+            @foreach ($item->getAllowedSites() as $site)
+                <x-chief::badge
+                    variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
+                    size="sm"
+                >
+                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}
+                </x-chief::badge>
+            @endforeach
+        @endif
+    </x-slot>
 
     <x-slot name="tabs">
         @include('chief-fragments::livewire.tabitems.nav')
@@ -14,8 +30,11 @@
                 @if ($item->id === $activeItemId)
                     @include('chief-fragments::livewire.tabitems.actions')
 
-                    <livewire:chief-fragments::context :key="$item->id" :context="$item"
-                                                       :scoped-locale="$scopedLocale" />
+                    <livewire:chief-fragments::context
+                        :key="$item->id"
+                        :context="$item"
+                        :scoped-locale="$scopedLocale"
+                    />
                 @endif
             </div>
         @endforeach

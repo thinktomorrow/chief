@@ -19,10 +19,11 @@
 >
     <div class="relative">
         <div x-sortable-handle class="group inline-flex min-h-6 cursor-pointer items-center gap-2 px-2 py-1">
-            <x-chief::icon.drag-drop-vertical class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800" />
+            <x-chief::icon.drag-drop-arrows class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800" />
             <x-chief::icon.arrow-bend-down-right data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800" />
 
-            <span class="p-3 bg-red-50">{{ $item->id }}</span> -
+            <span class="bg-red-50 p-3">{{ $item->id }}</span>
+            -
 
             @foreach ($this->getColumns($item) as $column)
                 <div class="flex items-center gap-1">

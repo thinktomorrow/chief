@@ -7,11 +7,11 @@
     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
     class="divide-y divide-grey-100 rounded-xl border border-grey-100"
 >
-
     @foreach ($form as $index => $values)
-        <div wire:key="{{ $elementId . '-' . $index }}"
-             x-sortable-item="{{ $index }}"
-             class="flex items-start gap-3 p-4"
+        <div
+            wire:key="{{ $elementId . '-' . $index }}"
+            x-sortable-item="{{ $index }}"
+            class="flex items-start gap-3 p-4"
         >
             <x-chief::button
                 x-sortable-handle
@@ -21,7 +21,7 @@
                 title="herschikken"
                 class="shrink-0"
             >
-                <x-chief::icon.drag-drop-vertical />
+                <x-chief::icon.drag-drop-arrows />
             </x-chief::button>
 
             <div class="grow">

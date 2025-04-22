@@ -1,7 +1,5 @@
 @php
     $links = $this->getLinks();
-    // TODO(ben): Is there a better way to get the model here?
-    $model = \Thinktomorrow\Chief\Shared\ModelReferences\ModelReference::fromString($this->modelReference)->instance();
 @endphp
 
 <x-chief::window title="Links">
@@ -24,16 +22,19 @@
                     <div class="flex items-start justify-between gap-2">
                         <p class="text-sm/5 text-grey-700">{{ $link->site->name }}</p>
 
-
                         <x-chief::badge :variant="$link->stateVariant">
                             {{ $link->stateLabel }}
                         </x-chief::badge>
-
                     </div>
 
-                    @if($link->url)
+                    @if ($link->url)
                         <div class="flex items-start justify-between gap-2">
-                            <x-chief::link size="xs" href="{{ $link->url->url }}" title="{{ $link->url->slug }}">
+                            <x-chief::link
+                                size="sm"
+                                href="{{ $link->url->url }}"
+                                title="{{ $link->url->slug }}"
+                                class="break-all"
+                            >
                                 <span>{{ $link->url->url }}</span>
                                 <x-chief::icon.link-square />
                             </x-chief::link>

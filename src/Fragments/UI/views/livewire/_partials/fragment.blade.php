@@ -17,8 +17,8 @@
 >
     <div class="space-y-3 py-4">
         <div class="flex items-start justify-end gap-3">
-            <x-chief::button x-sortable-handle size="sm" variant="outline-white" title="herschikken" class="shrink-0">
-                <x-chief::icon.drag-drop-vertical />
+            <x-chief::button x-sortable-handle size="sm" variant="grey" title="herschikken" class="shrink-0">
+                <x-chief::icon.drag-drop-arrows />
             </x-chief::button>
 
             <div class="mt-[0.1875rem] flex grow flex-wrap items-start gap-1.5">
@@ -53,7 +53,7 @@
         </div>
 
         @if ($fragment->content)
-            <div>
+            <div class="px-10">
                 {!! $fragment->content !!}
             </div>
         @endif

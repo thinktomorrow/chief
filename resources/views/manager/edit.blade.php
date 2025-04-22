@@ -1,7 +1,8 @@
 @php
     $hasAnyAsideTopComponents = count($layout->filterByPosition('aside-top')->getComponents()) > 0;
-    $hasSiteLinks = $model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
+    $hasContexts = $model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner;
     $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites;
+    $hasSiteLinks = $hasSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
     $hasStates = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page') && count($model->getStateKeys()) > 0;
     $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
 
@@ -23,6 +24,10 @@
                 </x-slot>
             @endif
 
+            @if ($hasSites)
+                <livewire:chief-wire::model-site-toggle :model="$model" />
+            @endif
+
             <x-slot name="actions">
                 @if ($hasStates)
                     @foreach ($model->getStateKeys() as $stateKey)
@@ -35,15 +40,11 @@
         </x-chief::page.header>
     </x-slot>
 
-    @if ($model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites)
-        <livewire:chief-wire::model-site-toggle :model="$model" />
-    @endif
-
     @foreach ($layout->filterByPosition('main')->exclude('pagetitle')->getComponents() as $component)
         {{ $component->render() }}
     @endforeach
 
-    @if ($model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner)
+    @if ($hasContexts)
         <livewire:chief-fragments::contexts :resource-key="$resource::resourceKey()" :model="$model" />
     @endif
 
