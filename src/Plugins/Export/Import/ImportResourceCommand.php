@@ -4,7 +4,9 @@ namespace Thinktomorrow\Chief\Plugins\Export\Import;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
+use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ImportResourceCommand extends BaseCommand
 {
@@ -20,8 +22,11 @@ class ImportResourceCommand extends BaseCommand
     public function handle(): void
     {
         $file = $this->argument('file');
+
+        HeadingRowFormatter::default('none');
+
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
-        $locales = config('chief.locales', []);
+        $locales = ChiefSites::locales();
 
         // Remove headers which are added automatically - these are integers
         $headers = array_filter($headers, function ($header) {
