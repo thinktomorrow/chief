@@ -3,6 +3,7 @@ import './sortable/index';
 import './tables/index';
 
 /* Alpine directives */
+import buttonGroup from './alpine-directives/button-group';
 import copyDirective from './alpine-directives/copy';
 import dialog from './alpine-directives/dialog';
 import dropdown from './alpine-directives/dropdown';
@@ -21,6 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* Register Alpine directives */
+window.Alpine.data('buttonGroup', buttonGroup);
 window.Alpine.data('dialog', dialog);
 window.Alpine.data('dropdown', dropdown);
 window.Alpine.data('selectlist', selectlist);
