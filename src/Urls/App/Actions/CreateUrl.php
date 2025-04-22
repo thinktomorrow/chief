@@ -17,12 +17,15 @@ final class CreateUrl
 
     private string $status;
 
-    public function __construct(ModelReference $modelReference, string $site, string $slug, string $status)
+    private bool $prependBaseUrlSegment;
+
+    public function __construct(ModelReference $modelReference, string $site, string $slug, string $status, bool $prependBaseUrlSegment = true)
     {
         $this->modelReference = $modelReference;
         $this->site = $site;
         $this->slug = $slug;
         $this->status = $status;
+        $this->prependBaseUrlSegment = $prependBaseUrlSegment;
     }
 
     public function getModelReference(): ModelReference
@@ -43,5 +46,10 @@ final class CreateUrl
     public function getStatus(): LinkStatus
     {
         return LinkStatus::from($this->status);
+    }
+
+    public function prependBaseUrlSegment(): bool
+    {
+        return $this->prependBaseUrlSegment;
     }
 }

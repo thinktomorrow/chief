@@ -34,10 +34,24 @@ class UrlApplicationTest extends ChiefTestCase
         $this->model = $this->setUpAndCreateArticle();
     }
 
-    public function test_it_creates_new_url()
+    public function test_it_creates_new_url_with_base_url_segment()
     {
         $this->application->create(new CreateUrl(
             $this->model->modelReference(), 'nl', 'my-slug', 'online'
+        ));
+
+        $url = UrlRecord::first();
+
+        $this->assertNotNull($url);
+        $this->assertEquals('nl-base/my-slug', $url->slug);
+        $this->assertEquals('nl', $url->site);
+        $this->assertEquals(LinkStatus::online, LinkStatus::from($url->status));
+    }
+
+    public function test_it_creates_new_url_without_prepending_base_url_segment()
+    {
+        $this->application->create(new CreateUrl(
+            $this->model->modelReference(), 'nl', 'my-slug', 'online', false
         ));
 
         $url = UrlRecord::first();
@@ -94,16 +108,34 @@ class UrlApplicationTest extends ChiefTestCase
             $existingId,
             'updated-slug',
             'online',
-            null
         ));
 
         $updated = $this->repository->find($existingId);
-        $this->assertEquals('updated-slug', $updated->slug);
+        $this->assertEquals('nl-base/updated-slug', $updated->slug);
 
         $this->assertDatabaseHas('chief_urls', [
             'slug' => 'original-slug',
             'redirect_id' => $updated->id,
         ]);
+    }
+
+    public function test_it_updates_url_without_prepending_base_url_segment()
+    {
+        $existingId = $this->repository->create($this->model->modelReference(), [
+            'site' => 'nl',
+            'slug' => 'original-slug',
+            'status' => LinkStatus::online->value,
+        ]);
+
+        $this->application->update(new UpdateUrl(
+            $existingId,
+            'updated-slug',
+            'online',
+            false,
+        ));
+
+        $updated = $this->repository->find($existingId);
+        $this->assertEquals('updated-slug', $updated->slug);
     }
 
     public function test_it_deletes_url_and_dispatches_event()

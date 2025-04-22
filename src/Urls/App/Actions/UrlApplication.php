@@ -26,6 +26,10 @@ class UrlApplication
 
     public function create(CreateUrl $command): string
     {
+        if (! $command->prependBaseUrlSegment()) {
+            $this->prependBaseUrlSegment(false);
+        }
+
         $model = $command->getModelReference()->instance();
         $site = $command->getSite();
         $slug = $command->getSlug();
@@ -64,6 +68,10 @@ class UrlApplication
      */
     public function update(UpdateUrl $command): void
     {
+        if (! $command->prependBaseUrlSegment()) {
+            $this->prependBaseUrlSegment(false);
+        }
+
         $urlRecord = $this->repository->find($command->getId());
 
         $slug = $this->composeSlug($urlRecord->model, $urlRecord->site, $command->getSlug());
@@ -129,9 +137,9 @@ class UrlApplication
         $this->force();
 
         if ($existingUrl = $this->repository->findActiveByModel($command->getModelReference(), $command->getSite())) {
-            $this->update(new UpdateUrl($existingUrl->id, '/', 'online', null));
+            $this->update(new UpdateUrl($existingUrl->id, '/', 'online', false));
         } else {
-            $this->create(new CreateUrl($command->getModelReference(), $command->getSite(), '/', 'online', null));
+            $this->create(new CreateUrl($command->getModelReference(), $command->getSite(), '/', 'online', false));
         }
     }
 }

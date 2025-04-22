@@ -64,4 +64,14 @@ class ArticlePage extends Model implements Page
     {
         return 'article_page';
     }
+
+    public function baseUrlSegment(?string $site = null): string
+    {
+        return match ($site) {
+            'nl' => 'nl-base',
+            'fr' => 'fr-base',
+            'en' => 'en-base',
+            default => 'base',
+        };
+    }
 }

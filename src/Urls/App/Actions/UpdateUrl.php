@@ -14,11 +14,14 @@ final class UpdateUrl
 
     private string $status;
 
-    public function __construct(string $id, string $slug, string $status)
+    private bool $prependBaseUrlSegment;
+
+    public function __construct(string $id, string $slug, string $status, bool $prependBaseUrlSegment = true)
     {
         $this->id = $id;
         $this->slug = $slug;
         $this->status = $status;
+        $this->prependBaseUrlSegment = $prependBaseUrlSegment;
     }
 
     public function getId(): string
@@ -34,5 +37,10 @@ final class UpdateUrl
     public function getStatus(): LinkStatus
     {
         return LinkStatus::from($this->status);
+    }
+
+    public function prependBaseUrlSegment(): bool
+    {
+        return $this->prependBaseUrlSegment;
     }
 }

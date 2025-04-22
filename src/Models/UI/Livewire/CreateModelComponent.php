@@ -79,8 +79,11 @@ class CreateModelComponent extends Component
         $model = new $this->modelClass($resource->getAttributesOnCreate());
 
         $layout = Layout::make($resource->fields($model))
-            ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
-            ->setScopedLocale($this->scopedLocale ? [$this->scopedLocale] : []);
+            ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']); // TODO: make consistent tags...
+
+        if ($this->scopedLocale) {
+            $layout->setScopedLocale($this->scopedLocale);
+        }
 
         return $layout->getComponentsWithoutForms();
     }
