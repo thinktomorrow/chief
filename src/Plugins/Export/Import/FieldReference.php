@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
+use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\FieldLine;
 use Thinktomorrow\Chief\Resource\Resource;
@@ -38,8 +42,7 @@ class FieldReference
         $model = ModelReference::fromString($modelReference)->instance();
 
         if ($model instanceof FragmentModel) {
-            $resourceKey = ModelReference::fromString($model->model_reference)->shortClassName();
-            $resource = app(Registry::class)->resource($resourceKey);
+            $resource = app(FragmentFactory::class)->create($model);
         } else {
             $resource = app(Registry::class)->findResourceByModel($model::class);
         }
@@ -61,7 +64,7 @@ class FieldReference
         $fields = Fields::make([$this->field]);
 
         $this->field->name($this->fieldName); // To support nested fields
-        $key = Fields\FieldName\FieldNameHelpers::replaceBracketsByDots(
+        $key = FieldNameHelpers::replaceBracketsByDots(
             $locale !== FieldLine::NON_LOCALIZED
                 ? $this->field->getName($locale)
                 : $this->field->getName()
@@ -70,7 +73,7 @@ class FieldReference
         $payload = Arr::undot([$key => $value]);
 
         // Hack way to save repeat fields
-        if ($this->field instanceof Fields\Repeat) {
+        if ($this->field instanceof Repeat) {
             // Merge current values with passed value
             $nestedFieldKey = substr($this->fieldName, strpos($this->fieldName, '.') + 1);
             $nestedFieldKey .= '.'.$locale;
@@ -101,7 +104,7 @@ class FieldReference
 
     public function isRepeatField(): bool
     {
-        return $this->field instanceof Fields\Repeat;
+        return $this->field instanceof Repeat;
     }
 
     private function array_merge_overwrite(): array
