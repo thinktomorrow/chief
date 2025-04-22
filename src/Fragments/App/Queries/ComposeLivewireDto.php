@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\App\Queries;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\SharedFragmentDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\TabItem;
@@ -13,6 +14,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\MenuDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
@@ -36,11 +38,12 @@ class ComposeLivewireDto
     }
 
     /** @return Collection<ContextDto> */
-    public function getContextsByOwner(ModelReference $modelReference): Collection
+    public function getContextsByOwner(ContextOwner|ModelReference $modelReference): Collection
     {
-        $collection = $this->contextRepository->getByOwner($modelReference)
-            ->map(function ($context) {
-                $owner = $context->owner;
+        $owner = $modelReference instanceof ContextOwner ? $modelReference : $modelReference->instance();
+
+        $collection = $this->contextRepository->getByOwner($owner->modelReference())
+            ->map(function ($context) use ($owner) {
                 $ownerResource = $this->registry->findResourceByModel($owner::class);
 
                 return ContextDto::fromContext(
@@ -51,9 +54,7 @@ class ComposeLivewireDto
                 );
             });
 
-        $model = $modelReference->instance();
-
-        $modelLocales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+        $modelLocales = $owner instanceof HasAllowedSites ? $owner->getAllowedSites() : ChiefSites::locales();
 
         $this->setUnassignedActiveSitesToPrimaryContext($collection, $modelLocales);
 
@@ -100,22 +101,25 @@ class ComposeLivewireDto
     }
 
     /** @return Collection<SharedFragmentDto> */
-    public function getSharedFragmentDtos(string $fragmentId): Collection
+    public function getSharedFragmentDtos(string $fragmentId, ContextOwner&ReferableModel $owner): Collection
     {
         // TODO: optimize this: allow array of fragmentIds, get all results for given fragmentIds, memoize generic results and filter by fragmentId
 
         return $this->contextRepository->getContextsByFragment($fragmentId)
-            ->map(function ($context) use ($fragmentId) {
+            ->map(function ($context) use ($fragmentId, $owner) {
 
-                $owner = $context->owner;
-                $ownerResource = $this->registry->findResourceByModel($owner::class);
+                $contextOwner = ($context->owner_type == $owner->modelReference()->shortClassName() && $context->owner_id == $owner->modelReference()->id())
+                    ? $owner
+                    : $context->owner;
+
+                $ownerResource = $this->registry->findResourceByModel($contextOwner::class);
 
                 return SharedFragmentDto::fromContext(
                     $fragmentId,
                     $context,
-                    $owner->modelReference(),
-                    $ownerResource->getPageTitle($owner),
-                    $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
+                    $contextOwner->modelReference(),
+                    $ownerResource->getPageTitle($contextOwner),
+                    $this->registry->findManagerByModel($contextOwner::class)->route('edit', $contextOwner),
                 );
             });
     }

@@ -6,31 +6,38 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class EditState extends Component
 {
     use HasForm;
     use ShowsAsDialog;
+    use WithMemoizedModel;
     use WithStateConfig;
 
     public string $parentComponentId;
 
     public string $stateKey;
 
-    public string $modelReference;
+    public ModelReference $modelReference;
 
     public ?string $transitionInConfirmationState = null;
 
     public ?string $errorMessage = null;
 
-    public function mount(string $parentComponentId, string $stateKey, string $modelReference)
+    public function mount(string $parentComponentId, string $stateKey, StatefulContract&ReferableModel $model)
     {
         $this->parentComponentId = $parentComponentId;
         $this->stateKey = $stateKey;
-        $this->modelReference = $modelReference;
+        $this->modelReference = $model->modelReference();
+
+        $this->setMemoizedModel($model);
     }
 
     public function getListeners()
@@ -115,7 +122,7 @@ class EditState extends Component
 
             app(UpdateState::class)->handle(
                 $resource::resourceKey(),
-                $this->getModel()->modelReference(),
+                $this->modelReference,
                 $this->stateKey,
                 $transitionKey,
                 $this->form,

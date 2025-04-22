@@ -6,7 +6,6 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 trait WithStateConfig
 {
@@ -54,15 +53,6 @@ trait WithStateConfig
         }
 
         return $this->stateMachine = StateMachine::fromConfig($this->getModel(), $this->getStateConfig());
-    }
-
-    private function getModel(): StatefulContract
-    {
-        if ($this->model) {
-            return $this->model;
-        }
-
-        return $this->model = ModelReference::fromString($this->modelReference)->instance();
     }
 
     private function getFreshModel(): StatefulContract

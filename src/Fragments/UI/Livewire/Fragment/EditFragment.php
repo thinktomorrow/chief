@@ -8,14 +8,18 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
+use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOnline;
 use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragment;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class EditFragment extends Component
 {
@@ -23,6 +27,7 @@ class EditFragment extends Component
     use InteractsWithFields;
     use ShowsAsDialog;
     use WithFragments;
+    use WithMemoizedModel;
 
     // parent livewire component id
     public string $parentComponentId;
@@ -35,10 +40,15 @@ class EditFragment extends Component
 
     public string $scopedLocale;
 
-    public function mount(ContextDto $context, string $parentComponentId)
+    public ModelReference $modelReference;
+
+    public function mount(ContextDto $context, string $parentComponentId, ContextOwner&ReferableModel $model)
     {
         $this->context = $context;
         $this->parentComponentId = $parentComponentId;
+
+        $this->modelReference = $model->modelReference();
+        $this->setMemoizedModel($model);
     }
 
     public function getListeners()
@@ -85,7 +95,8 @@ class EditFragment extends Component
     {
         return FragmentDto::fromFragment(
             app(FragmentRepository::class)->findInContext($fragmentId, $this->context->id),
-            app(ComposeLivewireDto::class)->getContext($this->context->ownerReference, $this->context->id)
+            app(ComposeLivewireDto::class)->getContext($this->context->ownerReference, $this->context->id),
+            $this->getModel()
         );
     }
 

@@ -20,7 +20,6 @@ class ContextRepository
     public function getByOwner(ModelReference $modelReference): \Illuminate\Support\Collection
     {
         return ContextModel::where('owner_type', $modelReference->shortClassName())
-            ->with('owner')
             ->where('owner_id', $modelReference->id())
             ->get();
     }

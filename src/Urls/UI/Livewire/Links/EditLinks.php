@@ -6,7 +6,9 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\DeleteUrl;
@@ -20,8 +22,9 @@ class EditLinks extends Component
     use HasForm;
     use ShowsAsDialog;
     use WithLinks;
+    use WithMemoizedModel;
 
-    public string $modelReference;
+    public ModelReference $modelReference;
 
     public Collection $links;
 
@@ -29,9 +32,10 @@ class EditLinks extends Component
 
     public array $redirectDeletionQueue = [];
 
-    public function mount(string $modelReference)
+    public function mount(ReferableModel $model)
     {
-        $this->modelReference = $modelReference;
+        $this->modelReference = $model->modelReference();
+        $this->setMemoizedModel($model);
     }
 
     public function getListeners()
@@ -71,7 +75,7 @@ class EditLinks extends Component
 
     public function save()
     {
-        $model = ModelReference::fromString($this->modelReference)->instance();
+        $model = $this->getModel();
 
         $this->validate([
             'form.*.slug' => ['required', new UniqueUrlSlugRule($model, $model)],
@@ -163,7 +167,6 @@ class EditLinks extends Component
             $this->form[$link->locale] = [
                 'slug' => $link->url?->slugWithoutBaseUrlSegment,
                 'status' => $link->status->value,
-                'context' => $link->contextId,
             ];
         }
     }

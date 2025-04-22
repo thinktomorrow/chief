@@ -13,6 +13,8 @@ use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class FormComponent extends Component
 {
+    use WithMemoizedModel;
+
     public ModelReference $modelReference;
 
     public Form $form;
@@ -25,6 +27,8 @@ class FormComponent extends Component
         $this->form = $form;
 
         $this->scopedLocale = ChiefSites::getLocaleScope();
+
+        $this->setMemoizedModel($model);
     }
 
     public function getListeners()
@@ -41,7 +45,7 @@ class FormComponent extends Component
      */
     public function getComponents(): array
     {
-        $model = $this->modelReference->instance();
+        $model = $this->getModel();
         $resource = app(Registry::class)->findResourceByModel($model::class);
 
         return Layout::make($resource->fields($model))
@@ -53,7 +57,7 @@ class FormComponent extends Component
 
     public function editForm(): void
     {
-        $model = $this->modelReference->instance();
+        $model = $this->getModel();
         $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
 
         $this->dispatch('open-'.$this->getId(), [

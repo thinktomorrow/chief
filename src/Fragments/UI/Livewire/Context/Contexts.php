@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\Items;
@@ -13,16 +14,20 @@ use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class Contexts extends Items
 {
-    public string $modelReference;
+    use WithMemoizedModel;
+
+    public ModelReference $modelReference;
 
     // Memoized collection
     private ?Collection $contexts = null;
 
     public function mount(ReferableModel&ContextOwner $model, ?string $activeContextId = null)
     {
-        $this->modelReference = $model->modelReference()->get();
+        $this->modelReference = $model->modelReference();
 
         $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+
+        $this->setMemoizedModel($model);
 
         $this->mountItems($locales, $activeContextId);
     }
@@ -35,7 +40,7 @@ class Contexts extends Items
         }
 
         return $this->contexts = app(ComposeLivewireDto::class)
-            ->getContextsByOwner(ModelReference::fromString($this->modelReference));
+            ->getContextsByOwner($this->getModel());
     }
 
     public function addItem(): void

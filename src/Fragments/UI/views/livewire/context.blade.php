@@ -37,6 +37,7 @@
 
     <livewire:chief-fragments::edit-fragment
         :key="$context->id . '-edit-fragment'"
+        :model="$this->getModel()"
         :context="$context"
         :parent-component-id="$this->getId()"
     />

@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\Urls\UI\Livewire\Links;
 
 use Livewire\Component;
+use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
@@ -11,12 +13,15 @@ use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 class Links extends Component
 {
     use WithLinks;
+    use WithMemoizedModel;
 
-    public string $modelReference;
+    public ModelReference $modelReference;
 
     public function mount(Visitable&ReferableModel $model)
     {
-        $this->modelReference = $model->modelReference()->get();
+        $this->modelReference = $model->modelReference();
+
+        $this->setMemoizedModel($model);
     }
 
     public function getListeners()

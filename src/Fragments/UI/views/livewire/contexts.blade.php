@@ -32,6 +32,7 @@
 
                     <livewire:chief-fragments::context
                         :key="$item->id"
+                        :model="$this->getModel()"
                         :context="$item"
                         :scoped-locale="$scopedLocale"
                     />

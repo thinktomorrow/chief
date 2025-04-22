@@ -10,6 +10,6 @@
         :key="$modelReference . $stateKey"
         :parent-component-id="$this->getId()"
         :state-key="$stateKey"
-        :model-reference="$modelReference"
+        :model="$this->getModel()"
     />
 </div>

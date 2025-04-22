@@ -47,5 +47,5 @@
         <p class="body text-grey-500">Nog geen links toegevoegd.</p>
     @endif
 
-    <livewire:chief-wire::edit-links key="edit-links" :model-reference="$modelReference" />
+    <livewire:chief-wire::edit-links key="edit-links" :model="$this->getModel()" />
 </x-chief::window>

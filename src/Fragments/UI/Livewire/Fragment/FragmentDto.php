@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
@@ -33,9 +34,9 @@ class FragmentDto implements Wireable
         public Collection $sharedFragmentDtos,
     ) {}
 
-    public static function fromFragment(Fragment $fragment, ContextDto $context): self
+    public static function fromFragment(Fragment $fragment, ContextDto $context, ContextOwner $owner): self
     {
-        $sharedFragmentDtos = self::composeSharedFragmentDtos($fragment->getFragmentId());
+        $sharedFragmentDtos = self::composeSharedFragmentDtos($fragment->getFragmentId(), $owner);
 
         return new static(
             $fragment->getFragmentId(),
@@ -61,9 +62,9 @@ class FragmentDto implements Wireable
         return Layout::make($fragment->fields($fragment))->getComponentsWithoutForms();
     }
 
-    private static function composeSharedFragmentDtos(string $fragmentId)
+    private static function composeSharedFragmentDtos(string $fragmentId, ContextOwner $owner): Collection
     {
-        return app(ComposeLivewireDto::class)->getSharedFragmentDtos($fragmentId);
+        return app(ComposeLivewireDto::class)->getSharedFragmentDtos($fragmentId, $owner);
     }
 
     public function toLivewire()

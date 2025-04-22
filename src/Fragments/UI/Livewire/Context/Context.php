@@ -3,21 +3,30 @@
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 
 use Livewire\Component;
+use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class Context extends Component
 {
     use WithFragments;
+    use WithMemoizedModel;
 
     public ContextDto $context;
 
-    public function mount(ContextDto $context, string $scopedLocale)
+    public ModelReference $modelReference;
+
+    public function mount(ContextDto $context, string $scopedLocale, ContextOwner&ReferableModel $model)
     {
         $this->context = $context;
+        $this->modelReference = $model->modelReference();
+        $this->setMemoizedModel($model);
+        $this->scopedLocale = $scopedLocale;
 
         $this->refreshFragments();
 
-        $this->scopedLocale = $scopedLocale;
     }
 
     public function getListeners()

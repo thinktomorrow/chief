@@ -149,7 +149,7 @@ trait WithFragments
         $localeReference = app()->getLocale();
         app()->setLocale($this->scopedLocale);
 
-        $result = FragmentDto::fromFragment($fragment, $this->context);
+        $result = FragmentDto::fromFragment($fragment, $this->context, $this->getModel());
 
         if ($localeReference !== app()->getLocale()) {
             app()->setLocale($localeReference);

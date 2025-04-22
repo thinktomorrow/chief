@@ -90,6 +90,7 @@
                 <livewire:chief-fragments::edit-fragment
                     :key="$fragment->getId() . '-edit-fragment'"
                     :context="$context"
+                    :model="$this->getModel()"
                     :parent-component-id="$this->getId()"
                 />
 

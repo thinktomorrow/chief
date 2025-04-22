@@ -3,21 +3,26 @@
 namespace Thinktomorrow\Chief\ManagedModels\States\UI\Livewire;
 
 use Livewire\Component;
+use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class State extends Component
 {
+    use WithMemoizedModel;
     use WithStateConfig;
 
     public string $stateKey;
 
-    public string $modelReference;
+    public ModelReference $modelReference;
 
     public function mount(string $stateKey, StatefulContract&ReferableModel $model)
     {
         $this->stateKey = $stateKey;
-        $this->modelReference = $model->modelReference()->get();
+        $this->modelReference = $model->modelReference();
+
+        $this->setMemoizedModel($model);
     }
 
     public function getListeners()
