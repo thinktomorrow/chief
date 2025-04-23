@@ -152,6 +152,17 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return $fallbackLocales;
     }
 
+    public static function assetFallbackLocales(): array
+    {
+        $fallbackLocales = [];
+
+        foreach (self::all() as $site) {
+            $fallbackLocales[$site->locale] = $site->assetFallbackLocale;
+        }
+
+        return $fallbackLocales;
+    }
+
     public static function primaryLocale(): string
     {
         return self::all()->getPrimaryLocale();

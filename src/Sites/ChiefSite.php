@@ -7,6 +7,7 @@ readonly class ChiefSite
     public function __construct(
         public string $locale,
         public ?string $fallbackLocale,
+        public ?string $assetFallbackLocale,
         public bool $isActive,
         public bool $isPrimary,
         public string $name,
@@ -23,6 +24,7 @@ readonly class ChiefSite
         return new static(
             $site['locale'],
             $site['fallback_locale'] ?? null,
+            $site['asset_fallback_locale'] ?? null,
             $site['active'] ?? false,
             $site['primary'] ?? false,
             $site['name'] ?? $site['locale'],
@@ -36,6 +38,7 @@ readonly class ChiefSite
         return [
             'locale' => $this->locale,
             'fallback_locale' => $this->fallbackLocale,
+            'asset_fallback_locale' => $this->assetFallbackLocale,
             'active' => $this->isActive,
             'primary' => $this->isPrimary,
             'name' => $this->name,

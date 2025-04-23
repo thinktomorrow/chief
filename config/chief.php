@@ -41,6 +41,7 @@ return [
         [
             'locale' => 'nl',
             'fallback_locale' => null,
+            'asset_fallback_locale' => null,
             'name' => 'Vlaanderen (nl)',
             'short_name' => 'be',
             'url' => env('CHIEF_SITES_PRIMARY_URL', env('APP_URL', 'http://localhost')),
@@ -50,7 +51,8 @@ return [
         [
             'locale' => 'fr',
             'name' => 'Wallonië (fr)',
-            'fallback_locale' => 'nl',
+            'fallback_locale' => null,
+            'asset_fallback_locale' => 'nl',
             'short_name' => 'fr',
             'url' => env('CHIEF_SITES_URL_FR', env('APP_URL', 'http://localhost')),
             'active' => false,
@@ -58,6 +60,7 @@ return [
         [
             'locale' => 'en',
             'fallback_locale' => 'fr',
+            'asset_fallback_locale' => 'nl',
             'name' => 'Brits',
             'short_name' => 'english',
             'url' => env('CHIEF_SITES_URL_EN', env('APP_URL', 'http://localhost')),

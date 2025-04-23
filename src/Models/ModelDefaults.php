@@ -28,7 +28,7 @@ trait ModelDefaults
 
     protected function getAssetFallbackLocales(): array
     {
-        return ChiefSites::fallbackLocales();
+        return ChiefSites::assetFallbackLocales();
     }
 
     public function viewKey(): string
