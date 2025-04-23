@@ -1,11 +1,11 @@
-<x-chief::dialog.modal wired size="sm" title="Fragmenten aanpassen">
+<x-chief::dialog.modal wired size="sm" title="Configureer deze versie">
     @if ($isOpen)
         <x-chief::form.fieldset rule="form.title">
-            <x-chief::form.label for="title">Titel</x-chief::form.label>
+            <x-chief::form.label for="title">Titel van deze versie</x-chief::form.label>
             <x-chief::form.input.text id="title" wire:model="form.title" />
         </x-chief::form.fieldset>
 
-        @if(count($this->getAvailableLocales()) > 1)
+        @if (count($this->getAvailableLocales()) > 1)
             @include('chief-fragments::livewire.tabitems.item-locales')
         @else
             @include('chief-fragments::livewire.tabitems.item-single-locale')
