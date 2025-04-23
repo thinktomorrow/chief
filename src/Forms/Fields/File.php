@@ -97,10 +97,13 @@ class File extends Component implements Field, HasComponents
         $preppedPayload = [];
 
         foreach ($ruleKeys as $ruleKey) {
-            if (Arr::has($payload, $ruleKey.'.uploads')) {
+            if (Arr::has($payload, $ruleKey.'.uploads') && count(Arr::get($payload, $ruleKey.'.uploads')) > 0) {
                 $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey.'.uploads'));
-            } elseif (Arr::has($payload, $ruleKey.'.attach')) {
-                $preppedPayload[$ruleKey] = $this->convertAttachedAssetsToUploadedFiles(Arr::get($payload, $ruleKey.'.attach'));
+            } elseif (Arr::has($payload, $ruleKey.'.attach') && count(Arr::get($payload, $ruleKey.'.attach')) > 0) {
+                $preppedPayload[$ruleKey] = $this->convertAssetsToUploadedFiles(Arr::get($payload, $ruleKey.'.attach'));
+            } // If the asset fields haven't been altered, it means that the files are set as non-assoc array instead of specific uploads, attach, queued_for_deletion,... subarrays.
+            elseif (! Arr::has($payload, $ruleKey.'.queued_for_deletion') && count(Arr::get($payload, $ruleKey)) > 0) {
+                $preppedPayload[$ruleKey] = $this->convertAssetsToUploadedFiles(Arr::get($payload, $ruleKey));
             }
         }
 
@@ -114,7 +117,7 @@ class File extends Component implements Field, HasComponents
             ->all();
     }
 
-    private function convertAttachedAssetsToUploadedFiles(array $attach): array
+    private function convertAssetsToUploadedFiles(array $attach): array
     {
         $assetIds = collect($attach)->pluck('id')->all();
 
