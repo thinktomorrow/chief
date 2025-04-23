@@ -4,25 +4,27 @@
     $fieldType = strtolower(class_basename($component));
     $fieldToggles = $getFieldToggles();
 
-    $attributes = $attributes->merge([
+    $fieldSetAttributes = new \Illuminate\View\ComponentAttributeBag();
+
+    $fieldSetAttributes = $fieldSetAttributes->merge([
         'data-field-key' => $getId($locale ?? null),
         'data-field-type' => $fieldType,
     ]);
 
     if (count($fieldToggles) > 0) {
-        $attributes = $attributes->merge([
+        $fieldSetAttributes = $fieldSetAttributes->merge([
             'data-conditional-toggle' => json_encode($fieldToggles),
         ]);
     }
 
     if ($fieldType == 'hidden') {
-        $attributes = $attributes->merge([
+        $fieldSetAttributes = $fieldSetAttributes->merge([
             'hidden' => true,
         ]);
     }
 @endphp
 
-<x-chief::form.fieldset :attributes="$attributes" wire:ignore.self>
+<x-chief::form.fieldset wire:ignore.self :attributes="$fieldSetAttributes">
     @if ($getLabel())
         <x-chief::form.label :required="$isRequired()">
             {{ $getLabel() }}

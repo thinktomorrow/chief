@@ -2,9 +2,9 @@ import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
 class RadioFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
-        const currentValues = this._getCurrentValuesFromRadioElements();
+        this.currentValues = this._getCurrentValuesFromRadioElements();
 
-        this._toggleConditionalFields(currentValues);
+        this._toggleConditionalFields();
     }
 
     _getCurrentValuesFromRadioElements() {

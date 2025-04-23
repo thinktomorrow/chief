@@ -1,4 +1,3 @@
-// import _isEmpty from 'lodash/isEmpty';
 import _debounce from 'lodash/debounce';
 
 /**
@@ -13,8 +12,8 @@ class ConditionalFieldTrigger {
         this.name = name;
         this.element = element;
         this.conditionalFields = this.constructor._createConditionalFieldsObject(conditionalFieldsData);
+        this.currentValues = [];
 
-        this.formgroupToggleAttribute = 'data-conditional-toggled-by';
         this._init();
     }
 
@@ -50,20 +49,19 @@ class ConditionalFieldTrigger {
      * Based on the result, toggle the conditional fields.
      * If one or more of the current values matches the conditional fields values, show it.
      * Otherwise, hide the conditional field.
-     * @param {Array<String>} currentValues
      */
-    _toggleConditionalFields(currentValues) {
+    _toggleConditionalFields() {
         this.conditionalFields.forEach((conditionalField) => {
             const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
                 if (this.constructor._isValidRegexExpression(conditionalFieldValue)) {
-                    return currentValues.find((currentValue) => {
+                    return this.currentValues.find((currentValue) => {
                         const regex = this.constructor._createRegexFromString(conditionalFieldValue);
 
                         return currentValue.match(regex);
                     });
                 }
 
-                return currentValues.includes(conditionalFieldValue);
+                return this.currentValues.includes(conditionalFieldValue);
             });
 
             if (isConditionalFieldToBeTriggered) {

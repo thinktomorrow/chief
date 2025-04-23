@@ -3,7 +3,7 @@
 @endphp
 
 @if (count($selected) > 0)
-    <div class="flex flex-wrap gap-0.5">
+    <div class="flex flex-wrap gap-1">
         @foreach ($selected as $value)
             @foreach ($getOptions() as $optionValue)
                 @if ($optionValue['value'] == $value)
