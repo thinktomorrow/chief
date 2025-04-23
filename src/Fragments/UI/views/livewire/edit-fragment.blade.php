@@ -82,18 +82,22 @@
                     @endif
                 </div>
 
-                <livewire:chief-fragments::edit-fragment
-                    :key="$fragment->getId() . '-edit-fragment'"
-                    :context="$context"
-                    :model="$this->getModel()"
-                    :parent-component-id="$this->getId()"
-                />
+                <template x-teleport="body">
+                    <livewire:chief-fragments::edit-fragment
+                        :key="$fragment->getId() . '-edit-fragment'"
+                        :context="$context"
+                        :model="$this->getModel()"
+                        :parent-component-id="$this->getId()"
+                    />
+                </template>
 
-                <livewire:chief-fragments::add-fragment
-                    :key="$fragment->getId() . '-add-fragment'"
-                    :context="$context"
-                    :parent-component-id="$this->getId()"
-                />
+                <template x-teleport="body">
+                    <livewire:chief-fragments::add-fragment
+                        :key="$fragment->getId() . '-add-fragment'"
+                        :context="$context"
+                        :parent-component-id="$this->getId()"
+                    />
+                </template>
             </x-chief::form.fieldset>
         @endif
 

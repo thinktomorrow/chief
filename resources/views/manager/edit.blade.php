@@ -35,7 +35,7 @@
                     @endforeach
                 @endif
 
-                @include('chief::manager._partials.edit-actions')
+                {{-- @include('chief::manager._partials.edit-actions') --}}
             </x-slot>
         </x-chief::page.header>
     </x-slot>
