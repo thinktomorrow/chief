@@ -14,8 +14,6 @@ trait WithFragments
 {
     public Collection $fragments;
 
-    public string $scopedLocale;
-
     private function getListenersWithFragments()
     {
         return [
