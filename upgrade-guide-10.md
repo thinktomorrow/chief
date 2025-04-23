@@ -120,3 +120,6 @@ Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\ChiefSites
 #### Forms
 
 - Upgrade the back views so they use the new page template and components
+- Repeat field should be localized as a whole. This provides more consistent behaviour. Any field items should no longer
+  be localized. You can run a chief command `chief:localize-repeat-field {resourceKey} {key}` to convert database values
+  to the new format. 
