@@ -18,6 +18,8 @@ class Context extends Component
 
     public ModelReference $modelReference;
 
+    public string $scopedLocale;
+
     public function mount(ContextDto $context, string $scopedLocale, ContextOwner&ReferableModel $model)
     {
         $this->context = $context;
