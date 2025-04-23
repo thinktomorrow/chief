@@ -44,7 +44,7 @@ trait AddsNewFragments
 
         $layout = Layout::make($fragment->fields($fragment))
             ->filterByNotTagged(['edit', 'not-on-create']) // TODO: make consistent tags...
-            ->setScopedLocale($this->context->allowedSites);
+            ->setLocales($this->context->getAllowedSites());
 
         return $layout->getComponentsWithoutForms();
     }

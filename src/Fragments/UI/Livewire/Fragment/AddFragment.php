@@ -27,6 +27,10 @@ class AddFragment extends Component
 
     public ?int $insertAfterOrder = null;
 
+    public array $locales;
+
+    public string $scopedLocale;
+
     public function mount(ContextDto $context, ?string $parentComponentId = null)
     {
         $this->context = $context;
@@ -45,6 +49,8 @@ class AddFragment extends Component
     {
         $this->parentId = $values['parentId'] ?: null;
         $this->insertAfterOrder = $values['order'];
+        $this->locales = $values['locales'];
+        $this->scopedLocale = $values['scopedLocale'];
 
         $this->isOpen = true;
 
