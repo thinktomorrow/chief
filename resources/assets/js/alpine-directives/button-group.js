@@ -9,7 +9,9 @@ const ButtonGroup = () => ({
         });
     },
     repositionTabMarker() {
-        this.$nextTick(() => {
+        // this.$nextTick(() => {
+        setTimeout(() => {
+            console.log(Array.from(this.$refs.buttons.children));
             const tabElement = Array.from(this.$refs.buttons.children).find(
                 (tab) => tab.getAttribute('aria-selected') === 'true'
             );
@@ -18,7 +20,8 @@ const ButtonGroup = () => ({
 
             this.$refs.tabMarker.style.width = `${tabElement.offsetWidth}px`;
             this.$refs.tabMarker.style.left = `${tabElement.offsetLeft}px`;
-        });
+            // });
+        }, 50);
     },
     // Src: https://stackoverflow.com/questions/1462138/event-listener-for-when-element-becomes-visible#answer-66394121
     onVisible(element, callback) {

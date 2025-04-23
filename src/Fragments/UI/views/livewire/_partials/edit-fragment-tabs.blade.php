@@ -1,4 +1,10 @@
-<x-chief::tabs active-tab="{{ $scopedLocale }}" :show-nav="true" :should-listen-for-external-tab="true">
+<x-chief::tabs
+    data-slot="form-group"
+    active-tab="{{ $scopedLocale }}"
+    :show-nav="true"
+    :should-listen-for-external-tab="true"
+    size="base"
+>
     @foreach ($locales as $locale)
         <x-chief::tabs.tab
             tab-id="{{ $locale }}"
