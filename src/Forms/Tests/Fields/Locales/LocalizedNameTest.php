@@ -183,4 +183,16 @@ class LocalizedNameTest extends TestCase
             'fr' => 'foobar.fr',
         ], $field->getDottedLocalizedNames());
     }
+
+    public function test_it_can_get_all_file_localized_dotted_names()
+    {
+        $field = File::make('title')
+            ->name('foobar')
+            ->locales(['nl', 'fr']);
+
+        $this->assertEquals([
+            'nl' => 'files.foobar.nl',
+            'fr' => 'files.foobar.fr',
+        ], $field->getDottedLocalizedNames());
+    }
 }

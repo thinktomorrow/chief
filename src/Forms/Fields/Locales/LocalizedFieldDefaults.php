@@ -78,14 +78,14 @@ trait LocalizedFieldDefaults
     {
         return $this->getFieldName()
             ->bracketed()
-            ->matrix($this->getName(), $this->getLocales());
+            ->matrix($this->getRawName(), $this->getLocales());
     }
 
     public function getDottedLocalizedNames(): array
     {
         return $this->getFieldName()
             ->dotted()
-            ->matrix($this->getName(), $this->getLocales());
+            ->matrix($this->getRawName(), $this->getLocales());
     }
 
     /** @deprecated use getLocalizedFieldName() */
