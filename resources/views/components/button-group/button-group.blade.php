@@ -17,6 +17,7 @@
     >
         <nav x-ref="buttons" class="relative flex items-start justify-start border border-transparent">
             <div
+                wire:ignore
                 x-ref="tabMarker"
                 @class([
                     'btn btn-outline-white absolute left-0 font-normal ring-0 transition-all duration-150 ease-out',
