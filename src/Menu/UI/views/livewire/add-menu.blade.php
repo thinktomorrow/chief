@@ -1,12 +1,16 @@
-<x-chief::dialog.modal wired size="sm" title="Voeg Menu toe"
-                       subtitle="Je kan meerdere menu tabs beheren. Zo kan je specifieke menu's per site voorzien.">
+<x-chief::dialog.modal
+    wired
+    size="sm"
+    title="Voeg een menu versie toe"
+    subtitle="Je kan meerdere menu versies aanmaken en beheren. Zo kan je specifieke menu's per site voorzien."
+>
     @if ($isOpen)
         <x-chief::form.fieldset rule="form.title">
-            <x-chief::form.label for="title">Titel</x-chief::form.label>
+            <x-chief::form.label for="title">Titel van de nieuwe versie</x-chief::form.label>
             <x-chief::form.input.text id="title" wire:model="form.title" />
         </x-chief::form.fieldset>
 
-        @if(count($this->getAvailableLocales()) > 1)
+        @if (count($this->getAvailableLocales()) > 1)
             @include('chief-fragments::livewire.tabitems.item-locales')
         @endif
 
