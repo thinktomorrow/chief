@@ -12,9 +12,6 @@
 
         <x-slot name="header">
             <x-chief::dialog.drawer.header :title="ucfirst($fragment->label)" :badges="$badges">
-
-                <span>{{ $scopedLocale }}</span>
-
                 <div class="flex items-start gap-2">
                     <x-chief::button
                         variant="outline-white"
@@ -38,8 +35,6 @@
         @include('chief-fragments::livewire._partials.bookmark')
         @include('chief-fragments::livewire._partials.shared-fragment-actions')
         @include('chief-fragments::livewire._partials.edit-fragment-tabs')
-
-
 
         @foreach ($this->getFields() as $field)
             {{ $field }}
