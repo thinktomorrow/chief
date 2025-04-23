@@ -1,4 +1,4 @@
-import { initConditionalFields } from './conditional-fields/init-conditional-fields';
+import { initConditionalFieldsInContainer, initConditionalFields } from './conditional-fields/init-conditional-fields';
 import initCharacterCount from './utilities/character-count';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,8 +12,8 @@ document.addEventListener('form-dialog-opened', (event) => {
         const dialogEl = event.detail.componentId
             ? document.querySelector(`[wire\\:id="${event.detail.componentId}"]`)
             : document;
-        console.log(dialogEl);
-        initConditionalFields(dialogEl);
+
+        initConditionalFieldsInContainer(dialogEl);
         initCharacterCount();
     }, 0);
 });

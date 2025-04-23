@@ -2,13 +2,14 @@
     use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
 
     $fieldType = strtolower(class_basename($component));
+    $fieldToggles = $getFieldToggles();
 
     $attributes = $attributes->merge([
         'data-field-key' => $getId($locale ?? null),
         'data-field-type' => $fieldType,
     ]);
 
-    if ($fieldToggles = $getFieldToggles()) {
+    if (count($fieldToggles) > 0) {
         $attributes = $attributes->merge([
             'data-conditional-toggle' => json_encode($fieldToggles),
         ]);
@@ -19,10 +20,9 @@
             'hidden' => true,
         ]);
     }
-
 @endphp
 
-<x-chief::form.fieldset :attributes="$attributes">
+<x-chief::form.fieldset :attributes="$attributes" wire:ignore.self>
     @if ($getLabel())
         <x-chief::form.label :required="$isRequired()">
             {{ $getLabel() }}
@@ -35,9 +35,9 @@
         </x-chief::form.description>
     @endif
 
-    @if($hasLocales() && count($getLocales()) == 1)
+    @if ($hasLocales() && count($getLocales()) == 1)
         @include($getView(), ['component' => $component, 'locale' => $getLocales()[0]])
-    @elseif($hasLocales() && count($getLocales()) > 1)
+    @elseif ($hasLocales() && count($getLocales()) > 1)
         <x-chief::tabs :show-nav="false" :should-listen-for-external-tab="true">
             @foreach ($getLocales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}">
