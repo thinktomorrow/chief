@@ -19,6 +19,9 @@ const initConditionalFieldsInContainer = (
 ) => {
     const formgroupElements = Array.from(container.querySelectorAll(`[${formgroupAttribute}]`));
 
+    // To store all fields that are toggled by other fields
+    window.conditionalFieldsToggledByState = [];
+
     formgroupElements.forEach((element) => {
         const name = element.getAttribute(formgroupAttribute);
         const type = element.getAttribute(formgroupTypeAttribute);

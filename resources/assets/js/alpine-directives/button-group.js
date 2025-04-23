@@ -11,7 +11,6 @@ const ButtonGroup = () => ({
     repositionTabMarker() {
         // this.$nextTick(() => {
         setTimeout(() => {
-            console.log(Array.from(this.$refs.buttons.children));
             const tabElement = Array.from(this.$refs.buttons.children).find(
                 (tab) => tab.getAttribute('aria-selected') === 'true'
             );

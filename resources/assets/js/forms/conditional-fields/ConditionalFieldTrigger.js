@@ -1,4 +1,4 @@
-import _isEmpty from 'lodash/isEmpty';
+// import _isEmpty from 'lodash/isEmpty';
 import _debounce from 'lodash/debounce';
 
 /**
@@ -14,7 +14,6 @@ class ConditionalFieldTrigger {
         this.element = element;
         this.conditionalFields = this.constructor._createConditionalFieldsObject(conditionalFieldsData);
 
-        this.divider = '|';
         this.formgroupToggleAttribute = 'data-conditional-toggled-by';
         this._init();
     }
@@ -81,12 +80,15 @@ class ConditionalFieldTrigger {
      * @param {Object} element
      */
     _showConditionalField(element) {
-        const triggers = element.getAttribute(this.formgroupToggleAttribute);
+        const fieldState = window.conditionalFieldsToggledByState.find((item) => item.field === element);
 
-        if (!triggers) {
-            element.setAttribute(this.formgroupToggleAttribute, this.name);
-        } else if (!triggers.split(this.divider).includes(this.name)) {
-            element.setAttribute(this.formgroupToggleAttribute, triggers + this.divider + this.name);
+        if (fieldState) {
+            fieldState.toggledBy = [...new Set([...fieldState.toggledBy, this.name])];
+        } else {
+            window.conditionalFieldsToggledByState.push({
+                field: element,
+                toggledBy: [this.name],
+            });
         }
 
         element.classList.remove('hidden');
@@ -98,15 +100,20 @@ class ConditionalFieldTrigger {
      * @param {Object} element
      */
     _hideConditionalField(element) {
-        let triggers = element.getAttribute(this.formgroupToggleAttribute).split(this.divider);
+        const fieldState = window.conditionalFieldsToggledByState.find((item) => item.field === element);
 
-        if (triggers.includes(this.name)) {
-            triggers = triggers.filter((trigger) => trigger !== this.name);
-
-            element.setAttribute(this.formgroupToggleAttribute, triggers.join(this.divider));
+        if (!fieldState) {
+            element.classList.add('hidden');
+            return;
         }
 
-        if (_isEmpty(triggers)) {
+        fieldState.toggledBy = fieldState.toggledBy.filter((trigger) => trigger !== this.name);
+
+        if (fieldState.toggledBy.length === 0) {
+            window.conditionalFieldsToggledByState = window.conditionalFieldsToggledByState.filter(
+                (item) => item.field === element
+            );
+
             element.classList.add('hidden');
         }
     }
@@ -116,12 +123,7 @@ class ConditionalFieldTrigger {
      */
     _hideConditionalFields() {
         this.conditionalFields.forEach((conditionalField) => {
-            // This attribute is present on the conditional field only if it was already hidden before,
-            // or if it was shown by another conditional field trigger.
-            if (conditionalField.element.hasAttribute(this.formgroupToggleAttribute)) return;
-
             conditionalField.element.classList.add('hidden');
-            conditionalField.element.setAttribute(this.formgroupToggleAttribute, '');
         });
     }
 
