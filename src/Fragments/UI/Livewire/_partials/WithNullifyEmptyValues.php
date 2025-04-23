@@ -21,6 +21,7 @@ trait WithNullifyEmptyValues
 
     private function isEmptyValue($value): bool
     {
-        return empty($value) || $value === [[]] || $value === [null];
+        // Empty repeat values as well...
+        return $value === '' || $value === [[]] || $value === [null];
     }
 }

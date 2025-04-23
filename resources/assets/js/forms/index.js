@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('form-dialog-opened', (event) => {
     // Next tick my friend... next tick
     setTimeout(() => {
-        const dialogEl = event.detail.componentId
+        const container = event.detail.componentId
             ? document.querySelector(`[wire\\:id="${event.detail.componentId}"]`)
             : document;
 
-        initConditionalFieldsInContainer(dialogEl);
+        initConditionalFieldsInContainer(container);
         initCharacterCount();
     }, 0);
 });

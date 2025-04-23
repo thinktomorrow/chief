@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\App\ContextActions;
 use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 use Thinktomorrow\Chief\Fragments\Exceptions\SafeContextDeleteException;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Sites\Actions\SyncActiveSites;
@@ -65,7 +66,12 @@ class ContextApplication
         $context = $this->contextRepository->find($command->getContextId());
 
         foreach ($context->fragments()->get() as $fragmentModel) {
-            $this->detachFragment->handle($command->getContextId(), $fragmentModel->id);
+            try {
+                $this->detachFragment->handle($command->getContextId(), $fragmentModel->id);
+            } catch (FragmentAlreadyDetached $e) {
+                // Ignore this exception, it means the fragment is already detached from the context or that the fragment is no longer present.
+            }
+
         }
 
         $context->delete();
