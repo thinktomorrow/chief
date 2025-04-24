@@ -75,6 +75,11 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return self::all()->find($site)->name;
     }
 
+    public static function code(string $site): ?string
+    {
+        return self::all()->find($site)->code;
+    }
+
     public function getNames(): array
     {
         return $this->toCollection()->mapWithKeys(fn ($site) => [$site->locale => $site->name])->toArray();
