@@ -1222,16 +1222,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.44.3",
+            "version": "v11.44.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b0a87fbd13c0b05227a00da7968701f4274e3195"
+                "reference": "6b29bb79b18474ea5265b7022ba7b0f76eebeb4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b0a87fbd13c0b05227a00da7968701f4274e3195",
-                "reference": "b0a87fbd13c0b05227a00da7968701f4274e3195",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6b29bb79b18474ea5265b7022ba7b0f76eebeb4f",
+                "reference": "6b29bb79b18474ea5265b7022ba7b0f76eebeb4f",
                 "shasum": ""
             },
             "require": {
@@ -1433,7 +1433,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-04-23T14:45:24+00:00"
+            "time": "2025-04-23T23:35:40+00:00"
         },
         {
             "name": "laravel/pint",
@@ -3791,16 +3791,16 @@
         },
         {
             "name": "spatie/image",
-            "version": "3.8.1",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "80e907bc64fbb7ce87346e97c14534d7dad5d559"
+                "reference": "381f6363a07c3ea1cd32636535afde40af1c4744"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/80e907bc64fbb7ce87346e97c14534d7dad5d559",
-                "reference": "80e907bc64fbb7ce87346e97c14534d7dad5d559",
+                "url": "https://api.github.com/repos/spatie/image/zipball/381f6363a07c3ea1cd32636535afde40af1c4744",
+                "reference": "381f6363a07c3ea1cd32636535afde40af1c4744",
                 "shasum": ""
             },
             "require": {
@@ -3848,7 +3848,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/image/tree/3.8.1"
+                "source": "https://github.com/spatie/image/tree/3.8.2"
             },
             "funding": [
                 {
@@ -3860,7 +3860,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-27T13:01:00+00:00"
+            "time": "2025-04-24T08:28:20+00:00"
         },
         {
             "name": "spatie/image-optimizer",
@@ -8625,16 +8625,16 @@
         },
         {
             "name": "orchestra/sidekick",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/sidekick.git",
-                "reference": "aa22c8720ef071a36dfe887a5a26fcc62f5d2649"
+                "reference": "3dcae01c0305abfaa7f45562ebe4929bca21ced7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/aa22c8720ef071a36dfe887a5a26fcc62f5d2649",
-                "reference": "aa22c8720ef071a36dfe887a5a26fcc62f5d2649",
+                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/3dcae01c0305abfaa7f45562ebe4929bca21ced7",
+                "reference": "3dcae01c0305abfaa7f45562ebe4929bca21ced7",
                 "shasum": ""
             },
             "require": {
@@ -8645,7 +8645,7 @@
             "require-dev": {
                 "laravel/framework": "^9.52.16|^10.48.29|^11.44.1|^12.1.1|^13.0",
                 "laravel/pint": "^1.4",
-                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan": "^2.1.12",
                 "phpunit/phpunit": "^9.6|^10.0|^11.0|^12.0",
                 "symfony/process": "^6.0|^7.0"
             },
@@ -8673,9 +8673,9 @@
             "description": "Packages Toolkit Utilities and Helpers for Laravel",
             "support": {
                 "issues": "https://github.com/orchestral/sidekick/issues",
-                "source": "https://github.com/orchestral/sidekick/tree/v1.1.2"
+                "source": "https://github.com/orchestral/sidekick/tree/v1.1.3"
             },
-            "time": "2025-04-23T13:07:08+00:00"
+            "time": "2025-04-24T01:50:06+00:00"
         },
         {
             "name": "orchestra/testbench",
@@ -8734,16 +8734,16 @@
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v9.13.0",
+            "version": "v9.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "779d6ef911d221cc5301971af6fc466e6194ca16"
+                "reference": "c70abf563a9c027f33eb59b87b2bb16cccec88d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/779d6ef911d221cc5301971af6fc466e6194ca16",
-                "reference": "779d6ef911d221cc5301971af6fc466e6194ca16",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/c70abf563a9c027f33eb59b87b2bb16cccec88d5",
+                "reference": "c70abf563a9c027f33eb59b87b2bb16cccec88d5",
                 "shasum": ""
             },
             "require": {
@@ -8756,7 +8756,7 @@
             },
             "conflict": {
                 "brianium/paratest": "<7.3.0|>=8.0.0",
-                "laravel/framework": "<11.44.2|>=12.0.0",
+                "laravel/framework": "<11.44.3|>=12.0.0",
                 "laravel/serializable-closure": "<1.3.0|>=2.0.0 <2.0.3|>=3.0.0",
                 "nunomaduro/collision": "<8.0.0|>=9.0.0",
                 "orchestra/testbench-dusk": "<9.10.0|>=10.0.0",
@@ -8764,7 +8764,7 @@
             },
             "require-dev": {
                 "fakerphp/faker": "^1.24",
-                "laravel/framework": "^11.44.2",
+                "laravel/framework": "^11.44.3",
                 "laravel/pint": "^1.20",
                 "laravel/serializable-closure": "^1.3|^2.0.4",
                 "mockery/mockery": "^1.6.10",
@@ -8825,7 +8825,7 @@
                 "issues": "https://github.com/orchestral/testbench/issues",
                 "source": "https://github.com/orchestral/testbench-core"
             },
-            "time": "2025-04-06T06:13:34+00:00"
+            "time": "2025-04-23T14:52:00+00:00"
         },
         {
             "name": "orchestra/workbench",

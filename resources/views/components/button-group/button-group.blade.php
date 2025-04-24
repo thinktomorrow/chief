@@ -3,7 +3,19 @@
     'size' => 'base',
 ])
 
-<div x-cloak x-data="buttonGroup()" x-on:click="repositionTabMarker()" {{ $attributes }}>
+<div
+    x-cloak
+    x-data="buttonGroup()"
+    x-on:click="
+        (e) => {
+            Array.from($refs.buttons.children).forEach((button) => {
+                button.ariaSelected = e.target === button ? 'true' : 'false'
+            })
+            repositionTabMarker()
+        }
+    "
+    {{ $attributes }}
+>
     <div
         @class([
             'inline-block bg-grey-100',
