@@ -38,34 +38,6 @@
                             >
                                 Gebruik deze versie voor de {{ $name }} site
                             </x-chief::button>
-
-                            {{--
-                                <x-chief::button
-                                type="button"
-                                size="xs"
-                                variant="transparent"
-                                tabindex="-1"
-                                x-on:click="$dispatch('open-dialog', { 'id': 'activate-site-info-{{ $locale }}' })"
-                                >
-                                <x-chief::icon.information-circle />
-                                </x-chief::button>
-                                
-                                <x-chief::dialog.dropdown
-                                id="activate-site-info-{{ $locale }}"
-                                :offset="4"
-                                placement="bottom-center"
-                                >
-                                <div class="max-w-sm space-y-2 px-3 py-1.5">
-                                <p class="text-base/5 font-medium text-grey-700">Live zetten</p>
-                                
-                                <p class="text-sm text-grey-500">
-                                Wanneer je deze versie live zet, wordt ze onmiddellijk getoond op de
-                                {{ $name }} site. De versie die momenteel live staat, komt dan offline te
-                                staan.
-                                </p>
-                                </div>
-                                </x-chief::dialog.dropdown>
-                            --}}
                         @else
                             <div class="flex items-start gap-1">
                                 <span class="text-sm leading-6 text-grey-500">

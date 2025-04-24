@@ -12,6 +12,7 @@
         </x-chief::form.fieldset>
 
         <x-chief::form.fieldset>
+            <x-chief::form.label>Versie dupliceren</x-chief::form.label>
             <div data-slot="control" class="space-y-2">
                 <div class="flex items-start gap-2">
                     <x-chief::form.input.radio

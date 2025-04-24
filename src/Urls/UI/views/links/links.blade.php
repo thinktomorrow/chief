@@ -20,7 +20,7 @@
                     ])
                 >
                     <div class="flex items-start justify-between gap-2">
-                        <p class="text-sm/5 text-grey-700">{{ $link->site->name }}</p>
+                        <p class="text-sm/5 font-medium text-grey-500">{{ $link->site->name }}</p>
 
                         <x-chief::badge :variant="$link->stateVariant">
                             {{ $link->stateLabel }}
@@ -31,6 +31,7 @@
                         <div class="flex items-start justify-between gap-2">
                             <x-chief::link
                                 size="sm"
+                                variant="blue"
                                 href="{{ $link->url->url }}"
                                 title="{{ $link->url->slug }}"
                                 class="break-all"
