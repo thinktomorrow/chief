@@ -58,7 +58,7 @@ class PageTable extends Table
             ->filters([
                 ...((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) ? [SiteFilter::makeDefault($resourceKey)->primary()] : []),
                 TitleFilter::makeDefault(),
-                OnlineStateFilter::makeDefault()->tertiary(),
+                OnlineStateFilter::makeDefault()->secondary(),
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) use ($resourceKey) {

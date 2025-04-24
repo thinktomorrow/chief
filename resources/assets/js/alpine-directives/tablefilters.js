@@ -3,7 +3,6 @@ const tableFilters = () => ({
         this.$nextTick(() => {
             this.moveLastFilterToDrawer();
         });
-
         window.addEventListener('resize', () => {
             this.moveLastFilterToDrawer();
         });

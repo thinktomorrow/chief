@@ -50,10 +50,10 @@
             </div>
 
             <x-slot name="footer">
-                <x-chief::dialog.modal.footer class="!justify-start">
+                <x-chief::dialog.drawer.footer>
                     <x-chief::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief::button>
-                    <span>{{ $this->resultTotal }} resultaten gevonden</span>
-                </x-chief::dialog.modal.footer>
+                    <span class="my-2 leading-5 text-grey-500">{{ $this->resultTotal }} resultaten gevonden</span>
+                </x-chief::dialog.drawer.footer>
             </x-slot>
         </x-chief::dialog.drawer>
     </div>
