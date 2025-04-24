@@ -72,13 +72,11 @@ class CreateFragmentTest extends ChiefTestCase
         try {
             $fragmentId = app(CreateFragment::class)->handle(
                 SnippetStub::resourceKey(),
-                ['nl', 'fr'],
+                ['nl'],
                 [
                     'title' => 'bar',
                     'title_trans' => [
                         'nl' => '',
-                        'fr' => '',
-                        'en' => '',
                     ],
                 ],
                 []
@@ -88,8 +86,7 @@ class CreateFragmentTest extends ChiefTestCase
             $catched = true;
 
             $this->assertEquals([
-                'title_trans.nl' => ['The title_trans NL field is required.'],
-                'title_trans.fr' => ['The title_trans FR field is required.'],
+                'title_trans.nl' => ['The title_trans field is required.'],
             ], $e->errors());
         }
 
@@ -107,12 +104,11 @@ class CreateFragmentTest extends ChiefTestCase
 
         $fragmentId = app(CreateFragment::class)->handle(
             SnippetStub::resourceKey(),
-            ['nl', 'fr'],
+            ['nl'],
             [
                 'title' => 'bar',
                 'title_trans' => [
                     'nl' => 'title nl',
-                    'fr' => 'title fr',
                     'en' => 'title en',
                 ],
             ],
@@ -122,7 +118,6 @@ class CreateFragmentTest extends ChiefTestCase
         $model = FragmentModel::find($fragmentId);
 
         $this->assertEquals('title nl', $model->dynamic('title_trans', 'nl'));
-        $this->assertEquals('title fr', $model->dynamic('title_trans', 'fr'));
         $this->assertEquals('title en', $model->dynamic('title_trans', 'en'));
     }
 }
