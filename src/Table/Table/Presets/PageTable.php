@@ -17,7 +17,6 @@ use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\UnArchiveRowAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\VisitArchiveAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
-use Thinktomorrow\Chief\Table\Columns\ColumnDate;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Columns\Presets\LinksColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\Presets\SiteLinksColumnBadge;
@@ -68,10 +67,9 @@ class PageTable extends Table
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),
-                ColumnDate::make('updated_at')
-                    ->label('Aangepast')
-                    ->format('d/m/Y H:i'),
-
+                //                ColumnDate::make('updated_at')
+                //                    ->label('Aangepast')
+                //                    ->format('d/m/Y H:i'),
             ])
             ->sorters([
                 Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
