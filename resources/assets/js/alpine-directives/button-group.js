@@ -10,8 +10,6 @@ const ButtonGroup = () => ({
     },
     repositionTabMarker() {
         this.$nextTick(() => {
-            console.log('Repositioning tab marker ...');
-
             const tabElement = Array.from(this.$refs.buttons.children).find(
                 (tab) => tab.getAttribute('aria-selected') === 'true'
             );
