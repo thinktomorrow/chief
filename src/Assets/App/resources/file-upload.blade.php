@@ -1,4 +1,4 @@
-<x-chief::dialog.modal wired size="md" title="Voeg bestanden toe">
+<x-chief::dialog.modal wired size="sm" title="Voeg bestanden toe">
     @if ($isOpen)
         <!-- form prevents enter key in fields in this modal context to trigger submits of other form on the page -->
         <form
@@ -32,7 +32,7 @@
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
                 @if ($this->countUploadedOrSelectedFiles() < 1)
-                    <x-chief::button variant="grey" type="submit" form="file-upload-form-{{ $this->getId() }}" disabled>
+                    <x-chief::button variant="blue" type="submit" form="file-upload-form-{{ $this->getId() }}" disabled>
                         Voeg
                         {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
                         toe

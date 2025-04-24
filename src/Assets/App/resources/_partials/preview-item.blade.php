@@ -2,7 +2,7 @@
     use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
 @endphp
 
-<div wire:key="{{ $file->id }}" wire:sortable.item="{{ $file->id }}" class="@container relative">
+<div wire:key="{{ $file->id }}" wire:sortable.item="{{ $file->id }}" class="@container relative bg-white">
     {{-- File upload progress bar --}}
     @if ($file->isUploading && isset($this->findUploadFile($file->id)['progress']) && $this->findUploadFile($file->id)['progress'] <= 100)
         <div class="absolute inset-0">
@@ -84,7 +84,7 @@
                     </x-chief::button>
                 @endif
 
-                <x-chief::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="outline-white">
+                <x-chief::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="outline-red">
                     <x-chief::icon.delete />
                 </x-chief::button>
 

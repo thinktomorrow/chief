@@ -16,7 +16,7 @@
                 class="hidden"
             />
 
-            <x-chief::button for="{{ $getFieldId() }}" variant="grey" size="sm">
+            <x-chief::button for="{{ $getFieldId() }}" variant="outline-white" size="sm">
                 <x-chief::icon.upload />
                 <span>Upload een nieuw bestand</span>
             </x-chief::button>
@@ -24,14 +24,14 @@
     @endif
 
     @if ($allowToChooseFiles())
-        <x-chief::button wire:click="openFilesChoose" variant="grey" size="sm">
+        <x-chief::button wire:click="openFilesChoose" variant="outline-white" size="sm">
             <x-chief::icon.plus-sign />
             <span>Kies uit de mediabibliotheek</span>
         </x-chief::button>
     @endif
 
     @if ($allowToChooseExternalFiles())
-        <x-chief::button wire:click="openFilesChooseExternal" variant="grey" size="sm">
+        <x-chief::button wire:click="openFilesChooseExternal" variant="outline-white" size="sm">
             <x-chief::icon.link />
             <span>Link een extern bestand</span>
         </x-chief::button>

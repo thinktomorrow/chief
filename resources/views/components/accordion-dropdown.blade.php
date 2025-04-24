@@ -10,7 +10,7 @@
         accordionDropdownIsCollapsible: {{ $collapsible ? 'true' : 'false' }},
         accordionDropdownIsOpen: {{ $isOpen ? 'true' : 'false' }},
     }"
-    {{ $attributes->class('divide-y divide-grey-100 rounded-xl border border-grey-100 bg-grey-50 shadow-sm') }}
+    {{ $attributes->class('divide-y divide-grey-100 rounded-xl bg-grey-50') }}
 >
     <div class="flex items-start justify-between gap-2 px-4 py-3.5">
         <div class="mt-[0.1875rem] space-y-1.5">

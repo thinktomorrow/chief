@@ -5,10 +5,11 @@
     x-sortable
     x-sortable-group="{{ 'group-' . $elementId }}"
     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-    class="divide-y divide-grey-100 rounded-xl border border-grey-100"
+    class="rounded-xl border border-grey-200 [&>[data-slot=repeat-item]+[data-slot=repeat-item]]:border-t [&>[data-slot=repeat-item]+[data-slot=repeat-item]]:border-grey-200"
 >
     @foreach ($form as $index => $values)
         <div
+            data-slot="repeat-item"
             wire:key="{{ $elementId . '-' . $index }}"
             x-sortable-item="{{ $index }}"
             class="flex items-start gap-3 p-4"
@@ -17,7 +18,7 @@
                 x-sortable-handle
                 tabindex="-1"
                 size="sm"
-                variant="outline-white"
+                variant="grey"
                 title="herschikken"
                 class="shrink-0"
             >
