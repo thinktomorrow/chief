@@ -72,7 +72,9 @@ class File extends Component implements Field, HasComponents
 
     public function getLabel(): ?string
     {
-        $label = parent::getLabel();
+        if (! $label = parent::getLabel()) {
+            return null;
+        }
 
         if ($this->getLocales() === [ChiefSites::primaryLocale()]) {
             return $label.' (voor alle talen)';

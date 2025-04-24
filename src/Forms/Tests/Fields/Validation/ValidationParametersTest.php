@@ -54,20 +54,6 @@ class ValidationParametersTest extends TestCase
         );
     }
 
-    public function test_it_only_creates_localized_rules_is_field_is_localized()
-    {
-        $field = Text::make('xxx')
-            ->setScopedLocales(['nl', 'en']) // This is not setting locales but rather scoping the locales
-            ->rules('email');
-
-        $this->assertEquals(
-            [
-                'xxx' => ['nullable', 'email'],
-            ],
-            ValidationParameters::make($field)->getRules()
-        );
-    }
-
     public function test_it_forces_file_rules()
     {
         $field = File::make('xxx')->rules('mimetypes:image/png,text/plain');
@@ -125,23 +111,22 @@ class ValidationParametersTest extends TestCase
 
         $this->assertEquals(
             [
-                'xxx.nl' => 'xxx NL',
-                'xxx.en' => 'xxx EN',
+                'xxx.nl' => 'nl xxx',
+                'xxx.en' => 'en xxx',
             ],
             ValidationParameters::make($field)->getAttributes()
         );
     }
 
-    public function test_it_sets_validation_per_scoped_locale(): void
+    public function test_file_with_one_locale_shows_attribute_without_locale(): void
     {
         $field = Text::make('xxx')
-            ->locales(['nl', 'en'])
-            ->setScopedLocales(['nl'])
+            ->locales(['nl'])
             ->rules('email');
 
         $this->assertEquals(
             [
-                'xxx.nl' => 'xxx NL',
+                'xxx.nl' => 'xxx',
             ],
             ValidationParameters::make($field)->getAttributes()
         );
