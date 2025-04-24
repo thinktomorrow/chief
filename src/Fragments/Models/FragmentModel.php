@@ -86,9 +86,13 @@ final class FragmentModel extends Model implements FragmentResource, HasAsset, R
         return (bool) $this->getMeta('shared');
     }
 
+    /**
+     * TODO: In the future, every model should have a $model->bookmark property, which can be changed by the user.
+     * For now, we'll use a default bookmark based on the fragment id.
+     */
     public function getBookmark(): ?string
     {
-        return $this->bookmark ?? null;
+        return 'bookmark-'.$this->id;
     }
 
     private function getMeta(string $key)

@@ -19,7 +19,7 @@
         <div class="pointer-events-none relative flex h-full w-full animate-slide-in-nav justify-end p-2">
             <div
                 @class([
-                    'pointer-events-auto flex w-full flex-col rounded-xl bg-white/95 shadow-md ring-1 ring-grey-100 backdrop-blur-md',
+                    'pointer-events-auto flex w-full flex-col rounded-xl bg-white/[0.98] shadow-md ring-1 ring-grey-100 backdrop-blur-md',
                     'xs:w-sm' => $size === 'sm',
                     'sm:w-md' => $size === 'md',
                     'md:w-lg' => $size === 'lg',
