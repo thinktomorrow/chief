@@ -26,7 +26,10 @@ return [
      *                      All translations use this locale by default and user can opt to occasionally add own locale values when needed.
      *                      This locale is used as a fallback when a field (or asset) value is not available in the locale.
      *                      Leave null if you don't want to use a fallback strategy.
-     *
+     * - asset_fallback_locale The locale to fall back to when an asset value is not available in the locale
+     * - code               language format based on the IETF BCP 47 format language[-REGION] where language is two-letter code with
+     *                      optional region code in uppercase. This is used for the hreflang tags.
+     *                      e.g. en, fr, nl, en-US, fr-BE
      * - name               The name of the site used throughout the admin
      * - short_name         A short name used in admin select lists or tabs.
      * - url                The base url of the site.
@@ -44,6 +47,7 @@ return [
             'asset_fallback_locale' => null,
             'name' => 'Vlaanderen (nl)',
             'short_name' => 'be',
+            'code' => 'nl-BE',
             'url' => env('CHIEF_SITES_PRIMARY_URL', env('APP_URL', 'http://localhost')),
             'active' => true,
             'primary' => true,
@@ -54,6 +58,7 @@ return [
             'fallback_locale' => null,
             'asset_fallback_locale' => 'nl',
             'short_name' => 'fr',
+            'code' => 'fr-BE',
             'url' => env('CHIEF_SITES_URL_FR', env('APP_URL', 'http://localhost')),
             'active' => false,
         ],
@@ -63,6 +68,7 @@ return [
             'asset_fallback_locale' => 'nl',
             'name' => 'Brits',
             'short_name' => 'english',
+            'code' => 'en-GB',
             'url' => env('CHIEF_SITES_URL_EN', env('APP_URL', 'http://localhost')),
             'active' => false,
         ],
