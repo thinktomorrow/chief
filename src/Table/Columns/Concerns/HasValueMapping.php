@@ -67,8 +67,8 @@ trait HasValueMapping
         });
 
         return $this->mapVariant([
-            'gepubliceerd' => 'green',
-            'draft' => 'red',
+            'gepubliceerd' => 'blue',
+            'draft' => 'grey',
             'gearchiveerd' => 'red',
             'link ontbreekt' => 'orange',
         ]);
