@@ -14,7 +14,7 @@
                     variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
                     size="sm"
                 >
-                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}
+                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->name }}
                 </x-chief::badge>
             @endforeach
         @endif

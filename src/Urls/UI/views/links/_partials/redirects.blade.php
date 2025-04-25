@@ -1,9 +1,11 @@
-@foreach ($this->getRedirects()->groupBy(fn($siteLink) => $siteLink->site->locale) as $siteId => $redirectsPerSite)
-    @if(count($redirectsPerSite) > 0)
-        <x-chief::callout :title="'Redirects voor ' . $redirectsPerSite->first()->site->name"
-                          wire:key="redirects-{{ $siteId }}"
-                          variant="outline-white">
-            @foreach($redirectsPerSite as $redirect)
+@foreach ($this->getRedirects()->groupBy(fn ($siteLink) => $siteLink->site->locale) as $siteId => $redirectsPerSite)
+    @if (count($redirectsPerSite) > 0)
+        <x-chief::callout
+            :title="'Redirects voor ' . $redirectsPerSite->first()->site->name"
+            wire:key="redirects-{{ $siteId }}"
+            variant="outline-white"
+        >
+            @foreach ($redirectsPerSite as $redirect)
                 <div class="space-y-3 border-t border-grey-100 p-3">
                     <div class="flex items-start justify-between gap-2">
                         <div class="mt-[0.1875rem]">
@@ -12,7 +14,7 @@
                             </p>
                         </div>
 
-                        <div class="flex flex items-center gap-2">
+                        <div class="flex items-center gap-2">
                             @if ($this->redirectQueuedForDeletion($redirect->url->id))
                                 <x-chief::button
                                     x-on:click="$wire.undoDeleteRedirect('{{ $redirect->url->id }}')"

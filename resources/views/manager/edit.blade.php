@@ -25,18 +25,26 @@
             @endif
 
             @if ($hasSites)
-                <livewire:chief-wire::model-site-toggle :model="$model" />
+                <div class="flex justify-between">
+                    <livewire:chief-wire::site-selection :model="$model" />
+
+                    @if ($hasStates)
+                        @foreach ($model->getStateKeys() as $stateKey)
+                            <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                        @endforeach
+                    @endif
+                </div>
+            @else
+                <x-slot name="actions">
+                    @if ($hasStates)
+                        @foreach ($model->getStateKeys() as $stateKey)
+                            <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                        @endforeach
+                    @endif
+
+                    {{-- @include('chief::manager._partials.edit-actions') --}}
+                </x-slot>
             @endif
-
-            <x-slot name="actions">
-                @if ($hasStates)
-                    @foreach ($model->getStateKeys() as $stateKey)
-                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
-                    @endforeach
-                @endif
-
-                {{-- @include('chief::manager._partials.edit-actions') --}}
-            </x-slot>
         </x-chief::page.header>
     </x-slot>
 
@@ -58,9 +66,12 @@
                 {{ $component->displayAsTransparentForm()->render() }}
             @endforeach
 
-            @if ($hasSites)
+            {{--
+                @if ($hasSites)
+                <livewire:chief-wire::model-site-toggle :model="$model" />
                 <livewire:chief-wire::site-selection :model="$model" />
-            @endif
+                @endif
+            --}}
 
             @if ($hasSiteLinks)
                 <livewire:chief-wire::links :model="$model" />

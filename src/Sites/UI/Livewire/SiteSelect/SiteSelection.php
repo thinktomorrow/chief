@@ -13,10 +13,13 @@ use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 
 class SiteSelection extends Component
 {
+    public HasAllowedSites&ReferableModel $model;
+
     public string $modelReference;
 
     public function mount(HasAllowedSites&ReferableModel $model)
     {
+        $this->model = $model;
         $this->modelReference = $model->modelReference()->get();
     }
 

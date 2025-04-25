@@ -30,11 +30,7 @@
                 </div>
             @endif
 
-            @if ($slot->isNotEmpty())
-                <div class="prose prose-dark prose-spacing max-w-2xl">
-                    {{ $slot }}
-                </div>
-            @endif
+            {{ $slot }}
         </div>
     @endif
 </div>
