@@ -27,7 +27,9 @@
                 @endif
             </x-slot>
 
-            {!! $resource->getIndexDescription() !!}
+            <div class="prose prose-dark prose-spacing max-w-2xl">
+                {!! $resource->getIndexDescription() !!}
+            </div>
         </x-chief::page.header>
     </x-slot>
 

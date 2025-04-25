@@ -18,7 +18,7 @@
     };
 @endphp
 
-<div data-slot="form-preview" @class(['@container' => $label || $description])>
+<div {{ $attributes }} data-slot="form-preview" @class(['@container' => $label || $description])>
     <div @class([
         'flex flex-wrap items-start gap-x-4 gap-y-1',
         $containerClass,
