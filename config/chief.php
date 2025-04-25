@@ -27,7 +27,7 @@ return [
      *                      This locale is used as a fallback when a field (or asset) value is not available in the locale.
      *                      Leave null if you don't want to use a fallback strategy.
      * - asset_fallback_locale The locale to fall back to when an asset value is not available in the locale
-     * - code               language format based on the IETF BCP 47 format language[-REGION] where language is two-letter code with
+     * - code               locale format based on the IETF BCP 47 format language[-REGION] where language is two-letter code with
      *                      optional region code in uppercase. This is used for the hreflang tags.
      *                      e.g. en, fr, nl, en-US, fr-BE
      * - name               The name of the site used throughout the admin
@@ -47,6 +47,7 @@ return [
             'asset_fallback_locale' => null,
             'name' => 'Vlaanderen (nl)',
             'short_name' => 'be',
+            'adjective' => 'Vlaamse',
             'code' => 'nl-BE',
             'url' => env('CHIEF_SITES_PRIMARY_URL', env('APP_URL', 'http://localhost')),
             'active' => true,

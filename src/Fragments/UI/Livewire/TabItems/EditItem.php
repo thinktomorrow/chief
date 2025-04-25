@@ -27,20 +27,21 @@ abstract class EditItem extends Component
     {
         return [
             'open-edit-item' => 'open',
-            'allowed-sites-updated' => 'onAllowedSitesUpdated',
+            //            'allowed-sites-updated' => 'onAllowedSitesUpdated',
         ];
     }
 
-    public function onAllowedSitesUpdated(array $allowedSites): void
-    {
-        $this->locales = $allowedSites;
-    }
+    //    public function onAllowedSitesUpdated(array $allowedSites): void
+    //    {
+    //        $this->locales = $allowedSites;
+    //    }
 
     abstract protected function getItemById(string $itemId): TabItem;
 
     public function open($values = [])
     {
         $this->item = $this->getItemById($values['itemId']);
+        $this->locales = $this->item->getAllowedSites();
 
         $this->setDeletionFlags();
 
@@ -74,7 +75,7 @@ abstract class EditItem extends Component
 
     public function close()
     {
-        $this->reset(['form', 'item', 'cannotBeDeleted', 'cannotBeDeletedBecauseOfLastLeft', 'cannotBeDeletedBecauseOfConnectedToSite']);
+        $this->reset(['form', 'locales', 'item', 'cannotBeDeleted', 'cannotBeDeletedBecauseOfLastLeft', 'cannotBeDeletedBecauseOfConnectedToSite']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -121,6 +122,6 @@ abstract class EditItem extends Component
 
     public function getAvailableLocales(): array
     {
-        return ChiefSites::all()->filterByLocales($this->locales)->toCollection()->pluck('shortName', 'locale')->all();
+        return ChiefSites::all()->filterByLocales($this->locales)->getLocales();
     }
 }

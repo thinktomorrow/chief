@@ -12,6 +12,7 @@ readonly class ChiefSite
         public bool $isPrimary,
         public string $name,
         public string $shortName,
+        public string $adjective,
         public ?string $code,
         public ?string $url,
     ) {}
@@ -30,6 +31,7 @@ readonly class ChiefSite
             $site['primary'] ?? false,
             $site['name'] ?? $site['locale'],
             $site['short_name'] ?? ($site['name'] ?? $site['locale']),
+            $site['adjective'] ?? ($site['name'] ?? $site['locale']),
             $site['code'] ?? null,
             $site['url'] ?? null,
         );
@@ -45,6 +47,7 @@ readonly class ChiefSite
             'primary' => $this->isPrimary,
             'name' => $this->name,
             'short_name' => $this->shortName,
+            'adjective' => $this->adjective,
             'code' => $this->code,
             'url' => $this->url,
         ];

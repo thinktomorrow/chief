@@ -65,19 +65,28 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return $this->getPrimarySite()->locale;
     }
 
-    public static function shortName(string $site): string
-    {
-        return self::all()->find($site)->shortName;
-    }
-
     public static function name(string $site): string
     {
         return self::all()->find($site)->name;
     }
 
+    public static function shortName(string $site): string
+    {
+        return self::all()->find($site)->shortName;
+    }
+
+    /**
+     * The locale format based on the IETF BCP 47 format language[-REGION]
+     * e.g. nl, fr, nl-BE, fr-BE
+     */
     public static function code(string $site): ?string
     {
         return self::all()->find($site)->code;
+    }
+
+    public static function adjective(string $site): string
+    {
+        return self::all()->find($site)->adjective;
     }
 
     public function getNames(): array

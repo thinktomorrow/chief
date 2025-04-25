@@ -44,7 +44,7 @@ class AddContext extends AddItem
 
     protected function createOnSave(): string
     {
-        if ($this->form['duplicate_from'] === '1') {
+        if (isset($this->form['duplicate_from']) && $this->form['duplicate_from'] === '1') {
             $sourceContextId = $this->form['duplicate_from_item_id'] ?? $this->getItems()->first()?->getId();
 
             $contextId = app(ContextApplication::class)->duplicate(new DuplicateContext(

@@ -55,13 +55,13 @@ abstract class AddItem extends Component
 
     public function save()
     {
-        //        $this->validate([
-        //            'form.locales' => 'required|array|min:1',
-        //            //            'form.title' => 'required',
-        //        ], [
-        //            'form.locales.required' => 'Voeg minstens één site toe waarvoor je de inhoud wilt voorzien.',
-        //            //            'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
-        //        ]);
+        $this->validate([
+            'form.locales' => 'required|array|min:1',
+            //            'form.title' => 'required',
+        ], [
+            'form.locales.required' => 'Voeg minstens één site toe waarvoor je de inhoud wilt voorzien.',
+            //            'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
+        ]);
 
         $itemId = $this->createOnSave();
 
@@ -76,6 +76,6 @@ abstract class AddItem extends Component
 
     public function getAvailableLocales(): array
     {
-        return ChiefSites::all()->filterByLocales($this->locales)->toCollection()->pluck('name', 'locale')->all();
+        return ChiefSites::all()->filterByLocales($this->locales)->getLocales();
     }
 }
