@@ -38,7 +38,7 @@ class UpdateFragmentTest extends ChiefTestCase
         app(UpdateFragment::class)->handle(
             $context->id,
             $fragment->getFragmentId(),
-            ['nl', 'fr'],
+            ['nl', 'en'],
             ['title' => 'bar'],
             []
         );
@@ -65,10 +65,10 @@ class UpdateFragmentTest extends ChiefTestCase
         app(UpdateFragment::class)->handle(
             $context->id,
             $fragment->getFragmentId(),
-            ['nl', 'fr'],
+            ['nl', 'en'],
             ['title_trans' => [
                 'nl' => 'nl titel',
-                'fr' => 'fr titre',
+                'en' => 'en title',
             ]],
             []
         );
@@ -76,7 +76,7 @@ class UpdateFragmentTest extends ChiefTestCase
         $model = FragmentModel::find($fragment->getFragmentId());
 
         $this->assertEquals('nl titel', $model->dynamic('title_trans', 'nl'));
-        $this->assertEquals('fr titre', $model->dynamic('title_trans', 'fr'));
+        $this->assertEquals('en title', $model->dynamic('title_trans', 'en'));
     }
 
     public function test_it_only_validates_fragment_scoped_locales()
@@ -99,10 +99,9 @@ class UpdateFragmentTest extends ChiefTestCase
             app(UpdateFragment::class)->handle(
                 $context->id,
                 $fragment->getFragmentId(),
-                ['nl', 'fr'],
+                ['nl', 'en'],
                 ['title_trans' => [
                     'nl' => '',
-                    'fr' => '',
                     'en' => '',
                 ]],
                 []
@@ -112,8 +111,8 @@ class UpdateFragmentTest extends ChiefTestCase
             $catched = true;
 
             $this->assertEquals([
-                'title_trans.nl' => ['The title_trans NL field is required.'],
-                'title_trans.fr' => ['The title_trans FR field is required.'],
+                'title_trans.nl' => ['The nl title_trans field is required.'],
+                'title_trans.en' => ['The en title_trans field is required.'],
             ], $e->errors());
         }
 
@@ -138,7 +137,7 @@ class UpdateFragmentTest extends ChiefTestCase
         app(UpdateFragment::class)->handle(
             $context->id,
             $fragment->getFragmentId(),
-            ['nl', 'fr'],
+            ['nl', 'en'],
             ['title_trans' => [
                 'nl' => 'title nl',
                 'fr' => 'title fr',
@@ -171,10 +170,10 @@ class UpdateFragmentTest extends ChiefTestCase
         app(UpdateFragment::class)->handle(
             $context->id,
             $fragment->getFragmentId(),
-            ['nl', 'fr'],
+            ['nl', 'en'],
             ['title_trans' => [
                 'nl' => 'title nl',
-                'fr' => 'title fr',
+                'en' => 'title en',
             ]],
             []
         );
@@ -182,7 +181,7 @@ class UpdateFragmentTest extends ChiefTestCase
         $model = FragmentModel::find($fragment->getFragmentId());
 
         $this->assertEquals('title nl', $model->dynamic('title_trans', 'nl'));
-        $this->assertEquals('title fr', $model->dynamic('title_trans', 'fr'));
-        $this->assertEquals('old title en', $model->dynamic('title_trans', 'en'));
+        $this->assertEquals('title en', $model->dynamic('title_trans', 'en'));
+        $this->assertEquals('vieux titre fr', $model->dynamic('title_trans', 'fr'));
     }
 }
