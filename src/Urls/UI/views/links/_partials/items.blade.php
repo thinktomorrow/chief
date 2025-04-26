@@ -84,7 +84,7 @@
                     </x-chief::form.fieldset>
 
                     @php
-                        $redirectsPerSiteCount = count($redirects->get($link->locale));
+                        $redirectsPerSiteCount = $redirects->get($link->locale) ? count($redirects->get($link->locale)) : 0;
                     @endphp
 
                     @if ($redirectsPerSiteCount > 0)
