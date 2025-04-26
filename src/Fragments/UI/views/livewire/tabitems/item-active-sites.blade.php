@@ -11,10 +11,10 @@
                                 <x-chief::icon.link class="size-4 text-grey-500" />
                                 <div class="flex flex-col text-sm text-grey-500">
                                     <span class="body-dark font-medium">
-                                        Deze versie wordt getoond op de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }} site.
+                                        {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($locale) }}
                                     </span>
                                     <span>
-                                        Om dit te wijzigen wijs je een andere versie toe aan de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }} site.
+                                        Deze versie toont op de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }} site.  Om een andere versie te tonen, activeer in die versie de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }} site.
                                     </span>
                                 </div>
                             </div>
@@ -23,17 +23,21 @@
                             <x-chief::button
                                 type="button"
                                 size="xs"
-                                variant="outline-white"
+                                variant="blue"
                                 tabindex="-1"
                                 x-on:click="$wire.addActiveSite('{{ $locale }}')"
                             >
-                                Toon deze versie op de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }}
+                                <x-chief::icon.link />
+                                <span>
+                                    Toon deze versie op de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }}
                                 site
+                                </span>
+
                             </x-chief::button>
                         @else
                             <div class="flex items-start gap-1">
                                 <span class="text-sm leading-6 text-grey-500">
-                                    Deze versie zal gebruikt worden op de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }} site.
+                                    Deze versie zal na bewaren tonen op de {{ \Thinktomorrow\Chief\Sites\ChiefSites::adjective($locale) }} site.
                                 </span>
 
                                 <x-chief::button
