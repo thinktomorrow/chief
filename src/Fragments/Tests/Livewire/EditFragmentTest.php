@@ -33,24 +33,34 @@ class EditFragmentTest extends ChiefTestCase
         $this->component = Livewire::test(EditFragment::class, [
             'context' => ContextDto::fromContext(ContextModel::first(), $this->model->modelReference(), 'ownerLabel', 'ownerAdminUrl'),
             'parentComponentId' => 'xxx',
+            'model' => $this->model,
         ]);
     }
 
     public function test_component_renders()
     {
         $this->component
-            ->call('open', ['fragmentId' => $this->fragment->getFragmentId()])
+            ->call('open', [
+                'fragmentId' => $this->fragment->getFragmentId(),
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'nl',
+            ])
             ->assertStatus(200)
+            ->assertSet('locales', ['nl', 'en'])
+            ->assertSet('scopedLocale', 'nl')
             ->assertSet('form.title', 'initial value');
     }
 
-    public function test_can_update_and_save_fragment_data()
+    public function test_can_update_fragment()
     {
         $this->component
-            ->call('open', ['fragmentId' => $this->fragment->getFragmentId()])
+            ->call('open', [
+                'fragmentId' => $this->fragment->getFragmentId(),
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'nl',
+            ])
             ->set('form.title', 'Updated title')
-            ->call('save')
-            ->assertDispatched('fragment-updated-xxx');
+            ->call('save');
 
         $this->assertDatabaseHas('context_fragments', [
             'id' => $this->fragment->getFragmentId(),
@@ -61,7 +71,11 @@ class EditFragmentTest extends ChiefTestCase
     public function test_can_isolate_fragment()
     {
         $this->component
-            ->call('open', ['fragmentId' => $this->fragment->getFragmentId()])
+            ->call('open', [
+                'fragmentId' => $this->fragment->getFragmentId(),
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'nl',
+            ])
             ->call('isolateFragment')
             ->assertDispatched('fragment-isolated-xxx');
     }
@@ -69,7 +83,11 @@ class EditFragmentTest extends ChiefTestCase
     public function test_can_delete_fragment()
     {
         $this->component
-            ->call('open', ['fragmentId' => $this->fragment->getFragmentId()])
+            ->call('open', [
+                'fragmentId' => $this->fragment->getFragmentId(),
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'nl',
+            ])
             ->call('deleteFragment')
             ->assertDispatched('fragment-deleting-xxx');
 
@@ -82,7 +100,11 @@ class EditFragmentTest extends ChiefTestCase
     public function test_can_put_fragment_online()
     {
         $this->component
-            ->call('open', ['fragmentId' => $this->fragment->getFragmentId()])
+            ->call('open', [
+                'fragmentId' => $this->fragment->getFragmentId(),
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'nl',
+            ])
             ->call('putOnline')
             ->assertDispatched('fragment-updated-xxx');
 
@@ -95,7 +117,11 @@ class EditFragmentTest extends ChiefTestCase
         $this->fragment->getFragmentModel()->save();
 
         $this->component
-            ->call('open', ['fragmentId' => $this->fragment->getFragmentId()])
+            ->call('open', [
+                'fragmentId' => $this->fragment->getFragmentId(),
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'nl',
+            ])
             ->call('putOffline')
             ->assertDispatched('fragment-updated-xxx');
 

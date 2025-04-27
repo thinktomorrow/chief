@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\App\ContextActions;
 
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
-final class SyncAllowedSites
+final class SyncSites
 {
     private ModelReference $modelReference;
 

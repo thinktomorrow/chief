@@ -41,6 +41,7 @@ abstract class EditItem extends Component
     public function open($values = [])
     {
         $this->item = $this->getItemById($values['itemId']);
+
         $this->locales = $this->item->getAllowedSites();
 
         $this->setDeletionFlags();

@@ -55,11 +55,13 @@ class AddFragmentTest extends ChiefTestCase
     {
         $component = $this->mountComponent();
 
-        $component->call('open', ['parentId' => null, 'order' => 1])
+        $component->call('open', ['locales' => ['nl', 'en'], 'scopedLocale' => 'en', 'parentId' => null, 'order' => 1])
             ->assertSet('isOpen', true);
 
         $component->call('close')
             ->assertSet('isOpen', false)
+            ->assertSet('locales', ['nl', 'en'])
+            ->assertSet('scopedLocale', 'en')
             ->assertSet('parentId', null)
             ->assertSet('insertAfterOrder', null);
     }

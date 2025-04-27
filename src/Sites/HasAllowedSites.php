@@ -14,6 +14,10 @@ interface HasAllowedSites
 
     public function setAllowedSites(array $locales): void;
 
+    public function addAllowedSite(string $site): void;
+
+    public function removeAllowedSite(string $site): void;
+
     public function scopeByAllowedSite(Builder $query, string $site): void;
 
     public function scopeByAllowedSiteOrNone(Builder $query, string $site): void;

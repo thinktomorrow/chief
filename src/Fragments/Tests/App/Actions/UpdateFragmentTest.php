@@ -21,6 +21,12 @@ class UpdateFragmentTest extends ChiefTestCase
 
         chiefRegister()->fragment(SnippetStub::class);
         $this->owner = $this->setupAndCreateArticle();
+
+        SnippetStub::setFieldsDefinition(function () {
+            return [
+                Text::make('title_trans')->locales()->required(),
+            ];
+        });
     }
 
     public function test_it_can_update_fragment()
@@ -50,12 +56,6 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_can_update_fragment_with_localized_fields()
     {
-        SnippetStub::setFieldsDefinition(function () {
-            return [
-                Text::make('title_trans')->locales()->required(),
-            ];
-        });
-
         [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 0, ['title_trans' => [
             'nl' => 'oude titel nl',
             'fr' => 'vieux titre fr',
@@ -81,11 +81,6 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_only_validates_fragment_scoped_locales()
     {
-        SnippetStub::setFieldsDefinition(function () {
-            return [
-                Text::make('title_trans')->locales()->required(),
-            ];
-        });
 
         [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 0, ['title_trans' => [
             'nl' => 'oude titel nl',
@@ -122,11 +117,6 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_saves_scoped_locales_but_still_saves_other_locales()
     {
-        SnippetStub::setFieldsDefinition(function () {
-            return [
-                Text::make('title_trans')->locales()->required(),
-            ];
-        });
 
         [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 0, ['title_trans' => [
             'nl' => 'oude titel nl',
@@ -155,11 +145,6 @@ class UpdateFragmentTest extends ChiefTestCase
 
     public function test_it_keeps_existing_locale_values_intact()
     {
-        SnippetStub::setFieldsDefinition(function () {
-            return [
-                Text::make('title_trans')->locales()->required(),
-            ];
-        });
 
         [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 0, ['title_trans' => [
             'nl' => 'oude titel nl',

@@ -25,6 +25,16 @@ trait HasAllowedSitesDefaults
         $this->allowed_sites = $allowed_sites;
     }
 
+    public function addAllowedSite(string $site): void
+    {
+        $this->allowed_sites = array_unique(array_merge($this->allowed_sites ?? [], [$site]));
+    }
+
+    public function removeAllowedSite(string $site): void
+    {
+        $this->allowed_sites = array_values(array_diff($this->allowed_sites ?? [], [$site]));
+    }
+
     public function scopeByAllowedSite(Builder $query, string $site): void
     {
         $query->whereJsonContains($this->getTable().'.allowed_sites', $site);

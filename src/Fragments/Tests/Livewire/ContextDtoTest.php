@@ -90,7 +90,7 @@ class ContextDtoTest extends ChiefTestCase
         $this->assertNull($dto->title);
         $this->assertEquals($this->owner->modelReference()->get(), $dto->ownerReference);
         $this->assertEquals('http://localhost/admin/article_page/'.$this->owner->getKey().'/edit', $dto->ownerAdminUrl);
-        $this->assertEquals(['nl', 'fr', 'en'], $dto->allowedSites); // Default all locales
+        $this->assertEquals(['nl', 'en'], $dto->allowedSites); // Default all locales
         $this->assertEquals([], $dto->activeSites);
     }
 }

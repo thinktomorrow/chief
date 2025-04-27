@@ -37,6 +37,8 @@ class ContextTest extends ChiefTestCase
                 'ownerLabel',
                 'ownerAdminUrl'
             ),
+            'scopedLocale' => 'nl',
+            'model' => $this->model,
         ]);
 
         $this->componentId = $component->instance()->getId();

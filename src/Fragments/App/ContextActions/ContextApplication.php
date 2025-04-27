@@ -97,12 +97,22 @@ class ContextApplication
         return $targetContext->id;
     }
 
-    public function syncAllowedSites(SyncAllowedSites $command): void
+    /**
+     * If the context owner changed allowed sites selection, we remove
+     * any sites on the contexts that should no longer be present.
+     */
+    public function syncSites(SyncSites $command): void
     {
         $this->contextRepository
             ->getByOwner($command->getModelReference())
-            ->each(fn ($context) => $context->setAllowedSites($command->getAllowedSites()))
-            ->each(fn ($context) => $context->save())
+            ->each(function ($context) use ($command) {
+
+                $removedSites = array_diff($context->getAllowedSites(), $command->getAllowedSites());
+
+                foreach ($removedSites as $removedSite) {
+                    $context->removeAllowedSite($removedSite);
+                }
+            })
             ->each(function ($context) use ($command) {
 
                 $removedSites = array_diff($context->getActiveSites(), $command->getAllowedSites());
@@ -110,9 +120,8 @@ class ContextApplication
                 foreach ($removedSites as $removedSite) {
                     $context->removeActiveSite($removedSite);
                 }
-
-                $context->save();
-            });
+            })
+            ->each(fn ($context) => $context->save());
     }
 
     /**
