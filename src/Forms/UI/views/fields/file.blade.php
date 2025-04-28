@@ -14,7 +14,7 @@
         wire:key="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         parent-component-id="{{ $insideComponent ? $this->getId() : null }}"
-        :model-reference="$getModel()?->modelReference()->get()"
+        :model-reference="$getModel()->modelReference()->get()"
         :field-key="$field->getKey()"
         :locale="$locale"
         :field-name="$field->getName($locale)"

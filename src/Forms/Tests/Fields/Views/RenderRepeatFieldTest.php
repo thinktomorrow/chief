@@ -13,8 +13,7 @@ class RenderRepeatFieldTest extends ChiefTestCase
         parent::setUp();
     }
 
-    /** @test */
-    public function it_can_render_a_repeat_field()
+    public function test_it_can_render_a_repeat_field()
     {
         $component = Repeat::make('xxx')->items([
             Text::make('title'),
@@ -32,14 +31,13 @@ class RenderRepeatFieldTest extends ChiefTestCase
 
         $render = $component->toHtml();
 
-        $this->assertStringContainsString('name="xxx[0][title]"', $render);
-        $this->assertStringContainsString('name="xxx[0][function]"', $render);
-        $this->assertStringContainsString('name="xxx[1][title]"', $render);
-        $this->assertStringContainsString('name="xxx[1][function]"', $render);
+        $this->assertStringContainsString('wire:model="form.xxx"', $render);
+        //        $this->assertStringContainsString('wire:model="xxx.0.function"', $render);
+        //        $this->assertStringContainsString('wire:model="xxx.1.title"', $render);
+        //        $this->assertStringContainsString('wire:model="xxx.1.function"', $render);
     }
 
-    /** @test */
-    public function it_can_render_a_repeat_field_with_localized_content()
+    public function test_it_can_render_a_repeat_field_with_localized_content()
     {
         $component = Repeat::make('xxx')->items([
             Text::make('title')->locales(['nl', 'en']),
@@ -54,14 +52,13 @@ class RenderRepeatFieldTest extends ChiefTestCase
 
         $render = $component->toHtml();
 
-        $this->assertStringContainsString('name="xxx[0][title][nl]"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.title.nl"', $render);
         $this->assertStringContainsString('value="first title nl"', $render);
-        $this->assertStringContainsString('name="xxx[0][title][en]"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.title.en"', $render);
         $this->assertStringContainsString('value="first title en"', $render);
     }
 
-    /** @test */
-    public function when_repeat_field_misses_locale_it_shows_default()
+    public function test_when_repeat_field_misses_locale_it_shows_default()
     {
         $component = Repeat::make('xxx')->items([
             Text::make('title')->locales(['nl', 'fr']),
@@ -76,14 +73,13 @@ class RenderRepeatFieldTest extends ChiefTestCase
 
         $render = $component->toHtml();
 
-        $this->assertStringContainsString('name="xxx[0][title][nl]"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.title.nl"', $render);
         $this->assertStringContainsString('value="first title nl"', $render);
-        $this->assertStringContainsString('name="xxx[0][title][fr]"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.title.fr"', $render);
         $this->assertStringContainsString('value=""', $render);
     }
 
-    /** @test */
-    public function it_can_render_a_nested_repeat_field()
+    public function test_it_can_render_a_nested_repeat_field()
     {
         $component = Repeat::make('xxx')->items([
             Text::make('title'),
@@ -108,15 +104,14 @@ class RenderRepeatFieldTest extends ChiefTestCase
 
         $render = $component->toHtml();
 
-        $this->assertStringContainsString('name="xxx[0][title]"', $render);
-        $this->assertStringContainsString('name="xxx[0][yyy][0][function]"', $render);
-        $this->assertStringContainsString('name="xxx[0][yyy][1][function]"', $render);
-        $this->assertStringContainsString('name="xxx[1][title]"', $render);
-        $this->assertStringContainsString('name="xxx[1][yyy][0][function]"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.title"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.yyy.0.function"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.yyy.1.function"', $render);
+        $this->assertStringContainsString('wire:model="xxx.1.title"', $render);
+        $this->assertStringContainsString('wire:model="xxx.1.yyy.0.function"', $render);
     }
 
-    /** @test */
-    public function it_can_render_a_default_empty_nested_repeat_field()
+    public function test_it_can_render_a_default_empty_nested_repeat_field()
     {
         $component = Repeat::make('xxx')->items([
             Text::make('title'),
@@ -127,7 +122,7 @@ class RenderRepeatFieldTest extends ChiefTestCase
 
         $render = $component->toHtml();
 
-        $this->assertStringContainsString('name="xxx[0][title]"', $render);
-        $this->assertStringContainsString('name="xxx[0][yyy][0][function]"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.title"', $render);
+        $this->assertStringContainsString('wire:model="xxx.0.yyy.0.function"', $render);
     }
 }

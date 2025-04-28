@@ -75,7 +75,7 @@ class FileRequiredRuleTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb.en');
-        $this->assertStringContainsString('thumb EN is verplicht.', session()->get('errors')->first('files.thumb.en'));
+        $this->assertStringContainsString('en thumb is verplicht.', session()->get('errors')->first('files.thumb.en'));
 
         $this->assertCount(0, $this->model->assets('thumb'));
     }
