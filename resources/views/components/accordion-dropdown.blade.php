@@ -22,7 +22,7 @@
 
             @if ($description)
                 <p class="text-base/6 text-grey-500">
-                    {{ $description }}
+                    {!! $description !!}
                 </p>
             @endif
         </div>
