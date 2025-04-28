@@ -4,11 +4,7 @@
 
 <x-chief::window title="Fragmenten">
     <x-slot name="badges">
-        @php
-            $item = $items->first(fn ($item) => $item->id === $activeItemId);
-        @endphp
-
-        @if (count($locales) > 1)
+        @if (($item = $items->first(fn ($item) => $item->id === $activeItemId)) && count($locales) > 1)
             @foreach ($item->getAllowedSites() as $site)
                 <x-chief::badge
                     variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"

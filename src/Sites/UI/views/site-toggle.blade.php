@@ -8,7 +8,6 @@
     @endforeach
     </x-chief::tabs>
 --}}
-
 <div class="space-y-6">
     <x-chief::button-group size="base">
         @foreach ($sites as $site)
