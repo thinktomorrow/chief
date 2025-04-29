@@ -22,7 +22,7 @@
                     @foreach ($fragment->sharedFragmentDtos as $sharedFragmentDto)
                         <div class="flex items-start justify-between gap-3 px-3 py-2.5">
                             <div class="body-dark body leading-6">
-                                {{ $sharedFragmentDto->ownerLabel }}
+                                {{ $sharedFragmentDto->ownerLabel }} {{ $sharedFragmentDto->contextLabel ? ' > ' . $sharedFragmentDto->contextLabel : null }}
                             </div>
 
                             <x-chief::link

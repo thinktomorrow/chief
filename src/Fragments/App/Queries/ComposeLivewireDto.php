@@ -119,7 +119,7 @@ class ComposeLivewireDto
                     $context,
                     $contextOwner->modelReference(),
                     $ownerResource->getPageTitle($contextOwner),
-                    $this->registry->findManagerByModel($contextOwner::class)->route('edit', $contextOwner),
+                    $this->registry->findManagerByModel($contextOwner::class)->route('edit', $contextOwner).'?context='.$context->id,
                 );
             });
     }
