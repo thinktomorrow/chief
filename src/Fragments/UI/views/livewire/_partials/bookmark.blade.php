@@ -1,26 +1,24 @@
-@if ($fragment->bookmark && count($fragment->urls))
-    @foreach ($fragment->urls as $url)
-        <div class="flex flex-wrap items-center gap-2">
-            <span class="label label-grey">#{{ $fragment->bookmark }}</span>
+<div class="flex flex-wrap items-center gap-2">
+    <x-chief::badge size="sm">{{ $url }}#{{ $bookmark }}</x-chief::badge>
 
-            <x-chief::button
-                href="{{ $url }}#{{ $fragment->bookmark }}"
-                title="Bekijk dit fragment op de website"
-                target="_blank"
-                rel="noopener"
-            >
-                <x-chief::icon.link-square />
-                <span>Kopieer</span>
-            </x-chief::button>
+    <x-chief::button
+        size="xs"
+        x-copy="{
+            content: '{{ $url }}#{{ $bookmark }}',
+            successContent: '#{{ $bookmark }} gekopieerd!'
+        }"
+    >
+        <x-chief::icon.link />
+        <span>Kopieer</span>
+    </x-chief::button>
 
-            <x-chief::button
-                x-copy="{
-                        content: '#{{ $fragment->bookmark }}',
-                        successContent: '#{{ $fragment->bookmark }} gekopieerd!'
-                    }"
-            >
-                <x-chief::icon.link />
-            </x-chief::button>
-        </div>
-    @endforeach
-@endif
+    <x-chief::button
+        href="{{ $url }}#{{ $bookmark }}"
+        title="Bekijk dit fragment op de website"
+        target="_blank"
+        rel="noopener"
+        size="xs"
+    >
+        <x-chief::icon.link-square />
+    </x-chief::button>
+</div>
