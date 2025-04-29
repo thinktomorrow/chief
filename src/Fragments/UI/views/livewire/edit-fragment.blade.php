@@ -32,9 +32,9 @@
         </x-slot>
 
         {{-- TODO(ben): get fragment urls --}}
-        @include('chief-fragments::livewire._partials.bookmark')
         @include('chief-fragments::livewire._partials.shared-fragment-actions')
         @include('chief-fragments::livewire._partials.edit-fragment-tabs')
+        @include('chief-fragments::livewire._partials.bookmarks')
 
         @foreach ($this->getFields() as $field)
             {{ $field }}
