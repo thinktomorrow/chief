@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
+namespace Thinktomorrow\Chief\Forms\Tests\TestSupport;
 
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Fragments\BaseFragment;
 use Thinktomorrow\Chief\Fragments\Fragment;
 
-class FragmentStub extends BaseFragment implements Fragment
+class FragmentWithRepeat extends BaseFragment implements Fragment
 {
     public function renderAdminFragment($owner, $loop, $viewData = []): string
     {

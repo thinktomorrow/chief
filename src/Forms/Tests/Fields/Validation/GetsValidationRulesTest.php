@@ -7,7 +7,7 @@ use InvalidArgumentException;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
-class ValidationRulesFormsTest extends FormsTestCase
+class GetsValidationRulesTest extends FormsTestCase
 {
     public function test_field_has_default_no_validation()
     {

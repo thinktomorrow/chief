@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Tests\File;
+namespace Thinktomorrow\Chief\Forms\Tests\Actions\File;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

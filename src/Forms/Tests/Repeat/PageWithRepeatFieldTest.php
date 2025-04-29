@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
 
+use Thinktomorrow\Chief\Forms\Tests\TestSupport\PageWithRepeat;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -13,14 +14,14 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     {
         parent::setUp();
 
-        PageStub::migrateUp();
-        chiefRegister()->resource(PageStub::class, PageManager::class);
+        PageWithRepeat::migrateUp();
+        chiefRegister()->resource(PageWithRepeat::class, PageManager::class);
     }
 
     /** @test */
     public function it_can_retrieve_a_new_repeat_section()
     {
-        $pageStub = PageStub::create();
+        $pageStub = PageWithRepeat::create();
 
         $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values').'?index=99');
         $response->assertStatus(200);
@@ -37,7 +38,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     /** @test */
     public function it_can_retrieve_a_new_repeat_section_for_existing_page()
     {
-        $pageStub = PageStub::create();
+        $pageStub = PageWithRepeat::create();
 
         $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'repeat_values', $pageStub).'?index=99');
         $response->assertStatus(200);
@@ -56,7 +57,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     {
         $this->disableExceptionHandling();
 
-        $pageStub = PageStub::create();
+        $pageStub = PageWithRepeat::create();
 
         $response = $this->asAdmin()->get($this->manager($pageStub)->route('repeat-section', 'nested', $pageStub).'?index=0&prefix=repeat_values[99][nested]');
         $response->assertStatus(200);
@@ -69,7 +70,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     /** @test */
     public function it_can_save_repeat_section()
     {
-        $pageStub = PageStub::create();
+        $pageStub = PageWithRepeat::create();
 
         $response = $this->asAdmin()->put($this->manager($pageStub)->route('form-update', $pageStub, 'repeat_form'), [
             'repeat_values' => [
@@ -90,7 +91,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     /** @test */
     public function it_can_save_nested_repeat_section()
     {
-        $pageStub = PageStub::create();
+        $pageStub = PageWithRepeat::create();
 
         $response = $this->asAdmin()->put($this->manager($pageStub)->route('form-update', $pageStub, 'repeat_form'), [
             'repeat_values' => [
@@ -116,7 +117,7 @@ final class PageWithRepeatFieldTest extends ChiefTestCase
     public function it_can_populate_nested_repeat_sections()
     {
         $this->disableExceptionHandling();
-        $pageStub = PageStub::create();
+        $pageStub = PageWithRepeat::create();
 
         $this->asAdmin()->put($this->manager($pageStub)->route('form-update', $pageStub, 'repeat_form'), [
             'repeat_values' => [

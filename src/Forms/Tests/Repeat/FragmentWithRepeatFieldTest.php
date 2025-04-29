@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
 
+use Thinktomorrow\Chief\Forms\Tests\TestSupport\FragmentWithRepeat;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class FragmentWithRepeatFieldTest extends ChiefTestCase
@@ -12,13 +13,13 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
     {
         parent::setUp();
 
-        chiefRegister()->fragment(FragmentStub::class);
+        chiefRegister()->fragment(FragmentWithRepeat::class);
     }
 
     /** @test */
     public function it_can_retrieve_a_new_repeat_section()
     {
-        $stub = new FragmentStub;
+        $stub = new FragmentWithRepeat;
 
         $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values').'?index=99');
         $response->assertStatus(200);
@@ -36,7 +37,7 @@ final class FragmentWithRepeatFieldTest extends ChiefTestCase
     public function it_can_retrieve_a_new_repeat_section_for_existing_fragment()
     {
         $owner = $this->setupAndCreateArticle();
-        $stub = $this->createAndAttachFragment(new FragmentStub, $owner);
+        $stub = $this->createAndAttachFragment(new FragmentWithRepeat, $owner);
 
         $response = $this->asAdmin()->get($this->manager($stub)->route('repeat-section', 'repeat_values', $stub->getFragmentModel()->id).'?index=99');
         $response->assertStatus(200);

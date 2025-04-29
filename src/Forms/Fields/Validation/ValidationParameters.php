@@ -77,12 +77,30 @@ class ValidationParameters
                 return [];
             }
 
-            // If the array already has a associative key, we assume this is a custom validation entry, so we leave it be
-            if ($this->isAlreadyKeyed($value)) {
+            // Als het al gestructureerd is als ["field.rule" => "..."], laat het dan staan
+            if ($this->isAlreadyKeyed($value) && strpos(key($value), '.') !== false) {
                 return $value;
             }
+
+            // per-locale messages - elke regel per locale dupliceren
+            if ($this->isAlreadyKeyed($value)) {
+                $results = [];
+
+                foreach ($this->locales as $locale) {
+                    $fieldKey = call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName()).'.'.$locale);
+
+                    foreach ($value as $rule => $message) {
+                        $replacedMessage = str_replace(':locale', $locale, $message);
+                        $results["{$fieldKey}.{$rule}"] = $replacedMessage;
+                    }
+                }
+
+                return $results;
+            }
+
         }
 
+        // standaard key gebruiken
         if (! count($this->locales)) {
             return [
                 call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName())) => $value,
@@ -109,6 +127,44 @@ class ValidationParameters
                 $keys,
                 FieldName::make()->template(':name')->matrix($value, $localeReplacements)
             );
+
+        //        if (is_array($value)) {
+        //            if (count($value) < 1) {
+        //                return [];
+        //            }
+        //
+        //            // If the array already has a associative key, we assume this is a custom validation entry, so we leave it be
+        //            if ($this->isAlreadyKeyed($value)) {
+        //                return $value;
+        //            }
+        //        }
+        //
+        //        if (! count($this->locales)) {
+        //            return [
+        //                call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName())) => $value,
+        //            ];
+        //        }
+        //
+        //        $keys = $this->source->getFieldName()
+        //            ->dotted()
+        //            ->matrix($this->source->getRawName(), $this->locales);
+        //
+        //        if ($this->multiple) {
+        //            foreach ($keys as $i => $key) {
+        //                $keys[$i] = $key.'.*';
+        //            }
+        //        }
+        //
+        //        foreach ($keys as $i => $key) {
+        //            $keys[$i] = call_user_func($this->mapKeysCallback, $key);
+        //        }
+        //
+        //        return is_array($value)
+        //            ? array_fill_keys($keys, $value)
+        //            : array_combine(
+        //                $keys,
+        //                FieldName::make()->template(':name')->matrix($value, $localeReplacements)
+        //            );
     }
 
     public function mapKeys(\Closure $callback): self
@@ -120,6 +176,6 @@ class ValidationParameters
 
     private function isAlreadyKeyed(array $value): bool
     {
-        return ! array_is_list($value) && is_array(reset($value));
+        return ! array_is_list($value);
     }
 }

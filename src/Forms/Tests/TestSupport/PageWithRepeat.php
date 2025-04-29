@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Forms\Tests\Repeat;
+namespace Thinktomorrow\Chief\Forms\Tests\TestSupport;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +16,7 @@ use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
-class PageStub extends Model implements PageResource, ReferableModel
+class PageWithRepeat extends Model implements PageResource, ReferableModel
 {
     use PageResourceDefault;
     use ReferableModelDefault;
