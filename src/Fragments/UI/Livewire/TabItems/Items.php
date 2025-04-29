@@ -20,7 +20,12 @@ abstract class Items extends Component
     {
         $this->locales = $locales;
 
-        $this->onScopedToLocale(ChiefSites::getLocaleScope());
+        if ($activeItemId) {
+            $this->activeItemId = $activeItemId;
+            $this->scopedLocale = ChiefSites::getLocaleScope();
+        } else {
+            $this->onScopedToLocale(ChiefSites::getLocaleScope());
+        }
     }
 
     public function showTabs(): bool

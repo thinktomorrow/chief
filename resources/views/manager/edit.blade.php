@@ -53,7 +53,11 @@
     @endforeach
 
     @if ($hasContexts)
-        <livewire:chief-fragments::contexts :resource-key="$resource::resourceKey()" :model="$model" />
+        <livewire:chief-fragments::contexts
+            :resource-key="$resource::resourceKey()"
+            :model="$model"
+            :active-context-id="request()->input('context')"
+        />
     @endif
 
     @foreach ($layout->filterByPosition('main-bottom')->getComponents() as $component)
