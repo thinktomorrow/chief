@@ -4,7 +4,7 @@
             :aria-controls="$locale"
             :aria-selected="$locale === $scopedLocale ? 'true' : 'false'"
             wire:key="fragment-site-toggle-{{ $locale }}"
-            x-on:click="$dispatch('chieftab', { id: '{{ $locale }}' }); $wire.onScopedToLocale('{{ $locale }}')"
+            x-on:click="$dispatch('chieftab', { id: '{{ $locale }}', reference: 'fragment-site-toggle' }); $wire.onScopedToLocale('{{ $locale }}')"
         >
             {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($locale) }}
         </x-chief::button-group.button>
@@ -17,7 +17,7 @@
         scopedLocale: '{{ $scopedLocale }}',
         init() {
             this.$nextTick(() => {
-                this.$dispatch('chieftab', { id: '{{ $scopedLocale }}' })
+                this.$dispatch('chieftab', { id: '{{ $scopedLocale }}', reference: 'fragment-site-toggle' })
             })
         },
     }"

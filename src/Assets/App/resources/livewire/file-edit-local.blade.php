@@ -83,9 +83,13 @@
                 @endif
             </x-chief::form.fieldset>
 
-            @foreach ($this->getComponents() as $component)
-                {{ $component }}
-            @endforeach
+            <div data-slot="form-group">
+                @include('chief-assets::_partials.file-edit-site-toggle')
+
+                @foreach ($this->getComponents() as $component)
+                    {{ $component }}
+                @endforeach
+            </div>
 
             @if ($errors->any())
                 <x-chief::callout data-slot="form-group" size="small" variant="red">

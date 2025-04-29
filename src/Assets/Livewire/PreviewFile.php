@@ -14,9 +14,9 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\AssetType\AssetTypeFactory;
 use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -324,8 +324,8 @@ class PreviewFile implements Wireable
         foreach ($references as $reference) {
             $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
 
-            if ($model instanceof FragmentModel) {
-                $ownerModels = app(FragmentOwnerRepository::class)->getResourceOwners($model);
+            if ($model instanceof \Thinktomorrow\Chief\Fragments\Models\FragmentModel) {
+                $ownerModels = app(ContextOwnerRepository::class)->getOwnersByFragment($model->id);
 
                 foreach ($ownerModels as $ownerModel) {
                     $this->owners[] = $this->createOwnerFields($ownerModel, $model);

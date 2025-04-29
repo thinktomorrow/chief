@@ -1,7 +1,9 @@
 {{-- Notification if more than one owner --}}
 @if ($ownerCount > 1)
     <div class="flex items-start gap-1.5 rounded-xl bg-primary-50 p-2.5">
-        <svg class="h-5 w-5 shrink-0 text-primary-500"><use xlink:href="#icon-information-circle"></use></svg>
+        <svg class="h-5 w-5 shrink-0 text-primary-500">
+            <use xlink:href="#icon-information-circle"></use>
+        </svg>
 
         <p class="body text-sm text-primary-500">
             Dit bestand is gekoppeld op {{ $ownerCount }} plaatsen. Als je aanpassingen doet aan dit bestand of dit
@@ -20,7 +22,9 @@
     {{-- Notification in mediagallery file edit if one and only one owner --}}
 @elseif ($ownerCount == 1 && ! $currentOwner)
     <div class="flex items-start gap-1.5 rounded-md bg-primary-50 p-2.5">
-        <svg class="h-5 w-5 shrink-0 text-primary-500"><use xlink:href="#icon-information-circle"></use></svg>
+        <svg class="h-5 w-5 shrink-0 text-primary-500">
+            <use xlink:href="#icon-information-circle"></use>
+        </svg>
 
         <p class="body text-sm text-primary-500">
             Dit bestand wordt gebruikt op:
@@ -40,7 +44,9 @@
     {{-- Notification if no owner --}}
 @elseif ($ownerCount == 0)
     <div class="flex items-start gap-1.5 rounded-md bg-primary-50 p-2.5">
-        <svg class="h-5 w-5 shrink-0 text-primary-500"><use xlink:href="#icon-information-circle"></use></svg>
+        <svg class="h-5 w-5 shrink-0 text-primary-500">
+            <use xlink:href="#icon-information-circle"></use>
+        </svg>
 
         <p class="body text-sm text-primary-500">Dit bestand wordt momenteel nergens gebruikt.</p>
     </div>
