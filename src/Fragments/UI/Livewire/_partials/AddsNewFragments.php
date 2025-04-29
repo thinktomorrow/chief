@@ -38,6 +38,12 @@ trait AddsNewFragments
         ]);
     }
 
+    public function onScopedToLocale(string $locale): void
+    {
+        // Does nothing on the adding fragment view - but since we use the same fragment tabs
+        // as the edit fragment view, we need to implement this method...
+    }
+
     public function getFields(): Collection
     {
         $fragment = $this->getFragment();

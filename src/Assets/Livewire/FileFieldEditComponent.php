@@ -20,7 +20,7 @@ class FileFieldEditComponent extends Component
 
     public $parentId;
 
-    public string $modelReference;
+    public ?string $modelReference;
 
     public string $fieldKey;
 
@@ -32,7 +32,7 @@ class FileFieldEditComponent extends Component
 
     public $file = null;
 
-    public function mount(string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
+    public function mount(?string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
     {
         $this->modelReference = $modelReference;
         $this->fieldKey = $fieldKey;
@@ -149,7 +149,7 @@ class FileFieldEditComponent extends Component
 
     public function isolateAsset()
     {
-        if (! $this->previewFile->mediaId) {
+        if (! $this->previewFile->mediaId || ! $this->modelReference) {
             return;
         }
 
