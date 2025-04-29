@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Forms\Tests\Layouts;
 
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
-class FormTest extends TestCase
+class FormFormsTest extends FormsTestCase
 {
     /** @test */
     public function it_can_set_form_component()

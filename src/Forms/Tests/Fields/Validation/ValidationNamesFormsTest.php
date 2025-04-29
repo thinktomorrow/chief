@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Forms\Tests\Fields\Validation;
 
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationNames;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
-class ValidationNamesTest extends TestCase
+class ValidationNamesFormsTest extends FormsTestCase
 {
     public function test_it_can_get_the_rules()
     {

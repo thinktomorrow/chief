@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields\Validation;
 use Illuminate\Validation\Factory;
 use InvalidArgumentException;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
-class ValidationRulesTest extends TestCase
+class ValidationRulesFormsTest extends FormsTestCase
 {
     public function test_field_has_default_no_validation()
     {

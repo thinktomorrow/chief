@@ -5,16 +5,16 @@ namespace Thinktomorrow\Chief\Forms\Tests\File;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 use function app;
 
 class DeleteFileTest extends ChiefTestCase
 {
     use PageFormParams;
-    use UploadsFile;
+    use TestingFileUploads;
 
     private $model;
 
@@ -26,22 +26,18 @@ class DeleteFileTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $response = $this->uploadFile($this->model, [
-            'thumb' => [
-                'nl' => [
-                    'attach' => [
-                        ['id' => $asset->id],
-                    ],
+        $this->saveFileField($this->model, 'thumb', [
+            'nl' => [
+                'attach' => [
+                    ['id' => $asset->id],
                 ],
             ],
         ]);
 
-        $response = $this->uploadFile($this->model, [
-            'thumb' => [
-                'nl' => [
-                    'queued_for_deletion' => [
-                        ['id' => $asset->id],
-                    ],
+        $this->saveFileField($this->model, 'thumb', [
+            'nl' => [
+                'queued_for_deletion' => [
+                    ['id' => $asset->id],
                 ],
             ],
         ]);
@@ -55,17 +51,15 @@ class DeleteFileTest extends ChiefTestCase
         $asset = app(CreateAsset::class)->uploadedFile(UploadedFile::fake()->image('image-nl.png'))->save();
         $assetEn = app(CreateAsset::class)->uploadedFile(UploadedFile::fake()->image('image-en.png'))->save();
 
-        $response = $this->uploadFile($this->model, [
-            'thumb' => [
-                'nl' => [
-                    'attach' => [
-                        ['id' => $asset->id],
-                    ],
+        $this->saveFileField($this->model, 'thumb', [
+            'nl' => [
+                'attach' => [
+                    ['id' => $asset->id],
                 ],
-                'en' => [
-                    'attach' => [
-                        ['id' => $assetEn->id],
-                    ],
+            ],
+            'en' => [
+                'attach' => [
+                    ['id' => $assetEn->id],
                 ],
             ],
         ]);
@@ -73,12 +67,10 @@ class DeleteFileTest extends ChiefTestCase
         $this->assertCount(2, $this->model->fresh()->assets('thumb', null));
         $this->assertCount(2, Asset::all());
 
-        $response = $this->uploadFile($this->model, [
-            'thumb' => [
-                'en' => [
-                    'queued_for_deletion' => [
-                        ['id' => $assetEn->id],
-                    ],
+        $this->saveFileField($this->model, 'thumb', [
+            'en' => [
+                'queued_for_deletion' => [
+                    ['id' => $assetEn->id],
                 ],
             ],
         ]);

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Resource;
 
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
-class ResourceTest extends TestCase
+class ResourceFormsTest extends FormsTestCase
 {
     public function test_it_provides_chief_with_resource_info()
     {

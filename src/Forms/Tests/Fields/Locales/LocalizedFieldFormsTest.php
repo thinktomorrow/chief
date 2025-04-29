@@ -4,10 +4,10 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields\Locales;
 
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
-class LocalizedFieldTest extends TestCase
+class LocalizedFieldFormsTest extends FormsTestCase
 {
     private LocalizedField $localizedField;
 

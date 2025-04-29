@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields\Validation;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
-class ValidationParametersTest extends TestCase
+class ValidationParametersFormsTest extends FormsTestCase
 {
     protected function setUp(): void
     {

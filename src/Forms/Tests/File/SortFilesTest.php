@@ -5,16 +5,16 @@ namespace Thinktomorrow\Chief\Forms\Tests\File;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
+use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 use function app;
 
 class SortFilesTest extends ChiefTestCase
 {
     use PageFormParams;
-    use UploadsFile;
+    use TestingFileUploads;
 
     private $model;
 

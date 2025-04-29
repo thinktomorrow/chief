@@ -5,10 +5,10 @@ namespace Thinktomorrow\Chief\Forms\Tests\Actions;
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class SavingFieldTest extends TestCase
+class SavingFieldFormsTest extends FormsTestCase
 {
     public function test_a_field_can_have_custom_save_logic()
     {

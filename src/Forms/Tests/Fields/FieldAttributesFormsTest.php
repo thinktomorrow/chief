@@ -12,9 +12,9 @@ use Thinktomorrow\Chief\Forms\Fields\Slider;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
 use Thinktomorrow\Chief\Forms\Fields\Time;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
-class FieldAttributesTest extends TestCase
+class FieldAttributesFormsTest extends FormsTestCase
 {
     private array $classes;
 

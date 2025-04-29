@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Shared;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
-class AddQueryToUrlTest extends TestCase
+class AddQueryToUrlFormsTest extends FormsTestCase
 {
     public static function queryProvider()
     {

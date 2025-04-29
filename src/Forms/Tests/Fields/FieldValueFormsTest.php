@@ -4,10 +4,10 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields;
 
 use Carbon\Carbon;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class FieldValueTest extends TestCase
+class FieldValueFormsTest extends FormsTestCase
 {
     protected function setUp(): void
     {

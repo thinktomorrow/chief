@@ -8,16 +8,16 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
+use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
 use Thinktomorrow\Chief\Forms\Tests\stubs\CustomAsset;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class IsolateFileTest extends ChiefTestCase
 {
-    use UploadsFile;
+    use TestingFileUploads;
 
     private $model;
 
@@ -33,8 +33,8 @@ class IsolateFileTest extends ChiefTestCase
 
     protected function tearDown(): void
     {
-        Storage::delete('test/image-temp-name.png');
-        Storage::delete('test/image-second-temp-name.jpg');
+        //        Storage::delete('test/image-temp-name.png');
+        //        Storage::delete('test/image-second-temp-name.jpg');
 
         parent::tearDown();
     }

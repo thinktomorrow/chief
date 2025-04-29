@@ -114,6 +114,12 @@ class File extends Component implements Field, HasComponents
         $preppedPayload = [];
 
         foreach ($ruleKeys as $ruleKey) {
+
+            // Ignore empty values
+            if (is_null(Arr::get($payload, $ruleKey)) || Arr::get($payload, $ruleKey) === [null]) {
+                continue;
+            }
+
             if (Arr::has($payload, $ruleKey.'.uploads') && count(Arr::get($payload, $ruleKey.'.uploads')) > 0) {
                 $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey.'.uploads'));
             } elseif (Arr::has($payload, $ruleKey.'.attach') && count(Arr::get($payload, $ruleKey.'.attach')) > 0) {

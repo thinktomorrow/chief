@@ -5,10 +5,10 @@ namespace Thinktomorrow\Chief\Forms\Tests\Fields;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
-use Thinktomorrow\Chief\Forms\Tests\TestCase;
+use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class FieldsTest extends TestCase
+class FieldsFormsTest extends FormsTestCase
 {
     public function test_it_accepts_fields()
     {

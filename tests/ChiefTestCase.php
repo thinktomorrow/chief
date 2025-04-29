@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\ApplicationBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Activitylog\ActivitylogServiceProvider;
@@ -28,9 +29,7 @@ use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\PageWithAssets;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
-use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
 
 use function Orchestra\Testbench\default_skeleton_path;
@@ -39,7 +38,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
 {
     use RefreshDatabase;
     use TestHelpers;
-    use TestingWithFiles;
     use TestingWithManagers;
 
     protected $protectTestEnvironment = true;
@@ -100,13 +98,16 @@ abstract class ChiefTestCase extends OrchestraTestCase
         ChiefSites::clearCache();
 
         $this->app['view']->addLocation(__DIR__.'/Shared/stubs/views');
+
+        // Fake storage local disk
+        Storage::fake('local');
     }
 
     protected function tearDown(): void
     {
         SnippetStub::resetFieldsDefinition();
         ArticlePageResource::resetFieldsDefinition();
-        PageWithAssets::resetFieldsDefinition();
+        \Thinktomorrow\Chief\Forms\Tests\TestSupport\PageWithAssets::resetFieldsDefinition();
 
         // Clear out any memoized values
         Memoize::clear();

@@ -4,17 +4,17 @@ namespace Thinktomorrow\Chief\Forms\Tests\File;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use TestSupport\CustomAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Forms\Tests\stubs\CustomAsset;
+use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class AddFileTest extends ChiefTestCase
 {
     use PageFormParams;
-    use UploadsFile;
+    use TestingFileUploads;
 
     private $model;
 

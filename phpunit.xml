@@ -40,13 +40,8 @@
               ignoreDeprecatedCodeUnits="true"
               disableCodeCoverageIgnore="true">
         <report>
-            <clover outputFile="build/clover.xml"/>
-            <cobertura outputFile="build/cobertura.xml"/>
-            <crap4j outputFile="build/crap4j.xml" threshold="50"/>
             <html outputDirectory="build/html-coverage" lowUpperBound="50" highLowerBound="90"/>
-            <php outputFile="build/coverage.php"/>
             <text outputFile="build/coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
-            <xml outputDirectory="build/xml-coverage"/>
         </report>
     </coverage>
     <logging>

@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\Unit\UnitTestHelpers;
 
-class TestCase extends OrchestraTestCase
+class FormsTestCase extends OrchestraTestCase
 {
     use UnitTestHelpers;
 
