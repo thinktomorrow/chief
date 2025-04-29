@@ -10,3 +10,15 @@
         </x-chief::button-group.button>
     @endforeach
 </x-chief::button-group>
+
+{{-- Hack to get the scoped locale tab to be active when opening the drawer --}}
+<div
+    x-data="{
+        scopedLocale: '{{ $scopedLocale }}',
+        init() {
+            this.$nextTick(() => {
+                this.$dispatch('chieftab', { id: '{{ $scopedLocale }}' })
+            })
+        },
+    }"
+></div>
