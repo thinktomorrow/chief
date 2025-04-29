@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait HasValue
 {
+    use HasValueFallback;
     use HasValuePreparation;
 
     protected $value;
