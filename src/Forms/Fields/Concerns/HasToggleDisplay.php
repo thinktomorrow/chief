@@ -8,9 +8,9 @@ trait HasToggleDisplay
 {
     protected bool $showAsToggle = false;
 
-    public function showAsToggle($bool = true): static
+    public function showAsToggle(bool $showAsToggle = true): static
     {
-        $this->showAsToggle = $bool;
+        $this->showAsToggle = $showAsToggle;
 
         return $this;
     }

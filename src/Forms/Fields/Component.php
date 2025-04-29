@@ -162,6 +162,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             ...(isset($this->view) ? ['setView' => $this->view] : []),
             ...(isset($this->previewView) ? ['previewView' => $this->previewView] : []),
             ...(isset($this->useValueFallback) ? ['useValueFallback' => $this->useValueFallback] : []),
+            ...(isset($this->showAsToggle) ? ['showAsToggle' => $this->showAsToggle] : []),
+
         ];
     }
 }
