@@ -42,12 +42,18 @@ trait HasValue
 
     public function getValueOrFallback(?string $locale = null): mixed
     {
-        $value = $this->getRawValue($locale, true);
+        $currentFallbackValue = $this->useValueFallback;
 
-        return $this->hasPrepareValue() ? $this->getPrepareValue()($value) : $value;
+        $this->useValueFallback();
+
+        $value = $this->getValue($locale);
+
+        $this->useValueFallback($currentFallbackValue);
+
+        return $value;
     }
 
-    private function getRawValue(?string $locale = null, bool $withLocaleFallback = false): mixed
+    private function getRawValue(?string $locale = null): mixed
     {
         if (! $this->valueGiven) {
             if (! $this->getModel()) {
@@ -58,7 +64,7 @@ trait HasValue
                 return data_get($this->getModel(), $this->getColumnName(), $this->getDefault($locale));
             }
 
-            return $this->defaultEloquentValueResolver()($this->getModel(), $locale, $withLocaleFallback);
+            return $this->defaultEloquentValueResolver()($this->getModel(), $locale, $this->useValueFallback);
         }
 
         // Check if it is a closure

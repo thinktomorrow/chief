@@ -60,6 +60,10 @@ class File extends Component implements Field, HasComponents
                 return [];
             }
 
+            if ($this->useValueFallback) {
+                return $model->assets($field->getKey(), $locale)->all();
+            }
+
             return $field->getMedia($model, $locale);
         });
 

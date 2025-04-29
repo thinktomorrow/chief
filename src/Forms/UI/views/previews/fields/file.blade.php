@@ -1,9 +1,12 @@
 @php
     $locale = $locale ?? \Thinktomorrow\Chief\Sites\ChiefSites::primaryLocale();
 
-    use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
+    use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
+    use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
+
     /** @var \Thinktomorrow\AssetLibrary\Asset[] $assets */
     $assets = $getValueOrFallback($locale);
+
     $count = count($assets);
 @endphp
 

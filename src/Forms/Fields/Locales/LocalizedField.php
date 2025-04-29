@@ -29,30 +29,6 @@ interface LocalizedField
     public function setLocales(array $locales): static;
 
     /**
-     * Get the locale for current scope. This is used to render the field
-     * in the locale where the admin is currently working in.
-     */
-    //    public function getScopedLocale(): ?string;
-    //
-    //    public function setScopedLocale(?string $locale): static;
-
-    /**
-     * Locales in which the field should be presented to the admin.
-     * These are the active locales of the page / fragment.
-     */
-    //    public function getScopedLocales(): array;
-
-    //    public function setScopedLocales(array $scopedLocales): static;
-    //
-    //    /**
-    //     * The locales that are not scoped to the given context.
-    //     * E.g. locales of shared field not used here but in other context.
-    //     */
-    //    public function getDormantLocales(): array;
-    //
-    //    public function setDormantLocales(array $dormantLocales): static;
-
-    /**
      * Get the active fallback locale for the given locale.
      */
     public function getFallbackLocale(string $locale): ?string;

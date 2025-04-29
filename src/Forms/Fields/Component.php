@@ -30,6 +30,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValueFallback;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameDefaults;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
@@ -65,6 +66,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasTitle;
     use HasValidation;
     use HasValue;
+    use HasValueFallback;
     use HasView;
     use LocalizedFieldDefaults;
     use WithTags;
@@ -161,6 +163,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             ...(isset($this->customAttributes) ? ['customAttributes' => $this->customAttributes] : []),
             ...(isset($this->view) ? ['setView' => $this->view] : []),
             ...(isset($this->previewView) ? ['previewView' => $this->previewView] : []),
+            ...(isset($this->useValueFallback) ? ['useValueFallback' => $this->useValueFallback] : []),
         ];
     }
 }
