@@ -10,10 +10,11 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 
-class CreateFirstPageUrls
+class CreatePageFirstUrls
 {
     private Registry $registry;
 
@@ -41,7 +42,7 @@ class CreateFirstPageUrls
 
         try {
             foreach ($slugs as $site => $slug) {
-                $this->application->create(new CreateUrl($model->modelReference(), $site, $slug, 'offline', null));
+                $this->application->create(new CreateUrl($model->modelReference(), $site, $slug, 'offline'));
             }
         } catch (\Exception $e) {
             report($e);
@@ -57,11 +58,11 @@ class CreateFirstPageUrls
             return [];
         }
 
-        foreach (ChiefSites::all() as $site) {
-            $siteLocale = $site->locale;
+        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
 
-            app()->setLocale($siteLocale);
-            $slugs[$siteLocale] = Str::slug($resource->getPageTitle($model));
+        foreach ($locales as $locale) {
+            app()->setLocale($locale);
+            $slugs[$locale] = Str::slug($resource->getPageTitle($model));
         }
 
         // Reset locale

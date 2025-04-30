@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Tests\Application\Pages\Astrotomic;
+namespace Thinktomorrow\Chief\Forms\Tests\TestSupport;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,13 +14,13 @@ use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
-class QuoteWithAstrotomicTranslations extends Model implements PageResource, ReferableModel
+class ModelWithAstrotomicTranslations extends Model implements PageResource, ReferableModel
 {
     use \Astrotomic\Translatable\Translatable;
     use PageResourceDefault;
     use ReferableModelDefault;
 
-    public $table = 'quotes';
+    public $table = 'astrotomic_models';
 
     public $guarded = [];
 
@@ -36,26 +36,26 @@ class QuoteWithAstrotomicTranslations extends Model implements PageResource, Ref
     public function fields($model): Fields
     {
         return Fields::make([
-            Text::make('title_trans')->locales(['nl', 'en']),
+            Text::make('title_trans')->locales(),
         ]);
     }
 
     public static function migrateUp()
     {
-        Schema::create('quotes', function (Blueprint $table) {
+        Schema::create('astrotomic_models', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('quote_translations', function (Blueprint $table) {
+        Schema::create('astrotomic_model_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('quote_with_astrotomic_translations_id')->unsigned();
+            $table->integer('model_with_astrotomic_translations_id')->unsigned();
             $table->string('locale');
             $table->string('title_trans')->nullable();
             $table->timestamps();
 
-            $table->foreign('quote_with_astrotomic_translations_id')->references('id')->on('quotes')->onDelete('cascade');
+            $table->foreign('model_with_astrotomic_translations_id')->references('id')->on('astrotomic_models')->onDelete('cascade');
         });
     }
 }

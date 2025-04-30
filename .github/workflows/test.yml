@@ -41,6 +41,9 @@ jobs:
       - name: Execute assets tests
         run: vendor/bin/phpunit --testsuite assets
 
+      - name: Execute models tests
+        run: vendor/bin/phpunit --testsuite models
+
       - name: Execute fragments tests
         run: vendor/bin/phpunit --testsuite fragments
 

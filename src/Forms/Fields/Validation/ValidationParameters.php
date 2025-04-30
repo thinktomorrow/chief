@@ -127,44 +127,6 @@ class ValidationParameters
                 $keys,
                 FieldName::make()->template(':name')->matrix($value, $localeReplacements)
             );
-
-        //        if (is_array($value)) {
-        //            if (count($value) < 1) {
-        //                return [];
-        //            }
-        //
-        //            // If the array already has a associative key, we assume this is a custom validation entry, so we leave it be
-        //            if ($this->isAlreadyKeyed($value)) {
-        //                return $value;
-        //            }
-        //        }
-        //
-        //        if (! count($this->locales)) {
-        //            return [
-        //                call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName())) => $value,
-        //            ];
-        //        }
-        //
-        //        $keys = $this->source->getFieldName()
-        //            ->dotted()
-        //            ->matrix($this->source->getRawName(), $this->locales);
-        //
-        //        if ($this->multiple) {
-        //            foreach ($keys as $i => $key) {
-        //                $keys[$i] = $key.'.*';
-        //            }
-        //        }
-        //
-        //        foreach ($keys as $i => $key) {
-        //            $keys[$i] = call_user_func($this->mapKeysCallback, $key);
-        //        }
-        //
-        //        return is_array($value)
-        //            ? array_fill_keys($keys, $value)
-        //            : array_combine(
-        //                $keys,
-        //                FieldName::make()->template(':name')->matrix($value, $localeReplacements)
-        //            );
     }
 
     public function mapKeys(\Closure $callback): self

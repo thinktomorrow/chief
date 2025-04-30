@@ -23,13 +23,6 @@ class ArticlePageResource implements PageResource
         return ArticlePage::class;
     }
 
-    // Defines which atttribute of the model is the title.
-    // This is currently only used for duplicating a page and copying its title.
-    public function getTitleAttributeKey(): string
-    {
-        return 'custom';
-    }
-
     private function defaultFields($model): iterable
     {
         yield Text::make('title')->required()->rules(['min:4']);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Forms\Tests\Fields\Validation;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Validation\Input;
 
 use Illuminate\Validation\Factory;
 use InvalidArgumentException;

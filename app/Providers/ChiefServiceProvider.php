@@ -54,7 +54,7 @@ use Thinktomorrow\Chief\Models\ModelsServiceProvider;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
-use Thinktomorrow\Chief\Urls\App\Listeners\CreateFirstPageUrls;
+use Thinktomorrow\Chief\Urls\App\Listeners\CreatePageFirstUrls;
 use Thinktomorrow\Chief\Urls\App\Listeners\PropagateUrlChange;
 use Thinktomorrow\Chief\Urls\UrlsServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
@@ -196,7 +196,7 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(InviteAccepted::class, EnableUser::class.'@onAcceptingInvite');
 
         // Managed model events
-        Event::listen(ManagedModelCreated::class, [CreateFirstPageUrls::class, 'onManagedModelCreated']);
+        Event::listen(ManagedModelCreated::class, [CreatePageFirstUrls::class, 'onManagedModelCreated']);
         Event::listen(ManagedModelCreated::class, [CreateFirstContextForPage::class, 'onManagedModelCreated']);
         Event::listen(ManagedModelUrlUpdated::class, [TriggerPageChangedEvent::class, 'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [ProjectModelData::class, 'onManagedModelUrlUpdated']);

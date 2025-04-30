@@ -8,9 +8,41 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class SavingFieldFormsTest extends FormsTestCase
+class SavingFieldsTest extends FormsTestCase
 {
-    public function test_a_field_can_have_custom_save_logic()
+    protected function setUp(): void
+    {
+        parent::setUp();
+        ArticlePage::migrateUp();
+    }
+
+    public function test_it_saves_non_localized_fields()
+    {
+        $article = new ArticlePage;
+
+        $field = Text::make('title');
+
+        (new SaveFields)->save($article, Fields::make([$field]), [
+            'title' => 'Hello World',
+        ], []);
+
+        $this->assertEquals('Hello World', $article->fresh()->title);
+    }
+
+    public function test_it_skips_custom_setters()
+    {
+        $article = new ArticlePage;
+
+        $field = Text::make('title')->fillForSaving(function ($model) {
+            $model->title = 'manually-set';
+        });
+
+        (new SaveFields)->save($article, Fields::make([$field]), ['title' => 'default'], []);
+
+        $this->assertEquals('manually-set', $article->fresh()->title);
+    }
+
+    public function test_it_can_have_custom_save_logic()
     {
         $field = Text::make('title')->save(function () {
             return 'foobar';
@@ -19,9 +51,8 @@ class SavingFieldFormsTest extends FormsTestCase
         $this->assertEquals('foobar', call_user_func($field->getSave()));
     }
 
-    public function test_a_custom_save_logic_can_be_performed()
+    public function test_it_can_execute_custom_save_logic()
     {
-        ArticlePage::migrateUp();
         $article = new ArticlePage;
 
         $field = Text::make('title')->save(function ($model, $field, $input, $files) {
@@ -36,18 +67,8 @@ class SavingFieldFormsTest extends FormsTestCase
         $this->assertEquals('xxx-foobar', $article->fresh()->title);
     }
 
-    public function test_a_field_can_have_custom_set_logic()
+    public function test_it_can_prepare_value_for_saving()
     {
-        $field = Text::make('title')->prepareValue(function () {
-            return 'foobar';
-        });
-
-        $this->assertEquals('foobar', call_user_func($field->getPrepareValue()));
-    }
-
-    public function test_it_can_prepare_the_value_before_process()
-    {
-        ArticlePage::migrateUp();
         $article = new ArticlePage;
 
         $field = Text::make('title')->prepForSaving(function ($value, $input) {
@@ -63,7 +84,6 @@ class SavingFieldFormsTest extends FormsTestCase
 
     public function test_it_can_prepare_localized_values_for_saving()
     {
-        ArticlePage::migrateUp();
         $article = new ArticlePage;
 
         $field = Text::make('title_trans')->locales(['nl', 'en'])->prepForSaving(function ($value, $input, $locale) {
@@ -81,19 +101,18 @@ class SavingFieldFormsTest extends FormsTestCase
         $this->assertEquals('xxx-en-foobar', $article->fresh()->dynamic('title_trans', 'en'));
     }
 
-    public function test_it_can_save_localized_values_with_custom_formkey()
+    public function test_it_can_save_localized_values_with_custom_field_name()
     {
-        ArticlePage::migrateUp();
         $article = new ArticlePage;
 
-        $field = Text::make('title_trans')->setFieldNameTemplate(':name.:locale')->locales(['nl', 'en'])->prepForSaving(function ($value, $input) {
+        $field = Text::make('title_trans')->setFieldNameTemplate('trans.:locale.:name')->locales(['nl', 'en'])->prepForSaving(function ($value, $input) {
             return $value.'-foobar';
         });
 
         (new SaveFields)->save($article, Fields::make([$field]), [
-            'title_trans' => [
-                'nl' => 'xxx-nl',
-                'en' => 'xxx-en',
+            'trans' => [
+                'nl' => ['title_trans' => 'xxx-nl'],
+                'en' => ['title_trans' => 'xxx-en'],
             ],
         ], []);
 
