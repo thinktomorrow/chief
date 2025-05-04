@@ -146,10 +146,10 @@ class UrlRecord extends Model
     {
         $records = static::where('site', $locale)
             ->where('redirect_id', '=', null)
+            ->where('status', '=', LinkStatus::online->value)
             ->orderBy('updated_at', 'DESC')
             ->get();
 
-        // Filter out offline urls... TODO: this should be a state that is owned by the url and not the model.
         // Because of archived pages the mapping can be null so we reject them before we check for online
         return $records->map(function (UrlRecord $urlRecord) {
             return Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);

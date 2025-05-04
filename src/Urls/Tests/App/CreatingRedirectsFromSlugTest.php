@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
 use Thinktomorrow\Chief\Urls\Exceptions\RedirectUrlAlreadyExists;
 use Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound;
 
-final class CreateRedirectsFromSlugTest extends ChiefTestCase
+final class CreatingRedirectsFromSlugTest extends ChiefTestCase
 {
     private RedirectApplication $redirectApplication;
 

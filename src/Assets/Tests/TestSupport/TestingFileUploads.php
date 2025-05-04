@@ -8,6 +8,7 @@ use Illuminate\Testing\TestResponse;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFileField;
 use Thinktomorrow\Chief\Forms\Tests\TestSupport\PageWithAssets;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 trait TestingFileUploads
@@ -26,16 +27,20 @@ trait TestingFileUploads
         ]);
     }
 
-    private function uploadFileField(string $fieldKey, string $path, string $filename, string $mimeType, $model): void
+    private function uploadImageField(HasAsset $model, string $fieldKey = 'image', string $path = 'test/image.png', array $payload = []): void
     {
+        $basepath = substr($path, 0, strrpos($path, '/'));
+        $filename = substr($path, strrpos($path, '/') + 1);
+
+        $payload['path'] = Storage::path($path);
+        $payload['originalName'] = $filename;
+
+        $this->storeFakeImageOnDisk($basepath, $filename);
+
         $this->saveFileField($model, $fieldKey, [
             'nl' => [
                 'uploads' => [
-                    $this->fileFormPayload([
-                        'path' => Storage::path($path),
-                        'originalName' => $filename,
-                        'mimeType' => $mimeType,
-                    ]),
+                    $this->fileFormPayload($payload),
                 ],
             ],
         ]);
@@ -43,7 +48,12 @@ trait TestingFileUploads
 
     private function saveFileField(HasAsset $model, $fieldKey, array $payload): array
     {
-        $resource = app(Registry::class)->findResourceByModel($model::class);
+        if ($model instanceof Fragment) {
+            $resource = $model;
+            $model = $model->getFragmentModel();
+        } else {
+            $resource = app(Registry::class)->findResourceByModel($model::class);
+        }
 
         return app(SaveFileField::class)->handle(
             $model,

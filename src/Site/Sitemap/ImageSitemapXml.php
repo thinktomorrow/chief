@@ -81,7 +81,6 @@ class ImageSitemapXml
         $assets = $model->assets(null, $locale);
 
         if (! $context = $this->contextRepository->findBySite($model->modelReference(), $locale)) {
-
             return $assets;
         }
 
