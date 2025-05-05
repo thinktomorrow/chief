@@ -4,9 +4,10 @@ namespace Thinktomorrow\Chief\Assets\Tests\App;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use TestSupport\CustomAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
+use Thinktomorrow\Chief\Forms\Tests\TestSupport\CustomAsset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
@@ -175,6 +176,7 @@ class AddFileTest extends ChiefTestCase
     {
         config()->set('thinktomorrow.assetlibrary.types', [
             'custom' => CustomAsset::class,
+            'default' => Asset::class,
         ]);
 
         UploadedFile::fake()->image('image-nl.png', '10', '80')->storeAs('test', 'image-temp-name-nl.png');

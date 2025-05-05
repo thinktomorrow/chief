@@ -6,12 +6,15 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
+use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
 class UpdateFileFieldTest extends ChiefTestCase
 {
+    use TestingFileUploads;
+
     private $model;
 
     private Resource $resource;
@@ -35,7 +38,7 @@ class UpdateFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -60,7 +63,7 @@ class UpdateFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -96,7 +99,7 @@ class UpdateFileFieldTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -114,7 +117,7 @@ class UpdateFileFieldTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -122,7 +125,7 @@ class UpdateFileFieldTest extends ChiefTestCase
             ],
         ]);
 
-        $this->saveFileField($this->resource, $this->model, 'thumb_image', [
+        $this->saveFileField($this->model, 'thumb_image', [
             'nl' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -143,7 +146,7 @@ class UpdateFileFieldTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -154,7 +157,7 @@ class UpdateFileFieldTest extends ChiefTestCase
         $this->assertCount(1, $this->model->assets('thumb'));
         $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -172,7 +175,7 @@ class UpdateFileFieldTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -183,7 +186,7 @@ class UpdateFileFieldTest extends ChiefTestCase
         $this->assertCount(1, $this->model->assets('thumb'));
         $this->assertEquals('image.png', $this->model->asset('thumb')->getFileName());
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'en' => [
                 'attach' => [
                     ['id' => $asset->id],
@@ -205,7 +208,7 @@ class UpdateFileFieldTest extends ChiefTestCase
 
         $this->assertCount(1, $this->model->assets('thumb'));
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'queued_for_deletion' => [$asset->id],
             ],
@@ -219,7 +222,7 @@ class UpdateFileFieldTest extends ChiefTestCase
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
         UploadedFile::fake()->image('image2.png')->storeAs('test', 'image-temp-name-2.png');
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -251,7 +254,7 @@ class UpdateFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->resource, $this->model, 'thumb', [
+        $this->saveFileField($this->model, 'thumb', [
             'nl' => [
                 'uploads' => [
                     [
@@ -276,7 +279,7 @@ class UpdateFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->resource, $this->model, 'thumb_enhanced', [
+        $this->saveFileField($this->model, 'thumb_enhanced', [
             'nl' => [
                 'uploads' => [
                     [
@@ -301,7 +304,7 @@ class UpdateFileFieldTest extends ChiefTestCase
     {
         UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
 
-        $this->saveFileField($this->resource, $this->model, 'thumb_enhanced', [
+        $this->saveFileField($this->model, 'thumb_enhanced', [
             'nl' => [
                 'uploads' => [
                     [

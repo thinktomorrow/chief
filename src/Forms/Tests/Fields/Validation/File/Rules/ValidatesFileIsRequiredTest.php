@@ -51,7 +51,7 @@ class ValidatesFileIsRequiredTest extends ChiefTestCase
 
     public function test_it_passes_validation()
     {
-        $this->storeFakeImageOnDisk('test', 'image-temp-name.png');
+        $this->storeFakeImageOnDisk('image-temp-name.png', 'test');
 
         $field = File::make('thumb')->required();
 
@@ -74,7 +74,7 @@ class ValidatesFileIsRequiredTest extends ChiefTestCase
 
     public function test_it_validates_per_locale()
     {
-        $this->storeFakeImageOnDisk('test', 'image-temp-name.png');
+        $this->storeFakeImageOnDisk('image-temp-name.png');
 
         $this->expectException(ValidationException::class);
 

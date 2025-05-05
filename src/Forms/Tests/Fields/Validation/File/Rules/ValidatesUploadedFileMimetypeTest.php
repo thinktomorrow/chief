@@ -34,7 +34,7 @@ class ValidatesUploadedFileMimetypeTest extends ChiefTestCase
 
     public function test_it_fails_validation()
     {
-        $this->storeFakeImageOnDisk('test', 'image-temp-name.png');
+        $this->storeFakeImageOnDisk('image-temp-name.png');
 
         $this->expectException(ValidationException::class);
 
@@ -64,7 +64,7 @@ class ValidatesUploadedFileMimetypeTest extends ChiefTestCase
 
     public function test_it_passes_validation()
     {
-        $this->storeFakeImageOnDisk('test', 'image-temp-name.jpg');
+        $this->storeFakeImageOnDisk('image-temp-name.jpg');
 
         $payload = [
             'files' => ['thumb' => [

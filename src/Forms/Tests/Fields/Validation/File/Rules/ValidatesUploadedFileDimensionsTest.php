@@ -33,7 +33,7 @@ class ValidatesUploadedFileDimensionsTest extends ChiefTestCase
 
     public function test_it_fails_validation()
     {
-        $this->storeFakeImageOnDisk('test', 'image-temp-name.png');
+        $this->storeFakeImageOnDisk('image-temp-name.png');
 
         $this->expectException(ValidationException::class);
 
@@ -63,7 +63,7 @@ class ValidatesUploadedFileDimensionsTest extends ChiefTestCase
 
     public function test_it_passes_validation()
     {
-        $this->storeFakeImageOnDisk('test', 'image-temp-name.png', 21);
+        $this->storeFakeImageOnDisk('image-temp-name.png', 'test', 21);
 
         $payload = [
             'files' => ['thumb' => [

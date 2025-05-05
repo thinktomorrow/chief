@@ -35,12 +35,23 @@ trait TestingFileUploads
         $payload['path'] = Storage::path($path);
         $payload['originalName'] = $filename;
 
-        $this->storeFakeImageOnDisk($basepath, $filename);
+        $this->storeFakeImageOnDisk($filename, $basepath);
 
         $this->saveFileField($model, $fieldKey, [
             'nl' => [
                 'uploads' => [
                     $this->fileFormPayload($payload),
+                ],
+            ],
+        ]);
+    }
+
+    private function attachFile(HasAsset $model, $fieldKey, int $assetId)
+    {
+        return $this->saveFileField($model, $fieldKey, [
+            'nl' => [
+                'attach' => [
+                    ['id' => $assetId],
                 ],
             ],
         ]);
@@ -66,9 +77,13 @@ trait TestingFileUploads
         );
     }
 
-    private function storeFakeImageOnDisk(string $path, string $filename, $width = 10, $height = 20): void
+    private function storeFakeImageOnDisk(string $filename, string $basepath = 'test', $width = 10, $height = 20): UploadedFile
     {
-        Storage::disk('local')->putFileAs($path, UploadedFile::fake()->image($filename, $width, $height), $filename);
+        $uploadedFile = UploadedFile::fake()->image($filename, $width, $height);
+
+        Storage::disk('local')->putFileAs($basepath, $uploadedFile, $filename);
+
+        return $uploadedFile;
     }
 
     private function fileFormPayload(array $values = []): array
@@ -87,7 +102,7 @@ trait TestingFileUploads
         chiefRegister()->resource(PageWithAssets::class);
 
         $model = PageWithAssets::create();
-        $this->storeFakeImageOnDisk('test', 'image-temp-name.png');
+        $this->storeFakeImageOnDisk('image-temp-name.png', 'test');
         $this->saveFileField($model, 'thumb', [
             'nl' => [
                 'uploads' => [
