@@ -27,7 +27,7 @@ readonly class ChiefSite
             $site['locale'],
             $site['fallback_locale'] ?? null,
             $site['asset_fallback_locale'] ?? null,
-            $site['active'] ?? false,
+            $site['active'] ?? true,
             $site['primary'] ?? false,
             $site['name'] ?? $site['locale'],
             $site['short_name'] ?? ($site['name'] ?? $site['locale']),

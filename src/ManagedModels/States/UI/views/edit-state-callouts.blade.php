@@ -14,6 +14,11 @@
 
 <div class="space-y-6">
     <div class="space-y-3">
+        @if ($errors->any())
+            <x-chief::callout variant="red">
+                <p>{!! $errors->first() !!}</p>
+            </x-chief::callout>
+        @endif
         @foreach ($this->getTransitions() as $transition)
             <x-chief::callout
                 :title="$transition->title"

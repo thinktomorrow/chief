@@ -35,7 +35,7 @@ class TransitionDto
             $config->getConfirmationLabel($model, $transitionKey),
             $config->getConfirmationTitle($model, $transitionKey),
             $config->getConfirmationContent($model, $transitionKey),
-            $config->getConfirmationFields($model, $transitionKey),
+            iterator_to_array($config->getConfirmationFields($model, $transitionKey)),
             $config->getRedirectAfterTransition($model, $transitionKey),
             $config->getResponseNotification($transitionKey),
         );

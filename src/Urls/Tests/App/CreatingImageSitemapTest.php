@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
-use Thinktomorrow\Chief\Urls\App\Actions\Redirects\RedirectApplication;
 use Thinktomorrow\Chief\Urls\App\Actions\UpdateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
@@ -26,14 +25,11 @@ class CreatingImageSitemapTest extends ChiefTestCase
 
     private Visitable $model;
 
-    private RedirectApplication $redirectApplication;
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->application = app(UrlApplication::class);
-        $this->redirectApplication = app(RedirectApplication::class);
         $this->sitemapXml = app(ImageSitemapXml::class);
 
         $carbon = Carbon::today();
@@ -43,9 +39,9 @@ class CreatingImageSitemapTest extends ChiefTestCase
         $this->model = $this->setUpAndCreateArticle([
             'current_state' => PageState::published->value,
         ]);
+
         $this->application->create(new CreateUrl($this->model->modelReference(), 'nl', 'bar', 'online'));
         $this->application->create(new CreateUrl($this->model->modelReference(), 'en', 'baz', 'online'));
-
     }
 
     public function test_it_can_generate_from_model_asset(): void

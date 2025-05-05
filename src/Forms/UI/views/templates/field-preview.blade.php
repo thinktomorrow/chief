@@ -6,7 +6,6 @@
     @if ($hasLocales() && count($getLocales()) == 1)
         @include($getPreviewView(), ['component' => $component, 'locale' => $getLocales()[0]])
     @elseif ($hasLocales() && count($getLocales()) > 1)
-        @dd($getName(), $getLocales())
         <x-chief::tabs :show-nav="false" :should-listen-for-external-tab="true">
             @foreach ($getLocales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}">

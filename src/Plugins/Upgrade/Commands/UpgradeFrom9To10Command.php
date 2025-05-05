@@ -87,12 +87,14 @@ class UpgradeFrom9To10Command extends BaseCommand
             '->windowView(' => '->previewView(',
             'Fragment, HasBookmark' => 'Fragment', // HasBookmark already included
             'use Thinktomorrow\Chief\Fragments\HasBookmark;' => '',
+            '->editInSidebar()' => '',
             'config(\'chief.locales\')' => '\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
             'config(\'chief.locales\',[])' => '\Thinktomorrow\Chief\Sites\ChiefSites::locales()',
             'Thinktomorrow\Chief\Site\Urls\UrlHelper' => 'Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper',
             'Thinktomorrow\Chief\Site\Urls\UrlRecord' => 'Thinktomorrow\Chief\Urls\Models\UrlRecord',
             'Thinktomorrow\Chief\Site\Urls\ChiefResponse' => 'Thinktomorrow\Chief\Urls\ChiefResponse',
             'Thinktomorrow\Chief\Urls\Models\UrlRecordNotFound' => 'Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound',
+            '@fragments' => '@foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach',
 
             // Page
             'Thinktomorrow\Chief\ManagedModels\Presets\Page' => Page::class,
@@ -116,9 +118,11 @@ class UpgradeFrom9To10Command extends BaseCommand
             'renderAdminFragment(' => 'The following files have the old renderAdminFragment method. This method has been removed in Chief 0.10. Please replace it with renderInAdmin().',
             'renderFragment(' => 'The following files have the old renderFragment method. This method has been removed in Chief 0.10. Please replace it with render().',
             'editInSidebar()' => 'The following files have the old Form::editInSidebar method. This method has been removed in Chief 0.10. Please remove it.',
+            'redirectAfterSubmit(' => 'The following files have the old Form::redirectAfterSubmit method. This method has been removed in Chief 0.10. Please remove it.',
             'showAsBlank()' => 'The following files have the old Form::showAsBlank method. This method has been removed in Chief 0.10. Please remove it.',
             'ShowsPageState' => 'Trait ShowsPageState is removed. Please remove it from your model.',
             'getInstanceAttributes' => 'Method getInstanceAttributes is removed. Please replace it with getAttributesOnCreate(). It also does not need to return a nested array. Just return the attributes array.',
+            'FragmentsOwner' => 'The FragmentsOwner interface is removed. Please remove it from your model.',
         ];
 
         $allClean = true;

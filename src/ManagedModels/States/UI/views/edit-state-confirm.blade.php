@@ -10,7 +10,6 @@
             <p>{!! $errorMessage !!}</p>
         </x-chief::callout>
     @endif
-
     <div class="space-y-6">
         @foreach ($transitionInConfirm->confirmationFields as $field)
             {{ $field }}

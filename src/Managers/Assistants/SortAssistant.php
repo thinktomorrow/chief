@@ -52,7 +52,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle(
+        app(SortModels::class)->handleByModel(
             $this->managedModelClassInstance(),
             $request->indices,
             $this->managedModelClassInstance()->sortableAttribute(),

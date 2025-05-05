@@ -4,7 +4,12 @@ You can run the upgrade command to facilitate the upgrade process.
 
 - First temporarily comment the existing service providers of your project to avoid conflicts during installing chief
   0.10
+- Set the chief.sites config so the ugrade script can run with the proper sites.
 - Next install the chief 0.10 package
+
+## Run upgrade command
+
+First, add the sites config to your chief config file. This replaces the chief.locales config.
 
 ```bash
 composer require "chief/chief:^0.10"
@@ -18,32 +23,22 @@ composer require "chief/chief:^0.10"
 php artisan chief:upgrade-from-9-to-10
 ```
 
-- Make sure that all your resources have a locales column in the database. You can add it manually by creating and
+## Migrations
+
+- Make sure that all your resources have an allowed_sites column in the database. You can add it manually by creating
+  and
   running
   the following migration:
 
 ```php
 Schema::table('pages', function (Blueprint $table) {
-    $table->json('locales')->nullable();
+    $table->json('allowed_sites')->nullable();
 });
 ```
 
-### Views
+### Chief Nav
 
-use getFragments() function instead of @fragments.
-This directive does not make use of the component rendering of fragments.
-Best to loop the fragments in the view like:
-
-```php
-@foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
-```
-
-Default localized key is now `:name.:locale` instead of `trans.:locale.:name`. For existing projects, you
-can set the default key back by adding the following to your AppServiceProvider file:
-
-```php
-Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName::setDefaultTemplate('trans.:locale.:name');
-```
+Move your project `nav-project` file to `resources/views/vendor/chief/templates/page/nav/nav-project.blade.php`
 
 ### Redactor
 
@@ -53,8 +48,6 @@ dialogs.
 ```php
 // Load redactor in livewire dialogs
 document.addEventListener('form-dialog-opened', (event) => {
-
-    // Next tick my friend... next tick
     setTimeout(() => {
         const dialogEl = event.detail.componentId ? document.querySelector(`[wire\\:id="${event.detail.componentId}"]`) : document;
         loadRedactorInstances(dialogEl);
@@ -83,7 +76,7 @@ window.Redactor(el, customOptions);
 To exclude fields to show up on a model create page, use the `not-on-model-create` tag on the field.
 The former `not-on-create` tag is used to exclude on both models and fragments.
 
-### Fragments
+### Fragments & Fields
 
 #### View paths
 
@@ -97,14 +90,21 @@ Now, they are both defined as protected class variables, like so:
   protected $viewPath = 'theme::fragments.text';
 ```
 
-#### Rendering fragments in views
+#### Views
 
-On the front-end, replace the @fragments with:
+use getFragments() function instead of @fragments.
+This directive does not make use of the component rendering of fragments.
+Best to loop the fragments in the view like:
 
+```php
+@foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach
 ```
-@foreach (getFragments() as $fragment)
-    {!! $fragment->with(['page' => $model])->render() !!}
-@endforeach
+
+Default localized key is now `:name.:locale` instead of `trans.:locale.:name`. For existing projects, you
+can set the default key back by adding the following to your AppServiceProvider file:
+
+```php
+Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName::setDefaultTemplate('trans.:locale.:name');
 ```
 
 ### Chief config
@@ -114,6 +114,8 @@ Add the sites config to your config file. This is a new config value used to det
 You can reference the config file in the chief package as a starting point.
 
 Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\ChiefSites::locales()`.
+
+### Locales
 
 ### Plugins
 
