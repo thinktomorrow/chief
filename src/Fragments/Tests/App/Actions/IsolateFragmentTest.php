@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\Actions;
+namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
 use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;

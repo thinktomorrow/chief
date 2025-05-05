@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\Actions;
+namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;

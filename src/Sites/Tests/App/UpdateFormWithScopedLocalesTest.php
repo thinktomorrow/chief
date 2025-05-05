@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Thinktomorrow\Chief\Sites\Tests\App;
 
 use Illuminate\Validation\ValidationException;
 use Thinktomorrow\Chief\Forms\Fields\Text;

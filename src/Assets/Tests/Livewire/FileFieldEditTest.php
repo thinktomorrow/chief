@@ -1,6 +1,6 @@
 <?php
 
-namespace Livewire;
+namespace Thinktomorrow\Chief\Assets\Tests\Livewire;
 
 use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
