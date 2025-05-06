@@ -25,21 +25,22 @@ class MenuApplicationTest extends ChiefTestCase
     {
         parent::setUp();
 
-        $this->menuApplication = new MenuApplication;
+        $this->menuApplication = app(MenuApplication::class);
     }
 
     public function test_it_can_create_a_menu_and_dispatch_event(): void
     {
         Event::fake();
 
-        $command = new CreateMenu('main', ['nl', 'en'], 'Main Menu');
+        $command = new CreateMenu('main', ['nl', 'en'], ['nl'], 'Main Menu');
 
         $menuId = $this->menuApplication->create($command);
 
         $this->assertDatabaseHas('menus', [
             'id' => $menuId,
             'type' => 'main',
-            'sites' => json_encode(['nl', 'en']),
+            'allowed_sites' => json_encode(['nl', 'en']),
+            'active_sites' => json_encode(['nl']),
             'title' => 'Main Menu',
         ]);
 
@@ -54,16 +55,17 @@ class MenuApplicationTest extends ChiefTestCase
 
         $menu = Menu::create([
             'type' => 'main',
-            'sites' => ['nl'],
+            'allowed_sites' => ['nl'],
             'title' => 'Old Title',
         ]);
 
-        $command = new UpdateMenu($menu->id, ['nl', 'en'], 'Updated Title');
+        $command = new UpdateMenu($menu->id, ['nl', 'en'], ['nl', 'en'], 'Updated Title');
         $this->menuApplication->update($command);
 
         $this->assertDatabaseHas('menus', [
             'id' => $menu->id,
-            'sites' => json_encode(['nl', 'en']),
+            'allowed_sites' => json_encode(['nl', 'en']),
+            'active_sites' => json_encode(['nl', 'en']),
             'title' => 'Updated Title',
         ]);
 
@@ -78,7 +80,7 @@ class MenuApplicationTest extends ChiefTestCase
 
         $menu = Menu::create([
             'type' => 'main',
-            'sites' => ['nl'],
+            'allowed_sites' => ['nl'],
             'title' => 'Menu to delete',
         ]);
 
@@ -96,7 +98,7 @@ class MenuApplicationTest extends ChiefTestCase
     {
         Event::fake();
 
-        $command = new UpdateMenu(999, ['nl', 'en'], 'Updated Title');
+        $command = new UpdateMenu(999, ['nl', 'en'], [], 'Updated Title');
 
         $this->expectException(ModelNotFoundException::class);
         $this->menuApplication->update($command);

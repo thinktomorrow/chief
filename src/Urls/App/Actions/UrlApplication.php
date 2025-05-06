@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Urls\App\Actions;
 
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Urls\App\Actions\Redirects\AddRedirect;
 use Thinktomorrow\Chief\Urls\App\Actions\Redirects\CreateRedirectTo;
@@ -59,6 +60,8 @@ class UrlApplication
             $this->redirectApplication->addRedirect(new AddRedirect($existingRecord->id, $recordId));
         }
 
+        event(new ManagedModelUrlUpdated($model->modelReference()));
+
         return $recordId;
     }
 
@@ -94,6 +97,8 @@ class UrlApplication
         if ($urlRecord->slug != $slug) {
             $this->redirectApplication->createRedirectTo(new CreateRedirectTo($urlRecord->id, $urlRecord->slug));
         }
+
+        event(new ManagedModelUrlUpdated($urlRecord->model->modelReference()));
     }
 
     public function delete(DeleteUrl $command): void

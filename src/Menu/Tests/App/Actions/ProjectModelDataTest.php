@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Menu\Tests\App\Actions;
 
+use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\App\Queries\MenuTree;
@@ -22,12 +23,12 @@ class ProjectModelDataTest extends ChiefTestCase
         parent::setUp();
 
         $this->page = $this->setupAndCreateArticle([
-            'custom.nl' => 'artikel titel nl', // Custom is the specific column for the title
-            'custom.en' => 'artikel titel en',
+            'title.nl' => 'artikel titel nl',
+            'title.en' => 'artikel titel en',
             'current_state' => PageState::published,
         ]);
 
-        $menu = Menu::create(['type' => 'main', 'sites' => ['nl', 'en']]);
+        $menu = Menu::create(['type' => 'main', 'allowed_sites' => ['nl', 'en']]);
 
         MenuItem::create([
             'menu_id' => $menu->id,
@@ -40,7 +41,6 @@ class ProjectModelDataTest extends ChiefTestCase
 
     public function test_it_can_project_page_data()
     {
-        $this->disableExceptionHandling();
         app(ProjectModelData::class)->handleByOwner($this->page->getMorphClass(), $this->page->id);
 
         $collection = MenuTree::bySite('nl', 'main');
@@ -62,13 +62,13 @@ class ProjectModelDataTest extends ChiefTestCase
 
     public function test_it_can_project_page_data_when_page_is_updated()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()->put($this->manager($this->page)->route('update', $this->page), $this->validUpdatePageParams([
-            'custom' => [
+            'title' => [
                 'nl' => 'aangepaste titel nl',
                 'en' => 'updated title en',
             ],
         ]));
-
         $collection = MenuTree::bySite('nl', 'main');
         $this->assertEquals('label nl', $collection->first()->getLabel('nl'));
         $this->assertEquals('aangepaste titel nl', $collection->first()->getOwnerLabel('nl'));
@@ -79,21 +79,19 @@ class ProjectModelDataTest extends ChiefTestCase
     public function test_it_can_project_page_data_when_url_is_updated()
     {
         $this->updateLinks($this->page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
-
         $collection = MenuTree::bySite('nl', 'main');
-        $this->assertEquals('/foobar-nl', $collection->first()->getUrl('nl'));
+
+        $this->assertEquals('/nl-base/foobar-nl', $collection->first()->getUrl('nl'));
         $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel('nl'));
-        $this->assertEquals('/foobar-en', $collection->first()->getUrl('en'));
+        $this->assertEquals('/en-base/foobar-en', $collection->first()->getUrl('en'));
         $this->assertEquals('artikel titel en', $collection->first()->getOwnerLabel('en'));
     }
 
     public function test_it_can_project_page_data_when_page_has_archived()
     {
-        $this->disableExceptionHandling();
-        $this->asAdmin()
-            ->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'archive'));
+        app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'archive');
 
-        // Get by menu so offline items are included
+        // Get via query builder so offline items are included
         $collection = MenuTree::byMenu('1');
 
         $this->assertEquals('label nl', $collection->first()->getLabel());
@@ -103,8 +101,8 @@ class ProjectModelDataTest extends ChiefTestCase
 
     public function test_it_can_project_page_data_when_page_has_published()
     {
-        $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'unpublish'));
-        $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'publish'));
+        app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'unpublish');
+        app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'publish');
 
         $collection = MenuTree::bySite('nl', 'main');
         $this->assertFalse($collection->first()->isOffline());
@@ -112,10 +110,8 @@ class ProjectModelDataTest extends ChiefTestCase
 
     public function test_it_can_project_page_data_when_page_is_deleted()
     {
-        $this->asAdmin()
-            ->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'archive'));
-
-        $this->asAdmin()->put($this->manager($this->page)->route('state-update', $this->page, PageState::KEY, 'delete'));
+        app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'unpublish');
+        app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'delete');
 
         $this->assertNull(MenuItem::first()->owner);
 

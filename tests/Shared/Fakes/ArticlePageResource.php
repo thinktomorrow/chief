@@ -25,7 +25,7 @@ class ArticlePageResource implements PageResource
 
     private function defaultFields($model): iterable
     {
-        yield Text::make('title')->required()->rules(['min:4']);
+        yield Text::make('title')->locales()->required()->rules(['min:4']);
         yield Text::make('custom')
             ->rules(['required'])
             ->validationAttribute('custom attribute')
@@ -45,12 +45,12 @@ class ArticlePageResource implements PageResource
         yield Image::make(ArticlePage::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
         yield File::make(ArticlePage::FILEFIELD_ASSETTYPE_KEY)->assetType('custom')->tag('edit');
 
-        yield Text::make('title_sanitized')->prepForSaving(function ($value, array $input) {
+        yield Text::make('title_sanitized')->prepForSaving(function ($value, array $input, $locale = null) {
             if ($value) {
                 return $value;
             }
-            if (isset($input['title'])) {
-                return Str::slug($input['title']);
+            if (isset($input['title']) && isset($input['title'][$locale])) {
+                return Str::slug($input['title'][$locale]);
             }
 
             return null;
@@ -60,8 +60,9 @@ class ArticlePageResource implements PageResource
             if ($value) {
                 return $value;
             }
-            if (isset($input['title'])) {
-                return Str::slug($input['title']).'-'.$locale;
+
+            if (isset($input['title']) && isset($input['title'][$locale])) {
+                return Str::slug($input['title'][$locale]);
             }
 
             return null;

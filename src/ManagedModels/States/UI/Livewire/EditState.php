@@ -156,34 +156,6 @@ class EditState extends Component
         ]);
 
         $this->close();
-
-        // In case that the state makes the model inaccessible (such as a deletion)
-        // we'll want to redirect to a different page.
-        //        $stateConfig = $model->getStateConfig($key);
-        //        $redirect = $stateConfig->getRedirectAfterTransition($transitionKey, $model);
-        //
-        //        // A custom redirect is present so we'll return to the redirect.
-        //        if ($redirect && ! $request->expectsJson()) {
-        //            if ($notification = $stateConfig->getResponseNotification($transitionKey)) {
-        //                return redirect()->to($redirect)->with(
-        //                    'messages.'.($stateConfig->getTransitionType($transitionKey) ?: 'info'),
-        //                    $notification
-        //                );
-        //            }
-        //
-        //            return redirect()->to($redirect);
-        //        }
-        //
-        //        // Default when we don't have a custom redirect and no json response
-        //        // is expected, we'll go back to the current page
-        //        if (! $request->expectsJson()) {
-        //            return redirect()->back();
-        //        }
-        //
-        //        return response()->json([
-        //            'message' => 'Transition ['.$transitionKey.'] applied',
-        //            'redirect_to' => $redirect,
-        //        ]);
     }
 
     public function render()
