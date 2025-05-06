@@ -13,7 +13,7 @@ class Form
     {
         foreach ($translations as $locale => $trans) {
             foreach ($trans as $key => $value) {
-                call_user_func($callback, $locale, $key, $value);
+                call_user_func($callback, $key, $locale, $value);
             }
         }
     }

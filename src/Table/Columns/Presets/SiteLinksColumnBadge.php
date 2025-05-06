@@ -17,7 +17,7 @@ class SiteLinksColumnBadge extends ColumnBadge
             $urls = $model->urls;
             $items = [];
 
-            foreach ($model->getAllowedSites() as $site) {
+            foreach (ChiefSites::verifiedLocales($model->getAllowedSites()) as $site) {
 
                 $url = $urls->firstWhere('site', $site);
 

@@ -5,12 +5,12 @@
 <x-chief::window title="Fragmenten">
     <x-slot name="badges">
         @if (($item = $items->first(fn ($item) => $item->id === $activeItemId)) && count($locales) > 1)
-            @foreach ($item->getAllowedSites() as $site)
+            @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($item->getAllowedSites()) as $site)
                 <x-chief::badge
                     variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
                     size="sm"
                 >
-                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->name }}
+                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($site) }}
                 </x-chief::badge>
             @endforeach
         @endif

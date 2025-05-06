@@ -138,12 +138,6 @@ class ChiefSites implements \Countable, \IteratorAggregate
     /** Get all active sites */
     public static function all(): self
     {
-        return self::allIncludingNonActive()->onlyActive();
-    }
-
-    /** Get all sites, including non-active */
-    public static function allIncludingNonActive(): self
-    {
         if (self::$cachedSites) {
             return self::$cachedSites;
         }
@@ -154,6 +148,14 @@ class ChiefSites implements \Countable, \IteratorAggregate
     public static function locales(): array
     {
         return self::all()->getLocales();
+    }
+
+    /**
+     * Get the locales that are available on frontend
+     */
+    public static function activeLocales(): array
+    {
+        return self::all()->onlyActive()->getLocales();
     }
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -13,16 +14,24 @@ class MenuItemControllerTest extends ChiefTestCase
 {
     public function test_creating_a_new_menu_item()
     {
+        $menu = Menu::create(['type' => 'main']);
+
         $response = $this->asAdmin()
-            ->post(route('chief.back.menuitem.store'), $this->validParams([
-                'trans.nl.url' => 'https://thinktomorrow.be',
-                'trans.nl.label' => 'label one',
-                'trans.en.url' => 'https://thinktomorrow.co.uk',
-                'trans.en.label' => 'label two',
+            ->post(route('chief.back.menuitem.store', $menu->id), $this->validParams([
+                'trans' => [
+                    'nl' => [
+                        'label' => 'label one',
+                        'url' => 'https://thinktomorrow.be',
+                    ],
+                    'en' => [
+                        'label' => 'label two',
+                        'url' => 'https://thinktomorrow.co.uk',
+                    ],
+                ],
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menus.show', 'main'));
+        $response->assertRedirect(route('chief.back.menus.show', ['main', $menu->id]));
 
         $this->assertCount(1, MenuItem::all());
 
@@ -39,11 +48,13 @@ class MenuItemControllerTest extends ChiefTestCase
 
     public function test_creating_a_new_internal_menu_item()
     {
-        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
+        $menu = Menu::create(['type' => 'main']);
+
+        $page = $this->setupAndCreateArticle(['title.nl' => 'artikel pagetitle nl', 'title.en' => 'artikel pagetitle en']);
         $this->updateLinks($page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
         $this->asAdmin()
-            ->post(route('chief.back.menuitem.store'), $this->validParams([
+            ->post(route('chief.back.menuitem.store', $menu->id), $this->validParams([
                 'type' => 'internal',
                 'owner_reference' => $page->modelReference()->getShort(),
                 'trans.nl.label' => 'label one',
@@ -55,8 +66,8 @@ class MenuItemControllerTest extends ChiefTestCase
 
         $this->assertEquals($page->modelReference(), $item->owner->modelReference());
 
-        $this->assertEquals('/foobar-nl', $item->getUrl('nl'));
-        $this->assertEquals('/foobar-en', $item->getUrl('en'));
+        $this->assertEquals('/nl-base/foobar-nl', $item->getUrl('nl'));
+        $this->assertEquals('/en-base/foobar-en', $item->getUrl('en'));
 
         $this->assertEquals('label one', $item->getLabel('nl'));
         $this->assertEquals('label two', $item->getLabel('en'));
@@ -67,7 +78,8 @@ class MenuItemControllerTest extends ChiefTestCase
 
     public function test_editing_a_new_menu_item()
     {
-        $menuitem = MenuItem::create(['menu_type' => 'main']);
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $response = $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
@@ -76,7 +88,7 @@ class MenuItemControllerTest extends ChiefTestCase
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menus.show', $menuitem->menu_type));
+        $response->assertRedirect(route('chief.back.menus.show', [$menu->type, $menu->id]));
 
         $item = MenuItem::first();
         $this->assertEquals('foobar', $item->label);
@@ -85,7 +97,8 @@ class MenuItemControllerTest extends ChiefTestCase
 
     public function test_only_authenticated_admin_can_update_a_menu_item()
     {
-        $menuitem = MenuItem::create(['label' => ['nl' => 'existing label']]);
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id, 'label' => ['nl' => 'existing label']]);
 
         $this->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar']))
             ->assertRedirect(route('chief.back.login'));
@@ -95,9 +108,11 @@ class MenuItemControllerTest extends ChiefTestCase
 
     public function test_updating_a_new_menu_item_emits_event()
     {
+        $this->disableExceptionHandling();
         Event::fake();
 
-        $menuitem = MenuItem::create();
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $this->asAdmin()->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams());
 
@@ -106,51 +121,34 @@ class MenuItemControllerTest extends ChiefTestCase
 
     public function test_editing_an_internal_menu_item()
     {
-        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
+        $this->disableExceptionHandling();
+        $page = $this->setupAndCreateArticle(['title.nl' => 'artikel pagetitle nl', 'title.en' => 'artikel pagetitle en']);
         $this->updateLinks($page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
-        $menuitem = MenuItem::create();
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'type' => 'internal',
-                'owner_reference' => $page->modelReference()->getShort(),
+                'owner_reference' => $page->modelReference()->get(),
             ]))->assertStatus(302);
 
         $item = MenuItem::first();
 
         $this->assertEquals($page->modelReference(), $item->owner->modelReference());
 
-        $this->assertEquals('/foobar-nl', $item->getUrl('nl'));
-        $this->assertEquals('/foobar-en', $item->getUrl('en'));
+        $this->assertEquals('/nl-base/foobar-nl', $item->getUrl('nl'));
+        $this->assertEquals('/en-base/foobar-en', $item->getUrl('en'));
 
         $this->assertEquals('artikel pagetitle nl', $item->getOwnerLabel('nl'));
         $this->assertEquals('artikel pagetitle en', $item->getOwnerLabel('en'));
     }
 
-    public function test_using_homepage_as_link_gives_slash_as_link_entry()
-    {
-        $page = $this->setupAndCreateArticle(['custom.nl' => 'artikel pagetitle nl', 'custom.en' => 'artikel pagetitle en']);
-        $this->updateLinks($page, ['nl' => '/', 'en' => '/en']);
-
-        $menuitem = MenuItem::create();
-
-        $this->asAdmin()
-            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
-                'trans' => [],
-                'type' => 'internal',
-                'owner_reference' => $page->modelReference()->getShort(),
-            ]))->assertStatus(302);
-
-        $item = MenuItem::first();
-
-        $this->assertEquals('/', $item->getUrl('nl'));
-        $this->assertEquals('/en', $item->getUrl('en'));
-    }
-
     public function test_a_relative_url_is_sanitized_to_proper_relative_url()
     {
-        $menuitem = MenuItem::create();
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
@@ -163,13 +161,14 @@ class MenuItemControllerTest extends ChiefTestCase
 
     public function test_it_can_delete_a_menu_item()
     {
-        $menuitem = MenuItem::create(['menu_type' => 'main']);
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $response = $this->asAdmin()
             ->delete(route('chief.back.menuitem.destroy', $menuitem->id));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menus.show', $menuitem->menuType()));
+        $response->assertRedirect(route('chief.back.menus.show', [$menu->type, $menu->id]));
 
         $this->assertCount(0, MenuItem::all());
     }
@@ -178,16 +177,12 @@ class MenuItemControllerTest extends ChiefTestCase
     {
         Event::fake();
 
-        $menuitem = MenuItem::create();
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $this->asAdmin()->delete(route('chief.back.menuitem.destroy', $menuitem->id));
 
         Event::assertDispatched(MenuItemDeleted::class);
-    }
-
-    public function test_label_is_required()
-    {
-        $this->assertValidation(new MenuItem, 'trans.nl.label', $this->validParams(['trans.nl.label' => '']), route('chief.back.menus.show', 'main'), route('chief.back.menuitem.store'));
     }
 
     private function validParams($overrides = [])

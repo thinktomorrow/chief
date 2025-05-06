@@ -14,7 +14,7 @@ class SitesColumnBadge extends ColumnBadge
 
             $items = [];
 
-            foreach ($model->getAllowedSites() as $site) {
+            foreach (ChiefSites::verifiedLocales($model->getAllowedSites()) as $site) {
                 $items[] = (object) [
                     'locale' => $site,
                     'name' => ChiefSites::name($site),

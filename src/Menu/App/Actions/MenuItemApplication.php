@@ -37,13 +37,11 @@ class MenuItemApplication
             $model->owner_type = $command->getOwnerReference()->shortClassName();
             $model->owner_id = $command->getOwnerReference()->id();
         }
-
         Form::foreachTrans($command->getData(), function ($key, $locale, $value) use ($model) {
 
             if ($key == 'url' && $value) {
                 $value = $this->sanitizeUrl->sanitize($value);
             }
-
             $model->setDynamic($key, $value, $locale);
         });
 
@@ -64,6 +62,11 @@ class MenuItemApplication
 
         $model->type = $command->getLinkType();
         $model->parent_id = $command->getParentId();
+
+        if ($command->getOwnerReference()) {
+            $model->owner_type = $command->getOwnerReference()->shortClassName();
+            $model->owner_id = $command->getOwnerReference()->id();
+        }
 
         Form::foreachTrans($command->getData(), function ($key, $locale, $value) use ($model) {
 

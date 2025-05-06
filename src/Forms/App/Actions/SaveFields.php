@@ -90,7 +90,7 @@ class SaveFields
 
     private function localizedValueCallable($model, $field, $input): Closure
     {
-        return function ($locale, $key, $value) use ($model, $field, $input) {
+        return function ($key, $locale, $value) use ($model, $field, $input) {
             if (! is_string($locale)) {
                 throw new \InvalidArgumentException('Locale should be string. Given: '.$locale);
             }

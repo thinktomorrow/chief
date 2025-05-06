@@ -30,6 +30,7 @@ class MenuItemApplicationTest extends ChiefTestCase
 
     public function test_it_can_create_a_menu_item_and_dispatch_event(): void
     {
+        $this->disableExceptionHandling();
         Event::fake();
 
         $command = new CreateMenuItem(
@@ -37,7 +38,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             parentId: null,
             ownerReference: null,
-            data: ['title' => ['en' => 'Home', 'nl' => 'Thuis'], 'url' => ['nl' => 'https://example.com']]
+            data: ['en' => ['title' => 'Home'], 'nl' => ['title' => 'Thuis', 'url' => 'https://example.com']],
         );
 
         $menuItemId = $this->menuItemApplication->create($command);
@@ -71,7 +72,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             ownerReference: null,
             parentId: 2,
-            data: ['url' => ['nl' => 'https://example.com']]
+            data: ['nl' => ['url' => 'https://example.com']]
         );
 
         $this->menuItemApplication->update($command);
@@ -153,7 +154,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             parentId: $parentMenuItem->id,
             ownerReference: null,
-            data: ['url' => ['nl' => '/child']]
+            data: ['nl' => ['url' => '/child']]
         );
 
         $menuItemId = $this->menuItemApplication->create($command);
@@ -183,7 +184,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'internal',
             ownerReference: $owner->modelReference()->get(),
             parentId: null,
-            data: ['url' => ['nl' => '/page']]
+            data: ['nl' => ['url' => '/page']]
         );
 
         $menuItemId = $this->menuItemApplication->create($command);
@@ -211,7 +212,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             parentId: null,
             ownerReference: null,
-            data: ['url' => ['nl' => 'thinktomorrow.be']]
+            data: ['nl' => ['url' => 'thinktomorrow.be']]
         ));
 
         $this->assertDatabaseHas('menu_items', [
@@ -232,7 +233,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'internal',
             parentId: null,
             ownerReference: null,
-            data: ['url' => ['nl' => 'thinktomorrow.be']]
+            data: ['nl' => ['url' => 'thinktomorrow.be']]
         ));
     }
 }

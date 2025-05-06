@@ -25,7 +25,7 @@ class Contexts extends Items
     {
         $this->modelReference = $model->modelReference();
 
-        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+        $locales = $model instanceof HasAllowedSites ? ChiefSites::verifiedLocales($model->getAllowedSites()) : ChiefSites::locales();
 
         $this->setMemoizedModel($model);
 

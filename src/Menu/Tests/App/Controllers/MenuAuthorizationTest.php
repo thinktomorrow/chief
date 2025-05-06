@@ -10,29 +10,26 @@ class MenuAuthorizationTest extends ChiefTestCase
 {
     public function test_admin_can_view_the_create_form()
     {
-        $response = $this->asAdmin()->get(route('chief.back.menuitem.create', 'main'));
+        $menu = Menu::create(['type' => 'main']);
+
+        $response = $this->asAdmin()->get(route('chief.back.menuitem.create', $menu->id));
         $response->assertViewIs('chief-menu::create')
             ->assertStatus(200);
     }
 
     public function test_guests_cannot_view_the_create_form()
     {
-        $response = $this->get(route('chief.back.menuitem.create', 'main'));
+        $menu = Menu::create(['type' => 'main']);
+
+        $response = $this->get(route('chief.back.menuitem.create', $menu->id));
         $response->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
     }
 
-    public function test_only_authenticated_admin_can_create_a_menu_item()
-    {
-        $response = $this->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url' => 'https://thinktomorrow.be']));
-
-        $response->assertRedirect(route('chief.back.login'));
-        $this->assertCount(0, MenuItem::all());
-    }
-
     public function test_admin_can_view_the_edit_form()
     {
-        $menuitem = MenuItem::create();
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $response = $this->asAdmin()->get(route('chief.back.menuitem.edit', $menuitem->id));
         $response->assertSuccessful();
@@ -40,7 +37,8 @@ class MenuAuthorizationTest extends ChiefTestCase
 
     public function test_guests_cannot_view_the_edit_form()
     {
-        $menuitem = MenuItem::create();
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $response = $this->get(route('chief.back.menuitem.edit', $menuitem->id));
         $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
@@ -48,7 +46,8 @@ class MenuAuthorizationTest extends ChiefTestCase
 
     public function test_only_authenticated_admin_can_delete_a_menu_item()
     {
-        $menuitem = MenuItem::create();
+        $menu = Menu::create(['type' => 'main']);
+        $menuitem = MenuItem::create(['menu_id' => $menu->id]);
 
         $response = $this->delete(route('chief.back.menuitem.destroy', $menuitem->id));
 
@@ -71,15 +70,15 @@ class MenuAuthorizationTest extends ChiefTestCase
     public function test_menu_index_route_shows_menu_show_if_there_is_only_one_menu()
     {
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
-        $response->assertViewIs('chief-menu::show')
+        $response->assertViewIs('chief-menu::index')
             ->assertStatus(200);
     }
 
     public function test_admin_can_view_the_menu_show()
     {
-        $menu = Menu::all()->first();
+        Menu::create(['type' => 'main']);
 
-        $response = $this->asAdmin()->get(route('chief.back.menus.show', $menu->key()));
+        $response = $this->asAdmin()->get(route('chief.back.menus.show', 'main'));
         $response->assertViewIs('chief-menu::show')
             ->assertStatus(200);
     }

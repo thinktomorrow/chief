@@ -58,7 +58,7 @@ class FormComponent extends Component
     public function editForm(): void
     {
         $model = $this->getModel();
-        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+        $locales = $model instanceof HasAllowedSites ? ChiefSites::verifiedLocales($model->getAllowedSites()) : ChiefSites::locales();
 
         $this->dispatch('open-'.$this->getId(), [
             'locales' => $locales,

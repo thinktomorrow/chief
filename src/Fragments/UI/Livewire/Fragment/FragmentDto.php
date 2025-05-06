@@ -36,6 +36,7 @@ class FragmentDto implements Wireable
 
     public static function fromFragment(Fragment $fragment, ContextDto $context, ContextOwner $owner): self
     {
+        //        $sharedFragmentDtos = collect();
         $sharedFragmentDtos = self::composeSharedFragmentDtos($fragment->getFragmentId(), $owner);
 
         return new static(

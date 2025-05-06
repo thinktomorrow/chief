@@ -58,7 +58,7 @@ class CreatePageFirstUrls
             return [];
         }
 
-        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+        $locales = $model instanceof HasAllowedSites ? ChiefSites::verifiedLocales($model->getAllowedSites()) : ChiefSites::locales();
 
         foreach ($locales as $locale) {
             app()->setLocale($locale);
