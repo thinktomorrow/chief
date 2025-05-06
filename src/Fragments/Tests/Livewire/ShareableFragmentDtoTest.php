@@ -47,8 +47,8 @@ class ShareableFragmentDtoTest extends ChiefTestCase
         $this->assertEquals($context2->title, $sharedFragmentDtos->last()->contextLabel);
         $this->assertEquals($this->owner->modelReference()->get(), $sharedFragmentDtos->first()->ownerReference);
         $this->assertEquals($owner2->modelReference()->get(), $sharedFragmentDtos->last()->ownerReference);
-        $this->assertEquals('http://localhost/admin/article_page/'.$this->owner->getKey().'/edit', $sharedFragmentDtos->first()->ownerAdminUrl);
-        $this->assertEquals('http://localhost/admin/article_page/'.$owner2->getKey().'/edit', $sharedFragmentDtos->last()->ownerAdminUrl);
+        $this->assertEquals('http://localhost/admin/article_page/'.$this->owner->getKey().'/edit?context=1', $sharedFragmentDtos->first()->ownerAdminUrl);
+        $this->assertEquals('http://localhost/admin/article_page/'.$owner2->getKey().'/edit?context=2', $sharedFragmentDtos->last()->ownerAdminUrl);
         $this->assertEquals($ownerResource->getPageTitle($this->owner), $sharedFragmentDtos->first()->ownerLabel);
         $this->assertEquals($ownerResource->getPageTitle($owner2), $sharedFragmentDtos->last()->ownerLabel);
     }

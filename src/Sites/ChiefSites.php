@@ -36,12 +36,23 @@ class ChiefSites implements \Countable, \IteratorAggregate
             $chiefSites[] = ChiefSite::fromArray($site);
         }
 
-        return (new static(...$chiefSites))->onlyActive();
+        return new self(...$chiefSites);
     }
 
     public function get(): array
     {
         return $this->sites;
+    }
+
+    public function exists(string $locale): bool
+    {
+        foreach ($this->sites as $site) {
+            if ($site->locale === $locale) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function find(string $locale): ChiefSite
@@ -124,10 +135,14 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return new self(...array_filter($this->sites, fn (ChiefSite $site) => ! in_array($site->locale, $locales)));
     }
 
-    /**
-     * Get all active sites
-     */
+    /** Get all active sites */
     public static function all(): self
+    {
+        return self::allIncludingNonActive()->onlyActive();
+    }
+
+    /** Get all sites, including non-active */
+    public static function allIncludingNonActive(): self
     {
         if (self::$cachedSites) {
             return self::$cachedSites;

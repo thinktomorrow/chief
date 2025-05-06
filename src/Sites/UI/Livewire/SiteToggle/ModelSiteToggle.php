@@ -29,7 +29,7 @@ class ModelSiteToggle extends Component
 
         $this->scopedLocale = (request()->input('site') && ChiefSites::verify(request()->input('site')))
             ? request()->input('site')
-            : ($this->sites->contains(fn ($site) => $site->locale == $defaultLocaleScope) ? $defaultLocaleScope : $this->sites->first()?->locale);
+            : ($this->sites->isEmpty() || $this->sites->contains(fn ($site) => $site->locale == $defaultLocaleScope) ? $defaultLocaleScope : $this->sites->first()->locale);
     }
 
     public function getListeners()

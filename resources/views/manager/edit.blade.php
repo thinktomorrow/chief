@@ -6,7 +6,7 @@
     $hasStates = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page') && count($model->getStateKeys()) > 0;
     $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
 
-    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasSites || $hasStates || $hasAnyAsideComponents;
+    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasStates || $hasAnyAsideComponents;
 @endphp
 
 <x-chief::page.template :title="$resource->getPageTitle($model)" :container="$showSidebar ? '2xl' : 'lg'">
@@ -69,13 +69,6 @@
             @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
                 {{ $component->displayAsTransparentForm()->render() }}
             @endforeach
-
-            {{--
-                @if ($hasSites)
-                <livewire:chief-wire::model-site-toggle :model="$model" />
-                <livewire:chief-wire::site-selection :model="$model" />
-                @endif
-            --}}
 
             @if ($hasSiteLinks)
                 <livewire:chief-wire::links :model="$model" />

@@ -24,10 +24,11 @@ trait VisitableDefaults
             return '';
         }
 
-        // External logic such as the urls and thinktomorrow/locale package use locales instead of site ids.
-        $locale = ChiefSites::all()->find($site)->locale;
+        if (! ChiefSites::all()->exists($site)) {
+            return '';
+        }
 
-        return $this->resolveUrl($locale, [$urlRecord->slug]);
+        return $this->resolveUrl($site, [$urlRecord->slug]);
     }
 
     public function urls(): HasMany
