@@ -21,7 +21,7 @@ class RedirectApplication
         $this->repository = $repository;
     }
 
-    public function createRedirectTo(CreateRedirectTo $command): void
+    public function createRedirectTo(CreateRedirectTo $command): string
     {
         $targetRecord = $this->repository->find($command->getTargetId());
 
@@ -44,6 +44,8 @@ class RedirectApplication
         ]);
 
         $this->addRedirect(new AddRedirect($redirectRecordId, $targetRecord->id));
+
+        return $redirectRecordId;
     }
 
     public function createRedirectFromSlugs(CreateRedirectFromSlugs $command): void

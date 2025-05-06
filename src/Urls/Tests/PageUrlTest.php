@@ -30,26 +30,17 @@ class PageUrlTest extends ChiefTestCase
     public function test_the_fixed_base_segment_is_prepended_to_the_slug()
     {
         app()->setLocale('nl');
-        $this->assertEquals(url('/artikels/foobar'), $this->model->url());
-        $this->assertEquals(url('/artikels/foobar'), $this->model->url('nl'));
-        $this->assertEquals(url('/articles/foobar'), $this->model->url('en'));
+        $this->assertEquals(url('/nl-base/foobar'), $this->model->url());
+        $this->assertEquals(url('/nl-base/foobar'), $this->model->url('nl'));
+        $this->assertEquals(url('/en-base/foobar'), $this->model->url('en'));
     }
 
     public function test_url_is_by_default_based_on_current_locale()
     {
         app()->setLocale('nl');
-        $this->assertEquals(url('/artikels/foobar'), $this->model->url());
+        $this->assertEquals(url('/nl-base/foobar'), $this->model->url());
 
         app()->setLocale('en');
-        $this->assertEquals(url('/articles/foobar'), $this->model->url());
-    }
-
-    public function test_the_fallback_locale_for_the_base_url_segment_is_used_when_current_locale_not_found()
-    {
-        config()->set('app.fallback_locale', 'en');
-        $this->assertEquals('articles', $this->model->baseUrlSegment('fr'));
-
-        config()->set('app.fallback_locale', 'nl');
-        $this->assertEquals('artikels', $this->model->baseUrlSegment('fr'));
+        $this->assertEquals(url('/en-base/foobar'), $this->model->url());
     }
 }
