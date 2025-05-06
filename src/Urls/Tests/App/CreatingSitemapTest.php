@@ -3,6 +3,9 @@
 namespace Thinktomorrow\Chief\Urls\Tests\App;
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
@@ -17,6 +20,8 @@ class CreatingSitemapTest extends ChiefTestCase
 {
     use TestingFileUploads;
 
+    private $mockHandler;
+
     private SitemapXml $sitemapXml;
 
     private UrlApplication $application;
@@ -27,8 +32,10 @@ class CreatingSitemapTest extends ChiefTestCase
     {
         parent::setUp();
 
+        $this->mockHandler = new MockHandler;
+        $this->sitemapXml = new SitemapXml(new Client(['handler' => $this->mockHandler]));
+
         $this->application = app(UrlApplication::class);
-        $this->sitemapXml = app(SitemapXml::class);
 
         $carbon = Carbon::today();
         Carbon::setTestNow($carbon);
@@ -44,18 +51,38 @@ class CreatingSitemapTest extends ChiefTestCase
 
     public function test_it_can_generate_for_model(): void
     {
+        $this->mockHandler->append(new Response(200));
+        $this->mockHandler->append(new Response(200));
+
         $this->assertEqualsStringIgnoringStructure($this->getExpectedXmlFromModel(), $this->sitemapXml->generate('nl'));
     }
 
     public function test_it_can_generate_per_locale()
     {
+        $this->mockHandler->append(new Response(200));
+        $this->mockHandler->append(new Response(200));
+
         $this->assertEqualsStringIgnoringStructure($this->getExpectedXmlFromLocalizedModel(), $this->sitemapXml->generate('en'));
     }
 
     public function test_it_does_not_generate_sitemap_for_offline_urls(): void
     {
+        $this->mockHandler->append(new Response(200));
+        $this->mockHandler->append(new Response(200));
+
         $urlRecord = app(UrlRepository::class)->findBySlug('nl-base/bar', 'nl');
         $this->application->update(new UpdateUrl($urlRecord->id, 'nl', 'offline'));
+
+        $this->assertEqualsStringIgnoringStructure($this->getExpectedXmlWithOfflineUrl(), $this->sitemapXml->generate('nl'));
+    }
+
+    public function test_non_visitable_urls_will_be_excluded()
+    {
+        $this->mockHandler->append(new Response(404));
+
+        $urlRecord = app(UrlRepository::class)->findBySlug('nl-base/bar', 'nl');
+
+        $this->assertEqualsStringIgnoringStructure($this->getExpectedXmlWithOfflineUrl(), $this->sitemapXml->generate('nl'));
 
         $this->assertEqualsStringIgnoringStructure($this->getExpectedXmlWithOfflineUrl(), $this->sitemapXml->generate('nl'));
     }

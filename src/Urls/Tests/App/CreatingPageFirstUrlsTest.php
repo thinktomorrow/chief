@@ -54,14 +54,26 @@ class CreatingPageFirstUrlsTest extends ChiefTestCase
     public function test_it_can_create_url_for_all_allowed_sites(): void
     {
         $model = ArticlePage::create([
-            'allowed_sites' => ['nl', 'en', 'fr'],
+            'allowed_sites' => ['nl', 'en'],
             'title' => ['nl' => 'foo bar', 'en' => 'baz bak'],
         ]);
         $this->listener->onManagedModelCreated(new ManagedModelCreated($model->modelReference()));
 
-        $this->assertCount(3, $model->fresh()->urls);
+        $this->assertCount(2, $model->fresh()->urls);
         $this->assertEquals('nl-base/'.Str::slug('foo bar'), $model->urls[0]->slug);
         $this->assertEquals('en-base/'.Str::slug('baz bak'), $model->urls[1]->slug);
-        $this->assertEquals('fr-base/'.Str::slug('article page'), $model->urls[2]->slug);
+    }
+
+    public function test_it_can_create_url_for_only_verified_allowed_sites(): void
+    {
+        $model = ArticlePage::create([
+            'allowed_sites' => ['nl', 'en', 'dk'],
+            'title' => ['nl' => 'foo bar', 'dk' => 'baz bak'],
+        ]);
+        $this->listener->onManagedModelCreated(new ManagedModelCreated($model->modelReference()));
+
+        $this->assertCount(2, $model->fresh()->urls);
+        $this->assertEquals('nl-base/'.Str::slug('foo bar'), $model->urls[0]->slug);
+        $this->assertEquals('en-base/'.Str::slug('article page'), $model->urls[1]->slug);
     }
 }

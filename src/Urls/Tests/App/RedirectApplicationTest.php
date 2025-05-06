@@ -38,7 +38,7 @@ class RedirectApplicationTest extends ChiefTestCase
     public function test_it_creates_redirect()
     {
         $targetId = $this->urlApplication->create(new CreateUrl(
-            $this->model->modelReference(), 'nl', 'my-slug', 'online', null
+            $this->model->modelReference(), 'nl', 'my-slug', 'online'
         ));
 
         $this->application->createRedirectTo(new CreateRedirectTo(
@@ -48,7 +48,7 @@ class RedirectApplicationTest extends ChiefTestCase
 
         $this->assertDatabaseHas('chief_urls', [
             'id' => $targetId,
-            'slug' => 'my-slug',
+            'slug' => 'nl-base/my-slug',
             'redirect_id' => null,
         ]);
 
@@ -61,16 +61,16 @@ class RedirectApplicationTest extends ChiefTestCase
     public function test_it_creates_redirect_from_slugs()
     {
         $targetId = $this->urlApplication->create(new CreateUrl(
-            $this->model->modelReference(), 'nl', 'my-slug', 'online', null
+            $this->model->modelReference(), 'nl', 'my-slug', 'online'
         ));
 
         $this->application->createRedirectFromSlugs(new CreateRedirectFromSlugs(
-            'nl', 'redirect-slug', 'my-slug',
+            'nl', 'redirect-slug', 'nl-base/my-slug',
         ));
 
         $this->assertDatabaseHas('chief_urls', [
             'id' => $targetId,
-            'slug' => 'my-slug',
+            'slug' => 'nl-base/my-slug',
             'redirect_id' => null,
         ]);
 
@@ -92,38 +92,38 @@ class RedirectApplicationTest extends ChiefTestCase
     public function test_it_cannot_create_redirect_that_already_exists()
     {
         $targetId = $this->urlApplication->create(new CreateUrl(
-            $this->model->modelReference(), 'nl', 'my-slug', 'online', null
+            $this->model->modelReference(), 'nl', 'my-slug', 'online'
         ));
 
         $this->expectException(RedirectUrlAlreadyExists::class);
 
         $this->application->createRedirectTo(new CreateRedirectTo(
             $targetId,
-            'my-slug',
+            'nl-base/my-slug',
         ));
     }
 
     public function test_it_can_add_redirect_to_existing_urls(): void
     {
         $redirectId = $this->urlApplication->create(new CreateUrl(
-            $this->model->modelReference(), 'nl', 'redirect-slug', 'online', null
+            $this->model->modelReference(), 'nl', 'redirect-slug', 'online'
         ));
 
         $targetId = $this->urlApplication->create(new CreateUrl(
-            $this->model->modelReference(), 'nl', 'my-slug', 'online', null
+            $this->model->modelReference(), 'nl', 'my-slug', 'online'
         ));
 
         $this->application->addRedirect(new AddRedirect($redirectId, $targetId));
 
         $this->assertDatabaseHas('chief_urls', [
             'id' => $targetId,
-            'slug' => 'my-slug',
+            'slug' => 'nl-base/my-slug',
             'redirect_id' => null,
         ]);
 
         $this->assertDatabaseHas('chief_urls', [
             'id' => $redirectId,
-            'slug' => 'redirect-slug',
+            'slug' => 'nl-base/redirect-slug',
             'redirect_id' => $targetId,
         ]);
     }

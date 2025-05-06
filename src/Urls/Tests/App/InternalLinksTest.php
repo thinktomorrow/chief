@@ -32,7 +32,7 @@ class InternalLinksTest extends ChiefTestCase
 
         $response->assertJson([
             ['name' => '...', 'url' => ''],
-            ['name' => 'foobar', 'url' => 'http://localhost/foobar-nl'],
+            ['name' => 'foobar', 'url' => 'http://localhost/nl-base/foobar-nl'],
         ]);
     }
 
@@ -44,7 +44,7 @@ class InternalLinksTest extends ChiefTestCase
         $response = $this->asAdmin()->get(route('chief.api.internal-links').'?locale=en');
         $response->assertJson([
             ['name' => '...', 'url' => ''],
-            ['name' => 'foobar', 'url' => 'http://localhost/foobar-en'],
+            ['name' => 'foobar', 'url' => 'http://localhost/en-base/foobar-en'],
         ]);
     }
 }

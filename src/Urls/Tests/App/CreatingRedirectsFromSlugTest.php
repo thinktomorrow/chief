@@ -37,35 +37,24 @@ final class CreatingRedirectsFromSlugTest extends ChiefTestCase
 
     public function test_it_can_add_redirect()
     {
-        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', 'foobar-redirect-nl', 'foobar-nl'));
+        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', 'foobar-redirect-nl', 'nl-base/foobar-nl'));
 
         $this->assertEquals('foobar-redirect-nl', $this->repository->findRecentRedirectByModel($this->model->modelReference(), 'nl')->slug);
     }
 
     public function test_it_can_add_redirect_with_slash()
     {
-        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', '/foobar-redirect-nl', '/foobar-nl'));
+        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', '/foobar-redirect-nl', 'nl-base/foobar-nl'));
         $this->assertEquals('foobar-redirect-nl', $this->repository->findRecentRedirectByModel($this->model->modelReference(), 'nl')->slug);
 
-        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('en', '/foobar-redirect-en', '/foobar-en'));
+        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('en', '/foobar-redirect-en', 'en-base/foobar-en'));
         $this->assertEquals('foobar-redirect-en', $this->repository->findRecentRedirectByModel($this->model->modelReference(), 'en')->slug);
     }
 
     public function test_redirect_is_stripped_from_host()
     {
-        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', 'http://other.com/foobar-redirect-nl', 'foobar-nl'));
+        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', 'http://other.com/foobar-redirect-nl', 'nl-base/foobar-nl'));
         $this->assertEquals('foobar-redirect-nl', $this->repository->findRecentRedirectByModel($this->model->modelReference(), 'nl')->slug);
-    }
-
-    public function test_it_should_not_import_redirect_when_url_already_exists_ignoring_slash()
-    {
-        $article2 = ArticlePage::create(['title' => 'baz', 'current_state' => PageState::published]);
-        $this->updateLinks($article2, ['nl' => 'baz-nl', 'en' => 'baz-en']);
-
-        $this->expectException(RedirectUrlAlreadyExists::class);
-        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', 'baz-nl', '/foobar-nl'));
-
-        $this->assertNull($this->repository->findRecentRedirectByModel($this->model->modelReference(), 'nl'));
     }
 
     public function test_it_should_not_import_redirect_when_url_already_exists()
@@ -74,7 +63,18 @@ final class CreatingRedirectsFromSlugTest extends ChiefTestCase
         $this->updateLinks($article2, ['nl' => 'baz-nl', 'en' => 'baz-en']);
 
         $this->expectException(RedirectUrlAlreadyExists::class);
-        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', '/baz-nl', '/foobar-nl'));
+        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', '/nl-base/baz-nl', 'nl-base/foobar-nl'));
+
+        $this->assertNull($this->repository->findRecentRedirectByModel($this->model->modelReference(), 'nl'));
+    }
+
+    public function test_it_should_not_import_redirect_when_url_already_exists_ignoring_slash()
+    {
+        $article2 = ArticlePage::create(['title' => 'baz', 'current_state' => PageState::published]);
+        $this->updateLinks($article2, ['nl' => 'baz-nl', 'en' => 'baz-en']);
+
+        $this->expectException(RedirectUrlAlreadyExists::class);
+        $this->redirectApplication->createRedirectFromSlugs(new CreateRedirectFromSlugs('nl', 'nl-base/baz-nl', 'nl-base/foobar-nl'));
 
         $this->assertNull($this->repository->findRecentRedirectByModel($this->model->modelReference(), 'nl'));
     }
