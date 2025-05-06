@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\Assets\Tests\TestSupport;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\TestResponse;
+use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
+use Livewire\Features\SupportFileUploads\FileUploadController;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFileField;
 use Thinktomorrow\Chief\Forms\Tests\TestSupport\PageWithAssets;
@@ -77,13 +79,35 @@ trait TestingFileUploads
         );
     }
 
-    private function storeFakeImageOnDisk(string $filename, string $basepath = 'test', $width = 10, $height = 20): UploadedFile
+    private function storeFakeImageOnDisk(string $filename, ?string $basepath = null, $width = 10, $height = 20, string $disk = 'local'): UploadedFile
     {
         $uploadedFile = UploadedFile::fake()->image($filename, $width, $height);
 
-        Storage::disk('local')->putFileAs($basepath, $uploadedFile, $filename);
+        // Store the file manually
+        $realPath = $uploadedFile->storeAs($basepath ?: '/', $filename, $disk);
 
-        return $uploadedFile;
+        $fullPath = Storage::disk($disk)->path($realPath);
+
+        return new \Illuminate\Http\UploadedFile(
+            $fullPath,
+            $filename,
+            null,
+            null,
+            true // Set test mode to true
+        );
+    }
+
+    protected function storeFakeImageOnLivewireDisk(string $filename, ?string $basepath = null, $width = 10, $height = 20)
+    {
+        $uploadedFile = UploadedFile::fake()->image($filename, $width, $height);
+
+        Storage::fake(FileUploadConfiguration::disk());
+
+        $paths = app(FileUploadController::class)->validateAndStore([
+            $uploadedFile,
+        ], FileUploadConfiguration::disk());
+
+        return ltrim($paths[0], '/');
     }
 
     private function fileFormPayload(array $values = []): array

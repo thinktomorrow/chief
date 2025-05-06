@@ -1,9 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Assets\Tests\Livewire;
+namespace Thinktomorrow\Chief\Assets\Tests\Livewire\GalleryFiles;
 
 use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
+use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FileEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;

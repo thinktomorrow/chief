@@ -22,7 +22,6 @@ use Spatie\MediaLibrary\Conversions\ImageGenerators\Webp;
 use Spatie\Permission\PermissionServiceProvider;
 use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Sites\ChiefSites;
@@ -131,6 +130,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
             return $this->getTempDirectory();
         });
 
+        // Livewire file upload disk tmp directory
+
         $app['config']->set('permission.table_names', [
             'roles' => 'roles',
             'permissions' => 'permissions',
@@ -172,6 +173,12 @@ abstract class ChiefTestCase extends OrchestraTestCase
             'root' => $this->getTempDirectory('media2'),
         ]);
 
+        // Livewire testing disk for file uploads
+        $app['config']->set('filesystems.disks.tmp-for-tests', [
+            'driver' => 'local',
+            'root' => $this->getTempDirectory('livewire-tmp'), // Make sure it is livewire-tmp so it matches hardcoded default in Livewire
+        ]);
+
         $app['config']->set('media-library.image_generators', [
             Image::class,
             Webp::class,
@@ -189,7 +196,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         $app['config']->set('thinktomorrow.assetlibrary.formats', []);
 
         // Override the guest middleware since this is overloaded by Orchestra testbench itself
-        $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);
+        // $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);
     }
 
     protected function disableExceptionHandling()

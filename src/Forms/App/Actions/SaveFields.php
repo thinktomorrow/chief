@@ -92,8 +92,7 @@ class SaveFields
     {
         return function ($locale, $key, $value) use ($model, $field, $input) {
             if (! is_string($locale)) {
-                dd($locale, $key, $value);
-
+                throw new \InvalidArgumentException('Locale should be string. Given: '.$locale);
             }
 
             if ($key !== $field->getColumnName()) {
