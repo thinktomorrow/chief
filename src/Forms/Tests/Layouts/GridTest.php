@@ -10,8 +10,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class GridTest extends TestCase
 {
-    /** @test */
-    public function it_can_render_a_grid_component()
+    public function test_it_can_render_a_grid_component()
     {
         $component = Grid::make()->components([
             Textarea::make('intro'),
@@ -22,8 +21,7 @@ class GridTest extends TestCase
         $this->assertStringContainsString('<textarea', $component->toHtml());
     }
 
-    /** @test */
-    public function it_can_create_columns()
+    public function test_it_can_create_columns()
     {
         $component = Grid::make()->columns(2)->components([
             Textarea::make('intro'),

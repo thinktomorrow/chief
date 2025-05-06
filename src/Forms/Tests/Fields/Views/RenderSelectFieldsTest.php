@@ -26,8 +26,7 @@ class RenderSelectFieldsTest extends ChiefTestCase
         ];
     }
 
-    /** @test */
-    public function it_can_render_all_fields()
+    public function test_it_can_render_all_fields()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
@@ -37,8 +36,7 @@ class RenderSelectFieldsTest extends ChiefTestCase
         }
     }
 
-    /** @test */
-    public function it_can_render_select_field_with_nested_options()
+    public function test_it_can_render_select_field_with_nested_options()
     {
         $component = Select::make('xxx')->options([
             ['value' => 2, 'label' => 'first product'],
@@ -48,8 +46,7 @@ class RenderSelectFieldsTest extends ChiefTestCase
         $this->assertStringContainsString('name="xxx', $component->toHtml());
     }
 
-    /** @test */
-    public function it_can_render_localized_fields()
+    public function test_it_can_render_localized_fields()
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
@@ -60,27 +57,25 @@ class RenderSelectFieldsTest extends ChiefTestCase
 
             $render = $component->toHtml();
 
-            $this->assertStringContainsString('trans[nl][xxx]', $render);
-            $this->assertStringContainsString('trans[en][xxx]', $render);
+            $this->assertStringContainsString('xxx[nl]', $render);
+            $this->assertStringContainsString('xxx[en]', $render);
             $this->assertStringContainsString($valueNL, $render);
             $this->assertStringContainsString($valueEN, $render);
         }
     }
 
-    /** @test */
-    public function it_can_render_all_fields_in_a_window()
+    public function test_it_can_render_all_fields_in_a_window()
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
-            $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->editInSidebar()->value($value = 'one');
-            $this->assertStringContainsString($value, $component->toHtml());
+            $component = $class::make('xxx')->options(['one' => 'one-value', 'two' => 'two-value'])->value($value = 'one');
+            $this->assertStringContainsString($value, $component->renderPreview());
         }
     }
 
-    /** @test */
-    public function it_can_render_a_custom_view()
+    public function test_it_can_render_a_custom_view()
     {
-        $this->app['view']->addNamespace('test-views', __DIR__.'/../../stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__.'/../../TestSupport/stubs/views');
 
         $this->assertStringContainsString(
             'this is a custom field view',

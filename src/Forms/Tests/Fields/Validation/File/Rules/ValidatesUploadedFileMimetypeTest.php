@@ -71,14 +71,14 @@ class ValidatesUploadedFileMimetypeTest extends ChiefTestCase
                 'nl' => [
                     'uploads' => [
                         $this->fileFormPayload([
-                            'path' => Storage::path('test/image-temp-name.jpg'),
+                            'path' => Storage::path('image-temp-name.jpg'),
                         ]),
                     ],
                 ],
                 'en' => [
                     'uploads' => [
                         $this->fileFormPayload([
-                            'path' => Storage::path('test/image-temp-name.jpg'),
+                            'path' => Storage::path('image-temp-name.jpg'),
                         ]),
                     ],
                 ],

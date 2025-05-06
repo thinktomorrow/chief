@@ -31,8 +31,7 @@ class RenderTextualFieldsTest extends ChiefTestCase
         ];
     }
 
-    /** @test */
-    public function it_can_render_all_fields()
+    public function test_it_can_render_all_fields()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
@@ -42,8 +41,7 @@ class RenderTextualFieldsTest extends ChiefTestCase
         }
     }
 
-    /** @test */
-    public function it_can_render_localized_fields()
+    public function test_it_can_render_localized_fields()
     {
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
@@ -54,34 +52,32 @@ class RenderTextualFieldsTest extends ChiefTestCase
 
             $render = $component->toHtml();
 
-            $this->assertStringContainsString('trans[nl][xxx]', $render);
-            $this->assertStringContainsString('trans[en][xxx]', $render);
+            $this->assertStringContainsString('xxx[nl]', $render);
+            $this->assertStringContainsString('xxx[en]', $render);
             $this->assertStringContainsString($valueNL, $render);
             $this->assertStringContainsString($valueEN, $render);
         }
     }
 
-    /** @test */
-    public function it_can_render_all_fields_in_a_window()
+    public function test_it_can_render_all_fields_in_a_window()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
-            $component = $class::make('xxx')->editInSidebar()->value($value);
+            $component = $class::make('xxx')->value($value);
 
             if ($component instanceof Hidden) {
-                $this->assertStringNotContainsString($value, $component->toHtml());
+                $this->assertStringNotContainsString($value, $component->renderPreview());
             } elseif ($component instanceof Date) {
-                $this->assertStringContainsString('02/02/2022', $component->toHtml());
+                $this->assertStringContainsString('02/02/2022', $component->renderPreview());
             } else {
-                $this->assertStringContainsString($value, $component->toHtml());
+                $this->assertStringContainsString($value, $component->renderPreview());
             }
         }
     }
 
-    /** @test */
-    public function it_can_render_a_custom_view()
+    public function test_it_can_render_a_custom_view()
     {
-        $this->app['view']->addNamespace('test-views', __DIR__.'/../../stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__.'/../../TestSupport/stubs/views');
 
         $this->assertStringContainsString(
             'this is a custom field view',

@@ -33,7 +33,7 @@ class ValidatesUploadedFileMinSizeTest extends ChiefTestCase
 
     public function test_it_fails_validation()
     {
-        $this->storeFakeImageOnDisk('image-temp-name.png', 'test', 10, 10);
+        $this->storeFakeImageOnDisk('image-temp-name.png', null, 10, 10);
 
         $this->expectException(ValidationException::class);
 
@@ -63,7 +63,7 @@ class ValidatesUploadedFileMinSizeTest extends ChiefTestCase
 
     public function test_it_passes_validation()
     {
-        $this->storeFakeImageOnDisk('image-temp-name.png', 'test', 1000, 1000);
+        $this->storeFakeImageOnDisk('image-temp-name.png', null, 1000, 1000);
 
         $payload = [
             'files' => ['thumb' => [

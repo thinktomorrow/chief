@@ -16,8 +16,7 @@ class FieldValueFormsTest extends FormsTestCase
         ArticlePage::migrateUp();
     }
 
-    /** @test */
-    public function it_can_set_and_get_the_value()
+    public function test_it_can_set_and_get_the_value()
     {
         $field = Text::make('title');
 
@@ -30,8 +29,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals(['one', 'two', 'three'], $field->getValue());
     }
 
-    /** @test */
-    public function it_can_set_a_localized_default()
+    public function test_it_can_set_a_localized_default()
     {
         $field = Text::make('title')->locales(['nl', 'en'])->default(['nl' => 'foobar-nl', 'en' => 'foobar-en']);
 
@@ -40,8 +38,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals(['nl' => 'foobar-nl', 'en' => 'foobar-en'], $field->getValue());
     }
 
-    /** @test */
-    public function when_value_is_set_default_is_not_used()
+    public function test_when_value_is_set_default_is_not_used()
     {
         $field = Text::make('title')->locales(['nl', 'en'])->default(['nl' => 'foobar-nl', 'en' => 'foobar-en']);
         $field->value(['nl' => null, 'en' => 'value-en']);
@@ -53,8 +50,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals(['nl' => null, 'en' => 'value-en'], $field->getValue());
     }
 
-    /** @test */
-    public function it_can_set_a_default_which_is_used_when_no_value_is_given()
+    public function test_it_can_set_a_default_which_is_used_when_no_value_is_given()
     {
         $field = Text::make('title')->default('foobar');
 
@@ -64,8 +60,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals('some-value', $field->getValue());
     }
 
-    /** @test */
-    public function it_uses_the_default_when_no_localized_value_is_given()
+    public function test_it_uses_the_default_when_no_localized_value_is_given()
     {
         $field = Text::make('title')->default('foobar');
 
@@ -77,8 +72,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals('foobar', $field->getValue('fr'));
     }
 
-    /** @test */
-    public function default_value_can_be_a_php_reserved_keyword()
+    public function test_default_value_can_be_a_php_reserved_keyword()
     {
         $this->expectNotToPerformAssertions();
 
@@ -87,8 +81,7 @@ class FieldValueFormsTest extends FormsTestCase
         $field->getValue();
     }
 
-    /** @test */
-    public function it_can_get_the_existing_model_value()
+    public function test_it_can_get_the_existing_model_value()
     {
         $model = ArticlePage::make(['updated_at' => Carbon::yesterday()]);
         $field = Text::make('updated_at');
@@ -97,8 +90,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals(Carbon::yesterday(), $field->model($model)->getValue()); // with model
     }
 
-    /** @test */
-    public function if_model_has_not_got_the_value_than_the_default_is_used()
+    public function test_if_model_has_not_got_the_value_than_the_default_is_used()
     {
         $model = ArticlePage::make(['updated_at' => null]);
         $field = Text::make('updated_at')->value('default-value');
@@ -107,8 +99,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals('default-value', $field->getValue($model));
     }
 
-    /** @test */
-    public function it_can_get_the_existing_translated_model_value()
+    public function test_it_can_get_the_existing_translated_model_value()
     {
         config()->set('chief.locales.admin', ['nl', 'en', 'fr']);
 
@@ -128,8 +119,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertNull($field->getValue('fr'));
     }
 
-    /** @test */
-    public function it_allows_for_a_custom_value_resolver()
+    public function test_it_allows_for_a_custom_value_resolver()
     {
         $field = Text::make('title')->value(function () {
             return 'custom value';
@@ -138,8 +128,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals('custom value', $field->getValue());
     }
 
-    /** @test */
-    public function a_custom_resolved_value_always_trumps_the_default_value()
+    public function test_a_custom_resolved_value_always_trumps_the_default_value()
     {
         // Anything passed by value resolver trumps the default value
         $field = Text::make('title')->value('default-value')->value(function () {
@@ -149,8 +138,7 @@ class FieldValueFormsTest extends FormsTestCase
         $this->assertEquals('custom value', $field->getValue());
     }
 
-    /** @test */
-    public function it_can_prepare_value_for_view()
+    public function test_it_can_prepare_value_for_view()
     {
         $field = Text::make('title')->prepareValue(function ($value) {
             return strtoupper($value);

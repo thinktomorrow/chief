@@ -97,7 +97,7 @@ trait TestingFileUploads
         );
     }
 
-    protected function storeFakeImageOnLivewireDisk(string $filename, ?string $basepath = null, $width = 10, $height = 20)
+    protected function storeFakeImageOnLivewireDisk(string $filename, $width = 10, $height = 20)
     {
         $uploadedFile = UploadedFile::fake()->image($filename, $width, $height);
 
@@ -113,7 +113,7 @@ trait TestingFileUploads
     private function fileFormPayload(array $values = []): array
     {
         return array_merge([
-            'path' => Storage::path('test/image-temp-name.png'),
+            'path' => Storage::path('image-temp-name.png'),
             'originalName' => 'image.png',
             'mimeType' => 'image/png',
             'fieldValues' => [],
@@ -126,7 +126,7 @@ trait TestingFileUploads
         chiefRegister()->resource(PageWithAssets::class);
 
         $model = PageWithAssets::create();
-        $this->storeFakeImageOnDisk('image-temp-name.png', 'test');
+        $this->storeFakeImageOnDisk('image-temp-name.png');
         $this->saveFileField($model, 'thumb', [
             'nl' => [
                 'uploads' => [
