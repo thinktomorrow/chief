@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 trait WithLinks
 {
-    private function getLinks(): Collection
+    public function getLinks(): Collection
     {
         $links = collect();
 

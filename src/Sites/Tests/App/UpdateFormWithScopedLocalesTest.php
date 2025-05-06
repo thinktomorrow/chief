@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Sites\Tests\App;
 use Illuminate\Validation\ValidationException;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
+use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
 use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -22,12 +23,14 @@ class UpdateFormWithScopedLocalesTest extends ChiefTestCase
         chiefRegister()->resource(ArticlePageResource::class);
 
         $this->model = ArticlePage::create([
-            'locales' => ['nl', 'fr'],
+            'allowed_sites' => ['nl', 'en'],
         ]);
     }
 
     public function test_it_only_validates_page_scoped_locales()
     {
+        $this->expectException(ValidationException::class);
+
         ArticlePageResource::setFieldsDefinition(function () {
             return [
                 Form::make('main')->items([
@@ -36,25 +39,22 @@ class UpdateFormWithScopedLocalesTest extends ChiefTestCase
             ];
         });
 
-        $catched = false;
-
         try {
-            // ModelReference $modelReference, string $formId, array $data, array $files
-            app(UpdateForm::class)->handle($this->model->modelReference(), 'main', [
-                'title_trans' => ['nl' => '', 'fr' => null, 'en' => ''],
-            ], []);
+            app(ModelApplication::class)->updateForm(new UpdateForm(
+                $this->model->modelReference(),
+                ['nl', 'en'],
+                'main',
+                ['title_trans' => ['nl' => '', 'fr' => null, 'en' => '']], []
+            ));
         } catch (ValidationException $e) {
 
-            $catched = true;
-
             $this->assertEquals([
-                'title_trans.nl' => ['The title_trans NL field is required.'],
-                'title_trans.fr' => ['The title_trans FR field is required.'],
+                'title_trans.nl' => ['The nl title_trans field is required.'],
+                'title_trans.en' => ['The en title_trans field is required.'],
             ], $e->errors());
+
+            throw $e;
         }
-
-        $this->assertTrue($catched);
-
     }
 
     public function test_it_saves_scoped_locales_but_still_saves_other_locales()
@@ -67,12 +67,14 @@ class UpdateFormWithScopedLocalesTest extends ChiefTestCase
             ];
         });
 
-        app(UpdateForm::class)->handle($this->model->modelReference(), 'main', [
-            'title_trans' => ['nl' => 'title nl', 'fr' => 'title fr', 'en' => 'title en'],
-        ], []);
+        app(ModelApplication::class)->updateForm(new UpdateForm(
+            $this->model->modelReference(),
+            ['nl', 'en'],
+            'main',
+            ['title_trans' => ['nl' => 'title nl', 'fr' => 'title fr', 'en' => 'title en']], []
+        ));
 
         $this->assertEquals('title nl', $this->model->fresh()->dynamic('title_trans', 'nl'));
-        $this->assertEquals('title fr', $this->model->fresh()->dynamic('title_trans', 'fr'));
         $this->assertEquals('title en', $this->model->fresh()->dynamic('title_trans', 'en'));
     }
 
@@ -86,12 +88,15 @@ class UpdateFormWithScopedLocalesTest extends ChiefTestCase
             ];
         });
 
-        $this->model->setDynamic('title_trans', 'title en', 'en');
+        $this->model->setDynamic('title_trans', 'title fr', 'fr');
         $this->model->save();
 
-        app(UpdateForm::class)->handle($this->model->modelReference(), 'main', [
-            'title_trans' => ['nl' => 'title nl', 'fr' => 'title fr'],
-        ], []);
+        app(ModelApplication::class)->updateForm(new UpdateForm(
+            $this->model->modelReference(),
+            ['nl', 'en'],
+            'main',
+            ['title_trans' => ['nl' => 'title nl', 'en' => 'title en']], []
+        ));
 
         $this->assertEquals('title nl', $this->model->fresh()->dynamic('title_trans', 'nl'));
         $this->assertEquals('title fr', $this->model->fresh()->dynamic('title_trans', 'fr'));

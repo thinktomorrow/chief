@@ -5,10 +5,11 @@ namespace Thinktomorrow\Chief\Sites\Tests\UI;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
-use Thinktomorrow\Chief\Urls\App\Actions\SaveUrlSlugs;
+use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 use Thinktomorrow\Chief\Urls\UI\Livewire\Links\Links;
 
-class SiteLinksBoxTest extends ChiefTestCase
+class LinksComponentTest extends ChiefTestCase
 {
     public function test_it_can_create_component()
     {
@@ -22,10 +23,11 @@ class SiteLinksBoxTest extends ChiefTestCase
         $instance->assertSuccessful();
     }
 
-    public function test_it_can_get_site_links()
+    public function test_it_can_get_links()
     {
-        $model = $this->setUpAndCreateArticle(['sites' => ['nl', 'fr']]);
-        (new SaveUrlSlugs)->handle($model, ['nl' => 'test-nl', 'fr' => 'test-fr']);
+        $model = $this->setUpAndCreateArticle(['allowed_sites' => ['nl', 'fr']]);
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'nl', 'test-nl', 'online'));
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'en', 'test-en', 'online'));
 
         $instance = Livewire::test(Links::class, [
             'resourceKey' => ArticlePageResource::resourceKey(),
@@ -33,7 +35,8 @@ class SiteLinksBoxTest extends ChiefTestCase
         ]);
 
         // Assert see in view...
-        $instance->call('getSiteLinks');
-
+        $instance->call('getLinks')
+            ->assertSeeHtml('http://localhost/nl-base/test-nl')
+            ->assertSeeHtml('http://localhost/en-base/test-en');
     }
 }
