@@ -8,6 +8,8 @@ use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\App\Queries\MenuTree;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
+use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
@@ -63,12 +65,19 @@ class ProjectModelDataTest extends ChiefTestCase
     public function test_it_can_project_page_data_when_page_is_updated()
     {
         $this->disableExceptionHandling();
-        $this->asAdmin()->put($this->manager($this->page)->route('update', $this->page), $this->validUpdatePageParams([
-            'title' => [
-                'nl' => 'aangepaste titel nl',
-                'en' => 'updated title en',
-            ],
-        ]));
+
+        app(ModelApplication::class)->updateForm(new UpdateForm(
+            $this->page->modelReference(),
+            ['nl', 'en'],
+            'title_form',
+            [
+                'title' => [
+                    'nl' => 'aangepaste titel nl',
+                    'en' => 'updated title en',
+                ],
+            ], []
+        ));
+
         $collection = MenuTree::bySite('nl', 'main');
         $this->assertEquals('label nl', $collection->first()->getLabel('nl'));
         $this->assertEquals('aangepaste titel nl', $collection->first()->getOwnerLabel('nl'));

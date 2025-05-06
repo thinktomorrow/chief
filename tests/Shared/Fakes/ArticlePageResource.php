@@ -25,7 +25,10 @@ class ArticlePageResource implements PageResource
 
     private function defaultFields($model): iterable
     {
-        yield Text::make('title')->locales()->required()->rules(['min:4']);
+        yield Form::make('title_form')->items([
+            Text::make('title')->locales()->required()->rules(['min:4']),
+        ]);
+
         yield Text::make('custom')
             ->rules(['required'])
             ->validationAttribute('custom attribute')

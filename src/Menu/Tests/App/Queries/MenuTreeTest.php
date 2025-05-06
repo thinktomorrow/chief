@@ -9,21 +9,11 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MenuTreeTest extends ChiefTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
     public function test_it_can_render_a_tree()
     {
         $menu = Menu::create([
             'type' => 'main',
-            'sites' => ['nl'],
+            'allowed_sites' => ['nl'],
         ]);
 
         $firstMenuitem = MenuItem::create([
@@ -58,7 +48,7 @@ class MenuTreeTest extends ChiefTestCase
     {
         $menu = Menu::create([
             'type' => 'main',
-            'sites' => ['nl'],
+            'allowed_sites' => ['nl'],
         ]);
 
         MenuItem::create([
@@ -76,7 +66,7 @@ class MenuTreeTest extends ChiefTestCase
     {
         $menu = Menu::create([
             'type' => 'main',
-            'sites' => ['nl'],
+            'allowed_sites' => ['nl'],
         ]);
 
         MenuItem::create([

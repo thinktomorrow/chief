@@ -35,7 +35,10 @@ trait PageFormParams
     protected function validUpdatePageParams($overrides = [])
     {
         $params = [
-            'title' => 'title',
+            'title' => [
+                'nl' => 'titel',
+                'en' => 'title',
+            ],
             'custom' => 'custom',
             'content_trans' => [
                 'nl' => 'aangepaste content trans',
