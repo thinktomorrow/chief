@@ -101,7 +101,7 @@ class Invitation extends Model implements StatefulContract
         return InvitationState::from($this->$key);
     }
 
-    public function scopeOnline(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         $query->where(InvitationState::KEY, InvitationState::accepted);
     }

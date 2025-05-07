@@ -2,31 +2,30 @@
 
 namespace Thinktomorrow\Chief\Sites\Tests\Unit;
 
-class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
+use InvalidArgumentException;
+use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+
+class ChiefSitesUnitTest extends ChiefTestCase
 {
     protected function tearDown(): void
     {
         parent::tearDown();
-        ChiefSites::clearCache();
     }
 
     public function test_it_creates_from_array()
     {
-        $site = $this->makeChiefSite(['locale' => 'nl']);
-        $sites = new \ReflectionClass(ChiefSites::class);
-        $method = $sites->getMethod('fromArray');
-        $method->setAccessible(true);
+        $site = $this->dummySiteConfig(['locale' => 'nl']);
+        $sites = ChiefSites::fromArray([$site]);
 
-        $instance = $method->invoke(null, [$site->toArray()]);
-        $this->assertInstanceOf(ChiefSites::class, $instance);
-        $this->assertCount(1, $instance->get());
+        $this->assertCount(1, $sites->get());
     }
 
     public function test_it_filters_by_locales()
     {
-        $site1 = $this->makeChiefSite(['locale' => 'nl']);
-        $site2 = $this->makeChiefSite(['locale' => 'fr']);
-        $sites = new ChiefSites($site1, $site2);
+        $site1 = $this->dummySiteConfig(['locale' => 'nl']);
+        $site2 = $this->dummySiteConfig(['locale' => 'fr']);
+        $sites = ChiefSites::fromArray([$site1, $site2]);
 
         $filtered = $sites->filterByLocales(['nl']);
         $this->assertCount(1, $filtered->get());
@@ -35,9 +34,9 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
 
     public function test_it_rejects_by_locales()
     {
-        $site1 = $this->makeChiefSite(['locale' => 'nl']);
-        $site2 = $this->makeChiefSite(['locale' => 'fr']);
-        $sites = new ChiefSites($site1, $site2);
+        $site1 = $this->dummySiteConfig(['locale' => 'nl']);
+        $site2 = $this->dummySiteConfig(['locale' => 'fr']);
+        $sites = ChiefSites::fromArray([$site1, $site2]);
 
         $rejected = $sites->rejectByLocales(['fr']);
         $this->assertCount(1, $rejected->get());
@@ -46,18 +45,18 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
 
     public function test_it_returns_primary_locale()
     {
-        $site1 = $this->makeChiefSite(['locale' => 'nl', 'isPrimary' => true]);
-        $site2 = $this->makeChiefSite(['locale' => 'fr']);
-        $sites = new ChiefSites($site1, $site2);
+        $site1 = $this->dummySiteConfig(['locale' => 'nl', 'isPrimary' => true]);
+        $site2 = $this->dummySiteConfig(['locale' => 'fr']);
+        $sites = ChiefSites::fromArray([$site1, $site2]);
 
         $this->assertEquals('nl', $sites->getPrimaryLocale());
     }
 
     public function test_it_defaults_to_first_as_primary_if_none_marked()
     {
-        $site1 = $this->makeChiefSite(['locale' => 'nl']);
-        $site2 = $this->makeChiefSite(['locale' => 'fr']);
-        $sites = new ChiefSites($site1, $site2);
+        $site1 = $this->dummySiteConfig(['locale' => 'nl']);
+        $site2 = $this->dummySiteConfig(['locale' => 'fr']);
+        $sites = ChiefSites::fromArray([$site1, $site2]);
 
         $this->assertEquals('nl', $sites->getPrimaryLocale());
     }
@@ -67,10 +66,10 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Site locales should be unique.');
 
-        new ChiefSites(
-            makeChiefSite(['locale' => 'nl']),
-            makeChiefSite(['locale' => 'nl'])
-        );
+        ChiefSites::fromArray([
+            $this->dummySiteConfig(['locale' => 'nl']),
+            $this->dummySiteConfig(['locale' => 'nl']),
+        ]);
     }
 
     public function test_it_fails_when_no_sites_are_added()
@@ -78,14 +77,14 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('At least one site should be provided.');
 
-        config(['chief.sites' => []]);
+        config()->set('chief.sites', []);
         ChiefSites::fromConfig();
     }
 
     public function test_it_can_find_site_by_locale()
     {
-        $site1 = $this->makeChiefSite(['locale' => 'nl']);
-        $sites = new ChiefSites($site1);
+        $site1 = $this->dummySiteConfig(['locale' => 'nl']);
+        $sites = ChiefSites::fromArray([$site1]);
 
         $found = $sites->find('nl');
         $this->assertEquals('nl', $found->locale);
@@ -96,8 +95,8 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Site with id [de] not found');
 
-        $site1 = $this->makeChiefSite(['locale' => 'nl']);
-        $sites = new ChiefSites($site1);
+        $site1 = $this->dummySiteConfig(['locale' => 'nl']);
+        $sites = ChiefSites::fromArray([$site1]);
 
         $sites->find('de');
     }
@@ -105,7 +104,7 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
     public function test_static_cache_works()
     {
         config(['chief.sites' => [
-            makeChiefSite(['locale' => 'nl'])->toArray(),
+            $this->dummySiteConfig(['locale' => 'nl']),
         ]]);
 
         $first = ChiefSites::all();
@@ -117,8 +116,8 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
     public function test_verify_locale()
     {
         config(['chief.sites' => [
-            makeChiefSite(['locale' => 'nl'])->toArray(),
-            makeChiefSite(['locale' => 'fr'])->toArray(),
+            $this->dummySiteConfig(['locale' => 'nl']),
+            $this->dummySiteConfig(['locale' => 'fr']),
         ]]);
 
         $this->assertTrue(ChiefSites::verify('nl'));
@@ -128,8 +127,8 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
     public function test_fallback_locales()
     {
         config(['chief.sites' => [
-            makeChiefSite(['locale' => 'nl', 'fallbackLocale' => 'en'])->toArray(),
-            makeChiefSite(['locale' => 'fr', 'fallbackLocale' => 'nl'])->toArray(),
+            $this->dummySiteConfig(['locale' => 'nl', 'fallback_locale' => 'en']),
+            $this->dummySiteConfig(['locale' => 'fr', 'fallback_locale' => 'nl']),
         ]]);
 
         $expected = ['nl' => 'en', 'fr' => 'nl'];
@@ -140,8 +139,8 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
     public function test_asset_fallback_locales()
     {
         config(['chief.sites' => [
-            makeChiefSite(['locale' => 'nl', 'assetFallbackLocale' => 'en'])->toArray(),
-            makeChiefSite(['locale' => 'fr', 'assetFallbackLocale' => 'fr'])->toArray(),
+            $this->dummySiteConfig(['locale' => 'nl', 'asset_fallback_locale' => 'en']),
+            $this->dummySiteConfig(['locale' => 'fr', 'asset_fallback_locale' => 'fr']),
         ]]);
 
         $expected = ['nl' => 'en', 'fr' => 'fr'];
@@ -151,9 +150,9 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
 
     public function test_it_counts_and_iterates()
     {
-        $site1 = $this->makeChiefSite(['locale' => 'nl']);
-        $site2 = $this->makeChiefSite(['locale' => 'fr']);
-        $sites = new ChiefSites($site1, $site2);
+        $site1 = $this->dummySiteConfig(['locale' => 'nl']);
+        $site2 = $this->dummySiteConfig(['locale' => 'fr']);
+        $sites = ChiefSites::fromArray([$site1, $site2]);
 
         $this->assertCount(2, $sites);
 
@@ -165,9 +164,9 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(['nl', 'fr'], $locales);
     }
 
-    private function makeChiefSite(array $overrides = []): ChiefSite
+    private function dummySiteConfig(array $overrides = []): array
     {
-        return ChiefSite::fromArray(array_merge([
+        return array_merge([
             'locale' => 'nl',
             'name' => 'Dutch',
             'shortName' => 'NL',
@@ -177,6 +176,6 @@ class ChiefSitesUnitTest extends \PHPUnit\Framework\TestCase
             'isActive' => true,
             'fallbackLocale' => 'en',
             'assetFallbackLocale' => 'en',
-        ], $overrides));
+        ], $overrides);
     }
 }

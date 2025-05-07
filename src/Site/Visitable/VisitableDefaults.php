@@ -2,11 +2,14 @@
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Symfony\Component\HttpFoundation\Response;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
+use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 trait VisitableDefaults
@@ -14,18 +17,31 @@ trait VisitableDefaults
     use ResolvingRoute;
 
     /** {@inheritdoc} */
-    public function url(?string $site = null): string
+    public function url(?string $site = null): ?string
     {
         if (! $site) {
             $site = app()->getLocale();
         }
 
         if (! $urlRecord = $this->urls->first(fn ($urlRecord) => $urlRecord->site == $site)) {
-            return '';
+            return null;
         }
 
-        if (! ChiefSites::all()->exists($site)) {
-            return '';
+        if (! ChiefSites::all()->exists($site) || $urlRecord->isOffline()) {
+            return null;
+        }
+
+        return $this->resolveUrl($site, [$urlRecord->slug]);
+    }
+
+    public function rawUrl(?string $site = null): ?string
+    {
+        if (! $site) {
+            $site = app()->getLocale();
+        }
+
+        if (! $urlRecord = $this->urls->first(fn ($urlRecord) => $urlRecord->site == $site)) {
+            return null;
         }
 
         return $this->resolveUrl($site, [$urlRecord->slug]);
@@ -42,6 +58,36 @@ trait VisitableDefaults
     {
         return $this->hasMany(UrlRecord::class, 'model_id')
             ->where('model_type', $this->getMorphClass());
+    }
+
+    public function scopeOnline(Builder $query, ?string $site = null): void
+    {
+        if (! $site) {
+            $site = app()->getLocale();
+        }
+
+        if ($this instanceof HasAllowedSites) {
+            $query->byAllowedSiteOrNone($site);
+        }
+
+        if ($this instanceof StatefulContract) {
+            $query->published();
+        }
+
+        $query->withOnlineUrl($site);
+    }
+
+    public function scopeWithOnlineUrl(Builder $query, ?string $site = null): void
+    {
+        if (! $site) {
+            $site = app()->getLocale();
+        }
+
+        $query->whereHas('urls', function ($relatedBuilder) use ($site) {
+            return $relatedBuilder
+                ->where('site', $site)
+                ->where('status', LinkStatus::online->value);
+        });
     }
 
     public function isVisitable(): bool

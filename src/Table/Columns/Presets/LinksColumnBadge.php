@@ -22,7 +22,7 @@ class LinksColumnBadge extends ColumnBadge
                     'name' => ChiefSites::name($url->site),
                     'shortName' => ChiefSites::shortName($url->site),
                     'status' => $model->isVisitable() ? LinkStatus::from($url->status) : LinkStatus::offline,
-                    'url' => $model->url($url->site),
+                    'url' => $model->rawUrl($url->site),
                 ];
             }
 

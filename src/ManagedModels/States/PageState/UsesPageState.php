@@ -51,7 +51,7 @@ trait UsesPageState
     /**
      * Eloquent builder scope for filtering out the online models.
      */
-    public function scopeOnline(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         // Here we widen up the results in case of preview mode and ignore the published scope
         if (PreviewMode::fromRequest()->check()) {

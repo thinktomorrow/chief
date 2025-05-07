@@ -20,7 +20,10 @@ trait TestingFileUploads
     {
         return $this->asAdmin()->put($this->manager($model)->route('update', $model), [
             'files' => $payload,
-            'title' => 'title value',
+            'title' => [
+                'nl' => 'titel',
+                'en' => 'title',
+            ],
             'custom' => 'custom value',
             'content_trans' => [
                 'nl' => 'content nl',

@@ -35,13 +35,21 @@ trait HasAllowedSitesDefaults
         $this->allowed_sites = array_values(array_diff($this->allowed_sites ?? [], [$site]));
     }
 
-    public function scopeByAllowedSite(Builder $query, string $site): void
+    public function scopeByAllowedSite(Builder $query, ?string $site = null): void
     {
+        if (! $site) {
+            $site = app()->getLocale();
+        }
+
         $query->whereJsonContains($this->getTable().'.allowed_sites', $site);
     }
 
-    public function scopeByAllowedSiteOrNone(Builder $query, string $site): void
+    public function scopeByAllowedSiteOrNone(Builder $query, ?string $site = null): void
     {
+        if (! $site) {
+            $site = app()->getLocale();
+        }
+
         $query->when($site, fn ($q) => $q->where(function ($q) use ($site) {
             $q->whereJsonContains($this->getTable().'.allowed_sites', $site)
                 ->orWhereNull($this->getTable().'.allowed_sites')

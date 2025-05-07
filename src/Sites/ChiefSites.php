@@ -28,7 +28,7 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return $self;
     }
 
-    private static function fromArray(array $sites): self
+    public static function fromArray(array $sites): self
     {
         $chiefSites = [];
 

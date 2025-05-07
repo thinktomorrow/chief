@@ -21,5 +21,5 @@ interface StatefulContract
 
     public function inOnlineState(): bool;
 
-    public function scopeOnline(Builder $query): void;
+    public function scopePublished(Builder $query): void;
 }

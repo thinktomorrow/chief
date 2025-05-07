@@ -1,164 +1,127 @@
 # Changelog
 
-All notable changes to the `chief` application template will be documented in this file. Updates should follow
-the [Keep a CHANGELOG](http://keepachangelog.com/)
-principles.
+All notable changes to the `chief` application template will be documented in this file. Updates follow
+the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## Unreleased - upcoming 0.10.0
+## [Unreleased] - Upcoming 0.10.0
 
-Not backward compatible for fragment. Please run migrations since this update involves some database changes as well.
+You should follow the upgrade guide for upgrading any existing projects from 0.9 to 0.10.
+Please run migrations, as this update involves database changes, especially for the fragment tables.
 
-todo: fields owner as parameter resource owner and fragment if nested. Fields parameter of fragments is not resource so
-first param fragment is not needed.
+---
 
-- migratie voor context on fragments to adjacent tree structure
-- tests voor actions, queries, controllers, UI components, livewire and views
-- Remove Assistants folder.
-- remove FragmentResource stuff -> just fragmentable guys
-- use: Resource (as base model), Fragment
-- Changed: **Config change!** `chief.locales` in config now contains two entries: `chief.locales.admin` which contain
-  all available locales and `chief.locales.site`that hold the active locales in usage on the site.
-- Changed: Renamed `FragmentAdded` event tot `FragmentAttached` for consistency.
-- Changed: `Fragmentable::fragmentModel()` always returns an existing model. Else A `MissingFragmentModelException` is
-  thrown.
-- vine dep upgrades...
+### Added
 
-- Fragment field tags are now in use. In prior releases, the fields tags 'not-on-create' were not being used by
-  fragments and fields were always shown and saved.
+- `render()` and `renderInAdmin()` methods to fragments.
+- `viewData()` method to pass data to fragment views (`fragment`, `section`, and deprecated `model`).
+- Config option `fragment_viewpath` to set default view path for fragments.
+- New Blade components:
+    - `x-chief::dialog.drawer`
+        - `x-chief::dialog.drawer.header`
+        - `x-chief::dialog.drawer.footer`
+    - Refactored `x-chief::dialog.modal`
+        - `x-chief::dialog.modal.header`
+        - `x-chief::dialog.modal.footer`
+    - `x-chief::form.fieldset` (replaces `x-chief::input.group`)
+- New `size` attribute for `x-chief::tabs`: options are `xs`, `sm`, `base`.
 
-### Code architecture
+---
 
-All the fragment logic has been moved to the `Thinktomorrow\Chief\Fragments` namespace and cleanup up.
+### Changed
 
-- A fragment class should extend the BaseFragment. All of the logic is in that base class. A fragment class should look
-  something like this:
+- **Config:**
+    - `chief.sites`: site mgmt replacing `chief.locales`.
 
-```php
-use Thinktomorrow\Chief\Fragments\BaseFragment;
+- **State:**
+    - Added `scopeWithOnlineUrl` to Visitable interface to check if model has online url for given site.
+    - Added `rawUrl` to Visitable interface to check if model has online url for given site.
+    - former `scopeOnline` checked for the 'published' state on a page. This is now renamed to `scopePublished`.
+    - `scopeOnline` is now added as method to the Visitable interface.
+    - `scopeOnline` is now a general wrapper scope that checks for:
+        - whether page is published,
+        - whether page has an online url for the given site
+        - whether page is allowed on the given site
 
-class Image extends BaseFragment
-{
-    ...
-}
-```
+- **Fragments:**
+    - Renamed `FragmentAdded` event to `FragmentAttached`.
+    - `Fragmentable::fragmentModel()` now throws `MissingFragmentModelException` if no model found.
+    - Fragment classes must now extend `BaseFragment`.
+    - `viewPath` property in fragment classes must be `protected` or `public`, not `private`.
+    - Removed `Fragment::$baseViewPath`; use `protected ?string $viewPath` instead.
+    - After migration, `fragments.key` is no longer in `<key>@0` format but simply the key.
+    - Fragments now render as Blade components (like form fields).
+    - Replaced `renderFragment()` and `renderAdminFragment()` with `render()` and `renderInAdmin()`.
 
-- Moved trait `Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties` to
-  `Thinktomorrow\Chief\Fragments\Models\ForwardFragmentProperties`. It can also be removed because this is included in
-  the BaseFragment class.
-- Renamed interface `Thinktomorrow\Chief\Fragments\Fragmentable` to `Thinktomorrow\Chief\Fragments\Fragment`.
-- Removed trait `Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults` in favor of the
-  `Thinktomorrow\Chief\Fragments\BaseFragment` abstract class.
-- Deprecated `Thinktomorrow\Chief\Fragments\Fragment::fragmentModel()` in favor of
-  `Thinktomorrow\Chief\Fragments\Fragment::getFragmentModel()`.
-  class.
-- Deprecated interface `Thinktomorrow\Chief\ManagedModels\Presets\Page`. Use `Thinktomorrow\Chief\Models\Page`.
-- Removed interface `Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults`. Use
-  `Thinktomorrow\Chief\Models\PageDefaults`.
-- Removed class `Thinktomorrow\Chief\Managers\Presets\FragmentManager`. Fragment controllers are used now instead of the
-  Resource manager structure.
-- Removed class `FragmentAssistant`.
-- Removed trait `Thinktomorrow\Chief\ManagedModels\Assistants\ModelDefaults`. Use
-  `Thinktomorrow\Chief\Models\ModelDefaults`.
-- Removed interface `Thinktomorrow\Chief\ManagedModels\Assistants\ShowsPageState`.
-- Removed interface `Thinktomorrow\Chief\ManagedModels\Presets\Fragment`. Replaced by new interface
-  `Thinktomorrow\Chief\Fragments\Fragment`.
-- Moved interface`Thinktomorrow\Chief\Fragments\Assistants\HasBookmark` to
-  `Thinktomorrow\Chief\Fragments\Sections\HasBookmark`.
-- Changed: `Thinktomorrow\Chief\Models\ModelDefaults` is slimmed down and no longer contains the
-  `Thinktomorrow\AssetLibrary\InteractsWithAssets` and `Thinktomorrow\Chief\Shared\Concerns\Viewable\Viewable` trait
-  behaviour. You'll need to add this and the necessary interfaces to your projects models if required.
+- **Form Livewire Component:**
+    - Removed methods: `Form::action()`, `Form::windowAction()`, `Form::refreshUrl()`, `Form::redirectAfterSubmit()`.
+    - Removed `Field::editInSidebar()` and `Field::editInline()`.
+    - Use `Form::view()` instead of `Form::windowContainerView()` or `Form::previewView()`.
+    - Removed `Form::ProtectAgainstFill` trait.
+    - Obsolete scripts removed.
 
-- If you have a viewPath property in your fragment, this should be protected or public, not private.
-  Replace in each fragment class `private (string) $viewPath` with `protected ?string $viewPath`.
-- Removed: Fragment::$baseViewPath property. Usage of `private $baseViewPath` to set the path of the fragment. To reduce
-  complexity, we allow to set a custom viewPath via a `protected ?string $viewPath` but no longer allow to only set a
-  base path on its own.
-- After migration has run, the fragments records will contain a `key` column which represents the fragment class key.
-  This is no longer in the format of <key>@0, but solely the key.
-- Removed: soft deletion state of a fragment. Now a deleted fragment is hard deleted.
-- Added: config option `fragment_viewpath` to set the default view path for fragments.
+- **Form Components Cleanup:**
+    - All `x-chief::button` updated to `x-chief::button` (was `x-chief-table::button`).
+    - `x-chief::link` now follows `x-chief::button` API.
+    - Replaced legacy CSS files:
+        - `form.css`
+        - `button.css` → replaced by `bui-button.css`, then renamed back to `button.css`
+        - `link.css` → replaced by `bui-link.css`, then renamed back to `link.css`
 
-### Fragment rendering
+- **Renamed Components:**
+    - `x-chief::form.label` → was `x-chief::input.label`
+    - `x-chief::form.description` → was `x-chief::input.description`
+    - `x-chief::form.error` → was `x-chief::input.error`
 
-Fragments now behave and render in the views as blade components. This is similar to the way the form fields are
-rendered. These changes should make fragment rendering more structured, predictable, and easier to extend.
+- **ModelDefaults:**
+    - Now does **not** include:
+        - `InteractsWithAssets`
+        - `Viewable`
+    - You must manually add these to your models if needed.
 
-Refactored rendering logic to introduce clearer extensibility and standard view component behaviour.
-Replaced old renderFragment() and renderAdminFragment() methods with new render() and renderInAdmin() methods.
+- **Menu:** now uses Vine logic for rendering.
 
-- Added: `render()` and `renderInAdmin()` methods.
-- Added: `viewData()` method to pass data to the fragment view. The default data payload is:
-    - `fragment` - the fragment model
-    - `section` - the root fragment (if any)
-    - `model` - deprecated in favor of `fragment`
-- Properties `viewPath` and `adminViewPath` allow to set the view path of the fragment.
-- Removed: `renderFragment()` and `renderAdminFragment()` methods.
+---
 
-### Form livewire component
+### Removed
 
-- Removed: `Form::action()`, `Form::windowAction()`; `Form::refreshUrl()` and `Form::redirectAfterSubmit()` methods.
-- Removed: `Field::editInSidebar()` and `Field::editInline()` methods.
-- Removed: `Form::windowContainerView()` and `Form::previewView()`. Just use `Form::view()` instead.
-- Removed: Form `ProtectAgainstFill` trait.
-- Removed: Obsolete form and sidebar scripts
-
-### New glossary
-
-#### Section
-
-Root fragments of each context. This is the top level fragment of a context. A section can contain multiple fragments.
-Sections generally contain the layout options like background color, text color, positioning of text and images, grid
-display settings, ...
-Sections are the html elements that can be referenced via bookmarks.
-
-### Menu
-
-- Changed: Menu rendering is now done with the new vine logic.
-
-### View components
-
-#### Dialogs
-
-- A new `x-chief::dialog.drawer` component. This component consists of two new smaller components:
-    - Drawer header: `x-chief::dialog.drawer.header`
-    - Drawer footer: `x-chief::dialog.drawer.footer`
-- Refactored the `x-chief::dialog.modal` component so it uses the same API as the new `x-chief::dialog.drawer`
-  component. Built with the following components:
-    - Modal header: `x-chief::dialog.modal.header`
-    - Modal footer: `x-chief::dialog.modal.footer`
-
-#### Tabs
-
-- Visual update
-- Added `size` attribute for some additional control. Choices are: `xs`, `sm` and `base`.
-
-#### Forms
-
-A firm clean-up of all existing form styling/components.
-
-##### New components:
-
-- `x-chief::form.fieldset`: A refactored version of the old `x-chief::input.group`. Use these to make sure the nested
-  components are using the correct margins, relative to each other.
-
-##### Renamed components:
-
-- `x-chief::form.label` (Previously called `x-chief::input.label`)
-- `x-chief::form.description` (Previously called `x-chief::input.description`)
-- `x-chief::form.error` (Previously called `x-chief::input.error`)
-
-##### Clean-up
-
-- Changed all `x-chief::button` components to the newer `x-chief-table::button`. Then `x-chief-table::button` was
-  renamed to the existing, shorter `x-chief::button`.
-- Changed the `x-chief::link` component so it works with a similar API as the `x-chief::button` component.
-- Removed some legacy css styling
-    - `form.css`: not in use for quiet some time
-    - `button.css`: replaced by `bui-button.css` and renamed again to `button.css`
-    - `link.css`: replaced by `bui-link.css` and renamed again to `link.css`
-- Replaced and removed the following components
+- Entire `Assistants` folder
+- All `FragmentResource` logic; now handled through fragmentable models
+- Trait: `FragmentableDefaults` (replaced by `BaseFragment`)
+- Trait: `ModelDefaults` (replaced by `Chief\Models\ModelDefaults`)
+- Interface: `Fragmentable` → renamed to `Fragment`
+- Interface: `Presets\Fragment` → replaced by `Fragments\Fragment`
+- Interface: `Presets\Page` → replaced by `Models\Page`
+- Interface: `PageDefaults` → replaced by `Models\PageDefaults`
+- Interface: `ShowsPageState`
+- Interface: `Assistants\PageDefaults`
+- Class: `FragmentAssistant`
+- Class: `FragmentManager` (controllers are now used instead)
+- Trait: `ForwardFragmentProperties` moved to `Models\ForwardFragmentProperties` and included in `BaseFragment`
+- Fragment soft deletes — now permanently deleted (hard delete)
+- Obsolete Blade components:
     - `x-chief::copy-button`
     - `x-chief::icon-label`
     - `x-chief::icon-button`
     - `x-chief::inline-notification`
     - `x-chief::hierarchy`
+
+---
+
+### Deprecated
+
+- Method: `fragmentModel()` → use `getFragmentModel()` instead
+
+---
+
+### Code Architecture
+
+All fragment logic moved to `Thinktomorrow\Chief\Fragments` namespace.
+
+- Fragments should extend `BaseFragment`:
+  ```php
+  use Thinktomorrow\Chief\Fragments\BaseFragment;
+
+  class Image extends BaseFragment
+  {
+      ...
+  }

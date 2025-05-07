@@ -33,7 +33,7 @@ trait WithLinks
             $links->push(new LinkDto(
                 $site->locale,
                 SiteDto::fromConfig($site),
-                new LinkUrl($record->id, $model->url($site->locale), $record->slug, BaseUrlSegment::strip($record->slug, $model->baseUrlSegment($site->locale))),
+                new LinkUrl($record->id, $model->rawUrl($site->locale), $record->slug, BaseUrlSegment::strip($record->slug, $model->baseUrlSegment($site->locale))),
                 $status,
                 $stateLabel,
                 $stateVariant,

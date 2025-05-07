@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Symfony\Component\HttpFoundation\Response;
 
 interface Visitable
 {
     /**
-     * Full url to be used in frontend navigation
+     * Online url of the model for given/current site
      */
-    public function url(?string $site = null): string;
+    public function url(?string $site = null): ?string;
+
+    /** Url regardless of status for given/current site */
+    public function rawUrl(?string $site = null): ?string;
 
     /**
      * Check whether this model can be viewed
@@ -40,4 +44,8 @@ interface Visitable
 
     /** All urls, including redirects */
     public function allUrls(): HasMany;
+
+    public function scopeOnline(Builder $query, ?string $site = null): void;
+
+    public function scopeWithOnlineUrl(Builder $query, ?string $site = null): void;
 }

@@ -18,7 +18,7 @@ interface HasAllowedSites
 
     public function removeAllowedSite(string $site): void;
 
-    public function scopeByAllowedSite(Builder $query, string $site): void;
+    public function scopeByAllowedSite(Builder $query, ?string $site = null): void;
 
-    public function scopeByAllowedSiteOrNone(Builder $query, string $site): void;
+    public function scopeByAllowedSiteOrNone(Builder $query, ?string $site = null): void;
 }

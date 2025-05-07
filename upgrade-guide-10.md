@@ -107,6 +107,12 @@ can set the default key back by adding the following to your AppServiceProvider 
 Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName::setDefaultTemplate('trans.:locale.:name');
 ```
 
+- url() method on visitable models now only gets online urls. Use `rawUrl` to fetch offline urls as well.
+- `online` scope has changed. Use `online` scope to get models that: are allowed on given site, are published and have
+  online url for given site.
+- Former `online` scope is now changed to `published`.
+- Fetch only the active locales for your language switcher via: `ChiefSites::activeLocales()`.
+
 ### Chief config
 
 The locales config is no longer used.

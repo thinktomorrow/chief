@@ -116,16 +116,16 @@ class ProjectModelData
             app()->setLocale($locale); // only way to get localized pagetitle
             $menuItem->setOwnerLabel($resource->getPageTitle($model), $locale);
 
-            if ($model instanceof Visitable) {
-                $fullUrl = $model->url($locale);
-                $path = Url::fromString($fullUrl)->getPath();
+            if ($model instanceof Visitable && $onlineUrl = $model->url($locale)) {
+
+                $path = Url::fromString($onlineUrl)->getPath();
 
                 /**
                  * For root urls the path is null but in that case we want to have a '/' as path
                  * so we can safely prepend this on each path. However for real missing links
                  * we still set null as url on the menu item.
                  */
-                $menuItem->setUrl($fullUrl ? '/'.$path : null, $locale);
+                $menuItem->setUrl($onlineUrl ? '/'.$path : null, $locale);
             }
         }
 
