@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Export;
 
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
@@ -31,6 +32,7 @@ class ExportMenuCommandTest extends TestCase
 
     public function test_it_can_export_menu_text()
     {
+        $this->disableExceptionHandling();
         $menu = Menu::create([
             'type' => 'main',
         ]);
@@ -46,7 +48,7 @@ class ExportMenuCommandTest extends TestCase
 
         $this->artisan('chief:export-menu');
 
-        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name').'-menu-'.date('Y-m-d').'.xlsx');
+        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-menu-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 

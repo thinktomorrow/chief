@@ -50,7 +50,7 @@ class ImportResourceCommand extends BaseCommand
         }
 
         // Fixed non-localized import
-        if ($column === 'tekst') {
+        if (strtolower($column) === 'tekst') {
             $locale = 'x';
         } else {
             $defaultLocale = in_array(strtolower($column), $locales) ? strtolower($column) : null;

@@ -44,16 +44,16 @@ class ComposeFieldLinesTest extends TestCase
 
     public function test_it_can_export_non_localized_model_fields()
     {
-        $article = $this->setUpAndCreateArticle(['title' => 'title article', 'custom' => 'content article']);
+        $article = $this->setUpAndCreateArticle(['title' => ['nl' => 'title nl', 'en' => 'title en'], 'custom' => 'content article']);
         $resource = app(Registry::class)->resource('article_page');
 
         $composeLines = app(ComposeFieldLines::class)
             ->ignoreEmptyValues()
             ->compose($resource, $article, ['nl', 'en']);
 
-        $this->assertEquals('title article', $composeLines->getLines()->first()->getValue());
-        $this->assertEquals(null, $composeLines->getLines()->first()->getValue('nl'));
-        $this->assertEquals(null, $composeLines->getLines()->first()->getValue('en'));
+        $this->assertEquals('', $composeLines->getLines()->first()->getValue());
+        $this->assertEquals('title nl', $composeLines->getLines()->first()->getValue('nl'));
+        $this->assertEquals('title en', $composeLines->getLines()->first()->getValue('en'));
         $this->assertEquals('content article', $composeLines->getLines()[1]->getValue());
         $this->assertEquals(null, $composeLines->getLines()[1]->getValue('nl'));
         $this->assertEquals(null, $composeLines->getLines()[1]->getValue('en'));
@@ -93,10 +93,11 @@ class ComposeFieldLinesTest extends TestCase
             ->ignoreNonLocalized()
             ->compose($resource, $article, ['nl', 'en']);
 
-        $this->assertCount(3, $composeLines->getLines());
-        $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()->first()->getReference()));
+        $this->assertCount(4, $composeLines->getLines());
+        $this->assertStringEndsWith('title', decrypt($composeLines->getLines()->first()->getReference()));
         $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()[1]->getReference()));
         $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()[2]->getReference()));
+        $this->assertStringEndsWith('_trans', decrypt($composeLines->getLines()[3]->getReference()));
     }
 
     public function test_it_exports_fragments()

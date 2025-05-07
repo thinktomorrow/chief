@@ -31,7 +31,8 @@ Please run migrations, as this update involves database changes, especially for 
 
 - **Config:**
     - `chief.sites`: site mgmt replacing `chief.locales`.
-
+    - Diacritics are now converted to ascii for all links.
+  
 - **State:**
     - Added `scopeWithOnlineUrl` to Visitable interface to check if model has online url for given site.
     - Added `rawUrl` to Visitable interface to check if model has online url for given site.

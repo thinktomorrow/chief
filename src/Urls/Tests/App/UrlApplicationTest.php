@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Urls\Tests\App;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Urls\App\Actions\ChangeHomepageUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\DeleteUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\ReactivateUrl;
@@ -204,55 +203,20 @@ class UrlApplicationTest extends ChiefTestCase
         ]);
     }
 
-    public function test_it_can_change_to_homepage_url(): void
+    public function test_it_converts_diacritics_to_ascii(): void
     {
-        $recordId = $this->repository->create($this->model->modelReference(), [
-            'site' => 'nl',
-            'slug' => 'active-slug',
-            'status' => LinkStatus::online->value,
-        ]);
-
-        $this->application->changeHomepageUrl(new ChangeHomepageUrl($this->model->modelReference(), 'nl'));
+        $recordId = $this->application->create(new CreateUrl(
+            $this->model->modelReference(), 'nl', 'foobér', 'online'
+        ));
 
         $this->assertDatabaseHas('chief_urls', [
             'id' => $recordId,
-            'slug' => '/',
-            'redirect_id' => null,
-        ]);
-
-        $this->assertDatabaseHas('chief_urls', [
-            'slug' => 'active-slug',
-            'redirect_id' => $recordId,
-        ]);
-    }
-
-    public function test_it_can_force_change_homepage_url(): void
-    {
-        $recordId = $this->repository->create($this->model->modelReference(), [
-            'site' => 'nl',
-            'slug' => 'active-slug',
-            'status' => LinkStatus::online->value,
-        ]);
-
-        $model2 = $this->setUpAndCreateArticle([], false);
-
-        $existingHomepageId = $this->repository->create($model2->modelReference(), [
-            'site' => 'nl',
-            'slug' => '/',
-            'status' => LinkStatus::online->value,
-        ]);
-
-        $this->application->changeHomepageUrl(new ChangeHomepageUrl($this->model->modelReference(), 'nl'));
-
-        $this->assertDatabaseHas('chief_urls', [
-            'id' => $recordId,
-            'slug' => '/',
-            'redirect_id' => null,
+            'slug' => 'nl-base/foober',
         ]);
 
         $this->assertDatabaseMissing('chief_urls', [
-            'id' => $existingHomepageId,
-            'slug' => '/',
+            'id' => $recordId,
+            'slug' => 'nl-base/foobér',
         ]);
     }
 }

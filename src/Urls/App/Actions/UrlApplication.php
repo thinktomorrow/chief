@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Urls\App\Actions\Redirects\RedirectApplication;
 use Thinktomorrow\Chief\Urls\App\Actions\Redirects\RetargetAllRedirectsOf;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
 use Thinktomorrow\Chief\Urls\Events\UrlDeleted;
+use Thinktomorrow\Chief\Urls\Exceptions\HomepageSlugNotAllowed;
 
 class UrlApplication
 {
@@ -30,6 +31,8 @@ class UrlApplication
         if (! $command->prependBaseUrlSegment()) {
             $this->prependBaseUrlSegment(false);
         }
+
+        $this->validateIfHomepageSlugAllowed($command);
 
         $model = $command->getModelReference()->instance();
         $site = $command->getSite();
@@ -75,6 +78,8 @@ class UrlApplication
             $this->prependBaseUrlSegment(false);
         }
 
+        $this->validateIfHomepageSlugAllowed($command);
+
         $urlRecord = $this->repository->find($command->getId());
 
         $slug = $this->composeSlug($urlRecord->model, $urlRecord->site, $command->getSlug());
@@ -99,6 +104,19 @@ class UrlApplication
         }
 
         event(new ManagedModelUrlUpdated($urlRecord->model->modelReference()));
+    }
+
+    private function validateIfHomepageSlugAllowed(CreateUrl|UpdateUrl $command): void
+    {
+        if ($command->allowHomepageSlug()) {
+            return;
+        }
+
+        $slug = $command->getSlug();
+
+        if (! $slug || $slug == '/') {
+            throw new HomepageSlugNotAllowed('Slug ['.$slug.'] not allowed since it would interfere with the homepage link.');
+        }
     }
 
     public function delete(DeleteUrl $command): void
@@ -142,9 +160,9 @@ class UrlApplication
         $this->force();
 
         if ($existingUrl = $this->repository->findActiveByModel($command->getModelReference(), $command->getSite())) {
-            $this->update(new UpdateUrl($existingUrl->id, '/', 'online', false));
+            $this->update(new UpdateUrl($existingUrl->id, '/', 'online', false, true));
         } else {
-            $this->create(new CreateUrl($command->getModelReference(), $command->getSite(), '/', 'online', false));
+            $this->create(new CreateUrl($command->getModelReference(), $command->getSite(), '/', 'online', false, true));
         }
     }
 }

@@ -42,7 +42,7 @@ class ChangeHomepage
                     $modelReference = ModelReference::fromString(($existingValues[$locale]));
 
                     if ($recentRedirect = $this->repository->findRecentRedirectByModel($modelReference, $locale)) {
-                        $this->application->reactivateUrl(new ReactivateUrl($recentRedirect->id));
+                        $this->application->reactivateUrl(new ReactivateUrl((string) $recentRedirect->id));
                     }
                 }
             }

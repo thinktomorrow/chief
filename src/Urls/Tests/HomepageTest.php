@@ -3,37 +3,20 @@
 namespace Thinktomorrow\Chief\Urls\Tests;
 
 use Thinktomorrow\Chief\Admin\Settings\Homepage;
-use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
-use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\SettingFormParams;
+use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class HomepageTest extends ChiefTestCase
 {
-    use PageFormParams;
     use SettingFormParams;
-
-    /** @var Manager */
-    private $manager;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        ArticlePage::migrateUp();
-
-        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
-        $this->manager = $this->manager(ArticlePage::class);
-    }
 
     public function test_when_setting_homepage_url_is_set_as_well()
     {
-        $model = ArticlePage::create([]);
+        $model = $this->setUpAndCreateArticle();
 
         $response = $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
@@ -49,17 +32,9 @@ class HomepageTest extends ChiefTestCase
 
     public function test_when_setting_single_homepage_all_urls_are_changed()
     {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
-        $model = ArticlePage::first();
-
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => [
-                'nl' => 'foobar',
-                'en' => 'foobar',
-            ],
-        ]);
+        $model = $this->setUpAndCreateArticle();
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'nl', 'foobar', 'online'));
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'en', 'foobaz', 'online'));
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
@@ -75,7 +50,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertEquals($model->getMorphClass(), $nlHomepageUrlRecord->model_type);
         $this->assertEquals($model->modelReference()->id(), $nlHomepageUrlRecord->model_id);
 
-        $nlRedirectUrlRecord = UrlRecord::findBySlug('foobar', 'nl');
+        $nlRedirectUrlRecord = UrlRecord::findBySlug('nl-base/foobar', 'nl');
         $this->assertTrue($nlRedirectUrlRecord->isRedirect());
         $this->assertEquals($nlHomepageUrlRecord->id, $nlRedirectUrlRecord->redirect_id);
 
@@ -84,25 +59,17 @@ class HomepageTest extends ChiefTestCase
         $this->assertEquals($model->getMorphClass(), $enHomepageUrlRecord->model_type);
         $this->assertEquals($model->modelReference()->id(), $enHomepageUrlRecord->model_id);
 
-        $enRedirectUrlRecord = UrlRecord::findBySlug('foobar', 'en');
+        $enRedirectUrlRecord = UrlRecord::findBySlug('en-base/foobaz', 'en');
         $this->assertTrue($enRedirectUrlRecord->isRedirect());
         $this->assertEquals($enHomepageUrlRecord->id, $enRedirectUrlRecord->redirect_id);
     }
 
     public function test_when_setting_homepage_per_locale_only_those_localized_urls_of_the_model_are_changed()
     {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
-        $model = ArticlePage::first();
-
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => [
-                'nl' => 'foobar',
-                'en' => 'foobar',
-            ],
-        ]);
+        $model = $this->setUpAndCreateArticle();
         $other = ArticlePage::create();
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'nl', 'foobar', 'online'));
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'en', 'foobaz', 'online'));
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
@@ -118,15 +85,15 @@ class HomepageTest extends ChiefTestCase
         $this->assertEquals($model->modelReference()->id(), $homepageUrlRecord->model_id);
 
         // Assert existing nl url is redirected to homepage
-        $redirectUrlRecord = UrlRecord::findBySlug('foobar', 'nl');
+        $redirectUrlRecord = UrlRecord::findBySlug('nl-base/foobar', 'nl');
         $this->assertTrue($redirectUrlRecord->isRedirect());
         $this->assertEquals($homepageUrlRecord->id, $redirectUrlRecord->redirect_id);
 
         $this->assertEquals($other->modelReference()->getShort(), chiefSetting('homepage', 'en'));
 
         // Assert existing url record is kept the same
-        $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
-        $this->assertFalse(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
+        $this->assertEquals('en-base/foobaz', UrlRecord::findByModel($model, 'en')->slug);
+        $this->assertFalse(UrlRecord::findBySlug('en-base/foobaz', 'en')->isRedirect());
     }
 
     public function test_passing_homepage_setting_to_null_is_not_allowed()
@@ -143,17 +110,10 @@ class HomepageTest extends ChiefTestCase
 
     public function test_when_setting_homepage_to_another_url_the_previous_one_is_reset_to_its_recent_redirect()
     {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
-        $model = ArticlePage::first();
-
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => [
-                'nl' => 'foobar',
-                'en' => 'foobar',
-            ],
-        ]);
+        $this->disableExceptionHandling();
+        $model = $this->setUpAndCreateArticle();
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'nl', 'foobar', 'online'));
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'en', 'foobaz', 'online'));
 
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
@@ -162,11 +122,11 @@ class HomepageTest extends ChiefTestCase
             ],
         ]));
 
-        $this->assertEquals(6, UrlRecord::count());
+        $this->assertEquals(4, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($model, 'nl')->slug);
         $this->assertEquals('/', UrlRecord::findByModel($model, 'en')->slug);
-        $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
-        $this->assertTrue(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
+        $this->assertTrue(UrlRecord::findBySlug('nl-base/foobar', 'nl')->isRedirect());
+        $this->assertTrue(UrlRecord::findBySlug('en-base/foobaz', 'en')->isRedirect());
 
         $other = ArticlePage::create();
         $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
@@ -176,49 +136,31 @@ class HomepageTest extends ChiefTestCase
             ],
         ]));
 
-        $this->assertEquals(6, UrlRecord::count());
+        $this->assertEquals(4, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($other, 'nl')->slug);
         $this->assertEquals('/', UrlRecord::findByModel($other, 'en')->slug);
-        $this->assertEquals('foobar', UrlRecord::findByModel($model, 'nl')->slug);
-        $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
-    }
-
-    public function test_when_setting_a_homepage_url_the_homepage_setting_is_set_as_well()
-    {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
-        $model = ArticlePage::first();
-
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => [
-                'nl' => '/',
-                'en' => 'foobar',
-            ],
-        ]);
-
-        $this->assertEquals($model->modelReference()->getShort(), chiefSetting('homepage', 'nl'));
-        $this->assertNull(chiefSetting('homepage', 'en'));
+        $this->assertEquals('nl-base/foobar', UrlRecord::findByModel($model, 'nl')->slug);
+        $this->assertEquals('en-base/foobaz', UrlRecord::findByModel($model, 'en')->slug);
     }
 
     public function test_helper_can_check_if_page_is_homepage()
     {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
-        $model = ArticlePage::first();
-
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => [
-                'nl' => '/',
-                'en' => 'foobar',
-            ],
-        ]);
+        $model = $this->setUpAndCreateArticle();
         $other = ArticlePage::create();
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'nl', 'foobar', 'online'));
+        app(UrlApplication::class)->create(new CreateUrl($model->modelReference(), 'en', 'foobaz', 'online'));
+
+        $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
+            'homepage' => [
+                'nl' => $model->modelReference()->getShort(),
+                'en' => $other->modelReference()->getShort(),
+            ],
+        ]));
 
         $this->assertTrue(Homepage::is($model));
         $this->assertFalse(Homepage::is($model, 'en'));
 
-        $this->assertFalse(Homepage::is($other));
+        $this->assertFalse(Homepage::is($other, 'nl'));
+        $this->assertTrue(Homepage::is($other, 'en'));
     }
 }

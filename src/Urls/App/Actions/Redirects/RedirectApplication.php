@@ -73,8 +73,7 @@ class RedirectApplication
 
     public function retargetAllRedirectsOf(RetargetAllRedirectsOf $command): void
     {
-        $record = $this->repository->find($command->getRecordId());
-        $redirects = UrlRecord::where('redirect_id', $record->id)->get();
+        $redirects = UrlRecord::where('redirect_id', $command->getRecordId())->get();
 
         foreach ($redirects as $redirect) {
             $redirect->redirect_id = $command->getTargetId();

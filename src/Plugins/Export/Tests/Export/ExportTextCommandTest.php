@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Export;
 
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
 use Thinktomorrow\Chief\Sites\ChiefSites;
@@ -39,7 +40,7 @@ class ExportTextCommandTest extends TestCase
 
         $this->artisan('chief:export-text');
 
-        $filepath = storage_path('app/exports/'.date('Ymd').'/'.config('app.name').'-text-'.date('Y-m-d').'.xlsx');
+        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-text-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 

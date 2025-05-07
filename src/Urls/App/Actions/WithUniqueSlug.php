@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Urls\App\Actions;
 
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Urls\Exceptions\UrlAlreadyExists;
@@ -32,9 +33,12 @@ trait WithUniqueSlug
 
     private function composeSlug(Visitable $model, string $site, string $slug): string
     {
-        return $this->prependBaseUrlSegment
+        $slug = $this->prependBaseUrlSegment
             ? BaseUrlSegment::prepend($model, $slug, $site)
             : $slug;
+
+        // convert diacritics to ascii e.g. é -> e.
+        return Str::ascii($slug);
     }
 
     private function assertSlugDoesNotExistsAsActiveUrl(string $locale, string $slug, ?int $whiteListedId = null)

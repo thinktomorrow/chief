@@ -5,14 +5,13 @@ namespace Thinktomorrow\Chief\Urls\Tests;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResourceWithBaseSegments;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
-class LinkUpdateTest extends ChiefTestCase
+class LinkUpdateTestOld
 {
     use PageFormParams;
 
@@ -230,14 +229,5 @@ class LinkUpdateTest extends ChiefTestCase
         $response->assertStatus(200);
         $response->assertSessionHasNoErrors();
         $this->assertStringEndsWith('/artikels/foobar-updated', $model2->url());
-    }
-
-    public function test_changing_diacritics_are_allowed()
-    {
-        $this->updateLinks($this->model, ['nl' => 'foobér']);
-        $this->updateLinks($this->model, ['nl' => 'foober']);
-
-        $this->assertCount(1, UrlRecord::all());
-        $this->assertNotNull(UrlRecord::findBySlug('foober', 'nl'));
     }
 }

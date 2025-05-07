@@ -22,24 +22,34 @@ class VisitableUrlTest extends ChiefTestCase
     public function test_a_page_can_provide_an_url()
     {
         $page = ArticlePage::create();
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+        UrlRecord::create(['site' => 'nl', 'status' => 'online', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
         $this->assertInstanceOf(Visitable::class, $page);
         $this->assertEquals(url('/bar'), $page->url('nl'));
     }
 
-    public function test_when_url_is_not_found_for_locale_empty_string_is_returned()
+    public function test_a_page_can_provide_an_offline_url()
     {
         $page = ArticlePage::create();
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+        UrlRecord::create(['site' => 'nl', 'status' => 'offline', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+
+        $this->assertInstanceOf(Visitable::class, $page);
+        $this->assertEquals(url('/bar'), $page->rawUrl('nl'));
+        $this->assertNull($page->url('nl'));
+    }
+
+    public function test_when_url_is_not_found_for_site_empty_string_is_returned()
+    {
+        $page = ArticlePage::create();
+        UrlRecord::create(['site' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
         $this->assertEquals('', $page->url('fr'));
     }
 
-    public function test_when_no_locale_is_passed_current_locale_is_used()
+    public function test_when_no_site_is_passed_current_site_is_used()
     {
         $page = ArticlePage::create();
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+        UrlRecord::create(['site' => 'nl', 'status' => 'online', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
         app()->setLocale('fr');
         $this->assertEquals('', $page->url());
@@ -53,20 +63,21 @@ class VisitableUrlTest extends ChiefTestCase
         config()->set('app.fallback_locale', 'nl');
 
         $page = ArticlePage::create();
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar/nl', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
-        UrlRecord::create(['locale' => 'fr', 'slug' => 'bar/fr', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
-
-        app()->setLocale('fr');
-        $this->assertEquals(url('/bar/fr'), $page->url());
+        UrlRecord::create(['site' => 'nl', 'status' => 'online', 'slug' => 'bar/nl', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+        UrlRecord::create(['site' => 'en', 'status' => 'online', 'slug' => 'bar/en', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
         app()->setLocale('en');
-        $this->assertEquals('', $page->url());
+        $this->assertEquals(url('/bar/en'), $page->url());
+
+        app()->setLocale('fr');
+        $this->assertNull($page->url());
+        $this->assertNull($page->rawUrl());
     }
 
     public function test_a_page_can_provide_an_url_with_a_segmented_slug()
     {
         $page = ArticlePage::create();
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar/foo', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+        UrlRecord::create(['site' => 'nl', 'status' => 'online', 'slug' => 'bar/foo', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
         $this->assertEquals(url('/bar/foo'), $page->url());
     }

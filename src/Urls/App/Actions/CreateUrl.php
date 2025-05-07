@@ -19,13 +19,17 @@ final class CreateUrl
 
     private bool $prependBaseUrlSegment;
 
-    public function __construct(ModelReference $modelReference, string $site, string $slug, string $status, bool $prependBaseUrlSegment = true)
+    /** Avoids creating empty or root slash slug */
+    private bool $allowHomepageSlug;
+
+    public function __construct(ModelReference $modelReference, string $site, string $slug, string $status, bool $prependBaseUrlSegment = true, bool $allowHomepageSlug = false)
     {
         $this->modelReference = $modelReference;
         $this->site = $site;
         $this->slug = $slug;
         $this->status = $status;
         $this->prependBaseUrlSegment = $prependBaseUrlSegment;
+        $this->allowHomepageSlug = $allowHomepageSlug;
     }
 
     public function getModelReference(): ModelReference
@@ -51,5 +55,10 @@ final class CreateUrl
     public function prependBaseUrlSegment(): bool
     {
         return $this->prependBaseUrlSegment;
+    }
+
+    public function allowHomepageSlug(): bool
+    {
+        return $this->allowHomepageSlug;
     }
 }

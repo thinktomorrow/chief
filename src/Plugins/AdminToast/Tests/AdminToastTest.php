@@ -14,7 +14,7 @@ class AdminToastTest extends TestCase
         parent::setUp();
 
         $model = $this->setupAndCreateArticle(['title' => 'Foobar', 'current_state' => PageState::published]);
-        $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
+        $record = UrlRecord::create(['site' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
     }
 
     public function test_it_wil_not_fetch_toast_when_not_logged_in_as_admin()

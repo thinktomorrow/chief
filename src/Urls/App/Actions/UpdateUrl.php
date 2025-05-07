@@ -16,12 +16,16 @@ final class UpdateUrl
 
     private bool $prependBaseUrlSegment;
 
-    public function __construct(string $id, string $slug, string $status, bool $prependBaseUrlSegment = true)
+    /** Avoids creating empty or root slash slug */
+    private bool $allowHomepageSlug;
+
+    public function __construct(string $id, string $slug, string $status, bool $prependBaseUrlSegment = true, bool $allowHomepageSlug = false)
     {
         $this->id = $id;
         $this->slug = $slug;
         $this->status = $status;
         $this->prependBaseUrlSegment = $prependBaseUrlSegment;
+        $this->allowHomepageSlug = $allowHomepageSlug;
     }
 
     public function getId(): string
@@ -42,5 +46,10 @@ final class UpdateUrl
     public function prependBaseUrlSegment(): bool
     {
         return $this->prependBaseUrlSegment;
+    }
+
+    public function allowHomepageSlug(): bool
+    {
+        return $this->allowHomepageSlug;
     }
 }
