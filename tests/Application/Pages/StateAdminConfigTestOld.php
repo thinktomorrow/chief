@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleState;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleWithStateAdminConfig;
 
-class StateAdminConfigTest extends ChiefTestCase
+class StateAdminConfigTestOld extends ChiefTestCase
 {
     private $page;
 

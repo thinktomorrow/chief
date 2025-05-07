@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
 use function route;
 
-class UpdatePageTest extends ChiefTestCase
+class UpdatePageTestOld extends ChiefTestCase
 {
     use PageFormParams;
 

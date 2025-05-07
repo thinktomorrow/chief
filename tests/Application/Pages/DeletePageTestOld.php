@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
-final class DeletePageTest extends ChiefTestCase
+final class DeletePageTestOld extends ChiefTestCase
 {
     /** @var Manager */
     private $manager;

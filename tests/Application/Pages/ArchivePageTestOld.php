@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
-final class ArchivePageTest extends ChiefTestCase
+final class ArchivePageTestOld extends ChiefTestCase
 {
     /** @var Manager */
     private $manager;

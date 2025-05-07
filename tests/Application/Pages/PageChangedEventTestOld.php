@@ -19,7 +19,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class PageChangedEventTest extends ChiefTestCase
+class PageChangedEventTestOld extends ChiefTestCase
 {
     protected function setUp(): void
     {

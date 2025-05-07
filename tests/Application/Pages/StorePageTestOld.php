@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
-class StorePageTest extends ChiefTestCase
+class StorePageTestOld extends ChiefTestCase
 {
     use PageFormParams;
 

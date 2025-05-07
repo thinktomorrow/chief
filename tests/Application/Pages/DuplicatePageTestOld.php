@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
-class DuplicatePageTest extends ChiefTestCase
+class DuplicatePageTestOld extends ChiefTestCase
 {
     private $source;
 

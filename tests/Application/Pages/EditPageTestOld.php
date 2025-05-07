@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
-final class EditPageTest extends ChiefTestCase
+final class EditPageTestOld extends ChiefTestCase
 {
     /** @var Manager */
     private $manager;

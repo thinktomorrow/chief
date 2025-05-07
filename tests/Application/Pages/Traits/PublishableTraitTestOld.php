@@ -6,7 +6,7 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class PublishableTraitTest extends ChiefTestCase
+class PublishableTraitTestOld extends ChiefTestCase
 {
     protected function setUp(): void
     {

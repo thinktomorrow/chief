@@ -6,7 +6,7 @@ use Illuminate\Support\Carbon;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class HasPeriodTraitTest extends ChiefTestCase
+class HasPeriodTraitTestOld extends ChiefTestCase
 {
     protected function setUp(): void
     {

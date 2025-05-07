@@ -6,7 +6,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\NestableArticlePage;
 
-class IndexPageTest extends ChiefTestCase
+class IndexPageTestOld extends ChiefTestCase
 {
     public function test_it_can_get_models()
     {

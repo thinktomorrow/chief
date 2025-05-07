@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Pages;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class SortPagesTest extends ChiefTestCase
+class SortPagesTestOld extends ChiefTestCase
 {
     private $page;
 

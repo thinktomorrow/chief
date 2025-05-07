@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
-final class PublishPageTest extends ChiefTestCase
+final class PublishPageTestOld extends ChiefTestCase
 {
     /** @var Manager */
     private $manager;
