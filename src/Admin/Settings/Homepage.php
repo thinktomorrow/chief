@@ -11,12 +11,12 @@ final class Homepage
         return SelectedModel::is($model, Setting::HOMEPAGE, $locale);
     }
 
-    public static function url($locale = null): string
+    public static function url($locale = null): ?string
     {
         if ($instance = SelectedModel::fromKey(Setting::HOMEPAGE, $locale)) {
-            return $instance->url($locale);
+            return $instance->rawUrl($locale);
         }
 
-        return '';
+        return null;
     }
 }

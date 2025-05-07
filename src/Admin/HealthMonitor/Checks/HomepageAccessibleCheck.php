@@ -17,9 +17,9 @@ class HomepageAccessibleCheck implements HealthCheck
     /**
      * @return false|string
      */
-    private function get_http_response_code(string $url)
+    private function get_http_response_code(?string $url)
     {
-        if ($url == '') {
+        if (! $url) {
             return false;
         }
 
