@@ -54,20 +54,20 @@ class PropagateUrlChange
             $strippableSlugs = [];
 
             // In case of a parent switch, allow to replace the base url segment belonging to a former parent.
-            if ($formerParent && $formerSlug = $this->repository->findActiveByModel($formerParent->modelReference(), $locale)) {
-                $strippableSlugs[] = $formerSlug;
+            if ($formerParent && $formerParentUrl = $this->repository->findActiveByModel($formerParent->modelReference(), $locale)) {
+                $strippableSlugs[] = $formerParentUrl->slug;
             }
 
             // In case of parent changing its url, allow to replace the former base url segment belonging the parent.
-            if ($parentModel && $parentSlug = $this->repository->findActiveByModel($parentModel->modelReference(), $locale)) {
-                $strippableSlugs[] = $parentSlug;
+            if ($parentModel && $parentUrl = $this->repository->findActiveByModel($parentModel->modelReference(), $locale)) {
+                $strippableSlugs[] = $parentUrl->slug;
                 $strippableSlugs[] = $this->repository->findRecentRedirectByModel($parentModel->modelReference(), $locale)?->slug;
             }
 
             if ($record = $this->repository->findActiveByModel($model->modelReference(), $locale)) {
                 $strippedSlug = StripBaseUrlSegments::strip($model, $locale, $record->slug, $strippableSlugs);
 
-                $this->application->update(new UpdateUrl($record->id, $strippedSlug, $record->status));
+                $this->application->update(new UpdateUrl((string) $record->id, $strippedSlug, $record->status));
             }
         }
 

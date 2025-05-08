@@ -10,6 +10,8 @@ use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
+use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 
 trait NestableTestHelpers
 {
@@ -72,12 +74,11 @@ trait NestableTestHelpers
 
     private function changeSlug($model, $locale, $slug)
     {
-        $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => [
-                $locale => $slug,
-            ],
-        ]);
+        app(UrlApplication::class)->create(new CreateUrl(
+            $model->modelReference(),
+            $locale,
+            $slug,
+            'online',
+        ));
     }
 }

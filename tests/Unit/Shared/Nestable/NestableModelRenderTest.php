@@ -28,7 +28,7 @@ class NestableModelRenderTest extends ChiefTestCase
 
         $this->assertStringContainsString(
             '<h1>'.$node->title.'</h1>',
-            $node->response()->getOriginalContent(),
+            $node->response()->getOriginalContent()->render(),
         );
     }
 
@@ -38,7 +38,7 @@ class NestableModelRenderTest extends ChiefTestCase
 
         $this->assertStringContainsString(
             '<h1>'.$node->title.'</h1>',
-            $node->response()->getOriginalContent(),
+            $node->response()->getOriginalContent()->render(),
         );
     }
 }

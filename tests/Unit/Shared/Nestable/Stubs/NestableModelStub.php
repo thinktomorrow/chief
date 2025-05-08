@@ -29,4 +29,9 @@ class NestableModelStub extends Model implements Nestable, Page
     {
         return 'foobar';
     }
+
+    public function allowedFragments(): array
+    {
+        return [];
+    }
 }

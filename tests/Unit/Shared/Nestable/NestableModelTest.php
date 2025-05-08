@@ -45,8 +45,8 @@ class NestableModelTest extends ChiefTestCase
         $this->assertCount(2, $ancestors);
 
         $this->assertInstanceOf($node::class, $ancestors[0]);
-        $this->assertEquals('third', $ancestors[0]->id);
-        $this->assertEquals('first', $ancestors[1]->id);
+        $this->assertEquals('first', $ancestors[0]->id);
+        $this->assertEquals('third', $ancestors[1]->id);
     }
 
     public function test_it_can_get_breadcrumbs()
@@ -54,8 +54,8 @@ class NestableModelTest extends ChiefTestCase
         $node = $this->findNode('fourth');
 
         $this->assertCount(2, $node->getAncestors());
-        $this->assertEquals('label third nl', $node->getAncestors()[0]->title);
-        $this->assertEquals('label first nl', $node->getAncestors()[1]->title);
+        $this->assertEquals('label first nl', $node->getAncestors()[0]->title);
+        $this->assertEquals('label third nl', $node->getAncestors()[1]->title);
     }
 
     public function test_it_can_get_children()

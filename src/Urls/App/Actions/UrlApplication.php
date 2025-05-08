@@ -101,9 +101,9 @@ class UrlApplication
         // Create redirect if needed
         if ($urlRecord->slug != $slug) {
             $this->redirectApplication->createRedirectTo(new CreateRedirectTo($urlRecord->id, $urlRecord->slug));
-        }
 
-        event(new ManagedModelUrlUpdated($urlRecord->model->modelReference()));
+            event(new ManagedModelUrlUpdated($urlRecord->model->modelReference()));
+        }
     }
 
     private function validateIfHomepageSlugAllowed(CreateUrl|UpdateUrl $command): void

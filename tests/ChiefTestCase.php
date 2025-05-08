@@ -23,6 +23,7 @@ use Spatie\Permission\PermissionServiceProvider;
 use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\Fragments\ActiveContextId;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
@@ -112,6 +113,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
         Memoize::clear();
 
         ChiefSites::clearCache();
+
+        ActiveContextId::clear();
 
         parent::tearDown();
     }

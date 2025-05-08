@@ -8,7 +8,8 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelResourceStub;
 use Thinktomorrow\Chief\Tests\Unit\Shared\Nestable\Stubs\NestableModelStub;
-use Thinktomorrow\Chief\Urls\Models\UrlRecord;
+use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
+use Thinktomorrow\Chief\Urls\Exceptions\UrlAlreadyExists;
 
 class PropagateUrlChangeTest extends ChiefTestCase
 {
@@ -35,6 +36,8 @@ class PropagateUrlChangeTest extends ChiefTestCase
 
     public function test_it_does_not_propagate_when_slug_already_exists_on_another_model()
     {
+        $this->expectException(UrlAlreadyExists::class);
+
         $this->prepareModels();
         $this->changeParentModel('fifth', 'fourth');
         $this->changeSlug($this->findNode('fourth'), 'nl', 'existing-parent');
@@ -67,7 +70,9 @@ class PropagateUrlChangeTest extends ChiefTestCase
         $this->changeParentModel('fifth', 'fourth');
         $this->changeSlug($node, 'nl', 'foobar-2');
 
-        $this->assertEquals('foobar', UrlRecord::findRecentRedirect(NestableModelStub::find('fifth'), 'nl')->slug);
+        $redirect = app(UrlRepository::class)->findRecentRedirectByModel(NestableModelStub::find('fifth')->modelReference(), 'nl');
+
+        $this->assertEquals('foobar', $redirect->slug);
     }
 
     public function test_it_changes_url_slug_of_all_children_when_parent_url_changes()
