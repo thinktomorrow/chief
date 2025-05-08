@@ -14,7 +14,6 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\MenuDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
@@ -101,8 +100,10 @@ class ComposeLivewireDto
     }
 
     /** @return Collection<SharedFragmentDto> */
-    public function getSharedFragmentDtos(string $fragmentId, ContextOwner&ReferableModel $owner): Collection
+    public function getSharedFragmentDtos(string $fragmentId, ModelReference $ownerReference): Collection
     {
+        $owner = $ownerReference->instance();
+
         // TODO: optimize this: allow array of fragmentIds, get all results for given fragmentIds, memoize generic results and filter by fragmentId
 
         return $this->contextRepository->getContextsByFragment($fragmentId)

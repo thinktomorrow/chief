@@ -1,8 +1,6 @@
 @php
-    use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
-    use Thinktomorrow\Chief\Fragments\Fragment;
-
-    $ownerCount = $fragment->sharedFragmentDtos->count();
+    $sharedFragmentDtos = $fragment->getSharedFragmentDtos();
+    $ownerCount = $sharedFragmentDtos->count();
 @endphp
 
 @if ($fragment->isShared)
@@ -19,7 +17,7 @@
 
             <div class="mt-2 overflow-hidden rounded-md border border-grey-100">
                 <div class="max-h-48 divide-y divide-grey-100 overflow-y-auto">
-                    @foreach ($fragment->sharedFragmentDtos as $sharedFragmentDto)
+                    @foreach ($sharedFragmentDtos as $sharedFragmentDto)
                         <div class="flex items-start justify-between gap-3 px-3 py-2.5">
                             <div class="body-dark body leading-6">
                                 {{ $sharedFragmentDto->ownerLabel }} {{ $sharedFragmentDto->contextLabel ? ' > ' . $sharedFragmentDto->contextLabel : null }}

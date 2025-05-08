@@ -10,6 +10,8 @@ use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
 class FragmentDto implements Wireable
 {
@@ -19,6 +21,7 @@ class FragmentDto implements Wireable
     private function __construct(
         public string $fragmentId,
         public string $contextId,
+        public ModelReference $ownerReference,
         public ?string $parentId,
         public int $order,
         public string $label,
@@ -31,17 +34,14 @@ class FragmentDto implements Wireable
         public array $urls, // Frontend urls for this fragment per locale
         public ContextDto $context,
         public Collection $fields,
-        public Collection $sharedFragmentDtos,
     ) {}
 
-    public static function fromFragment(Fragment $fragment, ContextDto $context, ContextOwner $owner): self
+    public static function fromFragment(Fragment $fragment, ContextDto $context, ContextOwner&ReferableModel $owner): self
     {
-        //        $sharedFragmentDtos = collect();
-        $sharedFragmentDtos = self::composeSharedFragmentDtos($fragment->getFragmentId(), $owner);
-
         return new static(
             $fragment->getFragmentId(),
             $context->id,
+            $owner->modelReference(),
             $fragment->pivot->parent_id,
             $fragment->pivot->order,
             $fragment->getLabel(),
@@ -54,7 +54,6 @@ class FragmentDto implements Wireable
             [], // TODO: provide urls per site
             $context,
             self::composeFields($fragment),
-            $sharedFragmentDtos,
         );
     }
 
@@ -63,9 +62,14 @@ class FragmentDto implements Wireable
         return Layout::make($fragment->fields($fragment))->getComponentsWithoutForms();
     }
 
-    private static function composeSharedFragmentDtos(string $fragmentId, ContextOwner $owner): Collection
+    //    private static function composeSharedFragmentDtos(string $fragmentId, ContextOwner $owner): Collection
+    //    {
+    //        return app(ComposeLivewireDto::class)->getSharedFragmentDtos($fragmentId, $owner);
+    //    }
+    //
+    public function getSharedFragmentDtos(): Collection
     {
-        return app(ComposeLivewireDto::class)->getSharedFragmentDtos($fragmentId, $owner);
+        return app(ComposeLivewireDto::class)->getSharedFragmentDtos($this->fragmentId, $this->ownerReference);
     }
 
     public function toLivewire()
@@ -74,6 +78,7 @@ class FragmentDto implements Wireable
             'class' => static::class,
             'fragmentId' => $this->fragmentId,
             'contextId' => $this->contextId,
+            'ownerReference' => $this->ownerReference->toLivewire(),
             'parentId' => $this->parentId,
             'order' => $this->order,
             'label' => $this->label,
@@ -86,7 +91,6 @@ class FragmentDto implements Wireable
             'urls' => $this->urls,
             'context' => $this->context->toLivewire(),
             'fields' => $this->fields->map->toLivewire(),
-            'sharedFragmentDtos' => $this->sharedFragmentDtos->map->toLivewire(),
         ];
     }
 
@@ -95,6 +99,7 @@ class FragmentDto implements Wireable
         return new static(
             $value['fragmentId'],
             $value['contextId'],
+            ModelReference::fromLivewire($value['ownerReference']),
             $value['parentId'],
             $value['order'],
             $value['label'],
@@ -107,7 +112,6 @@ class FragmentDto implements Wireable
             $value['urls'],
             ContextDto::fromLivewire($value['context']),
             collect($value['fields'])->map(fn ($fieldData) => $fieldData['class']::fromLivewire($fieldData)),
-            collect($value['sharedFragmentDtos'])->map(fn ($sharedFragmentDto) => SharedFragmentDto::fromLivewire($sharedFragmentDto)),
         );
     }
 
