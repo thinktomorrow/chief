@@ -30,31 +30,31 @@ jobs:
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
       - name: Execute unit tests
-        run: vendor/bin/phpunit --testsuite unit
+        run: vendor/bin/phpunit --no-coverage --testsuite unit
 
       - name: Execute application tests
-        run: vendor/bin/phpunit --testsuite application
+        run: vendor/bin/phpunit --no-coverage --testsuite application
 
       - name: Execute forms tests
-        run: vendor/bin/phpunit --testsuite forms
+        run: vendor/bin/phpunit --no-coverage --testsuite forms
 
       - name: Execute assets tests
-        run: vendor/bin/phpunit --testsuite assets
+        run: vendor/bin/phpunit --no-coverage --testsuite assets
 
       - name: Execute models tests
-        run: vendor/bin/phpunit --testsuite models
+        run: vendor/bin/phpunit --no-coverage --testsuite models
 
       - name: Execute fragments tests
-        run: vendor/bin/phpunit --testsuite fragments
+        run: vendor/bin/phpunit --no-coverage --testsuite fragments
 
       - name: Execute menu tests
-        run: vendor/bin/phpunit --testsuite menu
+        run: vendor/bin/phpunit --no-coverage --testsuite menu
 
       - name: Execute table tests
-        run: vendor/bin/phpunit --testsuite table
+        run: vendor/bin/phpunit --no-coverage --testsuite table
 
       - name: Execute urls tests
-        run: vendor/bin/phpunit --testsuite urls
+        run: vendor/bin/phpunit --no-coverage --testsuite urls
 
       - name: Execute sites tests
-        run: vendor/bin/phpunit --testsuite sites
+        run: vendor/bin/phpunit --no-coverage --testsuite sites

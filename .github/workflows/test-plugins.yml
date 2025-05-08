@@ -30,13 +30,13 @@ jobs:
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
       - name: Execute AdminToast tests
-        run: vendor/bin/phpunit src/Plugins/AdminToast
+        run: vendor/bin/phpunit --no-coverage src/Plugins/AdminToast
 
       - name: Execute Tags tests
-        run: vendor/bin/phpunit src/Plugins/Tags
+        run: vendor/bin/phpunit --no-coverage src/Plugins/Tags
 
       - name: Execute TimeTable tests
-        run: vendor/bin/phpunit src/Plugins/TimeTable
+        run: vendor/bin/phpunit --no-coverage src/Plugins/TimeTable
 
       - name: Execute Export tests
-        run: vendor/bin/phpunit src/Plugins/Export
+        run: vendor/bin/phpunit --no-coverage src/Plugins/Export
