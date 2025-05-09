@@ -11,8 +11,8 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class SitemapXml
 {
@@ -37,7 +37,7 @@ class SitemapXml
 
     private function reset(): void
     {
-        $this->sitemap = new Sitemap();
+        $this->sitemap = new Sitemap;
         $this->urls = collect();
         $this->alternateUrls = [];
     }

@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Routing\Router;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +16,7 @@ use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
-use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 
 class RoutesServiceProvider extends ServiceProvider
 {
@@ -34,7 +33,7 @@ class RoutesServiceProvider extends ServiceProvider
 
     private function autoloadFrontendRoute()
     {
-        if (true !== config('chief.route.autoload')) {
+        if (config('chief.route.autoload') !== true) {
             return;
         }
 
@@ -52,14 +51,14 @@ class RoutesServiceProvider extends ServiceProvider
     private function loadOpenAdminRoutes(): void
     {
         Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-open-routes.php');
+            $this->loadRoutesFrom(__DIR__.'/../../routes/chief-open-routes.php');
         });
     }
 
     private function loadAdminRoutes(): void
     {
         Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-admin-routes.php');
+            $this->loadRoutesFrom(__DIR__.'/../../routes/chief-admin-routes.php');
 
             // Add project specific chief routing...
             $projectChiefRoutePath = config('chief.route.admin-filepath', null);
@@ -78,7 +77,6 @@ class RoutesServiceProvider extends ServiceProvider
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
-            SubstituteBindings::class,
 
             // Chief admin specific middleware
             AuthenticateChiefSession::class,

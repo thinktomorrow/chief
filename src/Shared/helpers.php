@@ -4,19 +4,22 @@
  * Wrapper around the dd helper from Symfony. This function provides the file from where the
  * dd function has been called so you won't be in the dark when finding it again.
  */
+
+use Thinktomorrow\Chief\Fragments\Models\FragmentCollection;
+
 if (! function_exists('trap')) {
     function trap($var, ...$moreVars): void
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         $basePath = __DIR__.'/../../';
 
-        if ('cli' == php_sapi_name()) {
+        if (php_sapi_name() == 'cli') {
             print_r("\e[1;30m dumped at: ".str_replace($basePath, '', $trace[0]['file']).', line: '.$trace[0]['line']."\e[40m\n");
         } else {
             print_r('[dumped at: '.str_replace($basePath, '', $trace[0]['file']).', line: '.$trace[0]['line']."]\n");
         }
 
-        dd($var, ...$moreVars);
+        // dd($var, ...$moreVars);
     }
 }
 
@@ -28,11 +31,21 @@ if (! function_exists('chiefAdmin')) {
     }
 }
 
-// Retrieve the online fragments of the current owning model
+// Retrieve the online fragments of the given or active context
 if (! function_exists('getFragments')) {
-    function getFragments($owner): Illuminate\Support\Collection
+    function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\Models\FragmentCollection
     {
-        return app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->getFragments($owner);
+        if (! $contextId && \Thinktomorrow\Chief\Fragments\ActiveContextId::exists()) {
+            $contextId = \Thinktomorrow\Chief\Fragments\ActiveContextId::get();
+        }
+
+        if (! $contextId) {
+            return new FragmentCollection;
+        }
+
+        return app(\Thinktomorrow\Chief\Fragments\App\Queries\GetFragments::class)->get(
+            $contextId
+        );
     }
 }
 
@@ -87,7 +100,7 @@ if (! function_exists('chiefmenu')) {
             $locale = app()->getLocale();
         }
 
-        return \Thinktomorrow\Chief\Site\Menu\Menu::forSite($key, $locale);
+        return \Thinktomorrow\Chief\Menu\App\Queries\MenuTree::bySite($locale, $key);
     }
 }
 
@@ -160,11 +173,9 @@ if (! function_exists('public_method_exists')) {
  */
 if (! function_exists('teaser')) {
     /**
-     * @param $text
-     * @param null   $max
-     * @param null   $ending
-     * @param string $clean  - whitelist of html tags: set to null to allow tags
-     *
+     * @param  null  $max
+     * @param  null  $ending
+     * @param  string  $clean  - whitelist of html tags: set to null to allow tags
      * @return mixed|string
      */
     function teaser($text, $max = null, $ending = null, $clean = '')
@@ -227,7 +238,7 @@ if (! function_exists('cleanupHTML')) {
             '@onclick=[^ ].*? @si',
         ], '', $value);
         // strip unwanted tags via whitelist...
-        if (false !== $whitelist) {
+        if ($whitelist !== false) {
             $value = strip_tags($value, $whitelist);
         }
 
@@ -269,7 +280,7 @@ if (! function_exists('isActiveUrl')) {
 
         $name = ltrim($name, '/');
 
-        if (false !== strpos($name, '*')) {
+        if (strpos($name, '*') !== false) {
             $name = str_replace(request()->getSchemeAndHttpHost().'/', '', $name);
             $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
 
@@ -320,7 +331,7 @@ if (! function_exists('addQueryToUrl')) {
                 return;
             }
             $split = explode('=', $v);
-            if (2 == count($split)) {
+            if (count($split) == 2) {
                 $current_query[$split[0]] = $split[1];
             }
         }, $_query);
@@ -341,7 +352,6 @@ if (! function_exists('chiefMemoize')) {
     /**
      * Memoize a function.
      *
-     * @param $key
      *
      * @return mixed
      */

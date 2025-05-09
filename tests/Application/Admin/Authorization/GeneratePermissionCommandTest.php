@@ -9,23 +9,21 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class GeneratePermissionCommandTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->withoutDefaultAuthorization();
     }
 
-    /** @test */
-    public function it_requires_a_name_parameter()
+    public function test_it_requires_a_name_parameter()
     {
         $this->expectException(RuntimeException::class);
 
         $this->artisan('chief:permission');
     }
 
-    /** @test */
-    public function single_permission_can_be_generated()
+    public function test_single_permission_can_be_generated()
     {
         Role::create(['name' => 'new admin']);
 
@@ -40,8 +38,7 @@ class GeneratePermissionCommandTest extends ChiefTestCase
         $this->assertEquals('view-ability', $role->permissions->first()->name);
     }
 
-    /** @test */
-    public function permissions_can_be_generated()
+    public function test_permissions_can_be_generated()
     {
         $this->artisan('chief:permission', [
             'name' => 'ability',
@@ -59,8 +56,7 @@ class GeneratePermissionCommandTest extends ChiefTestCase
         $this->assertEquals('chief', Permission::first()->guard_name);
     }
 
-    /** @test */
-    public function permissions_can_be_assigned_to_a_role()
+    public function test_permissions_can_be_assigned_to_a_role()
     {
         Role::create(['name' => 'admin']);
 
@@ -76,8 +72,7 @@ class GeneratePermissionCommandTest extends ChiefTestCase
         $this->assertContains('view-role', $permissionNames);
     }
 
-    /** @test */
-    public function permissions_can_be_assigned_to_multiple_roles()
+    public function test_permissions_can_be_assigned_to_multiple_roles()
     {
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'author']);

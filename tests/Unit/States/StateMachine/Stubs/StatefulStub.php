@@ -33,7 +33,7 @@ class StatefulStub implements StatefulContract
 
     public function getStateConfig(string $stateKey): StateConfig
     {
-        return new OnlineStateConfigStub();
+        return new OnlineStateConfigStub;
     }
 
     public function inOnlineState(): bool
@@ -41,7 +41,7 @@ class StatefulStub implements StatefulContract
         return $this->getState('online') == OnlineStateStub::online;
     }
 
-    public function scopeOnline(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         $query->where($this->getStateAttribute(), OnlineStateStub::online);
     }

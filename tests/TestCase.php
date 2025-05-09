@@ -5,20 +5,20 @@ namespace Thinktomorrow\Chief\Tests;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingWithFiles;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
-use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
 
 abstract class TestCase extends OrchestraTestCase
 {
     use TestHelpers;
-    use TestingWithManagers;
     use TestingWithFiles;
+    use TestingWithManagers;
 
     protected $protectTestEnvironment = true;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +28,7 @@ abstract class TestCase extends OrchestraTestCase
         config()->set('app.fallback_locale', 'nl');
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         // Clear out any memoized values
         Memoize::clear();

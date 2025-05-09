@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasView;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLocalizableProperties;
+use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanBeDefault;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanHideFromView;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanShowActiveLabel;
@@ -20,18 +20,17 @@ use Thinktomorrow\Chief\Table\Filters\Concerns\HasValue;
 
 abstract class Sorter extends Component
 {
+    use CanBeDefault;
+    use CanHideFromView;
+    use CanShowActiveLabel;
     use HasComponentRendering;
-    use HasLocalizableProperties;
-    use HasView;
+    use HasDescription;
     use HasKey;
     use HasLabel;
-    use HasDescription;
-    use HasValue;
-    use CanBeDefault;
-    use CanShowActiveLabel;
-    use CanHideFromView;
-
+    use HasLocalizableProperties;
     use HasQuery;
+    use HasValue;
+    use HasView;
 
     public function __construct(string $key)
     {

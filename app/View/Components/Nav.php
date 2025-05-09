@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\App\View\Components;
@@ -11,7 +12,6 @@ final class Nav extends Component
 {
     public ?string $title;
 
-    /** @var NavItems */
     private NavItems $nav;
 
     public function __construct(NavItems $nav, ?string $title = null)
@@ -25,7 +25,7 @@ final class Nav extends Component
      */
     public function render()
     {
-        return view('chief::components.nav.index');
+        return view('chief::components.nav.nav');
     }
 
     public function items(): Collection

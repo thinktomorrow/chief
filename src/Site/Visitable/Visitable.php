@@ -4,48 +4,48 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Symfony\Component\HttpFoundation\Response;
 
 interface Visitable
 {
     /**
-     * Full url to be used in frontend navigation
-     *
-     * @param null|string $locale
-     * @return string
+     * Online url of the model for given/current site
      */
-    public function url(string $locale = null): string;
+    public function url(?string $site = null): ?string;
+
+    /** Url regardless of status for given/current site */
+    public function rawUrl(?string $site = null): ?string;
 
     /**
      * Check whether this model can be viewed
      * by the current visitor or not.
-     *
-     * @return bool
      */
     public function isVisitable(): bool;
 
     /**
      * The base category uri segment for this type of model.
      * e.g. /news/, /events/.
-     *
-     * @param null|string $locale
-     * @return string
      */
-    public function baseUrlSegment(string $locale = null): string;
+    public function baseUrlSegment(?string $site = null): string;
 
     /**
      * Create the full url for this given resource
      *
-     * @param string|null $locale
-     * @param array|string|null $parameters
-     * @return string
+     * @param  array|string|null  $parameters
      */
-    public function resolveUrl(string $locale = null, $parameters = null): string;
+    public function resolveUrl(?string $site = null, $parameters = null): string;
 
     public function response(): Response;
 
+    /** All current urls, excluding redirects */
     public function urls(): HasMany;
 
+    /** All urls, including redirects */
     public function allUrls(): HasMany;
+
+    public function scopeOnline(Builder $query, ?string $site = null): void;
+
+    public function scopeWithOnlineUrl(Builder $query, ?string $site = null): void;
 }

@@ -15,17 +15,23 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 
 class FileFieldUploadComponent extends Component implements HasPreviewFiles, HasSyncedFormInputs
 {
-    use WithFileUploads;
-    use FileUploadDefaults;
     use EmitsToNestables;
+    use FileUploadDefaults;
     use InteractsWithChoosingAssets;
     use RenamesErrorBagFileAttribute;
+    use WithFileUploads;
 
     public ?string $modelReference;
+
     public string $fieldKey;
+
     public string $locale;
+
     public bool $allowExternalFiles = false;
+
     public bool $allowLocalFiles = true;
+
+    public ?string $parentComponentId = null;
 
     public function mount(?string $modelReference, string $fieldKey, string $locale, string $fieldName, array $assets = [], array $components = [])
     {
@@ -43,8 +49,8 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
         return [
             'upload:finished' => 'onUploadFinished',
             'upload:errored' => 'onUploadErrored',
-            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
-            'assetsChosen-' . $this->getId() => 'onAssetsChosen',
+            'assetUpdated-'.$this->getId() => 'onAssetUpdated',
+            'assetsChosen-'.$this->getId() => 'onAssetsChosen',
         ];
     }
 

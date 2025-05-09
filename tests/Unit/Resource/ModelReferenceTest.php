@@ -10,8 +10,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ModelReferenceTest extends TestCase
 {
-    /** @test */
-    public function it_can_make_a_reference()
+    public function test_it_can_make_a_reference()
     {
         $reference = ModelReference::make('classname', 1);
 
@@ -23,16 +22,14 @@ class ModelReferenceTest extends TestCase
         $this->assertTrue($reference->equals(ModelReference::fromString('classname@1')));
     }
 
-    /** @test */
-    public function it_cannot_make_a_reference_from_invalid_string()
+    public function test_it_cannot_make_a_reference_from_invalid_string()
     {
         $this->expectException(\InvalidArgumentException::class);
 
         ModelReference::fromString('classname@'); // missing id
     }
 
-    /** @test */
-    public function it_can_create_a_collection_from_model_references()
+    public function test_it_can_create_a_collection_from_model_references()
     {
         $first = new ArticlePage(['id' => 1]);
         $second = new ArticlePage(['id' => 2]);
@@ -44,8 +41,7 @@ class ModelReferenceTest extends TestCase
         $this->assertEquals($second->modelReference()->get(), $modelReferences[1]);
     }
 
-    /** @test */
-    public function a_model_can_have_a_model_reference()
+    public function test_a_model_can_have_a_model_reference()
     {
         $article = new ArticlePage(['id' => 1]);
 

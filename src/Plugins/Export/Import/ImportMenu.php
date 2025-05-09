@@ -6,12 +6,14 @@ use Illuminate\Console\OutputStyle;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\MenuItem;
 
 class ImportMenu implements ToCollection
 {
     private array $headers;
+
     private array $locales;
+
     private ?OutputStyle $output = null;
 
     public function __construct(array $headers, array $locales)
@@ -36,7 +38,7 @@ class ImportMenu implements ToCollection
             try {
                 $menuItemId = decrypt($encryptedId);
             } catch (DecryptException $e) {
-                $this->writeToOutput('Invalid menu item id reference: ' . $encryptedId, 'error');
+                $this->writeToOutput('Invalid menu item id reference: '.$encryptedId, 'error');
 
                 continue;
             }
@@ -44,19 +46,19 @@ class ImportMenu implements ToCollection
             $menuItem = MenuItem::find($menuItemId);
             foreach ($this->locales as $locale) {
 
-                $labelValueIndex = array_search($locale.'_label', $this->headers);
-                $urlValueIndex = array_search($locale.'_url', $this->headers);
+                $labelValueIndex = array_search($locale.' label', $this->headers);
+                $urlValueIndex = array_search($locale.' url', $this->headers);
 
                 if (! $labelValueIndex) {
-                    throw new \Exception('Label column not found for locale: '.$locale . '. Expected column name: '.$locale.'_label');
+                    throw new \Exception('Label column not found for locale: '.$locale.'. Expected column name: '.$locale.'_label');
                 }
 
                 if (! $urlValueIndex) {
-                    throw new \Exception('Url column not found for locale: '.$locale . '. Expected column name: '.$locale.'_url');
+                    throw new \Exception('Url column not found for locale: '.$locale.'. Expected column name: '.$locale.'_url');
                 }
 
-                $menuItem->setDynamic('label.' . $locale, $row[$labelValueIndex]);
-                $menuItem->setDynamic('url.' . $locale, $row[$urlValueIndex]);
+                $menuItem->setDynamic('label.'.$locale, $row[$labelValueIndex]);
+                $menuItem->setDynamic('url.'.$locale, $row[$urlValueIndex]);
             }
 
             $menuItem->save();

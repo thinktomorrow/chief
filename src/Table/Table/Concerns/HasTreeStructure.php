@@ -10,6 +10,7 @@ namespace Thinktomorrow\Chief\Table\Table\Concerns;
 trait HasTreeStructure
 {
     protected bool $shouldReturnResultsAsTree = false;
+
     protected string $treeLabelColumn = 'title';
 
     public function treeLabelColumn(string $treeLabelColumn): static

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -26,7 +27,7 @@ class ArticleWithStateAdminConfig extends ArticlePage implements PageResource
 
     public function getStateConfig(string $stateKey): StateConfig
     {
-        return new ArticleStateAdminConfig();
+        return new ArticleStateAdminConfig;
     }
 
     public function fields($model): iterable

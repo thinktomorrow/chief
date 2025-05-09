@@ -71,7 +71,7 @@ trait WithActions
         if ($action->hasEffect()) {
 
             // Perform effect
-            $effectResult = $action->getEffect()($formData, $data);
+            $effectResult = $action->getEffect()($formData, $data, $action, $this);
 
             // Redirect after success
             if ($effectResult && $action->hasRedirectOnSuccess()) {
@@ -97,7 +97,7 @@ trait WithActions
 
     public function openActionDialog($params): void
     {
-        $this->dispatch('open-' . $this->getId(), $params)->to('chief-form::dialog');
+        $this->dispatch('open-'.$this->getId(), $params)->to('chief-form::dialog');
     }
 
     private function showActionDialog($actionKey, array $data = []): void

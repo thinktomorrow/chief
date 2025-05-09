@@ -1,2 +1,4 @@
 THIS IS ARTICLE PAGE VIEW
-@fragments
+@foreach(getFragments() as $fragment)
+    {{ $fragment->render() }}
+@endforeach

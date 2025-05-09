@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Plugins\Tags\App\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagCreated;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagDeleted;
@@ -19,7 +19,9 @@ use Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Models\NullTagGroup;
 class TagsController extends Controller
 {
     private TagReadRepository $tagReadRepository;
+
     private FieldValidator $fieldValidator;
+
     private SaveFields $saveFields;
 
     public function __construct(TagReadRepository $tagReadRepository, FieldValidator $fieldValidator, SaveFields $saveFields)
@@ -67,7 +69,7 @@ class TagsController extends Controller
 
         event(new TagCreated(TagId::fromString($model->id)));
 
-        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is toegevoegd.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-'.$model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is toegevoegd.');
     }
 
     public function edit($tagId)
@@ -94,7 +96,7 @@ class TagsController extends Controller
 
         event(new TagUpdated(TagId::fromString($model->id)));
 
-        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is aangepast.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-'.$model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is aangepast.');
     }
 
     public function delete($tagId)
@@ -110,13 +112,13 @@ class TagsController extends Controller
 
         event(new TagDeleted(TagId::fromString($model->id)));
 
-        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is verwijderd.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-'.$model->taggroup_id)->with('messages.success', 'Tag '.$model->label.' is verwijderd.');
     }
 
     private function getModelAndFields(?string $tagId = null): array
     {
         $model = app(TagModel::class);
-        $model = $tagId ? $model::find($tagId): $model;
+        $model = $tagId ? $model::find($tagId) : $model;
 
         $fields = Fields::make($model->fields($model))->each(fn ($field) => $field->model($model));
 

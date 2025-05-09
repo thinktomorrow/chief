@@ -2,13 +2,15 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
+use Thinktomorrow\Chief\Menu\MenuItem;
 
 class ProjectMenuCommand extends BaseCommand
 {
     protected $signature = 'chief:project-menu';
+
     protected $description = 'Update all menu items with the current model data.';
+
     private ProjectModelData $projectModelData;
 
     public function __construct(ProjectModelData $projectModelData)
@@ -22,7 +24,7 @@ class ProjectMenuCommand extends BaseCommand
     {
         $menuItems = MenuItem::all();
 
-        $this->info(count($menuItems) . ' menuitems will be updated.');
+        $this->info(count($menuItems).' menuitems will be updated.');
 
         foreach ($menuItems as $menuItem) {
             $this->projectModelData->handleByMenuItem($menuItem);

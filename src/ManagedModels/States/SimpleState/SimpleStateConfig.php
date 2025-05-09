@@ -8,13 +8,13 @@ use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
+use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
-class SimpleStateConfig implements StateConfig, StateAdminConfig
+class SimpleStateConfig implements StateAdminConfig
 {
     use StateAdminConfigDefaults;
 
@@ -52,23 +52,23 @@ class SimpleStateConfig implements StateConfig, StateAdminConfig
 
     public function emitEvent(StatefulContract $statefulContract, string $transition, array $data): void
     {
-        if ('publish' == $transition) {
+        if ($transition == 'publish') {
             event(new ManagedModelPublished($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('published');
         }
 
-        if ('unpublish' == $transition) {
+        if ($transition == 'unpublish') {
             event(new ManagedModelUnPublished($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('unpublished');
         }
 
-        if ('delete' == $transition) {
+        if ($transition == 'delete') {
             event(new ManagedModelQueuedForDeletion($statefulContract->modelReference()));
             Audit::activity()->performedOn($statefulContract)->log('deleted');
         }
     }
 
-    public function getWindowTitle(StatefulContract $statefulContract): string
+    public function getEditTitle(StatefulContract $statefulContract): string
     {
         return 'Status';
     }
@@ -77,37 +77,52 @@ class SimpleStateConfig implements StateConfig, StateAdminConfig
     {
         switch ($statefulContract->getState($this->getStateKey())) {
             case SimpleState::online:
-                return '<span class="label label-xs label-success">Online</span>';
+                return 'Gepubliceerd';
 
             case SimpleState::offline:
-                return '<span class="label label-xs label-error">Offline</span>';
+                return 'Draft';
 
             case SimpleState::deleted:
-                return '<span class="label label-xs label-grey">Verwijderd</span>';
+                return 'Verwijderd';
 
             default:
                 return $statefulContract->getState($this->getStateKey())?->getValueAsString();
         }
     }
 
-    public function getTransitionButtonLabel(string $transitionKey): ?string
+    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
-                return 'Zet online';
+                return 'Publiceer';
 
             case 'unpublish':
-                return 'Haal offline';
+                return 'Zet in draft';
 
             case 'delete':
-                return 'verwijder';
+                return 'Verwijder';
 
             default:
                 return $transitionKey;
         }
     }
 
-    public function getTransitionType(string $transitionKey): ?string
+    public function getStateVariant(StatefulContract $statefulContract): string
+    {
+        return $this->getVariantForState($statefulContract->getState($this->getStateKey()));
+    }
+
+    private function getVariantForState(State $state): string
+    {
+        return match ($state) {
+            SimpleState::online => 'outline-blue',
+            SimpleState::offline => 'outline-orange',
+            SimpleState::deleted => 'outline-red',
+            default => 'outline-blue',
+        };
+    }
+
+    public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         switch ($transitionKey) {
             case 'publish':
@@ -121,7 +136,7 @@ class SimpleStateConfig implements StateConfig, StateAdminConfig
         }
     }
 
-    public function getTransitionContent(string $transitionKey): ?string
+    public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         if ($transitionKey == 'delete') {
             return 'Opgelet! Het verwijderen is definitief. Dit kan niet worden ongedaan gemaakt.';
@@ -139,7 +154,7 @@ class SimpleStateConfig implements StateConfig, StateAdminConfig
         return false;
     }
 
-    public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string
+    public function getRedirectAfterTransition(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         if (in_array($transitionKey, ['delete'])) {
             return app(Registry::class)->findManagerByModel($statefulContract::class)->route('index');

@@ -5,20 +5,12 @@ namespace Thinktomorrow\Chief\Forms\Concerns;
 trait HasView
 {
     protected string $view;
-    protected string $windowView;
 
-    protected bool $editInSidebar = false;
-
-    public function getEditInSidebar(): bool
-    {
-        return $this->editInSidebar;
-    }
+    protected string $previewView;
 
     public function getView(): string
     {
-        return ($this->editInSidebar && isset($this->windowView))
-            ? $this->windowView
-            : $this->view;
+        return $this->view;
     }
 
     public function setView(string $view): static
@@ -28,28 +20,15 @@ trait HasView
         return $this;
     }
 
-    public function windowView(string $windowView): static
+    public function previewView(string $previewView): static
     {
-        $this->windowView = $windowView;
+        $this->previewView = $previewView;
 
         return $this;
     }
 
-    public function editInSidebar(?string $windowView = null): static
+    public function getPreviewView(): string
     {
-        $this->editInSidebar = true;
-
-        if ($windowView) {
-            $this->windowView($windowView);
-        }
-
-        return $this;
-    }
-
-    public function editInline(): static
-    {
-        $this->editInSidebar = false;
-
-        return $this;
+        return $this->previewView;
     }
 }

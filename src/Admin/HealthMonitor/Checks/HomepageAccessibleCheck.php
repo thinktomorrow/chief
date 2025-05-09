@@ -17,9 +17,9 @@ class HomepageAccessibleCheck implements HealthCheck
     /**
      * @return false|string
      */
-    private function get_http_response_code(string $url)
+    private function get_http_response_code(?string $url)
     {
-        if ($url == '') {
+        if (! $url) {
             return false;
         }
 
@@ -37,7 +37,7 @@ class HomepageAccessibleCheck implements HealthCheck
 
     public function message(): string
     {
-        return 'Het lijkt erop dat de homepagina niet meer bereikbaar is. <a href="' . route('chief.back.settings.edit') . '" class="link">Kies een nieuwe</a>.';
+        return 'Het lijkt erop dat de homepagina niet meer bereikbaar is. <a href="'.route('chief.back.settings.edit').'" class="link">Kies een nieuwe</a>.';
     }
 
     /**

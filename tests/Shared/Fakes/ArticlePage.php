@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -7,27 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\AssetLibrary\InteractsWithAssets;
-use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Models\Page;
+use Thinktomorrow\Chief\Models\PageDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
 {
-
+    use HasPeriodTrait;
     use PageDefaults;
     use SoftDeletes;
-    use InteractsWithAssets;
-    use HasPeriodTrait;
     use Sortable;
+
     const FILEFIELD_DISK_KEY = 'file-on-other-disk';
+
     const FILEFIELD_ASSETTYPE_KEY = 'file-with-assetttype';
+
     const IMAGEFIELD_DISK_KEY = 'image-on-other-disk';
 
     public $table = 'article_pages';
+
     public $guarded = [];
 
     public $dynamicKeys = [
@@ -38,7 +40,8 @@ class ArticlePage extends Model implements Page
     {
         Schema::create('article_pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->nullable();
+            $table->json('allowed_sites')->nullable();
+            //            $table->string('title')->nullable();
             $table->string('current_state')->default(PageState::draft->getValueAsString());
             $table->json('values')->nullable(); // dynamic attributes
             $table->unsignedInteger('order')->default(0);
@@ -62,8 +65,13 @@ class ArticlePage extends Model implements Page
         return 'article_page';
     }
 
-    protected function dynamicLocales(): array
+    public function baseUrlSegment(?string $site = null): string
     {
-        return config('chief.locales', []);
+        return match ($site) {
+            'nl' => 'nl-base',
+            'fr' => 'fr-base',
+            'en' => 'en-base',
+            default => 'base',
+        };
     }
 }

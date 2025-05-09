@@ -1,0 +1,3 @@
+[data-slot='form-group'] + [data-slot='form-group'] {
+    @apply mt-6;
+}

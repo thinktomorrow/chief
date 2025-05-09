@@ -17,6 +17,7 @@ class CreateFragmentCommand extends Command
     protected $description = 'Generate a new chief fragment';
 
     private FileManipulation $fileManipulation;
+
     private SetupConfig $config;
 
     public function __construct(FileManipulation $fileManipulation, SetupConfig $config)
@@ -55,11 +56,11 @@ class CreateFragmentCommand extends Command
         }
 
         $className = Str::studly($name);
-        $namespacedClassName = '\\' . $namespace . '\\' . $className;
-        $fullPath = $path . '/' . $className.'.php';
+        $namespacedClassName = '\\'.$namespace.'\\'.$className;
+        $fullPath = $path.'/'.$className.'.php';
         $viewKey = Str::snake($className);
 
-        $this->fileManipulation->writeFile($fullPath, $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/fragment.php.stub'), [
+        $this->fileManipulation->writeFile($fullPath, $this->replacePlaceholders(file_get_contents(__DIR__.'/stubs/fragment.php.stub'), [
             'className' => $className,
             'namespace' => $namespace,
             'viewkey' => $viewKey,
@@ -71,13 +72,13 @@ class CreateFragmentCommand extends Command
          * Create view files
          */
         if ($this->confirm('Would you like to add a frontend view (fragments.'.$viewKey.')?', true)) {
-            $fullViewPath = resource_path('views/fragments/' . $viewKey . '.blade.php');
-            $this->fileManipulation->writeFile($fullViewPath, '<!-- ' . Inspiring::quote() . ' -->', $this->option('force'));
+            $fullViewPath = resource_path('views/fragments/'.$viewKey.'.blade.php');
+            $this->fileManipulation->writeFile($fullViewPath, '<!-- '.Inspiring::quote().' -->', $this->option('force'));
         }
 
         if ($this->confirm('Would you like to add a backend view (back.fragments.'.$viewKey.')?', true)) {
-            $fullViewPath = resource_path('views/back/fragments/' . $viewKey . '.blade.php');
-            $this->fileManipulation->writeFile($fullViewPath, '<!-- ' . Inspiring::quote() . ' -->', $this->option('force'));
+            $fullViewPath = resource_path('views/back/fragments/'.$viewKey.'.blade.php');
+            $this->fileManipulation->writeFile($fullViewPath, '<!-- '.Inspiring::quote().' -->', $this->option('force'));
         }
     }
 

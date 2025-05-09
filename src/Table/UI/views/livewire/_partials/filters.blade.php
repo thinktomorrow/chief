@@ -7,7 +7,7 @@
 
     <div>
         @if (count($this->getTertiaryFilters()) > 0)
-            <x-chief-table::button
+            <x-chief::button
                 x-on:click="$dispatch('open-dialog', { 'id': 'table-filters-drawer' })"
                 variant="outline-white"
                 class="relative"
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 @endif
-            </x-chief-table::button>
+            </x-chief::button>
         @endif
 
         <x-chief::dialog.drawer id="table-filters-drawer" title="Meer filters">
@@ -32,15 +32,15 @@
                     <div class="space-y-2">
                         <div>
                             @if ($filter->getLabel())
-                                <x-chief::input.label>
+                                <x-chief::form.label>
                                     {{ $filter->getLabel() }}
-                                </x-chief::input.label>
+                                </x-chief::form.label>
                             @endif
 
                             @if ($filter->getDescription())
-                                <x-chief::input.description>
+                                <x-chief::form.description>
                                     {!! $filter->getDescription() !!}
-                                </x-chief::input.description>
+                                </x-chief::form.description>
                             @endif
                         </div>
 
@@ -49,11 +49,11 @@
                 @endforeach
             </div>
 
-            <x-slot name="footer" class="flex items-center justify-start gap-2">
-                <x-chief-table::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief-table::button>
-                <div>
-                    <span>{{ $this->resultTotal }} resultaten gevonden</span>
-                </div>
+            <x-slot name="footer">
+                <x-chief::dialog.drawer.footer>
+                    <x-chief::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief::button>
+                    <span class="my-2 leading-5 text-grey-500">{{ $this->resultTotal }} resultaten gevonden</span>
+                </x-chief::dialog.drawer.footer>
             </x-slot>
         </x-chief::dialog.drawer>
     </div>

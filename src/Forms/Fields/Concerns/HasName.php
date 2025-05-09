@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
@@ -16,10 +17,11 @@ trait HasName
 
     public function getName(?string $locale = null): string
     {
-        if ($locale) {
-            return $this->getLocalizedFormKey()->get($this->name, $locale);
-        }
+        return $this->getFieldName()->get($this->name, $locale);
+    }
 
+    public function getRawName(): string
+    {
         return $this->name;
     }
 }

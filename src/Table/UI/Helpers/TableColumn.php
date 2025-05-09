@@ -6,6 +6,6 @@ class TableColumn
 {
     public static function image(string $imageUrl): string
     {
-        return '<img src="' . $imageUrl .'" />';
+        return '<img src="'.$imageUrl.'" />';
     }
 }

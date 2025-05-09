@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Users\Invites;
@@ -59,5 +60,10 @@ class InvitationStateConfig implements StateConfig
     public function getStateLabel(StatefulContract $statefulContract): ?string
     {
         return $statefulContract->getState($this->getStateKey())->getValueAsString();
+    }
+
+    public function getStateVariant(StatefulContract $statefulContract): string
+    {
+        return 'outline-blue';
     }
 }

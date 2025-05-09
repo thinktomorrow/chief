@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Assets\App\FileApplication;
 class VimeoDriver implements Driver
 {
     private CreateAsset $createAsset;
+
     private FileApplication $fileApplication;
 
     public function __construct(CreateAsset $createAsset, FileApplication $fileApplication)
@@ -58,14 +59,14 @@ class VimeoDriver implements Driver
      */
     private function getInfo(string $idOrUrl): array
     {
-        $query = str_contains($idOrUrl, 'http') ? $idOrUrl : 'https://vimeo.com/' . $idOrUrl;
+        $query = str_contains($idOrUrl, 'http') ? $idOrUrl : 'https://vimeo.com/'.$idOrUrl;
 
         try {
             $response = file_get_contents('https://vimeo.com/api/oembed.json?url='.urlencode($query));
 
             return json_decode($response, true);
         } catch (\ErrorException $e) {
-            throw ValidationException::withMessages(['driverId' => 'De opgegeven id of link is geen geldige Vimeo verwijzing: ' . '['.$idOrUrl.']']);
+            throw ValidationException::withMessages(['driverId' => 'De opgegeven id of link is geen geldige Vimeo verwijzing: '.'['.$idOrUrl.']']);
         }
         // ERROR/ file_get_contents(): Failed to enable crypto ???
 
@@ -92,8 +93,8 @@ class VimeoDriver implements Driver
 
     private function createPreviewThumbByResponse(array $oEmbedResponse): AssetContract
     {
-        $fileName = Str::slug($oEmbedResponse['title']) . '.webp';
-        $thumbUrl = $oEmbedResponse['thumbnail_url'] . '.webp';
+        $fileName = Str::slug($oEmbedResponse['title']).'.webp';
+        $thumbUrl = $oEmbedResponse['thumbnail_url'].'.webp';
 
         $asset = $this->createAsset
             ->url($thumbUrl)
@@ -122,8 +123,8 @@ class VimeoDriver implements Driver
 
     private function updatePreviewThumbByResponse(AssetContract $asset, array $oEmbedResponse): void
     {
-        $fileName = Str::slug($oEmbedResponse['title']) . '.webp';
-        $thumbUrl = $oEmbedResponse['thumbnail_url'] . '.webp';
+        $fileName = Str::slug($oEmbedResponse['title']).'.webp';
+        $thumbUrl = $oEmbedResponse['thumbnail_url'].'.webp';
 
         $media = $asset->getFirstMedia();
         $media->file_name = $fileName;

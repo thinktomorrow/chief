@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
@@ -47,17 +48,13 @@ class DuplicateModel
         return $copiedModel;
     }
 
-    /**
-     * @param Model $copiedModel
-     * @return void
-     */
     private function resetAstrotomicTranslations(Model $copiedModel): void
     {
         if (! $copiedModel->relationLoaded('translations')) {
             return;
         }
 
-        $transModels = new Collection();
+        $transModels = new Collection;
 
         foreach ($copiedModel->getRelation('translations') as $translation) {
             $transModels->push($translation->replicate(['id', 'owner_id', 'created_at', 'updated_at']));
@@ -68,17 +65,15 @@ class DuplicateModel
     }
 
     /**
-     * @param Model $model
-     * @param string $titleKey
-     * @param Model $copiedModel
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+     *
      * @throws \Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration
      */
     private function copyTitle(Model $model, string $titleKey, Model $copiedModel): void
     {
         // Default when title is no dynamic field
         if (! public_method_exists($model, 'dynamic') || ! $model->isDynamic($titleKey)) {
-            $copiedModel->$titleKey = '[Copy] ' . $model->$titleKey;
+            $copiedModel->$titleKey = $model->$titleKey.' [Copy]';
 
             return;
         }
@@ -88,11 +83,11 @@ class DuplicateModel
         $isTitleLocalized = $field ? $field->hasLocales() : false;
 
         if ($isTitleLocalized) {
-            $locales = config('chief.locales', []);
+            $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
             $defaultLocale = reset($locales);
-            $copiedModel->setDynamic($titleKey, '[Copy] ' . $model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)), $defaultLocale);
+            $copiedModel->setDynamic($titleKey, $model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)).' [Copy]', $defaultLocale);
         } else {
-            $copiedModel->setDynamic($titleKey, '[Copy] ' . $model->$titleKey);
+            $copiedModel->setDynamic($titleKey, $model->$titleKey.' [Copy]');
         }
     }
 }

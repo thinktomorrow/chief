@@ -48,7 +48,6 @@
         "@tiptap/extension-paragraph": "^2.4.0",
         "@tiptap/extension-text": "^2.4.0",
         "@tiptap/extension-underline": "^2.4.0",
-        "axios": "^1.2.2",
         "choices.js": "^10.2.0",
         "core-js": "^3.21.1",
         "cross-env": "^7.0.3",

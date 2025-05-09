@@ -1,4 +1,8 @@
-<div wire:key="{{ $file->id }}" wire:sortable.item="{{ $file->id }}" class="@container relative">
+@php
+    use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
+@endphp
+
+<div wire:key="{{ $file->id }}" wire:sortable.item="{{ $file->id }}" class="@container relative bg-white">
     {{-- File upload progress bar --}}
     @if ($file->isUploading && isset($this->findUploadFile($file->id)['progress']) && $this->findUploadFile($file->id)['progress'] <= 100)
         <div class="absolute inset-0">
@@ -21,10 +25,13 @@
                         alt="{{ $file->filename }}"
                         class="h-full w-full object-contain"
                     />
+                @elseif ($file->mimeType)
+                    <x-dynamic-component
+                        :component="MimetypeIcon::fromString($file->mimeType)->icon()"
+                        class="size-6 text-grey-400"
+                    />
                 @else
-                    <svg class="h-6 w-6 text-grey-400">
-                        <use xlink:href="#icon-document" />
-                    </svg>
+                    <x-chief::icon.attachment class="size-6 text-grey-400" />
                 @endif
             </div>
 
@@ -60,7 +67,7 @@
         @if ($file->isValidated && ! $file->isQueuedForDeletion)
             <div class="ml-auto flex items-center gap-1.5">
                 @if ($file->isExternalAsset)
-                    <x-chief-table::button
+                    <x-chief::button
                         href="{{ $file->getUrl() }}"
                         title="{{ $file->getUrl() }}"
                         target="_blank"
@@ -68,22 +75,22 @@
                         size="sm"
                     >
                         <x-chief::icon.link-square />
-                    </x-chief-table::button>
+                    </x-chief::button>
                 @endif
 
                 @if (count($files) > 1 && $allowMultiple())
-                    <x-chief-table::button wire:sortable.handle size="sm" variant="grey">
-                        <x-chief::icon.drag-drop-vertical />
-                    </x-chief-table::button>
+                    <x-chief::button wire:sortable.handle size="sm" variant="grey">
+                        <x-chief::icon.drag-drop-arrows />
+                    </x-chief::button>
                 @endif
 
-                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="outline-white">
+                <x-chief::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="outline-red">
                     <x-chief::icon.delete />
-                </x-chief-table::button>
+                </x-chief::button>
 
-                <x-chief-table::button wire:click="openFileEdit('{{ $file->id }}')" size="sm" variant="grey">
+                <x-chief::button wire:click="openFileEdit('{{ $file->id }}')" size="sm" variant="grey">
                     <x-chief::icon.quill-write />
-                </x-chief-table::button>
+                </x-chief::button>
             </div>
         @endif
 
@@ -95,9 +102,9 @@
                     {{ ucfirst($file->validationMessage) }}
                 </span>
 
-                <x-chief-table::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="grey">
+                <x-chief::button wire:click="deleteFile('{{ $file->id }}')" size="sm" variant="grey">
                     <x-chief::icon.cancel />
-                </x-chief-table::button>
+                </x-chief::button>
             </div>
         @elseif ($file->isQueuedForDeletion)
             <div
@@ -109,10 +116,10 @@
                     <span class="body body-dark text-sm">{{ $file->filename }} wordt niet bewaard</span>
                 @endif
 
-                <x-chief-table::button wire:click="undoDeleteFile('{{ $file->id }}')" size="sm" variant="grey">
+                <x-chief::button wire:click="undoDeleteFile('{{ $file->id }}')" size="sm" variant="grey">
                     <x-chief::icon.arrow-turn-backward />
                     <span>Ongedaan maken</span>
-                </x-chief-table::button>
+                </x-chief::button>
             </div>
         @endif
     </div>

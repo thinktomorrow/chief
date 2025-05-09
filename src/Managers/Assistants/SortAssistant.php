@@ -7,11 +7,11 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Thinktomorrow\Chief\ManagedModels\Actions\SortModels;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelsSorted;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Shared\Helpers\SortModels;
 
 trait SortAssistant
 {
@@ -26,17 +26,17 @@ trait SortAssistant
 
     public function canSortAssistant(string $action, $model = null): bool
     {
-        return (in_array($action, ['sort-index', 'index-for-sorting', 'move-index'])
-            && ($model && public_method_exists($model, 'isSortable') && $model->isSortable()));
+        return in_array($action, ['sort-index', 'index-for-sorting', 'move-index'])
+            && ($model && public_method_exists($model, 'isSortable') && $model->isSortable());
     }
 
     public function filtersSortAssistant(): Filters
     {
         $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
+        $model = new $modelClass;
 
         if (! $this->can('sort-index', $model)) {
-            return new Filters();
+            return new Filters;
         }
 
         return new Filters([
@@ -52,7 +52,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle(
+        app(SortModels::class)->handleByModel(
             $this->managedModelClassInstance(),
             $request->indices,
             $this->managedModelClassInstance()->sortableAttribute(),

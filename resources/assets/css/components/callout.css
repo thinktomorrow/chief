@@ -1,0 +1,161 @@
+/**
+ * Using @layer directive to add this classes to tailwindcss components
+ * This will make them responsive and combinable with variants
+ **/
+@layer components {
+    .callout {
+        @apply flex items-start;
+    }
+
+    /* Sizes */
+    .callout-base {
+        @apply gap-2.5 rounded-xl px-4 py-3.5;
+
+        & > [data-slot='icon-container'] > [data-slot='icon'],
+        & > [data-slot='icon-container'] > svg {
+            @apply size-6 shrink-0;
+        }
+
+        & [data-slot='title'] {
+            @apply font-display text-lg/6 font-medium;
+        }
+
+        & [data-slot='content'] {
+            @apply text-base/6;
+        }
+
+        & [data-slot='title'] + [data-slot='content'] {
+            @apply mt-1;
+        }
+    }
+    .callout-sm {
+        @apply gap-2 rounded-[0.625rem] px-3.5 py-3;
+
+        & > [data-slot='icon-container'] > [data-slot='icon'],
+        & > [data-slot='icon-container'] > svg {
+            @apply size-6 shrink-0;
+        }
+
+        & [data-slot='title'] {
+            @apply font-display text-base/6 font-medium;
+        }
+
+        & [data-slot='content'] {
+            @apply py-0.5 text-sm/5;
+        }
+    }
+    .callout-xs {
+        @apply gap-1.5 rounded-lg px-3 py-2.5;
+
+        & > [data-slot='icon-container'] > [data-slot='icon'],
+        & > [data-slot='icon-container'] > svg {
+            @apply size-5 shrink-0;
+        }
+
+        & [data-slot='title'] {
+            @apply font-display text-sm/5 font-medium;
+        }
+
+        & [data-slot='content'] {
+            @apply py-0.5 text-xs/4;
+        }
+    }
+
+    /* Variants */
+    .callout-grey {
+        @apply bg-grey-50;
+
+        & [data-slot='icon'],
+        & svg {
+            @apply text-grey-500;
+        }
+
+        & [data-slot='title'] {
+            @apply text-grey-900;
+        }
+
+        & [data-slot='content'] {
+            @apply text-grey-700;
+        }
+    }
+    .callout-blue {
+        @apply bg-primary-50;
+
+        & [data-slot='icon'],
+        & svg {
+            @apply text-primary-500;
+        }
+
+        & [data-slot='title'] {
+            @apply text-primary-900;
+        }
+
+        & [data-slot='content'] {
+            @apply text-primary-950;
+        }
+    }
+    .callout-red {
+        @apply bg-red-50;
+
+        & [data-slot='icon'],
+        & svg {
+            @apply text-red-500;
+        }
+
+        & [data-slot='title'] {
+            @apply text-red-900;
+        }
+
+        & [data-slot='content'] {
+            @apply text-red-950;
+        }
+    }
+    .callout-orange {
+        @apply bg-orange-50;
+
+        & [data-slot='icon'],
+        & svg {
+            @apply text-orange-500;
+        }
+
+        & [data-slot='title'] {
+            @apply text-orange-900;
+        }
+
+        & [data-slot='content'] {
+            @apply text-orange-950;
+        }
+    }
+    .callout-green {
+        @apply bg-green-50;
+
+        & [data-slot='icon'],
+        & svg {
+            @apply text-green-500;
+        }
+
+        & [data-slot='title'] {
+            @apply text-green-900;
+        }
+
+        & [data-slot='content'] {
+            @apply text-green-950;
+        }
+    }
+    .callout-outline-white {
+        @apply border border-grey-200;
+
+        & [data-slot='icon'],
+        & svg {
+            @apply text-grey-500;
+        }
+
+        & [data-slot='title'] {
+            @apply text-grey-900;
+        }
+
+        & [data-slot='content'] {
+            @apply text-grey-700;
+        }
+    }
+}

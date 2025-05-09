@@ -2,10 +2,16 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
-use Thinktomorrow\Chief\Forms\Fields;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
+use Thinktomorrow\Chief\Forms\Fields\Html;
+use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
 
@@ -14,10 +20,10 @@ class ComposeFieldLines
     private Registry $registry;
 
     private array $textFields = [
-        Fields\Text::class,
-        Fields\Textarea::class,
-        Fields\Html::class,
-        Fields\Repeat::class,
+        Text::class,
+        Textarea::class,
+        Html::class,
+        Repeat::class,
     ];
 
     private LinesCollection $lines;
@@ -40,12 +46,12 @@ class ComposeFieldLines
     public function __construct(Registry $registry)
     {
         $this->registry = $registry;
-        $this->lines = new LinesCollection();
+        $this->lines = new LinesCollection;
     }
 
     public function compose(Resource $resource, $model, array $locales): static
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         $this->modelLabel = $resource->getPageTitle($model);
 
@@ -53,7 +59,7 @@ class ComposeFieldLines
             $this->extractFieldValues($resource, $model, $locales)
         );
 
-        if ($model instanceof FragmentsOwner) {
+        if ($model instanceof ContextOwner) {
             $lines = $lines->merge($this->addFragmentFieldValues($model, $locales));
         }
 
@@ -107,11 +113,11 @@ class ComposeFieldLines
         $lines->push(new InfoLine([]));
     }
 
-    private function extractFieldValues($resource, $model, array $locales): LinesCollection
+    private function extractFieldValues(Resource $resource, $model, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
-        $model = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
+        $model = $model instanceof Fragment ? $model->getFragmentModel() : $model;
 
         $modelFields = Fields::makeWithoutFlatteningNestedFields($resource->fields($model))
             ->filterBy(fn ($field) => in_array($field::class, $this->textFields))
@@ -126,9 +132,9 @@ class ComposeFieldLines
         return $lines;
     }
 
-    private function extractRepeatField(Resource $resource, $model, Fields\Repeat $field, array $locales): LinesCollection
+    private function extractRepeatField(Resource $resource, $model, Repeat $field, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         if ($this->ignoreEmptyValues && ! $field->getValue()) {
             return $lines;
@@ -147,41 +153,38 @@ class ComposeFieldLines
         return $lines;
     }
 
-    private function addFragmentFieldValues(FragmentsOwner $model, array $locales): LinesCollection
+    private function addFragmentFieldValues(ContextOwner $model, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
-        /** @var Fragmentable[] $fragment */
-        $fragments = app(FragmentRepository::class)->getByOwner($model instanceof Fragmentable ? $model->fragmentModel() : $model);
+        $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
 
-        foreach ($fragments as $fragment) {
+        foreach ($contexts as $context) {
+            /** @var Fragment[] $fragment */
+            $fragments = app(FragmentRepository::class)->getByContext($context->id);
 
-            if ($this->ignoreOfflineFragments && $fragment->fragmentModel()->isOffline()) {
-                continue;
-            }
+            foreach ($fragments as $fragment) {
 
-            // Shared fragments are only exported once to reduce translation lines
-            // First time we encounter a shared fragment, we add it to the ignored list
-            if ($fragment->fragmentModel()->isShared()) {
-                if (in_array($fragment->fragmentModel()->id, $this->ignoredFragments)) {
+                if ($this->ignoreOfflineFragments && $fragment->getFragmentModel()->isOffline()) {
                     continue;
-                } else {
-                    $this->ignoredFragments[] = $fragment->fragmentModel()->id;
                 }
-            }
 
-            $lines = $lines->merge(
-                $this->extractFieldValues(
-                    $this->registry->resource($fragment::resourceKey()),
-                    $fragment,
-                    $locales
-                )
-            );
+                // Shared fragments are only exported once to reduce translation lines
+                // First time we encounter a shared fragment, we add it to the ignored list
+                if ($fragment->getFragmentModel()->isShared()) {
+                    if (in_array($fragment->getFragmentModel()->id, $this->ignoredFragments)) {
+                        continue;
+                    } else {
+                        $this->ignoredFragments[] = $fragment->getFragmentModel()->id;
+                    }
+                }
 
-            // Nested fragments
-            if ($fragment instanceof FragmentsOwner) {
                 $lines = $lines->merge(
-                    $this->addFragmentFieldValues($fragment, $locales)
+                    $this->extractFieldValues(
+                        $fragment, // Fragment is resource
+                        $fragment,
+                        $locales
+                    )
                 );
             }
         }
@@ -189,15 +192,15 @@ class ComposeFieldLines
         return $lines;
     }
 
-    private function addFieldLines($resource, $model, $field, array $locales): LinesCollection
+    private function addFieldLines(Resource $resource, $model, $field, array $locales): LinesCollection
     {
-        $lines = new LinesCollection();
+        $lines = new LinesCollection;
 
         if (in_array($field->getKey(), $this->ignoredFieldKeys)) {
             return $lines;
         }
 
-        if ($field instanceof Fields\Repeat) {
+        if ($field instanceof Repeat) {
             return $lines->merge($this->extractRepeatField($resource, $model, $field, $locales));
         }
 
@@ -219,12 +222,12 @@ class ComposeFieldLines
         $fieldLabel = $field->getLabel() ?: $field->getKey();
 
         if (str_starts_with($field->getKey(), 'seo_')) {
-            $fieldLabel = 'SEO ' . $fieldLabel;
+            $fieldLabel = 'SEO '.$fieldLabel;
         }
 
         $lines->push(new FieldLine(
             $model->modelReference()->get(),
-            Fields\Common\FormKey::replaceBracketsByDots($field->getName()),
+            FieldNameHelpers::replaceBracketsByDots($field->getName()),
             $this->modelLabel,
             ucfirst($resource->getLabel()),
             $fieldLabel,

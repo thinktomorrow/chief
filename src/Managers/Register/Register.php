@@ -6,8 +6,9 @@ namespace Thinktomorrow\Chief\Managers\Register;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use InvalidArgumentException;
+use ReflectionClass;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Request\ManagerRequestDispatcher;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoutes;
@@ -19,6 +20,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 final class Register
 {
     private Container $container;
+
     private AdminEnvironment $adminEnvironment;
 
     public function __construct(Container $container, AdminEnvironment $adminEnvironment)
@@ -29,7 +31,32 @@ final class Register
 
     public function fragment(string $fragmentClass): void
     {
-        $this->resource($fragmentClass, FragmentManager::class);
+        $this->assertModelIsResource($fragmentClass);
+        $this->assertModelIsReferable($fragmentClass);
+
+        $this->registerMorphMap($fragmentClass::resourceKey(), $fragmentClass);
+    }
+
+    private function assertModelIsResource(string $modelClass): void
+    {
+        if (! (new ReflectionClass($modelClass))->implementsInterface(Resource::class)) {
+            throw new InvalidArgumentException($modelClass.' should implement '.Resource::class);
+        }
+    }
+
+    private function assertModelIsReferable(string $modelClass): void
+    {
+        if (! (new ReflectionClass($modelClass))->implementsInterface(ReferableModel::class)) {
+            throw new InvalidArgumentException($modelClass.' should implement '.ReferableModel::class);
+        }
+    }
+
+    // Add to eloquent db morph map
+    private function registerMorphMap(string $key, string $modelClass)
+    {
+        Relation::morphMap([
+            $key => $modelClass,
+        ]);
     }
 
     public function resource(string $resourceClass, string $managerClass = PageManager::class): void
@@ -50,8 +77,7 @@ final class Register
 
         // Add to chief registry
         $this->container->make(Registry::class)
-            ->registerResource($resource::resourceKey(), $resource, $manager)
-        ;
+            ->registerResource($resource::resourceKey(), $resource, $manager);
 
         // Register routes only when in admin...
         if (! $this->adminEnvironment->check(request())) {
@@ -63,20 +89,5 @@ final class Register
             ManagedRoutes::empty($manager::class, $resource::resourceKey()),
             ManagerRequestDispatcher::class,
         );
-    }
-
-    // Add to eloquent db morph map
-    private function registerMorphMap(string $key, string $modelClass)
-    {
-        Relation::morphMap([
-            $key => $modelClass,
-        ]);
-    }
-
-    private function assertModelIsReferable(string $modelClass): void
-    {
-        if (! (new \ReflectionClass($modelClass))->implementsInterface(ReferableModel::class)) {
-            throw new \InvalidArgumentException($modelClass.' should implement '.ReferableModel::class);
-        }
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Factory;
+use Illuminate\Validation\Rule;
 use InvalidArgumentException;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
@@ -16,7 +16,9 @@ trait HasValidation
     protected bool $isRequired = false;
 
     protected array $rules = [];
+
     protected ?string $validationAttribute = null;
+
     protected array $validationMessages = [];
 
     public function required(bool $flag = true): static
@@ -41,7 +43,7 @@ trait HasValidation
             $rules = explode('|', $rules);
         }
 
-        $this->rules = array_merge($this->rules, (array)$rules);
+        $this->rules = array_merge($this->rules, (array) $rules);
 
         return $this;
     }
@@ -107,7 +109,7 @@ trait HasValidation
 
     public function isRequired(): bool
     {
-        if (app()->environment('local') && true === config('chief.disable_field_required_validation')) {
+        if (app()->environment('local') && config('chief.disable_field_required_validation') === true) {
             return false;
         }
 
@@ -117,7 +119,7 @@ trait HasValidation
     private function hasDefinitionInRules(string ...$definitions): bool
     {
         foreach ($definitions as $definition) {
-            if (false !== array_search($definition, $this->rules)) {
+            if (array_search($definition, $this->rules) !== false) {
                 return true;
             }
         }

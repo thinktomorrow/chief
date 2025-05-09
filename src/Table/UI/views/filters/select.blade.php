@@ -7,9 +7,11 @@
         {{ $getLabel() ?? $getKey() }}
 
         @if ($this->getActiveFilterValue($getKey()))
-            <span class="text-grey-200">|</span>
+            <div class="flex max-w-64 items-start gap-1 overflow-x-auto">
+                <span class="text-grey-200">|</span>
 
-            <span class="text-nowrap text-primary-500">{{ $this->getActiveFilterValue($getKey()) }}</span>
+                <span class="text-nowrap text-primary-500">{{ $this->getActiveFilterValue($getKey()) }}</span>
+            </div>
         @endif
     </x-chief-table::filter.select>
 </button>
@@ -26,8 +28,8 @@
         />
 
         <div class="flex items-start justify-between gap-2">
-            <x-chief-table::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief-table::button>
-            <x-chief-table::button
+            <x-chief::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief::button>
+            <x-chief::button
                 x-on:click="() => {
                     close()
                     $wire.addFilter()
@@ -36,7 +38,7 @@
                 variant="blue"
             >
                 Pas filter toe
-            </x-chief-table::button>
+            </x-chief::button>
         </div>
     </div>
 </x-chief::dialog.dropdown>

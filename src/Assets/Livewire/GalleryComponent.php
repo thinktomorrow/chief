@@ -10,8 +10,8 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGallery;
 
 class GalleryComponent extends Component
 {
-    use InteractsWithGallery;
     use EmitsToNestables;
+    use InteractsWithGallery;
 
     public $sort = null;
 
@@ -21,7 +21,7 @@ class GalleryComponent extends Component
     {
         return [
             'assetsDeleted' => 'onAssetsDeleted',
-            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
+            'assetUpdated-'.$this->getId() => 'onAssetUpdated',
             'filesUploaded' => 'onFilesUploaded',
         ];
     }

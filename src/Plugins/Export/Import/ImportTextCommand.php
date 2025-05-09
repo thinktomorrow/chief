@@ -4,14 +4,17 @@ namespace Thinktomorrow\Chief\Plugins\Export\Import;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
+use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\App\Console\ReadsCsv;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ImportTextCommand extends BaseCommand
 {
     use ReadsCsv;
 
     protected $signature = 'chief:import-text {file}';
+
     protected $description = 'Import text translations';
 
     public function __construct()
@@ -22,8 +25,16 @@ class ImportTextCommand extends BaseCommand
     public function handle(): void
     {
         $file = $this->argument('file');
+
+        HeadingRowFormatter::default('none');
+
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
-        $locales = config('chief.locales', []);
+        $locales = ChiefSites::locales();
+
+        // Remove headers which are added automatically - these are integers
+        $headers = array_filter($headers, function ($header) {
+            return ! is_int($header);
+        });
 
         $idColumn = $this->ask('Which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
 
@@ -55,6 +66,6 @@ class ImportTextCommand extends BaseCommand
             $locale
         ))->setOutput($this->output), $file);
 
-        $this->info('Finished import of text for locale '.$locale . ' 🤘');
+        $this->info('Finished import of text for locale '.$locale.' 🤘');
     }
 }

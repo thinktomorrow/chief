@@ -1,23 +1,15 @@
-<x-chief::input.group rule="name">
-    <x-chief::input.label for="name" required>
-        Naam
-    </x-chief::input.label>
+<x-chief::form.fieldset rule="name">
+    <x-chief::form.label for="name" required>Naam</x-chief::form.label>
 
-    <x-chief::input.description>
-        Unieke benaming van de rol.
-    </x-chief::input.description>
+    <x-chief::form.description>Unieke benaming van de rol.</x-chief::form.description>
 
-    <x-chief::input.text id="name" name="name" value="{{ old('name', $role->name) }}"/>
-</x-chief::input.group>
+    <x-chief::form.input.text id="name" name="name" value="{{ old('name', $role->name) }}" />
+</x-chief::form.fieldset>
 
-<x-chief::input.group rule="permission_names">
-    <x-chief::input.label for="permission_names" required>
-        Toestemmingen
-    </x-chief::input.label>
+<x-chief::form.fieldset rule="permission_names">
+    <x-chief::form.label for="permission_names" required>Toestemmingen</x-chief::form.label>
 
-    <x-chief::input.description>
-        Met welke rechten heeft deze rol toegang tot de admin.
-    </x-chief::input.description>
+    <x-chief::form.description>Met welke rechten heeft deze rol toegang tot de admin.</x-chief::form.description>
 
     <x-chief::multiselect
         id="permission_names"
@@ -26,4 +18,4 @@
         :selection="old('permission_names', $role->permissionNames())"
         :multiple="true"
     />
-</x-chief::input.group>
+</x-chief::form.fieldset>

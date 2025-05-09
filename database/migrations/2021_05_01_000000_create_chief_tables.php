@@ -1,12 +1,134 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up()
+    {
+        $this->createContextTables();
+        $this->createUserTables();
+
+        Schema::create('menus', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->json('allowed_sites')->nullable();
+            $table->json('active_sites')->nullable();
+            $table->string('title')->nullable();
+            $table->unsignedSmallInteger('order')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('menu_items', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('menu_id');
+            $table->enum('type', ['internal', 'custom', 'nolink'])->default('custom');
+            $table->boolean('hidden_in_menu')->default(false);
+            $table->string('owner_type')->nullable();
+            $table->unsignedInteger('owner_id')->nullable();
+            $table->json('values')->nullable();
+            $table->integer('order')->default(0);
+
+            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
+        });
+
+        Schema::create(config('activitylog.table_name'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('log_name')->nullable();
+            $table->text('description');
+            $table->nullableMorphs('subject', 'subject');
+            $table->nullableMorphs('causer', 'causer');
+            $table->json('properties')->nullable();
+            $table->timestamps();
+            $table->index('log_name');
+        });
+
+        Schema::create('settings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('key')->index();
+            $table->text('value');
+        });
+
+        Schema::create('chief_urls', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('redirect_id')->nullable();
+            $table->char('site', 8);
+            $table->char('status', 32)->default('offline');
+            $table->string('slug');
+            $table->string('model_type');
+            $table->integer('model_id')->unsigned();
+            $table->timestamps();
+
+            $table->unique(['site', 'slug']);
+            $table->foreign('redirect_id')->references('id')->on('chief_urls')->onDelete('cascade');
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('context_fragment_lookup');
+        Schema::dropIfExists('context_fragments');
+        Schema::dropIfExists('contexts');
+
+        Schema::dropIfExists('chief_users');
+        Schema::dropIfExists('chief_password_resets');
+
+        $permissionTableNames = config('permission.table_names');
+        Schema::dropIfExists($permissionTableNames['role_has_permissions']);
+        Schema::dropIfExists($permissionTableNames['model_has_roles']);
+        Schema::dropIfExists($permissionTableNames['model_has_permissions']);
+        Schema::dropIfExists($permissionTableNames['roles']);
+        Schema::dropIfExists($permissionTableNames['permissions']);
+
+        Schema::dropIfExists('invitations');
+        Schema::dropIfExists('menu_items');
+        Schema::dropIfExists('menu_item_translations');
+
+        Schema::dropIfExists(config('activitylog.table_name'));
+        Schema::dropIfExists('settings');
+        Schema::dropIfExists('chief_urls');
+    }
+
+    private function createContextTables()
+    {
+        Schema::create('contexts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('owner_type');
+            $table->char('owner_id', 36); // account for integer ids as well as uuids
+            $table->json('allowed_sites')->nullable();
+            $table->json('active_sites')->nullable();
+            $table->string('title')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('context_fragments', function (Blueprint $table) {
+            $table->char('id', 36);
+            $table->string('key');
+            $table->json('data')->nullable();
+            $table->json('meta')->nullable();
+            $table->timestamps();
+
+            $table->primary('id');
+        });
+
+        Schema::create('context_fragment_tree', function (Blueprint $table) {
+            $table->unsignedBigInteger('context_id');
+            $table->char('parent_id', 36)->nullable(); // Root fragments have no parent
+            $table->char('child_id', 36);
+            $table->unsignedSmallInteger('order')->default(0);
+
+            $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('context_fragments')->onDelete('cascade');
+            $table->foreign('child_id')->references('id')->on('context_fragments')->onDelete('cascade');
+
+            $table->unique(['context_id', 'parent_id', 'child_id']);
+        });
+    }
+
+    private function createUserTables()
     {
         Schema::create('chief_users', function (Blueprint $table) {
             $table->increments('id');
@@ -37,69 +159,6 @@ return new class extends Migration
             $table->dateTime('expires_at');
             $table->timestamps();
         });
-
-        Schema::create('menu_items', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('parent_id')->nullable();
-            $table->enum('type', ['internal', 'custom', 'nolink'])->default('custom');
-            $table->string('menu_type')->default('main');
-            $table->boolean('hidden_in_menu')->default(false);
-            $table->string('owner_type')->nullable();
-            $table->unsignedInteger('owner_id')->nullable();
-            $table->json('values')->nullable();
-            $table->integer('order')->default(0);
-        });
-
-        Schema::create(config('activitylog.table_name'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('log_name')->nullable();
-            $table->text('description');
-            $table->nullableMorphs('subject', 'subject');
-            $table->nullableMorphs('causer', 'causer');
-            $table->json('properties')->nullable();
-            $table->timestamps();
-            $table->index('log_name');
-        });
-
-        Schema::create('settings', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('key')->index();
-            $table->text('value');
-        });
-
-        Schema::create('chief_urls', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('redirect_id')->nullable();
-            $table->string('locale');
-            $table->string('slug');
-            $table->string('model_type');
-            $table->integer('model_id')->unsigned();
-            $table->timestamps();
-
-            $table->unique(['locale', 'slug']);
-            $table->foreign('redirect_id')->references('id')->on('chief_urls')->onDelete('cascade');
-        });
-    }
-
-    public function down()
-    {
-        Schema::dropIfExists('chief_users');
-        Schema::dropIfExists('chief_password_resets');
-
-        $permissionTableNames = config('permission.table_names');
-        Schema::dropIfExists($permissionTableNames['role_has_permissions']);
-        Schema::dropIfExists($permissionTableNames['model_has_roles']);
-        Schema::dropIfExists($permissionTableNames['model_has_permissions']);
-        Schema::dropIfExists($permissionTableNames['roles']);
-        Schema::dropIfExists($permissionTableNames['permissions']);
-
-        Schema::dropIfExists('invitations');
-        Schema::dropIfExists('menu_items');
-        Schema::dropIfExists('menu_item_translations');
-
-        Schema::dropIfExists(config('activitylog.table_name'));
-        Schema::dropIfExists('settings');
-        Schema::dropIfExists('chief_urls');
     }
 
     private function createPermissionTables()

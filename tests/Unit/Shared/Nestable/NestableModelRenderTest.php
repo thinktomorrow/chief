@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
@@ -10,11 +11,11 @@ class NestableModelRenderTest extends ChiefTestCase
 {
     use NestableTestHelpers;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->app['view']->addNamespace('test-views', __DIR__ . '/../../../Shared/stubs/views');
+        $this->app['view']->addNamespace('test-views', __DIR__.'/../../../Shared/stubs/views');
 
         chiefRegister()->resource(NestableModelResourceStub::class);
         NestableModelResourceStub::migrateUp();
@@ -26,8 +27,8 @@ class NestableModelRenderTest extends ChiefTestCase
         $node = $this->findNode('third');
 
         $this->assertStringContainsString(
-            '<h1>' . $node->title . '</h1>',
-            $node->response()->getOriginalContent(),
+            '<h1>'.$node->title.'</h1>',
+            $node->response()->getOriginalContent()->render(),
         );
     }
 
@@ -36,8 +37,8 @@ class NestableModelRenderTest extends ChiefTestCase
         $node = $this->findNode('first');
 
         $this->assertStringContainsString(
-            '<h1>' . $node->title . '</h1>',
-            $node->response()->getOriginalContent(),
+            '<h1>'.$node->title.'</h1>',
+            $node->response()->getOriginalContent()->render(),
         );
     }
 }

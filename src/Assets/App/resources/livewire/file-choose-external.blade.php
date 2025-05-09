@@ -4,56 +4,56 @@
     :title="$assetId ? 'Vervang extern bestand' : 'Voeg een link naar een extern bestand toe'"
 >
     @if ($isOpen)
-        <div class="space-y-4">
-            <x-chief::input.group>
-                <x-chief::input.label for="driverType">Platform</x-chief::input.label>
+        <x-chief::form.fieldset>
+            <x-chief::form.label for="driverType">Platform</x-chief::form.label>
 
-                <x-chief::input.select id="driverType" wire:model.live="driverType" container-class="w-full">
-                    @foreach ($driverTypes as $driverTypeOption)
-                        <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
-                    @endforeach
-                </x-chief::input.select>
-            </x-chief::input.group>
+            <x-chief::form.input.select id="driverType" wire:model.live="driverType">
+                @foreach ($driverTypes as $driverTypeOption)
+                    <option value="{{ $driverTypeOption }}">{{ ucfirst($driverTypeOption) }}</option>
+                @endforeach
+            </x-chief::form.input.select>
+        </x-chief::form.fieldset>
 
-            @if ($driverType)
-                <x-chief::input.group>
-                    <x-chief::input.label for="driverId">
-                        {{ $this->getLabel() }}
-                    </x-chief::input.label>
+        @if ($driverType)
+            <x-chief::form.fieldset>
+                <x-chief::form.label for="driverId">
+                    {{ $this->getLabel() }}
+                </x-chief::form.label>
 
-                    <x-chief::input.description>
-                        {!! $this->getDescription() !!}
-                    </x-chief::input.description>
+                <x-chief::form.description>
+                    {!! $this->getDescription() !!}
+                </x-chief::form.description>
 
-                    <x-chief::input.text
-                        x-data="{}"
-                        {{-- Prevents directive to be triggered twice --}}
-                        x-prevent-submit-on-enter
-                        id="driverId"
-                        wire:model="driverId"
-                        placeholder="{{ $this->getLabel() }}"
-                        class="w-full"
-                    />
-                </x-chief::input.group>
-            @endif
+                <x-chief::form.input.text
+                    x-data="{}"
+                    {{-- Prevents directive to be triggered twice --}}
+                    x-prevent-submit-on-enter
+                    id="driverId"
+                    wire:model="driverId"
+                    placeholder="{{ $this->getLabel() }}"
+                    class="w-full"
+                />
+            </x-chief::form.fieldset>
+        @endif
 
-            @if ($errors && count($errors) > 0)
-                <x-chief::inline-notification type="error" size="small" class="w-full">
-                    @foreach ($errors->all() as $error)
-                        <p>{{ ucfirst($error) }}</p>
-                    @endforeach
-                </x-chief::inline-notification>
-            @endif
-        </div>
+        @if ($errors->any())
+            <x-chief::callout data-slot="form-group" size="small" variant="red" class="w-full">
+                @foreach ($errors->all() as $error)
+                    <p>{{ ucfirst($error) }}</p>
+                @endforeach
+            </x-chief::callout>
+        @endif
 
         <x-slot name="footer">
-            <button wire:click="save" type="button" class="btn btn-primary">
-                @if ($assetId)
-                    Vervang extern bestand
-                @else
-                    Voeg extern bestand toe
-                @endif
-            </button>
+            <x-chief::dialog.modal.footer>
+                <x-chief::button wire:click="save" variant="blue" type="button">
+                    @if ($assetId)
+                        Vervang extern bestand
+                    @else
+                        Voeg extern bestand toe
+                    @endif
+                </x-chief::button>
+            </x-chief::dialog.modal.footer>
         </x-slot>
     @endif
 </x-chief::dialog.modal>

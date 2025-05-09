@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
 use Closure;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 trait HasValue
 {
+    use HasValueFallback;
     use HasValuePreparation;
 
     protected $value;
@@ -39,6 +41,19 @@ trait HasValue
         return $this->hasPrepareValue() ? $this->getPrepareValue()($value) : $value;
     }
 
+    public function getValueOrFallback(?string $locale = null): mixed
+    {
+        $currentFallbackValue = $this->useValueFallback;
+
+        $this->useValueFallback();
+
+        $value = $this->getValue($locale);
+
+        $this->useValueFallback($currentFallbackValue);
+
+        return $value;
+    }
+
     private function getRawValue(?string $locale = null): mixed
     {
         if (! $this->valueGiven) {
@@ -50,10 +65,11 @@ trait HasValue
                 return data_get($this->getModel(), $this->getColumnName(), $this->getDefault($locale));
             }
 
-            return $this->defaultEloquentValueResolver()($this->getModel(), $locale);
+            return $this->defaultEloquentValueResolver()($this->getModel(), $locale, $this->useValueFallback);
         }
 
-        if (is_callable($this->value)) {
+        // Check if it is a closure
+        if ($this->value instanceof Closure) {
             return call_user_func_array($this->value, [$this->getModel(), $locale, $this]);
         }
 
@@ -84,9 +100,15 @@ trait HasValue
      */
     private function defaultEloquentValueResolver(): Closure
     {
-        return function ($model, $locale = null) {
+        return function ($model, ?string $locale = null, bool $withLocaleFallback = false) {
             if ($locale && $this->hasLocales()) {
+
                 if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumnName())) {
+
+                    if ($withLocaleFallback) {
+                        return $model->localizedDynamic($this->getColumnName(), $locale);
+                    }
+
                     return $model->dynamic($this->getColumnName(), $locale, $this->getDefault($locale));
                 }
 
@@ -104,7 +126,18 @@ trait HasValue
                 }
             }
 
-            $value = $model->{$this->getColumnName()};
+            // Only relation methods can be called as a property. Other methods are treated as regular methods.
+            if (method_exists($model, $this->getColumnName())) {
+
+                $value = $model->{$this->getColumnName()}();
+
+                if ($value instanceof Relation) {
+                    $value = $model->{$this->getColumnName()};
+                }
+            } else {
+                // Default Eloquent value retrieval as a property (or relation)
+                $value = $model->{$this->getColumnName()};
+            }
 
             // Relationships are retrieved as collections - if they
             // are empty, we can return the default instead
@@ -113,7 +146,6 @@ trait HasValue
 
                 return (is_countable($default) && count($default) > 0) ? $default : $value;
             }
-
 
             return $value ?? $this->getDefault($locale);
         };

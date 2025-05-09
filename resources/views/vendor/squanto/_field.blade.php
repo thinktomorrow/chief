@@ -1,38 +1,36 @@
-<div class="flex flex-wrap justify-between w-full sm:flex-nowrap gap-y-3 gap-x-6">
-    <div class="w-full space-y-1 sm:w-64 shrink-0">
-        <p class="font-medium h6 h1-dark">
-            {{ ucfirst(str_replace('_', ' ', $lineViewModel->label())) }}
-        </p>
+@php
+    use Thinktomorrow\Chief\Sites\ChiefSites;
+@endphp
 
-        @if ($lineViewModel->description())
-            <p class="text-sm body text-grey-500">
-                {{ $lineViewModel->description() }}
-            </p>
-        @endif
-    </div>
-
-    <div class="w-full space-y-2">
-        @foreach($locales as $i => $locale)
+<x-chief::form.preview
+    size="lg"
+    :label="ucfirst(str_replace('_', ' ', $lineViewModel->label()))"
+    :description="$lineViewModel->description()"
+>
+    <div class="space-y-3">
+        @foreach ($locales as $i => $locale)
             @php
                 $fieldId = $lineViewModel->id() . '_' . $locale;
             @endphp
 
             <div class="flex w-full gap-2">
-                @if(count(config('chief.locales')) > 1)
-                    <div class="flex items-center justify-center w-8 p-2 rounded-md shrink-0 bg-grey-50">
-                        <span class="text-xs uppercase text-grey-500">{{ $locale }}</span>
+                @if (count(ChiefSites::locales()) > 1)
+                    <div class="flex w-8 shrink-0 items-center justify-center rounded-lg bg-grey-50 p-2">
+                        <span class="text-xs font-medium uppercase text-grey-500">{{ $locale }}</span>
                     </div>
                 @endif
 
-                <div class="w-full form-light">
-                    @if($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
-                        <x-chief::input.textarea
+                <div class="form-light w-full">
+                    @if ($lineViewModel->isFieldTypeTextarea() || $lineViewModel->isFieldTypeEditor())
+                        <x-chief::form.input.textarea
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
-                            class="{{ $lineViewModel->isFieldTypeEditor() ? 'redactor-editor' : '' }} w-full"
-                        >{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}</x-chief::input.textarea>
+                            @class(['w-full', 'redactor-editor' => $lineViewModel->isFieldTypeEditor()])
+                        >
+                            {!! old('squanto[' . $lineViewModel->key() . '][' . $locale . ']', $lineViewModel->value($locale)) !!}
+                        </x-chief::form.input.textarea>
                     @else
-                        <x-chief::input.text
+                        <x-chief::form.input.text
                             name="squanto[{{ $lineViewModel->key() }}][{{ $locale }}]"
                             id="{{ $fieldId }}"
                             value="{!! old('squanto['.$lineViewModel->key().']['.$locale.']', $lineViewModel->value($locale)) !!}"
@@ -42,4 +40,4 @@
             </div>
         @endforeach
     </div>
-</div>
+</x-chief::form.preview>

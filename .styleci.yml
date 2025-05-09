@@ -1,6 +1,0 @@
-preset: psr12
-risky: false
-
-finder:
-  exclude:
-    - "tests"

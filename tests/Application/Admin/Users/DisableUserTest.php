@@ -9,7 +9,7 @@ class DisableUserTest extends ChiefTestCase
 {
     private $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -23,8 +23,7 @@ class DisableUserTest extends ChiefTestCase
         $this->user->enable();
     }
 
-    /** @test */
-    public function user_can_be_disabled_by_admin()
+    public function test_user_can_be_disabled_by_admin()
     {
         $this->assertTrue($this->user->isEnabled());
 
@@ -33,8 +32,7 @@ class DisableUserTest extends ChiefTestCase
         $this->assertFalse($this->user->fresh()->isEnabled());
     }
 
-    /** @test */
-    public function admin_can_not_disable_themself()
+    public function test_admin_can_not_disable_themself()
     {
         $admin = $this->admin();
         $admin->enable();
@@ -48,8 +46,7 @@ class DisableUserTest extends ChiefTestCase
         $this->assertTrue($this->user->fresh()->isEnabled());
     }
 
-    /** @test */
-    public function user_cannot_be_disabled_by_regular_author()
+    public function test_user_cannot_be_disabled_by_regular_author()
     {
         $this->assertTrue($this->user->isEnabled());
 
@@ -58,8 +55,7 @@ class DisableUserTest extends ChiefTestCase
         $this->assertTrue($this->user->fresh()->isEnabled());
     }
 
-    /** @test */
-    public function disabled_user_cannot_log_in()
+    public function test_disabled_user_cannot_log_in()
     {
         $this->user->disable();
 

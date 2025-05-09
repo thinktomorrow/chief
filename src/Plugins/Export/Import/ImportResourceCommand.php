@@ -4,11 +4,14 @@ namespace Thinktomorrow\Chief\Plugins\Export\Import;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
+use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ImportResourceCommand extends BaseCommand
 {
     protected $signature = 'chief:import-resource {file : the file to import}';
+
     protected $description = 'Import model translations';
 
     public function __construct()
@@ -19,8 +22,16 @@ class ImportResourceCommand extends BaseCommand
     public function handle(): void
     {
         $file = $this->argument('file');
+
+        HeadingRowFormatter::default('none');
+
         $headers = (new HeadingRowImport)->toArray($file)[0][0];
-        $locales = config('chief.locales', []);
+        $locales = ChiefSites::locales();
+
+        // Remove headers which are added automatically - these are integers
+        $headers = array_filter($headers, function ($header) {
+            return ! is_int($header);
+        });
 
         $idColumn = $this->ask('Which column contains the ID references? Choose one of: '.implode(', ', $headers), $headers[0]);
 
@@ -39,7 +50,7 @@ class ImportResourceCommand extends BaseCommand
         }
 
         // Fixed non-localized import
-        if ($column === 'tekst') {
+        if (strtolower($column) === 'tekst') {
             $locale = 'x';
         } else {
             $defaultLocale = in_array(strtolower($column), $locales) ? strtolower($column) : null;
@@ -58,6 +69,6 @@ class ImportResourceCommand extends BaseCommand
             $locale
         ))->setOutput($this->output), $file);
 
-        $this->info('Finished import of fields for locale '.$locale . ' 🤘');
+        $this->info('Finished import of fields for locale '.$locale.' 🤘');
     }
 }

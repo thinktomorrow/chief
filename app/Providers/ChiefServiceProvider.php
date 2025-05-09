@@ -5,11 +5,12 @@ namespace Thinktomorrow\Chief\App\Providers;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefUserProvider;
+use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
@@ -25,10 +26,10 @@ use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
-use Thinktomorrow\Chief\Fragments\Actions\DeleteFragment;
-use Thinktomorrow\Chief\Fragments\Actions\UpdateFragmentMetadata;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Events\FragmentAdded;
+use Thinktomorrow\Chief\Fragments\App\Actions\CreateFirstContextForPage;
+use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
+use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragmentMetadata;
+use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
@@ -45,20 +46,40 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\ManagedModels\Listeners\PropagateArchivedUrl;
 use Thinktomorrow\Chief\ManagedModels\Listeners\TriggerPageChangedEvent;
+use Thinktomorrow\Chief\ManagedModels\States\StatesServiceProvider;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
+use Thinktomorrow\Chief\Menu\MenuServiceProvider;
+use Thinktomorrow\Chief\Models\ModelsServiceProvider;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
-use Thinktomorrow\Chief\Site\Menu\Application\ProjectModelData;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemCreated;
-use Thinktomorrow\Chief\Site\Menu\Events\MenuItemUpdated;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\Site\Urls\Application\CreateUrlForPage;
+use Thinktomorrow\Chief\Sites\SitesServiceProvider;
+use Thinktomorrow\Chief\Table\TableServiceProvider;
+use Thinktomorrow\Chief\Urls\App\Listeners\CreatePageFirstUrls;
+use Thinktomorrow\Chief\Urls\App\Listeners\PropagateUrlChange;
+use Thinktomorrow\Chief\Urls\UrlsServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {
     private SitemapServiceProvider $sitemapServiceProvider;
+
+    // TODO: use this list to loop over all SP. Each SP should have boot method for frontend essentials
+    // and a bootAdmin for the admin booting. Also a register and registerAdmin method. This allows
+    // To make distinction per provider instead of doing this all here in the main service provider.
+    // NOt in use yet... perhaps use a ChiefServiceProviderInterface for this.
+    private array $internalProviders = [
+        SitesServiceProvider::class,
+        StatesServiceProvider::class,
+        SquantoServiceProvider::class,
+        RoutesServiceProvider::class,
+        FragmentsServiceProvider::class,
+        ModelsServiceProvider::class,
+        UrlsServiceProvider::class,
+        MenuServiceProvider::class,
+        SquantoManagerServiceProvider::class,
+        AssetsServiceProvider::class,
+    ];
 
     public function __construct($app)
     {
@@ -75,7 +96,7 @@ class ChiefServiceProvider extends ServiceProvider
          * Boot required for frontend
          * ------------------------------------
          */
-        $this->bootFrontendEssentials();
+        $this->bootEssentials();
 
         if (! $this->app->make(AdminEnvironment::class)->check(request())) {
             return;
@@ -91,8 +112,11 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new ViewServiceProvider($this->app))->boot();
         (new FormsServiceProvider($this->app))->boot();
-        (new FragmentsServiceProvider($this->app))->boot();
-        (new \Thinktomorrow\Chief\Table\TableServiceProvider($this->app))->boot();
+        (new UrlsServiceProvider($this->app))->bootAdmin();
+        (new FragmentsServiceProvider($this->app))->bootAdmin();
+        (new ModelsServiceProvider($this->app))->bootAdmin();
+        (new MenuServiceProvider($this->app))->bootAdmin();
+        (new TableServiceProvider($this->app))->boot();
         (new AssetsServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         $this->sitemapServiceProvider->boot();
@@ -108,41 +132,19 @@ class ChiefServiceProvider extends ServiceProvider
         }
     }
 
-    public function register()
+    private function bootEssentials()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'chief');
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'chief-settings');
+        (new SitesServiceProvider($this->app))->boot();
+        (new StatesServiceProvider($this->app))->boot();
+        (new SquantoServiceProvider($this->app))->boot();
+        (new RoutesServiceProvider($this->app))->boot();
 
-        if ($this->app->runningInConsole()) {
-            (new ConsoleServiceProvider($this->app))->register();
-        }
+        $this->bootChiefAuth();
 
-        $this->app->singleton(Registry::class, function () {
-            return new Registry([]);
-        });
-
-        $this->app->singleton(Settings::class, function () {
-            return new Settings();
-        });
-
-        (new SquantoServiceProvider($this->app))->register();
-
-        if ($this->app->make(AdminEnvironment::class)->check(request())) {
-            $this->app->when(SettingsController::class)
-                ->needs(SettingFields::class)
-                ->give(function () {
-                    return new SettingFields(new Settings());
-                });
-
-            // Global chief nav singleton
-            $this->app->singleton(Nav::class, function () {
-                return new Nav();
-            });
-
-            (new AssetsServiceProvider($this->app))->register();
-            (new SquantoManagerServiceProvider($this->app))->register();
-            $this->sitemapServiceProvider->register();
-        }
+        (new UrlsServiceProvider($this->app))->boot();
+        (new FragmentsServiceProvider($this->app))->boot();
+        (new ModelsServiceProvider($this->app))->boot();
+        (new MenuServiceProvider($this->app))->boot();
     }
 
     private function bootChiefAuth(): void
@@ -165,8 +167,8 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Custom models for permission
         $this->app['config']['permission.models'] = [
-            'permission' => \Thinktomorrow\Chief\Admin\Authorization\Permission::class,
-            'role' => \Thinktomorrow\Chief\Admin\Authorization\Role::class,
+            'permission' => Permission::class,
+            'role' => Role::class,
         ];
 
         Auth::provider('chief-eloquent', function ($app, array $config) {
@@ -177,10 +179,10 @@ class ChiefServiceProvider extends ServiceProvider
     private function bootChiefSquanto(): void
     {
         // Project specific squanto files
-        $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');
+        $this->app['view']->addNamespace('squanto', __DIR__.'/../../resources/views/vendor/squanto');
 
         // Chief squanto defaults
-        $this->app['view']->addNamespace('squanto', base_path() . '/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
+        $this->app['view']->addNamespace('squanto', base_path().'/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
 
         // Use the chief routing
         $this->app['config']['squanto.use_default_routes'] = false;
@@ -191,10 +193,11 @@ class ChiefServiceProvider extends ServiceProvider
         // User events
         Event::listen(Login::class, LogSuccessfulLogin::class);
         Event::listen(UserInvited::class, SendInvite::class);
-        Event::listen(InviteAccepted::class, EnableUser::class . '@onAcceptingInvite');
+        Event::listen(InviteAccepted::class, EnableUser::class.'@onAcceptingInvite');
 
         // Managed model events
-        Event::listen(ManagedModelCreated::class, [CreateUrlForPage::class, 'onManagedModelCreated']);
+        Event::listen(ManagedModelCreated::class, [CreatePageFirstUrls::class, 'onManagedModelCreated']);
+        Event::listen(ManagedModelCreated::class, [CreateFirstContextForPage::class, 'onManagedModelCreated']);
         Event::listen(ManagedModelUrlUpdated::class, [TriggerPageChangedEvent::class, 'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [ProjectModelData::class, 'onManagedModelUrlUpdated']);
         Event::listen(ManagedModelUrlUpdated::class, [PropagateUrlChange::class, 'onManagedModelUrlUpdated']);
@@ -212,8 +215,8 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(FragmentDetached::class, [TriggerPageChangedEvent::class, 'onFragmentDetached']);
         Event::listen(FragmentDetached::class, [DeleteFragment::class, 'onFragmentDetached']);
         Event::listen(FragmentDetached::class, [UpdateFragmentMetadata::class, 'onFragmentDetached']);
-        Event::listen(FragmentAdded::class, [TriggerPageChangedEvent::class, 'onFragmentAdded']);
-        Event::listen(FragmentAdded::class, [UpdateFragmentMetadata::class, 'onFragmentAdded']);
+        Event::listen(FragmentAttached::class, [TriggerPageChangedEvent::class, 'onFragmentAdded']);
+        Event::listen(FragmentAttached::class, [UpdateFragmentMetadata::class, 'onFragmentAdded']);
         Event::listen(FragmentUpdated::class, [TriggerPageChangedEvent::class, 'onFragmentUpdated']);
         Event::listen(FragmentDuplicated::class, [TriggerPageChangedEvent::class, 'onFragmentDuplicated']);
         Event::listen(FragmentDuplicated::class, [UpdateFragmentMetadata::class, 'onFragmentDuplicated']);
@@ -222,25 +225,51 @@ class ChiefServiceProvider extends ServiceProvider
         // Form events
         Event::listen(FormUpdated::class, [TriggerPageChangedEvent::class, 'onFormUpdated']);
         Event::listen(FormUpdated::class, [ProjectModelData::class, 'onFormUpdated']);
-
-        // Menu events
-        Event::listen(MenuItemCreated::class, [ProjectModelData::class, 'onMenuItemCreated']);
-        Event::listen(MenuItemUpdated::class, [ProjectModelData::class, 'onMenuItemUpdated']);
     }
 
-    private function bootFrontendEssentials()
+    public function register()
     {
-        (new SquantoServiceProvider($this->app))->boot();
-        (new RoutesServiceProvider($this->app))->boot();
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief.php', 'chief');
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief-settings.php', 'chief-settings');
 
-        $this->bootChiefAuth();
+        if ($this->app->runningInConsole()) {
+            (new ConsoleServiceProvider($this->app))->register();
+        }
 
-        Relation::morphMap(['fragmentmodel' => FragmentModel::class]);
-        Relation::morphMap(['chiefuser' => User::class]);
-        Relation::morphMap(['menuitem' => MenuItem::class]);
-
-        Blade::directive('fragments', function () {
-            return '<?php echo app(\\Thinktomorrow\\Chief\\Fragments\\FragmentsRenderer::class)->render($model instanceof \Thinktomorrow\Chief\Shared\Concerns\Nestable\Tree\NestedNode ? $model->getModel() : $model, get_defined_vars()); ?>';
+        $this->app->singleton(Registry::class, function () {
+            return new Registry([]);
         });
+
+        $this->app->singleton(Settings::class, function () {
+            return new Settings;
+        });
+
+        $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
+
+        (new SitesServiceProvider($this->app))->register();
+        (new StatesServiceProvider($this->app))->register();
+        (new SquantoServiceProvider($this->app))->register();
+        (new UrlsServiceProvider($this->app))->register();
+        (new FragmentsServiceProvider($this->app))->register();
+        (new ModelsServiceProvider($this->app))->register();
+        (new MenuServiceProvider($this->app))->register();
+
+        if ($this->app->make(AdminEnvironment::class)->check(request())) {
+            $this->app->when(SettingsController::class)
+                ->needs(SettingFields::class)
+                ->give(function () {
+                    return new SettingFields(new Settings);
+                });
+            Relation::morphMap(['chiefuser' => User::class]);
+
+            // Global chief nav singleton
+            $this->app->singleton(Nav::class, function () {
+                return new Nav;
+            });
+
+            (new AssetsServiceProvider($this->app))->register();
+            (new SquantoManagerServiceProvider($this->app))->register();
+            $this->sitemapServiceProvider->register();
+        }
     }
 }

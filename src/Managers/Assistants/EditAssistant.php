@@ -5,10 +5,9 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Forms;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -64,18 +63,7 @@ trait EditAssistant
         View::share('manager', $this);
         View::share('model', $model);
         View::share('resource', $this->resource);
-        View::share('forms', Forms::make($this->resource->fields($model))->fill($this, $model));
-
-        $stateConfigs = [];
-
-        if ($model instanceof StatefulContract) {
-            $stateConfigs = collect($model->getStateKeys())
-                ->map(fn (string $stateKey) => $model->getStateConfig($stateKey))
-                ->filter(fn ($stateConfig) => $stateConfig instanceof StateAdminConfig)
-                ->all();
-        }
-
-        View::share('stateConfigs', $stateConfigs);
+        View::share('layout', Layout::make($this->resource->fields($model))->model($model));
 
         return $this->resource->getPageView();
     }
@@ -85,7 +73,7 @@ trait EditAssistant
         $model = $this->handleUpdate($request, $id);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $this->resource->getPageTitle($model) . '</a> is aangepast');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="'.$this->route('edit', $model).'">'.$this->resource->getPageTitle($model).'</a> is aangepast');
     }
 
     private function handleUpdate(Request $request, $id)
@@ -94,8 +82,8 @@ trait EditAssistant
 
         $this->guard('update', $model);
 
-        $fields = Forms::make($this->resource->fields($model))
-            ->fillModel($model)
+        $fields = Layout::make($this->resource->fields($model))
+            ->model($model)
             ->getFields();
 
         $this->fieldValidator()->handle($fields, $request->all());

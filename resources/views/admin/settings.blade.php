@@ -1,26 +1,20 @@
-<x-chief::page.template title="Settings">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Settings" class="max-w-3xl">
-            <button form="updateForm" type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
-        </x-chief::page.hero>
+<x-chief::page.template title="Instellingen" container="md">
+    <x-slot name="header">
+        <x-chief::page.header>
+            <x-slot name="actions">
+                <x-chief::button form="updateForm" type="submit" variant="blue">Wijzigingen opslaan</x-chief::button>
+            </x-slot>
+        </x-chief::page.header>
     </x-slot>
 
-    <x-chief::page.grid class="mt-8 max-w-3xl">
-        <form
-            action="{{ route('chief.back.settings.update') }}"
-            id="updateForm"
-            method="POST"
-            role="form"
-            class="card"
-        >
+    <x-chief::window>
+        <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
             @csrf
             @method('put')
 
-            <div class="space-y-6">
-                @foreach ($fields as $field)
-                    {!! $field->render() !!}
-                @endforeach
-            </div>
+            @foreach ($fields as $field)
+                {!! $field->render() !!}
+            @endforeach
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

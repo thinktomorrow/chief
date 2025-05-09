@@ -26,6 +26,6 @@ trait WithBulkActions
 
     public function hasAnyBulkActions(): bool
     {
-        return count($this->getResults()) > 0 && count($this->getTable()->getBulkActions()) > 0;
+        return count($this->getTable()->getBulkActions()) > 0;
     }
 }

@@ -6,11 +6,11 @@
         @endphp
 
         <x-slot name="header">
-            <div class="flex grow flex-wrap items-start justify-between gap-3">
+            <div class="flex shrink-0 flex-wrap items-start justify-between gap-3 p-4">
                 <div x-data="{}" class="relative flex grow items-center justify-end">
                     <x-chief::icon.search class="body-dark pointer-events-none absolute left-3 size-5" />
 
-                    <x-chief::input.text
+                    <x-chief::form.input.text
                         wire:model.live.debounce.500ms="filters.search"
                         x-data="{}"
                         {{-- Prevents directive to be triggered twice --}}
@@ -20,10 +20,10 @@
                     />
                 </div>
 
-                <x-chief::input.select wire:model.live="sort" class="w-64 shrink-0">
+                <x-chief::form.input.select wire:model.live="sort" class="w-64 shrink-0">
                     <option value="created_at_desc">Datum laatst toegevoegd</option>
                     <option value="created_at_asc">Datum eerst toegevoegd</option>
-                </x-chief::input.select>
+                </x-chief::form.input.select>
             </div>
         </x-slot>
 
@@ -49,7 +49,7 @@
         </div>
 
         <x-slot name="footer">
-            <div class="w-full space-y-4">
+            <div class="space-y-4 border-t border-grey-100 p-4">
                 @if ($rows->total() > $rows->count())
                     <div class="shrink-0">
                         {{ $rows->onEachSide(0)->links() }}
@@ -75,12 +75,12 @@
                         </div>
                     </div>
 
-                    <div class="flex shrink-0 flex-wrap justify-end gap-3 max-lg:w-full">
-                        <button wire:click="close" type="button" class="btn btn-grey shrink-0">Annuleren</button>
+                    <div class="flex shrink-0 flex-wrap justify-end gap-2 max-lg:w-full">
+                        <x-chief::button wire:click="close" type="button" class="shrink-0">Annuleren</x-chief::button>
 
-                        <button wire:click="save" type="button" class="btn btn-primary shrink-0">
+                        <x-chief::button variant="blue" wire:click="save" type="button" class="shrink-0">
                             Voeg selectie toe
-                        </button>
+                        </x-chief::button>
                     </div>
                 </div>
             </div>

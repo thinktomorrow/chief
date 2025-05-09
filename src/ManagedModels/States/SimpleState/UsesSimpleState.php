@@ -19,7 +19,7 @@ trait UsesSimpleState
     /** @return SimpleState */
     public function getState(string $key): ?State
     {
-        if (SimpleState::KEY == $key && $this->{$key}) {
+        if ($key == SimpleState::KEY && $this->{$key}) {
             return SimpleState::from($this->{$key});
         }
 
@@ -33,7 +33,7 @@ trait UsesSimpleState
 
     public function getStateConfig(string $stateKey): StateConfig
     {
-        if (SimpleState::KEY == $stateKey) {
+        if ($stateKey == SimpleState::KEY) {
             return app(SimpleStateConfig::class);
         }
 
@@ -48,7 +48,7 @@ trait UsesSimpleState
     /**
      * Eloquent builder scope for filtering out the online models.
      */
-    public function scopeOnline(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         // Here we widen up the results in case of preview mode and ignore the published scope
         if (PreviewMode::fromRequest()->check()) {

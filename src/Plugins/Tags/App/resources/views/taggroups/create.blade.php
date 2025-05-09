@@ -1,23 +1,22 @@
-@php
-    $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar tags', route('chief.tags.index'));
-@endphp
-
-<x-chief::page.template title="Groep toevoegen">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Groep toevoegen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl"></x-chief::page.hero>
+<x-chief::page.template title="Groep toevoegen" container="md">
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Tags', 'url' => route('chief.tags.index'), 'icon' => 'tags'],
+                'Groep toevoegen',
+            ]"
+        />
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <form id="tagGroupsCreateForm" action="{{ route('chief.taggroups.store') }}" method="POST" class="card">
+    <x-chief::window>
+        <form id="tagGroupsCreateForm" action="{{ route('chief.taggroups.store') }}" method="POST">
             @csrf
 
-            <div class="space-y-4">
-                @foreach($fields as $field)
-                    {!! $field->render() !!}
-                @endforeach
-            </div>
+            @foreach ($fields as $field)
+                {!! $field->render() !!}
+            @endforeach
 
-            <button class="btn btn-primary mt-4" type="submit">Voeg groep toe</button>
+            <x-chief::button data-slot="form-group" type="submit" variant="blue">Voeg groep toe</x-chief::button>
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

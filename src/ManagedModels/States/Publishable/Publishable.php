@@ -30,14 +30,6 @@ trait Publishable
     }
 
     /**
-     * @deprecated use UsesPageState::scopeOnline(Builder $query) instead
-     */
-    public function scopePublished($query)
-    {
-        $this->scopeOnline($query);
-    }
-
-    /**
      * @deprecated use $query->where(PageState::KEY, PageState::draft->value) instead
      */
     public function scopeDrafted($query)
@@ -46,7 +38,7 @@ trait Publishable
     }
 
     /**
-     * @deprecated use $query->online()->get() instead
+     * @deprecated use $query->published()->get() instead
      */
     public static function getAllPublished()
     {

@@ -14,8 +14,9 @@ use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\AssetType\AssetTypeFactory;
 use Thinktomorrow\AssetLibrary\External\ExternalAssetContract;
 use Thinktomorrow\Chief\Assets\App\FileHelper;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Database\FragmentOwnerRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
+use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
@@ -24,36 +25,34 @@ class PreviewFile implements Wireable
     const DEFAULT_ASSETTYPE = 'default';
 
     private function __construct(
-        public string  $id,
+        public string $id,
         public ?string $mediaId, // The actual Asset id
         public ?string $previewUrl,
-        public bool    $isPreviewable,
+        public bool $isPreviewable,
         public ?string $tempPath,
         public string $assetType,
-        public string  $filename,
-        public string  $size,
-        public string  $humanReadableSize,
-        public string  $mimeType,
-        public string  $extension,
+        public string $filename,
+        public string $size,
+        public string $humanReadableSize,
+        public string $mimeType,
+        public string $extension,
         public ?string $width = null,
         public ?string $height = null,
-        public bool    $isUploading = true,
-        public bool    $isValidated = false,
-        public bool    $isQueuedForDeletion = false,
-        public bool    $isAttachedToModel = false,
-        public bool    $isExternalAsset = false,
-        public array   $fieldValues = [],
+        public bool $isUploading = true,
+        public bool $isValidated = false,
+        public bool $isQueuedForDeletion = false,
+        public bool $isAttachedToModel = false,
+        public bool $isExternalAsset = false,
+        public array $fieldValues = [],
         public ?string $validationMessage = null,
         public ?string $createdAt = null,
         public ?string $updatedAt = null,
 
         // Asset related values
-        public array   $data = [],
-        public array   $urls = [],
-        public array   $owners = [],
-    ) {
-
-    }
+        public array $data = [],
+        public array $urls = [],
+        public array $owners = [],
+    ) {}
 
     public static function fromTemporaryUploadedFile(TemporaryUploadedFile $file, ?PreviewFile $current = null, array $attributes = []): static
     {
@@ -121,7 +120,7 @@ class PreviewFile implements Wireable
             $asset->id,
             $asset->id,
             $thumbUrl,
-            ('image' == $asset->getPreviewExtensionType()),
+            ($asset->getPreviewExtensionType() == 'image'),
             null,
             AssetTypeFactory::assetTypeByClassName(get_class($asset)),
             $asset->getFileName() ?: '',
@@ -162,7 +161,7 @@ class PreviewFile implements Wireable
         $media = $asset->getFirstMedia();
 
         if (! $media) {
-            throw new InvalidArgumentException('No media found for asset ' . $asset->id);
+            throw new InvalidArgumentException('No media found for asset '.$asset->id);
         }
 
         $urls = [
@@ -178,7 +177,7 @@ class PreviewFile implements Wireable
             $asset->id,
             $asset->id,
             $thumbUrl,
-            ('image' == $asset->getExtensionType()),
+            ($asset->getExtensionType() == 'image'),
             null,
             AssetTypeFactory::assetTypeByClassName(get_class($asset)),
             $asset->getFileName() ?: '',
@@ -297,6 +296,18 @@ class PreviewFile implements Wireable
         ];
     }
 
+    // The form payload that our UpdateFileField action expects
+    public function toFormPayload(): array
+    {
+        return [
+            'id' => $this->id,
+            'path' => $this->tempPath,
+            'originalName' => $this->filename,
+            'mimeType' => $this->mimeType,
+            'fieldValues' => $this->fieldValues,
+        ];
+    }
+
     public function loadOwners(): void
     {
         if (! $this->mediaId) {
@@ -313,8 +324,8 @@ class PreviewFile implements Wireable
         foreach ($references as $reference) {
             $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
 
-            if ($model instanceof FragmentModel) {
-                $ownerModels = app(FragmentOwnerRepository::class)->getResourceOwners($model);
+            if ($model instanceof \Thinktomorrow\Chief\Fragments\Models\FragmentModel) {
+                $ownerModels = app(ContextOwnerRepository::class)->getOwnersByFragment($model->id);
 
                 foreach ($ownerModels as $ownerModel) {
                     $this->owners[] = $this->createOwnerFields($ownerModel, $model);
@@ -341,7 +352,7 @@ class PreviewFile implements Wireable
     private function createOwnerFields($resourceModel, ?FragmentModel $fragmentModel = null): array
     {
         if ($fragmentModel) {
-            $fragment = ModelReference::fromString($fragmentModel->model_reference)->instance()->setFragmentModel($fragmentModel);
+            $fragment = app(FragmentFactory::class)->create($fragmentModel);
         }
 
         try {
@@ -356,7 +367,7 @@ class PreviewFile implements Wireable
 
                 // If a fragmentModel is owner, we use this fragment as the real model reference.
                 ...($fragmentModel) ? ['modelReference' => $fragmentModel->modelReference()->get()] : [],
-                ...($fragmentModel) ? ['label' => $resource->getPageTitle($resourceModel) .' > '. $fragment->getLabel()] : [],
+                ...($fragmentModel) ? ['label' => $resource->getPageTitle($resourceModel).' > '.$fragment->getLabel()] : [],
             ];
         } catch (Exception $e) {
             report($e);

@@ -5,58 +5,88 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
+use Thinktomorrow\Chief\Forms\Tags\HasTags;
 
-interface Field extends Validatable, Localizable
+interface Field extends HasTags, LocalizedField, Validatable
 {
     public function key(string $key): static;
+
     public function getKey(): string;
 
     // Formgroup elements
     public function id(string $id): static;
+
     public function getId(?string $locale = null): string;
+
     public function name(string $name): static;
+
     public function getName(?string $locale = null): string;
+
+    public function getRawName(): string;
+
     public function label(string $label): static;
+
     public function getLabel(): ?string;
+
     public function description(string $description): static;
+
     public function getDescription(): ?string;
 
     // Saving and retrieving field values
-    public function model(Model|array $model): static;
-    public function getModel(): null|Model|array;
+    public function model(object $model): static;
+
+    public function getModel(): ?object;
 
     public function columnName(string $columnName): static;
+
     public function getColumnName(): string;
 
-    public function prepare(Closure $prepareModelValue): static;
-    public function hasPrepareModelValue(): bool;
-    public function getPrepareModelValue(): ?Closure;
+    public function prepForSaving(Closure $prepForSaving): static;
 
-    public function setModelValue(Closure $setModelValue): static;
-    public function hasSetModelValue(): bool;
-    public function getSetModelValue(): ?Closure;
+    public function hasPrepForSaving(): bool;
+
+    public function getPrepForSaving(): ?Closure;
+
+    public function fillForSaving(Closure $fillForSaving): static;
+
+    public function hasFillForSaving(): bool;
+
+    public function getFillForSaving(): ?Closure;
 
     public function save(Closure $save): static;
+
     public function hasSave(): bool;
+
     public function getSave(): ?Closure;
 
     /** Value of active form request */
     public function getActiveValue(?string $locale = null);
+
     public function value(mixed $value): static;
+
     public function getValue(?string $locale = null): mixed;
 
     public function default(null|string|int|array|Closure $default): static;
+
     public function getDefault(?string $locale = null): null|string|int|array;
 
-    public function tagged(string|array $tags): bool;
-    public function untagged(): bool;
-    public function tag(string|array $tags): static;
-    public function untag(string|array $tags): static;
+    public function getFieldName(): FieldName;
+
+    /**
+     * Define a specific format for the locale key.
+     * e.g. ':name.:locale' or 'trans.:locale.:name'
+     */
+    public function setFieldNameTemplate(string $fieldNameTemplate): static;
+
+    public function getFieldNameTemplate(): string;
 
     public function toggleField(string $fieldName, string|array $values): static;
+
+    public function toggleFields(array $fieldToggles): static;
+
     public function getFieldToggles(): array;
 
     // TODO: no more getTYPE: conditional fields now still depend on it...

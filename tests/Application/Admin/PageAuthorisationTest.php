@@ -9,15 +9,14 @@ class PageAuthorisationTest extends ChiefTestCase
 {
     private ArticlePage $page;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->page = $this->setupAndCreateArticle();
     }
 
-    /** @test */
-    public function guests_cannot_view_the_create_form()
+    public function test_guests_cannot_view_the_create_form()
     {
         $manager = $this->manager($this->page);
 
@@ -26,8 +25,7 @@ class PageAuthorisationTest extends ChiefTestCase
             ->assertRedirect(route('chief.back.login'));
     }
 
-    /** @test */
-    public function a_non_admin_cannot_update_a_page()
+    public function test_a_non_admin_cannot_update_a_page()
     {
         $manager = $this->manager($this->page);
 
@@ -37,7 +35,7 @@ class PageAuthorisationTest extends ChiefTestCase
         $this->put($manager->route('update', $this->page), [
             'title' => 'nieuwe titel',
         ])->assertStatus(302)
-          ->assertRedirect(route('chief.back.login'));
+            ->assertRedirect(route('chief.back.login'));
 
         $this->assertEquals('existing-title', $this->page->fresh()->title);
     }

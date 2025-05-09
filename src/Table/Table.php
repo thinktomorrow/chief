@@ -28,35 +28,36 @@ use Thinktomorrow\Chief\Table\Table\References\ResourceReference;
 
 class Table extends Component implements Htmlable
 {
+    use CanAddQuery;
+    use HasActions;
+    use HasBulkActions;
+    use HasColumns;
     use HasComponentRendering;
-    use HasTableReference;
+    use HasFilters;
+    use HasHeaders;
     use HasLivewireComponent;
+    use HasModelKeyName;
+    use HasPagination;
     use HasPresets;
-
-    /** Tree support */
-    use HasResourceReference;
-    use HasTreeStructure;
 
     /** Base Query for all table data */
     use HasQuery;
-    use CanAddQuery;
-    use HasModelKeyName;
+
+    /** Tree support */
+    use HasResourceReference;
+
+    use HasRowActions;
     use HasRows;
     use HasRowViews;
-    use HasFilters;
     use HasSorters;
-    use HasHeaders;
-    use HasColumns;
-    use HasPagination;
-    use HasActions;
-    use HasBulkActions;
-    use HasRowActions;
+    use HasTableReference;
+    use HasTreeStructure;
 
     protected string $view = 'chief-table::index';
 
     public static function make()
     {
-        return new static();
+        return new static;
     }
 
     public function resource(string $resourceKey): static

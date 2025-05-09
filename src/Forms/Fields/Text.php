@@ -15,12 +15,14 @@ class Text extends Component implements Field
     use HasRedactorToolbar;
 
     protected string $view = 'chief-form::fields.text';
-    protected string $windowView = 'chief-form::fields.text-window';
+
+    protected string $previewView = 'chief-form::previews.fields.text';
+
     protected string $viewWithRedactor = 'chief-form::fields.text-with-redactor';
 
     public function getView(): string
     {
-        if ($this->hasRedactorOptions() && ! $this->getEditInSidebar()) {
+        if ($this->hasRedactorOptions()) {
             return $this->viewWithRedactor;
         }
 

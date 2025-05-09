@@ -1,4 +1,3 @@
-import EventBus from '../../utilities/EventBus';
 import InputFieldTrigger from './InputFieldTrigger';
 import RadioFieldTrigger from './RadioFieldTrigger';
 import CheckboxFieldTrigger from './CheckboxFieldTrigger';
@@ -19,6 +18,9 @@ const initConditionalFieldsInContainer = (
     conditionalFieldsDataAttribute = 'data-conditional-toggle'
 ) => {
     const formgroupElements = Array.from(container.querySelectorAll(`[${formgroupAttribute}]`));
+
+    // To store all fields that are toggled by other fields
+    window.conditionalFieldsToggledByState = [];
 
     formgroupElements.forEach((element) => {
         const name = element.getAttribute(formgroupAttribute);
@@ -55,10 +57,6 @@ const initConditionalFieldsInContainer = (
 
 const initConditionalFields = () => {
     initConditionalFieldsInContainer(document);
-
-    EventBus.subscribe('sidebarPanelActivated', (e) => {
-        initConditionalFieldsInContainer(e.panel.el);
-    });
 };
 
 export { initConditionalFieldsInContainer, initConditionalFields };

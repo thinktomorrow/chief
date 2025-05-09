@@ -15,7 +15,7 @@
         <div class="space-y-2">
             @foreach ($options as $value => $label)
                 <label for="{{ $id }}-{{ $value }}" class="flex items-start gap-2">
-                    <x-chief::input.radio
+                    <x-chief::form.input.radio
                         wire:model.live.debounce.300ms="filters.{{ $name }}"
                         id="{{ $id }}-{{ $value }}"
                         name="{{ $name }}"
@@ -29,8 +29,8 @@
         </div>
 
         <div class="flex items-start justify-between gap-2">
-            <x-chief-table::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief-table::button>
-            <x-chief-table::button
+            <x-chief::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief::button>
+            <x-chief::button
                 x-on:click="() => {
                     close()
                     $wire.addFilter()
@@ -39,7 +39,7 @@
                 variant="blue"
             >
                 Pas filter toe
-            </x-chief-table::button>
+            </x-chief::button>
         </div>
     </div>
 </x-chief::dialog.dropdown>

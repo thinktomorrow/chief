@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
@@ -27,7 +28,7 @@ trait StateAssistant
 
     public function canStateAssistant(string $action, $model = null): bool
     {
-        if (! in_array($action, ['state-edit','state-update'])) {
+        if (! in_array($action, ['state-edit', 'state-update'])) {
             return false;
         }
 
@@ -98,13 +99,13 @@ trait StateAssistant
         // In case that the state makes the model inaccessible (such as a deletion)
         // we'll want to redirect to a different page.
         $stateConfig = $model->getStateConfig($key);
-        $redirect = $stateConfig->getRedirectAfterTransition($transitionKey, $model);
+        $redirect = $stateConfig->getRedirectAfterTransition($model, $transitionKey);
 
         // A custom redirect is present so we'll return to the redirect.
         if ($redirect && ! $request->expectsJson()) {
             if ($notification = $stateConfig->getResponseNotification($transitionKey)) {
                 return redirect()->to($redirect)->with(
-                    'messages.' . ($stateConfig->getTransitionType($transitionKey) ?: 'info'),
+                    'messages.'.($stateConfig->getTransitionType($transitionKey) ?: 'info'),
                     $notification
                 );
             }
@@ -137,6 +138,6 @@ trait StateAssistant
             ]);
         }
 
-        return new Filters();
+        return new Filters;
     }
 }

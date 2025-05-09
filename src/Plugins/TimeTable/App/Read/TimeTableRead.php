@@ -15,5 +15,5 @@ interface TimeTableRead
     /** @return SlotsByDay[] */
     public function getDays(): array;
 
-    public function getData(string $key, string $locale = null, $default = null);
+    public function getData(string $key, ?string $locale = null, $default = null);
 }

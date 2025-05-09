@@ -15,7 +15,13 @@
         >
             @include('chief-table::livewire._partials.table-actions')
 
-            <div class="divide-y divide-grey-100 rounded-xl bg-white shadow-md ring-1 ring-grey-100">
+            <div
+                @class([
+                    'divide-y divide-grey-100 rounded-xl ring-1 ring-grey-100',
+                    'rounded-xl bg-white shadow-md shadow-grey-500/10' => $variant === 'card',
+                    '' => $variant === 'transparent',
+                ])
+            >
                 @include('chief-table::livewire._partials.table-container-header')
 
                 <div class="overflow-x-auto whitespace-nowrap">
@@ -23,11 +29,13 @@
                         <thead>
                             <tr class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4">
                                 {{-- This header contains the checkbox to select/deselect all items. It will only show if bulk actions are available --}}
-                                <th x-show="showCheckboxes" scope="col" class="w-5">
-                                    <div class="flex items-center">
-                                        <x-chief::input.checkbox x-ref="tableHeaderCheckbox" />
-                                    </div>
-                                </th>
+                                @if ($this->hasAnyBulkActions())
+                                    <th scope="col" class="w-5">
+                                        <div class="flex items-center">
+                                            <x-chief::form.input.checkbox x-ref="tableHeaderCheckbox" />
+                                        </div>
+                                    </th>
+                                @endif
 
                                 @foreach ($this->getHeaders() as $header)
                                     {{ $header }}
@@ -71,5 +79,6 @@
         @include('chief-table::index-no-records')
     @endif
 
+    <livewire:chief-wire::create-model :parent-component-id="$this->getId()" />
     <livewire:chief-form::dialog :parent-id="$this->getId()" />
 </div>

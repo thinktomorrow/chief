@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -8,35 +9,32 @@ use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Rules\FallbackLocaleRequiredRule;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 
 class ArticlePageResource implements PageResource
 {
     use PageResourceDefault;
+    use WithCustomFieldDefinitions;
 
     public static function modelClassName(): string
     {
         return ArticlePage::class;
     }
 
-    // Defines which atttribute of the model is the title.
-    // This is currently only used for duplicating a page and copying its title.
-    public function getTitleAttributeKey(): string
+    private function defaultFields($model): iterable
     {
-        return 'custom';
-    }
+        yield Form::make('title_form')->items([
+            Text::make('title')->locales()->required()->rules(['min:4']),
+        ]);
 
-    public function fields($model): iterable
-    {
-        yield Text::make('title')->required()->rules(['min:4']);
         yield Text::make('custom')
             ->rules(['required'])
             ->validationAttribute('custom attribute')
             ->validationMessages(['custom.required' => 'custom error for :attribute']);
-        yield Text::make('title_trans')->locales(['nl', 'en']);
-        yield Text::make('content_trans')->locales(['nl', 'en'])->rules(FallbackLocaleRequiredRule::RULE);
+        yield Text::make('title_trans')->locales();
+        yield Text::make('content_trans')->locales()->rules(FallbackLocaleRequiredRule::RULE);
 
         yield File::make('thumb');
         yield File::make('thumb_enhanced')->items([
@@ -50,23 +48,24 @@ class ArticlePageResource implements PageResource
         yield Image::make(ArticlePage::IMAGEFIELD_DISK_KEY)->storageDisk('secondMediaDisk')->tag('edit');
         yield File::make(ArticlePage::FILEFIELD_ASSETTYPE_KEY)->assetType('custom')->tag('edit');
 
-        yield Text::make('title_sanitized')->prepare(function ($value, array $input) {
+        yield Text::make('title_sanitized')->prepForSaving(function ($value, array $input, $locale = null) {
             if ($value) {
                 return $value;
             }
-            if (isset($input['title'])) {
-                return Str::slug($input['title']);
+            if (isset($input['title']) && isset($input['title'][$locale])) {
+                return Str::slug($input['title'][$locale]);
             }
 
             return null;
         });
 
-        yield Text::make('title_sanitized_trans')->locales()->prepare(function ($value, array $input, $locale = null) {
+        yield Text::make('title_sanitized_trans')->locales()->prepForSaving(function ($value, array $input, $locale = null) {
             if ($value) {
                 return $value;
             }
-            if (isset($input['title'])) {
-                return Str::slug($input['title']) . '-' . $locale;
+
+            if (isset($input['title']) && isset($input['title'][$locale])) {
+                return Str::slug($input['title'][$locale]);
             }
 
             return null;

@@ -1,4 +1,4 @@
-<x-chief::dialog.modal wired size="md" title="Voeg bestanden toe">
+<x-chief::dialog.modal wired size="sm" title="Voeg bestanden toe">
     @if ($isOpen)
         <!-- form prevents enter key in fields in this modal context to trigger submits of other form on the page -->
         <form
@@ -9,9 +9,9 @@
                 {{ $this->filePreview }}
 
                 @error('files.0')
-                    <x-chief::inline-notification type="error" class="mt-2">
-                        {{ ucfirst($message) }}
-                    </x-chief::inline-notification>
+                    <x-chief::callout size="small" variant="red" class="mt-2">
+                        <p>{{ ucfirst($message) }}</p>
+                    </x-chief::callout>
                 @enderror
 
                 {{ $this->fileSelect }}
@@ -29,17 +29,22 @@
             </x-chief-assets::upload-and-dropzone>
         </form>
 
-        <x-slot name="footer" class="flex justify-end">
-            <button
-                type="submit"
-                form="file-upload-form-{{ $this->getId() }}"
-                @disabled($this->countUploadedOrSelectedFiles() < 1)
-                @class(['btn btn-primary', 'btn-disabled' => $this->countUploadedOrSelectedFiles() < 1])
-            >
-                Voeg
-                {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
-                toe
-            </button>
+        <x-slot name="footer">
+            <x-chief::dialog.modal.footer>
+                @if ($this->countUploadedOrSelectedFiles() < 1)
+                    <x-chief::button variant="blue" type="submit" form="file-upload-form-{{ $this->getId() }}" disabled>
+                        Voeg
+                        {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
+                        toe
+                    </x-chief::button>
+                @else
+                    <x-chief::button variant="blue" type="submit" form="file-upload-form-{{ $this->getId() }}">
+                        Voeg
+                        {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
+                        toe
+                    </x-chief::button>
+                @endif
+            </x-chief::dialog.modal.footer>
         </x-slot>
     @endif
 </x-chief::dialog.modal>

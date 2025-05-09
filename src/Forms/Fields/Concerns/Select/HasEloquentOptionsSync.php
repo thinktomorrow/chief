@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns\Select;
 
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\SelectOptions;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Model\Nestable;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 
 trait HasEloquentOptionsSync
 {
-    public function sync(string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null, bool $syncInOrder = false, string $pivotOrderColumn = 'sort'): self
+    public function sync(?string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null, bool $syncInOrder = false, string $pivotOrderColumn = 'sort'): self
     {
         if (! $relation) {
             $relation = $this->getKey();
@@ -46,7 +46,7 @@ trait HasEloquentOptionsSync
     /**
      * Sync the relations in given order.
      */
-    public function syncInOrder(string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null): self
+    public function syncInOrder(?string $relation = null, string $valueKey = 'id', string $labelKey = 'title', ?callable $afterSaveCallback = null): self
     {
         return $this->sync($relation, $valueKey, $labelKey, $afterSaveCallback, true, 'sort');
     }

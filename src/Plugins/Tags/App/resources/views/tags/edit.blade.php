@@ -2,38 +2,39 @@
     $breadcrumb = new \Thinktomorrow\Chief\Admin\Nav\BreadCrumb('Terug naar tags', route('chief.tags.index'));
 @endphp
 
-<x-chief::page.template title="Tag aanpassen">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Tag aanpassen" :breadcrumbs="[$breadcrumb]" class="max-w-3xl" />
+<x-chief::page.template title="Tag aanpassen" container="md">
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Tags', 'url' => route('chief.tags.index'), 'icon' => 'tags'],
+                'Tag aanpassen',
+            ]"
+        />
     </x-slot>
 
-    <x-chief::page.grid class="max-w-3xl">
-        <form id="tagsEditForm" method="POST" action="{{ route('chief.tags.update', $model->id) }}" class="card">
+    <x-chief::window>
+        <form id="tagsEditForm" method="POST" action="{{ route('chief.tags.update', $model->id) }}">
             @csrf
             @method('PUT')
 
-            <div class="space-y-4">
-                @foreach ($fields as $field)
-                    {!! $field->render() !!}
-                @endforeach
+            @foreach ($fields as $field)
+                {!! $field->render() !!}
+            @endforeach
 
-                <div class="flex justify-between gap-3">
-                    <button class="btn btn-primary" type="submit">Bewaar aanpassingen</button>
+            <div data-slot="form-group" class="flex items-start gap-2">
+                <x-chief::button type="submit" variant="blue">Bewaar</x-chief::button>
 
-                    <button
-                        type="button"
-                        x-data
-                        x-on:click="$dispatch('open-dialog', { 'id': 'delete-tag-modal-{{ $model->id }}' })"
-                        class="btn btn-grey"
-                    >
-                        <x-chief::icon-label class="text-grey-500 hover:text-red-500" icon="icon-trash">
-                            Verwijder tag
-                        </x-chief::icon-label>
-                    </button>
-                </div>
+                <x-chief::button
+                    x-data
+                    x-on:click="$dispatch('open-dialog', { 'id': 'delete-tag-modal-{{ $model->id }}' })"
+                    variant="outline-red"
+                >
+                    <x-chief::icon.delete />
+                    <span>Verwijder tag</span>
+                </x-chief::button>
             </div>
         </form>
-    </x-chief::page.grid>
+    </x-chief::window>
 
     @push('portals')
         <x-chief::dialog.modal id="delete-tag-modal-{{ $model->id }}" title="Verwijder deze tag" size="xs">
@@ -55,9 +56,12 @@
             </div>
 
             <x-slot name="footer">
-                <button type="submit" form="delete-tag-modal-form-{{ $model->id }}" class="btn btn-error">
-                    <x-chief::icon-label icon="icon-trash">Verwijder tag</x-chief::icon-label>
-                </button>
+                <x-chief::dialog.modal.footer>
+                    <x-chief::button type="submit" form="delete-tag-modal-form-{{ $model->id }}" variant="red">
+                        <x-chief::icon.delete />
+                        <span>Verwijder tag</span>
+                    </x-chief::button>
+                </x-chief::dialog.modal.footer>
             </x-slot>
         </x-chief::dialog.modal>
     @endpush

@@ -5,7 +5,14 @@
     fill="none"
 >
     <path
-        d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18"
+        d="M3.99982 11.9998L19.9998 11.9998"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+    <path
+        d="M8.99963 17C8.99963 17 3.99968 13.3176 3.99966 12C3.99965 10.6824 8.99966 7 8.99966 7"
         stroke="currentColor"
         stroke-width="1.5"
         stroke-linecap="round"

@@ -25,7 +25,7 @@ trait WithReordering
 
     public function reorder()
     {
-        dd(func_get_args());
+        // dd(func_get_args());
         //        $reorderedPreviewFiles = collect($orderedIds)
         //            ->map(fn ($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
         //            ->all();

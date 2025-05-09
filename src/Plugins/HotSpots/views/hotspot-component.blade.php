@@ -41,7 +41,7 @@
 
                             <div
                                 x-on:click.stop="$wire.activateHotSpot('{{ $hotSpot['id'] }}')"
-                                class="hover:bg-primary relative h-4 w-4 cursor-pointer rounded-full bg-white shadow-lg ring-2 ring-black/10 transition-all duration-100 ease-in-out"
+                                class="relative h-4 w-4 cursor-pointer rounded-full bg-white shadow-lg ring-2 ring-black/10 transition-all duration-100 ease-in-out hover:bg-primary"
                                 x-bind:class="{
                                     '!bg-primary-500 !border !border-primary-600':
                                         '{{ $hotSpot['id'] }}' === activeIndex,
@@ -67,9 +67,9 @@
                             {{ $component }}
                         @endforeach
 
-                        <button type="button" wire:click="removeHotSpot('{{ $hotSpotId }}')" class="btn btn-grey">
+                        <x-chief::button type="button" wire:click="removeHotSpot('{{ $hotSpotId }}')" variant="grey">
                             Verwijder deze hotspot
-                        </button>
+                        </x-chief::button>
                     </div>
                 @empty
                     <div class="space-y-2">
@@ -83,21 +83,21 @@
                 @endforelse
 
                 @if ($errors->any())
-                    <div class="mt-6 space-y-2 border-t border-grey-100 pt-6">
-                        @if ($errors && count($errors) > 0)
-                            <x-chief::inline-notification type="error" size="medium" class="w-full">
-                                @foreach ($errors->all() as $error)
-                                    <p>{{ ucfirst($error) }}</p>
-                                @endforeach
-                            </x-chief::inline-notification>
-                        @endif
-                    </div>
+                    <x-chief::callout variant="red" class="mt-6">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ ucfirst($error) }}</p>
+                        @endforeach
+                    </x-chief::callout>
                 @endif
 
                 <x-slot name="footer">
-                    <button type="button" x-on:click="$wire.close()" class="btn btn-grey">Annuleren</button>
+                    <x-chief::dialog.modal.footer>
+                        <x-chief::button x-on:click="$wire.close()">Annuleren</x-chief::button>
 
-                    <button wire:click.prevent="submit" type="submit" class="btn btn-primary">Opslaan</button>
+                        <x-chief::button wire:click.prevent="submit" variant="blue" type="submit">
+                            Opslaan
+                        </x-chief::button>
+                    </x-chief::dialog.modal.footer>
                 </x-slot>
             </div>
         </form>

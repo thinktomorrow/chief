@@ -14,16 +14,16 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\FileUploadDefaults;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithChoosingAssets;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\RenamesErrorBagFileAttribute;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
 
 class FileUploadComponent extends Component implements HasPreviewFiles, HasSyncedFormInputs
 {
-    use WithFileUploads;
+    use EmitsToNestables;
     use FileUploadDefaults;
     use InteractsWithChoosingAssets;
-    use ShowsAsDialog;
     use RenamesErrorBagFileAttribute;
-    use EmitsToNestables;
+    use ShowsAsDialog;
+    use WithFileUploads;
 
     public $parentId;
 
@@ -40,11 +40,11 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
             'upload:errored' => 'onUploadErrored',
             'upload:finished' => 'onUploadFinished',
-            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
-            'assetsChosen-' . $this->getId() => 'onAssetsChosen',
+            'assetUpdated-'.$this->getId() => 'onAssetUpdated',
+            'assetsChosen-'.$this->getId() => 'onAssetsChosen',
         ];
     }
 
@@ -85,7 +85,7 @@ class FileUploadComponent extends Component implements HasPreviewFiles, HasSynce
     public function submit($formData)
     {
         $formData = collect($formData)
-            ->mapWithKeys(fn ($value, $key) => [FormKey::replaceBracketsByDots($key) => $value])
+            ->mapWithKeys(fn ($value, $key) => [FieldNameHelpers::replaceBracketsByDots($key) => $value])
             ->undot()
             ->get($this->fieldName);
 

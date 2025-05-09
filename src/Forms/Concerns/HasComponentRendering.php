@@ -17,4 +17,11 @@ trait HasComponentRendering
             'component' => $this,
         ]));
     }
+
+    public function renderPreview(): View
+    {
+        return view($this->getPreviewView(), array_merge($this->data(), [
+            'component' => $this,
+        ]));
+    }
 }

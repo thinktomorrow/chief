@@ -23,13 +23,16 @@ trait FileUploadDefaults
     public string $assetType = PreviewFile::DEFAULT_ASSETTYPE;
 
     public bool $allowMultiple = false;
+
     public array $acceptedMimeTypes = [];
+
     /**
      * The temporary uploaded files and the existing ones as previewFile object
      *
      * @var PreviewFile[]
      */
-    public $previewFiles = [];
+    public array $previewFiles = [];
+
     /**
      * The temporary uploaded files. These files
      * are not yet stored as media records.
@@ -38,9 +41,13 @@ trait FileUploadDefaults
      * FileRef is added as soon as the file is completely uploaded by Livewire
      */
     public $files = [];
+
     public array $rules = [];
+
     protected FilePreview $filePreview;
+
     protected FileSelect $fileSelect;
+
     protected array $components = [];
 
     public function getPreviewFiles(): array
@@ -55,7 +62,7 @@ trait FileUploadDefaults
 
     public function getFieldId(): string
     {
-        return $this->getId() . '-' . $this->fieldName;
+        return $this->getId().'-'.$this->fieldName;
     }
 
     public function getFieldName(): string
@@ -99,6 +106,7 @@ trait FileUploadDefaults
 
         $this->syncPreviewFiles();
 
+        $this->dispatchFilesUpdatedEvent();
         $this->dispatch('fileAdded');
     }
 
@@ -133,7 +141,7 @@ trait FileUploadDefaults
             $this->setFilesValidatedState($fileId, true);
         } catch (ValidationException $e) {
             $this->setFilesValidatedState($fileId, false, $e->validator->errors()->first('files'));
-            $this->removeUpload('files.' . $this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
+            $this->removeUpload('files.'.$this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
         }
     }
 
@@ -148,14 +156,6 @@ trait FileUploadDefaults
 
         $previewFile->isValidated = $validatedState;
         $previewFile->validationMessage = $validationMessage;
-
-        //        $previewFile = $this->findPreviewFile($fileId);
-        //
-        //        $this->updatePreviewFileValueByUploadFileId($fileId, 'isValidated', $validatedState);
-        //        $this->updatePreviewFileValueByUploadFileId($fileId, 'validationMessage', $validationMessage);
-        //        $this->files[$filesIndex]['validated'] = $validatedState;
-        //        $this->previewFiles[$previewFileIndex]->isValidated = $validatedState;
-        //        $this->previewFiles[$previewFileIndex]->validationMessage = $validationMessage;
     }
 
     public function findUploadFile($fileId): ?array
@@ -174,7 +174,7 @@ trait FileUploadDefaults
         $index = $this->findUploadFileIndex($fileId);
 
         if (is_null($index)) {
-            throw new InvalidArgumentException('No uploadFile found by id ' . $fileId);
+            throw new InvalidArgumentException('No uploadFile found by id '.$fileId);
         }
 
         $this->files[$index][$key] = $value;
@@ -214,7 +214,7 @@ trait FileUploadDefaults
             // are going to track it a bit to try to understand why id is missing.
             if (! isset($newFileDetails['id'])) {
 
-                report(new InvalidArgumentException('id is unexpectedly missing... from file entry: ' . print_r($newFileDetails, true)));
+                report(new InvalidArgumentException('id is unexpectedly missing... from file entry: '.print_r($newFileDetails, true)));
 
                 continue;
             }
@@ -246,8 +246,7 @@ trait FileUploadDefaults
      * The previewFile that has the uploadFileId as its id, is a pending previewFile and
      * once the file is fully uploaded, the temporaryUploadFile id will be used.
      *
-     * @param $fileId
-     * @return int|null
+     * @param  $fileId
      */
     private function findPreviewFileIndex($id): ?int
     {
@@ -259,19 +258,6 @@ trait FileUploadDefaults
 
         return null;
     }
-
-    //    private function updatePreviewFileValueByUploadFileId($uploadFileId, $key, $value): void
-    //    {
-    //        $index = $this->findPreviewIndex($uploadFileId);
-    //
-    //        if(is_null($index)) {
-    //            dd($uploadFileId, $this->previewFiles);
-    //
-    //            throw new \InvalidArgumentException('No previewFile found by id ' . $uploadFileId);
-    //        }
-    //
-    //        $this->previewFiles[$index]->{$key} = $value;
-    //    }
 
     public function onUploadErrored($name)
     {
@@ -291,6 +277,8 @@ trait FileUploadDefaults
             ->all();
 
         $this->previewFiles = $reorderedPreviewFiles;
+
+        $this->dispatchFilesUpdatedEvent();
     }
 
     public function openFileEdit($fileId)
@@ -303,9 +291,9 @@ trait FileUploadDefaults
         foreach ($this->previewFiles as $file) {
             if ($file->id == $fileId) {
 
-                // $this->removeUpload($key, $uploadedFile->getFilename())
-
                 $file->isQueuedForDeletion = true;
+
+                $this->dispatchFilesUpdatedEvent();
 
                 return;
             }
@@ -318,6 +306,8 @@ trait FileUploadDefaults
             if ($file->id == $fileId) {
                 $file->isQueuedForDeletion = false;
 
+                $this->dispatchFilesUpdatedEvent();
+
                 return;
             }
         }
@@ -328,5 +318,16 @@ trait FileUploadDefaults
         $previewFile = PreviewFile::fromArray($previewFileArray);
 
         $this->previewFiles[$this->findPreviewFileIndex($previewFile->id)] = $previewFile;
+
+        $this->dispatchFilesUpdatedEvent();
+    }
+
+    protected function dispatchFilesUpdatedEvent()
+    {
+        $this->dispatch('files-updated', ...[
+            'fieldName' => $this->fieldName, // e.g. files[image][nl]
+            'files' => $this->previewFiles,
+            'parentComponentId' => $this->parentComponentId ?? null,
+        ]);
     }
 }

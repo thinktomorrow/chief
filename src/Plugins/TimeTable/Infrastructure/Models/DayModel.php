@@ -16,8 +16,11 @@ class DayModel extends Model
     use UsesContent;
 
     protected $guarded = [];
+
     public $table = 'timetable_days';
+
     public $timestamps = false;
+
     public $casts = [
         'slots' => 'array',
         'data' => 'array',
@@ -32,24 +35,24 @@ class DayModel extends Model
     {
         yield Card::make()->title('Uurschema (voor- en namiddag)')
             ->description('Een leeg veld geeft aan dat je gesloten bent')->items([
-            Grid::make()->columns(2)->items([
-                Time::make('slots[0][from]')->step(1 * 60)->columnName('slots.0.from')->tag('not-on-create')->default('08:30'),
-                Time::make('slots[0][until]')->step(1 * 60)->columnName('slots.0.until')->tag('not-on-create')->default('12:00'),
-                Time::make('slots[1][from]')->step(1 * 60)->columnName('slots.1.from')->tag('not-on-create')->default('13:00'),
-                Time::make('slots[1][until]')->step(1 * 60)->columnName('slots.1.until')->tag('not-on-create')->default('17:00'),
-            ]),
+                Grid::make()->columns(2)->items([
+                    Time::make('slots[0][from]')->step(1 * 60)->columnName('slots.0.from')->tag(['not-on-model-create', 'not-on-create'])->default('08:30'),
+                    Time::make('slots[0][until]')->step(1 * 60)->columnName('slots.0.until')->tag(['not-on-model-create', 'not-on-create'])->default('12:00'),
+                    Time::make('slots[1][from]')->step(1 * 60)->columnName('slots.1.from')->tag(['not-on-model-create', 'not-on-create'])->default('13:00'),
+                    Time::make('slots[1][until]')->step(1 * 60)->columnName('slots.1.until')->tag(['not-on-model-create', 'not-on-create'])->default('17:00'),
+                ]),
 
-            Checkbox::make('closed')
-                ->options([
-                    1 => 'Hele dag gesloten',
-                ])
-                ->value(fn () => empty($model->slots) ? 1 : null)
-                ->showAsToggle(),
-        ]);
+                Checkbox::make('closed')
+                    ->options([
+                        1 => 'Hele dag gesloten',
+                    ])
+                    ->value(fn () => empty($model->slots) ? 1 : null)
+                    ->showAsToggle(),
+            ]);
 
         yield Text::make('content')
-            ->setLocalizedFormKeyTemplate('content.:locale')
-            ->tag('not-on-create')
+            ->setFieldNameTemplate('content.:locale')
+            ->tag(['not-on-model-create', 'not-on-create'])
             ->label('Eigen tekst')
             ->value($model->data['content'] ?? [])
             ->locales()
@@ -84,8 +87,8 @@ class DayModel extends Model
 
     private static function defaultSlots($weekDay): array
     {
-        return match((string) $weekDay) {
-            '6','7' => [],
+        return match ((string) $weekDay) {
+            '6', '7' => [],
             default => [
                 ['from' => '08:30', 'until' => '12:00'],
                 ['from' => '13:00', 'until' => '17:00'],

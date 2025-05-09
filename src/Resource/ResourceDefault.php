@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Resource;
 
-use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
-use Thinktomorrow\Chief\Forms\SaveFields;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Manager;
 
 trait ResourceDefault
@@ -42,14 +41,14 @@ trait ResourceDefault
 
     public function field($model, string $key): Field
     {
-        $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
+        $fieldModel = $model instanceof Fragment ? $model->getFragmentModel() : $model;
 
         return Fields::makeWithoutFlatteningNestedFields($this->fields($model))->find($key)->model($fieldModel);
     }
 
     public function nestedField($model, string $key): Field
     {
-        $fieldModel = $model instanceof Fragmentable ? $model->fragmentModel() : $model;
+        $fieldModel = $model instanceof Fragment ? $model->getFragmentModel() : $model;
 
         // TODO: this fails when the nested field has the same key as one of the other fields.
         return Fields::make($this->fields($model))->find($key)->model($fieldModel);
@@ -62,8 +61,13 @@ trait ResourceDefault
         return SaveFields::class;
     }
 
-    public function getInstanceAttributes(Request $request): array
+    public function getAttributesOnCreate(): array
     {
         return [];
+    }
+
+    public function prepareInputOnCreate(array $input): array
+    {
+        return $input;
     }
 }

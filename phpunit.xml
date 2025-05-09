@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="vendor/autoload.php"
-         colors="true" processIsolation="false" stopOnFailure="false"
+         colors="true" processIsolation="false" stopOnError="true" stopOnFailure="true"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd" cacheDirectory=".phpunit.cache"
          backupStaticProperties="false">
     <testsuites>
@@ -16,24 +16,37 @@
         <testsuite name="assets">
             <directory suffix="Test.php">./src/Assets/Tests</directory>
         </testsuite>
+        <testsuite name="models">
+            <directory suffix="Test.php">./src/Models/Tests</directory>
+        </testsuite>
         <testsuite name="fragments">
-            <directory suffix="Test.php">./src/Fragments</directory>
+            <directory suffix="Test.php">./src/Fragments/Tests</directory>
         </testsuite>
-        <testsuite name="resources">
-            <directory suffix="Test.php">./src/ManagedModels</directory>
-            <directory suffix="Test.php">./src/Managers</directory>
-            <directory suffix="Test.php">./src/Resource</directory>
+        <testsuite name="menu">
+            <directory suffix="Test.php">./src/Menu/Tests</directory>
         </testsuite>
-        <testsuite name="admin">
-            <directory suffix="Test.php">./src/Admin</directory>
-            <directory suffix="Test.php">./src/Site</directory>
-            <directory suffix="Test.php">./src/Shared</directory>
-            <directory suffix="Test.php">./src/Table</directory>
+        <testsuite name="table">
+            <directory suffix="Test.php">./src/Table/Tests</directory>
+        </testsuite>
+        <testsuite name="sites">
+            <directory suffix="Test.php">./src/Sites/Tests</directory>
+        </testsuite>
+        <testsuite name="urls">
+            <directory suffix="Test.php">./src/Urls/Tests</directory>
         </testsuite>
         <testsuite name="plugins">
             <directory suffix="Test.php">./src/Plugins</directory>
         </testsuite>
     </testsuites>
+    <coverage includeUncoveredFiles="true"
+              pathCoverage="false"
+              ignoreDeprecatedCodeUnits="true"
+              disableCodeCoverageIgnore="true">
+        <report>
+            <html outputDirectory="build/html-coverage" lowUpperBound="50" highLowerBound="90"/>
+            <text outputFile="build/coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+        </report>
+    </coverage>
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
@@ -45,6 +58,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_CONNECTION" value="testing"/>
+        <env name="DB_DATABASE" value=":memory:"/>
     </php>
     <source>
         <include>

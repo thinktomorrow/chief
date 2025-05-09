@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Layouts;
@@ -10,5 +11,6 @@ class Grid extends Component
     use HasColumns;
 
     protected string $view = 'chief-form::layouts.grid';
-    protected string $windowView = 'chief-form::layouts.default-window';
+
+    protected string $previewView = 'chief-form::previews.layouts.grid';
 }

@@ -4,10 +4,10 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\App\Http;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Forms;
-use Thinktomorrow\Chief\Forms\SaveFields;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateDeleted;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\DateUpdated;
@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DateModel;
 class DateController extends Controller
 {
     private FieldValidator $fieldValidator;
+
     private SaveFields $saveFields;
 
     public function __construct(FieldValidator $fieldValidator, SaveFields $saveFields)
@@ -32,7 +33,7 @@ class DateController extends Controller
         [$model, $fields] = $this->getModelAndFields();
 
         // Enrich fields with the layout components
-        $forms = Forms::make($model->fields($model))->fillModel($model)->getComponents();
+        $forms = Layout::make($model->fields($model))->model($model)->getComponents();
         $fields = $forms[0]->getComponents();
 
         return view('chief-timetable::dates.create', [
@@ -81,7 +82,7 @@ class DateController extends Controller
         [$model, $fields] = $this->getModelAndFields($dateId);
 
         // Enrich fields with the layout components
-        $forms = Forms::make($model->fields($model))->fillModel($model)->getComponents();
+        $forms = Layout::make($model->fields($model))->model($model)->getComponents();
         $fields = $forms[0]->getComponents();
 
         return view('chief-timetable::dates.edit', [
@@ -140,7 +141,7 @@ class DateController extends Controller
     private function getModelAndFields(?string $dateId = null): array
     {
         $model = app(DateModel::class);
-        $model = $dateId ? $model::find($dateId): $model;
+        $model = $dateId ? $model::find($dateId) : $model;
 
         $fields = Fields::makeWithoutFlatteningNestedFields($model->fields($model))->each(fn ($field) => $field->model($model));
 

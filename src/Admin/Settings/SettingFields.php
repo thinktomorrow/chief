@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Settings;
 
-use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
+use Thinktomorrow\Chief\Urls\App\Listeners\ChangeHomepage;
+use Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper;
 
 class SettingFields
 {

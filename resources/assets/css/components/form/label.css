@@ -1,4 +1,4 @@
 .form-input-label {
-    @apply block font-medium;
-    @apply text-black;
+    @apply block text-base/6 font-medium;
+    @apply text-grey-800;
 }

@@ -1,14 +1,36 @@
 @props([
-    'underline'
+    'size' => 'base',
+    'variant' => 'body-dark',
 ])
 
-<span {{
-    $attributes->class([
-        'inline-flex items-start text-sm leading-5 gap-1.5 transition-all duration-75 ease-in-out',
-        'text-grey-700 hover:text-primary-500',
-        '[&>svg]:shrink-0 [&>svg]:w-5 [&>svg]:h-5 [&>svg]:transition-all [&>svg]:duration-75 [&>svg]:ease-in-out [&:hover>svg]:scale-110',
-        'underline underline-offset-2' => isset($underline),
-    ])
-}}>
-    {{ $slot }}
-</span>
+@php
+    $attributes = $attributes->class([
+        'link cursor-pointer',
+        match ($size) {
+            'base' => 'link-base',
+            'sm' => 'link-sm',
+            'xs' => 'link-xs',
+            default => 'link-base',
+        },
+        match ($variant) {
+            'blue' => 'link-blue',
+            'red' => 'link-red',
+            'body-dark' => 'link-body-dark',
+            default => 'link-body-dark',
+        },
+    ]);
+@endphp
+
+@if ($attributes->has('href'))
+    <a {{ $attributes }}>
+        {{ $slot }}
+    </a>
+@elseif ($attributes->has('for'))
+    <label {{ $attributes }}>
+        {{ $slot }}
+    </label>
+@else
+    <button {{ $attributes->merge(['type' => 'button']) }}>
+        {{ $slot }}
+    </button>
+@endif

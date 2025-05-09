@@ -1,6 +1,6 @@
 <?php
 
-namespace Fields\Select;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Select;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Thinktomorrow\Chief\Forms\Fields\Select;
@@ -10,7 +10,7 @@ class RenderSelectTest extends ChiefTestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -24,7 +24,7 @@ class RenderSelectTest extends ChiefTestCase
     public function test_it_can_render_the_localized_field_view()
     {
         $component = Select::make('xxx')
-            ->setLocalizedFormKeyTemplate(':name.:locale')
+            ->setFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'en']);
         $this->assertStringContainsString('name="xxx[nl]', $component->toHtml());
         $this->assertStringContainsString('name="xxx[en]', $component->toHtml());
@@ -32,12 +32,12 @@ class RenderSelectTest extends ChiefTestCase
 
     public function test_it_can_render_field_window()
     {
-        $component = Select::make('xxx')->editInSidebar()
+        $component = Select::make('xxx')
             ->options(['foobar'])
             ->value('foobar');
 
-        $this->assertStringContainsString('foobar', $component->toHtml());
-        $this->assertStringNotContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('foobar', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('name="xxx', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_pairs()
@@ -53,7 +53,7 @@ class RenderSelectTest extends ChiefTestCase
 
     public function test_it_can_render_pairs_window()
     {
-        $component = Select::make('xxx')->editInSidebar()
+        $component = Select::make('xxx')
             ->options([
                 ['value' => 'one', 'label' => 'een'],
                 ['value' => 'two', 'label' => 'twee'],
@@ -62,8 +62,8 @@ class RenderSelectTest extends ChiefTestCase
             ])
             ->value('two');
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringNotContainsString('name="xxx', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('name="xxx', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_grouped_options_field()
@@ -86,7 +86,7 @@ class RenderSelectTest extends ChiefTestCase
 
     public function test_it_can_render_grouped_options_window()
     {
-        $component = Select::make('xxx')->editInSidebar()
+        $component = Select::make('xxx')
             ->options([
                 ['label' => 'first group', 'options' => [
                     ['value' => 'one', 'label' => 'een'],
@@ -96,9 +96,9 @@ class RenderSelectTest extends ChiefTestCase
                     ['value' => 'three', 'label' => 'drie'],
                 ]],
             ])
-            ->value('twee');
+            ->value('two');
 
-        $this->assertStringContainsString('twee', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_the_multiple_select_field()
@@ -109,7 +109,7 @@ class RenderSelectTest extends ChiefTestCase
 
     public function test_it_can_render_multiple_select_window()
     {
-        $component = Select::make('xxx')->editInSidebar()
+        $component = Select::make('xxx')
             ->multiple()
             ->options([
                 ['value' => 'one', 'label' => 'een'],
@@ -118,8 +118,8 @@ class RenderSelectTest extends ChiefTestCase
             ])
             ->value(['two', 'three']);
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('drie', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringContainsString('drie', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_multiple_grouped_options_field()
@@ -144,7 +144,7 @@ class RenderSelectTest extends ChiefTestCase
 
     public function test_it_can_render_multiple_grouped_options_window()
     {
-        $component = Select::make('xxx')->editInSidebar()
+        $component = Select::make('xxx')
             ->multiple()
             ->options([
                 ['label' => 'first group', 'options' => [
@@ -157,7 +157,7 @@ class RenderSelectTest extends ChiefTestCase
             ])
             ->value(['two', 'three']);
 
-        $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('drie', $component->toHtml());
+        $this->assertStringContainsString('twee', $component->renderPreview()->render());
+        $this->assertStringContainsString('drie', $component->renderPreview()->render());
     }
 }

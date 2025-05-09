@@ -13,21 +13,26 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
 class FileFieldEditComponent extends Component
 {
+    use EmitsToNestables;
+    use InteractsWithForm;
     use ShowsAsDialog;
     use WithFileUploads;
-    use InteractsWithForm;
-    use EmitsToNestables;
 
     public $parentId;
-    public string $modelReference;
+
+    public ?string $modelReference;
+
     public string $fieldKey;
+
     public string $locale;
 
     public ?PreviewFile $previewFile = null;
+
     public ?PreviewFile $replacedPreviewFile = null;
+
     public $file = null;
 
-    public function mount(string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
+    public function mount(?string $modelReference, string $fieldKey, string $locale, string $parentId, array $components = [])
     {
         $this->modelReference = $modelReference;
         $this->fieldKey = $fieldKey;
@@ -41,9 +46,9 @@ class FileFieldEditComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
-            'externalAssetUpdated-' . $this->getId() => 'onExternalAssetUpdated',
-            'assetUpdated-' . $this->getId() => 'onAssetUpdated',
+            'open-'.$this->parentId => 'open',
+            'externalAssetUpdated-'.$this->getId() => 'onExternalAssetUpdated',
+            'assetUpdated-'.$this->getId() => 'onAssetUpdated',
         ];
     }
 
@@ -105,7 +110,7 @@ class FileFieldEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId), ['owners' => $this->previewFile->owners]);
 
-        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);
 
         $this->close();
     }
@@ -121,7 +126,7 @@ class FileFieldEditComponent extends Component
         // Update previewfile to reflect the external asset data
         $this->previewFile = PreviewFile::fromAsset(Asset::find($this->previewFile->mediaId), ['owners' => $this->previewFile->owners]);
 
-        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);
 
         $this->close();
     }
@@ -144,7 +149,7 @@ class FileFieldEditComponent extends Component
 
     public function isolateAsset()
     {
-        if (! $this->previewFile->mediaId) {
+        if (! $this->previewFile->mediaId || ! $this->modelReference) {
             return;
         }
 
@@ -157,7 +162,7 @@ class FileFieldEditComponent extends Component
         // Update form values
         $this->syncForm();
 
-        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);
     }
 
     public function submit()
@@ -174,7 +179,7 @@ class FileFieldEditComponent extends Component
         }
 
         // Update form values
-        $this->previewFile->filename = $this->form['basename'] . '.' . $this->previewFile->extension;
+        $this->previewFile->filename = $this->form['basename'].'.'.$this->previewFile->extension;
         $this->syncForm();
 
         if ($this->previewFile->mediaId) {
@@ -183,7 +188,7 @@ class FileFieldEditComponent extends Component
             app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
         }
 
-        $this->dispatch('assetUpdated-' . $this->parentId, $this->previewFile);
+        $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);
 
         $this->close();
         $this->clearValidation();

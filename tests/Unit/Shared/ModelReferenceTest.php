@@ -12,15 +12,14 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ModelReferenceTest extends ChiefTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         ArticlePage::migrateUp();
     }
 
-    /** @test */
-    public function it_can_create_a_collection_from_model_references()
+    public function test_it_can_create_a_collection_from_model_references()
     {
         $first = new ArticlePage(['id' => 1, 'title' => 'first']);
         $second = new ArticlePage(['id' => 2, 'title' => 'second']);
@@ -32,8 +31,7 @@ class ModelReferenceTest extends ChiefTestCase
         $this->assertEquals($second->modelReference()->get(), $modelReferences[1]);
     }
 
-    /** @test */
-    public function it_can_create_collection_id_from_string()
+    public function test_it_can_create_collection_id_from_string()
     {
         $model = ArticlePage::create(['title' => 'new title']);
 
@@ -43,8 +41,7 @@ class ModelReferenceTest extends ChiefTestCase
         $this->assertTrue($modelReference->equals($model->modelReference()));
     }
 
-    /** @test */
-    public function it_can_create_instance_from_collection_id()
+    public function test_it_can_create_instance_from_collection_id()
     {
         $first = ArticlePage::create();
         $instance = $first->modelReference()->instance();
@@ -53,8 +50,7 @@ class ModelReferenceTest extends ChiefTestCase
         $this->assertEquals($first->id, $instance->id);
     }
 
-    /** @test */
-    public function it_can_instantiate_multiple_collection_ids()
+    public function test_it_can_instantiate_multiple_collection_ids()
     {
         $first = ArticlePage::create();
         $second = ArticlePage::create();
@@ -71,8 +67,7 @@ class ModelReferenceTest extends ChiefTestCase
         }
     }
 
-    /** @test */
-    public function it_can_get_morphed_reference()
+    public function test_it_can_get_morphed_reference()
     {
         Relation::$morphMap = [
             'article' => ArticlePage::class,
@@ -82,11 +77,10 @@ class ModelReferenceTest extends ChiefTestCase
 
         $reference = ModelReference::make(get_class($article), $article->id);
 
-        $this->assertEquals('article@' . $article->id, $reference->getShort());
+        $this->assertEquals('article@'.$article->id, $reference->getShort());
     }
 
-    /** @test */
-    public function it_can_create_from_morphed_reference()
+    public function test_it_can_create_from_morphed_reference()
     {
         Relation::$morphMap = [
             'article' => ArticlePage::class,
@@ -96,14 +90,13 @@ class ModelReferenceTest extends ChiefTestCase
 
         $reference = ModelReference::make('article', $article->id);
 
-        $this->assertEquals(get_class($article) .'@'. $article->id, $reference->get());
-        $this->assertEquals('article@' . $article->id, $reference->getShort());
+        $this->assertEquals(get_class($article).'@'.$article->id, $reference->get());
+        $this->assertEquals('article@'.$article->id, $reference->getShort());
 
         $this->assertInstanceOf(ArticlePage::class, $reference->instance());
     }
 
-    /** @test */
-    public function if_morphed_reference_does_not_exist_passed_string_is_used()
+    public function test_if_morphed_reference_does_not_exist_passed_string_is_used()
     {
         $reference = ModelReference::make('xxx', 1);
 

@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable\Model;
 
-use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\PropagateUrlChange;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Models\PageDefaults;
+use Thinktomorrow\Chief\Urls\App\Listeners\PropagateUrlChange;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 trait PageDefaultWithNestableUrl
 {
-    use PageDefaults{
+    use PageDefaults {
         baseUrlSegment as defaultBaseUrlSegment;
     }
 
@@ -28,14 +28,14 @@ trait PageDefaultWithNestableUrl
         });
     }
 
-    public function baseUrlSegment(?string $locale = null): string
+    public function baseUrlSegment(?string $site = null): string
     {
-        $locale = $locale ?: app()->getLocale();
+        $site = $site ?: app()->getLocale();
 
         if ($parent = $this->getParent()) {
-            return UrlRecord::findSlugByModel($parent, $locale);
+            return UrlRecord::findSlugByModel($parent, $site);
         }
 
-        return $this->defaultBaseUrlSegment($locale);
+        return $this->defaultBaseUrlSegment($site);
     }
 }

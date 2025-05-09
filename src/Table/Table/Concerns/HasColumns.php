@@ -13,7 +13,7 @@ trait HasColumns
     {
         $this->columns = array_merge($this->columns, array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns));
 
-        $this->updateHeaders();
+        $this->rebaseHeaders();
 
         return $this;
     }
@@ -32,7 +32,39 @@ trait HasColumns
             }
         }
 
-        $this->updateHeaders();
+        $this->rebaseHeaders();
+
+        return $this;
+    }
+
+    public function orderColumns(array $keysInOrder): static
+    {
+        $ordered = [];
+        $unOrdered = [];
+
+        // Sanitize keys to match the column key formatting
+        $keysInOrder = array_map(fn ($key) => strtolower($key), $keysInOrder);
+
+        foreach ($this->columns as $column) {
+            foreach ($column->getItems() as $item) {
+                if (in_array($item->getKey(), $keysInOrder)) {
+                    $ordered[(int) array_search($item->getKey(), $keysInOrder)] = $column;
+
+                    break;
+                } else {
+                    $unOrdered[] = $column;
+
+                    break;
+                }
+            }
+        }
+
+        // Sort by non-assoc keys so the desired order is maintained
+        ksort($ordered);
+
+        $this->columns = array_merge($ordered, $unOrdered);
+
+        $this->rebaseHeaders();
 
         return $this;
     }
@@ -42,7 +74,7 @@ trait HasColumns
         return $this->columns;
     }
 
-    private function updateHeaders(): void
+    private function rebaseHeaders(): void
     {
         $this->headers = collect($this->columns)
             ->reject(fn ($column) => empty($column->getItems()))

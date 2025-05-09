@@ -12,7 +12,7 @@ class OfflineStateRowAction extends Action
     public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'unpublish'): static
     {
         return static::make('offline-state-row')
-            ->label('Zet offline')
+            ->label('Zet terug in draft')
             ->variant('red')
             ->prependIcon('<x-chief::icon.view-off-slash />')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
@@ -27,10 +27,9 @@ class OfflineStateRowAction extends Action
                 return true;
             })
             ->keepDialogOpen()
-            ->notifyOnSuccess('Staat nu offline')->notifyOnFailure('Er is iets misgegaan bij het offline zetten van dit item.')
+            ->notifyOnSuccess('Staat in draft')->notifyOnFailure('Er is iets misgegaan bij het in draft zetten.')
             ->when(function ($model) {
                 return $model instanceof StatefulContract && $model->inOnlineState();
-            })
-        ;
+            });
     }
 }

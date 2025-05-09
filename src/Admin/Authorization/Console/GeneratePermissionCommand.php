@@ -20,7 +20,7 @@ class GeneratePermissionCommand extends Command
     public function handle(): void
     {
         $scope = $this->getNameArgument();
-        $permissions = (false === strpos($scope, '-')) ? Permission::generate($scope) : [$scope];
+        $permissions = (strpos($scope, '-') === false) ? Permission::generate($scope) : [$scope];
 
         $this->createPermissions($permissions);
         $this->assignPermissionsToRoles($permissions);
@@ -31,24 +31,16 @@ class GeneratePermissionCommand extends Command
         return Str::slug(strtolower(Str::singular($this->argument('name'))));
     }
 
-
-    /**
-     * @param $permissions
-     *
-     * @return void
-     */
     private function createPermissions(array $permissions): void
     {
         foreach ($permissions as $permission) {
             Permission::findOrCreate($permission, 'chief');
         }
 
-        $this->info('Permissions ' . implode(', ', $permissions) . ' created.');
+        $this->info('Permissions '.implode(', ', $permissions).' created.');
     }
 
     /**
-     * @param $permissions
-     *
      * @return void
      */
     private function assignPermissionsToRoles(array $permissions)
@@ -61,10 +53,12 @@ class GeneratePermissionCommand extends Command
 
         foreach ($roleNames as $roleName) {
             if ($role = Role::where('name', trim($roleName))->first()) {
-                $role->syncPermissions($permissions);
-                $this->info('Role ' . $roleName . ' assigned the given permissions.');
+                foreach ($permissions as $permission) {
+                    $role->givePermissionTo($permission);
+                }
+                $this->info('Role '.$roleName.' assigned the given permissions.');
             } else {
-                $this->warn('Role not found by name ' . $roleName . '!');
+                $this->warn('Role not found by name '.$roleName.'!');
             }
         }
     }

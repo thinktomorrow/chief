@@ -10,7 +10,6 @@ interface StatefulContract
 {
     /**
      * List of all state keys available on this model
-     * @return array
      */
     public function getStateKeys(): array;
 
@@ -21,5 +20,6 @@ interface StatefulContract
     public function getStateConfig(string $stateKey): StateConfig;
 
     public function inOnlineState(): bool;
-    public function scopeOnline(Builder $query): void;
+
+    public function scopePublished(Builder $query): void;
 }

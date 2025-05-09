@@ -52,7 +52,7 @@ class CreateTagTest extends TestCase
         $response = $this->performTagStore(['label' => null]);
 
         $response->assertSessionHasErrors('label')
-                 ->assertStatus(302);
+            ->assertStatus(302);
 
         $this->assertEquals(0, TagModel::count());
     }

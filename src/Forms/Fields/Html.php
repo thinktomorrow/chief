@@ -11,7 +11,8 @@ class Html extends Component implements Field
     // use HasRedactorToolbar;
 
     protected string $view = 'chief-form::fields.html-editor';
-    protected string $windowView = 'chief-form::fields.html-window';
+
+    protected string $windowView = 'chief-form::previews.fields.html';
 
     public function editor(): static
     {

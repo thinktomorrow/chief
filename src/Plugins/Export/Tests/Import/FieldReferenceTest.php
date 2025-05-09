@@ -2,11 +2,13 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Import;
 
-use Thinktomorrow\Chief\Fragments\Database\ContextModel;
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Export\Import\FieldReference;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\Tests\Unit\UnitTestHelpers;
 
 class FieldReferenceTest extends TestCase
@@ -15,7 +17,7 @@ class FieldReferenceTest extends TestCase
 
     private FieldReference $fieldReference;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -24,7 +26,7 @@ class FieldReferenceTest extends TestCase
 
     public function test_it_can_create_reference_from_encrypted_key()
     {
-        $reference = FieldReference::fromEncryptedKey(encrypt(ArticlePage::first()->modelReference()->get() . '|title'));
+        $reference = FieldReference::fromEncryptedKey(encrypt(ArticlePage::first()->modelReference()->get().'|title'));
 
         $this->assertEquals(ArticlePage::first(), $this->getPrivateProperty($reference, 'model'));
         $this->assertEquals(app(Registry::class)->resource('article_page'), $this->getPrivateProperty($reference, 'resource'));
@@ -35,14 +37,13 @@ class FieldReferenceTest extends TestCase
     public function test_it_can_create_reference_for_repeat_field()
     {
         $article = ArticlePage::create();
-        $snippet = $this->setUpAndCreateSnippet($article);
-        $resource = app(Registry::class)->resource($snippet::resourceKey());
+        [, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($article, SnippetStub::class);
 
-        $reference = FieldReference::fromEncryptedKey(encrypt($snippet->fragmentModel()->modelReference()->get() . '|links.1.title'));
+        $reference = FieldReference::fromEncryptedKey(encrypt($fragment->getFragmentModel()->modelReference()->get().'|links.1.title'));
 
-        $this->assertEquals($snippet->fragmentModel()->fresh(), $this->getPrivateProperty($reference, 'model'));
-        $this->assertEquals($resource, $this->getPrivateProperty($reference, 'resource'));
-        $this->assertEquals($resource->field($snippet->fragmentModel(), 'links')->getKey(), $this->getPrivateProperty($reference, 'field')->getKey());
+        $this->assertEquals($fragment->getFragmentModel()->fresh(), $this->getPrivateProperty($reference, 'model'));
+        $this->assertEquals($fragment->id, $this->getPrivateProperty($reference, 'resource')->id);
+        $this->assertEquals($fragment->field($fragment->getFragmentModel(), 'links')->getKey(), $this->getPrivateProperty($reference, 'field')->getKey());
         $this->assertEquals('links.1.title', $this->getPrivateProperty($reference, 'fieldName'));
     }
 
@@ -66,7 +67,7 @@ class FieldReferenceTest extends TestCase
         $this->assertTrue($fieldReference->isRepeatField());
         $fieldReference->saveValue('new title', 'nl');
 
-        $fragmentModel = ContextModel::ownedBy(ArticlePage::all()[1])->fragments()->first();
+        $fragmentModel = app(FragmentRepository::class)->getFragmentCollection(ArticlePage::first()->id)->first();
 
         $this->assertEquals([
             ['title' => ['nl' => 'new title']],
@@ -84,9 +85,8 @@ class FieldReferenceTest extends TestCase
     private function createRepeatFieldReference(): FieldReference
     {
         $article = ArticlePage::create();
-        $snippet = $this->setUpAndCreateSnippet($article);
-        $resource = app(Registry::class)->resource($snippet::resourceKey());
+        [, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($article, SnippetStub::class);
 
-        return new FieldReference($resource, $snippet->fragmentModel(), $resource->field($snippet, 'links'), 'links.0.title');
+        return new FieldReference($fragment, $fragment->getFragmentModel(), $fragment->field($fragment, 'links'), 'links.0.title');
     }
 }

@@ -3,11 +3,14 @@
 namespace Thinktomorrow\Chief\App\Console;
 
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXmlFile;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class GenerateSitemap extends BaseCommand
 {
     protected $signature = 'chief:sitemap';
+
     protected $description = 'Generate a sitemap for all locales. Only online and visitable urls are included.';
+
     /**
      * @var SitemapXmlFile
      */
@@ -22,12 +25,12 @@ class GenerateSitemap extends BaseCommand
 
     public function handle(): void
     {
-        $locales = config('chief.locales');
+        $locales = ChiefSites::locales();
 
         foreach ($locales as $locale) {
-            $filepath = public_path('sitemap-' . $locale . '.xml');
+            $filepath = public_path('sitemap-'.$locale.'.xml');
 
-            $this->info('Generating a sitemap for locale: ' . $locale . ' at: ' . $filepath);
+            $this->info('Generating a sitemap for locale: '.$locale.' at: '.$filepath);
 
             $this->sitemapXmlFile->create($locale, $filepath, $this->createAlternateLocales($locales, $locale));
         }
@@ -35,11 +38,6 @@ class GenerateSitemap extends BaseCommand
         $this->info('Done generating sitemaps.');
     }
 
-    /**
-     * @param array $locales
-     * @param $locale
-     * @return array
-     */
     protected function createAlternateLocales(array $locales, $locale): array
     {
         if (($key = array_search($locale, $locales)) !== false) {

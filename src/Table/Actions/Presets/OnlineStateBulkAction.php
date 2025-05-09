@@ -12,7 +12,7 @@ class OnlineStateBulkAction extends Action
     public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'publish'): static
     {
         return static::make('online-state-bulk')
-            ->label('Zet online')
+            ->label('Publiceer')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
 
                 $modelIds = $data['items'];
@@ -22,7 +22,7 @@ class OnlineStateBulkAction extends Action
                     try {
                         app(UpdateState::class)->handle(
                             $resourceKey,
-                            ModelReference::fromString($resourceKey .'@'. $modelId),
+                            ModelReference::fromString($resourceKey.'@'.$modelId),
                             $stateKey,
                             $transitionKey,
                             []
@@ -39,7 +39,6 @@ class OnlineStateBulkAction extends Action
 
                 return true;
             })
-            ->notifyOnSuccess('De selectie staat online!')->notifyOnFailure('Er is iets misgegaan bij het online plaatsen.')
-        ;
+            ->notifyOnSuccess('De selectie is gepubliceerd!')->notifyOnFailure('Er is iets misgegaan bij het publiceren.');
     }
 }

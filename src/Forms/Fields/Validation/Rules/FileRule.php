@@ -15,10 +15,7 @@ abstract class FileRule
      * Override the default getSize from ValidatesAttributes to avoid
      * calls to a hasRule method For files this is not needed anyway.
      *
-     * @param $attribute
-     * @param $value
-     * @param numeric $value
-     *
+     * @param  numeric  $value
      * @return bool|false|float|int
      */
     protected function getSize(string $attribute, $value)

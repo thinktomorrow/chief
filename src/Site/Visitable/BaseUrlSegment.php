@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Site\Visitable;
 
 class BaseUrlSegment
 {
-    public static function find(array $segments, string $locale = null)
+    public static function find(array $segments, ?string $locale = null)
     {
         if (count($segments) < 1) {
             return '/';
@@ -29,21 +29,28 @@ class BaseUrlSegment
         return reset($segments);
     }
 
-    /**
-     * @param Visitable $model
-     * @param string $slug
-     * @param $locale
-     * @param (int|string) $locale
-     *
-     * @return string
-     */
-    public static function prepend(Visitable $model, string $slug, $locale): string
+    public static function prepend(Visitable $model, string $slug, string $site): string
     {
-        $slugWithBaseSegment = $model->baseUrlSegment($locale) . '/' . $slug;
+        $slugWithBaseSegment = $model->baseUrlSegment($site).'/'.$slug;
         $slugWithBaseSegment = trim($slugWithBaseSegment, '/');
 
         // If slug with base segment is empty string, it means that the passed slug was probably a "/" character.
         // so we'll want to return it in case the base segment is not added.
         return $slugWithBaseSegment ?: '/';
+    }
+
+    public static function strip(string $slug, string $baseUrlSegment): string
+    {
+        // If this is a '/' slug, it indicates the homepage for this locale. In this case,
+        // we wont be trimming the slash
+        if ($slug === '/') {
+            return $slug;
+        }
+
+        if ($baseUrlSegment && strpos($slug, $baseUrlSegment) === 0) {
+            return trim(substr($slug, strlen($baseUrlSegment)), '/');
+        }
+
+        return $slug;
     }
 }

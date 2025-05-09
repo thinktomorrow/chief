@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation\Rules;
 
+use Thinktomorrow\Chief\Sites\ChiefSites;
+
 class FallbackLocaleRequiredRule
 {
     const RULE = 'requiredFallbackLocale';
 
     public function validate($attribute, $value, $params, $validator): bool
     {
+        $fallbackLocale = ChiefSites::primaryLocale();
+
         $validator->setCustomMessages([
             'required_fallback_locale' => 'Voor :attribute is de default taal verplicht.',
         ]);
-
-        $fallbackLocale = config('app.fallback_locale');
-
-        if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
-            return is_null($value) ? false : (bool) trim($value);
-        }
 
         if (str_ends_with($attribute, '.'.$fallbackLocale)) {
 

@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
 
 trait StateAdminConfigDefaults
@@ -17,16 +16,14 @@ trait StateAdminConfigDefaults
         return $statefulContract->getState($this->getStateKey())->getValueAsString();
     }
 
-    public function getWindowTitle(StatefulContract $statefulContract): string
+    public function getStateVariant(StatefulContract $statefulContract): string
     {
-        return 'Status';
+        return 'outline-blue';
     }
 
-    public function getWindowContent(StatefulContract $statefulContract, array $viewData): string
+    public function getEditTitle(StatefulContract $statefulContract): string
     {
-        return Blade::render('<x-slot name="labels">' .
-            $this->getStateLabel($statefulContract) .
-            '</x-slot>');
+        return 'Status';
     }
 
     public function getEditContent(StatefulContract $statefulContract): ?string
@@ -34,24 +31,24 @@ trait StateAdminConfigDefaults
         return null;
     }
 
-    public function getTransitionButtonLabel(string $transitionKey): ?string
+    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return Str::replace('_', ' ', $transitionKey);
     }
 
-    public function getTransitionType(string $transitionKey): ?string
+    public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return null;
     }
 
-    public function getTransitionContent(string $transitionKey): ?string
+    public function getTransitionTitle(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return null;
     }
 
-    public function getTransitionFields(string $transitionKey, StatefulContract $statefulContract): iterable
+    public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string
     {
-        return [];
+        return null;
     }
 
     public function hasConfirmationForTransition(string $transitionKey): bool
@@ -59,12 +56,32 @@ trait StateAdminConfigDefaults
         return false;
     }
 
+    public function getConfirmationLabel(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return $this->getTransitionLabel($statefulContract, $transitionKey);
+    }
+
+    public function getConfirmationTitle(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return $this->getTransitionTitle($statefulContract, $transitionKey);
+    }
+
+    public function getConfirmationContent(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return null;
+    }
+
+    public function getConfirmationFields(StatefulContract $statefulContract, string $transitionKey): iterable
+    {
+        return [];
+    }
+
     public function getAsyncModalUrl(string $transitionKey, StatefulContract $statefulContract): ?string
     {
         return null;
     }
 
-    public function getRedirectAfterTransition(string $transitionKey, StatefulContract $statefulContract): ?string
+    public function getRedirectAfterTransition(StatefulContract $statefulContract, string $transitionKey): ?string
     {
         return null;
     }

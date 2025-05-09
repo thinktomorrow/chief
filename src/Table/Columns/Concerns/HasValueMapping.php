@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\Table\Columns\Concerns;
 
 use Closure;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 
 trait HasValueMapping
@@ -14,13 +16,12 @@ trait HasValueMapping
         if ($valueMapResolver instanceof Closure) {
             $this->valueMapResolvers[] = $valueMapResolver;
         } else {
-            $this->valueMapResolvers[] = function (ColumnItem $columnItem) use ($valueMapResolver) {
-
-                $originalValue = $columnItem->getValue();
-
-                if (is_scalar($originalValue) && isset($valueMapResolver[$originalValue])) {
-                    $columnItem->value($valueMapResolver[$originalValue]);
+            $this->valueMapResolvers[] = function ($rawValue, ColumnItem $columnItem) use ($valueMapResolver) {
+                if (is_scalar($rawValue)) {
+                    return $valueMapResolver[$rawValue] ?? $rawValue;
                 }
+
+                return $rawValue;
             };
         }
 
@@ -30,7 +31,10 @@ trait HasValueMapping
     protected function handleValueMapping(ColumnItem $columnItem): void
     {
         foreach ($this->valueMapResolvers as $valueMapResolver) {
-            call_user_func($valueMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
+            $columnItem->value(
+                call_user_func($valueMapResolver, $columnItem->getRawValue(), $columnItem, $this->getModel())
+            );
+
         }
     }
 
@@ -39,16 +43,50 @@ trait HasValueMapping
      */
     public function pageStates(): static
     {
+        $this->mapValue(function ($rawValue, ColumnItem $columnItem, $model) {
+            if ($model instanceof StatefulContract) {
+                return $model->getStateConfig($columnItem->key)->getStateLabel($model);
+            }
+
+            if ($model instanceof Visitable) {
+                if ($model->inOnlineState()) {
+                    if ($model->urls->isNotEmpty()) {
+                        return 'gepubliceerd';
+                    } else {
+                        return 'gepubliceerd zonder links';
+                    }
+                }
+            }
+
+            return match ($rawValue) {
+                'published' => 'gepubliceerd',
+                'draft' => 'draft',
+                'archived' => 'gearchiveerd',
+                default => $rawValue,
+            };
+        });
+
+        return $this->mapVariant([
+            'gepubliceerd' => 'blue',
+            'draft' => 'grey',
+            'gearchiveerd' => 'red',
+            'link ontbreekt' => 'orange',
+        ]);
+    }
+
+    /** Preset for simple states */
+    public function simpleStates(): static
+    {
         $this->mapValue([
-            'published' => 'online',
-            'draft' => 'offline',
-            'archived' => 'archived',
+            'online' => 'online',
+            'offline' => 'offline',
+            'deleted' => 'verwijderd',
         ]);
 
         return $this->mapVariant([
             'online' => 'green',
             'offline' => 'red',
-            'archived' => 'red',
+            'deleted' => 'grey',
         ]);
     }
 }

@@ -15,11 +15,14 @@ class RenderFileFieldTest extends ChiefTestCase
     use RefreshDatabase;
 
     private array $classes;
+
     private $asset;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
+
+        $this->model = $this->setUpAndCreateArticle();
 
         $this->asset = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
@@ -31,19 +34,19 @@ class RenderFileFieldTest extends ChiefTestCase
         ];
     }
 
-    /** @test */
-    public function it_can_render_all_fields()
+    public function test_it_can_render_all_fields()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
-            $component = $class::make('xxx')->value($value);
+            $component = $class::make('xxx')
+                ->model($this->model)
+                ->value($value);
             $this->assertStringContainsString('name="files[xxx][nl]', $component->toHtml());
             $this->assertStringContainsString($value['nl'][0]->getFileName(), $component->toHtml());
         }
     }
 
-    /** @test */
-    public function it_can_render_localized_fields()
+    public function test_it_can_render_localized_fields()
     {
         $assetEn = app(CreateAsset::class)
             ->uploadedFile(UploadedFile::fake()->image('image-en.png'))
@@ -51,10 +54,13 @@ class RenderFileFieldTest extends ChiefTestCase
 
         /** @var Field $class */
         foreach (array_keys($this->classes) as $class) {
-            $component = $class::make('xxx')->locales(['nl', 'en'])->value([
-                'nl' => [$this->asset],
-                'en' => [$assetEn],
-            ]);
+            $component = $class::make('xxx')
+                ->model($this->model)
+                ->locales(['nl', 'en'])
+                ->value([
+                    'nl' => [$this->asset],
+                    'en' => [$assetEn],
+                ]);
 
             $render = $component->toHtml();
 
@@ -65,13 +71,12 @@ class RenderFileFieldTest extends ChiefTestCase
         }
     }
 
-    /** @test */
-    public function it_can_render_all_fields_in_a_window()
+    public function test_it_can_render_all_fields_in_a_window()
     {
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
-            $component = $class::make('xxx')->editInSidebar()->value($value);
-            $this->assertStringContainsString($value['nl'][0]->getFileName(), $component->toHtml());
+            $component = $class::make('xxx')->model($this->model)->value($value);
+            $this->assertStringContainsString($value['nl'][0]->getFileName(), $component->renderPreview()->render());
         }
     }
 }

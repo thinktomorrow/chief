@@ -52,7 +52,7 @@ trait WithFilters
     private function applyQueryFilters(Builder $builder): void
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
+            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery() && $filterValue) {
                 $filter->getQuery()($builder, $filterValue);
             }
         }
@@ -61,7 +61,7 @@ trait WithFilters
     private function applyCollectionFilters(Collection $rows): Collection
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery()) {
+            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery() && $filterValue) {
                 $rows = $filter->getQuery()($rows, $filterValue);
             }
         }
@@ -74,11 +74,11 @@ trait WithFilters
      */
     public function updatedFilters()
     {
-        //            foreach($this->filters as $key => $filterValue) {
-        //                if($this->isEmptyFilterValue($filterValue)) {
-        //                    unset($this->filters[$key]);
-        //                }
-        //            }
+        foreach ($this->filters as $key => $filterValue) {
+            if ($this->isEmptyFilterValue($filterValue)) {
+                unset($this->filters[$key]);
+            }
+        }
 
         $this->resetPage($this->getPaginationId());
 
@@ -88,14 +88,9 @@ trait WithFilters
 
     public function getFiltersUpdatedEvent(): string
     {
-        return 'filters-updated-' . strtolower($this->getId());
+        return 'filters-updated-'.strtolower($this->getId());
     }
 
-    /**
-     * @param string $filterKey
-     * @param array $filterValue
-     * @return array
-     */
     public function getFilterValueFromOptions(string $filterKey, array $filterValue): array
     {
         $filter = $this->findFilter($filterKey);
@@ -124,7 +119,7 @@ trait WithFilters
             }
         }
 
-        throw new \InvalidArgumentException('No filter found by key ' . $filterKey);
+        throw new \InvalidArgumentException('No filter found by key '.$filterKey);
     }
 
     private function findActiveFilterValue(string $filterKey): mixed
@@ -163,11 +158,11 @@ trait WithFilters
             return count($value) == 1 && $this->isEmptyFilterValue(reset($value));
         }
 
-        return is_null($value) || empty($value) || '' === $value;
+        return is_null($value) || empty($value) || $value === '';
     }
 
     public function hasAnyFiltersOrSorters(): bool
     {
-        return count($this->getFilters()) > 0 || count($this->getSorters()) > 0;
+        return count($this->getFilters()) > 0 || count($this->getSorters()) > 1;
     }
 }

@@ -1,40 +1,43 @@
-@php use Thinktomorrow\Chief\Plugins\ChiefPluginSections; @endphp
+@php
+    use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
+@endphp
+
 <x-chief-assets::upload-and-dropzone>
     {{ $this->filePreview }}
 
     @error('files.0')
-    <x-chief::inline-notification type="error" class="mt-2">
-        {{ ucfirst($message) }}
-    </x-chief::inline-notification>
+        <x-chief::callout size="small" variant="red" class="mt-2">
+            {{ ucfirst($message) }}
+        </x-chief::callout>
     @enderror
 
     {{ $this->fileSelect }}
 
-    <div>
+    <template x-teleport="body">
         <livewire:chief-wire::file-field-choose
             parent-id="{{ $this->getId() }}"
             allowMultiple="{{ $allowMultiple }}"
         />
-    </div>
+    </template>
 
-    <div>
+    <template x-teleport="body">
         <livewire:chief-wire::file-field-choose-external
             parent-id="{{ $this->getId() }}"
             allowMultiple="{{ $allowMultiple }}"
         />
-    </div>
+    </template>
 
-    <div>
+    <template x-teleport="body">
         <livewire:chief-wire::file-field-edit
-            parent-id="{{ $this->getId() }}"
-            model-reference="{{ $modelReference }}"
-            field-key="{{ $fieldKey }}"
-            locale="{{ $locale }}"
+            :parent-id="$this->getId()"
+            :model-reference="$modelReference"
+            :field-key="$fieldKey"
+            :locale="$locale"
             :components="$this->components"
         />
-    </div>
+    </template>
 
-    @foreach(app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
+    @foreach (app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
         <div>
             <livewire:is
                 component="{{ $livewireFileComponent }}"

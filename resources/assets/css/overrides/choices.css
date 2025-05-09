@@ -41,7 +41,7 @@
     display: block;
     width: 100%;
     /* padding: 10px; */
-    border-bottom: 1px solid theme('colors.grey.100');
+    border-bottom: 1px solid theme('colors.grey.200');
     background-color: #fff;
     margin: 0;
     @apply px-3 py-2;
@@ -144,11 +144,11 @@
     /* min-height: 44px; */
     overflow: hidden;
 
-    @apply inline-flex min-h-[2.5rem] w-full flex-wrap items-start gap-1.5 rounded-[0.625rem] border border-grey-100 bg-white py-2 pl-3 pr-10;
+    @apply inline-flex min-h-[2.5rem] w-full flex-wrap items-start gap-1.5 rounded-[0.625rem] border border-grey-200 bg-white py-2 pl-3 pr-10;
 }
 .is-focused .choices__inner,
 .is-open .choices__inner {
-    border-color: theme('colors.grey.200');
+    border-color: theme('colors.grey.300');
 }
 .is-open .choices__inner {
     /* border-radius: 2.5px 2.5px 0 0; */
@@ -224,7 +224,7 @@
     position: absolute;
     width: 100%;
     background-color: #fff;
-    border: 1px solid theme('colors.grey.100');
+    border: 1px solid theme('colors.grey.200');
     top: 100%;
     margin-top: -1px;
     /* border-bottom-left-radius: 2.5px;
@@ -242,7 +242,7 @@
 
 .is-open .choices__list--dropdown,
 .is-open .choices__list[aria-expanded] {
-    border-color: theme('colors.grey.200');
+    border-color: theme('colors.grey.300');
 }
 .is-flipped .choices__list--dropdown,
 .is-flipped .choices__list[aria-expanded] {
@@ -330,7 +330,7 @@
     /* font-weight: 600; */
     /* font-size: theme('fontSize.base'); */
     /* padding: 10px; */
-    border-bottom: 1px solid theme('colors.grey.100');
+    border-bottom: 1px solid theme('colors.grey.200');
     /* color: gray; */
 
     @apply body px-3 py-2 text-xs font-medium text-grey-500;

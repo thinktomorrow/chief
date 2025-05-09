@@ -9,7 +9,7 @@ class FileDimensionsRule extends FileRule
     public function validate($attribute, array $values, $params, $validator): bool
     {
         foreach ($values as $value) {
-            if ($value && false === $this->validateDimensions($attribute, $value, $params)) {
+            if ($value && $this->validateDimensions($attribute, $value, $params) === false) {
                 $this->addCustomValidationMessage($attribute, $params, $validator);
 
                 return false;
@@ -24,11 +24,6 @@ class FileDimensionsRule extends FileRule
     //        return parent::validateDimensions($attribute, $value, $parameters);
     //    }
 
-    /**
-     * @param $attribute
-     * @param $params
-     * @param $validator
-     */
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([
@@ -36,9 +31,6 @@ class FileDimensionsRule extends FileRule
         ]);
     }
 
-    /**
-     * @param $params
-     */
     private function humanReadableParams($params): array
     {
         $paramReplacements = [
@@ -52,7 +44,7 @@ class FileDimensionsRule extends FileRule
         $humanReadableParams = [];
 
         foreach ($params as $param) {
-            list($property, $value) = explode('=', $param);
+            [$property, $value] = explode('=', $param);
 
             $humanReadableParams[] = isset($paramReplacements[$property])
                 ? sprintf($paramReplacements[$property], $value)

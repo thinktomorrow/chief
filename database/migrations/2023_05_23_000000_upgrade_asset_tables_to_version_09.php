@@ -1,15 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up()
     {
         // Only want to run these migrations for existing asset database schemas.
-        if(Schema::hasTable('assets_pivot')) return;
+        if (Schema::hasTable('assets_pivot')) {
+            return;
+        }
 
         Schema::rename('asset_pivots', 'assets_pivot');
 
@@ -47,7 +49,5 @@ return new class extends Migration
             ->update(['model_type' => 'asset']);
     }
 
-    public function down()
-    {
-    }
+    public function down() {}
 };

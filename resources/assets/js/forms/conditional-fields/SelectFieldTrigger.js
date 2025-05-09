@@ -2,9 +2,9 @@ import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
 class SelectFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
-        const currentValues = this._getCurrentValuesFromSelectElement();
+        this.currentValues = this._getCurrentValuesFromSelectElement();
 
-        this._toggleConditionalFields(currentValues);
+        this._toggleConditionalFields();
     }
 
     _getCurrentValuesFromSelectElement() {

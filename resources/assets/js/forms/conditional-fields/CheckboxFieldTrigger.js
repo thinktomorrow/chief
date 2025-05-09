@@ -2,9 +2,9 @@ import ConditionalFieldTrigger from './ConditionalFieldTrigger';
 
 class CheckboxFieldTrigger extends ConditionalFieldTrigger {
     _handle() {
-        const currentValues = this._getCurrentValuesFromCheckboxElements();
+        this.currentValues = this._getCurrentValuesFromCheckboxElements();
 
-        this._toggleConditionalFields(currentValues);
+        this._toggleConditionalFields();
     }
 
     _getCurrentValuesFromCheckboxElements() {

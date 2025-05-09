@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\TimeTable\App\Presets;
 
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
-use Thinktomorrow\Chief\Forms\Form;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\HasTimeTable;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\Read\TimeTableReadRepository;
 
@@ -15,12 +15,11 @@ class FieldPresets
     {
         return Form::make('timetable')
             ->title('Openingsuren')
-            ->editInSidebar()
             ->items([
                 MultiSelect::make('timetable_id')
                     ->options(fn () => app(TimeTableReadRepository::class)->getAllTimeTablesForSelect())
-                    ->fieldWindowView('chief-timetable::fields.timetable-window')
-                    ->tag('not-on-create'),
+                    ->fieldPreviewView('chief-timetable::fields.timetable-window')
+                    ->tag(['not-on-model-create', 'not-on-create']),
             ]);
     }
 }

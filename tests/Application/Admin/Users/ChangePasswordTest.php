@@ -10,11 +10,11 @@ class ChangePasswordTest extends ChiefTestCase
 {
     private $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = new User();
+        $this->user = new User;
         $this->user->email = 'email';
         $this->user->firstname = 'firstname';
         $this->user->lastname = 'lastname';
@@ -22,9 +22,7 @@ class ChangePasswordTest extends ChiefTestCase
         $this->user->save();
     }
 
-
-    /** @test */
-    public function only_logged_in_user_can_update_password()
+    public function test_only_logged_in_user_can_update_password()
     {
         $this->assertFalse(auth()->guard('chief')->check());
 
@@ -35,8 +33,7 @@ class ChangePasswordTest extends ChiefTestCase
         $this->assertTrue(Hash::check('password', $this->user->fresh()->password));
     }
 
-    /** @test */
-    public function when_user_fills_in_password_prompt_password_gets_updated()
+    public function test_when_user_fills_in_password_prompt_password_gets_updated()
     {
         $response = $this->actingAs($this->user, 'chief')
             ->put(route('chief.back.password.update'), ['password' => 'new password', 'password_confirmation' => 'new password']);

@@ -15,6 +15,11 @@ trait PageResourceDefault
 {
     use ResourceDefault;
 
+    public function allowedFragments(): array
+    {
+        return [];
+    }
+
     public function getNavItem(): ?NavItem
     {
         $this->assertManager();
@@ -73,11 +78,6 @@ trait PageResourceDefault
         return ucfirst((new ResourceKeyFormat(static::modelClassName()))->getPluralLabel());
     }
 
-    public function getIndexDescription(): ?string
-    {
-        return null;
-    }
-
     protected function getNavTags(): array
     {
         return ['nav'];
@@ -86,6 +86,11 @@ trait PageResourceDefault
     protected function getNavIcon(): string
     {
         return Blade::render('<x-chief::icon.folder-library />');
+    }
+
+    public function getIndexDescription(): ?string
+    {
+        return null;
     }
 
     public function getCreatePageView(): View
@@ -111,9 +116,9 @@ trait PageResourceDefault
             return null;
         }
 
-        //        if ($pageType == 'edit' || $pageType == 'create') {
-        //            return new BreadCrumb('Overzicht', $this->manager->route('index'));
-        //        }
+        if ($pageType == 'edit' || $pageType == 'create') {
+            return new BreadCrumb('Overzicht', $this->manager->route('index'));
+        }
 
         return null;
     }
@@ -127,7 +132,7 @@ trait PageResourceDefault
     {
         $suffix = $model instanceof StatefulContract && ! $model->inOnlineState() ? ' [offline]' : '';
 
-        return $this->getPageTitle($model) . $suffix;
+        return $this->getPageTitle($model).$suffix;
     }
 
     public function getPageTitle($model): string

@@ -20,24 +20,24 @@ class MediaGalleryController extends Controller
         $search = $request->query()['search'] ?? '';
         $conversion = $request->query()['conversion'] ?? 'full';
 
-        $excluded = isset($request->query()['excluded']) ? explode(",", $request->query()['excluded']) : $excluded;
+        $excluded = isset($request->query()['excluded']) ? explode(',', $request->query()['excluded']) : $excluded;
 
         $links = Asset::with('media')
             ->orderBy('created_at', 'DESC')
             ->whereNotIn('id', $excluded)
             ->whereHas('media', function (Builder $query) use ($search) {
                 $query->where('mime_type', 'LIKE', '%image%');
-                $query->where('name', 'LIKE', '%' . $search . '%');
+                $query->where('name', 'LIKE', '%'.$search.'%');
             })
             ->offset($offset)
             ->limit($limit)
             ->get()
             ->map(function ($asset) use ($conversion) {
                 return [
-                    "id" => $asset->id,
-                    "url" => $asset->url($conversion),
-                    "filename" => $asset->filename(),
-                    "size" => $asset->getSize(),
+                    'id' => $asset->id,
+                    'url' => $asset->url($conversion),
+                    'filename' => $asset->filename(),
+                    'size' => $asset->getSize(),
                 ];
             });
 

@@ -8,7 +8,6 @@ trait HasFilters
 
     public function filters(array $filters = []): static
     {
-        // How to assign: primary, hidden,
         $this->filters = array_merge($this->filters, $filters);
 
         return $this;
@@ -24,6 +23,27 @@ trait HasFilters
         $keys = (array) $keys;
 
         $this->filters = array_filter($this->filters, fn ($filter) => ! in_array($filter->getKey(), $keys));
+
+        return $this;
+    }
+
+    public function orderFilters(array $keysInOrder): static
+    {
+        $ordered = [];
+        $unOrdered = [];
+
+        foreach ($this->filters as $item) {
+            if (in_array($item->getKey(), $keysInOrder)) {
+                $ordered[(int) array_search($item->getKey(), $keysInOrder)] = $item;
+            } else {
+                $unOrdered[] = $item;
+            }
+        }
+
+        // Sort by non-assoc keys so the desired order is maintained
+        ksort($ordered);
+
+        $this->filters = array_merge($ordered, $unOrdered);
 
         return $this;
     }

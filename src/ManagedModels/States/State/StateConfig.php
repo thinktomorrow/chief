@@ -22,4 +22,6 @@ interface StateConfig
     public function emitEvent(StatefulContract $statefulContract, string $transition, array $data): void;
 
     public function getStateLabel(StatefulContract $statefulContract): ?string;
+
+    public function getStateVariant(StatefulContract $statefulContract): string;
 }

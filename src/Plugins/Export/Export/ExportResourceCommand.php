@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ExportResourceCommand extends BaseCommand
 {
@@ -23,12 +24,12 @@ class ExportResourceCommand extends BaseCommand
 
     public function handle(): void
     {
-        /** @var Resource $resource */
+        /** @var resource $resource */
         $resource = app(Registry::class)->resource($this->argument('resource'));
-        $locales = $this->option('locales') ? explode(',', $this->option('locales'))  : config('chief.locales');
+        $locales = $this->option('locales') ? explode(',', $this->option('locales')) : ChiefSites::locales();
 
-        if (count(array_intersect($locales, config('chief.locales'))) !== count($locales)) {
-            $this->error('One of passed locales "' . $this->option('locales') .'" is not found as Chief locale. Available locales are: ' . implode(',', config('chief.locales')));
+        if (count(array_intersect($locales, ChiefSites::locales())) !== count($locales)) {
+            $this->error('One of passed locales "'.$this->option('locales').'" is not found as Chief locale. Available locales are: '.implode(',', ChiefSites::locales()));
 
             return;
         }
@@ -36,9 +37,9 @@ class ExportResourceCommand extends BaseCommand
         $models = $this->getModels($resource::resourceKey());
 
         (new ExportResourceDocument($resource, $models, $locales, ! $this->option('include-static')))
-            ->store($filepath = 'exports/' . config('app.name') .'-'. $resource::resourceKey().'-'.date('Y-m-d').'.xlsx');
+            ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-'.$resource::resourceKey().'-'.date('Y-m-d').'.xlsx');
 
-        $this->info('Finished '.$resource::resourceKey().' export. File available at: storage/app/' . $filepath);
+        $this->info('Finished '.$resource::resourceKey().' export. File available at: storage/app/'.$filepath);
     }
 
     private function getModels(string $resourceKey): Collection

@@ -16,8 +16,11 @@ class ImageCropComponent extends Component
     public $isOpen = false;
 
     public ?PreviewFile $previewFile = null;
+
     public ?MediaFile $mediaFile = null;
+
     public $form = [];
+
     public $parentId;
 
     public $listeners = [

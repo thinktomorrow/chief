@@ -3,19 +3,17 @@
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class AuditTest extends ChiefTestCase
 {
-    /** @test */
-    public function it_logs_edit_events_on_pages()
+    public function test_it_logs_edit_events_on_pages()
     {
-        $this->disableExceptionHandling();
         $user = $this->admin();
         $article = $this->setupAndCreateArticle();
 
-        $this->actingAs($user, 'chief')->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
+        $this->actingAs($user, 'chief');
+        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
         $audit = Audit::getAllActivityFor($article);
 
@@ -25,12 +23,11 @@ class AuditTest extends ChiefTestCase
         $this->assertEquals($article->getMorphClass(), $audit->last()->subject_type);
     }
 
-    /** @test */
-    public function it_show_events()
+    public function test_it_show_events()
     {
         $article = $this->setupAndCreateArticle();
 
-        $this->asAdmin()->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
+        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
         $response = $this->asAdmin()->get(route('chief.back.audit.index'));
         $response->assertSuccessful();
@@ -38,13 +35,12 @@ class AuditTest extends ChiefTestCase
         $this->assertCount(1, $response->viewData('audit'));
     }
 
-    /** @test */
-    public function it_can_show_events_per_user()
+    public function test_it_can_show_events_per_user()
     {
         $user = $this->admin();
         $article = $this->setupAndCreateArticle();
 
-        $this->actingAs($user, 'chief')->put($this->manager($article)->route('state-update', $article, PageState::KEY, 'archive'));
+        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
         $response = $this->actingAs($user, 'chief')->get(route('chief.back.audit.show', $user->id));
         $response->assertSuccessful();

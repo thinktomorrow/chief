@@ -9,27 +9,4 @@
             margin: 0;
         }
     }
-
-    /* Prepend/append styling */
-    .form-input-prepend,
-    .form-input-append {
-        @apply inline-flex shrink-0 items-center border border-grey-200 bg-grey-50 shadow-sm;
-        @apply px-3 py-2 text-grey-700;
-    }
-
-    .form-input-prepend {
-        @apply rounded-l-lg border-r-0;
-    }
-
-    .form-input-append {
-        @apply rounded-r-lg border-l-0;
-    }
-
-    .form-input-with-prepend {
-        @apply rounded-l-none;
-    }
-
-    .form-input-with-append {
-        @apply rounded-r-none;
-    }
 }

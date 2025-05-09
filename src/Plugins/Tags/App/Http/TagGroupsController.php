@@ -4,9 +4,9 @@ namespace Thinktomorrow\Chief\Plugins\Tags\App\Http;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagGroupCreated;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Events\TagGroupDeleted;
@@ -17,7 +17,9 @@ use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagGroupModel;
 class TagGroupsController extends Controller
 {
     private TagReadRepository $tagReadRepository;
+
     private FieldValidator $fieldValidator;
+
     private SaveFields $saveFields;
 
     public function __construct(TagReadRepository $tagReadRepository, FieldValidator $fieldValidator, SaveFields $saveFields)
@@ -50,7 +52,7 @@ class TagGroupsController extends Controller
 
         event(new TagGroupCreated(TagGroupId::fromString($model->id)));
 
-        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->id)->with('messages.success', 'Groep '.$model->label.' is toegevoegd.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-'.$model->id)->with('messages.success', 'Groep '.$model->label.' is toegevoegd.');
     }
 
     public function edit($tagGroupId)
@@ -77,7 +79,7 @@ class TagGroupsController extends Controller
 
         event(new TagGroupUpdated(TagGroupId::fromString($model->id)));
 
-        return redirect()->to(route('chief.tags.index').'#taggroup-' . $model->id)->with('messages.success', 'Groep '.$model->label.' is aangepast.');
+        return redirect()->to(route('chief.tags.index').'#taggroup-'.$model->id)->with('messages.success', 'Groep '.$model->label.' is aangepast.');
     }
 
     public function delete($tagGroupId)

@@ -16,11 +16,11 @@
     }
 
     .badge-xs {
-        @apply rounded-lg px-1.5 py-1 text-xs leading-[.875rem];
+        @apply rounded-md px-1.5 py-0.5 text-xs leading-4;
     }
 
     .badge-green {
-        @apply bg-green-100 text-green-800;
+        @apply bg-green-100 text-green-700;
     }
 
     .badge-red {
@@ -29,6 +29,10 @@
 
     .badge-orange {
         @apply bg-orange-100 text-orange-800;
+    }
+
+    .badge-blue {
+        @apply bg-primary-50 text-primary-500;
     }
 
     .badge-grey {

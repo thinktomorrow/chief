@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
@@ -12,7 +13,8 @@ class Date extends Component implements Field
     use HasStep;
 
     protected string $view = 'chief-form::fields.date';
-    protected string $windowView = 'chief-form::fields.date-window';
+
+    protected string $previewView = 'chief-form::previews.fields.date';
 
     public function getValue(?string $locale = null): mixed
     {

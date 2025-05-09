@@ -6,10 +6,9 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class CreateCommandsTest extends ChiefTestCase
 {
-    /** @test */
-    public function it_can_create_a_page()
+    public function test_it_can_create_a_page()
     {
-        $filepath = $this->getTempDirectory() .'/' . 'Article.php';
+        $filepath = $this->getTempDirectory().'/'.'Article.php';
 
         if (file_exists($filepath)) {
             unlink($filepath);
@@ -26,10 +25,9 @@ class CreateCommandsTest extends ChiefTestCase
         $this->assertFileExists($filepath);
     }
 
-    /** @test */
-    public function it_can_create_a_fragment()
+    public function test_it_can_create_a_fragment()
     {
-        $filepath = $this->getTempDirectory() .'/' . 'Quote.php';
+        $filepath = $this->getTempDirectory().'/'.'Quote.php';
 
         if (file_exists($filepath)) {
             unlink($filepath);
@@ -46,8 +44,7 @@ class CreateCommandsTest extends ChiefTestCase
         $this->assertFileExists($filepath);
     }
 
-    /** @test */
-    public function it_can_create_an_admin_view()
+    public function test_it_can_create_an_admin_view()
     {
         $this->setupAndCreateArticle();
 

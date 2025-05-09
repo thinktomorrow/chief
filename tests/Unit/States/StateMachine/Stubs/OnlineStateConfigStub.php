@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\States\StateMachine\Stubs;
@@ -8,9 +9,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
 class OnlineStateConfigStub implements StateConfig
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function getStateKey(): string
     {
@@ -47,5 +46,10 @@ class OnlineStateConfigStub implements StateConfig
     public function getStateLabel(StatefulContract $statefulContract): ?string
     {
         // TODO: Implement getStateLabel() method.
+    }
+
+    public function getStateVariant(StatefulContract $statefulContract): string
+    {
+        // TODO: Implement getStateVariant() method.
     }
 }

@@ -11,8 +11,8 @@
             definedlinks: '{{ route('chief.api.internal-links') }}',
             customClasses: [
                 { title: 'link als knop', class: 'btn btn-default', tags: ['a'] },
-                { title: 'link als primaire knop', class: 'btn btn-primary', tags: ['a'] },
-                { title: 'link as secundaire knop', class: 'btn btn-primary-outline', tags: ['a'] },
+                { title: 'link als primaire knop', class: 'btn btn-blue', tags: ['a'] },
+                { title: 'link as secundaire knop', class: 'btn btn-outline-blue', tags: ['a'] },
                 { title: 'geen knop weergave', class: '', tags: ['a'] },
             ],
             toolbarFixedTopOffset: 80,
@@ -20,5 +20,13 @@
 
         // Load redactor for all data-editor instances
         $R('[data-editor]');
+
+        // Init redactor in livewire dialogs
+        document.addEventListener('form-dialog-opened', () => {
+            // Next tick my friend... next tick
+            setTimeout(() => {
+                $R('[data-editor]');
+            }, 0);
+        });
     </script>
 @endpush

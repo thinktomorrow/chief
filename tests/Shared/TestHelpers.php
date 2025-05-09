@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +13,11 @@ use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\UpdateUrl;
+use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
+use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 
 trait TestHelpers
 {
@@ -95,7 +98,7 @@ trait TestHelpers
         return User::create(array_merge([
             'firstname' => 'Ben',
             'lastname' => Str::random(),
-            'email' => Str::random() . '@example.com',
+            'email' => Str::random().'@example.com',
         ], $values));
     }
 
@@ -133,15 +136,18 @@ trait TestHelpers
         return $author;
     }
 
-    protected function updateLinks(Model $model, array $links): TestResponse
+    protected function updateLinks(Model $model, array $links): void
     {
-        $response = $this->asAdmin()->put(route('chief.back.links.update'), [
-            'modelClass' => $model::class,
-            'modelId' => $model->id,
-            'links' => $links,
-        ]);
+        $application = app(UrlApplication::class);
+        $repository = app(UrlRepository::class);
 
-        return $response;
+        foreach ($links as $site => $slug) {
+            if ($existing = $repository->findActiveByModel($model->modelReference(), $site)) {
+                $application->update(new UpdateUrl($existing, $site, $slug));
+            } else {
+                $application->create(new CreateUrl($model->modelReference(), $site, $slug, 'online'));
+            }
+        }
     }
 
     protected function asAdmin()
@@ -171,7 +177,7 @@ trait TestHelpers
             $flag = true;
         });
 
-        $this->assertTrue($flag, 'Mail [' . $mailMessage->view . '] view could\'nt be rendered!');
+        $this->assertTrue($flag, 'Mail ['.$mailMessage->view.'] view could\'nt be rendered!');
     }
 
     //    protected function invokePrivateMethod($object, $methodName, array $parameters = [])
@@ -197,10 +203,10 @@ trait TestHelpers
         @mkdir($dst);
         while (false !== ($file = readdir($dir))) {
             if (($file != '.') && ($file != '..')) {
-                if (is_dir($src . '/' . $file)) {
-                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                if (is_dir($src.'/'.$file)) {
+                    $this->recurse_copy($src.'/'.$file, $dst.'/'.$file);
                 } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
+                    copy($src.'/'.$file, $dst.'/'.$file);
                 }
             }
         }

@@ -4,9 +4,9 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\App\Http;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Forms\Fields;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\SaveFields;
 use Thinktomorrow\Chief\Plugins\TimeTable\App\TimeTableFactory;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableCreated;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Events\TimeTableDeleted;
@@ -18,7 +18,9 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
 class TimeTableController extends Controller
 {
     private FieldValidator $fieldValidator;
+
     private SaveFields $saveFields;
+
     private TimeTableFactory $timeTableFactory;
 
     public function __construct(TimeTableFactory $timeTableFactory, FieldValidator $fieldValidator, SaveFields $saveFields)
@@ -46,7 +48,7 @@ class TimeTableController extends Controller
         [, $fields] = $this->getModelAndFields();
 
         return view('chief-timetable::timetables.create', [
-            'fields' => $fields->notTagged('not-on-create'),
+            'fields' => $fields->filterByNotTagged(['not-on-model-create', 'not-on-create']),
         ]);
     }
 
@@ -56,7 +58,7 @@ class TimeTableController extends Controller
 
         [$model, $fields] = $this->getModelAndFields();
 
-        $fields = $fields->notTagged('not-on-create');
+        $fields = $fields->filterByNotTagged(['not-on-model-create', 'not-on-create']);
 
         $this->fieldValidator->handle($fields, $request->all());
 

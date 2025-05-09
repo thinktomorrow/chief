@@ -14,13 +14,14 @@ trait HasVariantMapping
         if ($variantMapResolver instanceof Closure) {
             $this->variantMapResolvers[] = $variantMapResolver;
         } else {
-            $this->variantMapResolvers[] = function (ColumnItem $columnItem) use ($variantMapResolver) {
+            $this->variantMapResolvers[] = function ($rawValue, ColumnItem $columnItem) use ($variantMapResolver) {
 
-                $originalValue = $columnItem->getValue();
-
-                if (is_scalar($originalValue) && isset($variantMapResolver[$originalValue])) {
-                    $columnItem->variant($variantMapResolver[$originalValue]);
+                if (is_scalar($rawValue)) {
+                    // Check for both capitalized and lowercased keys
+                    return $variantMapResolver[strtolower($rawValue)] ?? ($variantMapResolver[$rawValue] ?? $rawValue);
                 }
+
+                return $rawValue;
             };
         }
 
@@ -30,7 +31,9 @@ trait HasVariantMapping
     protected function handleVariantMapping(ColumnItem $columnItem): void
     {
         foreach ($this->variantMapResolvers as $variantMapResolver) {
-            call_user_func($variantMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
+            $columnItem->variant(
+                call_user_func($variantMapResolver, $columnItem->getRawValue(), $columnItem, $this->getModel(), $this)
+            );
         }
     }
 }

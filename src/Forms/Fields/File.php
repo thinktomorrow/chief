@@ -12,7 +12,9 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
-use Thinktomorrow\Chief\Assets\App\UpdateFileField;
+use Thinktomorrow\Chief\Forms\App\Actions\SaveFileField;
+use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
+use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\AllowsExternalFiles;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAcceptedMimeTypes;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasAssetType;
@@ -23,31 +25,33 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasUploadButtonLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Validation\MapValidationRules;
 use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 /**
  * Default field settings are overriden mostly because values of file inputs
  * are always localized and always considered an array of items.
  */
-class File extends Component implements Field
+class File extends Component implements Field, HasComponents
 {
-    use HasMultiple;
-    use HasStorageDisk;
+    use AllowsExternalFiles;
+    use HasAcceptedMimeTypes;
     use HasAssetType;
     use HasCustomUrl;
-    use HasUploadButtonLabel;
     use HasEndpoint;
-    use HasAcceptedMimeTypes;
-    use AllowsExternalFiles;
+    use HasMultiple;
+    use HasStorageDisk;
+    use HasUploadButtonLabel;
+    use WithComponents;
 
     protected string $view = 'chief-form::fields.file';
-    protected string $windowView = 'chief-form::fields.file-window';
+
+    protected string $previewView = 'chief-form::previews.fields.file';
 
     public function __construct(string $key)
     {
         parent::__construct($key);
-
-        $this->locales([config('app.fallback_locale', 'nl')]);
-        $this->setLocalizedFormKeyTemplate('files.:name.:locale');
+        $this->locales([ChiefSites::primaryLocale()]);
+        $this->setFieldNameTemplate('files.:name.:locale');
 
         $this->uploadButtonLabel('Bestand opladen');
 
@@ -56,17 +60,34 @@ class File extends Component implements Field
                 return [];
             }
 
+            if ($this->useValueFallback) {
+                return $model->assets($field->getKey(), $locale)->all();
+            }
+
             return $field->getMedia($model, $locale);
         });
 
         $this->default([]);
 
         $this->save(function ($model, $field, $input, $files) {
-            app(UpdateFileField::class)->handle($model, $field, $input, $files);
+            app(SaveFileField::class)->handle($model, $field, $input, $files);
         });
     }
 
-    private function getMedia(Model & HasAsset $model, string $locale): array
+    public function getLabel(): ?string
+    {
+        if (! $label = parent::getLabel()) {
+            return null;
+        }
+
+        if ($this->getLocales() === [ChiefSites::primaryLocale()]) {
+            return $label.' (voor alle talen)';
+        }
+
+        return $label;
+    }
+
+    private function getMedia(Model&HasAsset $model, string $locale): array
     {
         return $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
             return $asset->pivot->locale == $locale;
@@ -93,10 +114,19 @@ class File extends Component implements Field
         $preppedPayload = [];
 
         foreach ($ruleKeys as $ruleKey) {
-            if (Arr::has($payload, $ruleKey . '.uploads')) {
-                $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey . '.uploads'));
-            } elseif (Arr::has($payload, $ruleKey . '.attach')) {
-                $preppedPayload[$ruleKey] = $this->convertAttachedAssetsToUploadedFiles(Arr::get($payload, $ruleKey . '.attach'));
+
+            // Ignore empty values
+            if (is_null(Arr::get($payload, $ruleKey)) || Arr::get($payload, $ruleKey) === [null]) {
+                continue;
+            }
+
+            if (Arr::has($payload, $ruleKey.'.uploads') && count(Arr::get($payload, $ruleKey.'.uploads')) > 0) {
+                $preppedPayload[$ruleKey] = $this->convertUploadsToUploadedFiles(Arr::get($payload, $ruleKey.'.uploads'));
+            } elseif (Arr::has($payload, $ruleKey.'.attach') && count(Arr::get($payload, $ruleKey.'.attach')) > 0) {
+                $preppedPayload[$ruleKey] = $this->convertAssetsToUploadedFiles(Arr::get($payload, $ruleKey.'.attach'));
+            } // If the asset fields haven't been altered, it means that the files are set as non-assoc array instead of specific uploads, attach, queued_for_deletion,... subarrays.
+            elseif (! Arr::has($payload, $ruleKey.'.queued_for_deletion') && count(Arr::get($payload, $ruleKey)) > 0) {
+                $preppedPayload[$ruleKey] = $this->convertAssetsToUploadedFiles(Arr::get($payload, $ruleKey));
             }
         }
 
@@ -110,7 +140,7 @@ class File extends Component implements Field
             ->all();
     }
 
-    private function convertAttachedAssetsToUploadedFiles(array $attach): array
+    private function convertAssetsToUploadedFiles(array $attach): array
     {
         $assetIds = collect($attach)->pluck('id')->all();
 
@@ -121,7 +151,7 @@ class File extends Component implements Field
 
     public function getRules(): array
     {
-        return (new MapValidationRules())->handle(parent::getRules(), [
+        return (new MapValidationRules)->handle(parent::getRules(), [
             'required' => 'file_required',
             'mimetypes' => 'file_mimetypes',
             'dimensions' => 'file_dimensions',

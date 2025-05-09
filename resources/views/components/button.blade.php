@@ -1,8 +1,45 @@
-<span {{
-    $attributes
-        ->merge(['class' => 'inline-flex items-start text-sm leading-5 gap-2 py-1.5 px-2 rounded-xl transition-all duration-75 ease-in-out'])
-        ->merge(['class' => 'text-grey-700 bg-grey-100 hover:text-primary-500 hover:bg-primary-50 shadow-sm'])
-        ->merge(['class' => '[&_svg]:shrink-0 [&_svg]:w-5 [&_svg]:h-5 [&_svg]:-mx-0.5 [&_svg]:transition-all [&_svg]:duration-75 [&_svg]:ease-in-out [&:hover_svg]:scale-110'])
-}}>
-    {{ $slot }}
-</span>
+@props([
+    'size' => 'base',
+    'variant' => 'outline-white',
+])
+
+@php
+    $attributes = $attributes->class([
+        'btn cursor-pointer',
+        match ($size) {
+            'lg' => 'btn-lg',
+            'base' => 'btn-base',
+            'sm' => 'btn-sm',
+            'xs' => 'btn-xs',
+            default => 'btn-base',
+        },
+        match ($variant) {
+            'blue' => 'btn-blue',
+            'grey' => 'btn-grey',
+            'transparent' => 'btn-transparent',
+            'red' => 'btn-red',
+            'orange' => 'btn-orange',
+            'green' => 'btn-green',
+            'outline-white' => 'btn-outline-white',
+            'outline-blue' => 'btn-outline-blue',
+            'outline-green' => 'btn-outline-green',
+            'outline-red' => 'btn-outline-red',
+            'outline-orange' => 'btn-outline-orange',
+            default => 'btn-outline-white',
+        },
+    ]);
+@endphp
+
+@if ($attributes->has('href'))
+    <a {{ $attributes }}>
+        {{ $slot }}
+    </a>
+@elseif ($attributes->has('for'))
+    <label {{ $attributes }}>
+        {{ $slot }}
+    </label>
+@else
+    <button {{ $attributes->merge(['type' => 'button']) }}>
+        {{ $slot }}
+    </button>
+@endif

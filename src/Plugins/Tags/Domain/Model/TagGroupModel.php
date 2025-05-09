@@ -13,7 +13,9 @@ class TagGroupModel extends Model implements ReferableModel
     use ReferableModelDefault;
 
     protected $guarded = [];
+
     public $table = 'chief_taggroups';
+
     public $timestamps = false;
 
     public function fields($model): iterable

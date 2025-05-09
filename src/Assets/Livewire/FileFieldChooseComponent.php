@@ -10,14 +10,19 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 
 class FileFieldChooseComponent extends Component
 {
-    use ShowsAsDialog;
     use InteractsWithGallery;
+    use ShowsAsDialog;
 
     public $assetIds = [];
+
     public array $existingAssetIds = [];
+
     public $selectedPreviewFiles = [];
+
     public $parentId;
+
     protected Gallery $gallery;
+
     public bool $allowMultiple = false;
 
     public function mount(string $parentId)
@@ -30,7 +35,7 @@ class FileFieldChooseComponent extends Component
     {
         return [
             'open' => 'open',
-            'open-' . $this->parentId => 'open',
+            'open-'.$this->parentId => 'open',
         ];
     }
 
@@ -81,7 +86,7 @@ class FileFieldChooseComponent extends Component
 
     public function save()
     {
-        $this->dispatch('assetsChosen-' . $this->parentId, $this->assetIds);
+        $this->dispatch('assetsChosen-'.$this->parentId, $this->assetIds);
 
         $this->close();
     }

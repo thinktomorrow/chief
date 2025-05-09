@@ -10,9 +10,6 @@ class ModelReferenceCollection extends Collection
 {
     /**
      * Inflate collection id strings to their respective models
-     *
-     * @param iterable $referenceStrings
-     * @return Collection
      */
     public static function fromModelReferences(iterable $referenceStrings): Collection
     {

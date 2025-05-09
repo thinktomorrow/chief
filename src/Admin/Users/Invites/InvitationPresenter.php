@@ -41,6 +41,6 @@ class InvitationPresenter
                 break;
         }
 
-        return '<span class="label ' . $flair . '">uitnodiging ' . $this->invitation->getState(InvitationState::KEY)?->getValueAsString() . '</span>';
+        return '<span class="label '.$flair.'">uitnodiging '.$this->invitation->getState(InvitationState::KEY)?->getValueAsString().'</span>';
     }
 }

@@ -2,14 +2,35 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Export;
 
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Squanto\Database\Application\AddDatabaseLine;
 use Thinktomorrow\Squanto\Domain\Line;
 use Thinktomorrow\Squanto\Domain\Metadata\Metadata;
 
 class ExportTextCommandTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config()->set('chief.sites', [
+            ['locale' => 'nl'],
+            ['locale' => 'en'],
+        ]);
+
+        ChiefSites::clearCache();
+    }
+
+    protected function tearDown(): void
+    {
+        ChiefSites::clearCache();
+
+        parent::tearDown();
+    }
+
     public function test_it_can_export_squanto_text()
     {
         app(AddDatabaseLine::class)->handle(
@@ -19,7 +40,7 @@ class ExportTextCommandTest extends TestCase
 
         $this->artisan('chief:export-text');
 
-        $filepath = storage_path('app/exports/'.config('app.name') .'-text-'.date('Y-m-d').'.xlsx');
+        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-text-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 

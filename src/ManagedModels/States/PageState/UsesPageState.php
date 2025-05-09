@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
@@ -39,7 +40,7 @@ trait UsesPageState
             return app(PageStateConfig::class);
         }
 
-        throw new \InvalidArgumentException('No state config found for ' . $stateKey);
+        throw new \InvalidArgumentException('No state config found for '.$stateKey);
     }
 
     public function inOnlineState(): bool
@@ -50,7 +51,7 @@ trait UsesPageState
     /**
      * Eloquent builder scope for filtering out the online models.
      */
-    public function scopeOnline(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         // Here we widen up the results in case of preview mode and ignore the published scope
         if (PreviewMode::fromRequest()->check()) {

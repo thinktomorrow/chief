@@ -9,7 +9,6 @@ trait Sortable
     /**
      * Is this model sortable in the chief admin? If so, the index page will allow
      * the user to sort the models manually.
-     * @return bool
      */
     public function isSortable(): bool
     {

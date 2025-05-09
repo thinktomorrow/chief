@@ -10,11 +10,11 @@ class UpdateYouTest extends ChiefTestCase
 {
     private $newUser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->newUser = new User();
+        $this->newUser = new User;
         $this->newUser->email = 'new@example.com';
         $this->newUser->firstname = 'new firstname';
         $this->newUser->lastname = 'new lastname';
@@ -22,16 +22,14 @@ class UpdateYouTest extends ChiefTestCase
         $this->newUser->assignRole('author');
     }
 
-    /** @test */
-    public function only_you_can_see_the_edit_view()
+    public function test_only_you_can_see_the_edit_view()
     {
         $response = $this->asAdmin()->get(route('chief.back.you.edit'));
 
         $this->assertNotEquals($this->newUser->id, $response->getOriginalContent()->getData()['user']->id);
     }
 
-    /** @test */
-    public function updating_your_data()
+    public function test_updating_your_data()
     {
         $response = $this->actingAs($this->newUser, 'chief')
             ->put(route('chief.back.you.update'), $this->validUpdateParams());
@@ -42,8 +40,7 @@ class UpdateYouTest extends ChiefTestCase
         $this->assertUpdatedValues($this->newUser->fresh());
     }
 
-    /** @test */
-    public function only_authenticated_admin_can_update_their_profile()
+    public function test_only_authenticated_admin_can_update_their_profile()
     {
         $response = $this->put(route('chief.back.you.update'), $this->validUpdateParams());
 
@@ -53,17 +50,15 @@ class UpdateYouTest extends ChiefTestCase
         $this->assertNewValues($this->newUser->fresh());
     }
 
-    /** @test */
-    public function when_updating_user_firstname_is_required()
+    public function test_when_updating_user_firstname_is_required()
     {
-        $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
+        $this->assertValidation(new User, 'firstname', $this->validUpdateParams(['firstname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
             'put');
     }
 
-    /** @test */
-    public function when_updating_user_lastname_is_required()
+    public function test_when_updating_user_lastname_is_required()
     {
-        $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
+        $this->assertValidation(new User, 'lastname', $this->validUpdateParams(['lastname' => '']), route('chief.back.dashboard'), route('chief.back.you.update'), 2, // App self and existing one
             'put');
     }
 

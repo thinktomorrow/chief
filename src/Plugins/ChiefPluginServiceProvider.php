@@ -28,6 +28,6 @@ abstract class ChiefPluginServiceProvider extends ServiceProvider
     {
         parent::register();
 
-        $this->app->singleton(ChiefPluginSections::class, fn () => new ChiefPluginSections());
+        $this->app->singleton(ChiefPluginSections::class, fn () => new ChiefPluginSections);
     }
 }

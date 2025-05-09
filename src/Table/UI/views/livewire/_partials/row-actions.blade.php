@@ -25,13 +25,13 @@
     @endforeach
 
     @if (count($tertiaryRowActions) > 0)
-        <x-chief-table::button
+        <x-chief::button
             size="xs"
             variant="transparent"
             x-on:click="$dispatch('open-dialog', { 'id': '{{ $dropdownId }}' })"
         >
             <x-chief::icon.more-vertical-circle />
-        </x-chief-table::button>
+        </x-chief::button>
 
         <template x-teleport="body">
             <x-chief::dialog.dropdown id="{{ $dropdownId }}" placement="bottom-end">

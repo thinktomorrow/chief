@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 trait AllowsExternalFiles
 {
     private bool $allowExternalFiles = false;
+
     private bool $allowLocalFiles = true;
 
     /**

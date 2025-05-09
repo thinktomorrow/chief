@@ -19,7 +19,7 @@ trait HasItemMapping
     protected function handleItemMapping(ColumnItem $columnItem): void
     {
         foreach ($this->itemMapResolvers as $itemMapResolver) {
-            call_user_func($itemMapResolver, $columnItem, $columnItem->getValue(), $this->getModel(), $this);
+            call_user_func($itemMapResolver, $columnItem->getRawValue(), $columnItem, $this->getModel(), $this);
         }
     }
 }

@@ -1,0 +1,131 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\Tests\Application\Pages;
+
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
+
+final class DeletePageTestOld extends ChiefTestCase
+{
+    /** @var Manager */
+    private $manager;
+
+    public function test_a_deleted_model_cannot_be_edited()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+            'current_state' => PageState::deleted,
+        ]);
+
+        $this->asAdmin()->get($this->manager->route('edit', $model))
+            ->assertStatus(302);
+    }
+
+    public function test_an_admin_can_only_delete_a_page_with_the_proper_permissions()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+            'current_state' => PageState::draft,
+        ]);
+
+        $this->asAdminWithoutRole()
+            ->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'))
+            ->assertStatus(302);
+
+        $this->assertEquals(PageState::draft, $model->fresh()->getState(PageState::KEY));
+        $this->assertFalse($model->fresh()->trashed());
+    }
+
+    public function test_an_admin_can_delete_a_page()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+            'current_state' => PageState::draft,
+        ]);
+
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'))
+            ->assertStatus(302)
+            ->assertRedirect($this->manager->route('index'));
+
+        $this->assertEquals(PageState::deleted, $model->fresh()->getState(PageState::KEY));
+        $this->assertTrue($model->fresh()->trashed());
+    }
+
+    public function test_an_admin_cannot_delete_a_published_page()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+            'current_state' => PageState::published,
+        ]);
+
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'))
+            ->assertStatus(304);
+
+        $this->assertEquals(PageState::published, $model->fresh()->getState(PageState::KEY));
+        $this->assertFalse($model->fresh()->trashed());
+    }
+
+    public function test_deleting_a_page_also_unlinks_any_assets()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+        ]);
+
+        UploadedFile::fake()->image('image.png')->storeAs('test', 'image-temp-name.png');
+
+        $this->saveFileField(new ArticlePageResource, $model, 'thumb', [
+            'nl' => [
+                'uploads' => [
+                    [
+                        'id' => 'xxx',
+                        'path' => Storage::path('test/image-temp-name.png'),
+                        'originalName' => 'image.png',
+                        'mimeType' => 'image/png',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertCount(1, Asset::all());
+
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'));
+
+        $this->assertCount(0, $model->fresh()->assets());
+
+        // Assert asset itself is still present
+        $this->assertCount(1, Asset::all());
+    }
+
+    public function test_deleting_a_page_also_deletes_the_context()
+    {
+        $model = ArticlePage::create([
+            'title' => 'first article',
+        ]);
+
+        $this->setupAndCreateQuote($model);
+        $this->assertFragmentCount($model, 1);
+
+        $this->asAdmin()->put($this->manager($model)->route('state-update', $model, PageState::KEY, 'delete'));
+
+        $this->assertFragmentCount($model, 0);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        ArticlePage::migrateUp();
+
+        app(Register::class)->resource(ArticlePageResource::class, PageManager::class);
+        $this->manager = $this->manager(ArticlePage::class);
+    }
+}

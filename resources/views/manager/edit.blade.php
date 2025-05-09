@@ -1,44 +1,82 @@
-<x-chief::page.template :title="$resource->getPageTitle($model)">
-    <x-slot name="hero">
-        <x-chief::page.hero :breadcrumbs="[$resource->getPageBreadCrumb('edit')]">
-            @if ($forms->has('pagetitle'))
+@php
+    $hasAnyAsideTopComponents = count($layout->filterByPosition('aside-top')->getComponents()) > 0;
+    $hasContexts = $model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner;
+    $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites;
+    $hasSiteLinks = $hasSites && $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
+    $hasStates = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page') && count($model->getStateKeys()) > 0;
+    $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
+
+    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasStates || $hasAnyAsideComponents;
+@endphp
+
+<x-chief::page.template :title="$resource->getPageTitle($model)" :container="$showSidebar ? '2xl' : 'lg'">
+    <x-slot name="header">
+        <x-chief::page.header
+            :title="$resource->getPageTitle($model)"
+            :breadcrumbs="[
+                ['label' => $resource->getIndexTitle(), 'url' => $manager->route('index'), 'icon' => $resource->getNavItem()?->icon()],
+                $resource->getPageTitle($model)
+            ]"
+        >
+            @if ($layout->hasForm('pagetitle'))
                 <x-slot name="customTitle">
-                    <x-chief-form::forms id="pagetitle" />
+                    {{ $layout->findForm('pagetitle')->render() }}
                 </x-slot>
+            @endif
+
+            @if ($hasSites)
+                <div class="flex justify-between">
+                    <livewire:chief-wire::site-selection :model="$model" />
+
+                    @if ($hasStates)
+                        @foreach ($model->getStateKeys() as $stateKey)
+                            <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                        @endforeach
+                    @endif
+                </div>
             @else
-                <x-slot name="title">
-                    {{ $resource->getPageTitle($model) }}
+                <x-slot name="actions">
+                    @if ($hasStates)
+                        @foreach ($model->getStateKeys() as $stateKey)
+                            <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                        @endforeach
+                    @endif
                 </x-slot>
             @endif
-
-            @if (count(config('chief.locales')) > 1)
-                <x-chief::tabs :listen-for-external-tab="true" class="-mb-3 mt-1">
-                    @foreach (config('chief.locales') as $locale)
-                        <x-chief::tabs.tab tab-id="{{ $locale }}"></x-chief::tabs.tab>
-                    @endforeach
-                </x-chief::tabs>
-            @endif
-
-            @include('chief::manager._partials.edit-actions')
-        </x-chief::page.hero>
+        </x-chief::page.header>
     </x-slot>
 
-    <x-chief::page.grid>
-        <x-chief-form::forms position="main" />
+    @foreach ($layout->filterByPosition('main')->exclude('pagetitle')->getComponents() as $component)
+        {{ $component->render() }}
+    @endforeach
 
-        @adminCan('fragments-index', $model)
-        <x-chief::fragments :owner="$model" />
-        @endAdminCan
+    @if ($hasContexts)
+        <livewire:chief-fragments::contexts
+            :resource-key="$resource::resourceKey()"
+            :model="$model"
+            :active-context-id="request()->input('context')"
+        />
+    @endif
 
-        <x-chief-form::forms position="main-bottom" />
+    @foreach ($layout->filterByPosition('main-bottom')->getComponents() as $component)
+        {{ $component->render() }}
+    @endforeach
 
-        <x-slot name="aside">
-            <x-chief-form::forms position="aside-top" />
-            <x-chief::window.states />
-            <x-chief::window.links />
-            <x-chief-form::forms position="aside" />
+    @if ($showSidebar)
+        <x-slot name="sidebar">
+            @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
+                {{ $component->render() }}
+            @endforeach
+
+            @if ($hasSiteLinks)
+                <livewire:chief-wire::links :model="$model" />
+            @endif
+
+            @foreach ($layout->filterByPosition('aside')->getComponents() as $component)
+                {{ $component->render() }}
+            @endforeach
         </x-slot>
-    </x-chief::page.grid>
+    @endif
 
     {{-- @include('chief::templates.page._partials.editor-script') --}}
 </x-chief::page.template>

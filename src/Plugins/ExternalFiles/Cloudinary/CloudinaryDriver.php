@@ -13,7 +13,7 @@ class CloudinaryDriver implements Driver
      */
     public function updateMedia(Asset $asset, string $url, array $data): void
     {
-        dd($url);
+        // dd($url);
         // Extract ID from url
 
         // CALL API for new info

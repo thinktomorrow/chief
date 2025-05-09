@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Widgets;
@@ -20,7 +21,7 @@ final class Widgets
 
     public static function fromArray(array $widgetClasses): self
     {
-        return new static(array_map(function (string $widgetClass) {
+        return new self(array_map(function (string $widgetClass) {
             return app($widgetClass);
         }, $widgetClasses));
     }

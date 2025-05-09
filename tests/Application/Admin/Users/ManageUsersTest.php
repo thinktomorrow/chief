@@ -9,27 +9,25 @@ class ManageUsersTest extends ChiefTestCase
 {
     private $newUser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->newUser = new User();
+        $this->newUser = new User;
         $this->newUser->email = 'email';
         $this->newUser->firstname = 'firstname';
         $this->newUser->lastname = 'lastname';
         $this->newUser->save();
     }
 
-    /** @test */
-    public function full_admin_can_view_the_users_overview()
+    public function test_full_admin_can_view_the_users_overview()
     {
         $response = $this->asAdmin()->get(route('chief.back.users.index'));
         $response->assertViewIs('chief::admin.users.index')
-                 ->assertStatus(200);
+            ->assertStatus(200);
     }
 
-    /** @test */
-    public function regular_author_cannot_view_the_users_overview()
+    public function test_regular_author_cannot_view_the_users_overview()
     {
         $response = $this->asAuthor()->get(route('chief.back.users.index'));
 

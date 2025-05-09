@@ -1,10 +1,11 @@
 @php
     $threshold = 3;
-    $count = count($getItems());
+    $items = $getItems();
+    $count = count($items);
 @endphp
 
-<div x-data="{ isShowingMore: false }" class="flex max-w-80 flex-wrap items-start gap-1">
-    @foreach ($getItems() as $item)
+<div x-data="{ isShowingMore: false }" class="flex items-start gap-1">
+    @foreach ($items as $item)
         @php
             $index = $count === $threshold ? $loop->index : $loop->iteration;
         @endphp

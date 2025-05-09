@@ -12,7 +12,7 @@ class UpdateSettingTest extends ChiefTestCase
 {
     use SettingFormParams;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -21,9 +21,9 @@ class UpdateSettingTest extends ChiefTestCase
         resolve(Settings::class)->fresh();
     }
 
-    /** @test */
-    public function update_a_setting()
+    public function test_update_a_setting()
     {
+        $this->disableExceptionHandling();
         Setting::create([
             'key' => 'app_name',
             'value' => 'old app_name',

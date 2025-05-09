@@ -22,7 +22,6 @@ class PreviewMode
             return new static(false);
         }
 
-
         $active = (session()->get('preview-mode', static::default()) === true && auth()->guard('chief')->check());
 
         return new static($active);
@@ -46,6 +45,6 @@ class PreviewMode
             return false;
         }
 
-        return ($mode == 'preview');
+        return $mode == 'preview';
     }
 }

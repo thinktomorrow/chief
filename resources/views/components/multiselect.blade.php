@@ -10,6 +10,7 @@
 <div
     x-cloak
     wire:ignore
+    data-slot="control"
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
     x-modelable="selection"
     x-data="{
@@ -47,7 +48,7 @@
         options: {
             allowHTML: true,
             paste: false,
-            searchResultLimit: 10,
+            searchResultLimit: 20,
             placeholder: true,
             placeholderValue: '{{ $placeholder }}',
             shouldSort: false, // Keep sorting as is

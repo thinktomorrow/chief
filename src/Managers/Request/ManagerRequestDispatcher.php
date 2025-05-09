@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Request;
@@ -7,7 +8,6 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 
 final class ManagerRequestDispatcher
 {
-    /** @var Registry */
     private Registry $registry;
 
     public function __construct(Registry $registry)

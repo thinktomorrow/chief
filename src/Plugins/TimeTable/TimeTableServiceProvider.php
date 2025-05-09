@@ -12,11 +12,11 @@ class TimeTableServiceProvider extends ChiefPluginServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-timetable', __DIR__ . '/App/resources/views');
+        $this->app['view']->addNamespace('chief-timetable', __DIR__.'/App/resources/views');
 
         $this->loadMigrationsFrom(__DIR__.'/Infrastructure/migrations');
 
-        $this->loadPluginAdminRoutes(__DIR__ . '/App/routes/chief-admin-routes.php');
+        $this->loadPluginAdminRoutes(__DIR__.'/App/routes/chief-admin-routes.php');
     }
 
     public function register()

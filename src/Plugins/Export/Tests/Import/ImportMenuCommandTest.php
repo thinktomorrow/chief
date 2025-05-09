@@ -2,14 +2,19 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Import;
 
+use Illuminate\Support\Facades\Storage;
+use Thinktomorrow\Chief\Menu\Menu;
+use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
 class ImportMenuCommandTest extends TestCase
 {
     public function test_it_can_import_menu()
     {
+        $menu = Menu::create(['type' => 'main']);
+
         MenuItem::create([
+            'menu_id' => $menu->id,
             'values' => json_encode([
                 'url' => ['nl' => '/nl-link', 'en' => '/en-link'],
                 'label' => ['nl' => 'test nl', 'en' => 'test en'],
@@ -19,7 +24,7 @@ class ImportMenuCommandTest extends TestCase
 
         $this->artisan('chief:export-menu');
 
-        $filepath = storage_path('app/exports/'.config('app.name') .'-menu-'.date('Y-m-d').'.xlsx');
+        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-menu-'.date('Y-m-d').'.xlsx');
 
         // Change the database text
         MenuItem::find(1)->update([

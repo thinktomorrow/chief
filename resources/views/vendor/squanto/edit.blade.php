@@ -1,44 +1,58 @@
 @php
-    use Thinktomorrow\Chief\Admin\Nav\BreadCrumb;$title = ucfirst($page->label());
-    $breadcrumb = new BreadCrumb('Vaste teksten', route('squanto.index'));
-    $collectedLines = collect($lines)->groupBy(function($lineViewModel) {
+    $title = ucfirst($page->label());
+    $collectedLines = collect($lines)->groupBy(function ($lineViewModel) {
         return $lineViewModel->sectionKey();
     });
 @endphp
-
 
 <x-chief::page.template :title="$title">
     @push('custom-styles')
         @include('squanto::_preventDuplicateSubmissions')
     @endpush
 
-    <x-slot name="hero">
-        <x-chief::page.hero :title="$title" :breadcrumbs="[$breadcrumb]">
-            <button form="updateSquantoForm" type="submit" class="btn btn-primary">
-                Bewaar aanpassingen
-            </button>
-        </x-chief::page.hero>
+    <x-slot name="header">
+        <x-chief::page.header
+            :breadcrumbs="[
+                ['label' => 'Vaste teksten', 'url' => route('squanto.index'), 'icon' => 'book-edit'],
+                $title
+            ]"
+        >
+            <x-slot name="actions">
+                <x-chief::button form="updateSquantoForm" type="submit" variant="blue">
+                    Bewaar aanpassingen
+                </x-chief::button>
+            </x-slot>
+        </x-chief::page.header>
     </x-slot>
 
-    <form id="updateSquantoForm" method="POST" action="{{ route('squanto.update', $page->slug()) }}" role="form">
-        {{ csrf_field() }}
+    <div class="relative">
+        <form id="updateSquantoForm" method="POST" action="{{ route('squanto.update', $page->slug()) }}" role="form">
+            {{ csrf_field() }}
 
-        <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="_method" value="PUT" />
 
-        <x-chief::page.grid>
-            @foreach($collectedLines as $sectionKey => $groupedLines)
-                <div class="space-y-4 card">
-                    <p class="text-sm tracking-wider uppercase text-grey-500">
-                        {{ ucfirst(str_replace('_', ' ', $sectionKey)) }}
-                    </p>
-
-                    @foreach($groupedLines as $lineViewModel)
-                        @include('squanto::_field')
+            @foreach ($collectedLines as $sectionKey => $groupedLines)
+                <x-chief::window :title="ucfirst(str_replace('_', ' ', $sectionKey))">
+                    @foreach ($groupedLines as $lineViewModel)
+                        <div @class(['mt-4 border-t border-grey-100 pt-4' => ! $loop->first])>
+                            @include('squanto::_field')
+                        </div>
                     @endforeach
-                </div>
+                </x-chief::window>
             @endforeach
-        </x-chief::page.grid>
-    </form>
+
+            <div data-slot="window" class="pointer-events-none sticky bottom-4 flex justify-center">
+                <x-chief::button
+                    form="updateSquantoForm"
+                    type="submit"
+                    variant="blue"
+                    class="pointer-events-auto rounded-full px-4 shadow-lg"
+                >
+                    Bewaar aanpassingen
+                </x-chief::button>
+            </div>
+        </form>
+    </div>
 
     @include('chief::templates.page._partials.editor-script')
 </x-chief::page.template>

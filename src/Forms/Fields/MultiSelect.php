@@ -14,15 +14,25 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 
 class MultiSelect extends Component implements Field
 {
-    use HasMultiple;
-    use HasGroupedOptions;
-    use HasTaggable;
-    use HasOptions;
-    use HasEloquentOptionsSync;
     use HasDropdownPosition;
+    use HasEloquentOptionsSync;
+    use HasGroupedOptions;
+    use HasMultiple;
+    use HasOptions;
+    use HasTaggable;
 
     protected string $view = 'chief-form::fields.multiselect';
-    protected string $windowView = 'chief-form::fields.select-window';
+
+    protected string $previewView = 'chief-form::previews.fields.select';
+
+    public function __construct(string $key)
+    {
+        parent::__construct($key);
+
+        $this->prepForSaving(function ($value) {
+            return $this->allowMultiple() ? $value : (is_array($value) && count($value) ? reset($value) : $value);
+        });
+    }
 
     public function getMultiSelectFieldOptions(?string $locale = null): array
     {

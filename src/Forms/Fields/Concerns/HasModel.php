@@ -2,14 +2,18 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
-use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 
 trait HasModel
 {
-    protected null|Model|array $model = null;
+    protected ?object $model = null;
+
     protected array $whenModelIsSetCallbacks = [];
 
-    public function model(Model|array $model): static
+    /**
+     * Recursive method to set the model on all components.
+     */
+    public function model(object $model): static
     {
         $this->model = $model;
 
@@ -17,10 +21,16 @@ trait HasModel
             call_user_func_array($callback, [$model, $this]);
         }
 
+        if ($this instanceof HasComponents) {
+            foreach ($this->getComponents() as $component) {
+                $component->model($model);
+            }
+        }
+
         return $this;
     }
 
-    public function getModel(): null|Model|array
+    public function getModel(): ?object
     {
         return $this->model;
     }

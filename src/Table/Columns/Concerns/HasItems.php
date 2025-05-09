@@ -19,6 +19,21 @@ trait HasItems
         return $this;
     }
 
+    private function itemsFromKey(string $key): static
+    {
+        if ($this->isRelationKey($key)) {
+            return $this->itemsFromRelationKey($key);
+        }
+
+        $this->items(function () {
+            $value = $this->getRawValue();
+
+            return is_iterable($value) ? $value : [$value];
+        });
+
+        return $this;
+    }
+
     private function itemsFromRelationKey(string $key): static
     {
         if (! $this->isRelationKey($key)) {
@@ -30,9 +45,8 @@ trait HasItems
 
         $this->items(function ($model) use ($relationName) {
             return $model->{$relationName};
-        })->eachItem(function (ColumnItem $item, $value) use ($relationAttribute) {
-            $item->value($value->{$relationAttribute});
-        })->label($relationName);
+        })->mapValue(fn ($value) => is_array($value) ? $value[$relationAttribute] : $value->{$relationAttribute})
+            ->label($relationName);
 
         return $this;
     }
@@ -46,7 +60,7 @@ trait HasItems
      * An instance of ColumnItem is created for each item.
      * Also, any mapping/looping requested is applied to each item.
      */
-    public function getItems(): iterable
+    public function getItems(): Collection
     {
         return $this->resolveItems()
             ->each(function (ColumnItem $item) {
@@ -57,26 +71,25 @@ trait HasItems
             })
             ->each(function (ColumnItem $item) {
                 $this->handleVariantMapping($item);
-            })
-            ->all();
+            });
     }
 
     private function resolveItems(): Collection
     {
         if (! $this->itemsResolver) {
-            $result = [$this->replicateToItem($this->getValue())];
+            $result = [$this->replicateToItem($this->getRawValue())];
         } else {
             $result = call_user_func($this->itemsResolver, $this->getModel());
         }
 
         $result = $result instanceof Collection ? $result : collect($result);
 
-        return $result->map(function (mixed $rawItem) {
+        return $result->values()->map(function (mixed $rawItem) {
             return (! $rawItem instanceof ColumnItem) ? $this->replicateToItem($rawItem) : $rawItem;
         });
     }
 
-    private function replicateToItem($value): static
+    protected function replicateToItem($value): static
     {
         $item = static::make($this->getKey())->value($value);
 
@@ -90,6 +103,10 @@ trait HasItems
 
         if ($this->link) {
             $item->link($this->link);
+        }
+
+        if ($this->openInNewTab) {
+            $item->openInNewTab();
         }
 
         return $item;

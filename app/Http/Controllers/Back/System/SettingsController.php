@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 class SettingsController extends Controller
 {
     private SettingFields $settingFields;
+
     private FieldValidator $fieldValidator;
 
     public function __construct(SettingFields $settingFields, FieldValidator $fieldValidator)

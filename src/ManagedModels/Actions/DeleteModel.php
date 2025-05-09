@@ -9,22 +9,25 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Fragments\Actions\DeleteContext;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
+use Thinktomorrow\Chief\Fragments\App\ContextActions\DeleteContext;
+use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class DeleteModel
 {
     private DetachAsset $detachAsset;
-    private DeleteContext $deleteContext;
 
-    public function __construct(DetachAsset $detachAsset, DeleteContext $deleteContext)
+    private ContextApplication $contextApplication;
+
+    public function __construct(DetachAsset $detachAsset, ContextApplication $contextApplication)
     {
         $this->detachAsset = $detachAsset;
-        $this->deleteContext = $deleteContext;
+        $this->contextApplication = $contextApplication;
     }
 
     public function onManagedModelQueuedForDeletion(ManagedModelQueuedForDeletion $e): void
@@ -41,8 +44,12 @@ class DeleteModel
                 $this->detachAsset->handleAll($model);
             }
 
-            if ($model instanceof FragmentsOwner) {
-                $this->deleteContext->handle($model);
+            if ($model instanceof ContextOwner) {
+                $contexts = app(ContextRepository::class)->getByOwner($model->modelReference());
+
+                foreach ($contexts as $context) {
+                    $this->contextApplication->delete(new DeleteContext($context->id));
+                }
             }
 
             // TODO: when deleting a model, where should the urls redirect to? Or expect here a 404?

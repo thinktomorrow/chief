@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -39,7 +40,7 @@ class ArticleStateAdminConfig implements StateAdminConfig
         ];
     }
 
-    public function getTransitionFields(string $transitionKey, StatefulContract $statefulContract): iterable
+    public function getConfirmationFields(StatefulContract $statefulContract, string $transitionKey): iterable
     {
         if ($transitionKey == 'draft') {
             yield Text::make('draft_note')->required();

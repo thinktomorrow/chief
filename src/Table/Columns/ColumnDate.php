@@ -7,6 +7,7 @@ use Carbon\Carbon;
 class ColumnDate extends ColumnItem
 {
     protected string $view = 'chief-table::columns.date';
+
     private string $format = 'Y-m-d H:i';
 
     public function getValue(?string $locale = null): string|int|null|float|\Stringable
@@ -30,5 +31,16 @@ class ColumnDate extends ColumnItem
     public function getFormat(): string
     {
         return $this->format;
+    }
+
+    protected function replicateToItem($value): static
+    {
+        $item = parent::replicateToItem($value);
+
+        if ($this->format) {
+            $item->format($this->format);
+        }
+
+        return $item;
     }
 }

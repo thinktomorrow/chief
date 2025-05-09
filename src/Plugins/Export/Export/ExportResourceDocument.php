@@ -14,17 +14,20 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\ComposeFieldLines;
 use Thinktomorrow\Chief\Resource\Resource;
 
-class ExportResourceDocument implements FromCollection, WithMapping, WithDefaultStyles, WithStyles, WithHeadings, WithColumnWidths, WithColumnFormatting
+class ExportResourceDocument implements FromCollection, WithColumnFormatting, WithColumnWidths, WithDefaultStyles, WithHeadings, WithMapping, WithStyles
 {
     use Exportable;
 
     private Resource $resource;
+
     private Collection $models;
+
     private array $locales;
 
     private bool $ignoreNonLocalized;
@@ -45,12 +48,11 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
         return $this->models;
     }
 
-    /**
-     * @return array
-     */
     public function columnFormats(): array
     {
-        return [];
+        return [
+            ...array_fill_keys(range('A', 'Z'), NumberFormat::FORMAT_TEXT),
+        ];
     }
 
     public function map($row): array
@@ -117,9 +119,9 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
             ->setColor(new Color('FF666666'));
 
         $defaultStyle->getAlignment()
-                ->setHorizontal(Alignment::HORIZONTAL_LEFT)
-                ->setVertical(Alignment::VERTICAL_CENTER)
-                ->setWrapText(true);
+            ->setHorizontal(Alignment::HORIZONTAL_LEFT)
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setWrapText(true);
 
         return $defaultStyle;
     }
@@ -127,7 +129,6 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
     /**
      * Style options: fill, font, borders, alignment, numberFormat, protection
      *
-     * @param Worksheet $sheet
      * @return \array[][]
      */
     public function styles(Worksheet $sheet)
@@ -135,26 +136,26 @@ class ExportResourceDocument implements FromCollection, WithMapping, WithDefault
         return [
             'A' => [
                 'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9']],
             ],
             'B' => [
                 'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9']],
             ],
             'C' => [
                 'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9']],
             ],
             'D' => [
                 'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9']],
             ],
 
             // Style the first row as bold text.
             1 => [
                 'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
-                'font' => ['bold' => true, 'color' => ['argb' => Color::COLOR_WHITE ]],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FF333333' ]]],
+                'font' => ['bold' => true, 'color' => ['argb' => Color::COLOR_WHITE]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FF333333']]],
         ];
 
     }

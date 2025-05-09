@@ -1,39 +1,40 @@
-<x-chief::page.template title="Vaste teksten">
-    <x-slot name="hero">
-        <x-chief::page.hero title="Vaste teksten" class="max-w-3xl"/>
-    </x-slot>
-
-    <x-chief::page.grid class="max-w-3xl mt-8">
-        <div class="divide-y card divide-grey-100">
-            @foreach($pages as $page)
-                @php
-                    $completionPercentage = $page->completionPercentage();
-                @endphp
-
-                <div @class([
-                    'flex items-center justify-between gap-4',
-                    'pt-3' => !$loop->first,
-                    'pb-3' => !$loop->last,
-                ])>
-                    <span class="space-x-1 mt-0.5">
+<x-chief::page.template title="Vaste teksten" container="md">
+    <x-chief::window>
+        <div class="divide-y divide-grey-100">
+            @foreach ($pages as $page)
+                <div
+                    @class([
+                        'flex items-center justify-between gap-4',
+                        'pt-3' => ! $loop->first,
+                        'pb-3' => ! $loop->last,
+                    ])
+                >
+                    <div class="mt-[0.1875rem] flex items-start gap-1.5">
                         <a
-                            href="{{ route('squanto.edit',$page->slug()) }}"
+                            href="{{ route('squanto.edit', $page->slug()) }}"
                             title="{{ ucfirst($page->label()) }}"
-                            class="font-medium body-dark hover:underline"
+                            class="leading-6 text-grey-800 hover:underline hover:underline-offset-2"
                         >
                             {{ ucfirst($page->label()) }}
                         </a>
 
-                        <span class="label label-grey label-xs">
-                            {{ $completionPercentage }}%
-                        </span>
-                    </span>
+                        @if ($percentage = $page->completionPercentage())
+                            <x-chief::badge :variant="$percentage == 100 ? 'green' : 'orange'" size="sm">
+                                {{ $page->completionPercentage() }}%
+                            </x-chief::badge>
+                        @endif
+                    </div>
 
-                    <a href="{{ route('squanto.edit',$page->slug()) }}" class="flex-shrink-0 link link-primary">
-                        <x-chief::icon-button type="edit"></x-chief-icon-button>
-                    </a>
+                    <x-chief::button
+                        href="{{ route('squanto.edit',$page->slug()) }}"
+                        title="Bewerk"
+                        variant="grey"
+                        size="sm"
+                    >
+                        <x-chief::icon.quill-write />
+                    </x-chief::button>
                 </div>
             @endforeach
         </div>
-    </x-chief::page.grid>
+    </x-chief::window>
 </x-chief::page.template>

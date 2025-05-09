@@ -10,11 +10,10 @@ class CustomAdminRouteTest extends TestCase
 {
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('chief.route.admin-filepath', __DIR__ . '/../../Shared/stubs/config/admin-filepaths.php');
+        $app['config']->set('chief.route.admin-filepath', __DIR__.'/../../Shared/stubs/config/admin-filepaths.php');
     }
 
-    /** @test */
-    public function a_custom_admin_filepath_can_add_chief_admin_routes()
+    public function test_a_custom_admin_filepath_can_add_chief_admin_routes()
     {
         // There is a dummy.route route defined in the config test stub
         $this->assertStringEndsWith('/admin/dummy-route', route('dummy.route'));
@@ -22,6 +21,6 @@ class CustomAdminRouteTest extends TestCase
         /** @var Route $registeredDummyRoute */
         $registeredDummyRoute = Arr::get(app('router')->getRoutes()->get('GET'), 'admin/dummy-route');
 
-        $this->assertEquals(['web-chief','auth:chief'], $registeredDummyRoute->gatherMiddleware());
+        $this->assertEquals(['web-chief', 'auth:chief'], $registeredDummyRoute->gatherMiddleware());
     }
 }

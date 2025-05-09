@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
@@ -6,17 +7,18 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page;
+use Thinktomorrow\Chief\Models\Page;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\PageResourceDefault;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\NestableFormPresets;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableDefault;
 
-class NestableArticlePage extends ArticlePage implements Page, Nestable, PageResource
+class NestableArticlePage extends ArticlePage implements Nestable, Page, PageResource
 {
-    use PageResourceDefault;
     use NestableDefault;
+    use PageResourceDefault;
+
     //    use NestablePageDefault;
 
     public static function migrateUp()

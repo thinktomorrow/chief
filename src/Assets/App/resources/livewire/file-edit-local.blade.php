@@ -1,29 +1,37 @@
 @php
+    use Thinktomorrow\Chief\Assets\App\MimetypeIcon;
     use Thinktomorrow\Chief\Plugins\ChiefPluginSections;
 @endphp
 
-@if($isOpen)
+@if ($isOpen)
     @php
         $ownerCount = count($previewFile->owners);
         $currentOwner = isset($modelReference) ? $previewFile->findOwner($modelReference) : null;
     @endphp
 
     <form class="space-y-4">
-        <div class="flex gap-6 p-3 border shadow-sm sm:pr-6 max-sm:flex-wrap rounded-xl border-grey-200">
-            <div class="flex items-center justify-center w-full h-64 overflow-hidden sm:h-48 sm:w-48 bg-grey-100 rounded-xl shrink-0">
-                @if($previewFile && $previewFile->isImage())
+        <div class="flex gap-6 rounded-xl border border-grey-200 p-3 shadow-sm max-sm:flex-wrap sm:pr-6">
+            <div
+                class="flex h-64 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl bg-grey-100 sm:h-48 sm:w-48"
+            >
+                @if ($previewFile && $previewFile->isImage())
                     <img
                         src="{{ $previewFile->previewUrl }}"
                         alt="Preview image"
-                        class="object-contain w-full h-full"
-                    >
+                        class="h-full w-full object-contain"
+                    />
+                @elseif ($previewFile->mimeType)
+                    <x-dynamic-component
+                        :component="MimetypeIcon::fromString($previewFile->mimeType)->icon()"
+                        class="size-8 text-grey-400"
+                    />
                 @else
-                    <svg class="w-6 h-6 text-grey-400"><use xlink:href="#icon-paper-clip"/></svg>
+                    <x-chief::icon.attachment class="size-8 text-grey-400" />
                 @endif
             </div>
 
-            <div class="flex items-center grow">
-                <div class="space-y-4 grow">
+            <div class="flex grow items-center">
+                <div class="grow space-y-4">
                     @include('chief-assets::_partials.file-edit-preview-url')
                     @include('chief-assets::_partials.file-edit-local-metadata')
                 </div>
@@ -34,73 +42,69 @@
             @include('chief-assets::_partials.file-edit-owner-info')
 
             <div class="flex flex-wrap gap-2">
-                @if($previewFile)
+                @if ($previewFile)
                     {{-- Replace file action --}}
-                    <label for="{{ $this->getId() }}" class="cursor-pointer">
-                        <input wire:model="file" type="file" id="{{ $this->getId() }}" class="hidden"/>
-
-                        <x-chief::button>
-                            <svg><use xlink:href="#icon-replace"></use></svg>
-                            Vervang bestand
+                    <div>
+                        <input wire:model="file" type="file" id="{{ $this->getId() }}" class="hidden" />
+                        <x-chief::button for="{{ $this->getId() }}" variant="grey" size="sm">
+                            <x-chief::icon.exchange />
+                            <span>Vervang bestand</span>
                         </x-chief::button>
-                    </label>
+                    </div>
 
-                    @if($ownerCount > 1)
+                    @if ($ownerCount > 1)
                         @include('chief-assets::_partials.file-edit-owner-action')
                     @endif
 
-                    @foreach(app(ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
+                    @foreach (app(ChiefPluginSections::class)->getLivewireFileEditActions() as $livewireFileEditAction)
                         @include($livewireFileEditAction)
                     @endforeach
                 @endif
             </div>
         </div>
 
-        <div class="space-y-4">
-            <x-chief::input.group rule="form.basename">
-                <x-chief::input.label for="form.basename">Bestandsnaam</x-chief::input.label>
+        <div>
+            <x-chief::form.fieldset rule="form.basename">
+                <x-chief::form.label for="form.basename">Bestandsnaam</x-chief::form.label>
 
-                <x-chief::input.prepend-append :append="'.'.$previewFile->extension">
-                    <x-chief::input.text
+                <x-chief::form.input.prepend-append :append="'.'.$previewFile->extension">
+                    <x-chief::form.input.text
                         id="form.basename"
                         name="form[basename]"
                         placeholder="Bestandsnaam"
                         wire:model="form.basename"
                     />
-                </x-chief::input.prepend-append>
+                </x-chief::form.input.prepend-append>
 
-                @if($replacedPreviewFile)
+                @if ($replacedPreviewFile)
                     <span class="text-sm text-grey-500">
                         Vorige bestandsnaam was: {{ $replacedPreviewFile->filename }}
                     </span>
                 @endif
-            </x-chief::input.group>
+            </x-chief::form.fieldset>
 
-            @foreach($this->getComponents() as $component)
-                {{ $component }}
-            @endforeach
-        </div>
+            <div data-slot="form-group">
+                @include('chief-assets::_partials.file-edit-site-toggle')
 
-        @if($errors->any())
-            <div class="space-y-2">
-                @foreach($errors->all() as $error)
-                    <x-chief::inline-notification type="error">
-                        {{ ucfirst($error) }}
-                    </x-chief::inline-notification>
+                @foreach ($this->getComponents() as $component)
+                    {{ $component }}
                 @endforeach
             </div>
-        @endif
+
+            @if ($errors->any())
+                <x-chief::callout data-slot="form-group" size="small" variant="red">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ ucfirst($error) }}</p>
+                    @endforeach
+                </x-chief::callout>
+            @endif
+        </div>
     </form>
 
     <x-slot name="footer">
-        <div class="flex flex-wrap justify-end gap-3">
-            <button type="button" x-on:click="close()" class="btn btn-grey">
-                Annuleer
-            </button>
-
-            <button wire:click.prevent="submit" type="submit" class="btn btn-primary">
-                Bewaar bestand
-            </button>
-        </div>
+        <x-chief::dialog.modal.footer>
+            <x-chief::button type="button" x-on:click="close()">Annuleer</x-chief::button>
+            <x-chief::button wire:click.prevent="submit" variant="blue" type="submit">Bewaar bestand</x-chief::button>
+        </x-chief::dialog.modal.footer>
     </x-slot>
 @endif

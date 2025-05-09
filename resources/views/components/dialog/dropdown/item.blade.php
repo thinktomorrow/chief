@@ -5,18 +5,19 @@
 
 @php
     $attributes = $attributes->class([
-        'bui-dropdown-item cursor-pointer font-medium',
+        'dropdown-item cursor-pointer font-medium',
         match ($size) {
-            'base' => 'bui-dropdown-item-base',
-            default => 'bui-dropdown-item-base',
+            'base' => 'dropdown-item-base',
+            default => 'dropdown-item-base',
         },
         match ($variant) {
-            'grey' => 'bui-dropdown-item-grey',
-            'red' => 'bui-dropdown-item-red',
-            'orange' => 'bui-dropdown-item-orange',
-            'light-blue' => 'bui-dropdown-item-light-blue',
-            'green' => 'bui-dropdown-item-green',
-            default => 'bui-dropdown-item-grey',
+            'grey' => 'dropdown-item-grey',
+            'red' => 'dropdown-item-red',
+            'orange' => 'dropdown-item-orange',
+            'blue' => 'dropdown-item-blue',
+            'light-blue' => 'dropdown-item-light-blue',
+            'green' => 'dropdown-item-green',
+            default => 'dropdown-item-grey',
         },
     ]);
 @endphp

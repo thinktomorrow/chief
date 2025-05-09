@@ -1,18 +1,19 @@
-import Sidebar from './sidebar/Sidebar';
-import Forms from './Forms';
-import FormSubmit from './utilities/form-submit';
-import initRepeatFields from './fields/init-repeat-fields';
-import { initConditionalFields } from './conditional-fields/init-conditional-fields';
-import initFormNotifications from './utilities/form-notifications';
+import { initConditionalFieldsInContainer, initConditionalFields } from './conditional-fields/init-conditional-fields';
 import initCharacterCount from './utilities/character-count';
 
 document.addEventListener('DOMContentLoaded', () => {
-    new Forms(document.getElementById('content'), new Sidebar()).load(document);
-
-    initRepeatFields();
     initConditionalFields();
-    initFormNotifications();
     initCharacterCount();
+});
 
-    FormSubmit.listen('[data-submit-form]');
+document.addEventListener('form-dialog-opened', (event) => {
+    // Next tick my friend... next tick
+    setTimeout(() => {
+        const container = event.detail.componentId
+            ? document.querySelector(`[wire\\:id="${event.detail.componentId}"]`)
+            : document;
+
+        initConditionalFieldsInContainer(container);
+        initCharacterCount();
+    }, 0);
 });

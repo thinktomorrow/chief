@@ -10,7 +10,7 @@ class EditModelAction extends Action
     {
         return static::make('edit')
             ->link(function ($model) use ($resourceKey) {
-                return '/admin/' . $resourceKey . '/' . $model->getKey() . '/edit';
+                return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
             })
             ->iconEdit();
     }

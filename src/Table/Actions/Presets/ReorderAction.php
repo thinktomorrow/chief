@@ -14,7 +14,7 @@ class ReorderAction extends Action
 
         return static::make('reorder')
             ->label('Herschikken')
-            ->description('Hiermee kunt u de volgorde van de ' . $resource->getPluralLabel() . ' wijzigen.')
+            ->description('Hiermee kunt u de volgorde van de '.$resource->getPluralLabel().' wijzigen.')
             ->prependIcon('<x-chief::icon.sorting />')
             ->link($manager->route('index-for-sorting'));
     }

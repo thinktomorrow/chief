@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
@@ -6,24 +7,20 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Fragments\Assistants\ForwardFragmentProperties;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
-use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\BaseFragment;
+use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\WithCustomFieldDefinitions;
 
-class SnippetStub implements Fragmentable, FragmentsOwner
+class SnippetStub extends BaseFragment implements Fragment
 {
-    use FragmentableDefaults;
-    use ForwardFragmentProperties;
-    use OwningFragments;
+    use WithCustomFieldDefinitions;
 
     public static function resourceKey(): string
     {
         return 'snippet-stub';
     }
 
-    public function fields($model): iterable
+    private function defaultFields(): iterable
     {
         yield Text::make('title');
         yield Text::make('title_trans')->locales();
@@ -36,16 +33,11 @@ class SnippetStub implements Fragmentable, FragmentsOwner
 
     public function getTitle()
     {
-        return $this->fragmentModel()->title;
+        return $this->getFragmentModel()->title;
     }
 
     public function viewKey(): string
     {
         return 'snippet_stub';
-    }
-
-    public function dynamicLocaleFallback(): ?string
-    {
-        return 'en';
     }
 }

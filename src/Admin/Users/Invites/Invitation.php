@@ -21,7 +21,9 @@ class Invitation extends Model implements StatefulContract
      * @var int
      */
     private static $expires = 60 * 24 * 3;
+
     public $guarded = [];
+
     protected $casts = [
         'expires_at' => 'datetime',
     ];
@@ -77,7 +79,7 @@ class Invitation extends Model implements StatefulContract
 
     public function getStateConfig(string $stateKey): StateConfig
     {
-        return new InvitationStateConfig();
+        return new InvitationStateConfig;
     }
 
     public function present(): InvitationPresenter
@@ -99,7 +101,7 @@ class Invitation extends Model implements StatefulContract
         return InvitationState::from($this->$key);
     }
 
-    public function scopeOnline(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         $query->where(InvitationState::KEY, InvitationState::accepted);
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Nestable;
@@ -14,7 +15,7 @@ class NestableTest extends TestCase
 
     public function test_it_can_create_nestable_model()
     {
-        $node = new NestableModelStub();
+        $node = new NestableModelStub;
 
         $this->assertInstanceOf(Nestable::class, $node);
         $this->assertInstanceOf(NestableModelStub::class, $node);

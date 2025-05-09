@@ -4,23 +4,33 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Validation;
 
-use Thinktomorrow\Chief\Forms\Fields\Common\FormKey;
-use Thinktomorrow\Chief\Forms\Fields\Common\Localizable;
-use Thinktomorrow\Chief\Forms\Fields\Common\LocalizedFormKey;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ValidationParameters
 {
-    private Validatable & Localizable $source;
+    private Validatable&LocalizedField $source;
+
+    private array $locales = [];
+
     private bool $multiple = false;
+
     private \Closure $mapKeysCallback;
 
-    final private function __construct(Validatable & Localizable $source)
+    final private function __construct(Validatable&LocalizedField $source)
     {
         $this->source = $source;
+
+        if ($source->hasLocales()) {
+            $this->locales = $source->getLocales();
+        }
+
         $this->mapKeysCallback = fn ($key) => $key;
     }
 
-    public static function make(Validatable & Localizable $source): self
+    public static function make(Validatable&LocalizedField $source): self
     {
         return new static($source);
     }
@@ -38,50 +48,72 @@ class ValidationParameters
      */
     public function getRules(): array
     {
-        return $this->createEntryForEachLocale($this->source->getRules());
+        return $this->createEntryForEachLocale($this->source->getRules(), $this->locales);
     }
 
     public function getAttributes(): array
     {
         if (! $attribute = $this->source->getValidationAttribute()) {
-            $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getName();
-            $attribute .= ($this->source->hasLocales() && count($this->source->getLocales()) > 1) ? ' :locale' : '';
+            $attribute = $this->source->getLabel() ? $this->source->getLabel() : $this->source->getRawName();
+            $attribute = (count($this->locales) && count($this->source->getLocales()) > 1) ? ':locale '.$attribute : $attribute;
         }
 
-        return $this->createEntryForEachLocale($attribute);
+        $localeNames = array_map(fn ($locale) => ChiefSites::shortName($locale), $this->locales);
+
+        return $this->createEntryForEachLocale($attribute, $localeNames);
     }
 
     public function getMessages(): array
     {
-        return $this->createEntryForEachLocale($this->source->getValidationMessages());
+        $localeNames = array_map(fn ($locale) => ChiefSites::shortName($locale), $this->locales);
+
+        return $this->createEntryForEachLocale($this->source->getValidationMessages(), $localeNames);
     }
 
-    private function createEntryForEachLocale(string|array $value): array
+    private function createEntryForEachLocale(string|array $value, array $localeReplacements): array
     {
         if (is_array($value)) {
             if (count($value) < 1) {
                 return [];
             }
 
-            // If the array already has a associative key, we assume this is a custom validation entry, so we leave it be
-            if ($this->isAlreadyKeyed($value)) {
+            // Als het al gestructureerd is als ["field.rule" => "..."], laat het dan staan
+            if ($this->isAlreadyKeyed($value) && strpos(key($value), '.') !== false) {
                 return $value;
             }
+
+            // per-locale messages - elke regel per locale dupliceren
+            if ($this->isAlreadyKeyed($value)) {
+                $results = [];
+
+                foreach ($this->locales as $locale) {
+                    $fieldKey = call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName()).'.'.$locale);
+
+                    foreach ($value as $rule => $message) {
+                        $replacedMessage = str_replace(':locale', $locale, $message);
+                        $results["{$fieldKey}.{$rule}"] = $replacedMessage;
+                    }
+                }
+
+                return $results;
+            }
+
         }
 
-        if (! $this->source->hasLocales()) {
+        // standaard key gebruiken
+        if (! count($this->locales)) {
             return [
-                call_user_func($this->mapKeysCallback, FormKey::replaceBracketsByDots($this->source->getName())) => $value,
+                call_user_func($this->mapKeysCallback, FieldNameHelpers::replaceBracketsByDots($this->source->getName())) => $value,
             ];
         }
 
-        $keys = $this->source->getLocalizedFormKey()
+        $keys = $this->source->getFieldName()
             ->dotted()
-            ->matrix($this->source->getName(), $this->source->getLocales());
+            ->matrix($this->source->getRawName(), $this->locales);
 
         if ($this->multiple) {
             foreach ($keys as $i => $key) {
-                $keys[$i] = $key . '.*';
+                $keys[$i] = $key.'.*';
             }
         }
 
@@ -93,7 +125,7 @@ class ValidationParameters
             ? array_fill_keys($keys, $value)
             : array_combine(
                 $keys,
-                LocalizedFormKey::make()->template(':name')->matrix($value, array_map(fn ($locale) => strtoupper($locale), $this->source->getLocales()))
+                FieldName::make()->template(':name')->matrix($value, $localeReplacements)
             );
     }
 
@@ -106,6 +138,6 @@ class ValidationParameters
 
     private function isAlreadyKeyed(array $value): bool
     {
-        return ! array_is_list($value) && is_array(reset($value));
+        return ! array_is_list($value);
     }
 }

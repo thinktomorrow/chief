@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Thinktomorrow\Chief\Table\Columns\Column;
 use Thinktomorrow\Chief\Table\Columns\ColumnItem;
+use Thinktomorrow\Chief\Table\Filters\Presets\SiteFilter;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
@@ -25,24 +26,28 @@ use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
 class TableComponent extends Component
 {
-    use WithPagination;
-    use WithPaginationControl;
-    use WithTreeResults;
-    use WithFilters;
-    use WithVariantFilters;
-    use WithSorters;
     use WithActions;
-    use WithRowActions;
     use WithBulkActions;
     use WithBulkSelection;
+    use WithFilters;
     use WithNotifications;
+    use WithPagination;
+    use WithPaginationControl;
     use WithReordering;
+    use WithRowActions;
+    use WithSorters;
+    use WithTreeResults;
+    use WithVariantFilters;
 
     public TableReference $tableReference;
+
     private ?Table $table = null;
 
     public ?int $resultPageCount = null;
+
     public ?int $resultTotal = null;
+
+    public string $variant = 'card';
 
     public function mount(Table $table)
     {
@@ -59,9 +64,23 @@ class TableComponent extends Component
     public function getListeners()
     {
         return [
-            'dialogSaved-' . $this->getId() => 'onActionDialogSaved',
+            'dialogSaved-'.$this->getId() => 'onActionDialogSaved',
             'requestRefresh' => '$refresh',
+            'scoped-to-locale' => 'onScopedToLocale',
         ];
+    }
+
+    public function onScopedToLocale($locale)
+    {
+        // Filter result by site...
+        foreach ($this->getFilters() as $filter) {
+            if ($filter instanceof SiteFilter) {
+                $this->filters[$filter->getKey()] = $locale;
+
+                // Allow Alpine to listen to this event
+                $this->dispatch($this->getFiltersUpdatedEvent());
+            }
+        }
     }
 
     public function getTable(): Table
@@ -138,7 +157,9 @@ class TableComponent extends Component
         if ($this->shouldReturnResultsAsTree()) {
             $this->areResultsAsTree = true;
 
-            return $this->getResultsAsTree($builder, $this->getTable()->getResourceReference()->getResource(), $forceAsCollection);
+            $treeResource = $this->getTable()->getTreeResource() ?: $this->getTable()->getResourceReference()->getResource();
+
+            return $this->getResultsAsTree($builder, $treeResource, $forceAsCollection);
         }
 
         if (! $this->hasPagination()) {

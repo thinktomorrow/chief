@@ -16,7 +16,9 @@ class TagFilter extends SelectFilter
     private string $optionType = 'all';
 
     private ?Collection $tags = null;
+
     private array $tagGroupIds = [];
+
     private array $ownerTypes = [];
 
     public static function makeDefault(string $resourceKey): self
@@ -98,7 +100,7 @@ class TagFilter extends SelectFilter
     public function filterByOwnerTypes(array|string $ownerTypes): static
     {
         $this->optionType = 'owner_type';
-        $this->ownerTypes = (array)$ownerTypes;
+        $this->ownerTypes = (array) $ownerTypes;
 
         return $this;
     }
@@ -106,7 +108,7 @@ class TagFilter extends SelectFilter
     public function filterByTagCategory(array|string|int $tagGroupIds): static
     {
         $this->optionType = 'category';
-        $this->tagGroupIds = (array)$tagGroupIds;
+        $this->tagGroupIds = (array) $tagGroupIds;
 
         return $this;
     }

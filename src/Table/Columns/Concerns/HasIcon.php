@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 trait HasIcon
 {
     protected ?string $prependIcon = null;
+
     protected ?string $appendIcon = null;
 
     public function getPrependIcon(): ?string
@@ -41,6 +42,21 @@ trait HasIcon
     public function iconEdit(): static
     {
         return $this->icon('<x-chief::icon.quill-write />');
+    }
+
+    public function iconView(): static
+    {
+        return $this->icon('<x-chief::icon.view />');
+    }
+
+    public function iconAdd(): static
+    {
+        return $this->icon('<x-chief::icon.plus-sign />');
+    }
+
+    public function iconDelete(): static
+    {
+        return $this->icon('<x-chief::icon.delete />');
     }
 
     private function renderIcon(string $icon): string

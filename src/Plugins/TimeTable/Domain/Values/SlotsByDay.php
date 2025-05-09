@@ -14,7 +14,7 @@ class SlotsByDay
         // Type check
         array_map(fn (Slot $slot) => $slot, $slots);
 
-        $model = new static();
+        $model = new static;
 
         $model->day = $day;
         $model->slots = $slots;
@@ -91,5 +91,4 @@ class SlotsByDay
     {
         return array_map(fn (Slot $slot) => $slot->getAsString(), $this->slots);
     }
-
 }

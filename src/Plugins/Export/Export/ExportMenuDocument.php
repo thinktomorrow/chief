@@ -17,12 +17,14 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyles, WithStyles, WithHeadings, WithColumnWidths, WithColumnFormatting
+class ExportMenuDocument implements FromCollection, WithColumnFormatting, WithColumnWidths, WithDefaultStyles, WithHeadings, WithMapping, WithStyles
 {
     use Exportable;
 
     private Collection $models;
+
     private array $locales;
+
     private Collection $styleCollection;
 
     public function __construct(Collection $models, array $locales)
@@ -38,9 +40,6 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
         return $this->models;
     }
 
-    /**
-     * @return array
-     */
     public function columnFormats(): array
     {
         return [];
@@ -56,7 +55,7 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
 
         return [
             encrypt($row->id),
-            $row->menu_type,
+            $row->menu->type.($row->menu->title ? ': '.$row->menu->title : ''),
             $row->type,
             ...$values,
         ];
@@ -119,9 +118,9 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
             ->setColor(new Color('FF666666'));
 
         $defaultStyle->getAlignment()
-                ->setHorizontal(Alignment::HORIZONTAL_LEFT)
-                ->setVertical(Alignment::VERTICAL_CENTER)
-                ->setWrapText(true);
+            ->setHorizontal(Alignment::HORIZONTAL_LEFT)
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setWrapText(true);
 
         return $defaultStyle;
     }
@@ -129,7 +128,6 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
     /**
      * Style options: fill, font, borders, alignment, numberFormat, protection
      *
-     * @param Worksheet $sheet
      * @return \array[][]
      */
     public function styles(Worksheet $sheet)
@@ -137,22 +135,22 @@ class ExportMenuDocument implements FromCollection, WithMapping, WithDefaultStyl
         return [
             'A' => [
                 'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9']],
             ],
             'B' => [
                 'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9']],
             ],
             'C' => [
                 'alignment' => ['wrapText' => false],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9' ]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FFD9D9D9']],
             ],
 
             // Style the first row as bold text.
             1 => [
                 'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
-                'font' => ['bold' => true, 'color' => ['argb' => Color::COLOR_WHITE ]],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FF333333' ]]],
+                'font' => ['bold' => true, 'color' => ['argb' => Color::COLOR_WHITE]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FF333333']]],
         ];
 
     }
