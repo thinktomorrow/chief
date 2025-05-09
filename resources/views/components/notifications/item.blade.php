@@ -36,19 +36,19 @@
 >
     <div class="shrink-0 rounded-full">
         <template x-if="type == 'info'">
-            <svg class="h-6 w-6 bg-primary-50 text-primary-500"><use xlink:href="#icon-information-circle"></use></svg>
+            <x-chief::icon.information-circle class="size-6 bg-primary-50 text-primary-500" />
         </template>
 
         <template x-if="type == 'success'">
-            <svg class="h-6 w-6 bg-green-50 text-green-500"><use xlink:href="#icon-check-circle"></use></svg>
+            <x-chief::icon.checkmark-circle class="size-6 bg-green-50 text-green-500" />
         </template>
 
         <template x-if="type == 'warning'">
-            <svg class="h-6 w-6 bg-orange-50 text-orange-500"><use xlink:href="#icon-exclamation-triangle"></use></svg>
+            <x-chief::icon.alert-circle class="size-6 bg-orange-50 text-orange-500" />
         </template>
 
         <template x-if="type == 'error'">
-            <svg class="h-6 w-6 bg-red-50 text-red-500"><use xlink:href="#icon-exclamation-circle"></use></svg>
+            <x-chief::icon.alert-circle class="size-6 bg-red-50 text-red-500" />
         </template>
     </div>
 
@@ -57,6 +57,6 @@
     </div>
 
     <button type="button" class="shrink-0" x-on:click="isOpen = false">
-        <svg class="h-5 w-5 text-grey-500"><use xlink:href="#icon-x-mark"></use></svg>
+        <x-chief::icon.cancel class="size-5 text-grey-500" />
     </button>
 </div>

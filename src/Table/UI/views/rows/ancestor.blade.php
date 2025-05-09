@@ -9,9 +9,7 @@
                 {{ $this->getAncestorTreeLabel($ancestor) }}
 
                 @if (! $loop->last)
-                    <svg class="my-1 size-3">
-                        <use xlink:href="#icon-chevron-right"></use>
-                    </svg>
+                    <x-chief::icon.chevron-right class="my-1 size-3" />
                 @endif
             @endforeach
         </div>
