@@ -6,7 +6,11 @@
     <x-slot name="header">
         <x-chief::page.header
             :breadcrumbs="[
-                ['label' => $resource->getIndexTitle(), 'url' => $manager->route('index'), 'icon' => $resource->getNavItem()?->icon()],
+                [
+                    'label' => $resource->getIndexTitle(), 
+                    'url' => $manager->route('index'), 
+                    'icon' => $resource->getNavItem()?->icon()
+                ], 
                 $title
             ]"
         />
@@ -17,7 +21,8 @@
             @csrf
 
             <x-chief::form.fieldset class="w-full space-y-3">
-                <x-chief::form.label for="allowed_sites" required>Op welke sites wil je de nieuwe pagina tonen?
+                <x-chief::form.label for="allowed_sites" required>
+                    Op welke sites wil je de nieuwe pagina tonen?
                 </x-chief::form.label>
 
                 @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::all() as $site)
@@ -49,7 +54,7 @@
             </x-chief::form.fieldset>
 
             @foreach ($layout->filterByNotTagged(['not-on-model-create', 'not-on-create'])->getComponents() as $component)
-                @if($component instanceof \Thinktomorrow\Chief\Forms\Layouts\Form)
+                @if ($component instanceof \Thinktomorrow\Chief\Forms\Layouts\Form)
                     {{ $component->displayAsInlineForm()->render() }}
                 @else
                     {{ $component->render() }}
