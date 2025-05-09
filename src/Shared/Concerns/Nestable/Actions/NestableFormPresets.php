@@ -12,6 +12,7 @@ class NestableFormPresets
         yield Form::make('nestable_parent_form')
             ->title('Paginastructuur')
             ->position('aside')
+            ->displayAsTransparentForm()
             ->items([
                 MultiSelect::make('parent_id')
                     ->label('Bovenliggend item')

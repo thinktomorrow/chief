@@ -6,15 +6,16 @@ trait HasFormDisplay
 {
     /**
      * How the form is displayed on the page. Options are:
-     * - window: the form is displayed in a window and edits are done via dialog
-     * - blank: same as window but display is without window layout
+     * - card: the form is displayed in a card and edits are done via dialog
+     * - transparent: same as card but display is without card layout
      * - inline: the form is displayed as an inline form in window
+     * - compact: the form is displayed as a compact form and edits are done via dialog
      */
-    protected string $formDisplay = 'window';
+    protected string $formDisplay = 'card';
 
-    public function displayAsWindowForm(): static
+    public function displayAsCardForm(): static
     {
-        return $this->setFormDisplay('window');
+        return $this->setFormDisplay('card');
     }
 
     public function displayAsTransparentForm(): static

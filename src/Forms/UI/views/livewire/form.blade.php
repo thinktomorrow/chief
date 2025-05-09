@@ -1,7 +1,6 @@
 <x-chief::window
     :title="$form->getTitle()"
     :variant="$form->getFormDisplay()"
-    {{-- TODO(tijs): you can do cleaner than this --}}
     x-data="{
         formUpdated: false,
         init() {

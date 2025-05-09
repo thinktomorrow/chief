@@ -32,6 +32,7 @@ class FieldPresets
         yield Form::make('form_seo')
             ->title('Seo')
             ->position('aside')
+            ->displayAsTransparentForm()
             ->items([
                 Text::make('seo_title')
                     ->label('Titel')
