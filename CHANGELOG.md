@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## 0.10.1 - 2025-05-11
+
 - Changed: (breaking) Repeat items are no longer allowed to be localized. Localize the repeat field instead. You can run
   the migrate command `chief:localize-repeat-field {classes} {key}` to convert the json data to the new format.
 - Removed: The previously deprecated `custom-scripts-after-vue` stack (loaded in the page layout) was removed.
