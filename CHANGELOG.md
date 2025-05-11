@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## 0.10.2 - 2025-05-11
+
 - Fixed: Propagate url change for nestable models. Also allow homepage urls to propagate to child models.
 
 ## 0.10.1 - 2025-05-11
