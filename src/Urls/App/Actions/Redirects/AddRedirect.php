@@ -10,10 +10,10 @@ final class AddRedirect
 
     private string $targetId;
 
-    public function __construct(string $redirectId, string $targetId)
+    public function __construct(string|int $redirectId, string|int $targetId)
     {
-        $this->redirectId = $redirectId;
-        $this->targetId = $targetId;
+        $this->redirectId = (string) $redirectId;
+        $this->targetId = (string) $targetId;
     }
 
     public function getRedirectId(): string

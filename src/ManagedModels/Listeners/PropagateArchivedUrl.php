@@ -28,7 +28,7 @@ class PropagateArchivedUrl
             if ($targetRecord = $targetRecords->first(function ($record) use ($urlRecord) {
                 return $record->locale == $urlRecord->locale && ! $record->isRedirect();
             })) {
-                app(RedirectApplication::class)->addRedirect(new AddRedirect($urlRecord->id, $targetRecord->id));
+                app(RedirectApplication::class)->addRedirect(new AddRedirect((string) $urlRecord->id, $targetRecord->id));
             }
         }
 
