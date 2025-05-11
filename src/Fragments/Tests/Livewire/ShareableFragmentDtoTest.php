@@ -35,7 +35,7 @@ class ShareableFragmentDtoTest extends ChiefTestCase
         $context2 = FragmentTestHelpers::createContext($owner2);
         FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
 
-        $sharedFragmentDtos = $this->composer->getSharedFragmentDtos($fragment->getFragmentId(), $this->owner);
+        $sharedFragmentDtos = $this->composer->getSharedFragmentDtos($fragment->getFragmentId(), $this->owner->modelReference());
 
         $this->assertCount(2, $sharedFragmentDtos);
 
