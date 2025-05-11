@@ -18,6 +18,7 @@ class FieldPresets
         yield Form::make('tags')
             ->title('Tags')
             ->position('aside')
+            ->displayAsTransparentForm()
             ->items([
                 $field ?: static::tagSelect($model),
             ]);

@@ -42,9 +42,7 @@
         {{-- Mobile Chief title --}}
         <div class="flex items-center justify-start lg:hidden">
             <div data-mobile-navigation-toggle class="shrink-0 cursor-pointer rounded-md p-2 hover:bg-grey-50">
-                <svg class="body-dark size-6">
-                    <use xlink:href="#icon-arrow-long-left"></use>
-                </svg>
+                <x-chief::icon.arrow-left class="body-dark size-6" />
             </div>
 
             <a

@@ -41,8 +41,6 @@
                             <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
                         @endforeach
                     @endif
-
-                    {{-- @include('chief::manager._partials.edit-actions') --}}
                 </x-slot>
             @endif
         </x-chief::page.header>
@@ -67,7 +65,7 @@
     @if ($showSidebar)
         <x-slot name="sidebar">
             @foreach ($layout->filterByPosition('aside-top')->getComponents() as $component)
-                {{ $component->displayAsTransparentForm()->render() }}
+                {{ $component->render() }}
             @endforeach
 
             @if ($hasSiteLinks)
@@ -75,7 +73,7 @@
             @endif
 
             @foreach ($layout->filterByPosition('aside')->getComponents() as $component)
-                {{ $component->displayAsTransparentForm()->render() }}
+                {{ $component->render() }}
             @endforeach
         </x-slot>
     @endif

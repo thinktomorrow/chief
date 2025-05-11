@@ -51,7 +51,7 @@
         @endif
 
         @if($exception)
-            <svg class="w-5 h-5 text-orange-500 shrink-0"><use xlink:href="#icon-exclamation-circle"></use></svg>
+            <x-chief::icon.alert-circle class="size-5 text-orange-500 shrink-0" />
         @endif
     </div>
 

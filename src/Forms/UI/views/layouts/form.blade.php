@@ -1,4 +1,1 @@
-<livewire:chief-wire::form
-    :model="$getModel()"
-    :form="$component"
-/>
+<livewire:chief-wire::form :model="$getModel()" :form="$component" />
