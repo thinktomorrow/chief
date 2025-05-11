@@ -67,7 +67,9 @@ class PropagateUrlChange
             if ($record = $this->repository->findActiveByModel($model->modelReference(), $locale)) {
                 $strippedSlug = StripBaseUrlSegments::strip($model, $locale, $record->slug, $strippableSlugs);
 
-                $this->application->update(new UpdateUrl((string) $record->id, $strippedSlug, $record->status));
+                if ($record->slug !== $strippedSlug) {
+                    $this->application->update(new UpdateUrl((string) $record->id, $strippedSlug, $record->status));
+                }
             }
         }
 
