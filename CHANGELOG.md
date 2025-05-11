@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Changed: (breaking) Repeat items are no longer allowed to be localized. Localize the repeat field instead. You can run
+  the migrate command `chief:localize-repeat-field {classes} {key}` to convert the json data to the new format.
 - Removed: The previously deprecated `custom-scripts-after-vue` stack (loaded in the page layout) was removed.
   Use the `custom-scripts` stack instead.
 - Removed: SVG symbols file. All projects referring to SVG icons by id with `xlink:href`, should now use full SVG icons

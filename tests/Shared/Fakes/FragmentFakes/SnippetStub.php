@@ -25,8 +25,8 @@ class SnippetStub extends BaseFragment implements Fragment
         yield Text::make('title');
         yield Text::make('title_trans')->locales();
         yield File::make('thumb')->locales();
-        yield Repeat::make('links')->items([
-            Text::make('title')->locales(),
+        yield Repeat::make('links')->locales()->items([
+            Text::make('title'),
             Text::make('url'),
         ]);
     }

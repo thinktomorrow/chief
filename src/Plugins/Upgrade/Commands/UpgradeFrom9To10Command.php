@@ -123,6 +123,8 @@ class UpgradeFrom9To10Command extends BaseCommand
             'ShowsPageState' => 'Trait ShowsPageState is removed. Please remove it from your model.',
             'getInstanceAttributes' => 'Method getInstanceAttributes is removed. Please replace it with getAttributesOnCreate(). It also does not need to return a nested array. Just return the attributes array.',
             'FragmentsOwner' => 'The FragmentsOwner interface is removed. Please remove it from your model.',
+            'custom-scripts-after-vue' => 'The custom-scripts-after-vue directive is removed. Please remove it from your blade files.',
+            'xlink:href' => 'You should now use full SVG icons instead',
         ];
 
         $allClean = true;
