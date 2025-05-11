@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Propagate url change for nestable models. Also allow homepage urls to propagate to child models.
+
 ## 0.10.1 - 2025-05-11
 
 - Changed: (breaking) Repeat items are no longer allowed to be localized. Localize the repeat field instead. You can run
