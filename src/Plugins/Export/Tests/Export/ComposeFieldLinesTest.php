@@ -12,7 +12,6 @@ class ComposeFieldLinesTest extends TestCase
 {
     public function test_it_can_export_localized_model_fields()
     {
-        $this->disableExceptionHandling();
         $article = $this->setUpAndCreateArticle(['title_trans' => ['nl' => 'title article nl', 'en' => 'title article en'], 'content_trans' => ['nl' => 'content article nl']]);
         $resource = app(Registry::class)->resource('article_page');
 

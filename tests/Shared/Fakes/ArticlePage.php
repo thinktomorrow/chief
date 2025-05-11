@@ -34,6 +34,7 @@ class ArticlePage extends Model implements Page
 
     public $dynamicKeys = [
         'title', 'custom', 'title_trans', 'content_trans', 'seo_title', 'seo_description', 'title_sanitized', 'title_sanitized_trans',
+        'hero_links',
     ];
 
     public static function migrateUp()

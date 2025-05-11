@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Export\Lines;
 
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
 use Thinktomorrow\Chief\Forms\Fields\Html;
@@ -134,6 +135,9 @@ class ComposeFieldLines
 
     private function extractRepeatField(Resource $resource, $model, Repeat $field, array $locales): LinesCollection
     {
+        // Repeat field itself is localized... Items not.
+        // TODO: Protect in repeat field itself by checking if items has locales
+
         $lines = new LinesCollection;
 
         if ($this->ignoreEmptyValues && ! $field->getValue()) {
@@ -141,7 +145,6 @@ class ComposeFieldLines
         }
 
         $components = $field->getRepeatedComponents();
-
         foreach ($components as $componentGroup) {
             foreach (Fields::make($componentGroup) as $nestedField) {
                 $lines = $lines->merge(
@@ -151,6 +154,21 @@ class ComposeFieldLines
         }
 
         return $lines;
+    }
+
+    private function flattenRepeatFieldValues(Repeat $field, array $values): array
+    {
+        $flattened = [];
+
+        foreach ($values as $key => $value) {
+            if (is_array($value)) {
+                $flattened = array_merge($flattened, $this->flattenRepeatFieldValues($field, $value));
+            } else {
+                $flattened[$field->getKey().'.'.$key] = $value;
+            }
+        }
+
+        return $flattened;
     }
 
     private function addFragmentFieldValues(ContextOwner $model, array $locales): LinesCollection
@@ -201,7 +219,33 @@ class ComposeFieldLines
         }
 
         if ($field instanceof Repeat) {
-            return $lines->merge($this->extractRepeatField($resource, $model, $field, $locales));
+
+            if ($field->hasLocales()) {
+                $values = collect($locales)->mapWithKeys(fn ($locale) => [$locale => $field->getValue($locale)]);
+            } else {
+                $values = [FieldLine::NON_LOCALIZED => $field->getValue()];
+            }
+
+            $valuesGroups = $this->extractRepeatValues($values);
+
+            foreach ($valuesGroups as $valuesGroup) {
+
+                foreach ($valuesGroup as $key => $_values) {
+
+                    $_values = ! $this->ignoreNonLocalized ? [FieldLine::NON_LOCALIZED => '', ...$_values] : $_values;
+
+                    $lines->push(new FieldLine(
+                        $model->modelReference()->get(),
+                        FieldNameHelpers::replaceBracketsByDots($field->getName()),
+                        $this->modelLabel,
+                        ucfirst($resource->getLabel()),
+                        ($field->getLabel() ?: $field->getKey()).' > '.$key,
+                        $_values,
+                    ));
+                }
+            }
+
+            return $lines;
         }
 
         if ($this->ignoreNonLocalized && ! $field->hasLocales()) {
@@ -235,6 +279,53 @@ class ComposeFieldLines
         ));
 
         return $lines;
+    }
+
+    private function extractRepeatValues(Collection|array $input): array
+    {
+        if (! is_array($input)) {
+            $input = $input->all();
+        }
+
+        $locales = array_keys($input);
+
+        $maxCount = max(array_map(fn ($_input) => ! $_input || ! is_array($_input) ? 0 : count($_input), $input));
+
+        // Collect all field names used anywhere
+        $fieldKeys = [];
+        foreach ($input as $localeEntries) {
+
+            // null value, so nothing exists yet for this repeat locale.
+            if (! is_array($localeEntries)) {
+                continue;
+            }
+
+            foreach ($localeEntries as $entry) {
+                foreach ($entry as $field => $_) {
+                    $fieldKeys[$field] = true;
+                }
+            }
+        }
+        $fieldKeys = array_keys($fieldKeys);
+
+        $result = [];
+
+        for ($i = 0; $i < $maxCount; $i++) {
+            $item = [];
+
+            foreach ($fieldKeys as $fieldKey) {
+                $item[$fieldKey] = [];
+
+                foreach ($locales as $locale) {
+                    $value = $input[$locale][$i][$fieldKey] ?? null;
+                    $item[$fieldKey][$locale] = $value;
+                }
+            }
+
+            $result[] = $item;
+        }
+
+        return $result;
     }
 
     private function areAllValuesEmpty(array $values): bool
