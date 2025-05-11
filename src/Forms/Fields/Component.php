@@ -117,20 +117,6 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         // This is an empty fill and acts as the component default.
     }
 
-    //    public function fieldFormView(string $fieldFormView): static
-    //    {
-    //        $this->fieldFormView = $fieldFormView;
-    //
-    //        return $this;
-    //    }
-    //
-    //    public function fieldPreviewView(string $fieldPreviewView): static
-    //    {
-    //        $this->fieldPreviewView = $fieldPreviewView;
-    //
-    //        return $this;
-    //    }
-
     protected function wireableMethods(array $components): array
     {
         return [

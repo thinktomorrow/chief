@@ -7,6 +7,8 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 use DeepCopy\DeepCopy;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Forms\Exceptions\RepeatItemsCannotBeLocalized;
+use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 
@@ -55,5 +57,31 @@ class Repeat extends Component implements Field, HasTaggedComponents
             });
 
         return $clonedComponents;
+    }
+
+    public function components(array $components): static
+    {
+        $this->components = $components;
+
+        $this->ensureItemsAreNotLocalized();
+
+        return $this;
+    }
+
+    public function addComponent($component): void
+    {
+        $this->components[] = $component;
+
+        $this->ensureItemsAreNotLocalized();
+    }
+
+    private function ensureItemsAreNotLocalized(): void
+    {
+        foreach (Fields::make($this->components)->all() as $component) {
+            if ($component instanceof LocalizedField && $component->hasLocales()) {
+                throw new RepeatItemsCannotBeLocalized('
+                    Repeat items cannot be localized. Localize the repeat field itself.');
+            }
+        }
     }
 }
