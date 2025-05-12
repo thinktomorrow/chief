@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Issue where change to homepage of a nestable model conflicted when propagating url changes with parent slug.
+- Added: Homepage link is no longer deletable via the edit-links of a page
+
 ## 0.10.2 - 2025-05-11
 
 - Fixed: Propagate url change for nestable models. Also allow homepage urls to propagate to child models.

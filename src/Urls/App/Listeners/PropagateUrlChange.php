@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Urls\App\Actions\UpdateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 use Thinktomorrow\Chief\Urls\App\Queries\StripBaseUrlSegments;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
+use Thinktomorrow\Chief\Urls\Models\HomepageSlug;
 
 class PropagateUrlChange
 {
@@ -66,6 +67,10 @@ class PropagateUrlChange
 
             if ($record = $this->repository->findActiveByModel($model->modelReference(), $locale)) {
                 $strippedSlug = StripBaseUrlSegments::strip($model, $locale, $record->slug, $strippableSlugs);
+
+                if (HomepageSlug::is($record->slug)) {
+                    return;
+                }
 
                 $this->application->update(new UpdateUrl((string) $record->id, $strippedSlug, $record->status, true, true));
             }

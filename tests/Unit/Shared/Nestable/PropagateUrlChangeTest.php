@@ -89,6 +89,21 @@ class PropagateUrlChangeTest extends ChiefTestCase
         $this->assertEquals('http://localhost/parent-2/foobar', $node->url());
     }
 
+    public function test_it_changes_nested_url_to_homepage_slug()
+    {
+        $this->prepareModels();
+        $this->changeParentModel('fifth', 'fourth');
+        $node = $this->findNode('fifth');
+
+        app(UrlApplication::class)->changeHomepageUrl(new ChangeHomepageUrl($node->modelReference(), 'nl'));
+
+        $parentNode = $this->findNode('fourth');
+        $this->assertEquals('http://localhost/parent', $parentNode->url());
+
+        $node = $this->findNode('fifth');
+        $this->assertEquals('http://localhost', $node->url());
+    }
+
     public function test_it_uses_current_parent_slug_for_url_slug_when_parent_selection_changes()
     {
         $this->prepareModels();
