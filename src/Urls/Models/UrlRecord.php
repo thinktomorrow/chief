@@ -110,7 +110,7 @@ class UrlRecord extends Model
 
     public function isHomepage(): bool
     {
-        return $this->slug === '/';
+        return HomepageSlug::is($this->slug);
     }
 
     public static function existsIgnoringRedirects(?string $slug, ?string $locale = null, ?Model $ignoredModel = null): bool

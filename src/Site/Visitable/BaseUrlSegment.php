@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Visitable;
 
+use Thinktomorrow\Chief\Urls\Models\HomepageSlug;
+
 class BaseUrlSegment
 {
     public static function find(array $segments, ?string $locale = null)
@@ -43,7 +45,7 @@ class BaseUrlSegment
     {
         // If this is a '/' slug, it indicates the homepage for this locale. In this case,
         // we wont be trimming the slash
-        if ($slug === '/') {
+        if (HomepageSlug::is($slug)) {
             return $slug;
         }
 

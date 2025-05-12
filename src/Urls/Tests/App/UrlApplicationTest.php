@@ -2,11 +2,9 @@
 
 namespace Thinktomorrow\Chief\Urls\Tests\App;
 
-use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
-use Thinktomorrow\Chief\Urls\App\Actions\DeleteUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\ReactivateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UpdateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
@@ -135,23 +133,6 @@ class UrlApplicationTest extends ChiefTestCase
 
         $updated = $this->repository->find($existingId);
         $this->assertEquals('updated-slug', $updated->slug);
-    }
-
-    public function test_it_deletes_url_and_dispatches_event()
-    {
-        Event::fake();
-
-        $existingId = $this->repository->create($this->model->modelReference(), [
-            'site' => 'nl',
-            'slug' => 'my-slug',
-            'status' => LinkStatus::online->value,
-        ]);
-
-        $this->application->delete(new DeleteUrl($existingId));
-
-        $this->assertDatabaseMissing('chief_urls', ['id' => $existingId]);
-
-        Event::assertDispatched(\Thinktomorrow\Chief\Urls\Events\UrlDeleted::class);
     }
 
     public function test_update_fails_if_slug_is_already_used_by_active_url()

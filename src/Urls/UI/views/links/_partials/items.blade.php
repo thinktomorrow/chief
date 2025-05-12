@@ -33,7 +33,7 @@
                             <x-chief::icon.arrow-turn-backward />
                             <span>Ongedaan maken</span>
                         </x-chief::button>
-                    @else
+                    @elseif($this->isAllowedToDelete($link))
                         {{-- No badge component here because of data binding that doesn't work with variant --}}
                         <span
                             x-text="status"

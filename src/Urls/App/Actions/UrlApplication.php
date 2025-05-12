@@ -10,7 +10,9 @@ use Thinktomorrow\Chief\Urls\App\Actions\Redirects\RedirectApplication;
 use Thinktomorrow\Chief\Urls\App\Actions\Redirects\RetargetAllRedirectsOf;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
 use Thinktomorrow\Chief\Urls\Events\UrlDeleted;
+use Thinktomorrow\Chief\Urls\Exceptions\CannotDeleteHomepageSlug;
 use Thinktomorrow\Chief\Urls\Exceptions\HomepageSlugNotAllowed;
+use Thinktomorrow\Chief\Urls\Models\HomepageSlug;
 
 class UrlApplication
 {
@@ -114,9 +116,20 @@ class UrlApplication
 
         $slug = $command->getSlug();
 
-        if (! $slug || $slug == '/') {
+        if (HomepageSlug::is($slug)) {
             throw new HomepageSlugNotAllowed('Slug ['.$slug.'] not allowed since it would interfere with the homepage link.');
         }
+    }
+
+    public function safeDelete(DeleteUrl $command): void
+    {
+        $url = $this->repository->find($command->getId());
+
+        if (HomepageSlug::is($url->slug)) {
+            throw new CannotDeleteHomepageSlug('Slug [id'.$url->id.', site: '.$url->site.'] cannot be deleted because it is the homepage slug.');
+        }
+
+        $this->delete($command);
     }
 
     public function delete(DeleteUrl $command): void

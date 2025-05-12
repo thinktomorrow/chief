@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\Urls\App\Actions\DeleteUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UpdateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 use Thinktomorrow\Chief\Urls\App\ValidationRules\UniqueUrlSlugRule;
+use Thinktomorrow\Chief\Urls\Models\HomepageSlug;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
 class EditLinks extends Component
@@ -85,18 +86,13 @@ class EditLinks extends Component
             'form.*.status.required' => 'Status is verplicht',
         ]);
 
-        //        $locales = collect($this->form)
-        //            ->reject(fn ($values) => ! $values)
-        //            ->reject(fn ($value, $key) => in_array($key, $this->deletionQueue))
-        //            ->keys()->toArray();
-
         foreach ($this->form as $locale => $values) {
 
             $link = $this->links->first(fn ($_link) => $_link->locale == $locale);
             $urlRecordExists = $link->url && $link->url->id;
 
             if ($urlRecordExists && in_array($locale, $this->deletionQueue)) {
-                app(UrlApplication::class)->delete(new DeleteUrl($link->url->id));
+                app(UrlApplication::class)->safeDelete(new DeleteUrl($link->url->id));
 
                 continue;
             }
@@ -178,5 +174,14 @@ class EditLinks extends Component
         }
 
         return in_array($locale, $this->getModel()->getAllowedSites());
+    }
+
+    public function isAllowedToDelete(LinkDto $link): bool
+    {
+        if ($link->url && HomepageSlug::is($link->url->slug)) {
+            return false;
+        }
+
+        return true;
     }
 }
