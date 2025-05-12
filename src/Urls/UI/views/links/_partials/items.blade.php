@@ -19,9 +19,7 @@
                     @endif
 
                     <p class="my-0.5 text-sm/5 font-medium text-grey-500">
-                        <span x-text="baseUrl"></span>
-                        /
-                        <span x-text="url"></span>
+                        <span x-text="baseUrl"></span>/<span x-text="url.replace(/^\/+/, '')"></span>
                     </p>
                 </div>
 

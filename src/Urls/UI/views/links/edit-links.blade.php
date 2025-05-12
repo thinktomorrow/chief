@@ -2,7 +2,6 @@
     @if ($isOpen)
         <div class="space-y-4">
             @include('chief-urls::links._partials.items')
-            {{-- @include('chief-urls::links._partials.redirects') --}}
         </div>
 
         <x-slot name="footer">
