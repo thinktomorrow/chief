@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Table\Tests;
 
+use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\ModelFixture;
@@ -86,5 +87,14 @@ class ColumnItemValueTest extends TestCase
         $this->assertCount(2, $column->getItems());
         $this->assertEquals('dutch title', $column->getItems()->first()->getValue());
         $this->assertEquals('English title', $column->getItems()[1]->getValue());
+    }
+
+    public function test_it_verifies_if_value_can_be_rendered(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $column = ColumnText::make('fake')->value(Text::make('cannot-be-rendered'));
+
+        $column->getItems()->first()->getValue();
     }
 }

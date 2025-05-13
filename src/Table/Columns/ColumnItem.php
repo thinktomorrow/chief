@@ -64,17 +64,25 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     }
 
     /**
-     * Retrieve the renderable value for this column.
+     * Retrieve the render value for this column.
      */
     public function getValue(?string $locale = null): string|int|null|float|Stringable
     {
-        // Retrieve value(s)
         $value = $this->getDefaultValue($locale);
 
+        $this->verifyValueCanBeRendered($value);
+
+        return $this->teaseValue($value);
+    }
+
+    private function verifyValueCanBeRendered($value): void
+    {
         if (is_iterable($value)) {
             throw new \Exception('Non expected iterable value. The column item ['.$this->getKey().'] is expected to have a scalar value.');
         }
 
-        return $this->teaseValue($value);
+        if (! is_string($value) && ! is_int($value) && ! is_float($value) && ! is_null($value) && ! $value instanceof Stringable) {
+            throw new \InvalidArgumentException('The value cannot be rendered as table column. Value must be a string, int, float, null or an instance of Stringable. Got: '.gettype($value));
+        }
     }
 }

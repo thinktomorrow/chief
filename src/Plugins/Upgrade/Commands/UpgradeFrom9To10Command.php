@@ -121,7 +121,7 @@ class UpgradeFrom9To10Command extends BaseCommand
             'redirectAfterSubmit(' => 'The following files have the old Form::redirectAfterSubmit method. This method has been removed in Chief 0.10. Please remove it.',
             'showAsBlank()' => 'The following files have the old Form::showAsBlank method. This method has been removed in Chief 0.10. Please remove it.',
             'ShowsPageState' => 'Trait ShowsPageState is removed. Please remove it from your model.',
-            'getInstanceAttributes' => 'Method getInstanceAttributes is removed. Please replace it with getAttributesOnCreate(). It also does not need to return a nested array. Just return the attributes array.',
+            'getInstanceAttributes' => 'Method getInstanceAttributes is removed. Please replace it with `getAttributesOnCreate(): array`. It also does not need to return a nested array. Just return the attributes array. If you rely on manipulating the create input, you can use `prepareInputOnCreate(array $input): array`',
             'FragmentsOwner' => 'The FragmentsOwner interface is removed. Please remove it from your model.',
             'custom-scripts-after-vue' => 'The custom-scripts-after-vue directive is removed. Please remove it from your blade files.',
             'xlink:href' => 'You should now use full SVG icons instead',
