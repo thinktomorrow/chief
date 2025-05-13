@@ -4,7 +4,7 @@ on: [ push, pull_request ]
 
 jobs:
   analysis:
-    name: phpstan
+    name: larastan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,5 +25,5 @@ jobs:
       - name: Run composer install
         run: composer install -n --prefer-dist
 
-      - name: Run phpstan
+      - name: Run larastan
         run: ./vendor/bin/phpstan analyse src --level=2

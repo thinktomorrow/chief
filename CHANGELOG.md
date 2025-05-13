@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: Issue where change to homepage of a nestable model conflicted when propagating url changes with parent slug.
 - Added: Homepage link is no longer deletable via the edit-links of a page
+- Added: larastan github action to run static analysis on pull requests
 
 ## 0.10.2 - 2025-05-11
 
