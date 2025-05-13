@@ -70,6 +70,10 @@ trait HasForm
 
     private function getFieldsForValidation(): array
     {
+        if (! method_exists($this, 'getFields')) {
+            throw new \Exception('getFields method not found in the current class.');
+        }
+
         return collect($this->getFields())
             ->reject(fn ($field) => ! $field instanceof Field)
             ->all();
@@ -77,16 +81,28 @@ trait HasForm
 
     protected function getFilesForUpload(): Collection
     {
+        if (! isset($this->component)) {
+            throw new \Exception('Component not set as property.');
+        }
+
         return collect($this->component->getPreviewFiles())->reject(fn (PreviewFile $file) => ($file->isAttachedToModel || $file->isUploading || $file->isQueuedForDeletion || $file->mediaId));
     }
 
     protected function getFilesForAttach(): Collection
     {
+        if (! isset($this->component)) {
+            throw new \Exception('Component not set as property.');
+        }
+
         return collect($this->component->getPreviewFiles())->filter(fn (PreviewFile $file) => ($file->mediaId && ! $file->isQueuedForDeletion));
     }
 
     protected function getFilesForDeletion(): Collection
     {
+        if (! isset($this->component)) {
+            throw new \Exception('Component not set as property.');
+        }
+
         return collect($this->component->getPreviewFiles())->filter(fn (PreviewFile $file) => ($file->isAttachedToModel && $file->isQueuedForDeletion));
     }
 

@@ -8,7 +8,7 @@ parameters:
         - app
 
     # The level 10 is the highest level
-    level: 4
+    level: 1
 
     noModelMake: false
 

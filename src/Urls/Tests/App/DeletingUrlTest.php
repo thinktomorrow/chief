@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Thinktomorrow\Chief\Urls\Tests\App;
 
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
