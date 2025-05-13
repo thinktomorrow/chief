@@ -82,7 +82,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         }
 
         if (! is_string($value) && ! is_int($value) && ! is_float($value) && ! is_null($value) && ! $value instanceof Stringable) {
-            throw new \InvalidArgumentException('The value cannot be rendered as table column. Value must be a string, int, float, null or an instance of Stringable. Got: '.gettype($value));
+            throw new \InvalidArgumentException('The table column value for ['.$this->getKey().'] cannot be rendered. Value must be a string, int, float, null or an instance of Stringable. Got: '.gettype($value).'. Check if no conflicting model method or property exists for the given ['.$this->getColumnName().'] attribute.');
         }
     }
 }
