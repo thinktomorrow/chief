@@ -61,17 +61,7 @@ return [
             'short_name' => 'fr',
             'code' => 'fr-BE',
             'url' => env('CHIEF_SITES_URL_FR', env('APP_URL', 'http://localhost')),
-            'active' => false,
-        ],
-        [
-            'locale' => 'en',
-            'fallback_locale' => 'fr',
-            'asset_fallback_locale' => 'nl',
-            'name' => 'Brits',
-            'short_name' => 'english',
-            'code' => 'en-GB',
-            'url' => env('CHIEF_SITES_URL_EN', env('APP_URL', 'http://localhost')),
-            'active' => false,
+            'active' => true,
         ],
     ],
 
