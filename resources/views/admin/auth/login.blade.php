@@ -35,6 +35,7 @@
                         href="{{ route('chief.back.password.request') }}"
                         variant="blue"
                         size="sm"
+                        tabindex="-1"
                         class="mt-0.5"
                     >
                         Wachtwoord vergeten?
