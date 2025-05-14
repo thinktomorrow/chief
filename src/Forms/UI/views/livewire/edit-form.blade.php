@@ -8,7 +8,9 @@
             />
         </x-slot>
 
-        @include('chief-form::livewire._partials.edit-form-tabs')
+        @if(count($locales) > 0)
+            @include('chief-form::livewire._partials.locale-toggle')
+        @endif
 
         @foreach ($this->getComponents() as $childComponent)
             {{ $childComponent->render() }}

@@ -11,12 +11,14 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
 use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
 class EditFormComponent extends Component
 {
     use HasForm;
     use InteractsWithFields;
     use ShowsAsDialog;
+    use WithLocaleToggle;
 
     // parent livewire component id
     public string $parentComponentId;
@@ -24,10 +26,6 @@ class EditFormComponent extends Component
     public ModelReference $modelReference;
 
     public Form $formComponent;
-
-    public array $locales = [];
-
-    public ?string $scopedLocale = null;
 
     public function mount(ModelReference $modelReference, \Thinktomorrow\Chief\Forms\Layouts\Form $formComponent, string $parentComponentId)
     {
@@ -48,14 +46,15 @@ class EditFormComponent extends Component
     {
         $this->isOpen = true;
 
-        $this->locales = $values['locales'];
-        $this->scopedLocale = $values['scopedLocale'];
+        $components = $this->getComponents();
+
+        $this->setLocaleToggleOnOpen($values, $components);
 
         /**
          * Inject all field values in the Livewire form object
          * From then on we can use the form object to access the values
          */
-        $this->injectFormValues($this->getComponents());
+        $this->injectFormValues($components);
 
         $this->dispatch('form-dialog-opened', ...[
             'componentId' => $this->getId(),
