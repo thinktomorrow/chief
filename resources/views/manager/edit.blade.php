@@ -6,7 +6,7 @@
     $hasStates = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page') && count($model->getStateKeys()) > 0;
     $hasAnyAsideComponents = count($layout->filterByPosition('aside')->getComponents()) > 0;
 
-    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasStates || $hasAnyAsideComponents;
+    $showSidebar = $hasAnyAsideTopComponents || $hasSiteLinks || $hasAnyAsideComponents;
 @endphp
 
 <x-chief::page.template :title="$resource->getPageTitle($model)" :container="$showSidebar ? '2xl' : 'lg'">

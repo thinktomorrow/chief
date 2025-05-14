@@ -5,10 +5,13 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Locale toggle in form edit view is now hidden when no localized fields are present.
 - Fixed: Issue where change to homepage of a nestable model conflicted when propagating url changes with parent slug.
 - Added: Homepage link is no longer deletable via the edit-links of a page
 - Added: larastan github action to run static analysis on pull requests
 - Added: Verify if column item can be rendered in table.
+- Removed: `CHIEF_DISABLE_FIELD_REQUIRED_VALIDATION` option that allowed you to override required rules for local
+  development.
 
 ## 0.10.2 - 2025-05-11
 

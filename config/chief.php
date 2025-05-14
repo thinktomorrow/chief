@@ -121,7 +121,7 @@ return [
     ],
 
     /**
-     * Define your menus here. By default there is a generic 'main' menu but you
+     * Define your menu types here. By default there is a generic 'main' menu but you
      * are free to add different ones as well. e.g. footer-menu, sidebar,...
      */
     'menus' => [
@@ -198,13 +198,4 @@ return [
      * - 'preview' to use the preview view as a default so the admin can see drafted elements as well.
      */
     'preview-mode' => 'live',
-
-    /**
-     * During development, you'll sometimes want to disable required fields so you can
-     * manually test some input heavy form submissions. To easy this manual stuff,
-     * this flag allows the developer to disable any field requirements.
-     *
-     * This flag is only active in the local environment.
-     */
-    'disable_field_required_validation' => env('CHIEF_DISABLE_FIELD_REQUIRED_VALIDATION', false),
 ];
