@@ -7,10 +7,10 @@
         <x-chief::page.header
             :breadcrumbs="[
                 [
-                    'label' => $resource->getIndexTitle(), 
-                    'url' => $manager->route('index'), 
+                    'label' => $resource->getIndexTitle(),
+                    'url' => $manager->route('index'),
                     'icon' => $resource->getNavItem()?->icon()
-                ], 
+                ],
                 $title
             ]"
         />

@@ -81,7 +81,7 @@ trait HasItems
         } else {
             $result = call_user_func($this->itemsResolver, $this->getModel());
         }
-        //        $result = $result instanceof Collection ? $result : collect($result);
+
         $result = $result instanceof Collection ? $result : (! is_iterable($result) ? collect([$result]) : collect($result));
 
         return $result->values()->map(function (mixed $rawItem) {
