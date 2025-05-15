@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## 0.10.3 - 2025-05-15
+
 - Fixed: Unauthenticated redirectTo requires Request as parameter.
 - Fixed: Issue where change to homepage of a nestable model conflicted when propagating url changes with parent slug.
 - Fixed: Homepage link is no longer deletable via the edit-links of a page
