@@ -39,11 +39,11 @@ class CreateModelComponentTest extends ChiefTestCase
             ->assertSet('modelClass', ArticlePage::class);
     }
 
-    public function test_it_cannot_scope_locale_if_locale_is_not_a_allowed_site()
+    public function test_it_cannot_scope_locale_if_locale_is_not_present()
     {
         Livewire::test(CreateModelComponent::class)
             ->set('scopedLocale', 'fr')
-            ->set('allowed_sites', ['nl', 'en'])
+            ->set('locales', ['nl', 'en'])
             ->assertSet('scopedLocale', 'nl');
     }
 
@@ -52,13 +52,13 @@ class CreateModelComponentTest extends ChiefTestCase
         Livewire::test(CreateModelComponent::class)
             ->set('form', ['title' => 'Foo'])
             ->set('modelClass', ArticlePage::class)
-            ->set('allowed_sites', ['nl'])
+            ->set('locales', ['nl'])
             ->set('scopedLocale', 'nl')
             ->set('isOpen', true)
             ->call('close')
             ->assertSet('form', [])
             ->assertSet('modelClass', '')
-            ->assertSet('allowed_sites', [])
+            ->assertSet('locales', [])
             ->assertSet('scopedLocale', null)
             ->assertSet('isOpen', false);
     }
@@ -67,7 +67,7 @@ class CreateModelComponentTest extends ChiefTestCase
     {
         Livewire::test(CreateModelComponent::class)
             ->dispatch('open-create-model', ['modelClass' => ArticlePage::class])
-            ->set('allowed_sites', ['nl'])
+            ->set('locales', ['nl'])
             ->set('form', ['title_trans' => ''])
             ->call('save')
             ->assertHasErrors(['title_trans.nl']);
@@ -75,11 +75,26 @@ class CreateModelComponentTest extends ChiefTestCase
         $this->assertDatabaseCount('article_pages', 0);
     }
 
+    public function test_it_saves_locales()
+    {
+        $this->disableExceptionHandling();
+        Livewire::test(CreateModelComponent::class)
+            ->dispatch('open-create-model', ['modelClass' => ArticlePage::class])
+            ->set('locales', ['nl'])
+            ->set('form', ['title_trans' => ['nl' => 'Test title']])
+            ->call('save');
+
+        $this->assertDatabaseHas('article_pages', [
+            'id' => 1,
+            'allowed_sites' => json_encode(['nl']),
+        ]);
+    }
+
     public function test_it_saves_and_redirects_to_edit_page()
     {
         Livewire::test(CreateModelComponent::class)
             ->dispatch('open-create-model', ['modelClass' => ArticlePage::class])
-            ->set('allowed_sites', ['nl'])
+            ->set('locales', ['nl'])
             ->set('form', ['title_trans' => ['nl' => 'Test title']])
             ->call('save')
             ->assertRedirect('/admin/article_page/1/edit');

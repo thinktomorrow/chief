@@ -12,20 +12,18 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Models\App\Actions\CreateModel;
 use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
+use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
 class CreateModelComponent extends Component
 {
     use HasForm;
     use InteractsWithFields;
     use ShowsAsDialog;
+    use WithLocaleToggle;
 
     public ?string $parentComponentId = null;
 
     public string $modelClass;
-
-    public array $allowed_sites = [];
-
-    public ?string $scopedLocale = null;
 
     public function mount() {}
 
@@ -43,31 +41,31 @@ class CreateModelComponent extends Component
 
         $this->isOpen = true;
 
+        $fields = $this->getFields();
+
+        $this->setLocaleToggleOnOpen(array_merge(['locales' => []], $values), $fields);
+
         /**
          * Inject all field values in the Livewire form object
          * From then on we can use the form object to access the values
          */
-        $this->injectFormValues($this->getFields());
+        $this->injectFormValues($fields);
 
         $this->dispatch('form-dialog-opened', ...[
             'componentId' => $this->getId(),
         ]);
     }
 
-    public function updatedAllowedSites(): void
-    {
-        //        if (count($this->allowed_sites) == 1) {
-        //            $this->scopedLocale = $this->allowed_sites[0];
-        //        }
-
-        if (! in_array($this->scopedLocale, $this->allowed_sites)) {
-            $this->scopedLocale = $this->allowed_sites[0] ?? null;
-        }
-    }
+    //    public function updatedAllowedSites(): void
+    //    {
+    //        if (! in_array($this->scopedLocale, $this->allowed_sites)) {
+    //            $this->scopedLocale = $this->allowed_sites[0] ?? null;
+    //        }
+    //    }
 
     public function close()
     {
-        $this->reset(['form', 'modelClass', 'allowed_sites', 'scopedLocale']);
+        $this->reset(['form', 'modelClass', 'locales', 'scopedLocale']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -92,15 +90,15 @@ class CreateModelComponent extends Component
     {
         if ($this->shouldShowAllowedSites()) {
             $this->validate([
-                'allowed_sites' => ['required', 'array', 'min:1'],
+                'locales' => ['required', 'array', 'min:1'],
             ], [
-                'allowed_sites.required' => 'Duid minstens één site aan.',
+                'locales.required' => 'Duid minstens één site aan.',
             ]);
         }
 
         $modelId = app(ModelApplication::class)->create(new CreateModel(
             $this->modelClass,
-            $this->allowed_sites,
+            $this->locales,
             $this->form,
             [],
         ));

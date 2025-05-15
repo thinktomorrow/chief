@@ -18,18 +18,18 @@
 
 
 
-        @if($this->shouldShowAllowedSites())
-            @include('chief-models::livewire._partials.allowed-sites')
+        @if($this->isEditingLocalesAllowed())
+            @include('chief-models::livewire._partials.locale-selection')
 
-            @if(count($allowed_sites) > 0)
+            @if(count($locales) > 0)
 
                 <div class="mt-6">
                     <x-chief::window>
 
                         <x-slot name="tabs">
-                            @if (count($allowed_sites) > 0)
+                            @if (count($locales) > 0)
                                 <x-chief::window.tabs>
-                                    @foreach ($allowed_sites as $site)
+                                    @foreach ($locales as $site)
                                         <x-chief::window.tabs.item
                                             aria-controls="{{ $site }}"
                                             aria-selected="{{ $site === $scopedLocale }}"

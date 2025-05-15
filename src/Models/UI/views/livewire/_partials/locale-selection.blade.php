@@ -1,5 +1,5 @@
-<x-chief::form.fieldset class="w-full space-y-3" rule="allowed_sites">
-    <x-chief::form.label for="allowed_sites" required>
+<x-chief::form.fieldset class="w-full space-y-3" rule="locales">
+    <x-chief::form.label for="locales" required>
         Op welke sites wil je de nieuwe pagina tonen?
     </x-chief::form.label>
 
@@ -12,7 +12,7 @@
             ])
         >
             <x-chief::form.input.checkbox
-                wire:model.change="allowed_sites"
+                wire:model.change="locales"
                 id="{{ $site->locale }}"
                 value="{{ $site->locale }}"
                 class="shrink-0"

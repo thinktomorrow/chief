@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites\UI\Livewire;
 
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 trait WithLocaleToggle
 {
@@ -13,9 +14,30 @@ trait WithLocaleToggle
     protected function setLocaleToggleOnOpen(array $values, iterable $components): void
     {
         if ($this->areAnyFieldsLocalized($components)) {
-            $this->locales = $values['locales'];
-            $this->scopedLocale = $values['scopedLocale'];
+            $this->locales = $values['locales'] ?? [];
+            $this->scopedLocale = $values['scopedLocale'] ?? ($this->locales[0] ?? null);
         }
+    }
+
+    /**
+     * In the case that the locales are editable, like in the create model component,
+     * we need to make sure that the scoped locale is in the list of allowed locales.
+     */
+    public function updatedLocales(): void
+    {
+        if (! in_array($this->scopedLocale, $this->locales)) {
+            $this->scopedLocale = $this->locales[0] ?? null;
+        }
+    }
+
+    // public function shouldShowAllowedSites(): bool
+    //    {
+    //        return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class);
+    //    }
+
+    public function isEditingLocalesAllowed(): bool
+    {
+        return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class);
     }
 
     protected function areAnyFieldsLocalized(iterable $components): bool
