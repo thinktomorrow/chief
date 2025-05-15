@@ -69,9 +69,13 @@ return new class extends Migration
 
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('context_fragment_lookup');
         Schema::dropIfExists('context_fragments');
         Schema::dropIfExists('contexts');
+
+        Schema::enableForeignKeyConstraints();
 
         Schema::dropIfExists('chief_users');
         Schema::dropIfExists('chief_password_resets');
