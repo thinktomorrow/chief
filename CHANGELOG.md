@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Unauthenticated redirectTo requires Request as parameter.
 - Fixed: Locale toggle in form edit view is now hidden when no localized fields are present.
 - Fixed: Issue where change to homepage of a nestable model conflicted when propagating url changes with parent slug.
 - Added: Homepage link is no longer deletable via the edit-links of a page
