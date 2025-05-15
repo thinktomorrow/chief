@@ -5,7 +5,8 @@ namespace Thinktomorrow\Chief\App\Exceptions;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Exceptions\PostTooLargeException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -35,8 +36,8 @@ class ChiefExceptionHandler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function render($request, Throwable $e)
     {
@@ -64,7 +65,7 @@ class ChiefExceptionHandler extends ExceptionHandler
         return Str::startsWith(request()->path(), 'admin/') && ! $exception instanceof AuthenticationException && ! $exception instanceof ValidationException;
     }
 
-    protected function renderChiefException(\Illuminate\Http\Request $request, Throwable $exception)
+    protected function renderChiefException(Request $request, Throwable $exception)
     {
         if (! config('app.debug')) {
             if ($request->expectsJson()) {
@@ -77,7 +78,7 @@ class ChiefExceptionHandler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
-    protected function unauthorized(\Illuminate\Http\Request $request, AuthorizationException $exception)
+    protected function unauthorized(Request $request, AuthorizationException $exception)
     {
         return redirect()->route('chief.back.dashboard')
             ->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');
@@ -86,8 +87,8 @@ class ChiefExceptionHandler extends ExceptionHandler
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
@@ -102,6 +103,6 @@ class ChiefExceptionHandler extends ExceptionHandler
             return redirect()->guest(route('chief.back.login'));
         }
 
-        return redirect()->guest(method_exists($exception, 'redirectTo') ? $exception->redirectTo() : '/');
+        return redirect()->guest(method_exists($exception, 'redirectTo') ? $exception->redirectTo($request) : '/');
     }
 }
