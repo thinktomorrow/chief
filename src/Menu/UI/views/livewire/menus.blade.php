@@ -4,12 +4,8 @@
 
 <x-chief::window title="Menu items">
     <x-slot name="badges">
-        @php
-            $item = $items->first(fn ($item) => $item->id === $activeItemId);
-        @endphp
-
-        @if (count($locales) > 1)
-            @foreach ($item->getAllowedSites() as $site)
+        @if (($item = $items->first(fn ($item) => $item->id === $activeItemId)) && count($locales) > 1)
+            @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($item->getAllowedSites()) as $site)
                 <x-chief::badge
                     variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
                     size="sm"
