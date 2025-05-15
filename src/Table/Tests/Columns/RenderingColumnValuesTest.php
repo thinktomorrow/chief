@@ -1,14 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Table\Tests;
+namespace Thinktomorrow\Chief\Table\Tests\Columns;
 
 use Thinktomorrow\Chief\Forms\Fields\Text;
-use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\ModelFixture;
-use Thinktomorrow\Chief\Table\Tests\Fixtures\TaggedModelFixture;
+use Thinktomorrow\Chief\Table\Tests\TestCase;
 
-class ColumnItemValueTest extends TestCase
+class RenderingColumnValuesTest extends TestCase
 {
     public function test_default_value()
     {
@@ -51,28 +50,6 @@ class ColumnItemValueTest extends TestCase
         $this->assertCount(2, $column->getItems());
         $this->assertEquals('first category', $column->getItems()->first()->getValue());
         $this->assertEquals('second category', $column->getItems()[1]->getValue());
-    }
-
-    public function test_value_originates_from_model_relation()
-    {
-        TaggedModelFixture::migrateUp();
-        $model = TaggedModelFixture::create();
-        $tag1 = $model->tags()->create(['label' => 'first tag label']);
-        $tag2 = $model->tags()->create(['label' => 'second tag label']);
-
-        $column = ColumnText::make('tags')->model($model);
-
-        $this->assertCount(2, $column->getItems());
-        $this->assertInstanceOf(TagModel::class, $column->getItems()->first()->getValue());
-        $this->assertEquals($tag1->id, $column->getItems()->first()->getValue()->id);
-        $this->assertEquals($tag2->id, $column->getItems()[1]->getValue()->id);
-    }
-
-    public function test_no_items_are_resolved_if_relation_is_empty()
-    {
-        $column = ColumnText::make('tags')->model(new TaggedModelFixture);
-
-        $this->assertCount(0, $column->getItems());
     }
 
     public function test_value_originates_from_array()

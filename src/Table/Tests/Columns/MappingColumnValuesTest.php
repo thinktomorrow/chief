@@ -1,13 +1,14 @@
 <?php
 
-namespace Thinktomorrow\Chief\Table\Tests;
+namespace Thinktomorrow\Chief\Table\Tests\Columns;
 
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\ModelFixture;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TaggedModelFixture;
+use Thinktomorrow\Chief\Table\Tests\TestCase;
 
-class ColumnMapValueTest extends TestCase
+class MappingColumnValuesTest extends TestCase
 {
     public function test_it_can_map_value()
     {

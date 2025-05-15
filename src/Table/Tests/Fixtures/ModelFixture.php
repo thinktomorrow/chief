@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Table\Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
@@ -27,6 +28,7 @@ class ModelFixture extends Model
     {
         Schema::create('chief_table_model_fixtures', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title')->nullable();
             $table->json('values')->nullable(); // dynamic attributes
         });
@@ -35,5 +37,10 @@ class ModelFixture extends Model
     public function categories()
     {
         return collect(['first category', 'second category']);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(ModelFixture::class, 'parent_id');
     }
 }

@@ -8,6 +8,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Unauthenticated redirectTo requires Request as parameter.
 - Fixed: Issue where change to homepage of a nestable model conflicted when propagating url changes with parent slug.
 - Fixed: Homepage link is no longer deletable via the edit-links of a page
+- Fixed: Rendering table column for a relation attribute e.g. parent.title of a BelongsTo relation was broken.
 - Changed: Locale toggle in form edit view is now hidden when no localized fields are present.
 - Added: larastan github action to run static analysis on pull requests
 - Added: Verify if column item can be rendered in table.

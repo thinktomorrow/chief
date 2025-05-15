@@ -1,12 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Table\Tests;
+namespace Thinktomorrow\Chief\Table\Tests\Columns;
 
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\ModelFixture;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TaggedModelFixture;
+use Thinktomorrow\Chief\Table\Tests\TestCase;
 
-class ColumnMapVariantTest extends TestCase
+class MappingColumnVariantsTest extends TestCase
 {
     public function test_it_can_map_variant()
     {
