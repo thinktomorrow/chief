@@ -12,9 +12,9 @@ abstract class Items extends Component
 
     public array $locales;
 
-    public ?string $activeItemId = null;
-
     public string $scopedLocale;
+
+    public ?string $activeItemId = null;
 
     protected function mountItems(array $locales, ?string $activeItemId = null)
     {

@@ -11,7 +11,7 @@ trait WithLocaleToggle
 
     public ?string $scopedLocale = null;
 
-    protected function setLocaleToggleOnOpen(array $values, iterable $components): void
+    protected function setLocalesOnOpen(array $values, iterable $components): void
     {
         if ($this->areAnyFieldsLocalized($components)) {
             $this->locales = $values['locales'] ?? [];
@@ -30,16 +30,14 @@ trait WithLocaleToggle
         }
     }
 
-    // public function shouldShowAllowedSites(): bool
-    //    {
-    //        return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class);
-    //    }
-
     public function isEditingLocalesAllowed(): bool
     {
         return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class);
     }
 
+    /**
+     * Check if the locale toggle is needed for the given fields.
+     */
     protected function areAnyFieldsLocalized(iterable $components): bool
     {
         $fields = Fields::make($components)->all();

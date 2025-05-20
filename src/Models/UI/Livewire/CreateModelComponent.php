@@ -43,7 +43,7 @@ class CreateModelComponent extends Component
 
         $fields = $this->getFields();
 
-        $this->setLocaleToggleOnOpen(array_merge(['locales' => []], $values), $fields);
+        $this->setLocalesOnOpen(array_merge(['locales' => []], $values), $fields);
 
         /**
          * Inject all field values in the Livewire form object

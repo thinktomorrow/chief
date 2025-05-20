@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
 class EditFragment extends Component
 {
@@ -27,6 +28,7 @@ class EditFragment extends Component
     use InteractsWithFields;
     use ShowsAsDialog;
     use WithFragments;
+    use WithLocaleToggle;
     use WithMemoizedModel;
 
     // parent livewire component id
@@ -35,10 +37,6 @@ class EditFragment extends Component
     public ContextDto $context;
 
     public ?FragmentDto $fragment = null;
-
-    public array $locales;
-
-    public string $scopedLocale;
 
     public ModelReference $modelReference;
 
@@ -66,19 +64,21 @@ class EditFragment extends Component
     public function open($values = [])
     {
         $this->fragment = $this->composeFragmentDto($values['fragmentId']);
-        $this->locales = $values['locales'];
-        $this->scopedLocale = $values['scopedLocale'];
+
+        $this->isOpen = true;
+
+        $fields = $this->getFields();
+
+        $this->setLocalesOnOpen($values, $fields);
 
         // Load any child fragments
         $this->refreshFragments();
-
-        $this->isOpen = true;
 
         /**
          * Inject all field values in the Livewire form object
          * From then on we can use the form object to access the values
          */
-        $this->injectFormValues($this->getFields());
+        $this->injectFormValues($fields);
 
         $this->dispatch('form-dialog-opened', ...[
             'componentId' => $this->getId(),
@@ -102,7 +102,7 @@ class EditFragment extends Component
     // TODO(ben): this also closes parent dialogs
     public function close()
     {
-        $this->reset(['fragment', 'form']);
+        $this->reset(['fragment', 'form', 'locales', 'scopedLocale']);
         $this->resetErrorBag();
 
         $this->isOpen = false;

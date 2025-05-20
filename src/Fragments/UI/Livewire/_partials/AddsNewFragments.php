@@ -9,11 +9,13 @@ use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
 trait AddsNewFragments
 {
     use HasForm;
     use InteractsWithFields;
+    use WithLocaleToggle;
 
     public bool $showCreate = false;
 
@@ -23,11 +25,15 @@ trait AddsNewFragments
     {
         $this->fragmentKey = $fragmentKey;
 
+        $fields = $this->getFields();
+
+        $this->setLocalesOnOpen($this->localeValuesForNewFragment, $fields);
+
         /**
          * Inject all field values in the Livewire form object
          * From then on we can use the form object to access the values
          */
-        $this->injectFormValues($this->getFields());
+        $this->injectFormValues($fields);
 
         $this->showCreate = true;
 

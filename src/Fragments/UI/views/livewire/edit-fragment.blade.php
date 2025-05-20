@@ -33,7 +33,10 @@
 
         {{-- TODO(ben): get fragment urls --}}
         @include('chief-fragments::livewire._partials.shared-fragment-actions')
-        @include('chief-fragments::livewire._partials.edit-fragment-tabs')
+
+        @if(count($locales) > 0)
+            @include('chief-fragments::livewire._partials.locale-toggle')
+        @endif
         @include('chief-fragments::livewire._partials.bookmarks')
 
         @foreach ($this->getFields() as $field)

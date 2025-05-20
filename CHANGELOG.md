@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Changed: Refactor locales on create model component
+
 ## 0.10.3 - 2025-05-15
 
 - Fixed: Unauthenticated redirectTo requires Request as parameter.

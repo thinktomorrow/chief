@@ -27,9 +27,7 @@ class AddFragment extends Component
 
     public ?int $insertAfterOrder = null;
 
-    public array $locales;
-
-    public string $scopedLocale;
+    public array $localeValuesForNewFragment;
 
     public function mount(ContextDto $context, ?string $parentComponentId = null)
     {
@@ -49,8 +47,12 @@ class AddFragment extends Component
     {
         $this->parentId = $values['parentId'] ?: null;
         $this->insertAfterOrder = $values['order'];
-        $this->locales = $values['locales'];
-        $this->scopedLocale = $values['scopedLocale'];
+
+        // On open we keep track of the passed locales for the new fragment dialog
+        $this->localeValuesForNewFragment = [
+            'locales' => $values['locales'],
+            'scopedLocale' => $values['scopedLocale'],
+        ];
 
         $this->isOpen = true;
 
@@ -67,6 +69,7 @@ class AddFragment extends Component
             'form', 'parentId', 'insertAfterOrder',
             'showCreate', 'fragmentKey', // properties for new fragments
             'filters', // properties for existing fragments
+            'locales', 'scopedLocale',
         ]);
         $this->resetErrorBag();
 

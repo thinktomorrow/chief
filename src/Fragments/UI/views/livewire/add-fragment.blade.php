@@ -1,7 +1,9 @@
 <x-chief::dialog.drawer wired>
     @if ($isOpen)
         @if ($showCreate)
-            @include('chief-fragments::livewire._partials.edit-fragment-tabs')
+            @if(count($locales) > 0)
+                @include('chief-fragments::livewire._partials.locale-toggle')
+            @endif
             @include('chief-fragments::livewire._partials.add-fragment-form')
         @else
             @include('chief-fragments::livewire._partials.add-fragment-selection')
