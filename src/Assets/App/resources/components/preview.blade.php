@@ -15,7 +15,7 @@
         }
     "
     @class([
-        'max-h-[24rem] divide-y divide-grey-200 overflow-auto rounded-[0.625rem] border-grey-200 shadow-sm',
+        'divide-grey-200 border-grey-200 max-h-[24rem] divide-y overflow-auto rounded-[0.625rem] shadow-xs',
         'border' => count($files) > 0,
     ])
 >

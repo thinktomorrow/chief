@@ -6,7 +6,7 @@
     {{-- File upload progress bar --}}
     @if ($file->isUploading && isset($this->findUploadFile($file->id)['progress']) && $this->findUploadFile($file->id)['progress'] <= 100)
         <div class="absolute inset-0">
-            <div class="absolute bottom-0 left-0 right-0 h-1 bg-green-100">
+            <div class="absolute right-0 bottom-0 left-0 h-1 bg-green-100">
                 <div
                     class="h-full bg-green-600 transition-all duration-300 ease-in-out"
                     style="width: {{ $this->findUploadFile($file->id)['progress'] }}%"
@@ -15,10 +15,10 @@
         </div>
     @endif
 
-    <div class="@md:flex-nowrap relative flex justify-between gap-x-4 gap-y-2 py-2 pl-2 pr-4 @1px:flex-wrap">
+    <div class="@md:flex-nowrap @1px:flex-wrap relative flex justify-between gap-x-4 gap-y-2 py-2 pr-4 pl-2">
         <div class="flex gap-4">
             {{-- File thumb --}}
-            <div class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-grey-100">
+            <div class="bg-grey-100 flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg">
                 @if ($file->isPreviewable && $file->previewUrl)
                     <img
                         src="{{ $file->previewUrl }}"
@@ -28,15 +28,15 @@
                 @elseif ($file->mimeType)
                     <x-dynamic-component
                         :component="MimetypeIcon::fromString($file->mimeType)->icon()"
-                        class="size-6 text-grey-400"
+                        class="text-grey-400 size-6"
                     />
                 @else
-                    <x-chief::icon.attachment class="size-6 text-grey-400" />
+                    <x-chief::icon.attachment class="text-grey-400 size-6" />
                 @endif
             </div>
 
             {{-- File information --}}
-            <div class="grow space-y-0.5 break-all py-1.5 leading-tight">
+            <div class="grow space-y-0.5 py-1.5 leading-tight break-all">
                 <p class="text-black">
                     {{ $file->filename }}
 
@@ -45,7 +45,7 @@
                     @endif
                 </p>
 
-                <p class="text-sm text-grey-500">
+                <p class="text-grey-500 text-sm">
                     @if ($file->isExternalAsset)
                         {{ ucfirst($file->getExternalAssetType()) }} -
                         @if ($file->hasData('external.duration'))
@@ -96,7 +96,7 @@
 
         @if (! $file->isValidated)
             <div
-                class="@md:flex-nowrap absolute inset-0 flex items-center justify-between gap-2 bg-red-100/75 px-4 py-2 backdrop-blur-sm backdrop-filter @1px:flex-wrap"
+                class="@md:flex-nowrap @1px:flex-wrap absolute inset-0 flex items-center justify-between gap-2 bg-red-100/75 px-4 py-2 backdrop-blur-xs backdrop-filter"
             >
                 <span class="body text-sm text-red-500">
                     {{ ucfirst($file->validationMessage) }}
@@ -108,7 +108,7 @@
             </div>
         @elseif ($file->isQueuedForDeletion)
             <div
-                class="@md:flex-nowrap absolute inset-0 flex items-center justify-between gap-2 bg-white/75 px-4 py-2 backdrop-blur-sm backdrop-filter @1px:flex-wrap"
+                class="@md:flex-nowrap @1px:flex-wrap absolute inset-0 flex items-center justify-between gap-2 bg-white/75 px-4 py-2 backdrop-blur-xs backdrop-filter"
             >
                 @if ($file->mediaId)
                     <span class="body body-dark text-sm">{{ $file->filename }} wordt verwijderd</span>

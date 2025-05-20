@@ -33,13 +33,18 @@
             }
         </style>
 
-        <link rel="stylesheet" href="{{ chief_cached_asset('chief-assets/back/css/main.css') }}" />
+        {{
+            Vite::useBuildDirectory('chief/build')->withEntryPoints([
+                'resources/assets/css/main.css',
+                'resources/assets/js/main.js',
+            ])
+        }}
 
         @livewireStyles
 
         @stack('custom-styles')
     </head>
-    <body class="min-h-screen bg-grey-50/50">
+    <body data-theme="chief" class="bg-grey-50/50 min-h-screen">
         <main>
             {{ $slot }}
 
@@ -50,8 +55,6 @@
         @include('chief::templates.page._partials.refresh-modal')
 
         @livewireScripts
-
-        <script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
 
         @stack('custom-scripts')
 

@@ -1,45 +1,39 @@
-/**
- * Using @layer directive to add this classes to tailwindcss components
- * This will make them responsive and combinable with variants
- **/
-@layer components {
-    .link {
-        @apply inline-flex items-start text-left font-medium;
-        @apply transition-all duration-150 ease-in-out;
-        @apply underline-offset-2 hover:underline;
-    }
+@utility link {
+    @apply inline-flex items-start text-left font-medium;
+    @apply transition-all duration-150 ease-in-out;
+    @apply underline-offset-2 hover:underline;
+}
 
-    /* Sizes */
-    .link-base {
-        @apply gap-1 text-base/6;
-        & > [data-slot='icon'],
-        & > svg {
-            @apply mt-0.5 size-5 shrink-0;
-        }
+/* ---------- Sizes ---------- */
+@utility link-base {
+    @apply gap-1 text-base/6;
+    & > [data-slot='icon'],
+    & > svg {
+        @apply mt-0.5 size-5 shrink-0;
     }
-    .link-sm {
-        @apply gap-[0.1875rem] text-sm/5;
-        & > [data-slot='icon'],
-        & > svg {
-            @apply mt-px size-[1.125rem] shrink-0;
-        }
+}
+@utility link-sm {
+    @apply gap-[0.1875rem] text-sm/5;
+    & > [data-slot='icon'],
+    & > svg {
+        @apply mt-px size-[1.125rem] shrink-0;
     }
-    .link-xs {
-        @apply gap-0.5 text-xs/5;
-        & > [data-slot='icon'],
-        & > svg {
-            @apply mt-px size-[1.125rem] shrink-0;
-        }
+}
+@utility link-xs {
+    @apply gap-0.5 text-xs/5;
+    & > [data-slot='icon'],
+    & > svg {
+        @apply mt-px size-[1.125rem] shrink-0;
     }
+}
 
-    /* Variants */
-    .link-blue {
-        @apply text-primary-500 hover:text-primary-600;
-    }
-    .link-red {
-        @apply text-red-500 hover:text-red-600;
-    }
-    .link-body-dark {
-        @apply text-grey-700 hover:text-primary-600;
-    }
+/* ---------- Variants ---------- */
+@utility link-blue {
+    @apply text-primary-500 hover:text-primary-600;
+}
+@utility link-red {
+    @apply text-red-500 hover:text-red-600;
+}
+@utility link-body-dark {
+    @apply text-grey-700 hover:text-primary-600;
 }

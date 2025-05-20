@@ -1,7 +1,7 @@
-<div class="row-start-start">
+<div class="flex flex-wrap items-start justify-start">
     <div class="w-full">
         <x-chief::window>
-            <div class="-my-4 divide-y divide-grey-100">
+            <div class="divide-grey-100 -my-4 divide-y">
                 @forelse ($audit as $event)
                     <div class="space-y-1 py-4">
                         <div>
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="py-4 text-grey-500">Nog niet veel soeps hier... Better start your writing!</div>
+                    <div class="text-grey-500 py-4">Nog niet veel soeps hier... Better start your writing!</div>
                 @endforelse
 
                 {{ $audit->links('chief::pagination.default') }}

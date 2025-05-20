@@ -9,7 +9,7 @@
         @endif
 
         @if ($slot->isNotEmpty())
-            <div class="prose-format prose-editor prose-size-sm text-wrap">
+            <div class="prose-format prose-editor text-sm text-wrap">
                 {{ $slot }}
             </div>
         @endif

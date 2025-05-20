@@ -14,7 +14,7 @@
             data-sortable
             data-sortable-is-sorting
             data-sortable-endpoint="{{ route('chief.back.menus.reorder.update', $menu->id) }}"
-            class="row-start-stretch gutter-1"
+            class="gutter-1 flex flex-wrap items-stretch justify-start"
         >
             @foreach ($menuItems as $menuItem)
                 <div
@@ -23,7 +23,7 @@
                     class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                 >
                     <div
-                        class="h-full cursor-move rounded-md border border-grey-100 bg-grey-50 p-3 transition duration-75 ease-in-out hover:bg-grey-100"
+                        class="border-grey-100 bg-grey-50 hover:bg-grey-100 h-full cursor-move rounded-md border p-3 transition duration-75 ease-in-out"
                     >
                         <p class="h6 h1-dark text-sm">
                             {{ $menuItem->getLabel() }}
