@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: export/import of translations for repeat fields
 - Changed: Refactor locales on create model component
 - Added: `showsLocales` on a field to indicate if field show be shown localized. This is for presentation purposes and
   differs from `hasLocales` which indicates if the field is localized.

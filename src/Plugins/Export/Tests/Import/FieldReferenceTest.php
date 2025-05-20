@@ -67,11 +67,13 @@ class FieldReferenceTest extends TestCase
         $this->assertTrue($fieldReference->isRepeatField());
         $fieldReference->saveValue('new title', 'nl');
 
-        $fragmentModel = app(FragmentRepository::class)->getFragmentCollection(ArticlePage::first()->id)->first();
+        $fragment = app(FragmentRepository::class)->getFragmentCollection(ArticlePage::first()->id)->first();
 
-        $this->assertEquals([
-            ['title' => ['nl' => 'new title']],
-        ], $fragmentModel->links);
+        // Localized by default for current locale
+        $this->assertEquals([['title' => 'new title']], $fragment->links);
+
+        // Entire links json data
+        $this->assertEquals(['nl' => [['title' => 'new title']]], $fragment->getFragmentModel()->dynamic('links'));
     }
 
     private function createFieldReference(): FieldReference

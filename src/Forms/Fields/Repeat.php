@@ -84,4 +84,21 @@ class Repeat extends Component implements Field, HasTaggedComponents
             }
         }
     }
+
+    /**
+     * getValue retrieves for the current locale, this method allows to fetch the entire
+     * repeat values for all locales. The entire json data object as array
+     */
+    public function getAllValues(): array
+    {
+        $model = $this->getModel();
+
+        if (method_exists($model, 'isDynamic') && $model->isDynamic($this->getColumnName())) {
+            $values = $model->dynamic($this->getColumnName(), null, []);
+
+            return is_array($values) ? $values : [];
+        }
+
+        return $model->{$this->getColumnName()} ?: [];
+    }
 }

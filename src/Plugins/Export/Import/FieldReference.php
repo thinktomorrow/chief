@@ -73,15 +73,18 @@ class FieldReference
         $payload = Arr::undot([$key => $value]);
 
         // Hack way to save repeat fields
-        if ($this->field instanceof Repeat) {
+        if ($this->field instanceof Repeat && $this->field->hasLocales()) {
+
             // Merge current values with passed value
             $nestedFieldKey = substr($this->fieldName, strpos($this->fieldName, '.') + 1);
-            $nestedFieldKey .= '.'.$locale;
-            $payload = Arr::undot([$nestedFieldKey => $value]);
 
-            $payload = $this->array_merge_overwrite($this->field->getValue(), $payload);
+            $nestedFieldKey = $locale.'.'.$nestedFieldKey;
+
+            $payload = Arr::undot([$nestedFieldKey => $value]);
+            $payload = $this->array_merge_overwrite($this->field->getAllValues(), $payload);
 
             $this->model->{$this->field->getColumnName()} = $payload;
+
             $this->model->save();
 
             return;
