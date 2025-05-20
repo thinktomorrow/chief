@@ -22,10 +22,15 @@
             rel="stylesheet"
         />
 
-        <link rel="stylesheet" href="{{ chief_cached_asset('css/main.css') }}" />
+        {{
+            Vite::useBuildDirectory('chief/build')->withEntryPoints([
+                'resources/assets/css/main.css',
+                'resources/assets/js/main.js',
+            ])
+        }}
     </head>
 
-    <body class="min-h-screen bg-grey-50/50">
+    <body class="bg-grey-50/50 min-h-screen">
         <main>
             {{ $slot }}
         </main>

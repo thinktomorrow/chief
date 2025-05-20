@@ -34,7 +34,7 @@ class ConsoleServiceProvider extends ServiceProvider
         ], 'chief-config');
 
         $this->publishes([
-            __DIR__.'/../../public/chief-assets' => public_path('/chief-assets'),
+            __DIR__.'/../../public/chief/build' => public_path('chief/build'),
         ], 'chief-assets');
 
         $this->commands([

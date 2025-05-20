@@ -1,25 +1,41 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
+@import 'tailwindcss';
 
-/* Components */
-@import './components/badge';
-@import './components/button';
-@import './components/callout';
-@import './components/dropdown-item';
+/* ---------- Sources ---------- */
+@source '../resources/views/**/*.blade.php';
+@source '../resources/assets/**/*.js';
+@source '../src/Assets/App/resources/**/*.blade.php';
+@source '../src/Forms/UI/views/**/*.blade.php';
+@source '../src/Fragments/UI/views/**/*.blade.php';
+@source '../src/Menu/UI/views/**/*.blade.php';
+@source '../src/Plugins/**/resources/**/*.blade.php';
+@source '../src/Plugins/HotSpots/views/**/*.blade.php';
+@source '../src/Sites/UI/views/**/*.blade.php';
+@source '../src/Table/UI/**/*.blade.php';
+
+/* ---------- General ---------- */
+@import './general/theme.css';
+@import './general/base.css';
+
+/* ---------- Components ---------- */
+@import './components/button.css';
+@import './components/badge.css';
+@import './components/callout.css';
+@import './components/dropdown-item.css';
 @import './components/form/index.css';
-@import './components/format';
-@import './components/label';
-@import './components/link';
-@import './components/prose';
-@import './components/tag';
-@import './components/window';
+@import './components/format.css';
+@import './components/label.css';
+@import './components/link.css';
+@import './components/prose.css';
+@import './components/tag.css';
+@import './components/window.css';
 
-/* General */
-@import './general/base';
+/* ---------- Utilities ---------- */
+@import './utilities/container.css';
+@import './utilities/gutter.css';
 
-/* Tailwind utilities */
-@import 'tailwindcss/utilities';
-
-/* Overrides */
-@import './overrides/redactor';
+/* ---------- Overrides ---------- */
+@import './overrides/redactor.css';
 @import './overrides/choices.css';
+
+/* ---------- Plugins ---------- */
+@plugin './plugins/ProseSpacing';

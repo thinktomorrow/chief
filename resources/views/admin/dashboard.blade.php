@@ -9,9 +9,9 @@
         <x-chief::page.header :title="'Welkom op je dashboard, ' . ucfirst(Auth::user()->firstname)" />
     </x-slot>
 
-    <div class="row-start-start gutter-3">
+    <div class="gutter-3 flex flex-wrap items-start justify-start">
         <div class="w-full">
-            <p class="text-lg text-grey-500">Don't try to follow trends. Create them.</p>
+            <p class="text-grey-500 text-lg">Don't try to follow trends. Create them.</p>
         </div>
 
         @if ($widgets)

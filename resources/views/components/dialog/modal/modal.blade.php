@@ -13,20 +13,20 @@
     >
         <div
             x-on:click.stop="close()"
-            class="absolute inset-0 animate-dialog-fade-in cursor-pointer bg-black/15 backdrop-blur-[2px]"
+            class="animate-dialog-fade-in absolute inset-0 cursor-pointer bg-black/15 backdrop-blur-[2px]"
         ></div>
 
-        <div class="container pointer-events-none relative inline-flex max-w-screen-2xl justify-center">
+        <div class="pointer-events-none relative container inline-flex max-w-screen-2xl justify-center">
             <div
                 @class([
-                    'pointer-events-auto animate-dialog-pop-in rounded-xl bg-white/[0.98] shadow-md ring-1 ring-grey-100 backdrop-blur-md',
+                    'animate-dialog-pop-in ring-grey-100 pointer-events-auto rounded-xl bg-white/[0.98] shadow-md ring-1 backdrop-blur-md',
                     'w-96' => $size === 'xxs',
-                    'w-xs' => $size === 'xs',
-                    'w-sm' => $size === 'sm',
-                    'w-md' => $size === 'md',
-                    'w-lg' => $size === 'lg',
-                    'w-xl' => $size === 'xl',
-                    'w-2xl' => $size === '2xl',
+                    'w-[480px]' => $size === 'xs',
+                    'w-[640px]' => $size === 'sm',
+                    'w-[768px]' => $size === 'md',
+                    'w-[1024px]' => $size === 'lg',
+                    'w-[1280px]' => $size === 'xl',
+                    'w-[1536px]' => $size === '2xl',
                 ])
             >
                 <div
