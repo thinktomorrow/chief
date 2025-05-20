@@ -12,11 +12,15 @@ use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound;
 
 /**
- * @property $id
- * @property $slug
- * @property $site
- * @property $model_type
- * @property $model_id
+ * @property int $id
+ * @property string $slug
+ * @property string|null $site
+ * @property string $model_type
+ * @property int $model_id
+ * @property int|null $redirect_id
+ * @property string $status
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
  */
 class UrlRecord extends Model
 {
