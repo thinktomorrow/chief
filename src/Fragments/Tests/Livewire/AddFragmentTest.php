@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\AddFragment;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class AddFragmentTest extends ChiefTestCase
 {
@@ -56,12 +57,15 @@ class AddFragmentTest extends ChiefTestCase
         $component = $this->mountComponent();
 
         $component->call('open', ['locales' => ['nl', 'en'], 'scopedLocale' => 'en', 'parentId' => null, 'order' => 1])
+            ->assertSet('localeValuesForNewFragment', [
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'en',
+            ])
             ->assertSet('isOpen', true);
 
         $component->call('close')
             ->assertSet('isOpen', false)
-            ->assertSet('locales', ['nl', 'en'])
-            ->assertSet('scopedLocale', 'en')
+            ->assertSet('localeValuesForNewFragment', [])
             ->assertSet('parentId', null)
             ->assertSet('insertAfterOrder', null);
     }
@@ -83,14 +87,32 @@ class AddFragmentTest extends ChiefTestCase
 
     public function test_it_can_show_create_form_and_save_fragment()
     {
-        [, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->model, Hero::class, null, 0);
+        chiefRegister()->fragment(Quote::class);
 
         $component = $this->mountComponent();
-        $component->call('showCreateForm', Hero::resourceKey())
+        $component
+            ->call('open', ['locales' => ['nl', 'en'], 'scopedLocale' => 'en', 'parentId' => null, 'order' => 1])
+            ->call('showCreateForm', Quote::resourceKey())
+            ->set('form.custom', 'foobar')
+            ->assertSet('locales', ['nl', 'en'])
+            ->assertSet('scopedLocale', 'en')
             ->assertSet('showCreate', true);
 
         $component->call('save')
+            ->assertSet('locales', [])
+            ->assertSet('scopedLocale', null)
             ->assertSet('isOpen', false);
+    }
+
+    public function test_it_can_show_create_form_for_non_localized_fragment()
+    {
+        $component = $this->mountComponent();
+        $component
+            ->call('open', ['locales' => ['nl', 'en'], 'scopedLocale' => 'en', 'parentId' => null, 'order' => 1])
+            ->call('showCreateForm', Hero::resourceKey())
+            ->assertSet('locales', [])
+            ->assertSet('scopedLocale', null)
+            ->assertSet('showCreate', true);
     }
 
     public function test_it_updates_filters_and_toggles_existing_view()

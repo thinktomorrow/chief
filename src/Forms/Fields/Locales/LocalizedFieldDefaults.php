@@ -40,6 +40,11 @@ trait LocalizedFieldDefaults
         return count($this->locales) > 0;
     }
 
+    public function showsLocales(): bool
+    {
+        return $this->hasLocales() && count($this->locales) > 1;
+    }
+
     public function setLocales(array $locales): static
     {
         $this->locales = $locales;

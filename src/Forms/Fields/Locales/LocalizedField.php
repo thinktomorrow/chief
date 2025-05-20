@@ -26,6 +26,11 @@ interface LocalizedField
      */
     public function hasLocales(): bool;
 
+    /**
+     * Check if the field should show per locale in the form
+     */
+    public function showsLocales(): bool;
+
     public function setLocales(array $locales): static;
 
     /**

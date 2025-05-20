@@ -159,4 +159,13 @@ class File extends Component implements Field, HasComponents
             'max' => 'file_max',
         ]);
     }
+
+    /**
+     * Since File is always localized, we need to override the default
+     * hasLocales to let it check if there are any custom locales set.
+     */
+    public function showsLocales(): bool
+    {
+        return $this->hasLocales() && $this->getLocales() !== [ChiefSites::primaryLocale()];
+    }
 }

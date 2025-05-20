@@ -27,7 +27,7 @@ class AddFragment extends Component
 
     public ?int $insertAfterOrder = null;
 
-    public array $localeValuesForNewFragment;
+    public array $localeValuesForNewFragment = [];
 
     public function mount(ContextDto $context, ?string $parentComponentId = null)
     {
@@ -70,7 +70,9 @@ class AddFragment extends Component
             'showCreate', 'fragmentKey', // properties for new fragments
             'filters', // properties for existing fragments
             'locales', 'scopedLocale',
+            'localeValuesForNewFragment',
         ]);
+
         $this->resetErrorBag();
 
         $this->isOpen = false;

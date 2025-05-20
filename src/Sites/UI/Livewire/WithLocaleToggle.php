@@ -13,7 +13,7 @@ trait WithLocaleToggle
 
     protected function setLocalesOnOpen(array $values, iterable $components): void
     {
-        if ($this->areAnyFieldsLocalized($components)) {
+        if ($this->showsLocalesForAnyField($components)) {
             $this->locales = $values['locales'] ?? [];
             $this->scopedLocale = $values['scopedLocale'] ?? ($this->locales[0] ?? null);
         }
@@ -38,12 +38,12 @@ trait WithLocaleToggle
     /**
      * Check if the locale toggle is needed for the given fields.
      */
-    protected function areAnyFieldsLocalized(iterable $components): bool
+    protected function showsLocalesForAnyField(iterable $components): bool
     {
         $fields = Fields::make($components)->all();
 
         foreach ($fields as $field) {
-            if ($field->hasLocales()) {
+            if ($field->showsLocales()) {
                 return true;
             }
         }
