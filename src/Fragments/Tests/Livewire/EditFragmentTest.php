@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\EditFragment;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class EditFragmentTest extends ChiefTestCase
 {
@@ -37,7 +38,23 @@ class EditFragmentTest extends ChiefTestCase
         ]);
     }
 
-    public function test_component_renders()
+    public function test_component_renders_for_localized_fragment()
+    {
+        [, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->model, Quote::class, null, 0, ['custom' => 'initial value']);
+
+        $this->component
+            ->call('open', [
+                'fragmentId' => $fragment->getFragmentId(),
+                'locales' => ['nl', 'en'],
+                'scopedLocale' => 'nl',
+            ])
+            ->assertStatus(200)
+            ->assertSet('locales', ['nl', 'en'])
+            ->assertSet('scopedLocale', 'nl')
+            ->assertSet('form.custom', 'initial value');
+    }
+
+    public function test_component_renders_for_non_localized_fragment()
     {
         $this->component
             ->call('open', [
@@ -46,8 +63,8 @@ class EditFragmentTest extends ChiefTestCase
                 'scopedLocale' => 'nl',
             ])
             ->assertStatus(200)
-            ->assertSet('locales', ['nl', 'en'])
-            ->assertSet('scopedLocale', 'nl')
+            ->assertSet('locales', [])
+            ->assertSet('scopedLocale', null)
             ->assertSet('form.title', 'initial value');
     }
 

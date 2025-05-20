@@ -42,4 +42,9 @@ class Quote extends BaseFragment implements Fragment, HasAsset
     {
         return ChiefSites::locales();
     }
+
+    public function adminViewPath(): string
+    {
+        return 'fragments.quote';
+    }
 }
