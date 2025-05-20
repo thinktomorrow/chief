@@ -6,15 +6,6 @@ trait ShowsAsDialog
 {
     public $isOpen = false;
 
-    public function toggleDialog()
-    {
-        if ($this->isOpen) {
-            $this->close();
-        } else {
-            $this->open();
-        }
-    }
-
     public function open()
     {
         $this->isOpen = true;

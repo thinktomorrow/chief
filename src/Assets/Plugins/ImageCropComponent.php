@@ -6,7 +6,6 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Thinktomorrow\Chief\Assets\App\FileApplication;
-use Thinktomorrow\Chief\Assets\Livewire\MediaFile;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 
 class ImageCropComponent extends Component
@@ -16,8 +15,6 @@ class ImageCropComponent extends Component
     public $isOpen = false;
 
     public ?PreviewFile $previewFile = null;
-
-    public ?MediaFile $mediaFile = null;
 
     public $form = [];
 
@@ -41,7 +38,7 @@ class ImageCropComponent extends Component
 
         if ($previewFile->mediaId) {
             $mediaModel = Media::find($previewFile->mediaId);
-            $this->mediaFile = MediaFile::fromMedia($mediaModel);
+            //            $this->mediaFile = MediaFile::fromMedia($mediaModel);
         }
 
     }
