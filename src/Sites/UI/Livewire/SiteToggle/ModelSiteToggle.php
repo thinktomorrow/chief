@@ -19,7 +19,7 @@ class ModelSiteToggle extends Component
 
     public string $scopedLocale;
 
-    public function mount(HasAllowedSites&ReferableModel $model)
+    public function mount(ReferableModel $model)
     {
         $this->modelReference = $model->modelReference();
 
@@ -64,10 +64,12 @@ class ModelSiteToggle extends Component
         return view('chief-sites::site-toggle');
     }
 
-    private function getSites(HasAllowedSites $model): Collection
+    private function getSites($model): Collection
     {
+        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+
         return ChiefSites::all()
-            ->filterByLocales($model->getAllowedSites())
+            ->filterByLocales($locales)
             ->toCollection()
             ->map(fn (ChiefSite $site) => SiteDto::fromConfig($site));
     }

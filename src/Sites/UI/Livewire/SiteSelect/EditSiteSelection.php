@@ -6,20 +6,21 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\Actions\SaveAllowedSites;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 class EditSiteSelection extends Component
 {
     use HasForm;
     use ShowsAsDialog;
 
-    public string $modelReference;
+    public HasAllowedSites&ReferableModel $model;
 
-    public function mount(string $modelReference)
+    public function mount(HasAllowedSites&ReferableModel $model)
     {
-        $this->modelReference = $modelReference;
+        $this->model = $model;
     }
 
     public function getListeners()
@@ -50,7 +51,8 @@ class EditSiteSelection extends Component
 
     public function save()
     {
-        $model = ModelReference::fromString($this->modelReference)->instance();
+        //        $model = $this->modelReference->instance();
+        $model = $this->model;
 
         app(SaveAllowedSites::class)->handle($model, $this->form['locales']);
 
@@ -66,7 +68,7 @@ class EditSiteSelection extends Component
 
     private function initialFormValues()
     {
-        $model = ModelReference::fromString($this->modelReference)->instance();
+        $model = $this->model;
 
         $this->form['locales'] = ChiefSites::all()->filterByLocales($model->getAllowedSites())->getLocales();
     }

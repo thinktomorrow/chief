@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
@@ -13,14 +12,11 @@ use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 
 class SiteSelection extends Component
 {
-    public HasAllowedSites&ReferableModel $model;
+    public ReferableModel $model;
 
-    public string $modelReference;
-
-    public function mount(HasAllowedSites&ReferableModel $model)
+    public function mount(ReferableModel $model)
     {
         $this->model = $model;
-        $this->modelReference = $model->modelReference()->get();
     }
 
     public function getListeners()
@@ -46,11 +42,18 @@ class SiteSelection extends Component
         return view('chief-sites::site-selection.site-selection');
     }
 
+    public function isAllowedToEditSiteSelection(): bool
+    {
+        return $this->model instanceof HasAllowedSites;
+    }
+
     public function getSites(): Collection
     {
-        $model = ModelReference::fromString($this->modelReference)->instance();
+        $model = $this->model;
 
-        return ChiefSites::all()->filterByLocales($model->getAllowedSites())->toCollection()
+        $locales = $model instanceof HasAllowedSites ? $model->getAllowedSites() : ChiefSites::locales();
+
+        return ChiefSites::all()->filterByLocales($locales)->toCollection()
             ->map(fn (ChiefSite $site) => SiteDto::fromConfig($site));
     }
 }
