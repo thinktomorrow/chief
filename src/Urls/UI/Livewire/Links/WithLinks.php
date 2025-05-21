@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Visitable\BaseUrlSegment;
 use Thinktomorrow\Chief\Sites\ChiefSite;
 use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\SiteDto;
 use Thinktomorrow\Chief\Urls\App\Queries\GetBaseUrls;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
@@ -19,7 +20,9 @@ trait WithLinks
         $links = collect();
 
         $model = $this->getModel();
-        $sites = ChiefSites::all()->filterByLocales($model->getAllowedSites());
+        $sites = $model instanceof HasAllowedSites
+            ? ChiefSites::all()->filterByLocales($model->getAllowedSites())
+            : ChiefSites::all();
         $activeRecords = $model->urls;
 
         /** @var UrlRecord $record */

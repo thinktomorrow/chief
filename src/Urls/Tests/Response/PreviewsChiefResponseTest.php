@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
-use Thinktomorrow\Chief\Urls\App\Actions\Redirects\RedirectApplication;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 use Thinktomorrow\Chief\Urls\ChiefResponse;
 
@@ -23,7 +22,6 @@ class PreviewsChiefResponseTest extends ChiefTestCase
         parent::setUp();
 
         $this->application = app(UrlApplication::class);
-        $this->redirectApplication = app(RedirectApplication::class);
 
         $this->model = $this->setUpAndCreateArticle(['current_state' => PageState::published->value]);
     }

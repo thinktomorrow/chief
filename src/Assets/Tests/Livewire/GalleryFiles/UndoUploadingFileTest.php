@@ -12,7 +12,7 @@ class UndoUploadingFileTest extends ChiefTestCase
 {
     use TestingFileUploads;
 
-    private Testable $fileFieldUploadComponent;
+    private Testable $fileUploadComponent;
 
     protected function setUp(): void
     {

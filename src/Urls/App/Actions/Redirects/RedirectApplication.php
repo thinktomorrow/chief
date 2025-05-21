@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Urls\App\Actions\Redirects;
 
-use Thinktomorrow\Chief\Urls\App\Actions\WithUniqueSlug;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
 use Thinktomorrow\Chief\Urls\Exceptions\RedirectUrlAlreadyExists;
 use Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound;
@@ -12,8 +11,6 @@ use Thinktomorrow\Url\Url;
 
 class RedirectApplication
 {
-    use WithUniqueSlug;
-
     private UrlRepository $repository;
 
     public function __construct(UrlRepository $repository)

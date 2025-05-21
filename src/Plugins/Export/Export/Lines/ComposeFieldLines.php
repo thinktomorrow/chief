@@ -133,43 +133,43 @@ class ComposeFieldLines
         return $lines;
     }
 
-    private function extractRepeatField(Resource $resource, $model, Repeat $field, array $locales): LinesCollection
-    {
-        // Repeat field itself is localized... Items not.
-        // TODO: Protect in repeat field itself by checking if items has locales
-
-        $lines = new LinesCollection;
-
-        if ($this->ignoreEmptyValues && ! $field->getValue()) {
-            return $lines;
-        }
-
-        $components = $field->getRepeatedComponents();
-        foreach ($components as $componentGroup) {
-            foreach (Fields::make($componentGroup) as $nestedField) {
-                $lines = $lines->merge(
-                    $this->addFieldLines($resource, $model, $nestedField, $locales)
-                );
-            }
-        }
-
-        return $lines;
-    }
-
-    private function flattenRepeatFieldValues(Repeat $field, array $values): array
-    {
-        $flattened = [];
-
-        foreach ($values as $key => $value) {
-            if (is_array($value)) {
-                $flattened = array_merge($flattened, $this->flattenRepeatFieldValues($field, $value));
-            } else {
-                $flattened[$field->getKey().'.'.$key] = $value;
-            }
-        }
-
-        return $flattened;
-    }
+    //    private function extractRepeatField(Resource $resource, $model, Repeat $field, array $locales): LinesCollection
+    //    {
+    //        // Repeat field itself is localized... Items not.
+    //        // TODO: Protect in repeat field itself by checking if items has locales
+    //
+    //        $lines = new LinesCollection;
+    //
+    //        if ($this->ignoreEmptyValues && ! $field->getValue()) {
+    //            return $lines;
+    //        }
+    //
+    //        $components = $field->getRepeatedComponents();
+    //        foreach ($components as $componentGroup) {
+    //            foreach (Fields::make($componentGroup) as $nestedField) {
+    //                $lines = $lines->merge(
+    //                    $this->addFieldLines($resource, $model, $nestedField, $locales)
+    //                );
+    //            }
+    //        }
+    //
+    //        return $lines;
+    //    }
+    //
+    //    private function flattenRepeatFieldValues(Repeat $field, array $values): array
+    //    {
+    //        $flattened = [];
+    //
+    //        foreach ($values as $key => $value) {
+    //            if (is_array($value)) {
+    //                $flattened = array_merge($flattened, $this->flattenRepeatFieldValues($field, $value));
+    //            } else {
+    //                $flattened[$field->getKey().'.'.$key] = $value;
+    //            }
+    //        }
+    //
+    //        return $flattened;
+    //    }
 
     private function addFragmentFieldValues(ContextOwner $model, array $locales): LinesCollection
     {
@@ -179,7 +179,8 @@ class ComposeFieldLines
 
         foreach ($contexts as $context) {
             /** @var Fragment[] $fragment */
-            $fragments = app(FragmentRepository::class)->getByContext($context->id);
+            $fragmentCollection = app(FragmentRepository::class)->getFragmentCollection($context->id);
+            $fragments = $fragmentCollection->flatten();
 
             foreach ($fragments as $fragment) {
 
@@ -228,7 +229,7 @@ class ComposeFieldLines
 
             $valuesGroups = $this->extractRepeatValues($values);
 
-            foreach ($valuesGroups as $valuesGroup) {
+            foreach ($valuesGroups as $index => $valuesGroup) {
 
                 foreach ($valuesGroup as $key => $_values) {
 
@@ -236,7 +237,7 @@ class ComposeFieldLines
 
                     $lines->push(new FieldLine(
                         $model->modelReference()->get(),
-                        FieldNameHelpers::replaceBracketsByDots($field->getName()),
+                        FieldNameHelpers::replaceBracketsByDots($field->getName()).'.'.$index.'.'.$key,
                         $this->modelLabel,
                         ucfirst($resource->getLabel()),
                         ($field->getLabel() ?: $field->getKey()).' > '.$key,

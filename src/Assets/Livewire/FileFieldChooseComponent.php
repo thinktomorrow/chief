@@ -28,7 +28,6 @@ class FileFieldChooseComponent extends Component
     public function mount(string $parentId)
     {
         $this->parentId = $parentId;
-        $this->rows = collect();
     }
 
     public function getListeners()

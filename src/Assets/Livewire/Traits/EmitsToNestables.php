@@ -13,6 +13,6 @@ trait EmitsToNestables
     {
         $params = array_merge($params, ['previous_sibling_id' => $this->getId()]);
 
-        $this->dispatch($event.'-'.$this->parentId, $params)->to($name);
+        $this->dispatch($event.'-'.($this->parentId ?? ''), $params)->to($name);
     }
 }

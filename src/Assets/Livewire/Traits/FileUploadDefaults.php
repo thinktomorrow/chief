@@ -141,7 +141,7 @@ trait FileUploadDefaults
             $this->setFilesValidatedState($fileId, true);
         } catch (ValidationException $e) {
             $this->setFilesValidatedState($fileId, false, $e->validator->errors()->first('files'));
-            $this->removeUpload('files.'.$this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
+            $this->_removeUpload('files.'.$this->findUploadFileIndex($fileId), $uploadedFile->getFilename());
         }
     }
 
