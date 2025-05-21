@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Added: config `allow_site_selection` to allow changing sites selection in the admin panel. This can be set per model
   via the `allowSiteSelection(): bool` method.
+- Added: Localized field has indicator next to label in form.
 
 ## 0.10.4 - 2025-05-20
 

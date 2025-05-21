@@ -26,8 +26,13 @@
 
 <x-chief::form.fieldset wire:ignore.self :attributes="$fieldSetAttributes">
     @if ($getLabel())
-        <x-chief::form.label :required="$isRequired()">
-            {{ $getLabel() }}
+        <x-chief::form.label class="flex gap-2 items-center" :required="$isRequired()">
+            <span>{!! $getLabel() !!}</span>
+            @if($showsLocaleIndicatorInForm())
+                <span title="Dit veld is invulbaar per site">
+                    <x-chief::icon.locales class="size-5 text-grey-400" />
+                </span>
+            @endif
         </x-chief::form.label>
     @endif
 
