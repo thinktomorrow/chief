@@ -10,6 +10,14 @@ return [
     'strict' => env('APP_DEBUG', false),
 
     /**
+     * Can the admin select and change selected sites for each HasAllowedSites model?
+     * If set to false, the admin can only view the selected sites but not change
+     * them. This can be set per model via the allowSiteSelection() method.
+     * This config value is used as a default.
+     */
+    'allow_site_selection' => false,
+
+    /**
      * Sites
      *
      * Define the different sites that are available in your application.

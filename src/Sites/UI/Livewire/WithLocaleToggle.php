@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites\UI\Livewire;
 
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 
 trait WithLocaleToggle
@@ -14,7 +15,7 @@ trait WithLocaleToggle
     protected function setLocalesOnOpen(array $values, iterable $components): void
     {
         if ($this->showsLocalesForAnyField($components)) {
-            $this->locales = $values['locales'] ?? [];
+            $this->locales = $values['locales'] ?: ($this->isAllowedToSelectSites() ? [] : ChiefSites::locales());
             $this->scopedLocale = $values['scopedLocale'] ?? ($this->locales[0] ?? null);
         }
     }
@@ -30,9 +31,9 @@ trait WithLocaleToggle
         }
     }
 
-    public function isEditingLocalesAllowed(): bool
+    public function isAllowedToSelectSites(): bool
     {
-        return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class);
+        return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class) && (new $this->modelClass)->allowSiteSelection();
     }
 
     /**

@@ -6,7 +6,7 @@
     <div class="flex items-center gap-2">
         <livewire:chief-wire::model-site-toggle :model="$this->model" />
 
-        @if($this->isAllowedToEditSiteSelection())
+        @if($this->isAllowedToSelectSites())
             <x-chief::button wire:click="edit" size="sm" variant="grey" title="Sites aanpassen" class="shrink-0">
                 <x-chief::icon.settings />
             </x-chief::button>

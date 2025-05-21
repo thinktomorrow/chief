@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: config `allow_site_selection` to allow changing sites selection in the admin panel. This can be set per model
+  via the `allowSiteSelection(): bool` method.
+
 ## 0.10.4 - 2025-05-20
 
 - Fixed: export/import of translations for repeat fields

@@ -42,9 +42,9 @@ class SiteSelection extends Component
         return view('chief-sites::site-selection.site-selection');
     }
 
-    public function isAllowedToEditSiteSelection(): bool
+    public function isAllowedToSelectSites(): bool
     {
-        return $this->model instanceof HasAllowedSites;
+        return $this->model instanceof HasAllowedSites && $this->model->allowSiteSelection();
     }
 
     public function getSites(): Collection
