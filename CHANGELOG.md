@@ -8,6 +8,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## 0.10.4 - 2025-05-20
 
 - Fixed: export/import of translations for repeat fields
+- Fixed: links mgmt for models that don't implement HasAllowedSites
+- Changed: Spaces in links are no longer allowed and are now automatically replaced with hyphens.
 - Changed: Refactor locales on create model component
 - Added: `showsLocales` on a field to indicate if field show be shown localized. This is for presentation purposes and
   differs from `hasLocales` which indicates if the field is localized.

@@ -38,7 +38,10 @@ trait WithUniqueSlug
             : $slug;
 
         // convert diacritics to ascii e.g. é -> e.
-        return Str::ascii($slug);
+        $slug = Str::ascii($slug);
+
+        // Convert spaces to hyphen e.g. "my slug" -> "my-slug"
+        return str_replace(' ', '-', $slug);
     }
 
     private function assertSlugDoesNotExistsAsActiveUrl(string $locale, string $slug, ?int $whiteListedId = null)
