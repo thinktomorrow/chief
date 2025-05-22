@@ -117,6 +117,20 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         // This is an empty fill and acts as the component default.
     }
 
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    /**
+     * Shows in the form that the field is localized.
+     * Displays an small icon next to the label
+     */
+    public function showsLocaleIndicatorInForm(): bool
+    {
+        return $this->hasLocales() && count($this->getLocales()) > 1;
+    }
+
     protected function wireableMethods(array $components): array
     {
         return [

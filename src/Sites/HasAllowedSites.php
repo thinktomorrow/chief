@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
  */
 interface HasAllowedSites
 {
+    /** Can the admin change selected sites for this model? */
+    public function allowSiteSelection(): bool;
+
     /** All sites where this model is active in. */
     public function getAllowedSites(): array;
 

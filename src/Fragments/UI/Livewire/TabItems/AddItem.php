@@ -37,7 +37,7 @@ abstract class AddItem extends Component
     {
         $this->isOpen = true;
 
-        $this->form['locales'] = [];
+        $this->form['locales'] = $this->locales;
         $this->form['active_sites'] = [];
     }
 
@@ -57,10 +57,10 @@ abstract class AddItem extends Component
     {
         $this->validate([
             'form.locales' => 'required|array|min:1',
-            //            'form.title' => 'required',
+            'form.title' => 'required',
         ], [
-            'form.locales.required' => 'Voeg minstens één site toe waarvoor je de inhoud wilt voorzien.',
-            //            'form.title.required' => 'Voorzie nog voor jezelf een titel. Kort en bondig.',
+            'form.locales.required' => 'Voeg minstens één site toe waarvoor je de versie wilt opmaken.',
+            'form.title.required' => 'Voorzie nog voor jezelf een titel voor deze versie. Kort en bondig.',
         ]);
 
         $itemId = $this->createOnSave();

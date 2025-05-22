@@ -18,39 +18,37 @@
 
 
 
-        @if($this->isEditingLocalesAllowed())
+        @if($this->isAllowedToSelectSites())
             @include('chief-models::livewire._partials.locale-selection')
+        @endif
 
-            @if(count($locales) > 0)
+        @if(count($locales) > 0)
 
-                <div class="mt-6">
-                    <x-chief::window>
+            <div class="mt-6">
+                <x-chief::window>
 
-                        <x-slot name="tabs">
-                            @if (count($locales) > 0)
-                                <x-chief::window.tabs>
-                                    @foreach ($locales as $site)
-                                        <x-chief::window.tabs.item
-                                            aria-controls="{{ $site }}"
-                                            aria-selected="{{ $site === $scopedLocale }}"
-                                            wire:key="locale-nav-{{ $site }}"
-                                            wire:click="set('scopedLocale', '{{ $site }}')"
-                                            :active="$site == $scopedLocale"
-                                        >
-                                            {{ \Thinktomorrow\Chief\Sites\ChiefSites::shortName($site) }}
-                                        </x-chief::window.tabs.item>
-                                    @endforeach
-                                </x-chief::window.tabs>
-                            @endif
-                        </x-slot>
+                    <x-slot name="tabs">
+                        <x-chief::window.tabs>
+                            @foreach ($locales as $site)
+                                <x-chief::window.tabs.item
+                                    aria-controls="{{ $site }}"
+                                    aria-selected="{{ $site === $scopedLocale }}"
+                                    wire:key="locale-nav-{{ $site }}"
+                                    wire:click="set('scopedLocale', '{{ $site }}')"
+                                    :active="$site == $scopedLocale"
+                                >
+                                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::shortName($site) }}
+                                </x-chief::window.tabs.item>
+                            @endforeach
+                        </x-chief::window.tabs>
+                    </x-slot>
 
-                        @foreach ($this->getFields() as $field)
-                            {{ $field }}
-                        @endforeach
-                    </x-chief::window>
+                    @foreach ($this->getFields() as $field)
+                        {{ $field }}
+                    @endforeach
+                </x-chief::window>
 
-                </div>
-            @endif
+            </div>
         @else
             @foreach ($this->getFields() as $field)
                 {{ $field }}

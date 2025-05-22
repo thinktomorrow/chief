@@ -24,17 +24,17 @@
                 </x-slot>
             @endif
 
-            @if ($hasSites)
-                <div class="flex justify-between">
-                    <livewire:chief-wire::site-selection :model="$model" />
+            <div class="flex justify-between">
+                <livewire:chief-wire::site-selection :model="$model" />
 
-                    @if ($hasStates)
-                        @foreach ($model->getStateKeys() as $stateKey)
-                            <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
-                        @endforeach
-                    @endif
-                </div>
-            @else
+                @if ($hasSites && $hasStates)
+                    @foreach ($model->getStateKeys() as $stateKey)
+                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                    @endforeach
+                @endif
+            </div>
+
+            @if (!$hasSites && $hasStates)
                 <x-slot name="actions">
                     @if ($hasStates)
                         @foreach ($model->getStateKeys() as $stateKey)

@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 trait HasAllowedSitesDefaults
 {
+    public function allowSiteSelection(): bool
+    {
+        return config('chief.allow_site_selection', false);
+    }
+
     /**
      * This method is called on an Eloquent model to initialize the localized defaults.
      */

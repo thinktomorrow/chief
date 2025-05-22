@@ -5,6 +5,25 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## 0.10.5 - 2025-05-22
+
+- Added: config `allow_site_selection` to allow changing sites selection in the admin panel. This can be set per model
+  via the `allowSiteSelection(): bool` method.
+- Added: config `allow_multiple_contexts` and `allow_multiple_menus` to allow the admin to add multiple fragment
+  contexts / menus.
+- Added: Localized field indicator next to form label.
+
+### Multisite as config
+
+With this PR the multisite functionality is now a config option. This means that you can activate Multisite on a project
+by setting following config:
+
+```php
+'allow_site_selection' => true,
+'allow_multiple_contexts' => true,
+'allow_multiple_menus' => true,
+```
+
 ## 0.10.4 - 2025-05-20
 
 - Fixed: export/import of translations for repeat fields

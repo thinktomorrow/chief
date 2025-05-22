@@ -10,6 +10,26 @@ return [
     'strict' => env('APP_DEBUG', false),
 
     /**
+     * Can the admin select and change selected sites for each HasAllowedSites model?
+     * If set to false, the admin can only view the selected sites but not change
+     * them. This can be set per model via the allowSiteSelection() method.
+     * This config value is used as a default.
+     */
+    'allow_site_selection' => false,
+
+    /**
+     * Can the admin add and manager more than one fragment context for page?
+     * If set to true, the admin can add, remove and change multiple
+     * fragment contexts for each page.
+     */
+    'allow_multiple_contexts' => false,
+
+    /**
+     * Can the admin add and manager more than one version per menu?
+     */
+    'allow_multiple_menus' => false,
+
+    /**
      * Sites
      *
      * Define the different sites that are available in your application.

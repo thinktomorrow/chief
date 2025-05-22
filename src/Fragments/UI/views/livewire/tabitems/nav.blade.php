@@ -11,7 +11,9 @@
         </x-chief::window.tabs.item>
     @endforeach
 
-    <x-chief::window.tabs.item wire:click="addItem">
-        <x-chief::icon.plus-sign class="size-5" />
-    </x-chief::window.tabs.item>
+    @if($this->allowMultipleItems())
+        <x-chief::window.tabs.item wire:click="addItem">
+            <x-chief::icon.plus-sign class="size-5" />
+        </x-chief::window.tabs.item>
+    @endif
 </x-chief::window.tabs>

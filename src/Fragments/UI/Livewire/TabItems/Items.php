@@ -50,6 +50,11 @@ abstract class Items extends Component
 
     abstract public function editItem(string $itemId): void;
 
+    public function allowMultipleItems(): bool
+    {
+        return false;
+    }
+
     public function showItem(string $itemId): void
     {
         $this->activeItemId = $itemId;

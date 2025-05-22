@@ -74,19 +74,6 @@ class File extends Component implements Field, HasComponents
         });
     }
 
-    public function getLabel(): ?string
-    {
-        if (! $label = parent::getLabel()) {
-            return null;
-        }
-
-        if ($this->getLocales() === [ChiefSites::primaryLocale()]) {
-            return $label.' (voor alle talen)';
-        }
-
-        return $label;
-    }
-
     private function getMedia(Model&HasAsset $model, string $locale): array
     {
         return $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
