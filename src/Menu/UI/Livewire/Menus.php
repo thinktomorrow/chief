@@ -46,4 +46,9 @@ class Menus extends Items
     {
         return app(ComposeLivewireDto::class)->getMenus($this->type);
     }
+
+    public function allowMultipleItems(): bool
+    {
+        return config('chief.allow_multiple_menus', false);
+    }
 }

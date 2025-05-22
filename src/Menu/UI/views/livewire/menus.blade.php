@@ -2,29 +2,35 @@
     $items = $this->getItems();
 @endphp
 
-<x-chief::window title="Menu items">
-    <x-slot name="badges">
-        @if (($item = $items->first(fn ($item) => $item->id === $activeItemId)) && count($locales) > 1)
-            @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($item->getAllowedSites()) as $site)
-                <x-chief::badge
-                    variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
-                    size="sm"
-                >
-                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}
-                </x-chief::badge>
-            @endforeach
-        @endif
-    </x-slot>
+<x-chief::window title="{{ $this->allowMultipleItems() || count($items) > 1 ? 'Menu' : '' }}">
 
-    <x-slot name="tabs">
-        @include('chief-fragments::livewire.tabitems.nav')
-    </x-slot>
+    @if($this->allowMultipleItems() || count($items) > 1)
+        <x-slot name="badges">
+            @if (($item = $items->first(fn ($item) => $item->id === $activeItemId)) && count($locales) > 1)
+                @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($item->getAllowedSites()) as $site)
+                    <x-chief::badge
+                        variant="{{ in_array($site, $item->getActiveSites()) ? 'blue' : 'outline-transparent' }}"
+                        size="sm"
+                    >
+                        {{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($site)->shortName }}
+                    </x-chief::badge>
+                @endforeach
+            @endif
+        </x-slot>
+
+        <x-slot name="tabs">
+            @include('chief-fragments::livewire.tabitems.nav')
+        </x-slot>
+    @endif
 
     <div class="-mb-4">
         @foreach ($items as $item)
             <div wire:key="menu-tab-content-{{ $item->id }}">
                 @if ($item->id === $activeItemId)
-                    @include('chief-fragments::livewire.tabitems.actions')
+
+                    @if($this->allowMultipleItems() || count($items) > 1)
+                        @include('chief-fragments::livewire.tabitems.actions')
+                    @endif
 
                     <livewire:chief-wire::table
                         :key="'table-'.$item->getId()"

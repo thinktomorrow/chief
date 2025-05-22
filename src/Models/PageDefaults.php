@@ -43,4 +43,9 @@ trait PageDefaults
     {
         return (new ResourceKeyFormat(static::class))->getKey();
     }
+
+    public function allowMultipleContexts(): bool
+    {
+        return config('chief.allow_multiple_contexts', false);
+    }
 }
