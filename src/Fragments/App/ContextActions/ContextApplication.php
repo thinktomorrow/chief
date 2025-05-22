@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\DuplicateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyDetached;
 use Thinktomorrow\Chief\Fragments\Exceptions\SafeContextDeleteException;
+use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Sites\Actions\SyncActiveSites;
 
@@ -103,8 +104,22 @@ class ContextApplication
      */
     public function syncSites(SyncSites $command): void
     {
-        $this->contextRepository
-            ->getByOwner($command->getModelReference())
+        $contexts = $this->contextRepository
+            ->getByOwner($command->getModelReference());
+
+        // If only one context is present, we make sure it matches the given sites
+        if ($contexts->count() == 1) {
+            /** @var ContextModel $context */
+            $context = $contexts->first();
+            $context->setAllowedSites($command->getAllowedSites());
+            $context->setActiveSites($command->getAllowedSites());
+            $context->save();
+
+            return;
+        }
+
+        // Remove any sites that are no longer allowed
+        $contexts
             ->each(function ($context) use ($command) {
 
                 $removedSites = array_diff($context->getAllowedSites(), $command->getAllowedSites());
@@ -120,8 +135,7 @@ class ContextApplication
                 foreach ($removedSites as $removedSite) {
                     $context->removeActiveSite($removedSite);
                 }
-            })
-            ->each(fn ($context) => $context->save());
+            })->each(fn ($context) => $context->save());
     }
 
     /**

@@ -22,6 +22,11 @@ trait HasActiveSitesDefaults
         return $this->active_sites ?? [];
     }
 
+    public function setActiveSites(array $locales): void
+    {
+        $this->active_sites = $locales;
+    }
+
     public function hasActiveSite($site): bool
     {
         return in_array($site, $this->active_sites ?? []);
