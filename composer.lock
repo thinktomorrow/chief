@@ -3925,16 +3925,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "11.12.9",
+            "version": "11.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "2435e90009c36906c33668d26c96c86acdb39af7"
+                "reference": "e2324b2f138ec41181089a7dcf28489be93ede53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/2435e90009c36906c33668d26c96c86acdb39af7",
-                "reference": "2435e90009c36906c33668d26c96c86acdb39af7",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/e2324b2f138ec41181089a7dcf28489be93ede53",
+                "reference": "e2324b2f138ec41181089a7dcf28489be93ede53",
                 "shasum": ""
             },
             "require": {
@@ -4018,7 +4018,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/11.12.9"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/11.13.0"
             },
             "funding": [
                 {
@@ -4030,7 +4030,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-31T07:55:00+00:00"
+            "time": "2025-05-22T12:25:27+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -4251,16 +4251,16 @@
         },
         {
             "name": "spatie/robots-txt",
-            "version": "2.3.1",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/robots-txt.git",
-                "reference": "58ed7b61c2a59e72f57b46e4d025967dd5f16000"
+                "reference": "ef926548f12654eaf332fe977cbb7f787590404d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/robots-txt/zipball/58ed7b61c2a59e72f57b46e4d025967dd5f16000",
-                "reference": "58ed7b61c2a59e72f57b46e4d025967dd5f16000",
+                "url": "https://api.github.com/repos/spatie/robots-txt/zipball/ef926548f12654eaf332fe977cbb7f787590404d",
+                "reference": "ef926548f12654eaf332fe977cbb7f787590404d",
                 "shasum": ""
             },
             "require": {
@@ -4295,7 +4295,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/robots-txt/issues",
-                "source": "https://github.com/spatie/robots-txt/tree/2.3.1"
+                "source": "https://github.com/spatie/robots-txt/tree/2.4.0"
             },
             "funding": [
                 {
@@ -4307,7 +4307,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-31T09:33:25+00:00"
+            "time": "2025-05-22T08:22:10+00:00"
         },
         {
             "name": "spatie/temporary-directory",
