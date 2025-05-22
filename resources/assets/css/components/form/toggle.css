@@ -1,27 +1,27 @@
-.form-input-toggle {
+@utility form-input-toggle {
     width: 3.5rem;
     height: 1.75rem;
 
     @apply relative inline-block;
-}
 
-.form-input-toggle:before {
-    content: '';
-    @apply absolute inset-0 cursor-pointer rounded-full bg-grey-100 transition-all duration-300 ease-in-out;
-}
+    &:before {
+        content: '';
+        @apply bg-grey-100 absolute inset-0 cursor-pointer rounded-full transition-all duration-300 ease-in-out;
+    }
 
-.form-input-toggle:after {
-    content: '';
-    position: absolute;
-    width: 1.25rem;
-    height: 1.25rem;
-    top: 0.25rem;
-    left: 0.25rem;
-    @apply inline-block rounded-full bg-white shadow transition-all duration-300 ease-in-out;
+    &:after {
+        content: '';
+        position: absolute;
+        width: 1.25rem;
+        height: 1.25rem;
+        top: 0.25rem;
+        left: 0.25rem;
+        @apply inline-block rounded-full bg-white shadow transition-all duration-300 ease-in-out;
+    }
 }
 
 input:focus + .form-input-toggle:before {
-    @apply shadow;
+    @apply shadow-sm;
 }
 
 input:checked + .form-input-toggle {

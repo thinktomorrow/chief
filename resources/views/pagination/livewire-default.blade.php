@@ -4,7 +4,7 @@
             <div class="flex flex-1 justify-between sm:hidden">
                 <span>
                     @if ($paginator->onFirstPage())
-                        <x-chief::button size="sm" variant="outline-white" class="pointer-events-none text-grey-400">
+                        <x-chief::button size="sm" variant="outline-white" class="text-grey-400 pointer-events-none">
                             <x-chief::icon.chevron-left />
                             <span>Vorige</span>
                         </x-chief::button>
@@ -35,7 +35,7 @@
                             <x-chief::icon.chevron-right />
                         </x-chief::button>
                     @else
-                        <x-chief::button size="sm" variant="outline-white" class="pointer-events-none text-grey-400">
+                        <x-chief::button size="sm" variant="outline-white" class="text-grey-400 pointer-events-none">
                             <span>Vorige</span>
                             <x-chief::icon.chevron-right />
                         </x-chief::button>
@@ -45,7 +45,7 @@
 
             <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <div>
-                    <p class="text-sm leading-5 text-grey-500">
+                    <p class="text-grey-500 text-sm leading-5">
                         <span>{{ $paginator->firstItem() }}</span>
                         <span>-</span>
                         <span>{{ $paginator->lastItem() }}</span>
@@ -56,7 +56,7 @@
                 </div>
 
                 <div>
-                    <span class="relative z-0 inline-flex -space-x-px rounded-md shadow-sm">
+                    <span class="relative z-0 inline-flex -space-x-px rounded-md shadow-xs">
                         <span>
                             {{-- Previous Page Link --}}
                             @if ($paginator->onFirstPage())
@@ -64,7 +64,7 @@
                                     <x-chief::button
                                         size="sm"
                                         variant="outline-white"
-                                        class="rounded-r-none text-grey-400"
+                                        class="text-grey-400 rounded-r-none"
                                     >
                                         <x-chief::icon.chevron-left />
                                     </x-chief::button>
@@ -92,7 +92,7 @@
                                     <x-chief::button
                                         size="sm"
                                         variant="outline-white"
-                                        class="pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
+                                        class="text-grey-400 pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal hover:relative"
                                     >
                                         {{ $element }}
                                     </x-chief::button>
@@ -108,7 +108,7 @@
                                                 <x-chief::button
                                                     size="sm"
                                                     variant="outline-white"
-                                                    class="pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal text-grey-400 hover:relative"
+                                                    class="text-grey-400 pointer-events-none min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal hover:relative"
                                                 >
                                                     {{ $page }}
                                                 </x-chief::button>
@@ -148,7 +148,7 @@
                                     <x-chief::button
                                         size="sm"
                                         variant="outline-white"
-                                        class="rounded-l-none text-grey-400"
+                                        class="text-grey-400 rounded-l-none"
                                     >
                                         <x-chief::icon.chevron-right />
                                     </x-chief::button>

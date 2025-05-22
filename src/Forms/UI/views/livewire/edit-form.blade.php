@@ -8,7 +8,7 @@
             />
         </x-slot>
 
-        @if(count($locales) > 0)
+        @if(count($locales) > 1)
             @include('chief-form::livewire._partials.locale-toggle')
         @endif
 

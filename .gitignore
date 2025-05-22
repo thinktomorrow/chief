@@ -16,12 +16,12 @@ _migration/uploads
 .phpunit.cache
 .php_cs.cache
 .php-cs-fixer.cache
-build/
 /docs/.obsidian
 
 ##########################################
 # BUILDING
 ##########################################
+/build
 /node_modules
 /npm-debug.log
 /yarn-error.log

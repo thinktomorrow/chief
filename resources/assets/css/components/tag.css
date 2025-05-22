@@ -1,21 +1,15 @@
-/**
- * Using @layer directive to add this classes to tailwindcss components
- * This will make them responsive and combinable with variants
- **/
-@layer components {
-    .tag {
-        @apply inline-flex items-center text-grey-800 ring-1 ring-inset ring-grey-100;
-    }
+@utility tag {
+    @apply text-grey-800 ring-grey-100 inline-flex items-center ring-1 ring-inset;
+}
 
-    .tag-base {
-        @apply gap-x-1.5 rounded-xl px-2 py-1.5 text-base leading-5;
-    }
+@utility tag-base {
+    @apply gap-x-1.5 rounded-xl px-2 py-1.5 text-base leading-5;
+}
 
-    .tag-sm {
-        @apply gap-x-1 rounded-lg px-1.5 py-1 text-sm leading-4;
-    }
+@utility tag-sm {
+    @apply gap-x-1 rounded-lg px-1.5 py-1 text-sm leading-4;
+}
 
-    .tag-xs {
-        @apply gap-x-1 rounded-lg px-1.5 py-1 text-xs leading-[.875rem];
-    }
+@utility tag-xs {
+    @apply gap-x-1 rounded-lg px-1.5 py-1 text-xs leading-[.875rem];
 }

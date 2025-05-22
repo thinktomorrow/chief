@@ -17,7 +17,7 @@
             return `${n.toFixed(n < 10 && l > 0 ? 1 : 0)} ${units[l]}`
         },
     }"
-    class="pointer-events-none relative flex items-center justify-center rounded-md border border-dashed border-grey-200 bg-white p-4 shadow-sm hover:border-grey-400"
+    class="border-grey-200 hover:border-grey-400 pointer-events-none relative flex items-center justify-center rounded-md border border-dashed bg-white p-4 shadow-xs"
 >
     <span x-html="filenameString ? filenameString : '{{ $slot }}'" class="body body-dark text-center"></span>
 

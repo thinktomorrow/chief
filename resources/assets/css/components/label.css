@@ -1,65 +1,47 @@
-/**
- * Using @layer directive to add this classes to tailwindcss components
- * This will make them responsive and combinable with variants
- * @deprecated : use x-chief::badge component instead
- **/
-@layer components {
-    .label {
-        @apply inline-block rounded px-2.5 py-1 font-medium leading-tight;
-    }
+@utility label {
+    @apply inline-block rounded-sm px-2.5 py-1 leading-tight font-medium;
+}
 
-    .label-xs {
-        @apply rounded px-2 py-1 text-xs;
-    }
+@utility label-xs {
+    @apply rounded-sm px-2 py-1 text-xs;
+}
+@utility label-sm {
+    @apply rounded-sm px-2.5 py-1 text-sm;
+}
+@utility label-md {
+    @apply rounded-md px-3 py-1 text-base;
+}
+@utility label-lg {
+    @apply rounded-lg px-4 py-3;
+}
+@utility label-xl {
+    @apply rounded-xl px-8 py-4;
+}
 
-    .label-sm {
-        @apply rounded px-2.5 py-1 text-sm;
-    }
+@utility label-primary {
+    @apply bg-primary-50 text-primary-500;
+}
+@utility label-secondary {
+    @apply bg-secondary-50 text-secondary-500;
+}
+@utility label-grey {
+    @apply bg-grey-100 text-grey-600;
+}
+@utility label-warning {
+    @apply bg-orange-100 text-orange-500;
+}
+@utility label-error {
+    @apply bg-red-100 text-red-500;
+}
+@utility label-success {
+    @apply bg-green-100 text-green-500;
+}
+@utility label-info {
+    @apply bg-blue-50 text-blue-500;
+}
 
-    .label-md {
-        @apply rounded-md px-3 py-1 text-base;
-    }
-
-    .label-lg {
-        @apply rounded-lg px-4 py-3;
-    }
-
-    .label-xl {
-        @apply rounded-xl px-8 py-4;
-    }
-
-    .with-xs-labels {
-        .label {
-            @apply mr-1;
-            @extend .label-xs;
-        }
-    }
-
-    .label-primary {
-        @apply bg-primary-50 text-primary-500;
-    }
-
-    .label-secondary {
-        @apply bg-secondary-50 text-secondary-500;
-    }
-
-    .label-grey {
-        @apply bg-grey-100 text-grey-600;
-    }
-
-    .label-warning {
-        @apply bg-orange-100 text-orange-500;
-    }
-
-    .label-error {
-        @apply bg-red-100 text-red-500;
-    }
-
-    .label-success {
-        @apply bg-green-100 text-green-500;
-    }
-
-    .label-info {
-        @apply bg-blue-50 text-blue-500;
+@utility with-xs-labels {
+    label {
+        @apply label-xs mr-1;
     }
 }

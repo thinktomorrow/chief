@@ -101,6 +101,36 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         // Fake storage local disk
         Storage::fake('local');
+
+        $this->symlinkPublicAssetsFolder();
+    }
+
+    /**
+     * To avoid Vite manifest not found errors in our tests...
+     *
+     * @return void
+     */
+    private function symlinkPublicAssetsFolder()
+    {
+        $buildPath = __DIR__.'/../public/chief/build';
+        $testbenchPath = base_path('public/chief/build');
+
+        if (! file_exists($buildPath)) {
+            throw new \Exception('Build path does not exist. Run npm run prod first.');
+        }
+
+        // Als symlink al bestaat: niets doen
+        if (is_link($testbenchPath)) {
+            return;
+        }
+
+        // Maak doelmap aan als die nog niet bestaat
+        if (! file_exists(dirname($testbenchPath))) {
+            mkdir(dirname($testbenchPath), 0777, true);
+        }
+
+        // Maak symlink
+        symlink($buildPath, $testbenchPath);
     }
 
     protected function tearDown(): void

@@ -30,3 +30,6 @@ window.Alpine.data('tabs', tabs);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
 window.Alpine.directive('copy', copyDirective);
+
+/* Tell Vite to build all files in this directory */
+import.meta.glob(['../img/**']);

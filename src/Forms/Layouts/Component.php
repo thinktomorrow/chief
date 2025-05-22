@@ -59,7 +59,7 @@ abstract class Component extends \Illuminate\View\Component implements HasTagged
     protected function wireableMethods(array $components): array
     {
         return [
-            ...(isset($this->key) ? ['key' => $this->key] : []),
+            ...['key' => $this->key],
             ...(isset($this->id) ? ['id' => $this->id] : []),
             ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
             ...(isset($this->components) ? ['components' => $components] : []),

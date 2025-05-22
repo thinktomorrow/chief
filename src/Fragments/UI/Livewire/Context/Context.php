@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
+use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -28,7 +29,6 @@ class Context extends Component
         $this->scopedLocale = $scopedLocale;
 
         $this->refreshFragments();
-
     }
 
     public function getListeners()
@@ -36,8 +36,18 @@ class Context extends Component
         return array_merge(
             $this->getListenersWithFragments(),
             [
+                'allowed-sites-updated' => 'onAllowedSitesUpdated',
             ]
         );
+    }
+
+    public function onAllowedSitesUpdated(array $allowedSites): void
+    {
+        // Get updated context with correct site references
+        $this->context = app(ComposeLivewireDto::class)
+            ->getContext($this->modelReference, $this->context->getId());
+
+        $this->refreshFragments();
     }
 
     public function render()

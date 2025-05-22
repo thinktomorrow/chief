@@ -1,7 +1,7 @@
 <x-chief::dialog.modal wired size="lg" title="Beheer de hotspots op deze afbeelding">
     @if ($isOpen)
         <form
-            class="row-start-start gutter-4"
+            class="gutter-4 flex flex-wrap items-start justify-start"
             x-data="{
                 activeIndex: @entangle('activeHotSpotId'),
                 addHotSpot: (event) => {
@@ -41,7 +41,7 @@
 
                             <div
                                 x-on:click.stop="$wire.activateHotSpot('{{ $hotSpot['id'] }}')"
-                                class="relative h-4 w-4 cursor-pointer rounded-full bg-white shadow-lg ring-2 ring-black/10 transition-all duration-100 ease-in-out hover:bg-primary"
+                                class="hover:bg-primary relative h-4 w-4 cursor-pointer rounded-full bg-white shadow-lg ring-2 ring-black/10 transition-all duration-100 ease-in-out"
                                 x-bind:class="{
                                     '!bg-primary-500 !border !border-primary-600':
                                         '{{ $hotSpot['id'] }}' === activeIndex,
@@ -50,7 +50,7 @@
                         </div>
                     @endforeach
 
-                    <div class="overflow-hidden rounded-xl bg-grey-100">
+                    <div class="bg-grey-100 overflow-hidden rounded-xl">
                         <img
                             src="{{ $previewFile->getUrl('large') }}"
                             alt="Preview image"

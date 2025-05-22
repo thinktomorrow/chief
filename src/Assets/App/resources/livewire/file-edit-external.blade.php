@@ -5,9 +5,9 @@
     @endphp
 
     <form class="space-y-4">
-        <div class="flex gap-6 rounded-xl border border-grey-200 p-3 shadow-sm max-sm:flex-wrap sm:pr-6">
+        <div class="border-grey-200 flex gap-6 rounded-xl border p-3 shadow-xs max-sm:flex-wrap sm:pr-6">
             <div
-                class="flex h-64 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl bg-grey-100 sm:h-48 sm:w-48"
+                class="bg-grey-100 flex h-64 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl sm:h-48 sm:w-48"
             >
                 @if ($previewFile->isPreviewable && $previewFile->previewUrl)
                     <img
@@ -18,10 +18,10 @@
                 @elseif ($previewFile->mimeType)
                     <x-dynamic-component
                         :component="MimetypeIcon::fromString($previewFile->mimeType)->icon()"
-                        class="size-8 text-grey-400"
+                        class="text-grey-400 size-8"
                     />
                 @else
-                    <x-chief::icon.attachment class="size-8 text-grey-400" />
+                    <x-chief::icon.attachment class="text-grey-400 size-8" />
                 @endif
             </div>
 

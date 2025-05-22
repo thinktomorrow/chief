@@ -1,89 +1,83 @@
-/**
- * Using @layer directive to add this classes to tailwindcss components
- * This will make them responsive and combinable with variants
- **/
-@layer components {
-    .btn {
-        @apply flex w-max items-start text-left font-medium;
-        @apply transition-all duration-150 ease-in-out;
-        /**
-         * TODO(tijs): Ideally the outlines shouldn't be removed.
-         * Each button variant should have a specific focus styling, so they are clearly visible when tabbing
-         **/
-        @apply outline-none;
-    }
+@utility btn {
+    @apply flex w-max items-start text-left font-medium;
+    @apply transition-all duration-150 ease-in-out;
+    /**
+    * TODO(tijs): Ideally the outlines shouldn't be removed.
+    * Each button variant should have a specific focus styling, so they are clearly visible when tabbing
+    **/
+    @apply outline-hidden;
+}
 
-    /* Sizes */
-    .btn-lg {
-        @apply gap-1 rounded-xl px-4 py-2.5 text-lg leading-6;
-        & > [data-slot='icon'],
-        & > svg {
-            @apply size-6 shrink-0;
-            @apply first:-ml-1.5 last:-mr-1.5;
-        }
+/* ---------- Sizes ---------- */
+@utility btn-lg {
+    @apply gap-1 rounded-xl px-4 py-2.5 text-lg leading-6;
+    & > [data-slot='icon'],
+    & > svg {
+        @apply size-6 shrink-0;
+        @apply first:-ml-1.5 last:-mr-1.5;
     }
-    .btn-base {
-        @apply gap-1 rounded-[0.625rem] px-3 py-2 text-base leading-5;
-        & > [data-slot='icon'],
-        & > svg {
-            @apply size-5 shrink-0;
-            @apply first:-ml-1 last:-mr-1;
-        }
+}
+@utility btn-base {
+    @apply gap-1 rounded-[0.625rem] px-3 py-2 text-base leading-5;
+    & > [data-slot='icon'],
+    & > svg {
+        @apply size-5 shrink-0;
+        @apply first:-ml-1 last:-mr-1;
     }
-    .btn-sm {
-        @apply gap-[0.1875rem] rounded-lg px-[0.5625rem] py-1.5 text-sm leading-[1.125rem];
-        & > [data-slot='icon'],
-        & > svg {
-            @apply size-[1.125rem] shrink-0;
-            @apply first:-ml-[0.1875rem] last:-mr-[0.1875rem];
-        }
+}
+@utility btn-sm {
+    @apply gap-[0.1875rem] rounded-lg px-[0.5625rem] py-1.5 text-sm leading-[1.125rem];
+    & > [data-slot='icon'],
+    & > svg {
+        @apply size-[1.125rem] shrink-0;
+        @apply first:-ml-[0.1875rem] last:-mr-[0.1875rem];
     }
-    .btn-xs {
-        @apply gap-0.5 rounded-md px-[0.3125rem] py-[0.1875rem] text-xs leading-[1.125rem];
-        & > [data-slot='icon'],
-        & > svg {
-            @apply size-[1.125rem] shrink-0;
-            @apply first:-ml-0.5 last:-mr-0.5;
-        }
+}
+@utility btn-xs {
+    @apply gap-0.5 rounded-md px-[0.3125rem] py-[0.1875rem] text-xs leading-[1.125rem];
+    & > [data-slot='icon'],
+    & > svg {
+        @apply size-[1.125rem] shrink-0;
+        @apply first:-ml-0.5 last:-mr-0.5;
     }
+}
 
-    /* Variants */
-    .btn-blue {
-        @apply bg-primary-500 text-white hover:bg-primary-600;
-    }
-    .btn-grey {
-        @apply bg-grey-100 text-grey-800 hover:bg-grey-200 hover:text-grey-950;
-    }
-    .btn-transparent {
-        @apply bg-transparent text-grey-800 hover:bg-grey-950/5 hover:text-grey-950;
-    }
-    .btn-red {
-        @apply bg-red-500 text-white hover:bg-red-600;
-    }
-    .btn-orange {
-        @apply bg-orange-500 text-white hover:bg-orange-600;
-    }
-    .btn-green {
-        @apply bg-green-500 text-white hover:bg-green-600;
-    }
-    .btn-outline-white {
-        @apply shadow-sm;
-        @apply bg-white text-grey-800 ring-1 ring-inset ring-grey-200 hover:text-grey-950 hover:ring-grey-300;
-    }
-    .btn-outline-green {
-        @apply shadow-sm;
-        @apply bg-green-50 text-green-700 ring-1 ring-inset ring-green-200 hover:ring-green-300;
-    }
-    .btn-outline-blue {
-        @apply shadow-sm shadow-primary-500/10;
-        @apply bg-white text-primary-500 ring-1 ring-inset ring-primary-100 hover:ring-primary-200;
-    }
-    .btn-outline-red {
-        @apply shadow-sm shadow-red-500/10;
-        @apply bg-white text-red-500 ring-1 ring-inset ring-red-200 hover:ring-red-300;
-    }
-    .btn-outline-orange {
-        @apply shadow-sm shadow-orange-500/10;
-        @apply bg-white text-orange-500 ring-1 ring-inset ring-orange-200 hover:ring-orange-300;
-    }
+/* ---------- Variants ---------- */
+@utility btn-blue {
+    @apply bg-primary-500 hover:bg-primary-600 text-white;
+}
+@utility btn-grey {
+    @apply bg-grey-100 text-grey-800 hover:bg-grey-200 hover:text-grey-950;
+}
+@utility btn-transparent {
+    @apply text-grey-800 hover:bg-grey-950/5 hover:text-grey-950 bg-transparent;
+}
+@utility btn-red {
+    @apply bg-red-500 text-white hover:bg-red-600;
+}
+@utility btn-orange {
+    @apply bg-orange-500 text-white hover:bg-orange-600;
+}
+@utility btn-green {
+    @apply bg-green-500 text-white hover:bg-green-600;
+}
+@utility btn-outline-white {
+    @apply shadow-xs;
+    @apply text-grey-800 ring-grey-200 hover:text-grey-950 hover:ring-grey-300 bg-white ring-1 ring-inset;
+}
+@utility btn-outline-green {
+    @apply shadow-xs;
+    @apply bg-green-50 text-green-700 ring-1 ring-green-200 ring-inset hover:ring-green-300;
+}
+@utility btn-outline-blue {
+    @apply shadow-primary-500/10 shadow-xs;
+    @apply text-primary-500 ring-primary-100 hover:ring-primary-200 bg-white ring-1 ring-inset;
+}
+@utility btn-outline-red {
+    @apply shadow-xs shadow-red-500/10;
+    @apply bg-white text-red-500 ring-1 ring-red-200 ring-inset hover:ring-red-300;
+}
+@utility btn-outline-orange {
+    @apply shadow-xs shadow-orange-500/10;
+    @apply bg-white text-orange-500 ring-1 ring-orange-200 ring-inset hover:ring-orange-300;
 }

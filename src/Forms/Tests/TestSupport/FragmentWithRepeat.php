@@ -20,7 +20,7 @@ class FragmentWithRepeat extends BaseFragment implements Fragment
 
     public function renderFragment($owner, $loop, $viewData = []): string
     {
-        return 'fragment-stub-'.$this->id.' ';
+        return 'fragment-stub-'.$this->getFragmentId().' ';
     }
 
     public function allowedFragments(): array

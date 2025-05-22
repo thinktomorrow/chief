@@ -1,126 +1,120 @@
-@layer components {
-    .h1-size {
-        @apply text-3xl sm:text-4xl;
-    }
+/* ---------- Sizes ---------- */
+@utility h1-size {
+    @apply text-3xl sm:text-4xl;
+}
+@utility h2-size {
+    @apply text-3xl;
+}
+@utility h3-size {
+    @apply text-2xl;
+}
+@utility h4-size {
+    @apply text-xl;
+}
+@utility h5-size {
+    @apply text-lg;
+}
+@utility h6-size {
+    @apply text-base;
+}
+@utility body-size {
+    @apply text-base;
+}
 
-    .h2-size {
-        @apply text-3xl;
-    }
+/* ---------- Weights ---------- */
+@utility h1-weight {
+    font-weight: var(--font-weight-bold);
+}
+@utility h2-weight {
+    font-weight: var(--font-weight-bold);
+}
+@utility h3-weight {
+    font-weight: var(--font-weight-semibold);
+}
+@utility h4-weight {
+    font-weight: var(--font-weight-semibold);
+}
+@utility h5-weight {
+    font-weight: var(--font-weight-medium);
+}
+@utility h6-weight {
+    font-weight: var(--font-weight-medium);
+}
+@utility body-weight {
+    font-weight: var(--font-weight-normal);
+}
 
-    .h3-size {
-        @apply text-2xl;
-    }
+/* ---------- Tracking ---------- */
+@utility h1-tracking {
+    letter-spacing: var(--letter-spacing-tight);
+}
+@utility h2-tracking {
+    letter-spacing: var(--letter-spacing-tight);
+}
+@utility h3-tracking {
+    letter-spacing: var(--letter-spacing-tight);
+}
+@utility h4-tracking {
+    letter-spacing: var(--letter-spacing-normal);
+}
+@utility h5-tracking {
+    letter-spacing: var(--letter-spacing-normal);
+}
+@utility h6-tracking {
+    letter-spacing: var(--letter-spacing-normal);
+}
+@utility body-tracking {
+    letter-spacing: var(--letter-spacing-normal);
+}
 
-    .h4-size {
-        @apply text-xl;
-    }
+/* ---------- Colors ---------- */
+@utility h1-dark {
+    @apply text-grey-950;
+}
+@utility h2-dark {
+    @apply text-grey-950;
+}
+@utility h3-dark {
+    @apply text-grey-950;
+}
+@utility h4-dark {
+    @apply text-grey-950;
+}
+@utility h5-dark {
+    @apply text-grey-950;
+}
+@utility h6-dark {
+    @apply text-grey-950;
+}
+@utility body-dark {
+    @apply text-grey-700;
+}
 
-    .h5-size {
-        @apply text-lg;
-    }
+/* ---------- Defaults ---------- */
+@utility h1 {
+    @apply font-display h1-size h1-weight h1-tracking;
+}
 
-    .h6-size {
-        @apply text-base;
-    }
+@utility h2 {
+    @apply font-display h2-size h2-weight h2-tracking;
+}
 
-    .body-size {
-        @apply text-base;
-    }
+@utility h3 {
+    @apply font-display h3-size h3-weight h3-tracking;
+}
 
-    .h1-weight,
-    .h2-weight {
-        font-weight: theme('fontWeight.bold');
-    }
+@utility h4 {
+    @apply font-display h4-size h4-weight h4-tracking;
+}
 
-    .h3-weight,
-    .h4-weight {
-        font-weight: theme('fontWeight.semibold');
-    }
+@utility h5 {
+    @apply font-display h5-size h5-weight h5-tracking;
+}
 
-    .h5-weight,
-    .h6-weight {
-        font-weight: theme('fontWeight.medium');
-    }
+@utility h6 {
+    @apply font-display h6-size h6-weight h6-tracking;
+}
 
-    .body-weight {
-        font-weight: theme('fontWeight.normal');
-    }
-
-    .h1-tracking,
-    .h2-tracking,
-    .h3-tracking {
-        letter-spacing: theme('letterSpacing.tight');
-    }
-
-    .h4-tracking,
-    .h5-tracking,
-    .h6-tracking {
-        letter-spacing: theme('letterSpacing.normal');
-    }
-
-    .body-tracking {
-        letter-spacing: theme('letterSpacing.normal');
-    }
-
-    .h1-dark,
-    .h2-dark,
-    .h3-dark,
-    .h4-dark,
-    .h5-dark,
-    .h6-dark {
-        @apply text-grey-950;
-    }
-
-    .body-dark {
-        @apply text-grey-700;
-    }
-
-    .h1 {
-        @apply font-display;
-        @extend .h1-size;
-        @extend .h1-weight;
-        @extend .h1-tracking;
-    }
-
-    .h2 {
-        @apply font-display;
-        @extend .h2-size;
-        @extend .h2-weight;
-        @extend .h2-tracking;
-    }
-
-    .h3 {
-        @apply font-display;
-        @extend .h3-size;
-        @extend .h3-weight;
-        @extend .h3-tracking;
-    }
-
-    .h4 {
-        @apply font-body;
-        @extend .h4-size;
-        @extend .h4-weight;
-        @extend .h4-tracking;
-    }
-
-    .h5 {
-        @apply font-body;
-        @extend .h5-size;
-        @extend .h5-weight;
-        @extend .h5-tracking;
-    }
-
-    .h6 {
-        @apply font-body;
-        @extend .h6-size;
-        @extend .h6-weight;
-        @extend .h6-tracking;
-    }
-
-    .body {
-        @apply font-body;
-        @extend .body-size;
-        @extend .body-weight;
-        @extend .body-tracking;
-    }
+@utility body {
+    @apply font-body body-size body-weight body-tracking;
 }

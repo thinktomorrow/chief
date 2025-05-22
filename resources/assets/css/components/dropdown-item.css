@@ -1,37 +1,35 @@
-@layer components {
-    .dropdown-item {
-        @apply col-span-full grid w-max grid-cols-subgrid items-start text-left;
-        @apply transition-all duration-150 ease-in-out;
-    }
+@utility dropdown-item {
+    @apply col-span-full grid w-max grid-cols-subgrid items-start text-left;
+    @apply transition-all duration-150 ease-in-out;
+}
 
-    /* Sizes */
-    .dropdown-item-base {
-        @apply gap-1.5 px-3.5 py-2 text-base leading-5;
+/* ---------- Sizes ---------- */
+@utility dropdown-item-base {
+    @apply gap-1.5 px-3.5 py-2 text-base leading-5;
 
-        & > [data-slot='icon'],
-        & > svg {
-            @apply size-5 shrink-0;
-            @apply first:-ml-1 last:-mr-1;
-        }
+    & > [data-slot='icon'],
+    & > svg {
+        @apply size-5 shrink-0;
+        @apply first:-ml-1 last:-mr-1;
     }
+}
 
-    /* Variants */
-    .dropdown-item-grey {
-        @apply bg-white text-grey-800 hover:bg-grey-50 hover:text-grey-950;
-    }
-    .dropdown-item-red {
-        @apply bg-white text-red-800 hover:bg-red-50 hover:text-red-600;
-    }
-    .dropdown-item-orange {
-        @apply bg-white text-orange-800 hover:bg-orange-50 hover:text-orange-600;
-    }
-    .dropdown-item-blue {
-        @apply bg-white text-primary-500 hover:bg-blue-50 hover:text-primary-600;
-    }
-    .dropdown-item-light-blue {
-        @apply bg-white text-light-blue-800 hover:bg-light-blue-50 hover:text-light-blue-600;
-    }
-    .dropdown-item-green {
-        @apply bg-white text-green-700 hover:bg-green-50 hover:text-green-600;
-    }
+/* ---------- Variants ---------- */
+@utility dropdown-item-grey {
+    @apply text-grey-800 hover:bg-grey-50 hover:text-grey-950 bg-white;
+}
+@utility dropdown-item-red {
+    @apply bg-white text-red-800 hover:bg-red-50 hover:text-red-600;
+}
+@utility dropdown-item-orange {
+    @apply bg-white text-orange-800 hover:bg-orange-50 hover:text-orange-600;
+}
+@utility dropdown-item-blue {
+    @apply text-primary-500 hover:text-primary-600 bg-white hover:bg-blue-50;
+}
+@utility dropdown-item-light-blue {
+    @apply bg-white text-blue-800 hover:bg-blue-50 hover:text-blue-600;
+}
+@utility dropdown-item-green {
+    @apply bg-white text-green-700 hover:bg-green-50 hover:text-green-600;
 }

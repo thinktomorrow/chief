@@ -1,20 +1,20 @@
-.form-input-radio {
+@utility form-input-radio {
     @apply relative size-5 appearance-none rounded-full leading-none;
 
     &:before {
         content: '';
-        @apply inline-block size-5 rounded-full bg-white shadow-sm ring-1 ring-grey-200;
+        @apply ring-grey-200 inline-block size-5 rounded-full bg-white shadow-xs ring-1;
         @apply hover:ring-grey-300;
     }
 
     &:after {
         content: '';
-        @apply absolute left-2.5 top-2.5 inline-block size-0 rounded-full;
+        @apply absolute top-2.5 left-2.5 inline-block size-0 rounded-full;
         @apply bg-primary-500;
     }
 
     &:focus {
-        @apply outline-none ring-primary-500;
+        @apply ring-primary-500 outline-hidden;
     }
 
     &:checked {
@@ -24,7 +24,7 @@
         }
 
         &:after {
-            @apply left-[0.3125rem] top-[0.3125rem] size-2.5;
+            @apply top-[0.3125rem] left-[0.3125rem] size-2.5;
         }
     }
 

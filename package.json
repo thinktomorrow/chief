@@ -1,48 +1,37 @@
 {
+    "type": "module",
     "private": true,
     "scripts": {
-        "prod": "mix --production --mix-config=webpack.mix.js",
-        "watch": "mix watch --mix-config=webpack.mix.js",
-        "prepare": "husky install",
+        "watch": "vite build --watch --config vite.config.js",
+        "prod": "vite build --config vite.config.js",
+        "prepare": "husky",
         "test": "jest"
     },
     "devDependencies": {
-        "@tailwindcss/container-queries": "^0.1.1",
-        "autoprefixer": "^10.4.14",
-        "babel-jest": "^29.3.1",
-        "cross-env": "^7.0.3",
+        "@babel/preset-env": "^7.27.2",
+        "@tailwindcss/vite": "^4.1.7",
+        "dotenv": "^16.5.0",
         "eslint": "^8.32.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-plugin-import": "^2.27.5",
-        "eslint-plugin-vue": "^9.9.0",
-        "eslint-webpack-plugin": "^3.2.0",
-        "expect": "^29.3.1",
-        "husky": "^8.0.3",
+        "husky": "^9.0.11",
         "jest": "^29.3.1",
         "jest-environment-jsdom": "^29.7.0",
         "jest-fetch-mock": "^3.0.3",
-        "laravel-mix": "^6.0.43",
-        "laravel-mix-eslint": "^0.2.0",
-        "laravel-mix-polyfill": "^3.0.0",
-        "lint-staged": "^13.1.0",
-        "postcss": "^8.4.22",
-        "postcss-extend": "^1.0.5",
-        "postcss-import": "^14.0.2",
-        "prettier": "^3.3.2",
-        "prettier-plugin-blade": "^2.1.16",
-        "prettier-plugin-tailwindcss": "^0.6.4",
-        "shelljs": "^0.8.4",
-        "tailwindcss": "^3.3.1"
+        "laravel-vite-plugin": "^1.2.0",
+        "lint-staged": "^16.0.0",
+        "prettier": "^3.5.3",
+        "prettier-plugin-blade": "^2.1.21",
+        "prettier-plugin-tailwindcss": "^0.6.11",
+        "shelljs": "^0.10.0",
+        "tailwindcss": "^4.1.7",
+        "vite": "^6.3.5",
+        "vite-plugin-eslint": "^1.8.1"
     },
     "dependencies": {
-        "@floating-ui/dom": "^1.5.1",
-        "choices.js": "^10.2.0",
-        "core-js": "^3.21.1",
-        "cross-env": "^7.0.3",
+        "@floating-ui/dom": "^1.7.0",
+        "choices.js": "^11.1.0",
         "lodash": "^4.17.21",
-        "sortablejs": "^1.13.0"
-    },
-    "engine": {
-        "node": ">=18.13.0"
+        "sortablejs": "^1.15.6"
     }
 }

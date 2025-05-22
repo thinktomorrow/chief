@@ -27,7 +27,7 @@
             </div>
         </x-slot>
 
-        <div class="row-start-start gutter-2">
+        <div class="gutter-2 flex flex-wrap items-start justify-start">
             @foreach ($rows as $i => $asset)
                 <div
                     wire:key="filefield_choose_{{ $i . '_' . $asset->id }}"
@@ -49,7 +49,7 @@
         </div>
 
         <x-slot name="footer">
-            <div class="space-y-4 border-t border-grey-100 p-4">
+            <div class="border-grey-100 space-y-4 border-t p-4">
                 @if ($rows->total() > $rows->count())
                     <div class="shrink-0">
                         {{ $rows->onEachSide(0)->links() }}
@@ -58,7 +58,7 @@
 
                 <div class="flex shrink-0 justify-between gap-6 max-lg:flex-wrap">
                     <div class="flex items-center gap-5">
-                        <p class="body shrink-0 text-sm text-grey-500">
+                        <p class="body text-grey-500 shrink-0 text-sm">
                             {{ $count }} {{ $count == 1 ? 'item' : 'items' }} geselecteerd
                         </p>
 
@@ -68,7 +68,7 @@
                                     <img
                                         src="{{ $selectedPreviewFile->getUrl('thumb') }}"
                                         alt="{{ $selectedPreviewFile->filename }}"
-                                        class="h-10 w-10 rounded-lg border-2 border-white bg-grey-100 object-cover"
+                                        class="bg-grey-100 h-10 w-10 rounded-lg border-2 border-white object-cover"
                                     />
                                 </div>
                             @endforeach

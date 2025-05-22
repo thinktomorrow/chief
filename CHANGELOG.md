@@ -5,9 +5,14 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Change: Now using Vite instead of Laravel Mix to build all Chief assets
+- Change: Upgraded TailwindCSS to v4. Refactored the existing tailwind.config.js to the new CSS config.
+- Change: Upgraded all other JS packages to their latest versions
+
 ## 0.10.6 - 2025-05-22
 
 - Fixed: Adding allowed sites to model didn't sync yet with the context in case of one default context.
+- Fixed: instant update of sites sync
 
 ## 0.10.5 - 2025-05-22
 
