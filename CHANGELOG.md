@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## 0.10.5 - 2025-05-22
+
 - Added: config `allow_site_selection` to allow changing sites selection in the admin panel. This can be set per model
   via the `allowSiteSelection(): bool` method.
 - Added: config `allow_multiple_contexts` and `allow_multiple_menus` to allow the admin to add multiple fragment
