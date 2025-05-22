@@ -1,16 +1,16 @@
 @import 'tailwindcss';
 
 /* ---------- Sources ---------- */
-@source '../resources/views/**/*.blade.php';
-@source '../resources/assets/**/*.js';
-@source '../src/Assets/App/resources/**/*.blade.php';
-@source '../src/Forms/UI/views/**/*.blade.php';
-@source '../src/Fragments/UI/views/**/*.blade.php';
-@source '../src/Menu/UI/views/**/*.blade.php';
-@source '../src/Plugins/**/resources/**/*.blade.php';
-@source '../src/Plugins/HotSpots/views/**/*.blade.php';
-@source '../src/Sites/UI/views/**/*.blade.php';
-@source '../src/Table/UI/**/*.blade.php';
+@source './../../../resources/views/**/*.blade.php';
+@source './../../../resources/assets/**/*.js';
+@source './../../../src/Assets/App/resources/**/*.blade.php';
+@source './../../../src/Forms/UI/views/**/*.blade.php';
+@source './../../../src/Fragments/UI/views/**/*.blade.php';
+@source './../../../src/Menu/UI/views/**/*.blade.php';
+@source './../../../src/Plugins/**/resources/**/*.blade.php';
+@source './../../../src/Plugins/HotSpots/views/**/*.blade.php';
+@source './../../../src/Sites/UI/views/**/*.blade.php';
+@source './../../../src/Table/UI/**/*.blade.php';
 
 /* ---------- General ---------- */
 @import './general/theme.css';
