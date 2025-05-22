@@ -35,13 +35,12 @@ trait HasRedactorToolbar
             $this->redactorOptions = array_merge($this->redactorOptions, ['direction' => 'rtl']);
         }
 
-        return array_merge($this->defaultRedactorOptions($locale), $this->redactorOptions);
+        return array_merge($this->defaultRedactorOptions(), $this->redactorOptions);
     }
 
     private function defaultRedactorOptions(): array
     {
         return [
-
         ];
     }
 

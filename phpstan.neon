@@ -7,6 +7,13 @@ parameters:
         - src
         - app
 
+    excludePaths:
+        analyse:
+            - src/*/Tests
+            - src/*/*/Tests
+            - src/**/Tests/**/*.blade.php
+            - tests/
+
     # The level 10 is the highest level
     level: 1
 
