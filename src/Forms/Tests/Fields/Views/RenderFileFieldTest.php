@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\File;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class RenderFileFieldTest extends ChiefTestCase
 {
@@ -17,6 +18,8 @@ class RenderFileFieldTest extends ChiefTestCase
     private array $classes;
 
     private $asset;
+
+    private ArticlePage $model;
 
     protected function setUp(): void
     {
