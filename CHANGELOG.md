@@ -8,6 +8,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## 0.10.6 - 2025-05-22
 
 - Fixed: Adding allowed sites to model didn't sync yet with the context in case of one default context.
+- Fixed: instant update of sites sync
 
 ## 0.10.5 - 2025-05-22
 
