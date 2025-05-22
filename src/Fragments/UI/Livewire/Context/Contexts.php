@@ -37,6 +37,12 @@ class Contexts extends Items
             ->getContextsByOwner($this->model);
     }
 
+    public function onSitesUpdated(): void
+    {
+        // Allow to fetch up to date contexts again
+        $this->contexts = null;
+    }
+
     public function addItem(): void
     {
         $this->dispatch('open-add-item')->to('chief-wire::add-context');
