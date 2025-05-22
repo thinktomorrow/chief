@@ -1,0 +1,45 @@
+{
+  "resources/assets/css/main.css": {
+    "file": "assets/main-B5057QTp.css",
+    "src": "resources/assets/css/main.css",
+    "isEntry": true
+  },
+  "resources/assets/img/favicon/android-chrome-192x192.png": {
+    "file": "assets/android-chrome-192x192-DzJ0vo_i.png",
+    "src": "resources/assets/img/favicon/android-chrome-192x192.png"
+  },
+  "resources/assets/img/favicon/android-chrome-512x512.png": {
+    "file": "assets/android-chrome-512x512-DI9fE3Oq.png",
+    "src": "resources/assets/img/favicon/android-chrome-512x512.png"
+  },
+  "resources/assets/img/favicon/apple-touch-icon.png": {
+    "file": "assets/apple-touch-icon-DRuLXGKj.png",
+    "src": "resources/assets/img/favicon/apple-touch-icon.png"
+  },
+  "resources/assets/img/favicon/favicon-16x16.png": {
+    "file": "assets/favicon-16x16-Drcu-zfD.png",
+    "src": "resources/assets/img/favicon/favicon-16x16.png"
+  },
+  "resources/assets/img/favicon/favicon-32x32.png": {
+    "file": "assets/favicon-32x32-9vO3ecOW.png",
+    "src": "resources/assets/img/favicon/favicon-32x32.png"
+  },
+  "resources/assets/img/favicon/favicon.ico": {
+    "file": "assets/favicon-DL8BRKQl.ico",
+    "src": "resources/assets/img/favicon/favicon.ico"
+  },
+  "resources/assets/img/favicon/safari-pinned-tab.svg": {
+    "file": "assets/safari-pinned-tab-BW93lO8l.svg",
+    "src": "resources/assets/img/favicon/safari-pinned-tab.svg"
+  },
+  "resources/assets/img/favicon/site.webmanifest": {
+    "file": "assets/site-Cej2GXxX.webmanifest",
+    "src": "resources/assets/img/favicon/site.webmanifest"
+  },
+  "resources/assets/js/main.js": {
+    "file": "assets/main-CMgRSuDX.js",
+    "name": "main",
+    "src": "resources/assets/js/main.js",
+    "isEntry": true
+  }
+}
