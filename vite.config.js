@@ -50,16 +50,14 @@ export default defineConfig({
 
                 // Publish chief assets in the symlinked project.
                 if (shell.exec('php artisan vendor:publish --tag=chief-assets --force').code !== 0) {
-                    shell.echo(
-                        `Error: couldn't publish chief assets in directory ${process.env.SYMLINKED_PROJECT_PATH}.\n`
-                    );
+                    shell.echo(`Error: couldn't publish chief assets in directory ${symlinkedProjectDir}.\n`);
                     shell.exit(1);
                 }
 
                 // Change directory back to current directory.
                 shell.cd(currentDir);
 
-                shell.echo(`Published chief assets in project ${process.env.SYMLINKED_PROJECT_PATH}.\n`);
+                shell.echo(`Published chief assets in project ${symlinkedProjectDir}.\n`);
 
                 return 0;
             },
