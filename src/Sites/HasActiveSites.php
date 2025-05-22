@@ -12,6 +12,8 @@ interface HasActiveSites extends HasAllowedSites
     /** All sites where this model is active in. */
     public function getActiveSites(): array;
 
+    public function setActiveSites(array $locales): void;
+
     public function addActiveSite(string $site): void;
 
     public function removeActiveSite(string $site): void;

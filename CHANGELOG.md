@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Adding allowed sites to model didn't sync yet with the context in case of one default context.
+
 ## 0.10.5 - 2025-05-22
 
 - Added: config `allow_site_selection` to allow changing sites selection in the admin panel. This can be set per model
