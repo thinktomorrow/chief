@@ -9,7 +9,7 @@
         />
 
         <div
-            class="bg-grey-100 group hover:bg-primary-50 peer-focus:ring-3-1 peer-focus:ring-3-primary-500 flex items-center gap-2 rounded-full px-4 py-2 transition-all duration-75 ease-in-out"
+            class="bg-grey-100 group hover:bg-primary-50 peer-focus:ring-primary-500 flex items-center gap-2 rounded-full px-4 py-2 transition-all duration-75 ease-in-out peer-focus:ring-1"
         >
             <svg
                 class="group-hover:text-primary-500 h-6 w-6 text-black transition-all duration-75 ease-in-out group-hover:scale-110"

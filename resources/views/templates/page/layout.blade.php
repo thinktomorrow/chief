@@ -44,7 +44,7 @@
 
         @stack('custom-styles')
     </head>
-    <body data-theme="chief" class="bg-grey-50/50 min-h-screen">
+    <body class="bg-grey-50/50 min-h-screen">
         <main>
             {{ $slot }}
 

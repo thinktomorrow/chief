@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <div class="@md:flex-nowrap @1px:flex-wrap relative flex justify-between gap-x-4 gap-y-2 py-2 pr-4 pl-2">
+    <div class="@md:flex-nowrap @min-[1px]:flex-wrap relative flex justify-between gap-x-4 gap-y-2 py-2 pr-4 pl-2">
         <div class="flex gap-4">
             {{-- File thumb --}}
             <div class="bg-grey-100 flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg">
@@ -96,7 +96,7 @@
 
         @if (! $file->isValidated)
             <div
-                class="@md:flex-nowrap @1px:flex-wrap absolute inset-0 flex items-center justify-between gap-2 bg-red-100/75 px-4 py-2 backdrop-blur-xs backdrop-filter"
+                class="@md:flex-nowrap @min-[1px]:flex-wrap absolute inset-0 flex items-center justify-between gap-2 bg-red-100/75 px-4 py-2 backdrop-blur-xs backdrop-filter"
             >
                 <span class="body text-sm text-red-500">
                     {{ ucfirst($file->validationMessage) }}
@@ -108,7 +108,7 @@
             </div>
         @elseif ($file->isQueuedForDeletion)
             <div
-                class="@md:flex-nowrap @1px:flex-wrap absolute inset-0 flex items-center justify-between gap-2 bg-white/75 px-4 py-2 backdrop-blur-xs backdrop-filter"
+                class="@md:flex-nowrap @min-[1px]:flex-wrap absolute inset-0 flex items-center justify-between gap-2 bg-white/75 px-4 py-2 backdrop-blur-xs backdrop-filter"
             >
                 @if ($file->mediaId)
                     <span class="body body-dark text-sm">{{ $file->filename }} wordt verwijderd</span>
