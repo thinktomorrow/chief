@@ -8,6 +8,7 @@
         "test": "jest"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.27.2",
         "@tailwindcss/vite": "^4.1.7",
         "dotenv": "^16.5.0",
         "eslint": "^8.32.0",
