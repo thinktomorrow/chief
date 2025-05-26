@@ -22,12 +22,10 @@
             rel="stylesheet"
         />
 
-        {{
-            Vite::useBuildDirectory('chief/build')->withEntryPoints([
-                'resources/assets/css/main.css',
-                'resources/assets/js/main.js',
-            ])
-        }}
+        <link rel="preload" as="style" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
+        <link rel="modulepreload" href="{{ Vite::buildAsset('resources/assets/js/main.js') }}" />
+        <link rel="stylesheet" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
+        <script type="module" src="{{ Vite::buildAsset('resources/assets/js/main.js') }}"></script>
     </head>
 
     <body class="bg-grey-50/50 min-h-screen">

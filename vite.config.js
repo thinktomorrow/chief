@@ -10,9 +10,6 @@ export default defineConfig({
         outDir: 'public/chief/build',
         assetsDir: 'assets',
     },
-    server: {
-        hmr: false,
-    },
     plugins: [
         eslint({
             include: ['resources/assets/**/*.js'],
