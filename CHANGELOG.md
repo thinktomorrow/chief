@@ -6,6 +6,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## Unreleased
 
 - Added: `chief:default-menus` command to add default menus to the database.
+- Added: Highlight active nav item in the admin panel.
 - Changed: ⚠ BC break `chief.menus` config is now structured differently. Each key is the type and value is its label.
 - Changed: Now using Vite instead of Laravel Mix to build all Chief assets
 - Changed: Upgraded TailwindCSS to v4. Refactored the existing tailwind.config.js to the new CSS config.
