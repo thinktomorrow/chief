@@ -141,19 +141,14 @@ return [
     ],
 
     /**
-     * Define your menu types here. By default there is a generic 'main' menu but you
-     * are free to add different ones as well. e.g. footer-menu, sidebar,...
+     * Menu types and labels. These labels are used in the admin to display
+     * the menu types. To add the default menus for each of these types,
+     * you can use: php artisan chief:default-menus
      */
     'menus' => [
-        'main' => [
-            'label' => 'Hoofdnavigatie',
-        ],
-        'footer' => [
-            'label' => 'Footer links',
-        ],
-        'legal' => [
-            'label' => 'Juridische links',
-        ],
+        'main' => 'Hoofdnavigatie',
+        'footer' => 'Footer links',
+        'legal' => 'Juridische links',
     ],
 
     /**

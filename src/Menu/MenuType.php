@@ -22,8 +22,13 @@ class MenuType
     {
         $types = config('chief.menus', []);
 
-        return collect($types)->map(function ($menu, $key) {
-            return new static($key, $menu['label']);
+        return collect($types)->map(function ($label, $key) {
+
+            if (! is_string($label)) {
+                throw new \InvalidArgumentException('Menu type label must be a string, '.gettype($label)." given for key: {$key}");
+            }
+
+            return new static($key, $label);
         });
     }
 

@@ -13,11 +13,6 @@ class MenuController extends Controller
 
         $menuTypes = MenuType::all();
 
-        // If there is only one menu, we will show the menu immediately.
-        if ($menuTypes->count() == 1) {
-            return $this->show($menuTypes->first()->getType());
-        }
-
         return view('chief-menu::index', [
             'menuTypes' => $menuTypes,
         ]);
