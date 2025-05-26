@@ -14,6 +14,8 @@ final class NavItem
 
     private string $icon;
 
+    private bool $isActive = false;
+
     public function __construct(string $label, string $url, array $tags, string $icon)
     {
         $this->label = $label;
@@ -45,5 +47,24 @@ final class NavItem
     public function isUntagged(): bool
     {
         return count($this->tags) == 0;
+    }
+
+    public function detectActive(): self
+    {
+        $this->isActive = (isActiveUrl($this->url) || isActiveUrl($this->url.'/*'));
+
+        return $this;
+    }
+
+    public function setActive(bool $active = true): self
+    {
+        $this->isActive = $active;
+
+        return $this;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isActive ?? false;
     }
 }
