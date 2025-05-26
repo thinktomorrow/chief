@@ -1,7 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\Console;
+namespace Thinktomorrow\Chief\Menu\App\Commands;
 
+use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\MenuItem;
 

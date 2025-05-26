@@ -121,6 +121,29 @@ You can reference the config file in the chief package as a starting point.
 
 Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\ChiefSites::locales()`.
 
+### Menu
+
+chief.menus is now structured differently. Each key is the type and value is its label.
+Please change the format in your `config/chief.php` file accordingly.
+
+```php
+return [
+    'menus' => [
+        'main' => 'Hoofdnavigatie',
+        'footer' => 'Footer links',
+        'legal' => 'Juridische links',
+        // Add more menu types as needed
+    ],
+];
+```
+
+For new projects, you need to add the default menus to the database.
+You can use the artisan command:
+
+```bash
+php artisan chief:default-menus
+```
+
 ### Locales
 
 ### Plugins

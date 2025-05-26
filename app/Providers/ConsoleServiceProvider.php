@@ -15,9 +15,10 @@ use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\LocalizeRepeatFieldCommand;
-use Thinktomorrow\Chief\App\Console\ProjectMenuCommand;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\Menu\App\Commands\DefaultMenusCommand;
+use Thinktomorrow\Chief\Menu\App\Commands\ProjectMenuCommand;
 use Thinktomorrow\Chief\Plugins\Upgrade\Commands\UpgradeFrom9To10Command;
 use Thinktomorrow\Chief\Urls\App\Commands\ImportRedirects;
 
@@ -53,6 +54,7 @@ class ConsoleServiceProvider extends ServiceProvider
             'command.chief:fragment',
             'command.chief:view',
             'command.chief:project-menu',
+            'command.chief:default-menus',
             'command.chief:import-redirects',
             'command.chief:upgrade-from-9-to-10',
             'command.chief:localize-repeat-field',
@@ -71,6 +73,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->app->bind('command.chief:admin', CreateAdmin::class);
         $this->app->bind('command.chief:developer', CreateDeveloper::class);
         $this->app->bind('command.chief:project-menu', ProjectMenuCommand::class);
+        $this->app->bind('command.chief:default-menus', DefaultMenusCommand::class);
         $this->app->bind('command.chief:import-redirects', ImportRedirects::class);
         $this->app->bind('command.chief:upgrade-from-9-to-10', UpgradeFrom9To10Command::class);
         $this->app->bind('command.chief:localize-repeat-field', LocalizeRepeatFieldCommand::class);

@@ -57,9 +57,8 @@ class MenuAuthorizationTest extends ChiefTestCase
 
     public function test_admin_can_view_the_menu_index()
     {
-        config()->set('chief.menus.footer', [
-            'label' => 'Hoofdnavigatie',
-            'view' => 'front.menus.main',
+        config()->set('chief.menus', [
+            'footer' => 'Footer navigation',
         ]);
 
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
