@@ -10,7 +10,7 @@
                     </div>
                 @endif
 
-                <div class="gutter-1.5 flex flex-wrap items-stretch justify-start">
+                <div class="gutter-1 flex flex-wrap items-stretch justify-start">
                     @foreach ($fragmentsByCategory as $allowedFragment)
                         <div class="w-full sm:w-1/2">
                             <a

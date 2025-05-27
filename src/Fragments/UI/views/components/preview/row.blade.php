@@ -12,7 +12,7 @@
             $gutterClass = 'gutter-1';
             break;
         case 'md':
-            $gutterClass = 'gutter-1.5';
+            $gutterClass = 'gutter-1';
             break;
         case 'lg':
             $gutterClass = 'gutter-2';
@@ -21,7 +21,7 @@
             $gutterClass = 'gutter-3';
             break;
         default:
-            $gutterClass = 'gutter-1.5';
+            $gutterClass = 'gutter-1';
     }
 
     switch ($items) {
