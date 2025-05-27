@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
@@ -41,6 +42,38 @@ class ViewServiceProvider extends ServiceProvider
 
         Blade::directive('endAdminCan', function () {
             return '<?php } ?>';
+        });
+
+        Vite::useBuildDirectory('chief/build');
+
+        Vite::macro('img', function (string $asset) {
+            try {
+                return $this->asset('resources/assets/img/'.$asset);
+            } catch (\Exception $e) {
+                report($e);
+
+                return '';
+            }
+        });
+
+        /**
+         * Works exactly like the asset() helper, but it never returns the hot asset.
+         * It will always return the built asset. We need to avoid hot reload for
+         * backend styles because these are set via a separate vite build.
+         * Otherwise frontend styles will leak into the backend.
+         */
+        Vite::macro('buildAsset', function (string $asset, ?string $buildDirectory = null) {
+            try {
+                $buildDirectory ??= $this->buildDirectory;
+
+                $chunk = $this->chunk($this->manifest($buildDirectory), $asset);
+
+                return $this->assetPath($buildDirectory.'/'.$chunk['file']);
+            } catch (\Exception $e) {
+                report($e);
+
+                return '';
+            }
         });
     }
 
