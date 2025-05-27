@@ -17,6 +17,10 @@ trait ForwardFragmentProperties
      */
     public function __get($key)
     {
+        if (! $this->hasFragmentModel()) {
+            return null;
+        }
+
         return $this->getFragmentModel()->$key;
     }
 }
