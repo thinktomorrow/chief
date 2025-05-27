@@ -4,8 +4,11 @@ namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
+use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\Select;
 
 trait InteractsWithFields
 {
@@ -35,12 +38,20 @@ trait InteractsWithFields
                     ? $this->composeEmptyRepeatValue($component, $locale)
                     : $component->getValue($locale);
 
+                if (! $value && ($component instanceof Checkbox || $component instanceof Select || $component instanceof Multiselect)) {
+                    $value = [];
+                }
+
                 $this->injectFormValue($name, $value);
             }
         } else {
             $value = ($component instanceof Repeat && $this->isEmptyRepeatValue($component->getValue()))
                 ? $this->composeEmptyRepeatValue($component)
                 : $component->getValue();
+
+            if (! $value && ($component instanceof Checkbox || $component instanceof Select || $component instanceof Multiselect)) {
+                $value = [];
+            }
 
             $this->injectFormValue($component->getName(), $value);
         }
