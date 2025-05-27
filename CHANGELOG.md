@@ -5,12 +5,16 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+This release contains breaking changes!
+
 - Fixed: Multiple checkbox/select options in Livewire forms were not properly handled.
 - Added: `chief:default-menus` command to add default menus to the database.
 - Added: Highlight active nav item in the admin panel.
-- Changed: ⚠ BC break `chief.menus` config is now structured differently. Each key is the type and value is its label.
+- Changed: **⚠ BC break** `chief.menus` config is now structured differently. Each key is the type and value is its
+  label. View the upgrade guide for more details.
+- Changed: **⚠ BC break** Upgraded TailwindCSS to v4. Refactored the existing tailwind.config.js to the new CSS config.
+  Also make sure to update the redactor-styles.css. View the upgrade guide for more details.
 - Changed: Now using Vite instead of Laravel Mix to build all Chief assets
-- Changed: Upgraded TailwindCSS to v4. Refactored the existing tailwind.config.js to the new CSS config.
 - Changed: Upgraded all other JS packages to their latest versions
 
 ## 0.10.6 - 2025-05-22

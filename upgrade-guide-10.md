@@ -71,6 +71,49 @@ customOptions['callbacks'] = {
 window.Redactor(el, customOptions);
 ```
 
+### Redactor backend styles
+
+redactor-styles.css content needs to be updated. This file is located in the project and is responsible for the backend
+build of redactor.
+Usually found at: `resources/assets/back/css/redactor-styles.css`.
+
+Import Tailwind CSS with a prefix so this doesn't override the Chief CSS variables.
+This allows us to still use the project specific theme to style the redactor editor in Chief.
+
+Here's an example:
+
+```css 
+
+@import 'tailwindcss' prefix(rs);
+@import './../../css/general/theme.css';
+
+/* Unset any Chief classes that could clash with project specified classes */
+.redactor-styles {
+    .btn,
+    .btn-primary {
+        all: unset;
+    }
+}
+
+/* Define all project specific classes */
+/* This selector is more unique than the above 'unset' classes to guarantee they are not overridden */
+.redactor-box .redactor-styles {
+    /* ---------- Prose styling ---------- */
+    @apply rs:font-body;
+
+    /* ---------- Custom classes ---------- */
+
+    .btn {
+        @apply rs:inline-block rs:rounded-lg rs:px-6 rs:py-3 rs:font-medium rs:shadow;
+    }
+
+    .btn-primary {
+        @apply rs:bg-primary-500 rs:text-white;
+    }
+}
+
+```
+
 ### Replace Field Tag not-on-create with not-on-model-create
 
 To exclude fields to show up on a model create page, use the `not-on-model-create` tag on the field.
@@ -144,11 +187,7 @@ You can use the artisan command:
 php artisan chief:default-menus
 ```
 
-### Locales
-
-### Plugins
-
-#### Forms
+#### Repeat field
 
 - Upgrade the back views so they use the new page template and components
 - Repeat field should be localized as a whole. This provides more consistent behaviour. Any field items should no longer
