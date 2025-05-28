@@ -7,6 +7,14 @@
 
     // Check if component is used inside a parent Livewire component (such as AddFragment)
     $insideComponent = isset($this) && method_exists($this, 'getId');
+
+    // Check any existing unsaved form data for this field
+    $value = $field->getValue($locale);
+
+    if(method_exists($this, 'getId')) {
+        $unsavedFormData = data_get($this->form, LivewireFieldName::get($getName($locale ?? null), null));
+//        dd($unsavedFormData);
+    }
 @endphp
 
 <div data-slot="control">
@@ -20,6 +28,7 @@
         :field-name="$field->getName($locale)"
         :allow-multiple="$field->allowMultiple()"
         :assets="$field->getValue($locale)"
+        :unsaved-form-data="$unsavedFormData ?? null"
         :components="$field->getComponents()"
         :rules="$field->getRules()"
         :validation-messages="$field->getValidationMessages()"
