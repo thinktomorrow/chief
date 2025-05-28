@@ -34,7 +34,7 @@ class DefaultMenusCommand extends BaseCommand
             if (Menu::where('type', $menuType->getType())->exists()) {
                 $this->warn("A menu of type '{$menuType->getType()}' already exists. Skipping creation.");
 
-                return;
+                continue;
             }
 
             $this->menuApplication->create(new CreateMenu($menuType->getType(), ChiefSites::locales(), ChiefSites::locales(), $menuType->getLabel()));
