@@ -38,7 +38,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             parentId: null,
             ownerReference: null,
-            data: ['en' => ['title' => 'Home'], 'nl' => ['title' => 'Thuis', 'url' => 'https://example.com']],
+            data: ['title' => ['en' => 'Home', 'nl' => 'Thuis'], 'url' => ['nl' => 'https://example.com']]
         );
 
         $menuItemId = $this->menuItemApplication->create($command);
@@ -72,7 +72,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             ownerReference: null,
             parentId: 2,
-            data: ['nl' => ['url' => 'https://example.com']]
+            data: ['url' => ['nl' => 'https://example.com']]
         );
 
         $this->menuItemApplication->update($command);
@@ -154,7 +154,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             parentId: $parentMenuItem->id,
             ownerReference: null,
-            data: ['nl' => ['url' => '/child']]
+            data: ['url' => ['nl' => '/child']]
         );
 
         $menuItemId = $this->menuItemApplication->create($command);
@@ -184,7 +184,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'internal',
             ownerReference: $owner->modelReference()->get(),
             parentId: null,
-            data: ['nl' => ['url' => '/page']]
+            data: ['url' => ['nl' => '/page']]
         );
 
         $menuItemId = $this->menuItemApplication->create($command);
@@ -212,7 +212,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'custom',
             parentId: null,
             ownerReference: null,
-            data: ['nl' => ['url' => 'thinktomorrow.be']]
+            data: ['url' => ['nl' => 'thinktomorrow.be']]
         ));
 
         $this->assertDatabaseHas('menu_items', [
@@ -233,7 +233,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             linkType: 'internal',
             parentId: null,
             ownerReference: null,
-            data: ['nl' => ['url' => 'thinktomorrow.be']]
+            data: ['url' => ['nl' => 'thinktomorrow.be']]
         ));
     }
 }

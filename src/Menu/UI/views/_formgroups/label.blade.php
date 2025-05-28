@@ -13,7 +13,7 @@
             @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}"
                                    tab-label="{{ \Thinktomorrow\Chief\Sites\ChiefSites::all()->find($locale)->shortName }}">
-                    <x-chief::form.fieldset :rule="'trans.' . $locale . '.label'">
+                    <x-chief::form.fieldset :rule="'trans.label.'.$locale">
                         <x-chief::form.input.text
                             name="trans[label][{{ $locale }}]"
                             id="trans-label-{{ $locale }}"
@@ -26,7 +26,7 @@
         </x-chief::tabs>
     @else
         @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
-            <x-chief::form.fieldset :rule="'trans.' . $locale . '.label'">
+            <x-chief::form.fieldset :rule="'trans.label.' . $locale">
                 <x-chief::form.input.text
                     name="trans[label][{{ $locale }}]"
                     id="trans-label-{{ $locale }}"
