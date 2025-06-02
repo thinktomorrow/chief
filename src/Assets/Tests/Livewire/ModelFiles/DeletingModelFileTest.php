@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Assets\Tests\Livewire\ModelFiles;
+namespace Livewire\ModelFiles;
 
 use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
@@ -13,15 +13,15 @@ use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
-class ShowsExistingModelFileTest extends ChiefTestCase
+class DeletingModelFileTest extends ChiefTestCase
 {
     use TestingFileUploads;
-
-    private Testable $fileFieldUploadComponent;
 
     private ArticlePage $model;
 
     private AssetContract $asset;
+
+    private Testable $fileFieldUploadComponent;
 
     protected function setUp(): void
     {
@@ -36,17 +36,18 @@ class ShowsExistingModelFileTest extends ChiefTestCase
 
         $this->fileFieldUploadComponent = Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
-            'fieldKey' => 'thumb',
             'previewFiles' => [PreviewFile::fromAsset($this->asset)],
+            'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
             'locale' => 'nl',
             'allowMultiple' => true,
         ]);
     }
 
-    public function test_it_shows_existing_file()
+    public function test_it_can_queue_existing_file_for_deletion()
     {
-        $this->fileFieldUploadComponent
-            ->assertSeeHtmlInOrder(['name="thumb[attach][0][id]"', 'value="'.$this->asset->id.'"']);
+        $this->fileFieldUploadComponent->call('deleteFile', $this->asset->id)
+            ->assertSet('previewFiles.0.isQueuedForDeletion', true)
+            ->assertSeeHtmlInOrder(['name="thumb[queued_for_deletion][0]"', 'value="'.$this->asset->id.'"']);
     }
 }

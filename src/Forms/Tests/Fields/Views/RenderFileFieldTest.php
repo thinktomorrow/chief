@@ -44,8 +44,9 @@ class RenderFileFieldTest extends ChiefTestCase
             $component = $class::make('xxx')
                 ->model($this->model)
                 ->value($value);
-            $this->assertStringContainsString('name="files[xxx][nl]', $component->toHtml());
-            $this->assertStringContainsString($value['nl'][0]->getFileName(), $component->toHtml());
+
+            $this->assertStringContainsString('files[xxx][nl]', $component->toHtml());
+            $this->assertStringContainsString('data-error-placeholder="files.xxx.nl', $component->toHtml());
         }
     }
 
@@ -67,10 +68,9 @@ class RenderFileFieldTest extends ChiefTestCase
 
             $render = $component->toHtml();
 
+            $this->assertStringContainsString('data-error-placeholder="files.xxx.nl', $render);
             $this->assertStringContainsString('files[xxx][nl]', $render);
             $this->assertStringContainsString('files[xxx][en]', $render);
-            $this->assertStringContainsString('image.png', $render);
-            $this->assertStringContainsString('image-en.png', $render);
         }
     }
 

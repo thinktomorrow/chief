@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 This release contains breaking changes!
 
+- Fixed: Pending file changes were stored but initial state was shown to admin when toggling between locales.
 - Fixed: Multiple checkbox options in Livewire forms were not properly handled.
 - Added: `chief:default-menus` command to add default menus to the database.
 - Added: Highlight active nav item in the admin panel.

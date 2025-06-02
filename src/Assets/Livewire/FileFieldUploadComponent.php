@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Assets\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
 use Thinktomorrow\Chief\Assets\Components\FilePreview;
 use Thinktomorrow\Chief\Assets\Components\FileSelect;
@@ -33,14 +32,16 @@ class FileFieldUploadComponent extends Component implements HasPreviewFiles, Has
 
     public ?string $parentComponentId = null;
 
-    public function mount(?string $modelReference, string $fieldKey, string $locale, string $fieldName, array $assets = [], array $components = [])
+    public function mount(?string $modelReference, string $fieldKey, string $locale, string $fieldName, array $previewFiles, array $components = [])
     {
         $this->modelReference = $modelReference;
         $this->fieldKey = $fieldKey;
         $this->fieldName = $fieldName;
         $this->locale = $locale;
 
-        $this->previewFiles = array_map(fn (AssetContract $asset) => PreviewFile::fromAsset($asset), $assets);
+        // Assert instances of PreviewFile
+        $this->previewFiles = array_map(fn (PreviewFile $previewFile) => $previewFile, $previewFiles);
+
         $this->components = array_map(fn (\Thinktomorrow\Chief\Forms\Fields\Component $component) => $component, $components);
     }
 

@@ -8,12 +8,8 @@
     // Check if component is used inside a parent Livewire component (such as AddFragment)
     $insideComponent = isset($this) && method_exists($this, 'getId');
 
-    // Check any existing unsaved form data for this field
-    $value = $field->getValue($locale);
-
-    if(method_exists($this, 'getId')) {
-        $unsavedFormData = data_get($this->form, LivewireFieldName::get($getName($locale ?? null), null));
-//        dd($unsavedFormData);
+    if($insideComponent) {
+        $currentPreviewFiles = data_get($this->form, LivewireFieldName::get($getName($locale ?? null), null));
     }
 @endphp
 
@@ -28,7 +24,7 @@
         :field-name="$field->getName($locale)"
         :allow-multiple="$field->allowMultiple()"
         :assets="$field->getValue($locale)"
-        :unsaved-form-data="$unsavedFormData ?? null"
+        :preview-files="$currentPreviewFiles ?? []"
         :components="$field->getComponents()"
         :rules="$field->getRules()"
         :validation-messages="$field->getValidationMessages()"

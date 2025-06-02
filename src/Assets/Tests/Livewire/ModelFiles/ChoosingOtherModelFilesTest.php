@@ -29,6 +29,7 @@ class ChoosingOtherModelFilesTest extends ChiefTestCase
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
             'locale' => 'nl',
+            'previewFiles' => [],
             'allowMultiple' => true,
         ]);
     }
@@ -43,7 +44,7 @@ class ChoosingOtherModelFilesTest extends ChiefTestCase
             ->assertCount('previewFiles', 0)
             ->call('onAssetsChosen', [$asset->id])
             ->assertCount('previewFiles', 1)
-            ->assertSeeHtmlInOrder(['name="thumb[attach][0][id]"', 'value="'.$asset->id.'"'])
-            ->assertSeeHtmlInOrder(['name="thumb[order][0]"', 'value="'.$asset->id.'"']);
+            ->assertSeeHtmlInOrder(['name="thumb[attach][0][id]"', 'value="' . $asset->id . '"'])
+            ->assertSeeHtmlInOrder(['name="thumb[order][0]"', 'value="' . $asset->id . '"']);
     }
 }

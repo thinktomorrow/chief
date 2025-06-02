@@ -176,12 +176,14 @@ class EditFragment extends Component
 
     public function save()
     {
+        $form = $this->prepareFormDataForSubmission();
+
         // Validation is done via the update command
         app(UpdateFragment::class)->handle(
             $this->fragment->contextId,
             $this->fragment->fragmentId,
             $this->context->allowedSites,
-            $this->form,
+            $form,
             [],
         );
 

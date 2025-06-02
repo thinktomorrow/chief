@@ -12,6 +12,7 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Assets\App\Http\LivewireUploadedFile;
+use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFileField;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Concerns\WithComponents;
@@ -64,7 +65,7 @@ class File extends Component implements Field, HasComponents
                 return $model->assets($field->getKey(), $locale)->all();
             }
 
-            return $field->getMedia($model, $locale);
+            return array_map(fn (AssetContract $asset) => PreviewFile::fromAsset($asset), $field->getMedia($model, $locale));
         });
 
         $this->default([]);
