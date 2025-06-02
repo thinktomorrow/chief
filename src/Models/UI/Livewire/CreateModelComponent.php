@@ -96,10 +96,12 @@ class CreateModelComponent extends Component
             ]);
         }
 
+        $form = $this->prepareFormDataForSubmission();
+
         $modelId = app(ModelApplication::class)->create(new CreateModel(
             $this->modelClass,
             $this->locales,
-            $this->form,
+            $form,
             [],
         ));
 

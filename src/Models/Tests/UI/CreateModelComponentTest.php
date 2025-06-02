@@ -77,7 +77,6 @@ class CreateModelComponentTest extends ChiefTestCase
 
     public function test_it_saves_locales()
     {
-        $this->disableExceptionHandling();
         Livewire::test(CreateModelComponent::class)
             ->dispatch('open-create-model', ['modelClass' => ArticlePage::class])
             ->set('locales', ['nl'])

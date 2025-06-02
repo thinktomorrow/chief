@@ -126,16 +126,53 @@ trait HasForm
         $previewFiles = collect($files)
             ->map(fn ($file) => PreviewFile::fromLivewire($file));
 
-        $filesForUpload = $previewFiles->reject(fn (PreviewFile $file) => ($file->isAttachedToModel || $file->isUploading || $file->isQueuedForDeletion || $file->mediaId));
-        $filesForAttach = $previewFiles->filter(fn (PreviewFile $file) => ($file->mediaId && ! $file->isQueuedForDeletion));
-        $filesForDeletion = $previewFiles->filter(fn (PreviewFile $file) => ($file->isAttachedToModel && $file->isQueuedForDeletion));
+        $this->setFormValue($key, $previewFiles->all());
+    }
+
+    protected function prepareFormDataForSubmission(): array
+    {
+        $formData = $this->form;
+
+        // Convert files to the format expected by the UpdateFileField action
+        if (isset($formData['files'])) {
+            $formData['files'] = $this->convertPreviewFilesToFormPayload();
+        }
+
+        return $formData;
+    }
+
+    private function convertPreviewFilesToFormPayload(): array
+    {
+        $convertedFiles = [];
+
+        foreach ($this->form['files'] as $fieldName => $previewFiles) {
+            foreach ($previewFiles as $locale => $_previewFiles) {
+
+                // Assert that $_previewFiles is an array of PreviewFile instances
+                if (! is_array($_previewFiles) || ! collect($_previewFiles)->every(fn ($file) => $file instanceof PreviewFile)) {
+                    throw new \InvalidArgumentException("Invalid files payload format. Expected an array of PreviewFile instances for field '{$fieldName}' and locale '{$locale}'.");
+                }
+
+                $_previewFiles = collect($_previewFiles);
+
+                $filesForUpload = $_previewFiles->reject(fn (PreviewFile $file) => ($file->isAttachedToModel || $file->isUploading || $file->isQueuedForDeletion || $file->mediaId));
+                $filesForAttach = $_previewFiles->filter(fn (PreviewFile $file) => ($file->mediaId && ! $file->isQueuedForDeletion));
+                $filesForDeletion = $_previewFiles->filter(fn (PreviewFile $file) => ($file->isAttachedToModel && $file->isQueuedForDeletion));
+
+                $convertedFiles[$fieldName][$locale] = [
+                    'uploads' => $filesForUpload->map(fn (PreviewFile $file) => $file->toFormPayload())->toArray(),
+                    'attach' => $filesForAttach->map(fn (PreviewFile $file) => $file->toFormPayload())->toArray(),
+                    'queued_for_deletion' => $filesForDeletion->map(fn (PreviewFile $file) => $file->id)->toArray(),
+                    'order' => $_previewFiles->map(fn (PreviewFile $file) => $file->id)->toArray(),
+                ];
+            }
+        }
+
+        return $convertedFiles;
+
+        //        $convertedFiles[$fieldName] = $this->convertPreviewFilesToFormPayload($previewFiles);
 
         // Convert to array that our UpdateFileField action expects
-        $this->setFormValue($key, [
-            'uploads' => $filesForUpload->map(fn (PreviewFile $file) => $file->toFormPayload())->toArray(),
-            'attach' => $filesForAttach->map(fn (PreviewFile $file) => $file->toFormPayload())->toArray(),
-            'queued_for_deletion' => $filesForDeletion->map(fn (PreviewFile $file) => $file->id)->toArray(),
-            'order' => $previewFiles->map(fn (PreviewFile $file) => $file->id)->toArray(),
-        ]);
+
     }
 }

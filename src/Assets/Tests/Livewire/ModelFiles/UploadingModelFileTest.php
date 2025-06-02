@@ -24,6 +24,7 @@ class UploadingModelFileTest extends ChiefTestCase
 
         $this->fileFieldUploadComponent = Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $model->modelReference()->get(),
+            'previewFiles' => [],
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
             'locale' => 'nl',

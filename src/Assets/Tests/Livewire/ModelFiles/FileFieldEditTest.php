@@ -30,6 +30,7 @@ class FileFieldEditTest extends ChiefTestCase
             'fieldKey' => 'thumb',
             'locale' => 'nl',
             'parentId' => 'xxx',
+            'previewFiles' => [],
             'components' => [
                 $this->textComponent = Text::make('alt'),
             ],

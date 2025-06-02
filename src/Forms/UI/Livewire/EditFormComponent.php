@@ -89,11 +89,13 @@ class EditFormComponent extends Component
 
     public function save()
     {
+        $form = $this->prepareFormDataForSubmission();
+
         app(ModelApplication::class)->updateForm(new UpdateForm(
             $this->modelReference,
             [$this->scopedLocale],
             $this->formComponent->getId(),
-            $this->form,
+            $form,
             [])
         );
 
