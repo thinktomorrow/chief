@@ -19,13 +19,13 @@ class MenuItemControllerTest extends ChiefTestCase
         $response = $this->asAdmin()
             ->post(route('chief.back.menuitem.store', $menu->id), $this->validParams([
                 'trans' => [
-                    'nl' => [
-                        'label' => 'label one',
-                        'url' => 'https://thinktomorrow.be',
+                    'label' => [
+                        'nl' => 'label one',
+                        'en' => 'label two',
                     ],
-                    'en' => [
-                        'label' => 'label two',
-                        'url' => 'https://thinktomorrow.co.uk',
+                    'url' => [
+                        'nl' => 'https://thinktomorrow.be',
+                        'en' => 'https://thinktomorrow.co.uk',
                     ],
                 ],
             ]));
@@ -57,8 +57,8 @@ class MenuItemControllerTest extends ChiefTestCase
             ->post(route('chief.back.menuitem.store', $menu->id), $this->validParams([
                 'type' => 'internal',
                 'owner_reference' => $page->modelReference()->getShort(),
-                'trans.nl.label' => 'label one',
-                'trans.en.label' => 'label two',
+                'trans.label.nl' => 'label one',
+                'trans.label.en' => 'label two',
             ]))
             ->assertStatus(302);
 
@@ -83,8 +83,8 @@ class MenuItemControllerTest extends ChiefTestCase
 
         $response = $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
-                'trans.nl.label' => 'foobar',
-                'trans.nl.url' => 'https://thinktomorrow.be',
+                'trans.label.nl' => 'foobar',
+                'trans.url.nl' => 'https://thinktomorrow.be',
             ]));
 
         $response->assertStatus(302);
@@ -153,7 +153,7 @@ class MenuItemControllerTest extends ChiefTestCase
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'type' => 'custom',
-                'trans.nl.url' => 'contact',
+                'trans.url.nl' => 'contact',
             ]));
 
         $this->assertEquals('/contact', $menuitem->fresh()->url);
@@ -192,9 +192,11 @@ class MenuItemControllerTest extends ChiefTestCase
             'allow_parent' => false, // flag to allow nesting or not
             'parent_id' => null,
             'trans' => [
-                'nl' => [
-                    'label' => 'nieuw label',
-                    'url' => 'http://google.com',
+                'label' => [
+                    'nl' => 'nieuw label',
+                ],
+                'url' => [
+                    'nl' => 'http://google.com',
                 ],
             ],
         ];
