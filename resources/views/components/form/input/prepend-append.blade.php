@@ -7,7 +7,7 @@
     @if ($prepend)
         <div
             @class([
-                'inline-flex shrink-0 items-center border border-grey-100 px-3 py-2 text-grey-500 shadow-sm',
+                'border-grey-100 text-grey-500 inline-flex shrink-0 items-center border px-3 py-2 shadow-xs',
                 'rounded-l-[0.625rem] border-r-0',
             ])
         >
@@ -22,7 +22,7 @@
     @if ($append)
         <div
             @class([
-                'inline-flex shrink-0 items-center border border-grey-100 px-3 py-2 text-grey-500 shadow-sm',
+                'border-grey-100 text-grey-500 inline-flex shrink-0 items-center border px-3 py-2 shadow-xs',
                 'rounded-r-[0.625rem] border-l-0',
             ])
         >

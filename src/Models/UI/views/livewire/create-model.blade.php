@@ -16,7 +16,13 @@
             </x-chief::dialog.drawer.header>
         </x-slot>
 
-
+        @if ($errors->any())
+            <x-chief::callout size="sm" variant="red" class="mt-2">
+                @foreach ($errors->all() as $error)
+                    <p>{{ ucfirst($error) }}</p>
+                @endforeach
+            </x-chief::callout>
+        @endif
 
         @if($this->isAllowedToSelectSites())
             @include('chief-models::livewire._partials.locale-selection')
@@ -37,7 +43,7 @@
                                     wire:click="set('scopedLocale', '{{ $site }}')"
                                     :active="$site == $scopedLocale"
                                 >
-                                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::shortName($site) }}
+                                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($site) }}
                                 </x-chief::window.tabs.item>
                             @endforeach
                         </x-chief::window.tabs>

@@ -1,45 +1,34 @@
-/**
- * Using @layer directive to add this classes to tailwindcss components
- * This will make them responsive and combinable with variants
- **/
-@layer components {
-    .badge {
-        @apply inline-block;
-    }
+@utility badge {
+    @apply inline-block;
+}
 
-    .badge-base {
-        @apply rounded-xl px-2 py-1.5 text-base leading-5;
-    }
+/* ---------- Sizes ---------- */
+@utility badge-base {
+    @apply rounded-xl px-2 py-1.5 text-base leading-5;
+}
+@utility badge-sm {
+    @apply rounded-lg px-1.5 py-1 text-sm leading-4;
+}
+@utility badge-xs {
+    @apply rounded-md px-1.5 py-0.5 text-xs leading-4;
+}
 
-    .badge-sm {
-        @apply rounded-lg px-1.5 py-1 text-sm leading-4;
-    }
-
-    .badge-xs {
-        @apply rounded-md px-1.5 py-0.5 text-xs leading-4;
-    }
-
-    .badge-green {
-        @apply bg-green-100 text-green-700;
-    }
-
-    .badge-red {
-        @apply bg-red-100 text-red-800;
-    }
-
-    .badge-orange {
-        @apply bg-orange-100 text-orange-800;
-    }
-
-    .badge-blue {
-        @apply bg-primary-50 text-primary-500;
-    }
-
-    .badge-grey {
-        @apply bg-grey-100 text-grey-800;
-    }
-
-    .badge-outline-transparent {
-        @apply text-grey-800 ring-1 ring-inset ring-grey-100;
-    }
+/* ---------- Variants ---------- */
+@utility badge-green {
+    @apply bg-green-100 text-green-700;
+}
+@utility badge-red {
+    @apply bg-red-100 text-red-800;
+}
+@utility badge-orange {
+    @apply bg-orange-100 text-orange-800;
+}
+@utility badge-blue {
+    @apply bg-primary-50 text-primary-500;
+}
+@utility badge-grey {
+    @apply bg-grey-100 text-grey-800;
+}
+@utility badge-outline-transparent {
+    @apply text-grey-800 ring-grey-100 ring-1 ring-inset;
 }

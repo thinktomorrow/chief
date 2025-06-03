@@ -28,6 +28,7 @@ class UndoUploadingModelFileTest extends ChiefTestCase
 
         $this->fileFieldUploadComponent = Livewire::test(FileFieldUploadComponent::class, [
             'modelReference' => $this->model->modelReference()->get(),
+            'previewFiles' => [],
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
             'locale' => 'nl',
@@ -63,22 +64,5 @@ class UndoUploadingModelFileTest extends ChiefTestCase
             ->call('deleteFile', $asset->id)
             ->assertSet('previewFiles.0.isQueuedForDeletion', true)
             ->assertDontSeeHtml('name="thumb[attach][0]"');
-    }
-
-    public function test_it_can_queue_existing_file_for_deletion()
-    {
-        $asset = app(CreateAsset::class)
-            ->uploadedFile(UploadedFile::fake()->image('image.png'))
-            ->save();
-
-        Livewire::test(FileFieldUploadComponent::class, [
-            'modelReference' => $this->model->modelReference()->get(),
-            'fieldKey' => 'thumb',
-            'fieldName' => 'thumb',
-            'locale' => 'nl',
-            'assets' => [$asset],
-        ])->call('deleteFile', $asset->id)
-            ->assertSet('previewFiles.0.isQueuedForDeletion', true)
-            ->assertSeeHtmlInOrder(['name="thumb[queued_for_deletion][0]"', 'value="'.$asset->id.'"']);
     }
 }

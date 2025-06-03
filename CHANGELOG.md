@@ -5,9 +5,26 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.7] - 2025-06-03
+
+This release contains breaking changes!
+
+- Fixed: Pending file changes were stored but initial state was shown to admin when toggling between locales.
+- Fixed: Menu item label and url were not saved when creating/editing a menu item.
+- Fixed: Multiple checkbox options in Livewire forms were not properly handled.
+- Added: `chief:default-menus` command to add default menus to the database.
+- Added: Highlight active nav item in the admin panel.
+- Changed: **⚠ BC break** `chief.menus` config is now structured differently. Each key is the type and value is its
+  label. View the upgrade guide for more details.
+- Changed: **⚠ BC break** Upgraded TailwindCSS to v4. Refactored the existing tailwind.config.js to the new CSS config.
+  Also make sure to update the redactor-styles.css. View the upgrade guide for more details.
+- Changed: Now using Vite instead of Laravel Mix to build all Chief assets
+- Changed: Upgraded all other JS packages to their latest versions
+
 ## 0.10.6 - 2025-05-22
 
 - Fixed: Adding allowed sites to model didn't sync yet with the context in case of one default context.
+- Fixed: instant update of sites sync
 
 ## 0.10.5 - 2025-05-22
 

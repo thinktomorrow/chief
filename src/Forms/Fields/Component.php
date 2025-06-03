@@ -36,6 +36,7 @@ use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
 use Thinktomorrow\Chief\Forms\Tags\WithTags;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithWireableFieldDefaults;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 abstract class Component extends \Illuminate\View\Component implements Htmlable, Wireable
 {
@@ -128,7 +129,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
      */
     public function showsLocaleIndicatorInForm(): bool
     {
-        return $this->hasLocales() && count($this->getLocales()) > 1;
+        return $this->hasLocales() && count(ChiefSites::locales()) > 1;
+        //        return $this->hasLocales() && count($this->getLocales()) > 1;
     }
 
     protected function wireableMethods(array $components): array

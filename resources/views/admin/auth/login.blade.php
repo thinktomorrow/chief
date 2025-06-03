@@ -2,21 +2,8 @@
     <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">
         {{ csrf_field() }}
 
-        {{-- TODO: field errors are handled but still need to show error if login credentials are incorrect --}}
-        @if ($errors->any())
-            <x-chief::callout data-slot="form-group" variant="red" title="Oops, er klopt iets niet">
-                <x-slot name="icon">
-                    <x-chief::icon.solid.alert />
-                </x-slot>
-
-                @foreach ($errors->all() as $_error)
-                    <p>{{ ucfirst($_error) }}</p>
-                @endforeach
-            </x-chief::callout>
-        @endif
-
-        <x-chief::form.fieldset>
-            <x-chief::form.label for="email" required>E-mailadres</x-chief::form.label>
+        <x-chief::form.fieldset rule="email">
+            <x-chief::form.label for="email">E-mailadres</x-chief::form.label>
             <x-chief::form.input.email
                 id="email"
                 name="email"
@@ -27,9 +14,9 @@
         </x-chief::form.fieldset>
 
         <div data-slot="form-group" class="space-y-4">
-            <x-chief::form.fieldset>
+            <x-chief::form.fieldset rule="password">
                 <div data-slot="label" class="flex items-start justify-between gap-2">
-                    <x-chief::form.label for="password" required>Wachtwoord</x-chief::form.label>
+                    <x-chief::form.label for="password">Wachtwoord</x-chief::form.label>
 
                     <x-chief::link
                         href="{{ route('chief.back.password.request') }}"

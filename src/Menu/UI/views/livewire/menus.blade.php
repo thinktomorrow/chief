@@ -23,7 +23,7 @@
         </x-slot>
     @endif
 
-    <div class="-mb-4">
+    <div>
         @foreach ($items as $item)
             <div wire:key="menu-tab-content-{{ $item->id }}">
                 @if ($item->id === $activeItemId)

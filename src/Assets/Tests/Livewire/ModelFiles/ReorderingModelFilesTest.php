@@ -29,6 +29,7 @@ class ReorderingModelFilesTest extends ChiefTestCase
             'fieldKey' => 'thumb',
             'fieldName' => 'thumb',
             'locale' => 'nl',
+            'previewFiles' => [],
             'allowMultiple' => true,
         ]);
     }

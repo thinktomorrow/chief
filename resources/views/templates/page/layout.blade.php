@@ -33,13 +33,16 @@
             }
         </style>
 
-        <link rel="stylesheet" href="{{ chief_cached_asset('chief-assets/back/css/main.css') }}" />
+        <link rel="preload" as="style" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
+        <link rel="modulepreload" href="{{ Vite::buildAsset('resources/assets/js/main.js') }}" />
+        <link rel="stylesheet" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
+        <script type="module" src="{{ Vite::buildAsset('resources/assets/js/main.js') }}"></script>
 
         @livewireStyles
 
         @stack('custom-styles')
     </head>
-    <body class="min-h-screen bg-grey-50/50">
+    <body class="bg-grey-50/50 min-h-screen">
         <main>
             {{ $slot }}
 
@@ -50,8 +53,6 @@
         @include('chief::templates.page._partials.refresh-modal')
 
         @livewireScripts
-
-        <script src="{{ chief_cached_asset('chief-assets/back/js/main.js') }}"></script>
 
         @stack('custom-scripts')
 

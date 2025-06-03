@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Menu\Exceptions\OwnerReferenceIsRequiredForInternalLinkType;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\MenuLinkType;
-use Thinktomorrow\Chief\Shared\Helpers\Form;
 
 class MenuItemApplication
 {
@@ -37,13 +36,15 @@ class MenuItemApplication
             $model->owner_type = $command->getOwnerReference()->shortClassName();
             $model->owner_id = $command->getOwnerReference()->id();
         }
-        Form::foreachTrans($command->getData(), function ($key, $locale, $value) use ($model) {
 
-            if ($key == 'url' && $value) {
-                $value = $this->sanitizeUrl->sanitize($value);
+        foreach ($command->getData() as $key => $values) {
+            foreach ($values as $locale => $value) {
+                if ($key == 'url' && $value) {
+                    $value = $this->sanitizeUrl->sanitize($value);
+                }
+                $model->setDynamic($key, $value, $locale);
             }
-            $model->setDynamic($key, $value, $locale);
-        });
+        }
 
         $model->save();
 
@@ -68,14 +69,14 @@ class MenuItemApplication
             $model->owner_id = $command->getOwnerReference()->id();
         }
 
-        Form::foreachTrans($command->getData(), function ($key, $locale, $value) use ($model) {
-
-            if ($key == 'url' && $value) {
-                $value = $this->sanitizeUrl->sanitize($value);
+        foreach ($command->getData() as $key => $values) {
+            foreach ($values as $locale => $value) {
+                if ($key == 'url' && $value) {
+                    $value = $this->sanitizeUrl->sanitize($value);
+                }
+                $model->setDynamic($key, $value, $locale);
             }
-
-            $model->setDynamic($key, $value, $locale);
-        });
+        }
 
         $model->save();
 

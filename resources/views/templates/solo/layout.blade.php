@@ -22,10 +22,13 @@
             rel="stylesheet"
         />
 
-        <link rel="stylesheet" href="{{ chief_cached_asset('css/main.css') }}" />
+        <link rel="preload" as="style" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
+        <link rel="modulepreload" href="{{ Vite::buildAsset('resources/assets/js/main.js') }}" />
+        <link rel="stylesheet" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
+        <script type="module" src="{{ Vite::buildAsset('resources/assets/js/main.js') }}"></script>
     </head>
 
-    <body class="min-h-screen bg-grey-50/50">
+    <body class="bg-grey-50/50 min-h-screen">
         <main>
             {{ $slot }}
         </main>

@@ -1,12 +1,10 @@
-@layer utilities {
-    /* Hides native up/down arrows for number inputs */
-    .form-input-without-spin-buttons {
-        -moz-appearance: textfield;
+/* Hides native up/down arrows for number inputs */
+@utility form-input-without-spin-buttons {
+    -moz-appearance: textfield;
 
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 }

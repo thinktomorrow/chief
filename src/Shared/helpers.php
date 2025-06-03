@@ -49,29 +49,6 @@ if (! function_exists('getFragments')) {
     }
 }
 
-/*
- * Retrieve the public asset with a version stamp.
- * This allows for browsercache out of the box
- */
-if (! function_exists('chief_cached_asset')) {
-    function chief_cached_asset($filepath): string
-    {
-        $manifestPath = '/chief-assets/back';
-
-        // Manifest expects each entry to start with a leading slash - we make sure to deduplicate the manifest path.
-        $entry = str_replace($manifestPath, '', '/'.ltrim($filepath, '/'));
-
-        try {
-            // Paths should be given relative to the manifestpath so make sure to remove the basepath
-            return asset(mix($entry, $manifestPath));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error($e);
-
-            return $manifestPath.$entry;
-        }
-    }
-}
-
 if (! function_exists('chiefSetting')) {
     function chiefSetting($key = null, $locale = null, $default = null)
     {

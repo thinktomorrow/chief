@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
+use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 
@@ -35,12 +36,20 @@ trait InteractsWithFields
                     ? $this->composeEmptyRepeatValue($component, $locale)
                     : $component->getValue($locale);
 
+                if (! $value && ($component instanceof Checkbox)) {
+                    $value = [];
+                }
+
                 $this->injectFormValue($name, $value);
             }
         } else {
             $value = ($component instanceof Repeat && $this->isEmptyRepeatValue($component->getValue()))
                 ? $this->composeEmptyRepeatValue($component)
                 : $component->getValue();
+
+            if (! $value && ($component instanceof Checkbox)) {
+                $value = [];
+            }
 
             $this->injectFormValue($component->getName(), $value);
         }

@@ -7,6 +7,10 @@
 
     // Check if component is used inside a parent Livewire component (such as AddFragment)
     $insideComponent = isset($this) && method_exists($this, 'getId');
+
+    if($insideComponent) {
+        $currentPreviewFiles = data_get($this->form, LivewireFieldName::get($getName($locale ?? null), null));
+    }
 @endphp
 
 <div data-slot="control">
@@ -20,6 +24,7 @@
         :field-name="$field->getName($locale)"
         :allow-multiple="$field->allowMultiple()"
         :assets="$field->getValue($locale)"
+        :preview-files="$currentPreviewFiles ?? []"
         :components="$field->getComponents()"
         :rules="$field->getRules()"
         :validation-messages="$field->getValidationMessages()"

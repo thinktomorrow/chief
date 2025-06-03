@@ -83,6 +83,7 @@ abstract class BaseFragment extends Component implements Fragment
     protected function adminViewPath(): string
     {
         if (property_exists($this, 'adminViewPath') && isset($this->adminViewPath)) {
+
             return $this->adminViewPath;
         }
 

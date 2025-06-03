@@ -32,7 +32,7 @@ class LoginController extends Controller
             return redirect()->intended(route('chief.back.dashboard'));
         }
 
-        $failedAttempt = 'Jouw gegevens zijn onjuist of jouw account is nog niet actief.';
+        $failedAttempt = ['email' => 'Jouw gegevens zijn onjuist of jouw account is nog niet actief.'];
 
         return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors($failedAttempt);
     }

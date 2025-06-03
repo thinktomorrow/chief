@@ -1,5 +1,5 @@
 <div
-    class="flex flex-wrap items-center justify-center gap-3 rounded-lg border border-dashed border-grey-200 bg-white p-5 shadow-sm"
+    class="border-grey-200 flex flex-wrap items-center justify-center gap-3 rounded-lg border border-dashed bg-white p-5 shadow-xs"
 >
     @if ($allowToUploadFiles())
         <div>
