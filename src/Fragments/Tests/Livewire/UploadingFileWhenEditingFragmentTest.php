@@ -1,6 +1,6 @@
 <?php
 
-namespace Livewire;
+namespace Thinktomorrow\Chief\Fragments\Tests\Livewire;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
