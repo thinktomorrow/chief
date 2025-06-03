@@ -112,11 +112,12 @@ trait SortAssistant
         View::share('models', $this->indexModelsForSorting());
         View::share('model', $this->managedModelClassInstance());
 
-        return view('chief::manager.index-for-sorting');
+        //        return view('chief::manager.index-for-sorting');
 
         // TODO: this is the future sorting table but not quite there yet...
-        // View::share('table', $this->resource->getReorderTable());
-        // return $this->resource->getIndexView();
+        View::share('table', $this->resource->getReorderTable());
+
+        return $this->resource->getIndexView();
     }
 
     protected function indexModelsForSorting(): LengthAwarePaginator
