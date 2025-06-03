@@ -38,7 +38,7 @@ trait InteractsWithFields
                     ? $this->composeEmptyRepeatValue($component, $locale)
                     : $component->getValue($locale);
 
-                if (! $value && ($component instanceof Checkbox || $component instanceof Select || $component instanceof Multiselect)) {
+                if (! $value && ($component instanceof Checkbox || $component instanceof Select || $component instanceof MultiSelect)) {
                     $value = [];
                 }
 
