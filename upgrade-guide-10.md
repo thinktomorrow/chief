@@ -166,7 +166,8 @@ Also replace `config('chief.locales')` by `\Thinktomorrow\Chief\Sites\ChiefSites
 
 ### Menu
 
-chief.menus is now structured differently. Each key is the type and value is its label.
+The `chief.menus` configuration now uses a simple associative array: each key is a menu type and each value is its
+label.
 Please change the format in your `config/chief.php` file accordingly.
 
 ```php
