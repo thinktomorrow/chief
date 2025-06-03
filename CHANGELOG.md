@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## 0.10.7 - 2025-06-03
+
 This release contains breaking changes!
 
 - Fixed: Pending file changes were stored but initial state was shown to admin when toggling between locales.
