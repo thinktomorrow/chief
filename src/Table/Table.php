@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireComponent;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasModelKeyName;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPagination;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPresets;
+use Thinktomorrow\Chief\Table\Table\Concerns\HasReordering;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRows;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowViews;
@@ -42,6 +43,8 @@ class Table extends Component implements Htmlable
 
     /** Base Query for all table data */
     use HasQuery;
+
+    use HasReordering;
 
     /** Tree support */
     use HasResourceReference;
@@ -72,6 +75,13 @@ class Table extends Component implements Htmlable
         $modelClassName = $this->getResourceReference()->getResource()->modelClassName();
 
         $this->modelKeyName((new $modelClassName)->getKeyName());
+
+        // Reordering support
+        if (method_exists((new $modelClassName), 'isSortable')) {
+            $this->allowReordering(method_exists((new $modelClassName), 'isSortable') && (new $modelClassName)->isSortable());
+            $this->setReorderingModelClass($modelClassName);
+            $this->setReorderingColumn((new $modelClassName)->sortableAttribute());
+        }
 
         return $this->query(function () use ($modelClassName) {
             return $modelClassName::query();

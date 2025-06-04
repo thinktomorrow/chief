@@ -36,6 +36,7 @@ class PageTable extends Table
         $modelClass = $resource::modelClassName();
 
         $table = static::make()
+            ->noPagination() // Temp
             ->setTableReference(new TableReference(static::class, 'makeDefault', [$resourceKey]))
             ->resource($resourceKey)
             ->actions([

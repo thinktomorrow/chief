@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelsSorted;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Shared\Helpers\SortModels;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\ReorderModels;
 
 trait SortAssistant
 {
@@ -52,7 +52,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handleByModel(
+        app(ReorderModels::class)->handleByModel(
             $this->managedModelClassInstance(),
             $request->indices,
             $this->managedModelClassInstance()->sortableAttribute(),
@@ -73,7 +73,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [index] for item sorting request.');
         }
 
-        app(SortModels::class)->handleItem($this->managedModelClassInstance(), $request->index, $this->managedModelClassInstance()->sortableAttribute());
+        app(ReorderModels::class)->handleItem($this->managedModelClassInstance(), $request->index, $this->managedModelClassInstance()->sortableAttribute());
 
         return response()->json([
             'message' => 'models sorted.',

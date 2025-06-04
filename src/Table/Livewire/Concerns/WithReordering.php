@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\ReorderModels;
 
 trait WithReordering
 {
@@ -23,13 +24,26 @@ trait WithReordering
         return NestableTree::fromIterable($this->getResults());
     }
 
-    public function reorder()
+    public function reorder(array $orderedIds)
     {
-        // dd(func_get_args());
-        //        $reorderedPreviewFiles = collect($orderedIds)
-        //            ->map(fn ($previewFileId) => $this->previewFiles[$this->findPreviewFileIndex($previewFileId)])
-        //            ->all();
-        //
-        //        $this->previewFiles = $reorderedPreviewFiles;
+        if (count($orderedIds) < 1) {
+            return;
+        }
+
+        $modelClass = $this->getTable()->getReorderingModelClass();
+
+        app(ReorderModels::class)->handleByModel(new $modelClass, $orderedIds);
+    }
+
+    public function moveToParent($itemId, $parentId, array $orderedIds)
+    {
+        $modelClass = $this->getTable()->getReorderingModelClass();
+
+        // Get position of the item in the ordered list
+        $itemIndex = array_search($itemId, $orderedIds);
+
+        app(ReorderModels::class)->moveToParent(new $modelClass, $itemId, $parentId, $itemIndex);
+
+        $this->reorder($orderedIds);
     }
 }

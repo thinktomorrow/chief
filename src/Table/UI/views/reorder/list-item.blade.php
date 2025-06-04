@@ -22,9 +22,6 @@
             <x-chief::icon.drag-drop-arrows class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800" />
             <x-chief::icon.arrow-bend-down-right data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800" />
 
-            <span class="bg-red-50 p-3">{{ $item->id }}</span>
-            -
-
             @foreach ($this->getColumns($item) as $column)
                 <div class="flex items-center gap-1">
                     @foreach ($column->getItems() as $columnItem)
@@ -39,7 +36,6 @@
             x-sortable-group="{{ $sortableGroup }}"
             x-sortable-ghost-class="table-sort-ghost"
             x-sortable-drag-class="table-sort-drag"
-            x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
             class="nested-sortable [&_.nested-sortable]:ml-[28px] [&_[data-slot=indent-icon]]:block"
         >
             @foreach ($item->getChildNodes() as $_item)
