@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
+
 trait HasReordering
 {
     private bool $allowReordering = false;
@@ -39,6 +41,11 @@ trait HasReordering
         $this->reorderingModelClass = $modelClass;
 
         return $this;
+    }
+
+    public function hasValidReorderingModelClass(): bool
+    {
+        return ! is_null($this->reorderingModelClass) && (new \ReflectionClass($this->reorderingModelClass))->implementsInterface(Sortable::class);
     }
 
     public function getReorderingModelClass(): ?string

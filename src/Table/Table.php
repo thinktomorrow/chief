@@ -74,18 +74,25 @@ class Table extends Component implements Htmlable
         }
 
         $modelClassName = $this->getResourceReference()->getResource()->modelClassName();
-        $model = new $modelClassName;
-        $this->modelKeyName($model->getKeyName());
 
-        // Reordering support
-        if ((new \ReflectionClass($modelClassName))->implementsInterface(Sortable::class)) {
-            $this->allowReordering($model->isSortable());
-            $this->setReorderingModelClass($modelClassName);
-        }
+        $this->modelKeyName((new $modelClassName)->getKeyName());
+        $this->setReordering($modelClassName);
 
         return $this->query(function () use ($modelClassName) {
             return $modelClassName::query();
         });
+    }
+
+    public function setReordering(string $modelClass): static
+    {
+        $model = new $modelClass;
+
+        if ($model instanceof Sortable) {
+            $this->allowReordering($model->isSortable());
+            $this->setReorderingModelClass($modelClass);
+        }
+
+        return $this;
     }
 
     public function query(Closure $query): static
