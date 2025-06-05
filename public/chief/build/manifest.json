@@ -52,14 +52,6 @@
     "file": "assets/ronzino-regular-DsIgV4eI.woff2",
     "src": "resources/assets/fonts/ronzino/ronzino-regular.woff2"
   },
-  "resources/assets/img/favicon/android-chrome-192x192.png": {
-    "file": "assets/android-chrome-192x192-DzJ0vo_i.png",
-    "src": "resources/assets/img/favicon/android-chrome-192x192.png"
-  },
-  "resources/assets/img/favicon/android-chrome-512x512.png": {
-    "file": "assets/android-chrome-512x512-DI9fE3Oq.png",
-    "src": "resources/assets/img/favicon/android-chrome-512x512.png"
-  },
   "resources/assets/img/favicon/apple-touch-icon.png": {
     "file": "assets/apple-touch-icon-DRuLXGKj.png",
     "src": "resources/assets/img/favicon/apple-touch-icon.png"
@@ -81,7 +73,7 @@
     "src": "resources/assets/img/favicon/safari-pinned-tab.svg"
   },
   "resources/assets/img/favicon/site.webmanifest": {
-    "file": "assets/site-BEvDmKmy.webmanifest",
+    "file": "assets/site-B_M129lY.webmanifest",
     "src": "resources/assets/img/favicon/site.webmanifest"
   },
   "resources/assets/js/main.js": {
