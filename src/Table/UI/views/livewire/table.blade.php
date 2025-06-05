@@ -17,15 +17,15 @@
 
             <div
                 @class([
-                    'divide-y divide-grey-100 rounded-xl ring-1 ring-grey-100',
-                    'rounded-xl bg-white shadow-md shadow-grey-500/10' => $variant === 'card',
+                    'divide-grey-100 ring-grey-100 divide-y rounded-xl ring-1',
+                    'shadow-grey-500/10 rounded-xl bg-white shadow-md' => $variant === 'card',
                     '' => $variant === 'transparent',
                 ])
             >
                 @include('chief-table::livewire._partials.table-container-header')
 
                 <div class="overflow-x-auto whitespace-nowrap">
-                    <table class="min-w-full table-fixed divide-y divide-grey-100">
+                    <table class="divide-grey-100 min-w-full table-fixed divide-y">
                         <thead>
                             <tr class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4">
                                 {{-- This header contains the checkbox to select/deselect all items. It will only show if bulk actions are available --}}
@@ -58,7 +58,7 @@
                             </tr>
                         </thead>
 
-                        <tbody class="divide-y divide-grey-100 [&>*:last-child_[data-slot=actions]]:rounded-br-xl">
+                        <tbody class="divide-grey-100 divide-y [&>*:last-child_[data-slot=actions]]:rounded-br-xl">
                             @includeWhen($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table::rows.ancestor', ['ancestors' => $this->getAncestors()])
 
                             @if ($this->resultPageCount > 0)

@@ -1,6 +1,7 @@
 @php
     $results = $this->getReorderResults();
     $sortableGroup = 'reorder-table-item';
+    $variant ??= 'transparent';
 @endphp
 
 <div class="space-y-4">
@@ -41,7 +42,11 @@
                 $wire.moveToParent(itemId, parentId, ids)
             }
         "
-        class="border-grey-100 shadow-grey-500/10 rounded-xl border bg-white px-1 py-2.5 shadow-md"
+        @class([
+            'border-grey-100 shadow-grey-500/10 divide-grey-100 divide-y rounded-xl border px-1 py-1.5',
+            'bg-white shadow-md' => $variant === 'card',
+            '' => $variant === 'transparent',
+        ])
     >
         @foreach ($results as $item)
             @include(

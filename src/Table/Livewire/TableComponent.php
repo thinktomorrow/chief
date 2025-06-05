@@ -108,7 +108,7 @@ class TableComponent extends Component
     public function render()
     {
         if ($this->isReordering) {
-            return view('chief-table::reorder.list', []);
+            return view('chief-table::reorder.list', ['variant' => $this->variant]);
         }
 
         return view('chief-table::livewire.table', []);
