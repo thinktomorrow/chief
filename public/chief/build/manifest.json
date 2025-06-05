@@ -1,8 +1,56 @@
 {
   "resources/assets/css/main.css": {
-    "file": "assets/main-Big6b2oX.css",
+    "file": "assets/main-BhLZ-MDX.css",
     "src": "resources/assets/css/main.css",
     "isEntry": true
+  },
+  "resources/assets/fonts/ronzino/ronzino-bold.woff": {
+    "file": "assets/ronzino-bold-Ytdos6AV.woff",
+    "src": "resources/assets/fonts/ronzino/ronzino-bold.woff"
+  },
+  "resources/assets/fonts/ronzino/ronzino-bold.woff2": {
+    "file": "assets/ronzino-bold-D3DsWgt4.woff2",
+    "src": "resources/assets/fonts/ronzino/ronzino-bold.woff2"
+  },
+  "resources/assets/fonts/ronzino/ronzino-boldoblique.woff": {
+    "file": "assets/ronzino-boldoblique-upUk1_DK.woff",
+    "src": "resources/assets/fonts/ronzino/ronzino-boldoblique.woff"
+  },
+  "resources/assets/fonts/ronzino/ronzino-boldoblique.woff2": {
+    "file": "assets/ronzino-boldoblique-B00Nkw8Q.woff2",
+    "src": "resources/assets/fonts/ronzino/ronzino-boldoblique.woff2"
+  },
+  "resources/assets/fonts/ronzino/ronzino-medium.woff": {
+    "file": "assets/ronzino-medium-BGn0qYwJ.woff",
+    "src": "resources/assets/fonts/ronzino/ronzino-medium.woff"
+  },
+  "resources/assets/fonts/ronzino/ronzino-medium.woff2": {
+    "file": "assets/ronzino-medium-C2UERhn-.woff2",
+    "src": "resources/assets/fonts/ronzino/ronzino-medium.woff2"
+  },
+  "resources/assets/fonts/ronzino/ronzino-mediumoblique.woff": {
+    "file": "assets/ronzino-mediumoblique-CdFRxBxG.woff",
+    "src": "resources/assets/fonts/ronzino/ronzino-mediumoblique.woff"
+  },
+  "resources/assets/fonts/ronzino/ronzino-mediumoblique.woff2": {
+    "file": "assets/ronzino-mediumoblique-BXFZLjc1.woff2",
+    "src": "resources/assets/fonts/ronzino/ronzino-mediumoblique.woff2"
+  },
+  "resources/assets/fonts/ronzino/ronzino-oblique.woff": {
+    "file": "assets/ronzino-oblique-Dtfj3GQl.woff",
+    "src": "resources/assets/fonts/ronzino/ronzino-oblique.woff"
+  },
+  "resources/assets/fonts/ronzino/ronzino-oblique.woff2": {
+    "file": "assets/ronzino-oblique-BKlVcp99.woff2",
+    "src": "resources/assets/fonts/ronzino/ronzino-oblique.woff2"
+  },
+  "resources/assets/fonts/ronzino/ronzino-regular.woff": {
+    "file": "assets/ronzino-regular-Bt7_sshz.woff",
+    "src": "resources/assets/fonts/ronzino/ronzino-regular.woff"
+  },
+  "resources/assets/fonts/ronzino/ronzino-regular.woff2": {
+    "file": "assets/ronzino-regular-DsIgV4eI.woff2",
+    "src": "resources/assets/fonts/ronzino/ronzino-regular.woff2"
   },
   "resources/assets/img/favicon/android-chrome-192x192.png": {
     "file": "assets/android-chrome-192x192-DzJ0vo_i.png",
@@ -37,7 +85,7 @@
     "src": "resources/assets/img/favicon/site.webmanifest"
   },
   "resources/assets/js/main.js": {
-    "file": "assets/main-CMgRSuDX.js",
+    "file": "assets/main-Dynov-3z.js",
     "name": "main",
     "src": "resources/assets/js/main.js",
     "isEntry": true
