@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanAddQuery;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasActions;
@@ -73,14 +74,13 @@ class Table extends Component implements Htmlable
         }
 
         $modelClassName = $this->getResourceReference()->getResource()->modelClassName();
-
-        $this->modelKeyName((new $modelClassName)->getKeyName());
+        $model = new $modelClassName;
+        $this->modelKeyName($model->getKeyName());
 
         // Reordering support
-        if (method_exists((new $modelClassName), 'isSortable')) {
-            $this->allowReordering(method_exists((new $modelClassName), 'isSortable') && (new $modelClassName)->isSortable());
+        if ((new \ReflectionClass($modelClassName))->implementsInterface(Sortable::class)) {
+            $this->allowReordering($model->isSortable());
             $this->setReorderingModelClass($modelClassName);
-            $this->setReorderingColumn((new $modelClassName)->sortableAttribute());
         }
 
         return $this->query(function () use ($modelClassName) {

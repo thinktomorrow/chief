@@ -9,19 +9,26 @@ trait WithBulkActions
     /** @return Action[] */
     public function getPrimaryBulkActions(): array
     {
-        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->isPrimary());
+        return $this->getBulkActionsByVariant('primary');
     }
 
     /** @return Action[] */
     public function getSecondaryBulkActions(): array
     {
-        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->isSecondary());
+        return $this->getBulkActionsByVariant('secondary');
     }
 
     /** @return Action[] */
     public function getTertiaryBulkActions(): array
     {
-        return array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->isTertiary());
+        return $this->getBulkActionsByVariant('tertiary');
+    }
+
+    private function getBulkActionsByVariant(string $variant): array
+    {
+        $variantActions = array_filter($this->getTable()->getBulkActions(), fn (Action $action) => $action->{'is'.ucfirst($variant)}());
+
+        return array_filter($variantActions, fn (Action $action) => ! $action->hasWhen() || $action->getWhen()($this));
     }
 
     public function hasAnyBulkActions(): bool
