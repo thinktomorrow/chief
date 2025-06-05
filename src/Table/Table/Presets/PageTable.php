@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Table\Table\Presets;
 
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
@@ -36,13 +37,12 @@ class PageTable extends Table
         $modelClass = $resource::modelClassName();
 
         $table = static::make()
-            ->noPagination() // Temp
             ->setTableReference(new TableReference(static::class, 'makeDefault', [$resourceKey]))
             ->resource($resourceKey)
             ->actions([
                 CreateModelAction::makeDefault($resourceKey)->primary(),
                 ...((new \ReflectionClass($modelClass))->hasMethod('scopeArchived') && $modelClass::archived()->count() > 0 ? [VisitArchiveAction::makeDefault($resourceKey)->tertiary()] : []),
-                ...((new \ReflectionClass($modelClass))->hasMethod('sortableAttribute') ? [ReorderAction::makeDefault($resourceKey)->secondary()] : []),
+                ...((new \ReflectionClass($modelClass))->implementsInterface(Sortable::class) ? [ReorderAction::makeDefault()->secondary()] : []),
             ])
             ->bulkActions([
                 OnlineStateBulkAction::makeDefault($resourceKey),
@@ -68,9 +68,6 @@ class PageTable extends Table
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
                 ...(((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),
-                //                ColumnDate::make('updated_at')
-                //                    ->label('Aangepast')
-                //                    ->format('d/m/Y H:i'),
             ])
             ->sorters([
                 Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {

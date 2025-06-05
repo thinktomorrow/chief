@@ -10,7 +10,6 @@ class CreateModelAction extends Action
     public static function makeDefault(string $resourceKey): static
     {
         $resource = app(Registry::class)->resource($resourceKey);
-        $manager = app(Registry::class)->manager($resourceKey);
 
         return static::make('create')
             ->label(ucfirst($resource->getLabel()).' toevoegen')

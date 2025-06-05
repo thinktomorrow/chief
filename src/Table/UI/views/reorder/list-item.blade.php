@@ -22,6 +22,10 @@
             <x-chief::icon.drag-drop-arrows class="size-5 shrink-0 text-grey-300 group-hover:text-grey-800" />
             <x-chief::icon.arrow-bend-down-right data-slot="indent-icon" class="hidden size-5 shrink-0 text-grey-800" />
 
+            <div class="flex items-center gap-1">
+                {{ $item->order + 1 }}.
+            </div>
+
             @foreach ($this->getColumns($item) as $column)
                 <div class="flex items-center gap-1">
                     @foreach ($column->getItems() as $columnItem)

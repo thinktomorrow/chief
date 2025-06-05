@@ -30,6 +30,8 @@ trait WithReordering
             return;
         }
 
+        $this->verifyReorderingModelClass();
+
         $modelClass = $this->getTable()->getReorderingModelClass();
 
         app(ReorderModels::class)->handleByModel(new $modelClass, $orderedIds);
@@ -37,6 +39,8 @@ trait WithReordering
 
     public function moveToParent($itemId, $parentId, array $orderedIds)
     {
+        $this->verifyReorderingModelClass();
+
         $modelClass = $this->getTable()->getReorderingModelClass();
 
         // Get position of the item in the ordered list
@@ -45,5 +49,12 @@ trait WithReordering
         app(ReorderModels::class)->moveToParent(new $modelClass, $itemId, $parentId, $itemIndex);
 
         $this->reorder($orderedIds);
+    }
+
+    private function verifyReorderingModelClass()
+    {
+        if (! $this->getTable()->hasValidReorderingModelClass()) {
+            throw new \RuntimeException('The table does not have a valid Sortable model class set. Given: ['.$this->getTable()->getReorderingModelClass().']');
+        }
     }
 }

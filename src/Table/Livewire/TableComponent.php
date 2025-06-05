@@ -57,7 +57,7 @@ class TableComponent extends Component
         $this->resetTertiaryFilters();
         $this->applyDefaultSorters();
 
-        if ($table->isReorderingAllowed() && $table->startWithReordering()) {
+        if ($table->isReorderingAllowed() && $table->isStartingWithReordering()) {
             $this->startReordering();
         }
         // active sorters - selected by user
