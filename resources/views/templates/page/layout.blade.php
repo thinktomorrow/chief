@@ -18,13 +18,7 @@
 
         @include('chief::templates.page._partials.metatags', ['title' => $title])
         @include('chief::templates.page._partials.favicon')
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-            rel="stylesheet"
-        />
+        @include('chief::templates.page._partials.fonts')
 
         {{-- Hide Alpine elements until Alpine is fully loaded --}}
         <style>
@@ -60,7 +54,7 @@
             document.addEventListener('livewire:initialized', () => {
                     // Trigger the admin scoped locale via query parameter e.g. ?site=nl
                     @if(request()->input('site') && \Thinktomorrow\Chief\Sites\ChiefSites::verify(request()->input('site')))
-                    window.dispatchEvent(new CustomEvent('scoped-to-locale', { detail: { locale: '{{ request()->input('site') }}' } }));
+                    window.dispatchEvent(new CustomEvent('scoped-to-locale', { detail: { locale: "{{ request()->input('site') }}' } }));
                     @endif
                 });
         </script>

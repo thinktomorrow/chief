@@ -2,23 +2,38 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Shared\Helpers;
+namespace Thinktomorrow\Chief\Shared\Concerns\Sortable;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class SortModels
+class ReorderModels
 {
+    public function handleByModel(Model&Sortable $model, array $indices): void
+    {
+        $table = $model->getTable();
+        $column = $model->sortableAttribute();
+        $indexColumn = $model->getKeyName();
+        $castIdToIntegers = $model->getKeyType() === 'int';
+
+        static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers);
+    }
+
+    public function moveToParent(Model&Sortable $model, $itemId, $parentId = null, $order = 0)
+    {
+        if (! $itemId) {
+            throw new \InvalidArgumentException('Missing argument [itemId] for moveToParent request.');
+        }
+
+        $model::findOrFail($itemId)->update([
+            'parent_id' => $parentId,
+            $model->sortableAttribute() => $order,
+        ]);
+    }
+
     public function handle(string $table, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true, ?string $extraWhere = null): void
     {
         static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers, $extraWhere);
-    }
-
-    public function handleByModel(Model $model, array $indices, string $column = 'order', string $indexColumn = 'id', bool $castIdToIntegers = true): void
-    {
-        $table = $model->getTable();
-
-        static::batchUpdateColumn($table, $column, $indices, $indexColumn, $castIdToIntegers);
     }
 
     /**

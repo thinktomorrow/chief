@@ -3,8 +3,7 @@
 @endphp
 
 <x-chief::window title="{{ $this->allowMultipleItems() || count($items) > 1 ? 'Menu' : '' }}">
-
-    @if($this->allowMultipleItems() || count($items) > 1)
+    @if ($this->allowMultipleItems() || count($items) > 1)
         <x-slot name="badges">
             @if (($item = $items->first(fn ($item) => $item->id === $activeItemId)) && count($locales) > 1)
                 @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($item->getAllowedSites()) as $site)
@@ -27,8 +26,7 @@
         @foreach ($items as $item)
             <div wire:key="menu-tab-content-{{ $item->id }}">
                 @if ($item->id === $activeItemId)
-
-                    @if($this->allowMultipleItems() || count($items) > 1)
+                    @if ($this->allowMultipleItems() || count($items) > 1)
                         @include('chief-fragments::livewire.tabitems.actions')
                     @endif
 

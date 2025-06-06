@@ -10,6 +10,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\SortableDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
@@ -19,12 +21,13 @@ use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\NodeDefaults;
 
-class MenuItem extends Model implements HasAllowedSites, Node, ReferableModel, TreeResource
+class MenuItem extends Model implements HasAllowedSites, Node, ReferableModel, Sortable, TreeResource
 {
     use HasAllowedSitesDefaults;
     use HasDynamicAttributes;
     use NodeDefaults;
     use ReferableModelDefault;
+    use SortableDefault;
 
     public $dynamicKeys = [
         'label', 'url', 'owner_label',

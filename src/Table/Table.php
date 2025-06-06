@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanAddQuery;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasActions;
@@ -17,6 +18,7 @@ use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireComponent;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasModelKeyName;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPagination;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPresets;
+use Thinktomorrow\Chief\Table\Table\Concerns\HasReordering;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowActions;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRows;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasRowViews;
@@ -42,6 +44,8 @@ class Table extends Component implements Htmlable
 
     /** Base Query for all table data */
     use HasQuery;
+
+    use HasReordering;
 
     /** Tree support */
     use HasResourceReference;
@@ -72,10 +76,23 @@ class Table extends Component implements Htmlable
         $modelClassName = $this->getResourceReference()->getResource()->modelClassName();
 
         $this->modelKeyName((new $modelClassName)->getKeyName());
+        $this->setReordering($modelClassName);
 
         return $this->query(function () use ($modelClassName) {
             return $modelClassName::query();
         });
+    }
+
+    public function setReordering(string $modelClass): static
+    {
+        $model = new $modelClass;
+
+        if ($model instanceof Sortable) {
+            $this->allowReordering($model->isSortable());
+            $this->setReorderingModelClass($modelClass);
+        }
+
+        return $this;
     }
 
     public function query(Closure $query): static

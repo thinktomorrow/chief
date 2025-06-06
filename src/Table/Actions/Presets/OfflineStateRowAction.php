@@ -28,7 +28,7 @@ class OfflineStateRowAction extends Action
             })
             ->keepDialogOpen()
             ->notifyOnSuccess('Staat in draft')->notifyOnFailure('Er is iets misgegaan bij het in draft zetten.')
-            ->when(function ($model) {
+            ->when(function ($component, $model) {
                 return $model instanceof StatefulContract && $model->inOnlineState();
             });
     }

@@ -5,6 +5,15 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+This release contains breaking changes regarding the Sortable logic!
+
+- Added: **⚠ BC break** Sortable models now require the `Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable`
+  interface.
+- Changed: **⚠ BC break** Renamed `Thinktomorrow\Chief\Shared\Concerns\Sortable` trait to
+  `Thinktomorrow\Chief\Shared\Concerns\Sortable\SortableDefault`.
+- Changed: Actions::when() closure has now a first parameter of `component` instead of `model`, which is now second
+  parameter.
+
 ## [0.10.7] - 2025-06-03
 
 This release contains breaking changes!

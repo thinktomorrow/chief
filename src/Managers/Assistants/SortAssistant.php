@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelsSorted;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Shared\Helpers\SortModels;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\ReorderModels;
 
 trait SortAssistant
 {
@@ -52,7 +52,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handleByModel(
+        app(ReorderModels::class)->handleByModel(
             $this->managedModelClassInstance(),
             $request->indices,
             $this->managedModelClassInstance()->sortableAttribute(),
@@ -73,7 +73,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [index] for item sorting request.');
         }
 
-        app(SortModels::class)->handleItem($this->managedModelClassInstance(), $request->index, $this->managedModelClassInstance()->sortableAttribute());
+        app(ReorderModels::class)->handleItem($this->managedModelClassInstance(), $request->index, $this->managedModelClassInstance()->sortableAttribute());
 
         return response()->json([
             'message' => 'models sorted.',
@@ -112,11 +112,12 @@ trait SortAssistant
         View::share('models', $this->indexModelsForSorting());
         View::share('model', $this->managedModelClassInstance());
 
-        return view('chief::manager.index-for-sorting');
+        //        return view('chief::manager.index-for-sorting');
 
         // TODO: this is the future sorting table but not quite there yet...
-        // View::share('table', $this->resource->getReorderTable());
-        // return $this->resource->getIndexView();
+        View::share('table', $this->resource->getReorderTable());
+
+        return $this->resource->getIndexView();
     }
 
     protected function indexModelsForSorting(): LengthAwarePaginator

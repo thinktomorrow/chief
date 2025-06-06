@@ -94,6 +94,8 @@ class UpgradeFrom9To10Command extends BaseCommand
             'Thinktomorrow\Chief\Site\Urls\UrlRecord' => 'Thinktomorrow\Chief\Urls\Models\UrlRecord',
             'Thinktomorrow\Chief\Site\Urls\ChiefResponse' => 'Thinktomorrow\Chief\Urls\ChiefResponse',
             'Thinktomorrow\Chief\Urls\Models\UrlRecordNotFound' => 'Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound',
+            'use Sortable' => 'use SortableDefault',
+            'Thinktomorrow\Chief\Shared\Concerns\Sortable' => 'Thinktomorrow\Chief\Shared\Concerns\Sortable\SortableDefault',
             '@fragments' => '@foreach(getFragments() as $fragment) {{ $fragment->render() }} @endforeach',
 
             // Page
@@ -125,6 +127,7 @@ class UpgradeFrom9To10Command extends BaseCommand
             'FragmentsOwner' => 'The FragmentsOwner interface is removed. Please remove it from your model.',
             'custom-scripts-after-vue' => 'The custom-scripts-after-vue directive is removed. Please remove it from your blade files.',
             'xlink:href' => 'You should now use full SVG icons instead',
+            'use SortableDefault' => 'This class requires the Sortable interface to be implemented.',
         ];
 
         $allClean = true;

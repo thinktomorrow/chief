@@ -12,19 +12,26 @@ trait WithActions
     /** @return Action[] */
     public function getPrimaryActions(): array
     {
-        return array_filter($this->getTable()->getActions(), fn (Action $action) => $action->isPrimary());
+        return $this->getActionsByVariant('primary');
     }
 
     /** @return Action[] */
     public function getSecondaryActions(): array
     {
-        return array_filter($this->getTable()->getActions(), fn (Action $action) => $action->isSecondary());
+        return $this->getActionsByVariant('secondary');
     }
 
     /** @return Action[] */
     public function getTertiaryActions(): array
     {
-        return array_filter($this->getTable()->getActions(), fn (Action $action) => $action->isTertiary());
+        return $this->getActionsByVariant('tertiary');
+    }
+
+    private function getActionsByVariant(string $variant): array
+    {
+        $variantActions = array_filter($this->getTable()->getActions(), fn (Action $action) => $action->{'is'.ucfirst($variant)}());
+
+        return array_filter($variantActions, fn (Action $action) => ! $action->hasWhen() || $action->getWhen()($this));
     }
 
     public function applyAction($actionKey, array $payload = []): void

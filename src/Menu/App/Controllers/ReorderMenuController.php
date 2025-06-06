@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Menu\App\Controllers;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Menu\Events\MenuReordered;
 use Thinktomorrow\Chief\Menu\Menu;
-use Thinktomorrow\Chief\Shared\Helpers\SortModels;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\ReorderModels;
 
 class ReorderMenuController
 {
@@ -25,7 +25,7 @@ class ReorderMenuController
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle(
+        app(ReorderModels::class)->handle(
             'menu_items',
             $request->indices,
             'order',

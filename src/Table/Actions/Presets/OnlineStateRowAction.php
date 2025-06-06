@@ -29,7 +29,7 @@ class OnlineStateRowAction extends Action
                 return true;
             })
             ->notifyOnSuccess('Is nu gepubliceerd!')->notifyOnFailure('Er is iets misgegaan bij het publiceren.')
-            ->when(function ($model) use ($stateKey, $transitionKey) {
+            ->when(function ($component, $model) use ($stateKey, $transitionKey) {
 
                 if (! $model instanceof StatefulContract) {
                     return false;
