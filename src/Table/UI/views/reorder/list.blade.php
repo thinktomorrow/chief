@@ -16,6 +16,8 @@
         </x-chief::button>
     </div>
 
+    @include('chief-table::livewire._partials.table-container-header')
+
     <div
         x-sortable
         x-sortable-group="{{ $sortableGroup }}"

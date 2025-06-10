@@ -15,7 +15,7 @@ trait WithLocaleToggle
     protected function setLocalesOnOpen(array $values, iterable $components): void
     {
         if ($this->showsLocalesForAnyField($components)) {
-            $this->locales = $values['locales'] ?: ($this->isAllowedToSelectSites() ? [] : ChiefSites::locales());
+            $this->locales = $values['locales'] ?? ($this->isAllowedToSelectSites() ? [] : ChiefSites::locales());
             $this->scopedLocale = $values['scopedLocale'] ?? ($this->locales[0] ?? null);
         }
     }
@@ -33,6 +33,10 @@ trait WithLocaleToggle
 
     public function isAllowedToSelectSites(): bool
     {
+        if (! isset($this->modelClass)) {
+            return false;
+        }
+
         return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class) && (new $this->modelClass)->allowSiteSelection();
     }
 

@@ -7,12 +7,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Thinktomorrow\Chief\Table\Columns\Column;
-use Thinktomorrow\Chief\Table\Columns\ColumnItem;
 use Thinktomorrow\Chief\Table\Filters\Presets\SiteFilter;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithColumns;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithColumnSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithFilters;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithNotifications;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithPagination as WithPaginationControl;
@@ -29,6 +29,8 @@ class TableComponent extends Component
     use WithActions;
     use WithBulkActions;
     use WithBulkSelection;
+    use WithColumns;
+    use WithColumnSelection;
     use WithFilters;
     use WithNotifications;
     use WithPagination;
@@ -98,11 +100,6 @@ class TableComponent extends Component
     protected function getModelKeyName(): string
     {
         return $this->getTable()->getModelKeyName();
-    }
-
-    public function getHeaders(): array
-    {
-        return $this->getTable()->getHeaders();
     }
 
     public function render()
@@ -192,47 +189,9 @@ class TableComponent extends Component
             ->setPageName($this->getPaginationId());
     }
 
-    public function getColumns($model): array
+    public function isTableHeaderShown(): bool
     {
-        return array_map(function (Column $column) use ($model) {
-            return $column->model($model);
-        }, $this->getTable()->getColumns($model));
-    }
-
-    /**
-     * The unique key reference to the row. Used to reference
-     * each row in the DOM for proper livewire diffing
-     */
-    public function getRowKey($model): string
-    {
-        if (is_array($model)) {
-            return md5(print_r($model, true));
-        }
-
-        return (string) $model->{$this->getModelKeyName()};
-    }
-
-    public function getRowView(): string
-    {
-        return $this->getTable()->getRowView();
-    }
-
-    /**
-     * Used as label in the ancestor breadcrumb
-     */
-    public function getAncestorTreeLabel($model): ?ColumnItem
-    {
-        $columns = $this->getColumns($model);
-
-        foreach ($columns as $column) {
-            foreach ($column->getItems() as $columnItem) {
-                if ($columnItem->getKey() == $this->getTable()->getTreeLabelColumn()) {
-                    return $columnItem;
-                }
-            }
-        }
-
-        return null;
+        return count($this->getFilters()) > 0 || count($this->getSorters()) > 1 || $this->allowColumnSelection();
     }
 
     /**

@@ -78,7 +78,7 @@ trait HasColumns
     {
         $this->headers = collect($this->columns)
             ->reject(fn ($column) => empty($column->getItems()))
-            ->map(fn ($column) => Header::make($column->getItems()[0]->getLabel()))
+            ->map(fn ($column) => Header::makeHeader($column->getItems()[0]->getKey(), $column->getItems()[0]->getLabel()))
             ->all();
     }
 }

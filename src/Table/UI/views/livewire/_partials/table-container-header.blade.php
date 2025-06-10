@@ -1,4 +1,4 @@
-@if ($this->hasAnyFiltersOrSorters())
+@if ($this->isTableHeaderShown())
     <div
         id="table-container-header"
         class="flex justify-between gap-2 px-4 py-2.5"

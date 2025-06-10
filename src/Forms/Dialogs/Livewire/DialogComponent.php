@@ -6,11 +6,13 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
+use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
 class DialogComponent extends Component
 {
     use HasForm;
     use ShowsAsDialog;
+    use WithLocaleToggle;
 
     public $parentId;
 
@@ -40,6 +42,8 @@ class DialogComponent extends Component
 
         // how to convert to model(s) from data;
         $this->data = $value['data'];
+
+        $this->setlocalesOnOpen($this->data, $this->getFields());
 
         $this->isOpen = true;
     }
