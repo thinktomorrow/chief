@@ -34,11 +34,6 @@ class ConsoleServiceProvider extends ServiceProvider
             __DIR__.'/../../config/chief-settings.php' => config_path('chief-settings.php'),
         ], 'chief-config');
 
-        // Clear the target directory before publishing
-        if (is_dir(public_path('/chief'))) {
-            $this->app->make('files')->deleteDirectory(public_path('/chief'));
-        }
-
         $this->publishes([
             __DIR__.'/../../public/chief' => public_path('/chief'),
         ], 'chief-assets');
