@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\ReorderModels;
 
 trait WithReordering
@@ -19,9 +18,9 @@ trait WithReordering
         $this->isReordering = false;
     }
 
-    public function getReorderResults(): NestableTree
+    public function getReorderResults(): iterable
     {
-        return NestableTree::fromIterable($this->getResults());
+        return $this->getResults();
     }
 
     public function reorder(array $orderedIds)

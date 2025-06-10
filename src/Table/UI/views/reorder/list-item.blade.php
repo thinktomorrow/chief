@@ -1,5 +1,5 @@
 <div
-    x-sortable-item="{{ $item->id }}"
+    x-sortable-item="{{ $item->getKey() }}"
     @class([
         'border border-transparent',
         '[&.table-sort-ghost]:rounded-lg',
@@ -10,6 +10,7 @@
         '[&.table-sort-ghost]:shadow',
         '[&.table-sort-ghost]:shadow-primary-50',
         '[&.table-sort-ghost_[x-sortable]]:hidden',
+        '[&.table-sort-ghost_[data-slot=index]]:hidden',
         '[&.table-sort-drag>*]:opacity-50',
         '[&.table-sort-drag>*]:inline-block',
         '[&.table-sort-drag>*]:max-h-28',
@@ -17,6 +18,8 @@
         '[&.table-sort-drag>*]:rounded-md',
         '[&.table-sort-drag>*]:bg-white',
         '[&.table-sort-drag_[data-slot=fade]]:block',
+        '[&.table-sort-drag_[data-slot=indent-icon]]:hidden',
+        '[&.table-sort-drag_[data-slot=index]]:hidden',
     ])
 >
     <div class="relative">
@@ -26,8 +29,8 @@
         >
             <x-chief::icon.arrow-bend-down-right data-slot="indent-icon" class="text-grey-800 hidden size-5 shrink-0" />
 
-            <div class="flex items-center gap-1">
-                <p class="text-grey-400 font-medium">{{ $item->order + 1 }}.</p>
+            <div data-slot="index" class="flex items-center gap-1">
+                <p class="text-grey-400 font-medium">{{ $itemIndex + 1 }}.</p>
             </div>
 
             @foreach ($this->getColumns($item) as $column)
@@ -39,24 +42,26 @@
             @endforeach
         </div>
 
-        <div
-            x-sortable
-            x-sortable-group="{{ $sortableGroup }}"
-            x-sortable-ghost-class="table-sort-ghost"
-            x-sortable-drag-class="table-sort-drag"
-            class="nested-sortable [&_.nested-sortable]:ml-[28px] [&_[data-slot=indent-icon]]:block"
-        >
-            @foreach ($item->getChildNodes() as $_item)
-                @include(
-                    'chief-table::reorder.list-item',
-                    [
-                        'item' => $_item,
-                        'sortableGroup' => $sortableGroup,
-                        'indent' => ++$indent,
-                    ]
-                )
-            @endforeach
-        </div>
+        @if($item instanceof \Thinktomorrow\Vine\Node && count($item->getChildNodes()) > 0)
+            <div
+                x-sortable
+                x-sortable-group="{{ $sortableGroup }}"
+                x-sortable-ghost-class="table-sort-ghost"
+                x-sortable-drag-class="table-sort-drag"
+                class="nested-sortable [&_.nested-sortable]:ml-[28px] [&_[data-slot=indent-icon]]:block"
+            >
+                @foreach ($item->getChildNodes() as $itemIndex => $_item)
+                    @include(
+                        'chief-table::reorder.list-item',
+                        [
+                            'item' => $_item,
+                            'sortableGroup' => $sortableGroup,
+                            'indent' => ++$indent,
+                        ]
+                    )
+                @endforeach
+            </div>
+        @endif
 
         <div
             data-slot="fade"

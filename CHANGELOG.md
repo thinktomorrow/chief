@@ -7,6 +7,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 This release contains breaking changes regarding the Sortable logic!
 
+- Fixed: show scopedLocale in edit parent fragment even when no localized fields are present so fragments can be
+  previewed per locale.
 - Added: **⚠ BC break** Sortable models now require the `Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable`
   interface.
 - Changed: **⚠ BC break** Renamed `Thinktomorrow\Chief\Shared\Concerns\Sortable` trait to

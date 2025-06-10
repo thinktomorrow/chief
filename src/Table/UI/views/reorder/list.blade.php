@@ -48,7 +48,7 @@
             '' => $variant === 'transparent',
         ])
     >
-        @foreach ($results as $item)
+        @foreach ($results as $itemIndex => $item)
             @include(
                 'chief-table::reorder.list-item',
                 [
@@ -59,4 +59,6 @@
             )
         @endforeach
     </div>
+
+    @include('chief-table::livewire._partials.table-container-footer')
 </div>

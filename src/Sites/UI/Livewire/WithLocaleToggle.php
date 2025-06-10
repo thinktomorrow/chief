@@ -43,6 +43,11 @@ trait WithLocaleToggle
     {
         $fields = Fields::make($components)->all();
 
+        // If the fragment allows fragments, we always show the locale toggle
+        if ($this->fragment->allowsFragments) {
+            return true;
+        }
+
         foreach ($fields as $field) {
             if ($field->showsLocales()) {
                 return true;

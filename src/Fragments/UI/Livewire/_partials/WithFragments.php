@@ -145,7 +145,10 @@ trait WithFragments
     private function composeFragmentDtoInScopedLocale(Fragment $fragment): FragmentDto
     {
         $localeReference = app()->getLocale();
-        app()->setLocale($this->scopedLocale);
+
+        if ($this->scopedLocale) {
+            app()->setLocale($this->scopedLocale);
+        }
 
         $result = FragmentDto::fromFragment($fragment, $this->context, $this->getModel());
 
