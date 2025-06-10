@@ -25,6 +25,11 @@ class Column
         return $this->items;
     }
 
+    public function contains(\Closure $closure): bool
+    {
+        return collect($this->items)->contains($closure);
+    }
+
     public function removeItem(string $key): static
     {
         $this->items = collect($this->items)

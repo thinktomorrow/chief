@@ -9,7 +9,7 @@
     @foreach ($secondaryRowActions as $action)
         <x-chief-table::action.button
             :action="$action"
-            wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
+            wire:click="applyRowAction('{{ $action->getKey() }}', '{{ str_replace('\\', '\\\\', $item->modelReference()->get()) }}')"
             size="xs"
             variant="outline-white"
         />
@@ -18,7 +18,7 @@
     @foreach ($primaryRowActions as $action)
         <x-chief-table::action.button
             :action="$action"
-            wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
+            wire:click="applyRowAction('{{ $action->getKey() }}', '{{ str_replace('\\', '\\\\', $item->modelReference()->get()) }}')"
             size="xs"
             variant="grey"
         />
@@ -37,7 +37,7 @@
             <x-chief::dialog.dropdown id="{{ $dropdownId }}" placement="bottom-end">
                 @foreach ($tertiaryRowActions as $action)
                     <x-chief-table::action.dropdown.item
-                        wire:click="applyRowAction('{{ $action->getKey() }}', '{{ $item->modelReference()->getShort() }}')"
+                        wire:click="applyRowAction('{{ $action->getKey() }}', '{{ str_replace('\\', '\\\\', $item->modelReference()->get()) }}')"
                         :action="$action"
                         variant="grey"
                     />

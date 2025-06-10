@@ -9,6 +9,8 @@
         </div>
     @endif
 
+    @include('chief-table::livewire._partials.column-selection')
+
     @if (count($this->getSortersForView()) > 1)
         <x-chief::button x-on:click="$dispatch('open-dialog', { 'id': 'table-sorting' })" variant="outline-white">
             <x-chief::icon.sorting />
