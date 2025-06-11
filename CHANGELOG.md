@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.8] - 2025-06-11
+
 This release introduces the new sorting UI for the table indices and contains breaking changes regarding the Sortable
 logic!
 
