@@ -5,7 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
-This release contains breaking changes regarding the Sortable logic!
+This release introduces the new sorting UI for the table indices and contains breaking changes regarding the Sortable
+logic!
 
 - Fixed: show scopedLocale in edit parent fragment even when no localized fields are present so fragments can be
   previewed per locale.
@@ -15,6 +16,7 @@ This release contains breaking changes regarding the Sortable logic!
   `Thinktomorrow\Chief\Shared\Concerns\Sortable\SortableDefault`.
 - Changed: Actions::when() closure has now a first parameter of `component` instead of `model`, which is now second
   parameter.
+- Changed: Make password 'missing login' error less clear for security reasons.
 
 ## [0.10.7] - 2025-06-03
 
