@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Menu\App\Queries;
 
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Table\Actions\Action;
+use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
 use Thinktomorrow\Chief\Table\Actions\RowAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
@@ -16,7 +17,8 @@ class GetMenuTable
     {
         return Table::make()->query(function () use ($menuId) {
             return MenuItem::where('menu_id', $menuId);
-        })->returnResultsAsTree()
+        })->setReordering(MenuItem::class)
+            ->returnResultsAsTree()
             ->setTreeResource(new MenuItem)
             ->setTableReference(new Table\References\TableReference(static::class, 'getTable', [$menuId]))
             ->columns([
@@ -57,15 +59,12 @@ class GetMenuTable
                     ]),
             ])
             ->actions([
+                ReorderAction::makeDefault()->secondary(),
                 Action::make('create')
                     ->label('Menu item toevoegen')
+                    ->variant('blue')
                     ->prependIcon('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5"> <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" /> </svg>')
                     ->link(route('chief.back.menuitem.create', $menuId)),
-                Action::make('reorder')
-                    ->label('Herschikken')
-                    ->description('Hiermee kunt u de volgorde wijzigen.')
-                    ->prependIcon('<x-chief::icon.sorting />')
-                    ->link(route('chief.back.menus.reorder', $menuId)),
             ])
             ->rowActions([
                 RowAction::make('edit')

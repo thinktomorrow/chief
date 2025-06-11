@@ -6,7 +6,7 @@ return [
     'reset' => 'Jouw wachtwoord is aangepast.',
     'sent' => 'We hebben je de wachtwoord reset link toegestuurd.',
     'token' => 'Het ingevulde wachtwoord reset token is niet geldig.',
-    'user' => 'We kunnen geen gebruiker terugvinden met dit e-mail address.',
+    'user' => 'Als het e-mailadres bij ons bekend is, ontvang je binnenkort een e-mail met instructies om je wachtwoord te resetten.',
     'throttled' => 'Teveel gefaalde loginpogingen na elkaar. Gelieve even te wachten.',
 
 ];

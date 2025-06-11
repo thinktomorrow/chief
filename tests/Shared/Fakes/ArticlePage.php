@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Models\Page;
 use Thinktomorrow\Chief\Models\PageDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
-use Thinktomorrow\Chief\Shared\Concerns\Sortable;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\SortableDefault;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class ArticlePage extends Model implements Page
@@ -20,7 +20,7 @@ class ArticlePage extends Model implements Page
     use HasPeriodTrait;
     use PageDefaults;
     use SoftDeletes;
-    use Sortable;
+    use SortableDefault;
 
     const FILEFIELD_DISK_KEY = 'file-on-other-disk';
 

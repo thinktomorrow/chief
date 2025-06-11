@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Table\Table\Presets;
 
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
@@ -34,14 +35,15 @@ class PageTable extends Table
     {
         $resource = app(Registry::class)->resource($resourceKey);
         $modelClass = $resource::modelClassName();
+        $reflection = new \ReflectionClass($modelClass);
 
         $table = static::make()
             ->setTableReference(new TableReference(static::class, 'makeDefault', [$resourceKey]))
             ->resource($resourceKey)
             ->actions([
                 CreateModelAction::makeDefault($resourceKey)->primary(),
-                ...((new \ReflectionClass($modelClass))->hasMethod('scopeArchived') && $modelClass::archived()->count() > 0 ? [VisitArchiveAction::makeDefault($resourceKey)->tertiary()] : []),
-                ...((new \ReflectionClass($modelClass))->hasMethod('sortableAttribute') ? [ReorderAction::makeDefault($resourceKey)->secondary()] : []),
+                ...($reflection->hasMethod('scopeArchived') && $modelClass::archived()->count() > 0 ? [VisitArchiveAction::makeDefault($resourceKey)->tertiary()] : []),
+                ...($reflection->implementsInterface(Sortable::class) ? [ReorderAction::makeDefault()->secondary()] : []),
             ])
             ->bulkActions([
                 OnlineStateBulkAction::makeDefault($resourceKey),
@@ -55,7 +57,7 @@ class PageTable extends Table
                 DuplicateModelAction::makeDefault($resourceKey)->tertiary(),
             ])
             ->filters([
-                ...((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) ? [SiteFilter::makeDefault($resourceKey)->primary()] : []),
+                ...($reflection->implementsInterface(HasAllowedSites::class) ? [SiteFilter::makeDefault($resourceKey)->primary()] : []),
                 TitleFilter::makeDefault(),
                 OnlineStateFilter::makeDefault()->secondary(),
             ])
@@ -64,12 +66,9 @@ class PageTable extends Table
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
                 })->tease(54, '...'),
                 ColumnBadge::make('current_state')->pageStates()->label('Status'),
-                ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
-                ...(((new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
-                ...(((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class) && ! (new \ReflectionClass($modelClass))->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),
-                //                ColumnDate::make('updated_at')
-                //                    ->label('Aangepast')
-                //                    ->format('d/m/Y H:i'),
+                ...(($reflection->implementsInterface(HasAllowedSites::class) && $reflection->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
+                ...(($reflection->implementsInterface(HasAllowedSites::class) && ! $reflection->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
+                ...(($reflection->implementsInterface(Visitable::class) && ! $reflection->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),
             ])
             ->sorters([
                 Sort::make('title_asc')->label('Titel - A-Z')->query(function ($builder) {
@@ -83,12 +82,16 @@ class PageTable extends Table
                 }),
             ]);
 
-        if ((new \ReflectionClass($modelClass))->implementsInterface(Taggable::class)) {
+        if ($reflection->implementsInterface(Taggable::class)) {
             $table->tagPresets($resourceKey);
         }
 
-        if ((new \ReflectionClass($modelClass))->implementsInterface(Visitable::class)) {
+        if ($reflection->implementsInterface(Visitable::class)) {
             $table->visitablePresets($resourceKey);
+        }
+
+        if ($reflection->implementsInterface(Sortable::class)) {
+            $table->sortablePresets();
         }
 
         // Check if model has updated_at timestamp

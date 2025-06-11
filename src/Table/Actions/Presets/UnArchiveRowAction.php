@@ -29,7 +29,7 @@ class UnArchiveRowAction extends Action
                 return true;
             })
             ->notifyOnSuccess('Hersteld en opnieuw beschikbaar')->notifyOnFailure('Er is iets misgegaan bij het herstellen van dit item.')
-            ->when(function ($model) use ($stateKey, $transitionKey) {
+            ->when(function ($component, $model) use ($stateKey, $transitionKey) {
 
                 if (! $model instanceof StatefulContract) {
                     return false;

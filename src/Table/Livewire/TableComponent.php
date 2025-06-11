@@ -57,6 +57,9 @@ class TableComponent extends Component
         $this->resetTertiaryFilters();
         $this->applyDefaultSorters();
 
+        if ($table->isReorderingAllowed() && $table->isStartingWithReordering()) {
+            $this->startReordering();
+        }
         // active sorters - selected by user
         // default sorters - automatically active when no user selection
     }
@@ -105,7 +108,7 @@ class TableComponent extends Component
     public function render()
     {
         if ($this->isReordering) {
-            return view('chief-table::reorder.list', []);
+            return view('chief-table::reorder.list', ['variant' => $this->variant]);
         }
 
         return view('chief-table::livewire.table', []);

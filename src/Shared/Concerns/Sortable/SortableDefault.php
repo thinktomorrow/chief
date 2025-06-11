@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Shared\Concerns;
+namespace Thinktomorrow\Chief\Shared\Concerns\Sortable;
 
-trait Sortable
+trait SortableDefault
 {
     /**
      * Is this model sortable in the chief admin? If so, the index page will allow
@@ -23,8 +23,8 @@ trait Sortable
         return 'order';
     }
 
-    public function scopeSortedManually($query)
+    public function scopeSortedManually($query): void
     {
-        return $query->orderBy($this->sortableAttribute(), 'ASC');
+        $query->orderBy($this->sortableAttribute(), 'ASC');
     }
 }
