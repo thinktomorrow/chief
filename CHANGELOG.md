@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.9] - 2025-06-19
+
+- Fixed: On create model dialog, the file field disappeared when switching locale
+
 ## [0.10.8] - 2025-06-11
 
 This release introduces the new sorting UI for the table indices and contains breaking changes regarding the Sortable

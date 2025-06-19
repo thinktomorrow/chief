@@ -55,13 +55,11 @@
                 </x-chief::window>
 
             </div>
-        @else
+        @elseif(!$this->isAllowedToSelectSites())
             @foreach ($this->getFields() as $field)
                 {{ $field }}
             @endforeach
         @endif
-
-
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
