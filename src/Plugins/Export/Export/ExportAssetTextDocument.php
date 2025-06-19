@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\Plugins\Export\Export;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
-use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -18,8 +18,9 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Thinktomorrow\AssetLibrary\AssetContract;
+use Thinktomorrow\Chief\Plugins\Hive\Drivers\OpenAi\Prompts\OpenAiImageAltPrompt;
 
-class ExportAltDocument implements FromCollection, WithColumnFormatting, WithColumnWidths, WithDefaultStyles, WithDrawings, WithHeadings, WithMapping, WithStyles
+class ExportAssetTextDocument implements FromCollection, WithColumnFormatting, WithColumnWidths, WithDefaultStyles, WithHeadings, WithMapping, WithStyles
 {
     use Exportable;
 
@@ -32,12 +33,15 @@ class ExportAltDocument implements FromCollection, WithColumnFormatting, WithCol
     // Keep track of pending drawings to be added later
     private array $pendingDrawings;
 
-    public function __construct(Collection $models, array $locales)
+    private bool $hive;
+
+    public function __construct(Collection $models, array $locales, bool $hive = false)
     {
         $this->models = $models;
         $this->locales = $locales;
 
         $this->styleCollection = collect();
+        $this->hive = $hive;
     }
 
     public function collection()
@@ -55,25 +59,35 @@ class ExportAltDocument implements FromCollection, WithColumnFormatting, WithCol
         /** @var AssetContract $asset */
         $asset = $row;
 
-        $alts = $asset->getData('alt');
-
-        if (! $alts) {
-            $alts = [];
-        }
-
         $values = array_reduce(
             $this->locales,
             fn ($carry, $locale) => [...$carry, $asset->getData('alt.'.$locale)],
             []
         );
 
-        $this->pendingDrawings[] = $asset->getPath('thumb');
+        if ($this->hive) {
+            try {
+                $altTexts = app(OpenAiImageAltPrompt::class)->prompt([
+                    'asset_id' => $asset->id,
+                    'locales' => $this->locales,
+                ])->getAltTexts();
+
+                foreach ($altTexts as $locale => $altText) {
+                    $valueIndex = array_search($locale, $this->locales);
+                    $values[$valueIndex] = $altText;
+                }
+
+            } catch (\Exception $e) {
+                // If the OpenAI prompt fails, we can still export the asset without alt texts.
+                // Log the error or handle it as needed.
+                Log::error('Failed to generate alt text for asset ID '.$asset->id.': '.$e->getMessage());
+            }
+        }
 
         return [
             encrypt($asset->id),
-            '',
             $asset->getUrl(),
-            $asset->getFileName(),
+            $asset->getBaseName(),
             ...$values,
         ];
     }
@@ -82,42 +96,22 @@ class ExportAltDocument implements FromCollection, WithColumnFormatting, WithCol
     {
         $columns = array_reduce(
             $this->locales,
-            fn ($carry, $locale) => [...$carry, "{$locale} url", "{$locale} label", "{$locale} owner label"],
+            fn ($carry, $locale) => [...$carry, "{$locale} alt"],
             []
         );
 
         return [
             'ID',
             'Afbeelding',
-            'Link',
             'Bestandsnaam',
             ...$columns,
         ];
-    }
-
-    public function drawings()
-    {
-        return collect($this->pendingDrawings)->map(function ($imagePath, $index) {
-            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
-            $drawing->setPath($imagePath); // Assuming the URL is a valid path to the image
-            $drawing->setHeight(40);
-            $drawing->setWidth(40);
-            $drawing->setCoordinates('B'.$index + 1); // Adjust coordinates as needed
-
-            $drawing->setOffsetX(2);
-            $drawing->setOffsetY(2);
-
-            $drawing->setResizeProportional(true);
-
-            return $drawing;
-        })->all();
     }
 
     public function columnWidths(): array
     {
         return [
             'A' => 2,
-            'B' => 44,
         ];
     }
 

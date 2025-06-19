@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\Table\Table\Concerns\HasColumns;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasFilters;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasHeaders;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireComponent;
+use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireListeners;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasModelKeyName;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPagination;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasPresets;
@@ -38,6 +39,7 @@ class Table extends Component implements Htmlable
     use HasFilters;
     use HasHeaders;
     use HasLivewireComponent;
+    use HasLivewireListeners;
     use HasModelKeyName;
     use HasPagination;
     use HasPresets;

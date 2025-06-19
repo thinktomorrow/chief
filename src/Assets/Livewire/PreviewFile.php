@@ -18,6 +18,7 @@ use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\CannotInstantiateModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class PreviewFile implements Wireable
@@ -322,7 +323,11 @@ class PreviewFile implements Wireable
             ->get();
 
         foreach ($references as $reference) {
-            $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
+            try {
+                $model = ModelReference::make($reference->entity_type, $reference->entity_id)->instance();
+            } catch (CannotInstantiateModelReference $e) {
+                continue;
+            }
 
             if ($model instanceof \Thinktomorrow\Chief\Fragments\Models\FragmentModel) {
                 $ownerModels = app(ContextOwnerRepository::class)->getOwnersByFragment($model->id);
@@ -333,6 +338,7 @@ class PreviewFile implements Wireable
 
                 continue;
             }
+
             $this->owners[] = $this->createOwnerFields($model);
         }
     }

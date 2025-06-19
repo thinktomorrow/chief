@@ -11,6 +11,8 @@ use Thinktomorrow\Chief\Forms\Fields\Validation\ValidationParameters;
 
 trait InteractsWithForm
 {
+    use InteractsWithBasename;
+
     public $form = [];
 
     public $components = []; // The initial components + the generic ones of the Asset combined
@@ -114,14 +116,5 @@ trait InteractsWithForm
         $this->previewFile->fieldValues = array_merge($this->previewFile->fieldValues, $this->form);
 
         $this->form['basename'] = $this->previewFile->getBaseName();
-    }
-
-    private function addDefaultBasenameValidation(array $rules = [], array $messages = [], array $validationAttributes = []): array
-    {
-        $rules = array_merge($rules, ['form.basename' => ['required', 'min:1', 'max:200']]);
-        $messages = array_merge($messages, []);
-        $validationAttributes = array_merge($validationAttributes, ['form.basename' => 'bestandsnaam']);
-
-        return [$rules, $messages, $validationAttributes];
     }
 }

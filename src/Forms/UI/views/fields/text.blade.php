@@ -15,4 +15,8 @@
         :autofocus="$hasAutofocus()"
         :attributes="$attributes->merge($getCustomAttributes())"
     />
+
+    @if($isHiveEnabled())
+        @include('chief-hive::suggest', ['payload' => $getHivePayload($locale ?? null, $this->getId() ? $this : null)])
+    @endif
 </x-chief::form.input.prepend-append>

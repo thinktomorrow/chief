@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\Seo\App\Controllers;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Plugins\Seo\UI\Livewire\GetAltTable;
+use Thinktomorrow\Chief\Plugins\Seo\UI\Livewire\GetAssetsTable;
 
 class SeoController extends Controller
 {
@@ -18,12 +18,12 @@ class SeoController extends Controller
         ]);
     }
 
-    public function altIndex()
+    public function assetsIndex()
     {
         $this->authorize('update-page');
 
-        return view('chief-seo::alt.index', [
-            'table' => app(GetAltTable::class)->getTable(),
+        return view('chief-seo::assets.index', [
+            'table' => app(GetAssetsTable::class)->getTable(),
         ]);
     }
 }

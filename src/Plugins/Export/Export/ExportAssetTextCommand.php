@@ -6,11 +6,11 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
-class ExportAltCommand extends BaseCommand
+class ExportAssetTextCommand extends BaseCommand
 {
-    protected $signature = 'chief:export-alt';
+    protected $signature = 'chief:export-asset-text {--hive : AI generate any missing alt texts}';
 
-    protected $description = 'Export image alt texts';
+    protected $description = 'Export asset filename and image alt texts';
 
     public function __construct()
     {
@@ -26,7 +26,7 @@ class ExportAltCommand extends BaseCommand
             return $model->isImage();
         });
 
-        (new ExportAltDocument($models, ChiefSites::locales()))
+        (new ExportAssetTextDocument($models, ChiefSites::locales(), $this->option('hive')))
             ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-alt-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished export. File available at: storage/app/'.$filepath);

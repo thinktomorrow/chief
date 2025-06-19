@@ -5,6 +5,22 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+Introduces seo table for asset management, which allows you to easily manage filename and alt attributes of each asset.
+
+- Every Asset model should implement the `HasAlt` interface as well as the `ReferencesModel` to be able to use the seo
+  table.
+- The alt field definition should look like this:
+
+```php
+public function fields(): iterable
+    {
+        yield Text::make('alt')
+            ->locales()
+            ->label('Alt tekst')
+            ->value(fn ($model, $locale) => $model->getAlt($locale));
+    }
+```
+
 ## [0.10.8] - 2025-06-11
 
 This release introduces the new sorting UI for the table indices and contains breaking changes regarding the Sortable

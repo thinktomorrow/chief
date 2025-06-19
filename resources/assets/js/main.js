@@ -11,6 +11,7 @@ import multiselectDirective from './alpine-directives/multiselect';
 import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 import selectlist from './alpine-directives/selectlist';
 import tabs from './alpine-directives/tabs';
+import hiveAssistant from './alpine-directives/hive-assistant';
 
 /* Utilities */
 import initAnimatedToggle from './utilities/animated-toggle';
@@ -27,6 +28,7 @@ window.Alpine.data('dialog', dialog);
 window.Alpine.data('dropdown', dropdown);
 window.Alpine.data('selectlist', selectlist);
 window.Alpine.data('tabs', tabs);
+window.Alpine.data('hiveAssistant', hiveAssistant);
 window.Alpine.directive('multiselect', multiselectDirective);
 window.Alpine.directive('prevent-submit-on-enter', preventSubmitOnEnter);
 window.Alpine.directive('copy', copyDirective);
