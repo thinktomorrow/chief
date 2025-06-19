@@ -7,12 +7,15 @@ namespace Thinktomorrow\Chief\Forms\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCharacterCount;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPrependAppend;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasRedactorToolbar;
+use Thinktomorrow\Chief\Plugins\Hive\App\Field\HiveField;
+use Thinktomorrow\Chief\Plugins\Hive\App\Field\HiveFieldDefaults;
 
-class Text extends Component implements Field
+class Text extends Component implements Field, HiveField
 {
     use HasCharacterCount;
     use HasPrependAppend;
     use HasRedactorToolbar;
+    use HiveFieldDefaults;
 
     protected string $view = 'chief-form::fields.text';
 

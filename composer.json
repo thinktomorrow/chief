@@ -33,6 +33,7 @@
         "larastan/larastan": "^3.0",
         "maatwebsite/excel": "^3.1",
         "mockery/mockery": "^1.6",
+        "openai-php/client": "^0.13.0",
         "orchestra/testbench": "^9.9",
         "phpunit/phpunit": "^11.3",
         "spatie/opening-hours": "^2.13"
@@ -64,7 +65,8 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "allow-plugins": {
-            "composer/package-versions-deprecated": true
+            "composer/package-versions-deprecated": true,
+            "php-http/discovery": true
         }
     },
     "scripts": {

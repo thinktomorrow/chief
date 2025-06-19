@@ -5,9 +5,28 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## Seo asset table
+
+Introduces seo table for asset management, which allows you to easily manage filename and alt attributes of each asset.
+Every Asset model should implement the `HasAlt` interface as well as the `ReferencesModel` to be able to use the seo
+table.
+
+The alt field definition on an Asset class should look like this:
+
+```php
+public function fields(): iterable
+    {
+        yield Text::make('alt')
+            ->locales()
+            ->label('Alt tekst')
+            ->value(fn ($model, $locale) => $model->getAlt($locale));
+    }
+```
+
 - Fixed: On create fragment, the file field was not saved.
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
+- Added: asset alt and filename export / import
 - Added: Select list field
 - Added: Loading indicator on save buttons in sidebar dialog.
 - Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. Except repeat fields

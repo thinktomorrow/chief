@@ -8,8 +8,9 @@
         />
     </x-slot>
 
-    <livewire:chief-wire::table key="seo-alt-table" :table="$table" />
+    <livewire:chief-wire::table key="seo-assets-table" :table="$table" />
 
-    <livewire:chief-wire::edit-alt />
+    <livewire:chief-wire::file-edit parent-id="seo-asset" />
+    {{--    <livewire:chief-wire::edit-asset />--}}
 
 </x-chief::page.template>

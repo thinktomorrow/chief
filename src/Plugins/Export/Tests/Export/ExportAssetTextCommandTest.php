@@ -10,7 +10,7 @@ use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\Chief\Plugins\Export\Tests\TestCase;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
-class ExportAltCommandTest extends TestCase
+class ExportAssetTextCommandTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -44,15 +44,15 @@ class ExportAltCommandTest extends TestCase
             ],
         ]);
 
-        $this->artisan('chief:export-alt');
+        $this->artisan('chief:export-asset-text');
 
         $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-alt-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 
-        $this->assertEquals($asset->getUrl(), $sheet->getCell('B2')->getValue());
+        $this->assertEquals("=IMAGE('".$asset->getUrl()."')", $sheet->getCell('B2')->getValue());
         $this->assertEquals($asset->getUrl(), $sheet->getCell('C2')->getValue());
-        $this->assertEquals($asset->getFileName(), $sheet->getCell('D2')->getValue());
+        $this->assertEquals($asset->getBaseName(), $sheet->getCell('D2')->getValue());
         $this->assertEquals('alt nl', $sheet->getCell('E2')->getValue());
         $this->assertEquals('alt en', $sheet->getCell('F2')->getValue());
     }
@@ -63,15 +63,15 @@ class ExportAltCommandTest extends TestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->artisan('chief:export-alt');
+        $this->artisan('chief:export-asset-text');
 
         $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-alt-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 
-        $this->assertEquals($asset->getUrl(), $sheet->getCell('B2')->getValue());
+        $this->assertEquals("=IMAGE('".$asset->getUrl()."')", $sheet->getCell('B2')->getValue());
         $this->assertEquals($asset->getUrl(), $sheet->getCell('C2')->getValue());
-        $this->assertEquals($asset->getFileName(), $sheet->getCell('D2')->getValue());
+        $this->assertEquals($asset->getBaseName(), $sheet->getCell('D2')->getValue());
         $this->assertEquals(null, $sheet->getCell('E2')->getValue());
         $this->assertEquals(null, $sheet->getCell('F2')->getValue());
     }

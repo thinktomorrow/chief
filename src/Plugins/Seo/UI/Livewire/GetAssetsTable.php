@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Filters\SearchFilter;
 use Thinktomorrow\Chief\Table\Table;
 
-class GetAltTable
+class GetAssetsTable
 {
     public function getTable(): Table
     {
@@ -23,6 +23,7 @@ class GetAltTable
                 })->orderBy('created_at', 'desc');
         })
             ->setTableReference(new Table\References\TableReference(static::class, 'getTable'))
+            ->listeners(['assetUpdated-seo-asset' => 'requestRefresh'])
             ->columns([
                 // Get column image, filename and alt text (per locale) for each asset
                 ColumnImage::make('image')
@@ -54,7 +55,7 @@ class GetAltTable
                     ->link(route('chief.back.menuitem.create', 'ddd')),
             ])
             ->rowActions([
-                EditAltRowAction::makeDefault()
+                EditAssetRowAction::makeDefault()
                     ->iconEdit()
                     ->variant('grey'),
             ])

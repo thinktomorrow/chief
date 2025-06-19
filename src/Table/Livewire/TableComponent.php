@@ -51,6 +51,8 @@ class TableComponent extends Component
 
     public string $variant = 'card';
 
+    public array $customListeners = [];
+
     public function mount(Table $table)
     {
         $this->table = $table;
@@ -62,17 +64,20 @@ class TableComponent extends Component
         if ($table->isReorderingAllowed() && $table->isStartingWithReordering()) {
             $this->startReordering();
         }
+
+        // Any custom listeners
+        $this->customListeners = $table->getListeners();
         // active sorters - selected by user
         // default sorters - automatically active when no user selection
     }
 
     public function getListeners()
     {
-        return [
+        return array_merge([
             'dialogSaved-'.$this->getId() => 'onActionDialogSaved',
             'requestRefresh' => '$refresh',
             'scoped-to-locale' => 'onScopedToLocale',
-        ];
+        ], $this->customListeners);
     }
 
     public function onScopedToLocale($locale)
