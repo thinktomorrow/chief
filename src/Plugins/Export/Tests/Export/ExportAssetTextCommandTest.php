@@ -46,15 +46,14 @@ class ExportAssetTextCommandTest extends TestCase
 
         $this->artisan('chief:export-asset-text');
 
-        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-alt-'.date('Y-m-d').'.xlsx');
+        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-asset-text-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 
-        $this->assertEquals("=IMAGE('".$asset->getUrl()."')", $sheet->getCell('B2')->getValue());
-        $this->assertEquals($asset->getUrl(), $sheet->getCell('C2')->getValue());
-        $this->assertEquals($asset->getBaseName(), $sheet->getCell('D2')->getValue());
-        $this->assertEquals('alt nl', $sheet->getCell('E2')->getValue());
-        $this->assertEquals('alt en', $sheet->getCell('F2')->getValue());
+        $this->assertEquals($asset->getUrl(), $sheet->getCell('B2')->getValue());
+        $this->assertEquals($asset->getBaseName(), $sheet->getCell('C2')->getValue());
+        $this->assertEquals('alt nl', $sheet->getCell('D2')->getValue());
+        $this->assertEquals('alt en', $sheet->getCell('E2')->getValue());
     }
 
     public function test_it_can_export_empty_alt()
@@ -65,14 +64,13 @@ class ExportAssetTextCommandTest extends TestCase
 
         $this->artisan('chief:export-asset-text');
 
-        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-alt-'.date('Y-m-d').'.xlsx');
+        $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-asset-text-'.date('Y-m-d').'.xlsx');
 
         $sheet = IOFactory::load($filepath)->getActiveSheet();
 
-        $this->assertEquals("=IMAGE('".$asset->getUrl()."')", $sheet->getCell('B2')->getValue());
-        $this->assertEquals($asset->getUrl(), $sheet->getCell('C2')->getValue());
-        $this->assertEquals($asset->getBaseName(), $sheet->getCell('D2')->getValue());
+        $this->assertEquals($asset->getUrl(), $sheet->getCell('B2')->getValue());
+        $this->assertEquals($asset->getBaseName(), $sheet->getCell('C2')->getValue());
+        $this->assertEquals(null, $sheet->getCell('D2')->getValue());
         $this->assertEquals(null, $sheet->getCell('E2')->getValue());
-        $this->assertEquals(null, $sheet->getCell('F2')->getValue());
     }
 }
