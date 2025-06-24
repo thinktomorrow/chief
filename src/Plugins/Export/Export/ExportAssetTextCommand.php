@@ -27,7 +27,7 @@ class ExportAssetTextCommand extends BaseCommand
         });
 
         (new ExportAssetTextDocument($models, ChiefSites::locales(), $this->option('hive')))
-            ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-alt-'.date('Y-m-d').'.xlsx');
+            ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-asset-text-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished export. File available at: storage/app/'.$filepath);
     }
