@@ -74,7 +74,6 @@
         x-sortable
         x-sortable-ghost-class="select-list-ghost"
         x-sortable-drag-class="select-list-drag"
-        x-show="$data.selectedOptions.length > 0"
         x-on:end.stop="
             () => {
                 $data.sortSelection($event.target.sortable.toArray())

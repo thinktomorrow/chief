@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
+use Thinktomorrow\Chief\Forms\Fields\SelectList;
 
 trait InteractsWithFields
 {
@@ -36,7 +37,7 @@ trait InteractsWithFields
                     ? $this->composeEmptyRepeatValue($component, $locale)
                     : $component->getValue($locale);
 
-                if (! $value && ($component instanceof Checkbox)) {
+                if (! $value && ($component instanceof Checkbox || $component instanceof SelectList)) {
                     $value = [];
                 }
 
@@ -47,7 +48,7 @@ trait InteractsWithFields
                 ? $this->composeEmptyRepeatValue($component)
                 : $component->getValue();
 
-            if (! $value && ($component instanceof Checkbox)) {
+            if (! $value && ($component instanceof Checkbox || $component instanceof SelectList)) {
                 $value = [];
             }
 

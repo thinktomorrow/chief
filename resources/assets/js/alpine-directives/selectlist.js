@@ -1,9 +1,9 @@
 const Selectlist = (config) => ({
     // Set the selection either if we are in a livewire form based on the given
     // form property value or else on the passed selection
-    selection: config.selection,
-    options: config.options,
-    grouped: config.grouped,
+    selection: config.selection || [],
+    options: config.options || [],
+    grouped: config.grouped || false,
     showingSelectBox: false,
     searchTerm: '',
     get filteredOptions() {
@@ -26,7 +26,7 @@ const Selectlist = (config) => ({
         this.$nextTick(() => {
             this.updateSelectOptions();
 
-            if (this.selection.length === 0) {
+            if (!this.selection || this.selection.length === 0) {
                 this.showSelectBox();
             } else {
                 this.hideSelectBox();
