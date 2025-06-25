@@ -12,21 +12,21 @@ const Selectlist = (config) => ({
                 const newGroup = { ...group };
 
                 newGroup.choices = group.choices.filter(
-                    (option) => !this.selection.some((value) => option.value.toString() === value.toString())
+                    (option) => !this.rawSelection.some((value) => option.value.toString() === value.toString())
                 );
                 return newGroup;
             });
         }
 
         return this.options.filter(
-            (option) => !this.selection.some((value) => option.value.toString() === value.toString())
+            (option) => !this.rawSelection.some((value) => option.value.toString() === value.toString())
         );
     },
     init() {
         this.$nextTick(() => {
             this.updateSelectOptions();
 
-            if (!this.selection || this.selection.length === 0) {
+            if (!this.rawSelection || this.rawSelection.length === 0) {
                 this.showSelectBox();
             } else {
                 this.hideSelectBox();
@@ -36,8 +36,16 @@ const Selectlist = (config) => ({
             this.preserveSearchTerm();
         });
     },
+    // With wire:model, the selection can be null or undefined, so we need to handle that case.
+    get rawSelection() {
+        if (!this.selection) {
+            return [];
+        }
+
+        return this.selection;
+    },
     get selectedOptions() {
-        return this.selection.map((value) => this.findOptionByValue(value));
+        return this.rawSelection.map((value) => this.findOptionByValue(value));
     },
     findOptionByValue(value) {
         if (this.grouped) {
@@ -55,15 +63,15 @@ const Selectlist = (config) => ({
         return this.options.find((option) => option.value.toString() === value.toString());
     },
     addItem() {
-        this.selection = [...this.selection, ...this.$el.choices.getValue(true)];
+        this.selection = [...this.rawSelection, ...this.$el.choices.getValue(true)];
         this.onSelectionChange();
     },
     removeItem(value) {
-        const index = this.selection.findIndex((val) => val.toString() === value.toString());
+        const index = this.rawSelection.findIndex((val) => val.toString() === value.toString());
 
         if (index === -1) return;
 
-        this.selection.splice(index, 1);
+        this.rawSelection.splice(index, 1);
         this.onSelectionChange();
     },
     sortSelection(sortedSelection) {
@@ -75,7 +83,7 @@ const Selectlist = (config) => ({
         this.$dispatch('select-list-change');
 
         // Notify wired model
-        this.$dispatch('input', this.selection);
+        this.$dispatch('input', this.rawSelection);
 
         this.updateSelectOptions();
     },
@@ -92,7 +100,7 @@ const Selectlist = (config) => ({
         this.showingSelectBox = true;
     },
     hideSelectBox() {
-        if (this.selection.length > 0) {
+        if (this.rawSelection.length > 0) {
             this.$el.choices.containerOuter.element.classList.add('hidden');
             this.showingSelectBox = false;
         }

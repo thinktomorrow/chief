@@ -166,4 +166,91 @@ describe('Selectlist', () => {
         expect(instance.$dispatch).toHaveBeenCalledWith('select-list-change');
         expect(instance.$dispatch).toHaveBeenCalledWith('input', []);
     });
+
+    it('calls showSelectBox in init if selection is empty', () => {
+        instance.showSelectBox = jest.fn();
+        instance.hideSelectBox = jest.fn();
+        instance.hideSelectBoxWhenUnfocused = jest.fn();
+        instance.preserveSearchTerm = jest.fn();
+        instance.selection = [];
+
+        instance.init();
+
+        expect(instance.showSelectBox).toHaveBeenCalled();
+        expect(instance.hideSelectBox).not.toHaveBeenCalled();
+    });
+
+    it('calls hideSelectBox in init if selection is not empty', () => {
+        instance.showSelectBox = jest.fn();
+        instance.hideSelectBox = jest.fn();
+        instance.hideSelectBoxWhenUnfocused = jest.fn();
+        instance.preserveSearchTerm = jest.fn();
+        instance.selection = [1];
+
+        instance.init();
+
+        expect(instance.hideSelectBox).toHaveBeenCalled();
+        expect(instance.showSelectBox).not.toHaveBeenCalled();
+    });
+
+    it('returns true for allowSelectBox when options remain', () => {
+        instance.selection = [1];
+        expect(instance.allowSelectBox).toBe(true);
+    });
+
+    it('returns false for allowSelectBox when all options are selected', () => {
+        instance.selection = [1, 2];
+        expect(instance.allowSelectBox).toBe(false);
+    });
+
+    it('finds the option by value in ungrouped options', () => {
+        const option = instance.findOptionByValue(2);
+        expect(option).toEqual({ value: 2, label: 'Option 2' });
+    });
+
+    it('finds the option by value in grouped options', () => {
+        config.grouped = true;
+        config.options = [
+            {
+                group: 'Group 1',
+                choices: [{ value: 1, label: 'Option 1' }],
+            },
+            {
+                group: 'Group 2',
+                choices: [{ value: 2, label: 'Option 2' }],
+            },
+        ];
+        instance = Selectlist(config);
+
+        const option = instance.findOptionByValue(2);
+        expect(option).toEqual({ value: 2, label: 'Option 2' });
+    });
+
+    it('returns correct selectedOptions', () => {
+        instance.selection = [1];
+        expect(instance.selectedOptions).toEqual([{ value: 1, label: 'Option 1' }]);
+    });
+
+    it('updates the select options using filtered options', () => {
+        instance.selection = [1];
+        instance.updateSelectOptions();
+
+        expect(mockChoices.clearStore).toHaveBeenCalled();
+        expect(mockChoices.setChoices).toHaveBeenCalledWith([{ value: 2, label: 'Option 2' }]);
+    });
+
+    it('preserves search term after addItem event', (done) => {
+        instance.searchTerm = 'zoek';
+
+        instance.forceSearch = jest.fn();
+        instance.preserveSearchTerm();
+
+        const addItemEvent = new Event('addItem');
+        instance.$el.dispatchEvent(addItemEvent);
+
+        setTimeout(() => {
+            expect(instance.forceSearch).toHaveBeenCalledWith('zoek');
+            done();
+        }, 0);
+    });
 });
