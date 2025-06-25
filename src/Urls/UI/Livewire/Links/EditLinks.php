@@ -98,7 +98,10 @@ class EditLinks extends Component
             }
 
             if ($urlRecordExists) {
-                app(UrlApplication::class)->update(new UpdateUrl($link->url->id, $values['slug'], $values['status']));
+
+                $allowHomepageSlug = HomepageSlug::is($link->url->slug);
+
+                app(UrlApplication::class)->update(new UpdateUrl($link->url->id, $values['slug'], $values['status'], true, $allowHomepageSlug));
 
                 continue;
             }
