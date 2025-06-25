@@ -42,7 +42,7 @@
             @endforeach
         </div>
 
-        @if($item instanceof \Thinktomorrow\Vine\Node && count($item->getChildNodes()) > 0)
+        @if($this->isTreeReorderingAllowed() && $item instanceof \Thinktomorrow\Vine\Node)
             <div
                 x-sortable
                 x-sortable-group="{{ $sortableGroup }}"

@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Reordering tree items in table showed wrong results.
+
 ## [0.10.9] - 2025-06-19
 
 - Fixed: On create model dialog, the file field disappeared when switching locale
