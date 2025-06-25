@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: On create fragment, the file field was not saved.
 - Fixed: Reordering tree items in table showed wrong results.
+- Added: Select list field
 
 ## [0.10.9] - 2025-06-19
 
