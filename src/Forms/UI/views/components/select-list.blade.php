@@ -37,11 +37,11 @@
     x-cloak
     wire:ignore
     x-data="selectlist({
-                options: @json($options),
-                selection: @json($selection),
-                multiple: @json($multiple),
-                grouped: @json($grouped),
-            })"
+        options: {{ Js::from($options) }},
+        selection: {{ Js::from($selection) }},
+        multiple: {{ Js::from($multiple) }},
+        grouped: {{ Js::from($grouped) }},
+    })"
     {{-- Easily bind data from your Livewire component with wire:model to the "selection" inside this Alpine component --}}
     x-modelable="selection"
     x-multiselect="{
