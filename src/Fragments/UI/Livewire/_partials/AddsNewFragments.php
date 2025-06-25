@@ -63,11 +63,13 @@ trait AddsNewFragments
 
     public function save()
     {
+        $form = $this->prepareFormDataForSubmission();
+
         // Validation is done via create fragment command
         $fragmentId = app(CreateFragment::class)->handle(
             $this->fragmentKey,
             $this->context->allowedSites,
-            $this->form,
+            $form,
             [],
         );
 
