@@ -9,6 +9,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
 - Added: Select list field
+- Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. This was meanly for
+  support of nested repeat fields, which are no longer supported.
 
 ## [0.10.9] - 2025-06-19
 
