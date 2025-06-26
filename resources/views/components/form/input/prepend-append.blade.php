@@ -3,7 +3,7 @@
     'append' => null,
 ])
 
-<div data-slot="control" class="flex">
+<div {{ $attributes->merge(['data-slot' => 'control'])->class('flex') }}>
     @if ($prepend)
         <div
             @class([

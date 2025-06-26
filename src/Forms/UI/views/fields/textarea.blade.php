@@ -3,7 +3,7 @@
 @endphp
 
 <x-chief::form.input.textarea
-    wire:model.blur="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+    wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
     v-pre
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"

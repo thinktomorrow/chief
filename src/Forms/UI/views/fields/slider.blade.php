@@ -3,7 +3,7 @@
 @endphp
 
 <x-chief::form.input.range
-    wire:model.change="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+    wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"
     placeholder="{{ $getPlaceholder($locale ?? null) }}"

@@ -3,7 +3,7 @@
 @endphp
 
 <x-chief::multiselect
-    wire:model.change="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+    wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
     name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
     :options="$getMultiSelectFieldOptions()"
     :multiple="$allowMultiple()"
