@@ -7,7 +7,7 @@
         @php
             $value = $option['value'];
             $label = $option['label'];
-            $id = $getElementId($locale ?? null) . '_' . $value;
+            $id = \Illuminate\Support\Str::random();
         @endphp
 
         <label wire:key="{{ $id }}" for="{{ $id }}" class="flex items-start gap-2">
