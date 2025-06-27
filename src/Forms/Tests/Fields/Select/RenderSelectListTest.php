@@ -18,7 +18,7 @@ class RenderSelectListTest extends ChiefTestCase
     public function test_it_can_render_the_field_view()
     {
         $component = SelectList::make('xxx');
-        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
+        $this->assertStringContainsString('wire:model="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_the_localized_field_view()
@@ -26,8 +26,8 @@ class RenderSelectListTest extends ChiefTestCase
         $component = SelectList::make('xxx')
             ->setFieldNameTemplate(':name.:locale')
             ->locales(['nl', 'en']);
-        $this->assertStringContainsString('wire:model.change="form.xxx.nl"', $component->toHtml());
-        $this->assertStringContainsString('wire:model.change="form.xxx.en"', $component->toHtml());
+        $this->assertStringContainsString('wire:model="form.xxx.nl"', $component->toHtml());
+        $this->assertStringContainsString('wire:model="form.xxx.en"', $component->toHtml());
     }
 
     public function test_it_can_render_field_window()
@@ -37,7 +37,7 @@ class RenderSelectListTest extends ChiefTestCase
             ->value('foobar');
 
         $this->assertStringContainsString('foobar', $component->renderPreview()->render());
-        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_pairs()
@@ -48,7 +48,7 @@ class RenderSelectListTest extends ChiefTestCase
             ['value' => 'three', 'label' => 'drie'],
             ['value' => 'four', 'label' => 'vier'],
         ]);
-        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
+        $this->assertStringContainsString('wire:model="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_pairs_window()
@@ -63,7 +63,7 @@ class RenderSelectListTest extends ChiefTestCase
             ->value('two');
 
         $this->assertStringContainsString('twee', $component->renderPreview()->render());
-        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_closure_as_option()
@@ -79,7 +79,7 @@ class RenderSelectListTest extends ChiefTestCase
             })->value('two');
 
         $this->assertStringContainsString('twee', $component->renderPreview()->render());
-        $this->assertStringNotContainsString('wire:model.change="form.xxx"', $component->renderPreview()->render());
+        $this->assertStringNotContainsString('wire:model="form.xxx"', $component->renderPreview()->render());
     }
 
     public function test_it_can_render_grouped_options_field()
@@ -97,7 +97,7 @@ class RenderSelectListTest extends ChiefTestCase
             ->value('twee');
 
         $this->assertStringContainsString('twee', $component->toHtml());
-        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
+        $this->assertStringContainsString('wire:model="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_grouped_options_window()
@@ -155,7 +155,7 @@ class RenderSelectListTest extends ChiefTestCase
 
         $this->assertStringContainsString('twee', $component->toHtml());
         $this->assertStringContainsString('drie', $component->toHtml());
-        $this->assertStringContainsString('wire:model.change="form.xxx"', $component->toHtml());
+        $this->assertStringContainsString('wire:model="form.xxx"', $component->toHtml());
     }
 
     public function test_it_can_render_multiple_grouped_options_window()
