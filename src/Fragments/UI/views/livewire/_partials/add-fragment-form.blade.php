@@ -20,7 +20,11 @@
 
 <x-slot name="footer">
     <x-chief::dialog.drawer.footer>
-        <x-chief::button wire:click="save" variant="blue" type="button">Bewaren</x-chief::button>
+        <x-chief::button wire:click="save" wire:loading.attr="disabled" variant="blue" type="button">Bewaren
+            <div wire:loading.delay class="shrink-0">
+                <x-chief::icon.loading class="size-4 shrink-0 animate-spin" />
+            </div>
+        </x-chief::button>
         <x-chief::button wire:click="$set('showCreate', false)" type="button">Annuleer</x-chief::button>
     </x-chief::dialog.drawer.footer>
 </x-slot>
