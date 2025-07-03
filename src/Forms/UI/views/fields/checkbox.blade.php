@@ -1,5 +1,6 @@
 @php
-    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+    $modelBindingType = $getWireModelType() == 'defer' ? 'wire:model' : 'wire:model.' . $getWireModelType();
+    $modelBinding = [$modelBindingType => Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName::get($getName($locale ?? null))];
 @endphp
 
 <div data-slot="control" class="space-y-2">
@@ -12,13 +13,14 @@
 
         <label wire:key="{{ $id }}" for="{{ $id }}" class="flex items-start gap-2">
             <x-chief::form.input.checkbox
-                wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
                 id="{{ $id }}"
                 name="{{ $getName($locale ?? null) . '[]' }}"
                 value="{{ $value }}"
                 :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
                 class="{{ $optedForToggleDisplay() ? 'appearance-none hidden' : null }}"
-                :attributes="$attributes->merge($getCustomAttributes())"
+                :attributes="$attributes
+                    ->merge($getCustomAttributes())
+                    ->merge($modelBinding)"
             />
 
             @if ($optedForToggleDisplay())

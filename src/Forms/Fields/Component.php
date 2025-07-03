@@ -30,6 +30,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasWireModelType;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameDefaults;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedFieldDefaults;
@@ -67,6 +68,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasValidation;
     use HasValue;
     use HasView;
+    use HasWireModelType;
     use LocalizedFieldDefaults;
     use WithTags;
     use WithWireableFieldDefaults;
@@ -165,6 +167,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             ...(isset($this->previewView) ? ['previewView' => $this->previewView] : []),
             ...(isset($this->useValueFallback) ? ['useValueFallback' => $this->useValueFallback] : []),
             ...(isset($this->showAsToggle) ? ['showAsToggle' => $this->showAsToggle] : []),
+            ...(isset($this->wireModelType) ? ['wireModelType' => $this->wireModelType] : []),
 
         ];
     }

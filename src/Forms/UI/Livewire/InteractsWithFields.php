@@ -37,6 +37,7 @@ trait InteractsWithFields
                     ? $this->composeEmptyRepeatValue($component, $locale)
                     : $component->getValue($locale);
 
+                // TODO: find better way to set default empty value... maybe a method on the component itself?
                 if (! $value && ($component instanceof Checkbox || $component instanceof SelectList)) {
                     $value = [];
                 }
@@ -48,6 +49,7 @@ trait InteractsWithFields
                 ? $this->composeEmptyRepeatValue($component)
                 : $component->getValue();
 
+            // TODO: find better way to set default empty value... maybe a method on the component itself?
             if (! $value && ($component instanceof Checkbox || $component instanceof SelectList)) {
                 $value = [];
             }
@@ -56,13 +58,24 @@ trait InteractsWithFields
         }
     }
 
-    private function composeEmptyRepeatValue(Repeat $component, ?string $locale = null): array
+    private function composeEmptyRepeatValue(HasComponents $component, ?string $locale = null): array
     {
         $emptyValue = [[]];
 
         foreach ($component->getComponents() as $nestedComponent) {
+
             if ($nestedComponent instanceof Repeat) {
-                $emptyValue[0][$nestedComponent->getName()] = $this->composeEmptyRepeatValue($nestedComponent, $locale);
+                throw new \LogicException('Cannot compose nested Repeat component.');
+            }
+
+            if ($nestedComponent instanceof HasComponents) {
+                // Kinda quirky, but it gets the job done.
+                $emptyValue[0] = array_merge($emptyValue[0], $this->composeEmptyRepeatValue($nestedComponent, $locale)[0]);
+            }
+
+            // TODO: find better way to set default empty value... maybe a method on the component itself?
+            if ($nestedComponent instanceof Checkbox || $nestedComponent instanceof SelectList) {
+                $emptyValue[0][$nestedComponent->getName()] = [];
             }
         }
 

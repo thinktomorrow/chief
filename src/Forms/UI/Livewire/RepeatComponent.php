@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Forms\Fields\Repeat;
 class RepeatComponent extends Component
 {
     use HasForm;
+    use InteractsWithFields;
 
     public Repeat $field;
 
@@ -54,6 +55,7 @@ class RepeatComponent extends Component
         }
 
         $component->setFieldNameTemplate($index.'.:name.:locale');
+        $component->enableWireModelLive();
     }
 
     public function addSection(): void

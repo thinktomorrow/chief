@@ -1,13 +1,14 @@
 @php
-    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+    $modelBindingType = $getWireModelType() == 'defer' ? 'wire:model' : 'wire:model.' . $getWireModelType();
+    $modelBinding = [$modelBindingType => Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName::get($getName($locale ?? null))];
 @endphp
 
 <x-chief::form.input.prepend-append
+    wire:ignore
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
     <x-chief::form.input.time
-        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
         placeholder="{{ $getPlaceholder($locale ?? null) }}"
@@ -16,6 +17,8 @@
         max="{{ $getMax() ?? null }}"
         step="{{ $getStep() ?? null }}"
         :autofocus="$hasAutofocus()"
-        :attributes="$attributes->merge($getCustomAttributes())"
+        :attributes="$attributes
+            ->merge($getCustomAttributes())
+            ->merge($modelBinding)"
     />
 </x-chief::form.input.prepend-append>

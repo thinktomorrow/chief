@@ -1,12 +1,15 @@
 @php
-    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+    $modelBindingType = $getWireModelType() == 'defer' ? 'wire:model' : 'wire:model.' . $getWireModelType();
+    $modelBinding = [$modelBindingType => Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName::get($getName($locale ?? null))];
 @endphp
 
 <x-chief::form.input.select
-    wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) . ($allowMultiple() ? '[]' : '') }}"
     :multiple="$allowMultiple()"
+    :attributes="$attributes
+            ->merge($getCustomAttributes())
+            ->merge($modelBinding)"
 >
     <option value="">---</option>
 
