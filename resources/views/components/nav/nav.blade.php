@@ -49,7 +49,7 @@
             {{ $slot }}
         @endif
     </x-chief::nav.item>
-@elseif ($items->count() > 0)
+@elseif (isset($append) || $items->count() > 0)
     @if ($title)
         <div class="mb-2 mt-6 px-2">
             <span class="body text-xs text-grey-500">
