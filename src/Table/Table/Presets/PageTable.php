@@ -64,8 +64,9 @@ class PageTable extends Table
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) use ($resourceKey) {
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
-                })->tease(54, '...'),
-                ColumnBadge::make('current_state')->pageStates()->label('Status'),
+                })->disallowColumnSelection()
+                    ->tease(54, '...'),
+                ColumnBadge::make('current_state')->pageStates()->label('Status')->columnNotSelectedByDefault(),
                 ...(($reflection->implementsInterface(HasAllowedSites::class) && $reflection->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
                 ...(($reflection->implementsInterface(HasAllowedSites::class) && ! $reflection->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
                 ...(($reflection->implementsInterface(Visitable::class) && ! $reflection->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),

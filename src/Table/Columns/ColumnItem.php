@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasColumnSelection;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasItemMapping;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasItems;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
@@ -28,6 +29,7 @@ use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
 abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
 {
     use HasColumnName;
+    use HasColumnSelection;
     use HasComponentRendering;
     use HasCustomAttributes;
     use HasDefault;

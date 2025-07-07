@@ -50,4 +50,15 @@ class Column
 
         return $this;
     }
+
+    public function isColumnSelectionAllowed(): bool
+    {
+        foreach ($this->items as $item) {
+            if (! $item->isColumnSelectionAllowed()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

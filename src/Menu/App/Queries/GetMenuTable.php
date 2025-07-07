@@ -24,6 +24,7 @@ class GetMenuTable
             ->columns([
                 ColumnText::make('label')
                     ->label('Label')
+                    ->disallowColumnSelection()
                     ->items(function ($model) {
                         return $model->getLabel();
                     })->link(function ($model) {

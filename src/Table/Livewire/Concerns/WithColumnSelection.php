@@ -11,7 +11,9 @@ trait WithColumnSelection
     {
         $this->columnSelection = session()->get(
             $this->getColumnSelectionSessionKey(),
-            array_keys($this->getOptionsForColumnSelection())
+            collect($this->getOptionsForColumnSelection())
+                ->filter(fn ($columnSelection) => $columnSelection['selected_by_default'] ?? true)
+                ->pluck('key')->toArray(),
         );
     }
 
@@ -27,7 +29,7 @@ trait WithColumnSelection
 
     private function getColumnSelectionSessionKey(): string
     {
-        return 'table.column.selection.'.$this->tableReference->toUniqueString();
+        return 'table.column.selection'.$this->tableReference->toUniqueString();
     }
 
     public function getColumnSelection(): array
@@ -39,7 +41,6 @@ trait WithColumnSelection
     {
         // Of all columns, key is the first column item key, value is the header label
         $columns = $this->getTable()->getColumns();
-
         $options = [];
 
         foreach ($columns as $column) {
@@ -48,7 +49,12 @@ trait WithColumnSelection
                 continue;
             }
 
-            $options[$firstItem->getKey()] = $firstItem->getLabel();
+            $options[] = [
+                'key' => $firstItem->getKey(),
+                'label' => $firstItem->getLabel(),
+                'disabled' => ! $firstItem->isColumnSelectionAllowed(),
+                'selected_by_default' => $firstItem->isColumnSelectedByDefault(),
+            ];
         }
 
         return $options;
