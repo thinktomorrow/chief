@@ -27,6 +27,7 @@ public function fields(): iterable
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
 - Added: asset alt and filename export / import
+- Added: Table column selection
 - Added: Select list field
 - Added: Loading indicator on save buttons in sidebar dialog.
 - Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. Except repeat fields
