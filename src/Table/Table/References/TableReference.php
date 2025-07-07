@@ -68,4 +68,9 @@ class TableReference implements Wireable
     {
         return $this->resourceClass.'::'.$this->tableKey;
     }
+
+    public function toUniqueString(): string
+    {
+        return $this->resourceClass.'::'.$this->tableKey.'?params='.implode('|', $this->parameters);
+    }
 }

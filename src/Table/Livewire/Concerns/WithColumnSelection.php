@@ -27,7 +27,7 @@ trait WithColumnSelection
 
     private function getColumnSelectionSessionKey(): string
     {
-        return 'table.column.selection.'.$this->tableReference->__toString();
+        return 'table.column.selection.'.$this->tableReference->toUniqueString();
     }
 
     public function getColumnSelection(): array
