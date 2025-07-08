@@ -30,6 +30,7 @@ public function fields(): iterable
 - Added: Table column selection
 - Added: Select list field
 - Added: Loading indicator on save buttons in sidebar dialog.
+- Added: WIP version for hive AI integration
 - Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. Except repeat fields
   are still live. This was meanly for
   support of nested repeat fields, which are no longer supported.

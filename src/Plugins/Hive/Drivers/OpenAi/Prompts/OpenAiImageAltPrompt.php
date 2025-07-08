@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Plugins\Hive\App\Prompts\HivePrompt;
 use Thinktomorrow\Chief\Plugins\Hive\App\Prompts\Presets\HivePromptDefaults;
 use Thinktomorrow\Chief\Plugins\Hive\Drivers\OpenAiDriver;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class OpenAiImageAltPrompt implements HivePrompt
 {
@@ -47,8 +48,8 @@ class OpenAiImageAltPrompt implements HivePrompt
             'messages' => [
                 ['role' => 'system', 'content' => 'Je bent een seo assistent die alt-teksten genereert voor afbeeldingen. Output als JSON object met elke locale als key. Hier is een beetje context over de site waarin de afbeelding gebruikt wordt: '.$projectContext],
                 ['role' => 'user', 'content' => [
-                    //                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst. Dit voor de volgende locales: '.implode(',', ChiefSites::locales())],
-                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst. Geef me drie voorstellen die verschillen qua creativiteit.'],
+                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst. Dit voor de volgende locales: '.implode(',', ChiefSites::locales())],
+                    //                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst. Geef me drie voorstellen die verschillen qua creativiteit.'],
                     ['type' => 'image_url', 'image_url' => [
                         'url' => 'data:image/jpeg;base64,'.$imageData,
                     ]],
@@ -64,7 +65,13 @@ class OpenAiImageAltPrompt implements HivePrompt
             throw new \Exception('No content returned from OpenAI for asset '.$asset->id);
         }
 
-        $this->altTexts = json_decode($content, true);
+        $altTexts = json_decode($content, true);
+
+        if (! $altTexts || ! is_array($altTexts)) {
+            throw new \Exception('Invalid JSON returned from OpenAI for asset '.$asset->id.': '.$content);
+        }
+
+        $this->altTexts = $altTexts;
 
         return $this;
     }
