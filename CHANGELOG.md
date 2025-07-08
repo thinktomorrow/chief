@@ -5,6 +5,18 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+### Overview
+
+- Introduces column selection UI in tables and backend support via new Livewire concerns (WithColumns,
+  WithColumnSelection).
+- Adds a Chief SEO plugin: Livewire tables, controllers, routes, Blade views, and console commands to export/import
+  asset
+  filenames and alt texts.
+- Integrates a Hive AI plugin: Alpine directives, service providers, prompts, and form field enhancements for AI-powered
+  text suggestions.
+
+### Changes
+
 - Fixed: On create fragment, the file field was not saved.
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
