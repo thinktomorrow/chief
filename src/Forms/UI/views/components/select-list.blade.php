@@ -69,7 +69,7 @@
     }"
     {{ $attributes->merge(['data-slot' => 'control'])->class(['space-y-2']) }}
 >
-    <ol
+    <div
         x-sortable
         x-sortable-ghost-class="select-list-ghost"
         x-sortable-drag-class="select-list-drag"
@@ -85,7 +85,15 @@
                 x-sortable-handle
                 x-bind:x-sortable-item="option.value"
                 size="base"
-                @class(['inline-flex items-start gap-1', '[&.select-list-ghost]:opacity-25', '[&.select-list-drag]:opacity-90'])
+                @class([
+                    'inline-flex items-start gap-1 border border-transparent cursor-grab',
+                    '[&.select-list-ghost]:border-dashed',
+                    '[&.select-list-ghost]:border-primary-500',
+                    '[&.select-list-ghost]:bg-primary-50',
+                    '[&.select-list-ghost]:shadow',
+                    '[&.select-list-ghost]:shadow-primary-50',
+                    '[&.select-list-drag]:opacity-50',
+                ])
             >
                 <span x-html="option.label" class="grow"></span>
 
@@ -99,19 +107,13 @@
             type="button"
             x-show="$data.allowSelectBox && !$data.showingSelectBox"
             x-on:click="$data.showSelectBox()"
-            x-transition:enter="transition duration-150 ease-out"
-            x-transition:enter-start="scale-0 opacity-0"
-            x-transition:enter-end="scale-100 opacity-100"
-            x-transition:leave="transition duration-75 ease-in"
-            x-transition:leave-start="scale-100 opacity-100"
-            x-transition:leave-end="scale-0 opacity-0"
-            class="origin-center"
+            class="origin-center border border-transparent"
         >
             <x-chief::badge size="base">
                 <x-chief::icon.plus-sign class="hover:body-dark text-grey-400 my-0.5 size-4" />
             </x-chief::badge>
         </button>
-    </ol>
+    </div>
 
     <div x-show="$data.showingSelectBox">
         <select name="{{ $name }}" x-ref="selectEl" x-on:change="$data.addItem()" multiple></select>
