@@ -5,7 +5,18 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
-## Seo asset table
+- Fixed: On create fragment, the file field was not saved.
+- Fixed: Reordering tree items in table showed wrong results.
+- Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
+- Added: asset alt and filename export / import
+- Added: Table column selection
+- Added: Select list field
+- Added: Loading indicator on save buttons in sidebar dialog.
+- Added: WIP version for hive AI integration
+- Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. Except repeat fields
+  are still live. This was meanly for support of nested repeat fields, which are no longer supported.
+
+### Seo asset table
 
 Introduces seo table for asset management, which allows you to easily manage filename and alt attributes of each asset.
 Every Asset model should implement the `HasAlt` interface as well as the `ReferencesModel` to be able to use the seo
@@ -22,18 +33,6 @@ public function fields(): iterable
             ->value(fn ($model, $locale) => $model->getAlt($locale));
     }
 ```
-
-- Fixed: On create fragment, the file field was not saved.
-- Fixed: Reordering tree items in table showed wrong results.
-- Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
-- Added: asset alt and filename export / import
-- Added: Table column selection
-- Added: Select list field
-- Added: Loading indicator on save buttons in sidebar dialog.
-- Added: WIP version for hive AI integration
-- Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. Except repeat fields
-  are still live. This was meanly for
-  support of nested repeat fields, which are no longer supported.
 
 ## [0.10.9] - 2025-06-19
 
