@@ -51,7 +51,7 @@ final class NavItem
 
     public function detectActive(): self
     {
-        $this->isActive = request()->is($this->url) || request()->is($this->url.'/*');
+        $this->isActive = request()->fullUrlIs($this->url) || request()->is($this->url) || request()->is($this->url.'/*');
 
         return $this;
     }

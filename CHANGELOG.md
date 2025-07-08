@@ -5,14 +5,45 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+### Overview
+
+- Introduces column-selection UI in tables with backend support via new Livewire concerns
+  (`WithColumns`, `WithColumnSelection`).
+- Adds a Chief SEO plugin (Livewire tables, controllers, routes, Blade views, and console commands)
+  to export / import asset filenames and alt texts.
+- Integrates a Hive AI plugin: Alpine directives, service providers, prompts, and form-field enhancements
+  for AI-powered text suggestions.
+
+### Changes
+
 - Fixed: On create fragment, the file field was not saved.
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
+- Added: asset alt and filename export / import
+- Added: Table column selection
 - Added: Select list field
 - Added: Loading indicator on save buttons in sidebar dialog.
+- Added: WIP version for hive AI integration
 - Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. Except repeat fields
-  are still live. This was meanly for
-  support of nested repeat fields, which are no longer supported.
+  are still live. This was mainly for support of nested repeat fields, which are no longer supported.
+
+### Seo Asset table
+
+Introduces SEO table for asset management, which allows you to easily manage filename and alt attributes of each asset.
+Every Asset model should implement the `HasAlt` interface as well as the `ReferencesModel` to be able to use the seo
+table.
+
+The alt field definition on an Asset class should look like this:
+
+```php
+public function fields(): iterable
+{
+    yield Text::make('alt')
+        ->locales()
+        ->label('Alt tekst')
+        ->value(fn ($model, $locale) => $model->getAlt($locale));
+}
+```
 
 ## [0.10.9] - 2025-06-19
 

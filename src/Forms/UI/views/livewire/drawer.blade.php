@@ -15,6 +15,10 @@
                 </div>
             @endif
 
+            {{--            @if(count($locales) > 1)--}}
+            {{--                @include('chief-form::livewire._partials.locale-toggle')--}}
+            {{--            @endif--}}
+
             @foreach ($this->getFields() as $field)
                 {{ $field }}
             @endforeach
