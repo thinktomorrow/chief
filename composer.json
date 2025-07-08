@@ -12,14 +12,14 @@
         "php": "^8.3",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.9",
-        "laravel/framework": "^11.31|^12.0",
+        "laravel/framework": "^11.45|^12.0",
         "laravel/pint": "^1.23",
-        "laravel/ui": "^4.2",
-        "livewire/livewire": "^3.4.6",
+        "laravel/ui": "^4.6",
+        "livewire/livewire": "^3.6.3",
         "ramsey/uuid": "^4.7.3",
-        "spatie/laravel-activitylog": "^4.7.3",
-        "spatie/laravel-permission": "^6.10",
-        "spatie/laravel-sitemap": "^7.3.1",
+        "spatie/laravel-activitylog": "^4.10.2",
+        "spatie/laravel-permission": "^6.20",
+        "spatie/laravel-sitemap": "^7.3.6",
         "thinktomorrow/assetlibrary": "^1.0.2",
         "thinktomorrow/dynamic-attributes": "^2.0.2",
         "thinktomorrow/squanto": "^5.0.0",
@@ -34,9 +34,9 @@
         "maatwebsite/excel": "^3.1",
         "mockery/mockery": "^1.6",
         "openai-php/client": "^0.13.0",
-        "orchestra/testbench": "^9.9",
-        "phpunit/phpunit": "^11.3",
-        "spatie/opening-hours": "^2.13"
+        "orchestra/testbench": "^9.14",
+        "phpunit/phpunit": "^11.5",
+        "spatie/opening-hours": "^2.41"
     },
     "autoload": {
         "psr-4": {
