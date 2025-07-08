@@ -34,9 +34,10 @@
         {{-- TODO(ben): get fragment urls --}}
         @include('chief-fragments::livewire._partials.shared-fragment-actions')
 
-        @if(count($locales) > 1)
+        @if (count($locales) > 1)
             @include('chief-fragments::livewire._partials.locale-toggle')
         @endif
+
         @include('chief-fragments::livewire._partials.bookmarks')
 
         @foreach ($this->getFields() as $field)
@@ -55,7 +56,7 @@
                     x-sortable-ghost-class="fragment-sort-ghost"
                     x-sortable-drag-class="fragment-sort-drag"
                     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-                    class="rounded-xl border border-grey-100 px-4 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
+                    class="border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100 rounded-xl border px-4 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t"
                 >
                     @if ($fragments->count() > 0)
                         @include(
@@ -106,10 +107,9 @@
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
-                <x-chief::button wire:click="save" wire:loading.attr="disabled" variant="blue">Bewaren
-                    <div wire:loading.delay class="shrink-0">
-                        <x-chief::icon.loading class="size-4 shrink-0 animate-spin" />
-                    </div>
+                <x-chief::button wire:click="save" wire:loading.attr="disabled" variant="blue">
+                    <span>Bewaren</span>
+                    <x-chief::icon.loading wire:loading.delay class="animate-spin" />
                 </x-chief::button>
                 <x-chief::button wire:click="close">Annuleer</x-chief::button>
             </x-chief::dialog.drawer.footer>

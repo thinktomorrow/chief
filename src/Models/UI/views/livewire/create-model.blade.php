@@ -24,15 +24,13 @@
             </x-chief::callout>
         @endif
 
-        @if($this->isAllowedToSelectSites())
+        @if ($this->isAllowedToSelectSites())
             @include('chief-models::livewire._partials.locale-selection')
         @endif
 
-        @if(count($locales) > 0)
-
+        @if (count($locales) > 0)
             <div class="mt-6">
                 <x-chief::window>
-
                     <x-slot name="tabs">
                         <x-chief::window.tabs>
                             @foreach ($locales as $site)
@@ -53,9 +51,8 @@
                         {{ $field }}
                     @endforeach
                 </x-chief::window>
-
             </div>
-        @elseif(!$this->isAllowedToSelectSites())
+        @elseif (! $this->isAllowedToSelectSites())
             @foreach ($this->getFields() as $field)
                 {{ $field }}
             @endforeach
@@ -63,16 +60,18 @@
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
-                <x-chief::button class="flex items-center" wire:click="save" wire:loading.attr="disabled" variant="blue"
-                                 type="button">
-                    Bewaren
-                    <div wire:loading.delay class="shrink-0">
-                        <x-chief::icon.loading class="size-4 shrink-0 animate-spin" />
-                    </div>
+                <x-chief::button
+                    class="flex items-center"
+                    wire:click="save"
+                    wire:loading.attr="disabled"
+                    variant="blue"
+                    type="button"
+                >
+                    <span>Bewaren</span>
+                    <x-chief::icon.loading wire:loading.delay class="animate-spin" />
                 </x-chief::button>
                 <x-chief::button wire:click="close" type="button">Annuleer</x-chief::button>
             </x-chief::dialog.drawer.footer>
         </x-slot>
-
     @endif
 </x-chief::dialog.drawer>

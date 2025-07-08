@@ -31,11 +31,11 @@
             $attributes->class([
                 'space-y-3',
                 'rounded-xl' => ! $tabs,
-                'rounded-b-xl rounded-tr-xl' => $tabs,
+                'rounded-tr-xl rounded-b-xl' => $tabs,
                 match ($variant) {
-                    'card' => 'border border-grey-100 bg-white p-4 shadow-md shadow-grey-500/10',
+                    'card' => 'border-grey-100 shadow-grey-500/10 border bg-white p-4 shadow-md',
                     'transparent' => 'p-4',
-                    default => 'border border-grey-100 bg-white p-4 shadow-md shadow-grey-500/10',
+                    default => 'border-grey-100 shadow-grey-500/10 border bg-white p-4 shadow-md',
                 },
             ])
         }}
@@ -47,7 +47,7 @@
                     <div class="space-y-1.5">
                         <div class="mt-[0.1875rem] flex items-start gap-2">
                             @if ($title)
-                                <h2 class="font-display text-xl/6 font-semibold text-grey-950">
+                                <h2 class="font-display text-grey-950 text-xl/6 font-semibold">
                                     {!! $title !!}
                                 </h2>
                             @endif
@@ -77,7 +77,7 @@
                 @endif
 
                 <div wire:loading.delay class="ml-auto shrink-0">
-                    <x-chief::icon.loading class="m-[0.3125rem] size-5 shrink-0 animate-spin text-grey-400" />
+                    <x-chief::icon.loading class="text-grey-700 m-[0.3125rem] size-5 shrink-0 animate-spin" />
                 </div>
             </div>
         @endif

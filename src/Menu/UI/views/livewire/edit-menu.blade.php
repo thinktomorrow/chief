@@ -5,7 +5,7 @@
             <x-chief::form.input.text id="title" wire:model="form.title" />
         </x-chief::form.fieldset>
 
-        @if(count($this->getAvailableLocales()) > 1)
+        @if (count($this->getAvailableLocales()) > 1)
             @include('chief-fragments::livewire.tabitems.item-locales')
         @else
             @include('chief-fragments::livewire.tabitems.item-single-locale')
@@ -14,11 +14,15 @@
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
                 <x-chief::button wire:click="close">Annuleer</x-chief::button>
-                <x-chief::button wire:click="save" wire:loading.attr="disabled" variant="blue" type="button"
-                                 class="shrink-0">Bewaren
-                    <div wire:loading.delay class="shrink-0">
-                        <x-chief::icon.loading class="size-4 shrink-0 animate-spin" />
-                    </div>
+                <x-chief::button
+                    wire:click="save"
+                    wire:loading.attr="disabled"
+                    variant="blue"
+                    type="button"
+                    class="shrink-0"
+                >
+                    <span>Bewaren</span>
+                    <x-chief::icon.loading wire:loading.delay class="animate-spin" />
                 </x-chief::button>
             </x-chief::dialog.modal.footer>
         </x-slot>
