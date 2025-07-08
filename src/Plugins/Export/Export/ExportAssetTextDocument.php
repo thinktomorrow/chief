@@ -30,9 +30,6 @@ class ExportAssetTextDocument implements FromCollection, WithColumnFormatting, W
 
     private Collection $styleCollection;
 
-    // Keep track of pending drawings to be added later
-    private array $pendingDrawings;
-
     private bool $hive;
 
     public function __construct(Collection $models, array $locales, bool $hive = false)
@@ -167,7 +164,8 @@ class ExportAssetTextDocument implements FromCollection, WithColumnFormatting, W
             1 => [
                 'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
                 'font' => ['bold' => true, 'color' => ['argb' => Color::COLOR_WHITE]],
-                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FF333333']]],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => 'FF333333']],
+            ],
         ];
 
     }
