@@ -44,4 +44,7 @@
             </div>
         </x-chief::dialog.dropdown>
     @endif
+
+    @include('chief-table::livewire._partials.column-selection')
+
 </div>

@@ -1,3 +1,11 @@
+@props([
+    'label',
+    'icon' => null,
+    'url' => null,
+    'open' => false,
+    'isActive' => false,
+])
+
 @php
     // Nav items with this attribute will be open on page load.
     $open = $open ?? false;
