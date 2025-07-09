@@ -31,6 +31,11 @@ trait WithLocaleToggle
         }
     }
 
+    public function onScopedToLocale(string $locale): void
+    {
+        $this->scopedLocale = $locale;
+    }
+
     public function isAllowedToSelectSites(): bool
     {
         if (! isset($this->modelClass)) {

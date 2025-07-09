@@ -53,6 +53,7 @@ class CreateModelComponent extends Component
 
         $this->dispatch('form-dialog-opened', ...[
             'componentId' => $this->getId(),
+            'parentComponentId' => $this->parentComponentId,
         ]);
     }
 
@@ -78,10 +79,6 @@ class CreateModelComponent extends Component
 
         $layout = Layout::make($resource->fields($model))
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']); // TODO: make consistent tags...
-
-        if ($this->scopedLocale) {
-            $layout->setScopedLocale($this->scopedLocale);
-        }
 
         return $layout->getComponentsWithoutForms();
     }

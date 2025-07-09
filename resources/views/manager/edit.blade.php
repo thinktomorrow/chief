@@ -77,6 +77,4 @@
             @endforeach
         </x-slot>
     @endif
-
-    @include('chief::templates.page._partials.editor-script')
 </x-chief::page.template>

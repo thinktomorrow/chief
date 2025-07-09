@@ -32,19 +32,20 @@
             <div class="mt-6">
                 <x-chief::window>
                     <x-slot name="tabs">
-                        <x-chief::window.tabs>
-                            @foreach ($locales as $site)
-                                <x-chief::window.tabs.item
-                                    aria-controls="{{ $site }}"
-                                    aria-selected="{{ $site === $scopedLocale }}"
-                                    wire:key="locale-nav-{{ $site }}"
-                                    wire:click="set('scopedLocale', '{{ $site }}')"
-                                    :active="$site == $scopedLocale"
-                                >
-                                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($site) }}
-                                </x-chief::window.tabs.item>
-                            @endforeach
-                        </x-chief::window.tabs>
+                        @include('chief-form::livewire._partials.locale-toggle')
+                        {{--                        <x-chief::window.tabs>--}}
+                        {{--                            @foreach ($locales as $site)--}}
+                        {{--                                <x-chief::window.tabs.item--}}
+                        {{--                                    aria-controls="{{ $site }}"--}}
+                        {{--                                    aria-selected="{{ $site === $scopedLocale }}"--}}
+                        {{--                                    wire:key="locale-nav-{{ $site }}"--}}
+                        {{--                                    wire:click="set('scopedLocale', '{{ $site }}')"--}}
+                        {{--                                    :active="$site == $scopedLocale"--}}
+                        {{--                                >--}}
+                        {{--                                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($site) }}--}}
+                        {{--                                </x-chief::window.tabs.item>--}}
+                        {{--                            @endforeach--}}
+                        {{--                        </x-chief::window.tabs>--}}
                     </x-slot>
 
                     @foreach ($this->getFields() as $field)

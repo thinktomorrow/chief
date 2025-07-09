@@ -195,7 +195,9 @@ return new class extends Migration
         $menuTypes = config('chief.menus', []);
 
         foreach ($menuTypes as $type => $values) {
-            $label = ucfirst($values['label']);
+
+            $label = is_array($values) ? $values['label'] : $values;
+
             app(\Thinktomorrow\Chief\Menu\App\Actions\MenuApplication::class)->create(
                 new \Thinktomorrow\Chief\Menu\App\Actions\CreateMenu($type, \Thinktomorrow\Chief\Sites\ChiefSites::locales(), \Thinktomorrow\Chief\Sites\ChiefSites::locales(), $label));
         }

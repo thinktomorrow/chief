@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
 class CreateModelAction extends Action
@@ -17,6 +18,7 @@ class CreateModelAction extends Action
             ->effect(function ($formData, $data, $action, $component) use ($resource) {
                 $component->dispatch('open-create-model', [
                     'modelClass' => $resource::modelClassName(),
+                    'locales' => ChiefSites::locales(),
                 ]);
             });
     }

@@ -89,13 +89,6 @@ trait WithFragments
         $this->refreshFragments();
     }
 
-    public function onScopedToLocale(string $locale): void
-    {
-        $this->scopedLocale = $locale;
-
-        $this->refreshFragments();
-    }
-
     public function reorder($fragmentIds)
     {
         app(ReorderFragments::class)->handle($this->context->id, $fragmentIds, isset($this->fragment) ? $this->fragment->fragmentId : null);

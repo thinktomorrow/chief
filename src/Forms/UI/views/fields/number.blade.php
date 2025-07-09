@@ -4,7 +4,6 @@
 @endphp
 
 <x-chief::form.input.prepend-append
-    wire:ignore
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >

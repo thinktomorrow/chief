@@ -65,5 +65,4 @@
         </form>
     </x-chief::window>
 
-    @include('chief::templates.page._partials.editor-script')
 </x-chief::page.template>

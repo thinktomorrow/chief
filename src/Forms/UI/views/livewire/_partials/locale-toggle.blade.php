@@ -7,7 +7,7 @@
                 wire:key="form-site-toggle-{{ $locale }}"
                 x-on:click="() => {
                     $dispatch('chieftab', { id: '{{ $locale }}', reference: 'form-site-toggle' });
-                    {{-- $wire.onScopedToLocale('{{ $locale }}') --}}
+                    $wire.onScopedToLocale('{{ $locale }}')
                 }"
             >
                 {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($locale) }}

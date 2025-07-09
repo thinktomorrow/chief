@@ -69,6 +69,13 @@ class EditFragment extends Component
             ->getContext($this->modelReference, $this->context->getId());
     }
 
+    public function onScopedToLocale(string $locale): void
+    {
+        $this->scopedLocale = $locale;
+
+        $this->refreshFragments();
+    }
+
     public function open($values = [])
     {
         $this->fragment = $this->composeFragmentDto($values['fragmentId']);

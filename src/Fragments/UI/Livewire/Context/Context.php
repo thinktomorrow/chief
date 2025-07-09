@@ -41,6 +41,13 @@ class Context extends Component
         );
     }
 
+    public function onScopedToLocale(string $locale): void
+    {
+        $this->scopedLocale = $locale;
+
+        $this->refreshFragments();
+    }
+
     public function onAllowedSitesUpdated(array $allowedSites): void
     {
         // Get updated context with correct site references

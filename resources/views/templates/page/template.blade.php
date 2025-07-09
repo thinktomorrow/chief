@@ -57,7 +57,10 @@
                         {{ $sidebar }}
                     </section>
                 @endif
+
             </div>
         </div>
     </div>
+
+    @include('chief::templates.page._partials.editor-script')
 </x-chief::page.layout>
