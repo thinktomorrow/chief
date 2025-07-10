@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
+use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
+
 trait HasWireModelType
 {
     protected string $wireModelType = 'defer';
@@ -34,6 +36,11 @@ trait HasWireModelType
 
     public function getWireModelType(): string
     {
-        return $this->wireModelType;
+        return $this->wireModelType === 'defer' ? 'wire:model' : 'wire:model.'.$this->wireModelType.'.debounce.350ms';
+    }
+
+    public function getWireModelValue(?string $locale = null): string
+    {
+        return LivewireFieldName::get($this->getName($locale ?? null));
     }
 }

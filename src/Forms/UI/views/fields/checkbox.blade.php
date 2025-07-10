@@ -1,8 +1,3 @@
-@php
-    $modelBindingType = $getWireModelType() == 'defer' ? 'wire:model' : 'wire:model.' . $getWireModelType();
-    $modelBinding = [$modelBindingType => Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName::get($getName($locale ?? null))];
-@endphp
-
 <div data-slot="control" class="space-y-2">
     @foreach ($getOptions() as $option)
         @php
@@ -20,7 +15,7 @@
                 class="{{ $optedForToggleDisplay() ? 'appearance-none hidden' : null }}"
                 :attributes="$attributes
                     ->merge($getCustomAttributes())
-                    ->merge($modelBinding)"
+                    ->merge([$getWireModelType() => $getWireModelValue($locale ?? null)])"
             />
 
             @if ($optedForToggleDisplay())

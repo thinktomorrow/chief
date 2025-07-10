@@ -1,19 +1,10 @@
-@php
-    use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
-@endphp
-
-{{--
-
-    Also needs to be wire:model.live to make Livewire modeling work with the redactor input event
-
---}}
-
+{{-- Also needs to be wire:model.live to make Livewire modeling work with the redactor input event --}}
 <div wire:ignore>
     <x-chief::form.input.textarea
         data-editor
         data-locale="{{ $locale ?? app()->getLocale() }}"
         data-custom-redactor-options="{{ json_encode($getRedactorOptions($locale ?? null)) }}"
-        wire:model.live="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        wire:model.live="{{ $getWireModelValue($locale ?? null) }}"
         v-pre
         id="{{ $getId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"

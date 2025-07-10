@@ -1,10 +1,5 @@
-@php
-    $modelBindingType = $getWireModelType() == 'defer' ? 'wire:model' : 'wire:model.' . $getWireModelType();
-    $wireBindingValue = Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName::get($getName($locale ?? null));
-@endphp
-
 <x-chief::form.input.prepend-append
-    wire:key="{{ $wireBindingValue }}"
+    wire:ignore
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
@@ -16,7 +11,7 @@
         :autofocus="$hasAutofocus()"
         :attributes="$attributes
             ->merge($getCustomAttributes())
-            ->merge([$modelBindingType => $wireBindingValue])"
+            ->merge([$getWireModelType() => $getWireModelValue($locale ?? null)])"
     />
 
     {{--    @if($isHiveEnabled())--}}

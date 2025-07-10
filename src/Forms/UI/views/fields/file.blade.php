@@ -15,8 +15,8 @@
 
 <div data-slot="control">
     <livewire:chief-wire::file-field-upload
-        wire:key="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
-        wire:model="{{ LivewireFieldName::get($getName($locale ?? null)) }}"
+        wire:key="{{ $getWireModelValue($locale ?? null) }}"
+        wire:model="{{ $getWireModelValue($locale ?? null) }}"
         parent-component-id="{{ $insideComponent ? $this->getId() : null }}"
         :model-reference="$getModel()?->modelReference()->get()"
         :field-key="$field->getKey()"
