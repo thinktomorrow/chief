@@ -13,6 +13,13 @@ use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 
+/**
+ * @property string $token
+ * @property int $invitee_id
+ * @property int $inviter_id
+ * @property string $state
+ * @property \Illuminate\Support\Carbon $expires_at
+ */
 class Invitation extends Model implements StatefulContract
 {
     /**
