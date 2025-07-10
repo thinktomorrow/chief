@@ -24,17 +24,12 @@ trait WithLocaleToggle
      * In the case that the locales are editable, like in the create model component,
      * we need to make sure that the scoped locale is in the list of allowed locales.
      */
-    //    public function updatedLocales(): void
-    //    {
-    //        if (! in_array($this->activeLocale, $this->locales)) {
-    //            $this->activeLocale = $this->locales[0] ?? null;
-    //        }
-    //    }
-
-    //    public function onScopedToLocale(string $locale): void
-    //    {
-    //        $this->activeLocale = $locale;
-    //    }
+    public function updatedLocales(): void
+    {
+        if (! in_array($this->scopedLocale, $this->locales)) {
+            $this->scopedLocale = $this->locales[0] ?? null;
+        }
+    }
 
     public function isAllowedToSelectSites(): bool
     {
