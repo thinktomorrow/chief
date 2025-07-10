@@ -77,10 +77,9 @@ class CreateModelComponent extends Component
         $resource = $this->getResource();
         $model = new $this->modelClass($resource->getAttributesOnCreate());
 
-        $layout = Layout::make($resource->fields($model))
-            ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']); // TODO: make consistent tags...
-
-        return $layout->getComponentsWithoutForms();
+        return Layout::make($resource->fields($model))
+            ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
+            ->getComponentsWithoutForms();
     }
 
     public function save()

@@ -37,6 +37,7 @@ class ModelApplication
          */
         $input = $this->nullifyEmptyValues($command->getInput());
 
+        // TODO: remove values for locales that are not set for the model
         $input = $resource->prepareInputOnCreate($input);
 
         $model = new $modelClass($resource->getAttributesOnCreate());

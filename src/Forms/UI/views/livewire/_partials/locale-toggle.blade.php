@@ -1,32 +1,37 @@
-<div data-slot="form-group">
-    <x-chief::button-group size="base">
-        @foreach ($locales as $locale)
-            <x-chief::button-group.button
-                :aria-controls="$locale"
-                :aria-selected="$locale === $scopedLocale ? 'true' : 'false'"
-                wire:key="form-site-toggle-{{ $locale }}"
-                x-on:click="() => {
-                    $dispatch('chieftab', { id: '{{ $locale }}', reference: 'form-site-toggle' });
-                    $wire.onScopedToLocale('{{ $locale }}')
-                }"
-            >
-                {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($locale) }}
-            </x-chief::button-group.button>
-        @endforeach
-    </x-chief::button-group>
+<div x-data="{
+        scopedLocale: '{{ $scopedLocale }}',
+        init() {
+            this.$nextTick(() => {
+                this.showScopedLocale();
+            })
+        },
+        showScopedLocale() {
+            this.$dispatch('chieftab', { id: this.scopedLocale, reference: 'form-site-toggle' });
 
-    {{-- Hack to get the scoped locale tab to be active when opening the drawer --}}
-    <div
-        x-data="{
-            scopedLocale: '{{ $scopedLocale }}',
-            init() {
-                this.$nextTick(() => {
-                    this.$dispatch('chieftab', {
-                        id: '{{ $scopedLocale }}',
-                        reference: 'form-site-toggle',
-                    })
-                })
-            },
-        }"
-    ></div>
+            @if ($entangleScopedLocale ?? false)
+                $wire.onScopedToLocale(this.scopedLocale);
+            @endif
+
+        }
+    }" data-slot="form-group">
+    <span class="font-bold" x-text="scopedLocale"></span>
+    <span>{{ implode(',', $locales) }}</span>
+
+    @if(count($locales) > 1)
+        <x-chief::button-group size="base">
+            @foreach ($locales as $i => $locale)
+                <x-chief::button-group.button
+                    :aria-controls="$locale"
+                    :aria-selected="($locale === $scopedLocale) ? 'true' : 'false'"
+                    wire:key="form-site-toggle-{{ $locale }}"
+                    x-on:click="() => {
+                        scopedLocale = '{{ $locale }}';
+                        showScopedLocale();
+                    }"
+                >
+                    {{ \Thinktomorrow\Chief\Sites\ChiefSites::name($locale) }}
+                </x-chief::button-group.button>
+            @endforeach
+        </x-chief::button-group>
+    @endif
 </div>

@@ -93,7 +93,7 @@ class EditFormComponent extends Component
 
         app(ModelApplication::class)->updateForm(new UpdateForm(
             $this->modelReference,
-            [$this->scopedLocale],
+            $this->locales, // Used to be scopedLocale but why???
             $this->formComponent->getId(),
             $form,
             [])

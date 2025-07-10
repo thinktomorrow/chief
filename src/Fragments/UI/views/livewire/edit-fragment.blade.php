@@ -34,9 +34,7 @@
         {{-- TODO(ben): get fragment urls --}}
         @include('chief-fragments::livewire._partials.shared-fragment-actions')
 
-        @if (count($locales) > 1)
-            @include('chief-fragments::livewire._partials.locale-toggle')
-        @endif
+        @include('chief-form::livewire._partials.locale-toggle', ['entangleScopedLocale' => true])
 
         @include('chief-fragments::livewire._partials.bookmarks')
 
