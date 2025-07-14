@@ -11,7 +11,7 @@
         "@babel/preset-env": "^7.27.2",
         "@tailwindcss/vite": "^4.1.7",
         "dotenv": "^16.5.0",
-        "eslint": "^8.32.0",
+        "eslint": "^9.31.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-plugin-import": "^2.27.5",
         "husky": "^9.0.11",
