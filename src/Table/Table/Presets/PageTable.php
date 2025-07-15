@@ -92,7 +92,7 @@ class PageTable extends Table
         }
 
         if ($reflection->implementsInterface(Sortable::class)) {
-            $table->sortablePresets();
+            $table->sortablePresets($resourceKey);
         }
 
         // Check if model has updated_at timestamp

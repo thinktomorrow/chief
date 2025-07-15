@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Table\Actions\Presets\AttachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ViewOnSiteAction;
@@ -40,13 +42,21 @@ trait HasPresets
         ]);
     }
 
-    public function sortablePresets(): self
+    public function sortablePresets(string $resourceKey): self
     {
+        $resource = app(Registry::class)->resource($resourceKey);
+        $modelClassName = $resource::modelClassName();
+        $model = new $modelClassName;
+
+        if (! $model instanceof Sortable) {
+            return $this;
+        }
+
         return $this->sorters([
             Sort::make('manual_order')
                 ->label('Volgorde volgens site')
-                ->query(function ($query) {
-                    $query->orderBy('order', 'asc');
+                ->query(function ($query) use ($model) {
+                    $query->orderBy($model->sortableAttribute(), 'asc');
                 })->actAsDefault(),
         ]);
     }
