@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
@@ -31,7 +31,7 @@ final class CreateFragment
 
         $fragment = app(FragmentFactory::class)->create($fragmentModel);
 
-        $fields = Layout::make($fragment->fields($fragment))
+        $fields = PageLayout::make($fragment->fields($fragment))
             ->model($fragment->getFragmentModel())
             ->setLocales($locales)
             ->getFields()

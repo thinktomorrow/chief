@@ -21,7 +21,7 @@ use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTags;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithWireableFieldDefaults;
 
-abstract class Component extends \Illuminate\View\Component implements HasTaggedComponents, Htmlable, Wireable
+abstract class LayoutComponent extends \Illuminate\View\Component implements HasTaggedComponents, Htmlable, Wireable
 {
     use HasComponentRendering;
     use HasCustomAttributes;

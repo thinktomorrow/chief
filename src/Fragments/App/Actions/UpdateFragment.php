@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithNullifyEmptyValues;
@@ -32,7 +32,7 @@ class UpdateFragment
          */
         $data = $this->nullifyEmptyValues($data);
 
-        $fields = Layout::make($fragment->fields($fragment))
+        $fields = PageLayout::make($fragment->fields($fragment))
             ->model($fragment->getFragmentModel())
             ->setLocales($locales)
             ->getFields();

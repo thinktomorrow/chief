@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Models\App\Actions\CreateModel;
@@ -77,7 +77,7 @@ class CreateModelComponent extends Component
         $resource = $this->getResource();
         $model = new $this->modelClass($resource->getAttributesOnCreate());
 
-        return Layout::make($resource->fields($model))
+        return PageLayout::make($resource->fields($model))
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
             ->getComponentsWithoutForms();
     }

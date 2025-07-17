@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Concerns\HasFormDisplay;
 use Thinktomorrow\Chief\Forms\Layouts\Concerns\WithLocalizedFields;
 
-class Form extends Component
+class Form extends LayoutComponent implements Layout
 {
     use HasFields;
     use HasFormDisplay;

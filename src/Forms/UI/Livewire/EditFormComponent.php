@@ -6,7 +6,7 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
 use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
@@ -81,7 +81,7 @@ class EditFormComponent extends Component
         $model = $this->modelReference->instance();
         $resource = app(Registry::class)->findResourceByModel($model::class);
 
-        return Layout::make($resource->fields($model))
+        return PageLayout::make($resource->fields($model))
             ->findForm($this->formComponent->getId())
             ->model($model)
             ->getComponents();

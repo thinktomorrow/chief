@@ -23,7 +23,9 @@ trait HasModel
 
         if ($this instanceof HasComponents) {
             foreach ($this->getComponents() as $component) {
-                $component->model($model);
+                if (method_exists($component, 'model')) {
+                    $component->model($model);
+                }
             }
         }
 

@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 
 use Thinktomorrow\Chief\Forms\Concerns\HasColumns;
 
-class Grid extends Component
+class Grid extends LayoutComponent implements Layout
 {
     use HasColumns;
 

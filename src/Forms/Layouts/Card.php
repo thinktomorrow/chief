@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 use Thinktomorrow\Chief\Forms\Concerns\HasCollapsible;
 use Thinktomorrow\Chief\Forms\Concerns\HasLayoutVariant;
 
-class Card extends Component
+class Card extends LayoutComponent implements Layout
 {
     use HasCollapsible;
     use HasLayoutVariant;

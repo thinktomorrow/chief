@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
@@ -48,7 +48,7 @@ class FormComponent extends Component
         $model = $this->getModel();
         $resource = app(Registry::class)->findResourceByModel($model::class);
 
-        return Layout::make($resource->fields($model))
+        return PageLayout::make($resource->fields($model))
             ->findForm($this->form->getId())
             ->model($model)
             ->setScopedLocale($this->scopedLocale)

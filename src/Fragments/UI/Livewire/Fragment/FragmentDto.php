@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment;
 
 use Illuminate\Support\Collection;
 use Livewire\Wireable;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
@@ -59,7 +59,7 @@ class FragmentDto implements Wireable
 
     private static function composeFields(Fragment $fragment): Collection
     {
-        return Layout::make($fragment->fields($fragment))->getComponentsWithoutForms();
+        return PageLayout::make($fragment->fields($fragment))->getComponentsWithoutForms();
     }
 
     //    private static function composeSharedFragmentDtos(string $fragmentId, ContextOwner $owner): Collection

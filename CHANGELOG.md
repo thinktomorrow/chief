@@ -14,16 +14,25 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Integrates a Hive AI plugin: Alpine directives, service providers, prompts, and form-field enhancements
   for AI-powered text suggestions.
 
-### Changes
+### Fixes
 
+- Fixed: use sortable attribute for table sorting
 - Fixed: On create fragment, the file field was not saved.
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
+
+### Additions
+
 - Added: asset alt and filename export / import
 - Added: Table column selection
 - Added: Select list field
 - Added: Loading indicator on save buttons in sidebar dialog.
 - Added: WIP version for hive AI integration
+- Added: Edit model livewire component to allow editing models in dialog
+- Added: `Thinktomorrow\Chief\Forms\Layouts\Layout` interface to allow placement of non form elements on a page
+
+### Changes
+
 - Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. They are also wire:
   ignored. Except repeat fields
   are still live. This was mainly for support of nested repeat fields, which are no longer supported.

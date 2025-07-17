@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire\_partials;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
@@ -54,7 +54,7 @@ trait AddsNewFragments
     {
         $fragment = $this->getFragment();
 
-        $layout = Layout::make($fragment->fields($fragment))
+        $layout = PageLayout::make($fragment->fields($fragment))
             ->filterByNotTagged(['edit', 'not-on-create'])
             ->setLocales($this->localeValuesForNewFragment['locales']);
 

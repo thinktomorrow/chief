@@ -13,9 +13,9 @@ use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasContent;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasDialogType;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasSubTitle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
-use Thinktomorrow\Chief\Forms\Layouts\Component;
+use Thinktomorrow\Chief\Forms\Layouts\LayoutComponent;
 
-class Dialog extends Component
+class Dialog extends LayoutComponent
 {
     use HasButton;
     use HasContent;

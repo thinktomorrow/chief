@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\Fragments\App\Actions\IsolateFragment;
@@ -125,7 +125,7 @@ class EditFragment extends Component
 
     public function getFields(): Collection
     {
-        $layout = Layout::make($this->fragment->fields)
+        $layout = PageLayout::make($this->fragment->fields)
             ->model($this->fragment->getFragmentModel());
 
         //        if (! $this->fragment->isShared) {

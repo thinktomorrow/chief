@@ -46,7 +46,7 @@
         </x-chief::page.header>
     </x-slot>
 
-    @foreach ($layout->filterByPosition('main')->exclude('pagetitle')->getComponents() as $component)
+    @foreach ($layout->filterByDefaultPosition()->exclude('pagetitle')->getComponents() as $component)
         {{ $component->render() }}
     @endforeach
 

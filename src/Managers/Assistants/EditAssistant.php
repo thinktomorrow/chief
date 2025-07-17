@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -63,7 +63,7 @@ trait EditAssistant
         View::share('manager', $this);
         View::share('model', $model);
         View::share('resource', $this->resource);
-        View::share('layout', Layout::make($this->resource->fields($model))->model($model));
+        View::share('layout', PageLayout::make($this->resource->fields($model))->model($model));
 
         return $this->resource->getPageView();
     }
@@ -82,7 +82,7 @@ trait EditAssistant
 
         $this->guard('update', $model);
 
-        $fields = Layout::make($this->resource->fields($model))
+        $fields = PageLayout::make($this->resource->fields($model))
             ->model($model)
             ->getFields();
 

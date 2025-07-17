@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Models\App\Actions;
 
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithNullifyEmptyValues;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
@@ -40,9 +40,9 @@ class ModelApplication
         // TODO: remove values for locales that are not set for the model
         $input = $resource->prepareInputOnCreate($input);
 
-        $model = new $modelClass($resource->getAttributesOnCreate());
+        $model = new $modelClass($resource->getAttributesOnCreate($input));
 
-        $fields = Layout::make($resource->fields($model))
+        $fields = PageLayout::make($resource->fields($model))
             ->model($model)
             ->setLocales($command->getLocales())
             ->getFields()
@@ -105,7 +105,7 @@ class ModelApplication
          */
         $input = $this->nullifyEmptyValues($command->getInput());
 
-        $fields = Layout::make($resource->fields($model))
+        $fields = PageLayout::make($resource->fields($model))
             ->findForm($command->getFormId())
             ->model($model)
             ->setLocales($command->getLocales())

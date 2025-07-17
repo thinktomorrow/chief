@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Forms\App\Queries;
 
 use Thinktomorrow\Chief\Forms\Layouts\Form;
-use Thinktomorrow\Chief\Forms\Layouts\Layout;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class FindForm
@@ -20,6 +20,6 @@ class FindForm
         $resource = $this->registry->findResourceByModel($model::class);
         $manager = $this->registry->findManagerByModel($model::class);
 
-        return Layout::make($resource->fields($model))->fill($manager, $model)->findForm($formId);
+        return PageLayout::make($resource->fields($model))->fill($manager, $model)->findForm($formId);
     }
 }

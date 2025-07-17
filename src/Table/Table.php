@@ -4,8 +4,10 @@ namespace Thinktomorrow\Chief\Table;
 
 use Closure;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
+use Thinktomorrow\Chief\Forms\Concerns\HasPosition;
+use Thinktomorrow\Chief\Forms\Layouts\Layout;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanAddQuery;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasQuery;
@@ -29,19 +31,19 @@ use Thinktomorrow\Chief\Table\Table\References\HasResourceReference;
 use Thinktomorrow\Chief\Table\Table\References\HasTableReference;
 use Thinktomorrow\Chief\Table\Table\References\ResourceReference;
 
-class Table extends Component implements Htmlable
+class Table extends Component implements Htmlable, Layout
 {
     use CanAddQuery;
     use HasActions;
     use HasBulkActions;
     use HasColumns;
-    use HasComponentRendering;
     use HasFilters;
     use HasHeaders;
     use HasLivewireComponent;
     use HasLivewireListeners;
     use HasModelKeyName;
     use HasPagination;
+    use HasPosition;
     use HasPresets;
 
     /** Base Query for all table data */
@@ -114,5 +116,27 @@ class Table extends Component implements Htmlable
         $this->view = $view;
 
         return $this;
+    }
+
+    public function toHtml(): string
+    {
+        return $this->render()->render();
+    }
+
+    public function render(): View
+    {
+        return view($this->getView(), array_merge(parent::data(), [
+            'component' => $this,
+        ]));
+    }
+
+    public function getId(): string
+    {
+        return $this->getTableReference()->toUniqueString();
+    }
+
+    public function getKey(): string
+    {
+        return $this->getId();
     }
 }
