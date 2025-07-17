@@ -75,6 +75,7 @@ class TableComponent extends Component
     {
         return array_merge([
             'dialogSaved-'.$this->getId() => 'onActionDialogSaved',
+            'requestRefresh-'.$this->getId() => '$refresh',
             'requestRefresh' => '$refresh',
             'scoped-to-locale' => 'onScopedToLocale',
         ], $this->customListeners);

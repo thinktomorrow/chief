@@ -25,6 +25,11 @@ class CreateModelComponent extends Component
 
     public string $modelClass;
 
+    public array $instanceAttributes = [];
+
+    /** After save, redirect to the create model page */
+    public bool $redirectAfterSave = true;
+
     public function mount() {}
 
     public function getListeners()
@@ -38,6 +43,8 @@ class CreateModelComponent extends Component
     public function open($values = [])
     {
         $this->modelClass = $values['modelClass'];
+        $this->instanceAttributes = $values['instanceAttributes'] ?? [];
+        $this->redirectAfterSave = $values['redirectAfterSave'] ?? true;
 
         $this->isOpen = true;
 
@@ -66,7 +73,7 @@ class CreateModelComponent extends Component
 
     public function close()
     {
-        $this->reset(['form', 'modelClass', 'locales', 'scopedLocale']);
+        $this->reset(['form', 'modelClass', 'locales', 'scopedLocale', 'redirectAfterSave']);
         $this->resetErrorBag();
 
         $this->isOpen = false;
@@ -75,7 +82,7 @@ class CreateModelComponent extends Component
     public function getFields(): Collection
     {
         $resource = $this->getResource();
-        $model = new $this->modelClass($resource->getAttributesOnCreate());
+        $model = new $this->modelClass($resource->getAttributesOnCreate($this->instanceAttributes));
 
         return PageLayout::make($resource->fields($model))
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
@@ -101,7 +108,13 @@ class CreateModelComponent extends Component
             [],
         ));
 
-        return redirect()->to('/admin/'.$this->getResource()::resourceKey().'/'.$modelId.'/edit');
+        if ($this->redirectAfterSave) {
+            return redirect()->to('/admin/'.$this->getResource()::resourceKey().'/'.$modelId.'/edit');
+        }
+
+        $this->close();
+
+        $this->dispatch('requestRefresh-'.$this->parentComponentId);
     }
 
     public function getTitle(): string

@@ -32,6 +32,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: `Thinktomorrow\Chief\Forms\Layouts\Layout` interface to allow placement of non form elements on a page
 - Added: `Field::getOriginalValue()` method to retrieve the original value of a column item before it was mapped. This
   impacts variant mapping of a column (see below)
+- Added: Parameter `redirectAfterSave` to instruct CreateModelComponent to close or redirect to the new page after save.
 
 ### Changes
 
@@ -40,6 +41,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   are still live. This was mainly for support of nested repeat fields, which are no longer supported.
 - Changed: Refactor locale toggles in forms and fragments to use one partial file.
 - Changed: Variant mapping of a column item now used the original value instead of any mapped value.
+- Changed: `Resource::getAttributesOnCreate` now has input values as its parameter, which allows you to
+  set any of these values as model attributes on create.
 
 ### Seo Asset table
 

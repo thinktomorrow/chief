@@ -30,7 +30,7 @@ interface Resource
     public function getSaveFieldsClass(): string;
 
     /** The attributes on a new model object - used on create */
-    public function getAttributesOnCreate(): array;
+    public function getAttributesOnCreate(array $input = []): array;
 
     /**
      * Adjust the create input before saving it as a new record.
