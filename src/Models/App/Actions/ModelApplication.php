@@ -63,7 +63,35 @@ class ModelApplication
 
         event(new ManagedModelCreated($model->modelReference()));
 
-        return $model->fresh()->getKey();
+        return $model->refresh()->getKey();
+    }
+
+    public function updateModel(UpdateModel $command): void
+    {
+        $model = $command->getModelReference()->instance();
+        $resource = $this->getResource($model::class);
+
+        /**
+         * Nullify empty string values so that they are stored as null in the database and
+         * not as empty strings. This is important for the fallback locale mechanism.
+         */
+        $input = $this->nullifyEmptyValues($command->getInput());
+
+        $fields = PageLayout::make($resource->fields($model))
+            ->model($model)
+            ->setLocales($command->getLocales())
+            ->getFields();
+
+        $this->fieldValidator->handle($fields, $input);
+
+        app($resource->getSaveFieldsClass())->save(
+            $model,
+            $fields,
+            $input,
+            $command->getFiles(),
+        );
+
+        event(new ManagedModelUpdated($model->modelReference()));
     }
 
     public function updateForm(UpdateForm $command): void
