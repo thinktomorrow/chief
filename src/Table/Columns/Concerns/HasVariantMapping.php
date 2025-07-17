@@ -31,8 +31,11 @@ trait HasVariantMapping
     protected function handleVariantMapping(ColumnItem $columnItem): void
     {
         foreach ($this->variantMapResolvers as $variantMapResolver) {
+
+            $value = is_scalar($columnItem->getOriginalValue()) ? $columnItem->getOriginalValue() : $columnItem->getRawValue();
+
             $columnItem->variant(
-                call_user_func($variantMapResolver, $columnItem->getOriginalValue(), $columnItem, $this->getModel(), $this)
+                call_user_func($variantMapResolver, $value, $columnItem, $this->getModel(), $this)
             );
         }
     }
