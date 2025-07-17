@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
+use Illuminate\Contracts\Pagination\Paginator as PaginatorContract;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\ReorderModels;
 
@@ -11,6 +12,8 @@ trait WithReordering
 
     public function startReordering()
     {
+        $this->verifyReorderingModelClass();
+
         $this->isReordering = true;
     }
 
@@ -19,9 +22,13 @@ trait WithReordering
         $this->isReordering = false;
     }
 
-    public function getReorderResults(): NestableTree
+    public function getReorderResults(): NestableTree|PaginatorContract
     {
-        return NestableTree::fromIterable($this->getResults());
+        if ($this->isTreeReorderingAllowed()) {
+            return NestableTree::fromIterable($this->getResults());
+        }
+
+        return $this->getResults();
     }
 
     public function isTreeReorderingAllowed(): bool
@@ -59,7 +66,7 @@ trait WithReordering
     private function verifyReorderingModelClass()
     {
         if (! $this->getTable()->hasValidReorderingModelClass()) {
-            throw new \RuntimeException('The table does not have a valid Sortable model class set. Given: ['.$this->getTable()->getReorderingModelClass().']');
+            throw new \RuntimeException('The table does not have a valid Sortable model class set. Given: ['.$this->getTable()->getReorderingModelClass().']. Please set the modelClass via `Table::setReorderingModelClass`.');
         }
     }
 }

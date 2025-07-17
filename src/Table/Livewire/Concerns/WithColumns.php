@@ -44,7 +44,14 @@ trait WithColumns
             return md5(print_r($model, true));
         }
 
-        return (string) $model->{$this->getModelKeyName()};
+        if (! $key = $model->{$this->getModelKeyName()}) {
+            throw new \RuntimeException(sprintf(
+                'The model does not have a value for the key "%s". Please set the Table::modelKeyName to the model\'s attribute for the unique id.',
+                $this->getModelKeyName()
+            ));
+        }
+
+        return (string) $key;
     }
 
     public function getRowView(): string

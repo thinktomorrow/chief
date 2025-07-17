@@ -3,14 +3,21 @@
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
+use Thinktomorrow\Chief\ManagedModels\States\State\GetPrimaryStateKeyOfModel;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
 class OnlineStateBulkAction extends Action
 {
-    public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'publish'): static
+    public static function makeDefault(string $resourceKey, ?string $stateKey = null, string $transitionKey = 'publish'): static
     {
+        if (! $primaryStateKey = GetPrimaryStateKeyOfModel::get($resourceKey)) {
+            throw new \RuntimeException('OnlineStateBulkAction requires a primary state key to be defined on the model.');
+        }
+
+        $stateKey = $stateKey ?: $primaryStateKey;
+
         return static::make('online-state-bulk')
             ->label('Publiceer')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {

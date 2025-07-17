@@ -51,7 +51,7 @@ trait WithColumnSelection
 
             $options[] = [
                 'key' => $firstItem->getKey(),
-                'label' => $firstItem->getLabel(),
+                'label' => $firstItem->getLabel() ?: ucfirst($firstItem->getKey()),
                 'disabled' => ! $firstItem->isColumnSelectionAllowed(),
                 'selected_by_default' => $firstItem->isColumnSelectedByDefault(),
             ];

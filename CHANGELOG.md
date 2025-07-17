@@ -43,6 +43,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Changed: Variant mapping of a column item now used the original value instead of any mapped value.
 - Changed: `Resource::getAttributesOnCreate` now has input values as its parameter, which allows you to
   set any of these values as model attributes on create.
+- Changed: improve flexibility of default table actions and ordering logic.
 
 ### Seo Asset table
 

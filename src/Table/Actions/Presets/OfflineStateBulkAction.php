@@ -3,14 +3,22 @@
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
+use Thinktomorrow\Chief\ManagedModels\States\State\GetPrimaryStateKeyOfModel;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
 class OfflineStateBulkAction extends Action
 {
-    public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'unpublish'): static
+    public static function makeDefault(string $resourceKey, ?string $stateKey = null, string $transitionKey = 'unpublish'): static
     {
+
+        if (! $primaryStateKey = GetPrimaryStateKeyOfModel::get($resourceKey)) {
+            throw new \RuntimeException('OfflineStateBulkAction requires a primary state key to be defined on the model.');
+        }
+
+        $stateKey = $stateKey ?: $primaryStateKey;
+
         return static::make('offline-state-bulk')
             ->label('Zet terug in draft')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {

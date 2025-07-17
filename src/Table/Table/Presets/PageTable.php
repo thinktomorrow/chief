@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Table\Table\Presets;
 
+use Thinktomorrow\Chief\ManagedModels\States\State\GetPrimaryStateKeyOfModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
@@ -66,7 +67,7 @@ class PageTable extends Table
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
                 })->disallowColumnSelection()
                     ->tease(54, '...'),
-                ColumnBadge::make('current_state')->pageStates()->label('Status')->columnNotSelectedByDefault(),
+                ...(($primaryStateKey = GetPrimaryStateKeyOfModel::get($resourceKey)) ? [ColumnBadge::make($primaryStateKey)->pageStates()->label('Status')->columnNotSelectedByDefault()] : []),
                 ...(($reflection->implementsInterface(HasAllowedSites::class) && $reflection->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
                 ...(($reflection->implementsInterface(HasAllowedSites::class) && ! $reflection->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
                 ...(($reflection->implementsInterface(Visitable::class) && ! $reflection->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),

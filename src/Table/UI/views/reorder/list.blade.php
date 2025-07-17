@@ -7,10 +7,10 @@
 <div class="space-y-4">
     <div class="flex items-start justify-between gap-4">
         <div class="prose prose-dark prose-spacing mt-1.5">
-            <p>Pas de volgorde van de items door ze naar de gewenste plek te slepen.</p>
+            <p>Pas de volgorde aan door naar de gewenste plek te slepen.</p>
         </div>
 
-        <x-chief::button size="base" variant="grey" wire:click="stopReordering()">
+        <x-chief::button class="shrink-0" size="base" variant="grey" wire:click="stopReordering()">
             <x-chief::icon.arrow-turn-backward />
             <span>Stop met herschikken</span>
         </x-chief::button>

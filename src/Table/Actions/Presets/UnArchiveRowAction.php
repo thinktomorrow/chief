@@ -3,15 +3,21 @@
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\State\GetPrimaryStateKeyOfModel;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 
 class UnArchiveRowAction extends Action
 {
-    public static function makeDefault(string $resourceKey, string $stateKey = 'current_state', string $transitionKey = 'unarchive'): static
+    public static function makeDefault(string $resourceKey, ?string $stateKey = null, string $transitionKey = 'unarchive'): static
     {
+        if (! $primaryStateKey = GetPrimaryStateKeyOfModel::get($resourceKey)) {
+            throw new \RuntimeException('UnarchiveRowAction requires a primary state key to be defined on the model.');
+        }
+
+        $stateKey = $stateKey ?: $primaryStateKey;
+
         return static::make('unarchive-state-row')
             ->label('Herstel uit archief')
             ->variant('green')
@@ -30,11 +36,6 @@ class UnArchiveRowAction extends Action
             })
             ->notifyOnSuccess('Hersteld en opnieuw beschikbaar')->notifyOnFailure('Er is iets misgegaan bij het herstellen van dit item.')
             ->when(function ($component, $model) use ($stateKey, $transitionKey) {
-
-                if (! $model instanceof StatefulContract) {
-                    return false;
-                }
-
                 $stateConfig = $model->getStateConfig($stateKey);
                 $stateMachine = StateMachine::fromConfig($model, $stateConfig);
 
