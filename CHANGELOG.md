@@ -30,6 +30,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: WIP version for hive AI integration
 - Added: Edit model livewire component to allow editing models in dialog
 - Added: `Thinktomorrow\Chief\Forms\Layouts\Layout` interface to allow placement of non form elements on a page
+- Added: `Field::getOriginalValue()` method to retrieve the original value of a column item before it was mapped. This
+  impacts variant mapping of a column (see below)
 
 ### Changes
 
@@ -37,6 +39,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   ignored. Except repeat fields
   are still live. This was mainly for support of nested repeat fields, which are no longer supported.
 - Changed: Refactor locale toggles in forms and fragments to use one partial file.
+- Changed: Variant mapping of a column item now used the original value instead of any mapped value.
 
 ### Seo Asset table
 

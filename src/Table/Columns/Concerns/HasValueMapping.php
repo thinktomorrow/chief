@@ -31,10 +31,11 @@ trait HasValueMapping
     protected function handleValueMapping(ColumnItem $columnItem): void
     {
         foreach ($this->valueMapResolvers as $valueMapResolver) {
-            $columnItem->value(
-                call_user_func($valueMapResolver, $columnItem->getRawValue(), $columnItem, $this->getModel())
-            );
+            $columnItem->setOriginalValue($originalValue = $columnItem->getRawValue());
 
+            $columnItem->value(
+                call_user_func($valueMapResolver, $originalValue, $columnItem, $this->getModel())
+            );
         }
     }
 
@@ -67,9 +68,9 @@ trait HasValueMapping
         });
 
         return $this->mapVariant([
-            'gepubliceerd' => 'blue',
+            'published' => 'blue',
             'draft' => 'grey',
-            'gearchiveerd' => 'red',
+            'archived' => 'red',
             'link ontbreekt' => 'orange',
         ]);
     }

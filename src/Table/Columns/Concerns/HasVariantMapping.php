@@ -32,7 +32,7 @@ trait HasVariantMapping
     {
         foreach ($this->variantMapResolvers as $variantMapResolver) {
             $columnItem->variant(
-                call_user_func($variantMapResolver, $columnItem->getRawValue(), $columnItem, $this->getModel(), $this)
+                call_user_func($variantMapResolver, $columnItem->getOriginalValue(), $columnItem, $this->getModel(), $this)
             );
         }
     }

@@ -12,7 +12,9 @@ trait HasValue
     use HasValueFallback;
     use HasValuePreparation;
 
-    protected $value;
+    protected mixed $value;
+
+    protected mixed $originalValue;
 
     /**
      * Flag to indicate internally that a value has been explicitly set (via value()).
@@ -39,6 +41,22 @@ trait HasValue
         $value = $this->getRawValue($locale);
 
         return $this->hasPrepareValue() ? $this->getPrepareValue()($value) : $value;
+    }
+
+    /**
+     * When value has been altered or mapped, this method
+     * can be used to retrieve the original value.
+     */
+    public function getOriginalValue(?string $locale = null): mixed
+    {
+        return $this->originalValue ?? $this->getRawValue($locale);
+    }
+
+    public function setOriginalValue(mixed $value): static
+    {
+        $this->originalValue = $value;
+
+        return $this;
     }
 
     public function getValueOrFallback(?string $locale = null): mixed
