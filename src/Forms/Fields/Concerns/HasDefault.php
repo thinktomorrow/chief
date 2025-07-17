@@ -8,7 +8,7 @@ use Closure;
 
 trait HasDefault
 {
-    protected null|string|int|array|Closure $default = null;
+    protected null|string|int|bool|array|Closure $default = null;
 
     /**
      * Flag to allow to ignore any given default values. This is used to explicitly get
@@ -16,14 +16,14 @@ trait HasDefault
      */
     protected bool $useDefault = true;
 
-    public function default(null|string|int|array|Closure $default): static
+    public function default(null|string|int|bool|array|Closure $default): static
     {
         $this->default = $default;
 
         return $this;
     }
 
-    public function getDefault(?string $locale = null): null|string|int|array
+    public function getDefault(?string $locale = null): null|string|int|array|bool
     {
         if (! $this->useDefault) {
             return null;

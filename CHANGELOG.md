@@ -26,6 +26,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: asset alt and filename export / import
 - Added: Table column selection
 - Added: Select list field
+- Added: Boolean field
 - Added: Loading indicator on save buttons in sidebar dialog.
 - Added: WIP version for hive AI integration
 - Added: Edit model livewire component to allow editing models in dialog

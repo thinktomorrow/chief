@@ -61,7 +61,7 @@ trait ResourceDefault
         return SaveFields::class;
     }
 
-    public function getAttributesOnCreate(array $payload = []): array
+    public function getAttributesOnCreate(array $input = []): array
     {
         return [];
     }

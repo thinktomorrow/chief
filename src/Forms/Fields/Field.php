@@ -69,9 +69,9 @@ interface Field extends HasTags, LocalizedField, Validatable
 
     public function getValue(?string $locale = null): mixed;
 
-    public function default(null|string|int|array|Closure $default): static;
+    public function default(null|string|int|bool|array|Closure $default): static;
 
-    public function getDefault(?string $locale = null): null|string|int|array;
+    public function getDefault(?string $locale = null): null|string|int|bool|array;
 
     public function getFieldName(): FieldName;
 
