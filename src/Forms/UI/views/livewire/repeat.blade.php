@@ -5,7 +5,7 @@
     x-sortable
     x-sortable-group="{{ 'group-' . $elementId }}"
     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-    class="rounded-xl border border-grey-200 bg-white [&>[data-slot=repeat-item]+[data-slot=repeat-item]]:border-t [&>[data-slot=repeat-item]+[data-slot=repeat-item]]:border-grey-200"
+    class="border-grey-200 [&>[data-slot=repeat-item]+[data-slot=repeat-item]]:border-grey-200 rounded-xl border bg-white [&>[data-slot=repeat-item]+[data-slot=repeat-item]]:border-t"
 >
     @foreach ($form as $index => $values)
         <div

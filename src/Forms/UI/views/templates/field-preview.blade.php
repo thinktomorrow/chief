@@ -2,7 +2,7 @@
     $component->ignoreDefault();
 @endphp
 
-<x-chief::form.preview :label="ucfirst($getLabel())">
+<x-chief::form.preview :label="ucfirst($getPreviewLabel())">
     @if ($hasLocales() && count($getLocales()) == 1)
         @include($getPreviewView(), ['component' => $component, 'locale' => $getLocales()[0]])
     @elseif ($hasLocales() && count($getLocales()) > 1)

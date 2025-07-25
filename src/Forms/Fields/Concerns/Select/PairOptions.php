@@ -53,7 +53,6 @@ class PairOptions
         }
 
         return collect($options)->map(function ($label, $value) {
-
             // Passed option can already be a paired item as ["key" => "one", "value" => "een"]
             if (is_array($label)) {
 

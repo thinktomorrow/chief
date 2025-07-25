@@ -1,0 +1,4 @@
+@utility form-input-description {
+    @apply body text-sm/6;
+    @apply text-grey-500;
+}
