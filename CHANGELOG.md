@@ -5,6 +5,15 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+### Changed
+
+- **Boolean field:**
+    - Added: new optionLabel and optionDescription fields.
+    - Added: HasPreviewLabel trait to make distinction between labels used in form and/or form preview. This way the Boolean field can show the new optionLabel as preview label instead.
+    - Changed: Layout now shows optionLabel and optionDescription to the left of the input toggle.
+    - Removed: `$getOptions()` as it will always be used as only one boolean (true/false).
+    - Removed: `$showAsToggle()` trait as it will always be shown as a toggle.
+
 ### Overview
 
 - Introduces column-selection UI in tables with backend support via new Livewire concerns
@@ -184,12 +193,10 @@ Please run migrations, as this update involves database changes, especially for 
 ### Changed
 
 - **Config:**
-
     - `chief.sites`: site mgmt replacing `chief.locales`.
     - Diacritics are now converted to ascii for all links.
 
 - **State:**
-
     - Added `scopeWithOnlineUrl` to Visitable interface to check if model has online url for given site.
     - Added `rawUrl` to Visitable interface to check if model has online url for given site.
     - former `scopeOnline` checked for the 'published' state on a page. This is now renamed to `scopePublished`.
@@ -200,7 +207,6 @@ Please run migrations, as this update involves database changes, especially for 
         - whether page is allowed on the given site
 
 - **Fragments:**
-
     - Renamed `FragmentAdded` event to `FragmentAttached`.
     - `Fragmentable::fragmentModel()` now throws `MissingFragmentModelException` if no model found.
     - Fragment classes must now extend `BaseFragment`.
@@ -211,7 +217,6 @@ Please run migrations, as this update involves database changes, especially for 
     - Replaced `renderFragment()` and `renderAdminFragment()` with `render()` and `renderInAdmin()`.
 
 - **Form Livewire Component:**
-
     - Removed methods: `Form::action()`, `Form::windowAction()`, `Form::refreshUrl()`, `Form::redirectAfterSubmit()`.
     - Removed `Field::editInSidebar()` and `Field::editInline()`.
     - Use `Form::view()` instead of `Form::windowContainerView()` or `Form::previewView()`.
@@ -219,7 +224,6 @@ Please run migrations, as this update involves database changes, especially for 
     - Obsolete scripts removed.
 
 - **Form Components Cleanup:**
-
     - All `x-chief::button` updated to `x-chief::button` (was `x-chief-table::button`).
     - `x-chief::link` now follows `x-chief::button` API.
     - Replaced legacy CSS files:
@@ -228,13 +232,11 @@ Please run migrations, as this update involves database changes, especially for 
         - `link.css` → replaced by `bui-link.css`, then renamed back to `link.css`
 
 - **Renamed Components:**
-
     - `x-chief::form.label` → was `x-chief::input.label`
     - `x-chief::form.description` → was `x-chief::input.description`
     - `x-chief::form.error` → was `x-chief::input.error`
 
 - **ModelDefaults:**
-
     - Now does **not** include:
         - `InteractsWithAssets`
         - `Viewable`

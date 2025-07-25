@@ -18,7 +18,7 @@
             x-cloak
             x-show="formUpdated"
             variant="green"
-            class="mt-[0.3125rem] inline-flex animate-pop-in-badge items-center gap-0.5"
+            class="animate-pop-in-badge mt-[0.3125rem] inline-flex items-center gap-0.5"
         >
             <span>Opgeslagen</span>
         </x-chief::badge>
