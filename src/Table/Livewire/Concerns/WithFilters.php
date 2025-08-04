@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Thinktomorrow\Chief\Table\Filters\Filter;
+use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 
 trait WithFilters
 {
@@ -26,6 +27,10 @@ trait WithFilters
         return array_filter($this->filters, fn ($filterValue) => ! $this->isEmptyFilterValue($filterValue));
     }
 
+    /**
+     * Display the filter value in the filter bar. For options we
+     * want to display the label instead of the value.
+     */
     public function getActiveFilterValue(string $filterKey): string
     {
         if (($filterValue = $this->findActiveFilterValue($filterKey))) {
@@ -95,16 +100,9 @@ trait WithFilters
     {
         $filter = $this->findFilter($filterKey);
 
-        if (method_exists($filter, 'getOptions')) {
-            $options = $filter->getOptions();
-            $filterValue = array_map(function ($value) use ($options) {
-                foreach ($options as $option) {
-                    if ($option['value'] == $value) {
-                        return $option['label'];
-                    }
-                }
-
-                return $value;
+        if ($filter instanceof SelectFilter) {
+            $filterValue = array_map(function ($value) use ($filter) {
+                return $filter->findLabelByValue($value) ?? $value;
             }, $filterValue);
         }
 

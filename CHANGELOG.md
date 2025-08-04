@@ -20,6 +20,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: On create fragment, the file field was not saved.
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
+- Fixed: issue with mapping original null value
+- Fixed: issue when using grouped select filter in table
 
 ### Additions
 

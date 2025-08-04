@@ -13,10 +13,11 @@ trait TreeResourceDefault
     public function getTreeModelIds(): array
     {
         $modelClass = static::modelClassName();
+        $modelObject = new $modelClass;
 
-        return DB::table((new $modelClass)->getTable())
+        return DB::table($modelObject->getTable())
             ->orderBy('order')
-            ->select(['id', 'parent_id'])
+            ->select([$modelObject->getKeyName(), 'parent_id'])
             ->get()
             ->all();
     }
@@ -25,6 +26,7 @@ trait TreeResourceDefault
     {
         $modelClass = static::modelClassName();
         $reflection = (new \ReflectionClass($modelClass));
+        $modelObject = new $modelClass;
         $eagerLoading = [];
 
         if ($reflection->implementsInterface(Visitable::class)) {
@@ -38,7 +40,7 @@ trait TreeResourceDefault
         $models = $modelClass::withoutGlobalScopes()
             ->with($eagerLoading)
             ->orderBy('order')
-            ->when($ids, fn ($query) => $query->whereIn('id', $ids))
+            ->when($ids, fn ($query) => $query->whereIn($modelObject->getKeyName(), $ids))
             ->get();
 
         // Sort by parent
