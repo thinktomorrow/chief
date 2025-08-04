@@ -36,7 +36,7 @@
         "openai-php/client": "^0.13.0",
         "orchestra/testbench": "^9.14",
         "phpunit/phpunit": "^11.5",
-        "spatie/opening-hours": "^2.41"
+        "spatie/opening-hours": "^4.2"
     },
     "autoload": {
         "psr-4": {
