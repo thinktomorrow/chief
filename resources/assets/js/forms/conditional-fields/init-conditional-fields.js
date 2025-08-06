@@ -48,7 +48,6 @@ const initConditionalFieldsInContainer = (
                 break;
             default:
                 console.error(
-                    /* eslint-disable-next-line */
                     `Error while trying to initialise conditional fields: Trigger handling for type ${type} is not implemented yet ...`
                 );
         }

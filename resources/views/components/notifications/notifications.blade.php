@@ -1,4 +1,4 @@
-<div class="pointer-events-none fixed bottom-6 right-6 z-20">
+<div class="pointer-events-none fixed right-6 bottom-6 z-[60]">
     <div
         x-cloak
         x-data="{
@@ -46,15 +46,15 @@
         <div
             x-on:click="toggleNotifications"
             x-show="notifications.length + asyncNotifications.length > 0"
-            class="relative cursor-pointer rounded-full border border-grey-100 bg-white p-3 text-grey-900 shadow-lg hover:bg-grey-50"
+            class="border-grey-100 text-grey-900 hover:bg-grey-50 relative cursor-pointer rounded-full border bg-white p-3 shadow-lg"
         >
             <x-chief::icon.bell class="size-5" />
 
             <div
                 x-show="closedNotifications > 0"
-                class="absolute -bottom-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600"
+                class="from-primary-500 to-primary-600 absolute -right-2 -bottom-2 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br"
             >
-                <span class="text-xs font-bold leading-none text-white" x-text="closedNotifications"></span>
+                <span class="text-xs leading-none font-bold text-white" x-text="closedNotifications"></span>
             </div>
         </div>
     </div>

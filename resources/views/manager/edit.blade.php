@@ -34,7 +34,7 @@
                 @endif
             </div>
 
-            @if (!$hasSites && $hasStates)
+            @if (! $hasSites && $hasStates)
                 <x-slot name="actions">
                     @if ($hasStates)
                         @foreach ($model->getStateKeys() as $stateKey)

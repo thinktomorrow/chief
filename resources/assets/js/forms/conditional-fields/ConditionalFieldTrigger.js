@@ -138,7 +138,6 @@ class ConditionalFieldTrigger {
 
             if (!element) {
                 console.error(
-                    /* eslint-disable-next-line */
                     `Error while trying to create conditional fields: Couldn't find formgroup with key ${key}. Make sure this field exists on this model.`
                 );
             } else {

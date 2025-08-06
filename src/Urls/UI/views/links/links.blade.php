@@ -16,11 +16,11 @@
                     wire:key="site-link-{{ $link->locale }}"
                     @class([
                         'space-y-1',
-                        'mt-3 border-t border-grey-100 pt-3' => ! $loop->first,
+                        'border-grey-100 mt-3 border-t pt-3' => ! $loop->first,
                     ])
                 >
                     <div class="flex items-start justify-between gap-2">
-                        <p class="text-sm/5 font-medium text-grey-500">{{ $link->site->name }}</p>
+                        <p class="text-grey-500 text-sm/5 font-medium">{{ $link->site->name }}</p>
 
                         <x-chief::badge :variant="$link->stateVariant">
                             {{ $link->stateLabel }}
