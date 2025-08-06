@@ -48,7 +48,7 @@
     @if ($hasLocales() && count($getLocales()) == 1)
         @include($getView(), ['component' => $component, 'locale' => $getLocales()[0]])
     @elseif ($hasLocales() && count($getLocales()) > 1)
-        <x-chief::tabs :show-nav="false" :should-listen-for-external-tab="true">
+        <x-chief::tabs data-slot="control" :show-nav="false" :should-listen-for-external-tab="true">
             @foreach ($getLocales() as $locale)
                 <x-chief::tabs.tab tab-id="{{ $locale }}">
                     @include($getView(), ['component' => $component, 'locale' => $locale])
@@ -61,11 +61,11 @@
 
     @if ($hasLocales())
         @foreach ($getLocales() as $locale)
-            <x-chief::form.error :rule="LivewireFieldName::get($getId($locale ?? null))" />
+            {{-- <x-chief::form.error :rule="LivewireFieldName::get($getId($locale ?? null))" /> --}}
             <x-chief::form.error :rule="$getId($locale)" />
         @endforeach
     @else
-        <x-chief::form.error :rule="LivewireFieldName::get($getId())" />
+        {{-- <x-chief::form.error :rule="LivewireFieldName::get($getId())" /> --}}
         <x-chief::form.error :rule="$getId()" />
     @endif
 </x-chief::form.fieldset>
