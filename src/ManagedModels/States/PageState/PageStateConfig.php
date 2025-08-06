@@ -147,27 +147,14 @@ class PageStateConfig implements StateAdminConfig
 
     public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
     {
-        switch ($transitionKey) {
-            case 'publish':
-                return 'Publiceer';
-
-                return 'Publiceer';
-
-            case 'unpublish':
-                return 'Zet terug in draft';
-
-            case 'archive':
-                return 'Archiveer';
-
-            case 'unarchive':
-                return 'Haal uit archief';
-
-            case 'delete':
-                return 'Verwijder';
-
-            default:
-                return $transitionKey;
-        }
+        return match ($transitionKey) {
+            'publish' => 'Publiceer',
+            'unpublish' => 'Zet terug in draft',
+            'archive' => 'Archiveer',
+            'unarchive' => 'Haal uit archief',
+            'delete' => 'Verwijder',
+            default => $transitionKey,
+        };
     }
 
     public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
@@ -184,25 +171,14 @@ class PageStateConfig implements StateAdminConfig
 
     public function getTransitionTitle(StatefulContract $statefulContract, string $transitionKey): ?string
     {
-        switch ($transitionKey) {
-            case 'publish':
-                return 'Publiceer';
-
-            case 'unpublish':
-                return 'Draft';
-
-            case 'archive':
-                return 'Archiveer';
-
-            case 'unarchive':
-                return 'Herstel';
-
-            case 'delete':
-                return 'Verwijder';
-
-            default:
-                return $transitionKey;
-        }
+        return match ($transitionKey) {
+            'publish' => 'Publiceer',
+            'unpublish' => 'Draft',
+            'archive' => 'Archiveer',
+            'unarchive' => 'Herstel',
+            'delete' => 'Verwijder',
+            default => $transitionKey,
+        };
     }
 
     public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string

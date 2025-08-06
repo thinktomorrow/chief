@@ -75,36 +75,12 @@ class SimpleStateConfig implements StateAdminConfig
 
     public function getStateLabel(StatefulContract $statefulContract): ?string
     {
-        switch ($statefulContract->getState($this->getStateKey())) {
-            case SimpleState::online:
-                return 'Gepubliceerd';
-
-            case SimpleState::offline:
-                return 'Draft';
-
-            case SimpleState::deleted:
-                return 'Verwijderd';
-
-            default:
-                return $statefulContract->getState($this->getStateKey())?->getValueAsString();
-        }
-    }
-
-    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
-    {
-        switch ($transitionKey) {
-            case 'publish':
-                return 'Publiceer';
-
-            case 'unpublish':
-                return 'Zet in draft';
-
-            case 'delete':
-                return 'Verwijder';
-
-            default:
-                return $transitionKey;
-        }
+        return match ($statefulContract->getState($this->getStateKey())) {
+            SimpleState::online => 'Gepubliceerd',
+            SimpleState::offline => 'Draft',
+            SimpleState::deleted => 'Verwijderd',
+            default => $statefulContract->getState($this->getStateKey())?->getValueAsString(),
+        };
     }
 
     public function getStateVariant(StatefulContract $statefulContract): string
@@ -116,7 +92,7 @@ class SimpleStateConfig implements StateAdminConfig
     {
         return match ($state) {
             SimpleState::online => 'outline-blue',
-            SimpleState::offline => 'outline-orange',
+            SimpleState::offline => 'outline-grey',
             SimpleState::deleted => 'outline-red',
             default => 'outline-blue',
         };
@@ -124,25 +100,41 @@ class SimpleStateConfig implements StateAdminConfig
 
     public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
     {
-        switch ($transitionKey) {
-            case 'publish':
-                return 'success';
+        return match ($transitionKey) {
+            'publish' => 'success',
+            'delete' => 'error',
+            default => 'info',
+        };
+    }
 
-            case 'delete':
-                return 'error';
-
-            default:
-                return 'info';
-        }
+    public function getTransitionTitle(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return match ($transitionKey) {
+            'publish' => 'Online zetten',
+            'unpublish' => 'Offline zetten',
+            'delete' => 'Verwijderen',
+            default => $transitionKey,
+        };
     }
 
     public function getTransitionContent(StatefulContract $statefulContract, string $transitionKey): ?string
     {
-        if ($transitionKey == 'delete') {
-            return 'Opgelet! Het verwijderen is definitief. Dit kan niet worden ongedaan gemaakt.';
-        }
+        return match ($transitionKey) {
+            'publish' => 'Het item zal onmiddellijk online komen te staan en zichtbaar zijn op de website.',
+            'unpublish' => 'Het item zal onmiddellijk offline worden gehaald en niet meer zichtbaar zijn op de website.',
+            'delete' => 'Opgelet! Het verwijderen van dit item is definitief en kan niet worden ongedaan gemaakt.',
+            default => null,
+        };
+    }
 
-        return null;
+    public function getTransitionLabel(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return match ($transitionKey) {
+            'publish' => 'Zet online',
+            'unpublish' => 'Zet offline',
+            'delete' => 'Verwijder',
+            default => $transitionKey,
+        };
     }
 
     public function hasConfirmationForTransition(string $transitionKey): bool
