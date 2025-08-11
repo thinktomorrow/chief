@@ -8,7 +8,7 @@
         "test": "jest"
     },
     "devDependencies": {
-        "@eslint/js": "^9.32.0",
+        "@eslint/js": "^9.33.0",
         "@tailwindcss/vite": "^4.1.11",
         "dotenv": "^16.6.1",
         "eslint": "^9.32.0",
