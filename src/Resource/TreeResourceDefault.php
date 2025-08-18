@@ -22,19 +22,20 @@ trait TreeResourceDefault
             ->all();
     }
 
-    public function getTreeModels(?array $ids = null): Collection
+    public function getTreeModels(?array $ids = null, array $eagerLoading = ['urls', 'tags']): Collection
     {
         $modelClass = static::modelClassName();
         $reflection = (new \ReflectionClass($modelClass));
         $modelObject = new $modelClass;
-        $eagerLoading = [];
 
-        if ($reflection->implementsInterface(Visitable::class)) {
-            $eagerLoading[] = 'urls';
-        }
+        foreach ($eagerLoading as $relation) {
+            if ($relation == 'urls' && ! $reflection->implementsInterface(Visitable::class)) {
+                unset($eagerLoading[array_search('urls', $eagerLoading)]);
+            }
 
-        if ($reflection->implementsInterface(Taggable::class)) {
-            $eagerLoading[] = 'tags';
+            if ($relation == 'tags' && ! $reflection->implementsInterface(Taggable::class)) {
+                unset($eagerLoading[array_search('tags', $eagerLoading)]);
+            }
         }
 
         $models = $modelClass::withoutGlobalScopes()

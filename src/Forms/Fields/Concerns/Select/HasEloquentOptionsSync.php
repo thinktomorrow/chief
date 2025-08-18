@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns\Select;
 
-use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\SelectOptions;
+use Thinktomorrow\Chief\Shared\Concerns\Nestable\Actions\MemoizedSelectOptions;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\Nestable;
 
 trait HasEloquentOptionsSync
@@ -17,7 +17,7 @@ trait HasEloquentOptionsSync
             $relationModel = $model->{$relation}()->getModel();
 
             $options = ($relationModel instanceof Nestable)
-                ? app(SelectOptions::class)->getOptions($relationModel::class)
+                ? app(MemoizedSelectOptions::class)->getOptions($relationModel::class)
                 : $relationModel::all()->pluck($labelKey, $valueKey)->toArray();
 
             $this->options($options)

@@ -213,6 +213,12 @@ return new class extends Migration
         foreach ($menuItems as $menuItem) {
             $menu = DB::table('menus')->where('type', $menuItem->menu_type)->first();
 
+            if (! $menu) {
+                print_r("Menu type '{$menuItem->menu_type}' not found for menu item with ID {$menuItem->id}");
+
+                continue;
+            }
+
             DB::table('menu_items')->where('id', $menuItem->id)->update([
                 'menu_id' => $menu->id,
             ]);
