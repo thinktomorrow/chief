@@ -3,10 +3,12 @@
 namespace Thinktomorrow\Chief\Table\Table\Presets;
 
 use Thinktomorrow\Chief\ManagedModels\States\State\GetPrimaryStateKeyOfModel;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Table\Actions\Presets\CreateModelAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\DuplicateModelAction;
@@ -47,20 +49,24 @@ class PageTable extends Table
                 ...($reflection->implementsInterface(Sortable::class) ? [ReorderAction::makeDefault()->secondary()] : []),
             ])
             ->bulkActions([
-                OnlineStateBulkAction::makeDefault($resourceKey),
-                OfflineStateBulkAction::makeDefault($resourceKey),
+                ...($reflection->implementsInterface(StatefulContract::class) ? [
+                    OnlineStateBulkAction::makeDefault($resourceKey),
+                    OfflineStateBulkAction::makeDefault($resourceKey),
+                ] : []),
             ])
             ->rowActions([
                 EditModelAction::makeDefault($resourceKey)->primary(),
-                OnlineStateRowAction::makeDefault($resourceKey)->tertiary(),
-                OfflineStateRowAction::makeDefault($resourceKey)->tertiary(),
-                UnArchiveRowAction::makeDefault($resourceKey)->tertiary(),
+                ...($reflection->implementsInterface(StatefulContract::class) ? [
+                    OnlineStateRowAction::makeDefault($resourceKey)->tertiary(),
+                    OfflineStateRowAction::makeDefault($resourceKey)->tertiary(),
+                    UnArchiveRowAction::makeDefault($resourceKey)->tertiary(),
+                ] : []),
                 DuplicateModelAction::makeDefault($resourceKey)->tertiary(),
             ])
             ->filters([
-                ...($reflection->implementsInterface(HasAllowedSites::class) ? [SiteFilter::makeDefault($resourceKey)->primary()] : []),
+                ...(($reflection->implementsInterface(HasAllowedSites::class) && ChiefSites::all()->count() > 1) ? [SiteFilter::makeDefault($resourceKey)->primary()] : []),
                 TitleFilter::makeDefault(),
-                OnlineStateFilter::makeDefault()->secondary(),
+                ...($reflection->implementsInterface(StatefulContract::class) ? [OnlineStateFilter::makeDefault()->secondary()] : []),
             ])
             ->columns([
                 ColumnText::make('title')->label('Titel')->link(function ($model) use ($resourceKey) {

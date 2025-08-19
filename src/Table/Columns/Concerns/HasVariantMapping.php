@@ -32,7 +32,7 @@ trait HasVariantMapping
     {
         foreach ($this->variantMapResolvers as $variantMapResolver) {
 
-            $value = is_scalar($columnItem->getOriginalValue()) ? $columnItem->getOriginalValue() : $columnItem->getRawValue();
+            $value = (is_scalar($columnItem->getOriginalValue()) || is_null($columnItem->getOriginalValue())) ? $columnItem->getOriginalValue() : $columnItem->getRawValue();
 
             $columnItem->variant(
                 call_user_func($variantMapResolver, $value, $columnItem, $this->getModel(), $this)

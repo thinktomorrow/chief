@@ -30,16 +30,16 @@ class SelectOptions
             ->pluck($model->getKeyName(), fn (Nestable $nestedNode) => $nestedNode->getBreadCrumbLabel());
     }
 
-    public function getTree(Nestable|string $model): NestableTree
+    public function getTree(Nestable|string $model, array $eagerLoading = []): NestableTree
     {
         $resource = $this->registry->findTreeResourceByModel(is_string($model) ? $model : $model::class);
 
-        return NestableTree::fromIterable($resource->getTreeModels());
+        return NestableTree::fromIterable($resource->getTreeModels(null, $eagerLoading));
     }
 
-    public function getOptions(string $modelClass, string $key = 'id'): array
+    public function getOptions(string $modelClass, string $key = 'id', array $eagerLoading = []): array
     {
-        return $this->getTree($modelClass)
+        return $this->getTree($modelClass, $eagerLoading)
             ->pluck($key, fn (Nestable $nestedNode) => $nestedNode->getBreadCrumbLabel());
     }
 }

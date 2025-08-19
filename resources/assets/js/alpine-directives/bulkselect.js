@@ -65,7 +65,6 @@ const Bulkselect = (config) => ({
         );
     },
     getSelectedPageItems() {
-        // eslint-disable-next-line arrow-body-style
         return this.pageItems.filter((item) => {
             return this.selection.some((selectedItem) => selectedItem.toString() === item.toString());
         });
@@ -79,15 +78,12 @@ const Bulkselect = (config) => ({
             this.isIndeterminateOnPage = false;
             this.$refs.tableHeaderCheckbox.checked = false;
         } else {
-            /* eslint-disable */
             this.isAllSelectedOnPage =
                 pageItems.length > 0 &&
                 !!pageItems.every((item) =>
                     this.selection.some((selectedItem) => selectedItem.toString() === item.toString())
                 );
-            /* eslint-enable */
 
-            // eslint-disable-next-line max-len
             this.isIndeterminateOnPage = !(
                 selectedPageItems.length === pageItems.length || selectedPageItems.length === 0
             );

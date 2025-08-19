@@ -22,6 +22,8 @@ trait HasValue
      */
     protected bool $valueGiven = false;
 
+    protected bool $originalValueGiven = false;
+
     public function value(mixed $value): static
     {
         $this->value = $value;
@@ -49,12 +51,17 @@ trait HasValue
      */
     public function getOriginalValue(?string $locale = null): mixed
     {
-        return $this->originalValue ?? $this->getRawValue($locale);
+        if ($this->originalValueGiven) {
+            return $this->originalValue;
+        }
+
+        return $this->getRawValue($locale);
     }
 
     public function setOriginalValue(mixed $value): static
     {
         $this->originalValue = $value;
+        $this->originalValueGiven = true;
 
         return $this;
     }

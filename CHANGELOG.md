@@ -29,6 +29,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: On create fragment, the file field was not saved.
 - Fixed: Reordering tree items in table showed wrong results.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
+- Fixed: issue with mapping original null value
+- Fixed: issue when using grouped select filter in table
 
 ### Additions
 
@@ -43,6 +45,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: `Field::getOriginalValue()` method to retrieve the original value of a column item before it was mapped. This
   impacts variant mapping of a column (see below)
 - Added: Parameter `redirectAfterSave` to instruct CreateModelComponent to close or redirect to the new page after save.
+- Added: option on `getTreeModels(?array $ids = null, array $eagerLoading = ['urls', 'tags']))` to select eager
+  relations. This parameter is also available on the `SelectOptions::getTree()` method.
+- Added: `MemoizedSelectOptions` to avoid duplicate queries when using the same select options in multiple
+  places.
 
 ### Changes
 

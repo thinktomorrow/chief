@@ -4,7 +4,7 @@ You can run the upgrade command to facilitate the upgrade process.
 
 - First temporarily comment the existing service providers of your project to avoid conflicts during installing chief
   0.10
-- Set the chief.sites config so the ugrade script can run with the proper sites.
+- Set the chief.sites config so the upgrade script can run with the proper sites.
 - Next install the chief 0.10 package
 
 ## Run upgrade command

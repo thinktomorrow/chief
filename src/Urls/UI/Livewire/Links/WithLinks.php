@@ -27,7 +27,6 @@ trait WithLinks
 
         /** @var UrlRecord $record */
         foreach ($activeRecords as $record) {
-
             $site = ChiefSites::all()->find($record->site);
 
             $status = LinkStatus::from($record->status);

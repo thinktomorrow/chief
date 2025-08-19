@@ -63,6 +63,8 @@ trait HasValueMapping
                 'published' => 'gepubliceerd',
                 'draft' => 'draft',
                 'archived' => 'gearchiveerd',
+                'online' => 'online',
+                'offline' => 'offline',
                 default => $rawValue,
             };
         });
@@ -72,6 +74,8 @@ trait HasValueMapping
             'draft' => 'grey',
             'archived' => 'red',
             'link ontbreekt' => 'orange',
+            'online' => 'green',
+            'offline' => 'red',
         ]);
     }
 

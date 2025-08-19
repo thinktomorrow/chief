@@ -17,9 +17,6 @@
     }"
     data-slot="form-group"
 >
-    <span class="font-bold" x-text="scopedLocale"></span>
-    <span>{{ implode(",", $locales) }}</span>
-
     @if (count($locales) > 1)
         <x-chief::button-group size="base">
             @foreach ($locales as $i => $locale)

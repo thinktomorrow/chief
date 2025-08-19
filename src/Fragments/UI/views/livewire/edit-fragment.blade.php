@@ -31,12 +31,9 @@
             </x-chief::dialog.drawer.header>
         </x-slot>
 
-        {{-- TODO(ben): get fragment urls --}}
         @include('chief-fragments::livewire._partials.shared-fragment-actions')
-
-        @include('chief-form::livewire._partials.locale-toggle', ['entangleScopedLocale' => true])
-
         @include('chief-fragments::livewire._partials.bookmarks')
+        @include('chief-form::livewire._partials.locale-toggle', ['entangleScopedLocale' => true])
 
         @foreach ($this->getFields() as $field)
             {{ $field }}

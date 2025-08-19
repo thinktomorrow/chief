@@ -1,4 +1,4 @@
-/**
+/*
  * Toggle visibility of element based on a given CSS animation
  * @param {String} containerSelector
  * @param {String} toggleSelector
@@ -56,9 +56,7 @@ class AnimatedToggle {
             this.container.classList.remove(animationClass);
         });
 
-        /* eslint-disable */
         void this.container.offsetWidth;
-        /* eslint-enable */
 
         this.animationClasses.forEach((animationClass) => {
             this.container.classList.add(animationClass);

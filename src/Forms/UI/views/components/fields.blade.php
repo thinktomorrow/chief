@@ -12,7 +12,6 @@
     if (isset($notTagged)) {
         $fields = $fields->filterByNotTagged(explode(',', $notTagged));
     }
-    // dd($fields, $fields->all());
 @endphp
 
 @foreach ($fields->all() as $field)

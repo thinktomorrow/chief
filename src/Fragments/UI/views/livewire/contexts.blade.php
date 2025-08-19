@@ -3,8 +3,7 @@
 @endphp
 
 <x-chief::window title="Fragmenten">
-    @if($this->allowMultipleItems() || count($items) > 1)
-
+    @if ($this->allowMultipleItems() || count($items) > 1)
         <x-slot name="badges">
             @if (($item = $items->first(fn ($item) => $item->id === $activeItemId)) && count($locales) > 1)
                 @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::verifiedLocales($item->getAllowedSites()) as $site)
@@ -21,15 +20,13 @@
         <x-slot name="tabs">
             @include('chief-fragments::livewire.tabitems.nav')
         </x-slot>
-
     @endif
 
     <div>
         @foreach ($items as $item)
             <div wire:key="context-tab-content-{{ $item->id }}">
                 @if ($item->id === $activeItemId)
-
-                    @if($this->allowMultipleItems() || count($items) > 1)
+                    @if ($this->allowMultipleItems() || count($items) > 1)
                         @include('chief-fragments::livewire.tabitems.actions')
                     @endif
 

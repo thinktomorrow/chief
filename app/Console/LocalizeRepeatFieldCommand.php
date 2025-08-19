@@ -23,7 +23,10 @@ class LocalizeRepeatFieldCommand extends BaseCommand
 
         foreach ($classes as $class) {
 
-            $models = $class::withoutGlobalScopes()->get();
+            $models = ((new \ReflectionClass($class))->hasMethod('withoutGlobalScopes')
+                ? $class::withoutGlobalScopes()->get()
+                : $class::all()
+            );
 
             $models->each(function ($model) use ($fieldKey) {
                 $this->localizeRepeatField($model, $fieldKey);

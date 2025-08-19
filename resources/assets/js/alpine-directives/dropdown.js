@@ -1,4 +1,3 @@
-// eslint-disable-next-line object-curly-newline
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 
 const dropdown = (config) => ({
