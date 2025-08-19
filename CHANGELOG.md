@@ -13,48 +13,57 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   to export / import asset filenames and alt texts.
 - Integrates a Hive AI plugin: Alpine directives, service providers, prompts, and form-field enhancements
   for AI-powered text suggestions.
+- Added a new SelectList field and Boolean field.
 
-### Fixes
+### Forms
 
-- Fixed: use sortable attribute for table sorting
-- Fixed: On create fragment, the file field was not saved.
-- Fixed: Reordering tree items in table showed wrong results.
+- **Breaking change** Removed: `showAsToggle()` method on fields. Only the new Boolean field will always be shown as a
+  toggle. Be sure to remove this on field definitions in your projects.
 - Fixed: non-unique checkbox/radio ids resulted in only toggling first checkbox/radio in forms
 - Fixed: issue with mapping original null value
-- Fixed: issue when using grouped select filter in table
-
-### Additions
-
-- Added: asset alt and filename export / import
-- Added: Table column selection
+- Added: HasPreviewLabel trait to make distinction between labels used in form and/or form preview. This way the Boolean
+  field can show the new optionLabel as preview label instead.
 - Added: Select list field
-- Added: Boolean field
+- Added: Boolean field with new optionLabel and optionDescription methods.
 - Added: Loading indicator on save buttons in sidebar dialog.
-- Added: WIP version for hive AI integration
-- Added: Edit model livewire component to allow editing models in dialog
 - Added: `Thinktomorrow\Chief\Forms\Layouts\Layout` interface to allow placement of non form elements on a page
 - Added: `Field::getOriginalValue()` method to retrieve the original value of a column item before it was mapped. This
   impacts variant mapping of a column (see below)
+- Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. They are also wire:
+  ignored. Except repeat fields are still live. This was mainly for support of nested repeat fields, which are no longer
+  supported.
+- Changed: Refactor locale toggles in forms and fragments to use one partial file.
+
+### Assets
+
+- Added: asset alt and filename export / import
+- Added: WIP version for hive AI integration
+
+### Tables
+
+- Fixed: Reordering tree items in table showed wrong results.
+- Fixed: use sortable attribute for table sorting
+- Fixed: issue when using grouped select filter in table
+- Added: Table column selection
+- Changed: Variant mapping of a column item now used the original value instead of any mapped value.
+- Changed: improve flexibility of default table actions and ordering logic.
+
+### Models
+
+- Fixed: On create fragment, the file field was not saved.
+- Added: Edit model livewire component to allow editing models in dialog
 - Added: Parameter `redirectAfterSave` to instruct CreateModelComponent to close or redirect to the new page after save.
 - Added: option on `getTreeModels(?array $ids = null, array $eagerLoading = ['urls', 'tags']))` to select eager
   relations. This parameter is also available on the `SelectOptions::getTree()` method.
 - Added: `MemoizedSelectOptions` to avoid duplicate queries when using the same select options in multiple
   places.
-
-### Changes
-
-- Changed: All wire:model field bindings are now deferred and no longer updated on blur or change. They are also wire:
-  ignored. Except repeat fields
-  are still live. This was mainly for support of nested repeat fields, which are no longer supported.
-- Changed: Refactor locale toggles in forms and fragments to use one partial file.
-- Changed: Variant mapping of a column item now used the original value instead of any mapped value.
 - Changed: `Resource::getAttributesOnCreate` now has input values as its parameter, which allows you to
   set any of these values as model attributes on create.
-- Changed: improve flexibility of default table actions and ordering logic.
 
 ### Seo Asset table
 
-Introduces SEO table for asset management, which allows you to easily manage filename and alt attributes of each asset.
+Introduces first version of asset management, which allows you to easily manage filename and alt attributes of each
+asset.
 Every Asset model should implement the `HasAlt` interface as well as the `ReferencesModel` to be able to use the seo
 table.
 
@@ -190,12 +199,10 @@ Please run migrations, as this update involves database changes, especially for 
 ### Changed
 
 - **Config:**
-
     - `chief.sites`: site mgmt replacing `chief.locales`.
     - Diacritics are now converted to ascii for all links.
 
 - **State:**
-
     - Added `scopeWithOnlineUrl` to Visitable interface to check if model has online url for given site.
     - Added `rawUrl` to Visitable interface to check if model has online url for given site.
     - former `scopeOnline` checked for the 'published' state on a page. This is now renamed to `scopePublished`.
@@ -206,7 +213,6 @@ Please run migrations, as this update involves database changes, especially for 
         - whether page is allowed on the given site
 
 - **Fragments:**
-
     - Renamed `FragmentAdded` event to `FragmentAttached`.
     - `Fragmentable::fragmentModel()` now throws `MissingFragmentModelException` if no model found.
     - Fragment classes must now extend `BaseFragment`.
@@ -217,7 +223,6 @@ Please run migrations, as this update involves database changes, especially for 
     - Replaced `renderFragment()` and `renderAdminFragment()` with `render()` and `renderInAdmin()`.
 
 - **Form Livewire Component:**
-
     - Removed methods: `Form::action()`, `Form::windowAction()`, `Form::refreshUrl()`, `Form::redirectAfterSubmit()`.
     - Removed `Field::editInSidebar()` and `Field::editInline()`.
     - Use `Form::view()` instead of `Form::windowContainerView()` or `Form::previewView()`.
@@ -225,7 +230,6 @@ Please run migrations, as this update involves database changes, especially for 
     - Obsolete scripts removed.
 
 - **Form Components Cleanup:**
-
     - All `x-chief::button` updated to `x-chief::button` (was `x-chief-table::button`).
     - `x-chief::link` now follows `x-chief::button` API.
     - Replaced legacy CSS files:
@@ -234,13 +238,11 @@ Please run migrations, as this update involves database changes, especially for 
         - `link.css` → replaced by `bui-link.css`, then renamed back to `link.css`
 
 - **Renamed Components:**
-
     - `x-chief::form.label` → was `x-chief::input.label`
     - `x-chief::form.description` → was `x-chief::input.description`
     - `x-chief::form.error` → was `x-chief::input.error`
 
 - **ModelDefaults:**
-
     - Now does **not** include:
         - `InteractsWithAssets`
         - `Viewable`

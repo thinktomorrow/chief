@@ -27,6 +27,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasName;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPreviewLabel;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasSave;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValidation;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasValue;
@@ -63,6 +64,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasModel;
     use HasName;
     use HasPlaceholder;
+    use HasPreviewLabel;
     use HasSave;
     use HasTitle;
     use HasValidation;
@@ -151,6 +153,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             ...(isset($this->default) ? ['default' => $this->default] : []),
             ...(isset($this->description) ? ['description' => $this->description] : []),
             ...(isset($this->options) ? ['options' => $this->options] : []),
+            ...(isset($this->optionLabel) ? ['optionLabel' => $this->optionLabel] : []),
+            ...(isset($this->optionDescription) ? ['optionDescription' => $this->optionDescription] : []),
             ...(isset($this->optionsAreAssumedGrouped) ? ['hasOptionGroups' => null] : []),
             ...(isset($this->allowMultiple) ? ['multiple' => $this->allowMultiple] : []),
             ...(isset($this->placeholder) ? ['placeholder' => $this->placeholder] : []),
@@ -165,6 +169,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             ...(isset($this->customAttributes) ? ['customAttributes' => $this->customAttributes] : []),
             ...(isset($this->view) ? ['setView' => $this->view] : []),
             ...(isset($this->previewView) ? ['previewView' => $this->previewView] : []),
+            ...(isset($this->previewLabel) ? ['previewLabel' => $this->previewLabel] : []),
             ...(isset($this->useValueFallback) ? ['useValueFallback' => $this->useValueFallback] : []),
             ...(isset($this->showAsToggle) ? ['showAsToggle' => $this->showAsToggle] : []),
             ...(isset($this->wireModelType) ? ['wireModelType' => $this->wireModelType] : []),

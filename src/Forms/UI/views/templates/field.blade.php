@@ -25,25 +25,13 @@
 @endphp
 
 <x-chief::form.fieldset wire:ignore.self :attributes="$fieldSetAttributes">
-    @if ($getLabel())
-        <div data-slot="label" class="flex items-center gap-1">
-            <x-chief::form.label :required="$isRequired()">
-                {!! $getLabel() !!}
-            </x-chief::form.label>
+    <x-chief::form.label :required="$isRequired()" :translatable="$showsLocaleIndicatorInForm()">
+        {!! $getLabel() !!}
+    </x-chief::form.label>
 
-            @if ($showsLocaleIndicatorInForm())
-                <span title="Dit veld is invulbaar per site">
-                    <x-chief::icon.locales class="text-grey-400 size-5" />
-                </span>
-            @endif
-        </div>
-    @endif
-
-    @if ($getDescription())
-        <x-chief::form.description>
-            {!! $getDescription() !!}
-        </x-chief::form.description>
-    @endif
+    <x-chief::form.description>
+        {!! $getDescription() !!}
+    </x-chief::form.description>
 
     @if ($hasLocales() && count($getLocales()) == 1)
         @include($getView(), ['component' => $component, 'locale' => $getLocales()[0]])

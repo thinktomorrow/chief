@@ -4,7 +4,6 @@
             <x-chief::dialog.drawer.header
                 :title="$formComponent->getTitle()"
                 :subtitle="$formComponent->getDescription()"
-                :badges="[]"
             />
         </x-slot>
 

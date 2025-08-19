@@ -14,9 +14,16 @@ trait HasFieldToggle
      * @param  $fieldName  : name of the conditional field
      * @param  $values  : values for which the conditional field should be shown
      */
-    public function toggleField(string $fieldName, string|array $values): static
+    public function toggleField(string $fieldName, string|int|bool|array $values): static
     {
-        $this->fieldToggles[$fieldName] = (array) $values;
+        $values = (array) $values;
+
+        // Sanitize each value to a string for js compatibility - also converts boolean to 0 and 1.
+        foreach ($values as $key => $value) {
+            $values[$key] = (string) $value;
+        }
+
+        $this->fieldToggles[$fieldName] = $values;
 
         return $this;
     }

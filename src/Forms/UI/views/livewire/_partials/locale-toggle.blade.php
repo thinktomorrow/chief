@@ -8,6 +8,7 @@
         },
         showScopedLocale() {
             this.$dispatch('chieftab', { id: this.scopedLocale, reference: 'form-site-toggle' });
+
             @if ($entangleScopedLocale ?? false)
                 $wire.onScopedToLocale(this.scopedLocale);
             @endif

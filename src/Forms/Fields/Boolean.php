@@ -4,40 +4,67 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasToggleDisplay;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
+use Closure;
 
 class Boolean extends Component implements Field
 {
-    use HasToggleDisplay;
+    protected string $view = 'chief-form::fields.boolean';
 
-    protected string $view = 'chief-form::fields.checkbox';
+    protected string $previewView = 'chief-form::previews.fields.boolean';
 
-    protected string $previewView = 'chief-form::previews.fields.checkbox';
+    protected ?string $optionLabel = null;
 
-    private string $optionLabel;
+    protected ?string $optionDescription = null;
 
     public function __construct(string $key)
     {
         parent::__construct($key);
 
-        $this->showAsToggle();
-        $this->default(false);
+        $this->defaultOff();
     }
 
-    public function option(string $optionLabel): static
+    public function default(int|bool|array|string|Closure|null $default): static
+    {
+        if (! is_bool($default)) {
+            throw new \InvalidArgumentException('Default value for Boolean field must be a boolean.');
+        }
+
+        return parent::default($default);
+    }
+
+    public function defaultOff(): static
+    {
+        return $this->default(false);
+    }
+
+    public function defaultOn(): static
+    {
+        return $this->default(true);
+    }
+
+    public function optionLabel(string $optionLabel): static
     {
         $this->optionLabel = $optionLabel;
+
+        $this->previewLabel($optionLabel);
 
         return $this;
     }
 
-    public function getOptions(?string $locale = null): array
+    public function getOptionLabel(): ?string
     {
-        $options = PairOptions::toPairs([
-            true => $this->optionLabel ?? 'Ja',
-        ]);
+        return $this->optionLabel;
+    }
 
-        return $options;
+    public function optionDescription(string $optionDescription): static
+    {
+        $this->optionDescription = $optionDescription;
+
+        return $this;
+    }
+
+    public function getOptionDescription(): ?string
+    {
+        return $this->optionDescription;
     }
 }

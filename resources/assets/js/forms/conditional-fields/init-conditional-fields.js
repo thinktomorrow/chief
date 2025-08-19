@@ -1,6 +1,7 @@
 import InputFieldTrigger from './InputFieldTrigger';
 import RadioFieldTrigger from './RadioFieldTrigger';
 import CheckboxFieldTrigger from './CheckboxFieldTrigger';
+import BooleanFieldTrigger from './BooleanFieldTrigger';
 import SelectFieldTrigger from './SelectFieldTrigger';
 import MultiSelectFieldTrigger from './MultiSelectFieldTrigger';
 
@@ -39,6 +40,9 @@ const initConditionalFieldsInContainer = (
                 break;
             case 'checkbox':
                 new CheckboxFieldTrigger(name, element, conditionalFieldsData);
+                break;
+            case 'boolean':
+                new BooleanFieldTrigger(name, element, conditionalFieldsData);
                 break;
             case 'select':
                 new SelectFieldTrigger(name, element, conditionalFieldsData);
