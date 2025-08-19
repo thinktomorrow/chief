@@ -7,6 +7,7 @@ import shell from 'shelljs';
 import dotenv from 'dotenv';
 
 export default defineConfig({
+    base: '/chief/build',
     build: {
         outDir: 'public/chief/build',
         assetsDir: 'assets',
@@ -61,4 +62,9 @@ export default defineConfig({
             },
         },
     ],
+    resolve: {
+        alias: {
+            '~fonts': path.resolve(__dirname, 'resources/assets/fonts'),
+        },
+    },
 });

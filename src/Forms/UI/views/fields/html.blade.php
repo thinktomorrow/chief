@@ -1,5 +1,5 @@
 {{-- Also needs to be wire:model.live to make Livewire modeling work with the redactor input event --}}
-<div wire:ignore>
+<div data-slot="control" wire:ignore>
     <x-chief::form.input.textarea
         data-editor
         data-locale="{{ $locale ?? app()->getLocale() }}"
@@ -13,6 +13,7 @@
         :autofocus="$hasAutofocus()"
         :attributes="$attributes->merge($getCustomAttributes())"
         style="resize: vertical"
-    >{{ $getActiveValue($locale ?? null) }}</x-chief::form.input.textarea>
-
+    >
+        {{ $getActiveValue($locale ?? null) }}
+    </x-chief::form.input.textarea>
 </div>

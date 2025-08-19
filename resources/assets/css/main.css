@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@import './theme.css';
+
 /* ---------- Sources ---------- */
 @source './../../../resources/views/**/*.blade.php';
 @source './../../../resources/assets/**/*.js';
@@ -13,8 +15,8 @@
 @source './../../../src/Table/UI/**/*.blade.php';
 
 /* ---------- General ---------- */
-@import './general/theme.css';
 @import './general/base.css';
+@import './general/fonts.css';
 
 /* ---------- Components ---------- */
 @import './components/button.css';

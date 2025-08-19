@@ -1,0 +1,55 @@
+@layer base {
+    @font-face {
+        font-family: 'Ronzino';
+        src:
+            url('~fonts/ronzino/ronzino-regular.woff') format('woff'),
+            url('~fonts/ronzino/ronzino-regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Ronzino';
+        src:
+            url('~fonts/ronzino/ronzino-oblique.woff') format('woff'),
+            url('~fonts/ronzino/ronzino-oblique.woff2') format('woff2');
+        font-weight: 400;
+        font-style: oblique;
+    }
+
+    @font-face {
+        font-family: 'Ronzino';
+        src:
+            url('~fonts/ronzino/ronzino-medium.woff') format('woff'),
+            url('~fonts/ronzino/ronzino-medium.woff2') format('woff2');
+        font-weight: 500;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Ronzino';
+        src:
+            url('~fonts/ronzino/ronzino-mediumoblique.woff') format('woff'),
+            url('~fonts/ronzino/ronzino-mediumoblique.woff2') format('woff2');
+        font-weight: 500;
+        font-style: oblique;
+    }
+
+    @font-face {
+        font-family: 'Ronzino';
+        src:
+            url('~fonts/ronzino/ronzino-bold.woff') format('woff'),
+            url('~fonts/ronzino/ronzino-bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Ronzino';
+        src:
+            url('~fonts/ronzino/ronzino-boldoblique.woff') format('woff'),
+            url('~fonts/ronzino/ronzino-boldoblique.woff2') format('woff2');
+        font-weight: 700;
+        font-style: oblique;
+    }
+}

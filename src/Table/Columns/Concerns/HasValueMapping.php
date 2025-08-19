@@ -83,9 +83,9 @@ trait HasValueMapping
     public function simpleStates(): static
     {
         $this->mapValue([
-            'online' => 'online',
-            'offline' => 'offline',
-            'deleted' => 'verwijderd',
+            'online' => 'Online',
+            'offline' => 'Offline',
+            'deleted' => 'Verwijderd',
         ]);
 
         return $this->mapVariant([

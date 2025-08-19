@@ -6,8 +6,8 @@
     rows="5"
     :autofocus="$hasAutofocus()"
     :attributes="$attributes
-            ->merge($getCustomAttributes())
-            ->merge([$getWireModelType() => $getWireModelValue($locale ?? null)])"
+        ->merge($getCustomAttributes())
+    ->merge([$getWireModelType() => $getWireModelValue($locale ?? null)])"
     style="resize: vertical"
 >
     {{ $getActiveValue($locale ?? null) }}
