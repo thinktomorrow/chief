@@ -29,11 +29,11 @@
     "require-dev": {
         "astrotomic/laravel-translatable": "^11.11",
         "barryvdh/laravel-debugbar": "^3.14",
-        "filp/whoops": "^2.14.6",
+        "filp/whoops": "^2.15",
         "larastan/larastan": "^3.0",
-        "maatwebsite/excel": "^3.1",
+        "maatwebsite/excel": "^3.1  ",
         "mockery/mockery": "^1.6",
-        "openai-php/client": "^0.13.0",
+        "openai-php/client": "^0.15.0",
         "orchestra/testbench": "^9.14",
         "phpunit/phpunit": "^11.5",
         "spatie/opening-hours": "^2.41"
