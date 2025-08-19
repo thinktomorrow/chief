@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.10] - 2025-08-19
+
 ### Overview
 
 - Introduces column-selection UI in tables with backend support via new Livewire concerns
