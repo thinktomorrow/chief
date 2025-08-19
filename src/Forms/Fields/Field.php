@@ -83,7 +83,7 @@ interface Field extends HasTags, LocalizedField, Validatable
 
     public function getFieldNameTemplate(): string;
 
-    public function toggleField(string $fieldName, string|array $values): static;
+    public function toggleField(string $fieldName, string|int|bool|array $values): static;
 
     public function toggleFields(array $fieldToggles): static;
 

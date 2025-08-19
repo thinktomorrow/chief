@@ -17,10 +17,6 @@ trait HasPreviewLabel
 
     public function getPreviewLabel(): ?string
     {
-        if (! $this->previewLabel && isset($this->label) && $this->label) {
-            return $this->label;
-        }
-
-        return $this->previewLabel;
+        return $this->previewLabel ?: $this->getLabel();
     }
 }

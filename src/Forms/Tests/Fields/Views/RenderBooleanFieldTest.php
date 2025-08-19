@@ -14,14 +14,14 @@ class RenderBooleanFieldTest extends ChiefTestCase
 
     public function test_it_can_render_boolean_field()
     {
-        $component = Boolean::make('xxx')->option('positieve keuze')->value(true);
+        $component = Boolean::make('xxx')->optionLabel('positieve keuze')->value(true);
         $this->assertStringContainsString('name="xxx', $component->toHtml());
         $this->assertStringContainsString(1, $component->toHtml());
     }
 
     public function test_it_can_render_localized_fields()
     {
-        $component = Boolean::make('xxx')->option('positieve keuze')->locales(['nl', 'en'])->value([
+        $component = Boolean::make('xxx')->optionLabel('positieve keuze')->locales(['nl', 'en'])->value([
             'nl' => $valueNL = true,
             'en' => $valueEN = false,
         ]);
@@ -36,7 +36,7 @@ class RenderBooleanFieldTest extends ChiefTestCase
 
     public function test_it_can_render_as_preview()
     {
-        $component = Boolean::make('xxx')->option('positieve keuze')->value(true);
+        $component = Boolean::make('xxx')->optionLabel('positieve keuze')->value(true);
         $this->assertStringContainsString(1, $component->renderPreview());
     }
 }

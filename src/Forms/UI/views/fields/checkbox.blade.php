@@ -12,18 +12,13 @@
                 name="{{ $getName($locale ?? null) . '[]' }}"
                 value="{{ $value }}"
                 :checked="in_array($value, (array) $getActiveValue($locale ?? null))"
-                class="{{ $optedForToggleDisplay() ? 'appearance-none hidden' : null }}"
                 :attributes="$attributes
                     ->merge($getCustomAttributes())
                     ->merge([$getWireModelType() => $getWireModelValue($locale ?? null)])"
             />
 
-            @if ($optedForToggleDisplay())
-                <span class="form-input-toggle shrink-0"></span>
-            @endif
-
             @if ($label)
-                <span @class(['body body-dark leading-5', 'mt-1' => $optedForToggleDisplay()])>
+                <span @class(['body body-dark leading-5'])>
                     {!! $label !!}
                 </span>
             @endif

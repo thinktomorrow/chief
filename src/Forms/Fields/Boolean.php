@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasToggleDisplay;
+use Closure;
 
 class Boolean extends Component implements Field
 {
-    // use HasToggleDisplay;
-
     protected string $view = 'chief-form::fields.boolean';
 
     protected string $previewView = 'chief-form::previews.fields.boolean';
@@ -22,13 +20,33 @@ class Boolean extends Component implements Field
     {
         parent::__construct($key);
 
-        // $this->showAsToggle();
-        $this->default(false);
+        $this->defaultOff();
+    }
+
+    public function default(int|bool|array|string|Closure|null $default): static
+    {
+        if (! is_bool($default)) {
+            throw new \InvalidArgumentException('Default value for Boolean field must be a boolean.');
+        }
+
+        return parent::default($default);
+    }
+
+    public function defaultOff(): static
+    {
+        return $this->default(false);
+    }
+
+    public function defaultOn(): static
+    {
+        return $this->default(true);
     }
 
     public function optionLabel(string $optionLabel): static
     {
         $this->optionLabel = $optionLabel;
+
+        $this->previewLabel($optionLabel);
 
         return $this;
     }
@@ -48,21 +66,5 @@ class Boolean extends Component implements Field
     public function getOptionDescription(): ?string
     {
         return $this->optionDescription;
-    }
-
-    /**
-     * Overrides the default preview label to use the optionLabel if set.
-     */
-    public function getPreviewLabel(): ?string
-    {
-        if (! $this->previewLabel) {
-            if ($this->getOptionLabel()) {
-                return $this->getOptionLabel();
-            }
-
-            return $this->getLabel();
-        }
-
-        return $this->previewLabel;
     }
 }
