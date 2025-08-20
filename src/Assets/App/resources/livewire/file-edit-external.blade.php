@@ -52,7 +52,9 @@
         </div>
 
         @if (count($this->getComponents()) > 0)
-            <div class="space-y-4">
+            <div data-slot="form-group">
+                @include('chief-assets::_partials.file-edit-site-toggle')
+
                 @foreach ($this->getComponents() as $component)
                     {{ $component }}
                 @endforeach

@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: External assets field components site/locale toggle was missing and is now added to the view.
+
 ## [0.10.10] - 2025-08-19
 
 ### Overview

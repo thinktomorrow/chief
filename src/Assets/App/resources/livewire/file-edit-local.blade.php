@@ -83,13 +83,15 @@
                 @endif
             </x-chief::form.fieldset>
 
-            <div data-slot="form-group">
-                @include('chief-assets::_partials.file-edit-site-toggle')
+            @if (count($this->getComponents()) > 0)
+                <div data-slot="form-group">
+                    @include('chief-assets::_partials.file-edit-site-toggle')
 
-                @foreach ($this->getComponents() as $component)
-                    {{ $component }}
-                @endforeach
-            </div>
+                    @foreach ($this->getComponents() as $component)
+                        {{ $component }}
+                    @endforeach
+                </div>
+            @endif
 
             @if ($errors->any())
                 <x-chief::callout data-slot="form-group" size="small" variant="red">
