@@ -28,7 +28,7 @@
         "vite-plugin-eslint": "^1.8.1"
     },
     "dependencies": {
-        "@floating-ui/dom": "^1.7.3",
+        "@floating-ui/dom": "^1.7.4",
         "choices.js": "^11.1.0",
         "globals": "^16.3.0",
         "lodash": "^4.17.21",

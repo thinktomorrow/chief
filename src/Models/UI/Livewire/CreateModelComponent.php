@@ -64,13 +64,6 @@ class CreateModelComponent extends Component
         ]);
     }
 
-    //    public function updatedAllowedSites(): void
-    //    {
-    //        if (! in_array($this->scopedLocale, $this->allowed_sites)) {
-    //            $this->scopedLocale = $this->allowed_sites[0] ?? null;
-    //        }
-    //    }
-
     public function close()
     {
         $this->reset(['form', 'modelClass', 'locales', 'scopedLocale', 'redirectAfterSave']);

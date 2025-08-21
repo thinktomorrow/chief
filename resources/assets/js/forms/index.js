@@ -1,9 +1,7 @@
 import { initConditionalFieldsInContainer, initConditionalFields } from './conditional-fields/init-conditional-fields';
-import initCharacterCount from './utilities/character-count';
 
 document.addEventListener('DOMContentLoaded', () => {
     initConditionalFields();
-    initCharacterCount();
 });
 
 document.addEventListener('form-dialog-opened', (event) => {
@@ -14,6 +12,5 @@ document.addEventListener('form-dialog-opened', (event) => {
             : document;
 
         initConditionalFieldsInContainer(container);
-        initCharacterCount();
     }, 0);
 });

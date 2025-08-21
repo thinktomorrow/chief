@@ -14,6 +14,8 @@
         :autofocus="$hasAutofocus()"
         :attributes="$attributes
             ->merge($getCustomAttributes())
-            ->merge([$getWireModelType() => $getWireModelValue($locale ?? null)])"
+        ->merge([$getWireModelType() => $getWireModelValue($locale ?? null)])"
     />
 </x-chief::form.input.prepend-append>
+
+@include('chief-form::fields._partials.charactercount')

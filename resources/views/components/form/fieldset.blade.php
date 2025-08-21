@@ -16,6 +16,10 @@
                 '[&_[data-slot=label]+[data-slot=tabs]]:mt-1.5',
                 '[&_[data-slot=hint]+[data-slot=hint]]:mt-1',
                 '[&_[data-slot=error]+[data-slot=error]]:mt-1',
+                // TODO: Better way to remove bottom border rounding for fields followed by a character count element
+                '[&_[data-slot=control]:has(+[data-slot=charactercount])]:rounded-b-none',
+                '[&_[data-slot=control]:has(+[data-slot=charactercount])_.form-input-field]:rounded-b-none',
+                '[&_[data-slot=control]:has(+[data-slot=charactercount])_.redactor-box]:rounded-b-none!',
             ])
         }}
     >

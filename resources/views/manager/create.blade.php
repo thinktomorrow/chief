@@ -29,7 +29,7 @@
                     <label
                         for="{{ $site->locale }}"
                         @class([
-                            'flex items-start gap-3 rounded-xl border border-grey-200 p-4',
+                            'border-grey-200 flex items-start gap-3 rounded-xl border p-4',
                             '[&:has(input[type=checkbox]:checked)]:border-blue-200 [&:has(input[type=checkbox]:checked)]:bg-blue-50',
                         ])
                     >
@@ -42,11 +42,11 @@
 
                         <div class="flex grow items-start justify-between gap-2">
                             <div class="space-y-2">
-                                <p class="font-medium leading-5 text-grey-700">
+                                <p class="text-grey-700 leading-5 font-medium">
                                     {{ $site->name }} ({{ $site->shortName }})
                                 </p>
 
-                                <p class="leading-5 text-grey-500">{{ $site->url }}</p>
+                                <p class="text-grey-500 leading-5">{{ $site->url }}</p>
                             </div>
                         </div>
                     </label>
@@ -64,5 +64,4 @@
             <x-chief::button data-slot="form-group" type="submit" variant="blue">Aanmaken</x-chief::button>
         </form>
     </x-chief::window>
-
 </x-chief::page.template>

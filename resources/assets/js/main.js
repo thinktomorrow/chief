@@ -12,6 +12,7 @@ import preventSubmitOnEnter from './alpine-directives/prevent-submit-on-enter';
 import selectlist from './alpine-directives/selectlist';
 import tabs from './alpine-directives/tabs';
 import hiveAssistant from './alpine-directives/hive-assistant';
+import characterCount from './alpine-directives/character-count';
 
 /* Utilities */
 import initAnimatedToggle from './utilities/animated-toggle';
@@ -24,6 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* Register Alpine directives */
 window.Alpine.data('buttonGroup', buttonGroup);
+window.Alpine.data('characterCount', characterCount);
 window.Alpine.data('dialog', dialog);
 window.Alpine.data('dropdown', dropdown);
 window.Alpine.data('selectlist', selectlist);

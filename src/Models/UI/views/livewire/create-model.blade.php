@@ -16,16 +16,6 @@
             </x-chief::dialog.drawer.header>
         </x-slot>
 
-        {{--
-            @if ($errors->any())
-            <x-chief::callout size="sm" variant="red" class="mt-2">
-            @foreach ($errors->all() as $error)
-            <p>{{ ucfirst($error) }}</p>
-            @endforeach
-            </x-chief::callout>
-            @endif
-        --}}
-
         @if ($this->isAllowedToSelectSites())
             @include('chief-models::livewire._partials.locale-selection')
         @endif

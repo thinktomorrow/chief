@@ -12,3 +12,5 @@
 >
     {{ $getActiveValue($locale ?? null) }}
 </x-chief::form.input.textarea>
+
+@include('chief-form::fields._partials.charactercount')

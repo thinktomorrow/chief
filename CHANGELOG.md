@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Change: Character count script refactored to alpinejs function so it works everywhere with Livewire.
+- Fixed: Character count elements under some field types were missing and are now added to the view.
 - Fixed: External assets field components site/locale toggle was missing and is now added to the view.
 
 ## [0.10.10] - 2025-08-19

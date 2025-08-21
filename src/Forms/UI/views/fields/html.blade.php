@@ -6,7 +6,7 @@
         data-custom-redactor-options="{{ json_encode($getRedactorOptions($locale ?? null)) }}"
         wire:model.live="{{ $getWireModelValue($locale ?? null) }}"
         v-pre
-        id="{{ $getId($locale ?? null) }}"
+        id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
         cols="10"
         rows="5"
@@ -17,3 +17,5 @@
         {{ $getActiveValue($locale ?? null) }}
     </x-chief::form.input.textarea>
 </div>
+
+@include('chief-form::fields._partials.charactercount')
