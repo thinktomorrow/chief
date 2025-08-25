@@ -10,6 +10,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Character count elements under some field types were missing and are now added to the view.
 - Fixed: External assets field components site/locale toggle was missing and is now added to the view.
 - Added: AssetColumnImage preset for table columns to show asset images.
+- Change: small improvements on hive such as adding default context to config.
 - Change: Character count script refactored to alpinejs function so it works everywhere with Livewire.
 - Change: HasCharacterCount now also available for Html fields
 
