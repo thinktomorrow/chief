@@ -21,6 +21,8 @@ class ExportAssetTextCommand extends BaseCommand
     {
         $models = Asset::all();
 
+        $this->confirm('This will export alt texts for '.$models->count().' assets. Do you wish to continue?', true) || exit(0);
+
         // Only images are relevant for alt text export
         $models = $models->filter(function ($model) {
             return $model->isImage();

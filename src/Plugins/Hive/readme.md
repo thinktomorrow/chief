@@ -13,3 +13,18 @@
 ```bash 
 composer require openai-php/client
 ```
+
+3. Maak een API key aan bij OpenAI en voeg deze toe aan je `.env` bestand.
+   Log hiervoor in op https://platform.openai.com/.
+
+```
+CHIEF_HIVE_CHATGPT_API_KEY=sk-proj-Pr6w_WnLh...
+```
+
+4. Voeg de project context toe aan je `.env` bestand.
+
+```
+CHIEF_HIVE_PROJECT_CONTEXT="Jij bent een expert copywriter en helpt mij met het schrijven van teksten voor op mijn website. Houd de teksten kort en krachtig."
+```
+
+

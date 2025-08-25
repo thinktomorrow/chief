@@ -49,7 +49,7 @@ class ImportAssetText implements ToCollection
             $baseNameIndex = array_search('Bestandsnaam', $this->headers);
             $basename = $row[$baseNameIndex] ?? null;
 
-            if ($asset->getBasename() !== $basename) {
+            if ($basename && $asset->getBasename() !== $basename) {
                 app(FileApplication::class)->updateFileName($asset->id, $basename);
                 $this->writeToOutput('Updated asset basename for: '.$assetId);
             }

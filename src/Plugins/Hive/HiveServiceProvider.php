@@ -13,6 +13,10 @@ class HiveServiceProvider extends ChiefPluginServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config/chief-hive.php', 'chief-hive');
 
         $this->loadPluginAdminRoutes(__DIR__.'/App/routes/chief-admin-routes.php');
+
+        $this->publishes([
+            __DIR__.'/config/chief-hive.php' => config_path('chief-hive.php'),
+        ], 'chief-hive-config');
     }
 
     public function register(): void

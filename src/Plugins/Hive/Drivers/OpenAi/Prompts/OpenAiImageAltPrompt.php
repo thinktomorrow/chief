@@ -41,14 +41,14 @@ class OpenAiImageAltPrompt implements HivePrompt
 
         $imageData = base64_encode(file_get_contents($path));
 
-        $projectContext = 'Onze Minimax M3 waterontharder haalt de kalk uit je water en zet zo hard water om in zacht water. Minimax is voor velen de ideale waterontharder. Hij is klein, werkt op waterdruk en heeft geen elektriciteit nodig. Enkele kernwoorden van het bedrijf zijn: waterontharder, waterverzachter, waterhardheid, hard water, kalk, zoutblokken, gezond water.';
+        $projectContext = config('chief-hive.context.default', '');
 
         $response = app(OpenAiDriver::class)->chat([
             'model' => config('chief-hive.openai.model', 'gpt-4o'),
             'messages' => [
                 ['role' => 'system', 'content' => 'Je bent een seo assistent die alt-teksten genereert voor afbeeldingen. Output als JSON object met elke locale als key. Hier is een beetje context over de site waarin de afbeelding gebruikt wordt: '.$projectContext],
                 ['role' => 'user', 'content' => [
-                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst. Dit voor de volgende locales: '.implode(',', ChiefSites::locales())],
+                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst met een maximum van 125 karakters. Dit voor de volgende locales: '.implode(',', ChiefSites::locales())],
                     //                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst. Geef me drie voorstellen die verschillen qua creativiteit.'],
                     ['type' => 'image_url', 'image_url' => [
                         'url' => 'data:image/jpeg;base64,'.$imageData,
