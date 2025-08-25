@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.11] - 2025-08-25
+
 - Fixed: Character count elements under some field types were missing and are now added to the view.
 - Fixed: External assets field components site/locale toggle was missing and is now added to the view.
 - Added: AssetColumnImage preset for table columns to show asset images.
