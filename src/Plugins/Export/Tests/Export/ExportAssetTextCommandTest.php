@@ -44,7 +44,9 @@ class ExportAssetTextCommandTest extends TestCase
             ],
         ]);
 
-        $this->artisan('chief:export-asset-text');
+        $this->artisan('chief:export-asset-text')
+            ->expectsConfirmation('This will export alt texts for 1 assets. Do you wish to continue?', 'yes')
+            ->assertExitCode(0);
 
         $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-asset-text-'.date('Y-m-d').'.xlsx');
 
@@ -62,7 +64,9 @@ class ExportAssetTextCommandTest extends TestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->artisan('chief:export-asset-text');
+        $this->artisan('chief:export-asset-text')
+            ->expectsConfirmation('This will export alt texts for 1 assets. Do you wish to continue?', 'yes')
+            ->assertExitCode(0);
 
         $filepath = Storage::disk('local')->path('exports/'.date('Ymd').'/'.config('app.name').'-asset-text-'.date('Y-m-d').'.xlsx');
 
