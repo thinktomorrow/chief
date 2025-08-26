@@ -13,11 +13,11 @@
             @if ($item->hasLink())
                 <a
                     href="{{ $item->getLink() }}"
-                    title="{{ $item->getValue() }}"
+                    title="{{ $item->getValue($getLocale()) }}"
                     x-show="{{ $index >= $threshold ? 'isShowingMore' : 'true' }}"
                 >
                     <x-chief::badge size="xs" :variant="$item->getVariant()">
-                        {{ $item->getValue() }}
+                        {{ $item->getValue($getLocale()) }}
                     </x-chief::badge>
                 </a>
             @else
@@ -26,7 +26,7 @@
                     :variant="$item->getVariant()"
                     x-show="{{ $index >= $threshold ? 'isShowingMore' : 'true' }}"
                 >
-                    {{ $item->getValue() }}
+                    {{ $item->getValue($getLocale()) }}
                 </x-chief::badge>
             @endif
         @endforeach

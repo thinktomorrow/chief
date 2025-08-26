@@ -13,7 +13,7 @@ trait WithPagination
 
     public function hasPagination(): bool
     {
-        return $this->getTable()->hasPagination();
+        return ! $this->isReordering && $this->getTable()->hasPagination();
     }
 
     private function getPaginationPerPage(): int

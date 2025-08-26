@@ -16,7 +16,7 @@
                 size="xs"
                 x-show="{{ $index >= $threshold ? 'isShowingMore' : 'true' }}"
             >
-                {{ $item->getValue() }}
+                {{ $item->getValue($getLocale()) }}
             </x-chief-tags::tag>
         @endforeach
 

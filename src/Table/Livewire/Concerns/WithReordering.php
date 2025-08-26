@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
 use Illuminate\Contracts\Pagination\Paginator as PaginatorContract;
+use Illuminate\Database\Eloquent\Collection;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\ReorderModels;
 
@@ -22,7 +23,7 @@ trait WithReordering
         $this->isReordering = false;
     }
 
-    public function getReorderResults(): NestableTree|PaginatorContract
+    public function getReorderResults(): NestableTree|PaginatorContract|Collection
     {
         if ($this->isTreeReorderingAllowed()) {
             return NestableTree::fromIterable($this->getResults());

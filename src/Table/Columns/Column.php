@@ -3,9 +3,12 @@
 namespace Thinktomorrow\Chief\Table\Columns;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasLocale;
 
 class Column
 {
+    use HasLocale;
+
     /** @var ColumnItem[] */
     private array $items;
 
@@ -22,7 +25,7 @@ class Column
 
     public function getItems(): array
     {
-        return $this->items;
+        return array_map(fn (ColumnItem $item) => $item->locale($this->getLocale()), $this->items);
     }
 
     public function contains(\Closure $closure): bool

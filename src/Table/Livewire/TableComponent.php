@@ -53,8 +53,13 @@ class TableComponent extends Component
 
     public array $customListeners = [];
 
+    public string $locale;
+
     public function mount(Table $table)
     {
+        /** Can be altered by the site filter / default filter */
+        $this->locale = app()->getLocale();
+
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
         $this->setDefaultFilters();

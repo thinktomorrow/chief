@@ -29,6 +29,10 @@ trait HasValue
         $this->value = $value;
         $this->valueGiven = true;
 
+        if (isset($this->locale)) {
+            $this->valueGivenForLocale = $this->locale;
+        }
+
         return $this;
     }
 
@@ -82,6 +86,7 @@ trait HasValue
     private function getRawValue(?string $locale = null): mixed
     {
         if (! $this->valueGiven) {
+
             if (! $this->getModel()) {
                 return $this->getDefault($locale);
             }

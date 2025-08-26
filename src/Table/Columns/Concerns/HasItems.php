@@ -93,6 +93,10 @@ trait HasItems
     {
         $item = static::make($this->getKey())->value($value);
 
+        if ($this->locale) {
+            $item->locale($this->locale);
+        }
+
         if ($this->model) {
             $item->model($this->model);
         }

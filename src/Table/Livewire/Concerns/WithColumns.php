@@ -18,7 +18,7 @@ trait WithColumns
         });
 
         return array_map(function (Column $column) use ($model) {
-            return $column->model($model);
+            return $column->locale($this->locale)->model($model);
         }, $columns);
     }
 

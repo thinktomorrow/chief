@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Thinktomorrow\Chief\Table\Filters\Filter;
+use Thinktomorrow\Chief\Table\Filters\Presets\SiteFilter;
 use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 
 trait WithFilters
@@ -52,6 +53,8 @@ trait WithFilters
                 $this->filters[$filter->getKey()] = $filter->getValue();
             }
         }
+
+        $this->syncLocaleWithSiteFilter();
     }
 
     private function applyQueryFilters(Builder $builder): void
@@ -74,11 +77,9 @@ trait WithFilters
         return $rows;
     }
 
-    /**
-     * Remove empty values out of the active filters
-     */
     public function updatedFilters()
     {
+        // Remove empty values out of the active filters
         foreach ($this->filters as $key => $filterValue) {
             if ($this->isEmptyFilterValue($filterValue)) {
                 unset($this->filters[$key]);
@@ -87,8 +88,19 @@ trait WithFilters
 
         $this->resetPage($this->getPaginationId());
 
+        $this->syncLocaleWithSiteFilter();
+
         // Allow Alpine to listen to this event
         $this->dispatch($this->getFiltersUpdatedEvent());
+    }
+
+    protected function syncLocaleWithSiteFilter(): void
+    {
+        foreach ($this->getFilters() as $filter) {
+            if ($filter instanceof SiteFilter && isset($this->filters[$filter->getKey()])) {
+                $this->locale = $this->filters[$filter->getKey()];
+            }
+        }
     }
 
     public function getFiltersUpdatedEvent(): string

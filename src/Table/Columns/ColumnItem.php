@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\Table\Columns\Concerns\HasColumnSelection;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasItemMapping;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasItems;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
+use Thinktomorrow\Chief\Table\Columns\Concerns\HasLocale;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasTeaser;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasValueMapping;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariant;
@@ -39,16 +40,24 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     use HasKey;
     use HasLabel;
     use HasLink;
+    use HasLocale;
     use HasLocalizableProperties;
     use HasModel;
     use HasTeaser;
     use HasValue {
+        value as setDefaultValue;
         getValue as getDefaultValue;
     }
     use HasValueMapping;
     use HasVariant;
     use HasVariantMapping;
     use HasView;
+
+    /**
+     * Specify locale in which the value has been given. This is
+     * useful to distinguish between localized values.
+     */
+    protected ?string $valueGivenForLocale = null;
 
     public function __construct(string $key)
     {
@@ -65,11 +74,27 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         return new static((string) $key);
     }
 
+    public function value(mixed $value): static
+    {
+        $this->setDefaultValue($value);
+
+        if (isset($this->locale)) {
+            $this->valueGivenForLocale = $this->locale;
+        }
+
+        return $this;
+    }
+
     /**
      * Retrieve the render value for this column.
      */
     public function getValue(?string $locale = null): string|int|null|float|Stringable
     {
+        // Force refetch of value in case the locale has changed.
+        if (($this->locale || $this->valueGivenForLocale) && $this->valueGivenForLocale !== $this->locale) {
+            $this->valueGiven = false;
+        }
+
         $value = $this->getDefaultValue($locale);
 
         $this->verifyValueCanBeRendered($value);

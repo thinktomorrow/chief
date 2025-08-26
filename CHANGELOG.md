@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Table columns are now rendered in given site filter. E.g. filtering on site 'nl' will now also render
+  columns with localized values for 'nl'.
+- Change: No pagination while reordering
+
 ## [0.10.11] - 2025-08-25
 
 - Fixed: Character count elements under some field types were missing and are now added to the view.
