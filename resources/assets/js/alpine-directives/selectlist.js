@@ -45,7 +45,9 @@ const Selectlist = (config) => ({
         return this.selection;
     },
     get selectedOptions() {
-        return this.rawSelection.map((value) => this.findOptionByValue(value));
+        return this.rawSelection
+            .map((value) => this.findOptionByValue(value))
+            .filter((option) => option !== null && option !== undefined);
     },
     findOptionByValue(value) {
         if (this.grouped) {
