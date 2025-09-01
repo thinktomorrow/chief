@@ -15,8 +15,10 @@ trait InteractsWithFields
     {
         foreach ($components as $component) {
 
-            if (! $component instanceof Field && $component instanceof HasComponents) {
-                $this->injectFormValues($component->getComponents());
+            if (! $component instanceof Field) {
+                if ($component instanceof HasComponents) {
+                    $this->injectFormValues($component->getComponents());
+                }
 
                 continue;
             }
