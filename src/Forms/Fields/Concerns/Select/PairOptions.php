@@ -53,11 +53,12 @@ class PairOptions
             $options = array_combine($options, $options);
         }
 
-        return collect($options)->map(function ($label, $value) {
+        return collect($options)->map(function ($label, $value) use ($options) {
             // Passed option can already be a paired item as ["key" => "one", "value" => "een"]
             if (is_array($label)) {
 
                 if (! isset($label['value'], $label['label'])) {
+                    dd($label, $options);
                     throw new InvalidOptionsForMultiSelect('Invalid MultiSelect option passed: ['.key($label).':'.reset($label).']');
                 }
 

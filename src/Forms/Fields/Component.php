@@ -83,6 +83,11 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
 
     protected string $fieldPreviewTemplate = 'chief-form::templates.field-preview';
 
+    /**
+     * @var true
+     */
+    private bool $showsLocaleToggle = false;
+
     public function __construct(string $key)
     {
         $this->key($key);
@@ -137,6 +142,23 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
         //        return $this->hasLocales() && count($this->getLocales()) > 1;
     }
 
+    /**
+     * Shows a locale toggle above the form to switch between locales.
+     * Normally there is a global form switch between locales, but
+     * sometimes you can opt in on a switch on field level.
+     */
+    public function showsLocaleToggle(): bool
+    {
+        return $this->showsLocaleToggle;
+    }
+
+    public function showLocaleToggle(bool $showsLocaleToggle = true): static
+    {
+        $this->showsLocaleToggle = $showsLocaleToggle;
+
+        return $this;
+    }
+
     protected function wireableMethods(array $components): array
     {
         return [
@@ -147,6 +169,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             ...(isset($this->columnName) ? ['columnName' => $this->columnName] : []),
             ...(isset($this->elementId) ? ['elementId' => $this->elementId] : []),
             ...(isset($this->locales) ? ['locales' => $this->locales] : []),
+            ...(isset($this->showsLocaleToggle) && $this->showsLocaleToggle ? ['showLocaleToggle' => true] : []),
             ...(isset($this->scopedLocale) ? ['setScopedLocale' => $this->scopedLocale] : []),
             ...(isset($this->fieldNameTemplate) ? ['setFieldNameTemplate' => $this->fieldNameTemplate] : []),
             ...(isset($this->label) ? ['label' => $this->label] : []),
