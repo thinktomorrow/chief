@@ -96,7 +96,7 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         }
 
         $value = $this->getDefaultValue($locale);
-        dump($value);
+
         $this->verifyValueCanBeRendered($value);
 
         return $this->teaseValue($value);
