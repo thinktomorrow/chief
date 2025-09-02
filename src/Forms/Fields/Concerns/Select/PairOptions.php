@@ -42,7 +42,8 @@ class PairOptions
         $firstGroup = reset($options);
 
         return is_array($firstGroup)
-            && isset($firstGroup['label'], $firstGroup['options'])
+            && array_key_exists('label', $firstGroup) // Can be null which is not a crime
+            && isset($firstGroup['options'])
             && is_array($firstGroup['options']);
     }
 

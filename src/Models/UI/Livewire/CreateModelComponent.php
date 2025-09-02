@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Models\App\Actions\CreateModel;
 use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
+use Thinktomorrow\Chief\Table\Table;
 
 class CreateModelComponent extends Component
 {
@@ -79,7 +80,8 @@ class CreateModelComponent extends Component
 
         return PageLayout::make($resource->fields($model))
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
-            ->getComponentsWithoutForms();
+            ->getComponentsWithoutForms()
+            ->reject(fn ($component) => $component instanceof Table);
     }
 
     public function save()

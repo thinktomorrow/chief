@@ -45,7 +45,7 @@ trait WithLocaleToggle
      */
     protected function showsLocalesForAnyField(iterable $components): bool
     {
-        $fields = Fields::make($components)->all();
+        $fields = Fields::makeWithoutFlatteningNestedFields($components)->all();
 
         // If the fragment allows fragments, we always show the locale toggle
         if (isset($this->fragment) && $this->fragment->allowsFragments) {

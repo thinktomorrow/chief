@@ -30,7 +30,6 @@
                     @php
                         $this->prepareFormComponent($formComponent, $index);
                     @endphp
-
                     {!! $formComponent->render() !!}
                 @endforeach
             </div>

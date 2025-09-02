@@ -41,7 +41,7 @@ trait CreateAssistant
      */
     public function create(Request $request)
     {
-        $model = $this->managedModelClassInstance(...$this->resource->getInstanceAttributes($request));
+        $model = $this->managedModelClassInstance($this->resource->getAttributesOnCreate($request->all()));
 
         View::share('manager', $this);
         View::share('model', $model);
@@ -73,7 +73,7 @@ trait CreateAssistant
 
     private function handleStore(Request $request)
     {
-        $model = $this->managedModelClassInstance(...$this->resource->getInstanceAttributes($request));
+        $model = $this->managedModelClassInstance($this->resource->getAttributesOnCreate($request->all()));
 
         $fields = PageLayout::make($this->resource->fields($model))
             ->model($model)
