@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Thinktomorrow\Chief\Forms\Dialogs\Livewire\TableActionDialogReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\BulkAction;
@@ -34,18 +35,18 @@ trait WithActions
         return array_filter($variantActions, fn (Action $action) => ! $action->hasWhen() || $action->getWhen()($this));
     }
 
-    public function applyAction($actionKey, array $payload = []): void
+    public function applyAction($actionKey, array $payload = []): ?SymfonyResponse
     {
         $action = $this->getTable()->findAction($actionKey);
 
         if ($action->hasDialog()) {
             $this->showActionDialog($actionKey, $this->getActionPayload($action, $payload));
 
-            return;
+            return null;
         }
 
         if ($action->hasEffect()) {
-            $this->applyActionEffect(
+            return $this->applyActionEffect(
                 $actionKey,
                 [],
                 $this->getActionPayload($action, $payload)
@@ -71,7 +72,7 @@ trait WithActions
         return [];
     }
 
-    private function applyActionEffect(string $key, array $formData, array $data = []): void
+    private function applyActionEffect(string $key, array $formData, array $data = []): ?SymfonyResponse
     {
         $action = $this->getTable()->findAction($key);
 
@@ -80,11 +81,15 @@ trait WithActions
             // Perform effect
             $effectResult = $action->getEffect()($formData, $data, $action, $this);
 
+            if ($effectResult && $effectResult instanceof SymfonyResponse) {
+                return $effectResult;
+            }
+
             // Redirect after success
             if ($effectResult && $action->hasRedirectOnSuccess()) {
                 redirect()->to($action->getRedirectOnSuccess()($formData, $data));
 
-                return;
+                return null;
             }
 
             // Effect notification on success or failure

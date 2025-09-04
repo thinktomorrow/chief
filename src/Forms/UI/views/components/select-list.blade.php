@@ -13,9 +13,9 @@
     // adding item to list is done by selecting from the multiselect
     // After adding, the value is removed from select
     // And is not shown in the select dropdown list
-    
+
     // Test: saving + livewire saving (e.g. in file field)
-    
+
     // Testing:
     // - the already selected values are shown in the list
     // - the selected values are updated after adding an item
@@ -25,9 +25,9 @@
     // - the select dropdown is updated after removing an item
     // - the select dropdown is hidden after adding an item
     // - the selected values are updated after sorting
-    
+
     // https://dev.to/thormeier/simple-and-effective-unit-testing-alpine-js-components-with-jest-13ig
-    
+
     // TODO: check if wire:model is possible to use here
     // TODO: allow rich html for each option in the list
 --}}

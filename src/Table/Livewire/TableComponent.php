@@ -202,6 +202,10 @@ class TableComponent extends Component
 
     public function isTableHeaderShown(): bool
     {
+        if ($this->isReordering) {
+            return false;
+        }
+
         return count($this->getFilters()) > 0 || count($this->getSorters()) > 1 || $this->allowColumnSelection();
     }
 

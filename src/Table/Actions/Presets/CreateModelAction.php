@@ -16,8 +16,10 @@ class CreateModelAction extends Action
             ->label(ucfirst($resource->getLabel()).' toevoegen')
             ->prependIcon('<x-chief::icon.plus-sign />')
             ->effect(function ($formData, $data, $action, $component) use ($resource, $instanceAttributes) {
+
                 $component->dispatch('open-create-model', [
                     'modelClass' => $resource::modelClassName(),
+                    'resourceClass' => $resource::class,
                     'locales' => ChiefSites::locales(),
                     'instanceAttributes' => $instanceAttributes,
                     'redirectAfterSave' => false,

@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: select options with empty values were not properly handled in forms.
 - Fixed: SelectList now filters out selected values that are not present in full options list.
 - Fixed: Table columns are now rendered in given site filter. E.g. filtering on site 'nl' will now also render
   columns with localized values for 'nl'.

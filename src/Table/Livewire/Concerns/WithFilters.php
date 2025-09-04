@@ -168,6 +168,6 @@ trait WithFilters
             return count($value) == 1 && $this->isEmptyFilterValue(reset($value));
         }
 
-        return is_null($value) || empty($value) || $value === '';
+        return is_null($value) || $value === '' || (is_array($value) && empty($value));
     }
 }
