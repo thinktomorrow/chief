@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Menu\Exceptions\OwnerReferenceIsRequiredForInternalLinkType;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\MenuLinkType;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -235,5 +236,42 @@ class MenuItemApplicationTest extends ChiefTestCase
             ownerReference: null,
             data: ['url' => ['nl' => 'thinktomorrow.be']]
         ));
+    }
+
+    public function test_url_is_removed_when_no_link_is_selected()
+    {
+        Event::fake();
+
+        $menuItemId = $this->menuItemApplication->create(new CreateMenuItem(
+            menuId: 1,
+            linkType: 'custom',
+            parentId: null,
+            ownerReference: null,
+            data: ['url' => ['nl' => 'thinktomorrow.be']]
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'menu_id' => 1,
+            'type' => 'custom',
+            'values' => json_encode(['url' => ['nl' => 'https://thinktomorrow.be']]),
+            'parent_id' => null,
+        ]);
+
+        $this->menuItemApplication->update(new UpdateMenuItem(
+            menuItemId: $menuItemId,
+            linkType: MenuLinkType::nolink->value,
+            ownerReference: null,
+            parentId: null,
+            data: []
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'menu_id' => 1,
+            'type' => MenuLinkType::nolink->value,
+            'values' => json_encode([]),
+            'parent_id' => null,
+        ]);
     }
 }

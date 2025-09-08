@@ -60,13 +60,17 @@ class MenuItemApplication
         }
 
         $model = MenuItem::findorFail($command->getMenuItemId());
-
         $model->type = $command->getLinkType();
         $model->parent_id = $command->getParentId();
 
         if ($command->getOwnerReference()) {
             $model->owner_type = $command->getOwnerReference()->shortClassName();
             $model->owner_id = $command->getOwnerReference()->id();
+        }
+
+        // Remove url if no link is given for custom link type
+        if ($command->getLinkType() === MenuLinkType::nolink) {
+            $model->removeDynamic('url');
         }
 
         foreach ($command->getData() as $key => $values) {
