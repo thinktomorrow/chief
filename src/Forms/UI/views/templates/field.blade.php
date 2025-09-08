@@ -49,11 +49,11 @@
 
     @if ($hasLocales())
         @foreach ($getLocales() as $locale)
-            {{-- <x-chief::form.error :rule="LivewireFieldName::get($getId($locale ?? null))" /> --}}
+            <x-chief::form.error :rule="LivewireFieldName::get($getId($locale ?? null))" />
             <x-chief::form.error :rule="$getId($locale)" />
         @endforeach
     @else
-        {{-- <x-chief::form.error :rule="LivewireFieldName::get($getId())" /> --}}
+        <x-chief::form.error :rule="LivewireFieldName::get($getId())" />
         <x-chief::form.error :rule="$getId()" />
     @endif
 </x-chief::form.fieldset>
