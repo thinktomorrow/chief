@@ -9,6 +9,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: SelectList now filters out selected values that are not present in full options list.
 - Fixed: Table columns are now rendered in given site filter. E.g. filtering on site 'nl' will now also render
   columns with localized values for 'nl'.
+- Added: Table now show the localized value based on the current site filter.
 - Change: No pagination while reordering
 
 ## [0.10.11] - 2025-08-25

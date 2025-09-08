@@ -36,8 +36,7 @@ class RenderTextualFieldsTest extends ChiefTestCase
         /** @var Field $class */
         foreach ($this->classes as $class => $value) {
             $component = $class::make('xxx')->value($value);
-            $this->assertStringContainsString('name="xxx"', $component->toHtml());
-            $this->assertStringContainsString($value, $component->toHtml());
+            $this->assertStringContainsString('wire:model="form.xxx"', $component->toHtml());
         }
     }
 
@@ -52,10 +51,8 @@ class RenderTextualFieldsTest extends ChiefTestCase
 
             $render = $component->toHtml();
 
-            $this->assertStringContainsString('xxx[nl]', $render);
-            $this->assertStringContainsString('xxx[en]', $render);
-            $this->assertStringContainsString($valueNL, $render);
-            $this->assertStringContainsString($valueEN, $render);
+            $this->assertStringContainsString('wire:model="form.xxx.nl"', $render);
+            $this->assertStringContainsString('wire:model="form.xxx.en"', $render);
         }
     }
 

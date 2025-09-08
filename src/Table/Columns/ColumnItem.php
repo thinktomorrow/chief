@@ -85,6 +85,20 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
         return $this;
     }
 
+    private bool $valueMarkedAsResolved = false;
+
+    public function markValueAsResolved(): static
+    {
+        $this->valueMarkedAsResolved = true;
+
+        return $this;
+    }
+
+    public function isValueMarkedAsResolved(): bool
+    {
+        return $this->valueMarkedAsResolved;
+    }
+
     /**
      * Retrieve the render value for this column.
      */
@@ -96,7 +110,11 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
             $this->valueGivenForLocale = $locale;
         }
 
-        $value = $this->getDefaultValue($locale);
+        if ($this->isValueMarkedAsResolved()) {
+            $value = $this->value;
+        } else {
+            $value = $this->getDefaultValue($locale);
+        }
 
         $this->verifyValueCanBeRendered($value);
 

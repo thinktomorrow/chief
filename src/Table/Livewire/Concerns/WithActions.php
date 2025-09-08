@@ -98,6 +98,8 @@ trait WithActions
             } elseif (! $effectResult && $action->hasNotificationOnFailure()) {
                 $this->showNotification($action->getNotificationOnFailure()($effectResult, $formData, $data), 'error');
             }
+
+            return null;
         }
 
         $this->bulkDeselectAll();
