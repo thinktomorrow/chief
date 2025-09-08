@@ -12,7 +12,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Menu item of type 'no link' now has any existing links removed when saving.
 - Added: Table now show the localized value based on the current site filter.
 - Added: PreviewFile is now optional parameter for `Asset::fields($previewFile)`;
-- Change: No pagination while reordering
+- Changed: No pagination while reordering
+- Changed: Redirect to edit page after creation of a model
 
 ## [0.10.11] - 2025-08-25
 
