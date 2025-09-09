@@ -20,7 +20,7 @@ class OpenAiTranslationPrompt implements HivePrompt
         $texts = $payload['texts'] ?? [];
 
         $projectContext = config('chief-hive.context.default', '');
-        $systemContent = <<<'TXT'
+        $systemContent = <<<EOD
 Je bent een professionele vertaler die consistente, natuurlijke en contextueel correcte vertalingen levert.
 Je taak: vul enkel ontbrekende of lege vertalingen in.
 - Behoud bestaande teksten exact zoals ze zijn.
@@ -29,7 +29,8 @@ Je taak: vul enkel ontbrekende of lege vertalingen in.
 - De array moet exact dezelfde lengte, volgorde en keys hebben als de input.
 - Elke entry in de array moet dezelfde keys bevatten als in de input (bv. "nl", "fr").
 - Output mag niets anders bevatten dan de JSON array.
-TXT;
+- het zijn teksten voor de site van een bedrijf dat actief is in de volgende sector: $projectContext
+EOD;
 
         $userContent = 'Vertaal de volgende inhoud naar de missende locales: '
             .implode(',', ChiefSites::locales())

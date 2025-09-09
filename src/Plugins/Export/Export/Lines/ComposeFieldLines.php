@@ -85,6 +85,10 @@ class ComposeFieldLines
             ->map(fn ($line) => $line->getValues())
             ->all();
 
+        if (empty($values)) {
+            return $lines;
+        }
+
         $result = app(OpenAiTranslationPrompt::class)->prompt(['texts' => $values])->getResult();
 
         foreach ($result as $i => $value) {
