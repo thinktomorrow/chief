@@ -25,7 +25,7 @@ Je bent een professionele vertaler die consistente, natuurlijke en contextueel c
 Je taak: vul enkel ontbrekende of lege vertalingen in.
 - Behoud bestaande teksten exact zoals ze zijn.
 - Behoud placeholders en speciale tekens zoals "#" exact.
-- Output ALTIJD een JSON array van objecten.
+- Output ALLEEN de pure JSON array, zonder uitleg, zonder markdown, zonder backticks.
 - De array moet exact dezelfde lengte, volgorde en keys hebben als de input.
 - Elke entry in de array moet dezelfde keys bevatten als in de input (bv. "nl", "fr").
 - Output mag niets anders bevatten dan de JSON array.
@@ -58,13 +58,13 @@ EOD;
         $content = $response->toArray()['choices'][0]['message']['content'];
 
         if (! $content) {
-            throw new \Exception('No content returned from OpenAI for texts '.implode(',', $texts));
+            throw new \Exception('No content returned from OpenAI for texts: '.print_r($texts, true));
         }
 
         $result = json_decode($content, true);
 
         if (! $result || ! is_array($result)) {
-            throw new \Exception('Invalid JSON returned from OpenAI for texts '.implode(',', $texts));
+            throw new \Exception('Invalid JSON returned from OpenAI for texts: '.print_r($texts, true));
         }
 
         $this->result = $result;
