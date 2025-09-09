@@ -23,19 +23,16 @@ class OpenAiTranslationPrompt implements HivePrompt
         $systemContent = <<<EOD
 Je bent een professionele vertaler die consistente, natuurlijke en contextueel correcte vertalingen levert.
 Je taak: vul enkel ontbrekende of lege vertalingen in.
-- Behoud bestaande teksten exact zoals ze zijn.
-- Behoud placeholders en speciale tekens zoals "#" exact.
-- Output ALLEEN de pure JSON array, zonder uitleg, zonder markdown, zonder backticks.
-- De array moet exact dezelfde lengte, volgorde en keys hebben als de input.
-- Elke entry in de array moet dezelfde keys bevatten als in de input (bv. "nl", "fr").
-- Output mag niets anders bevatten dan de JSON array.
-- het zijn teksten voor de site van een bedrijf dat actief is in de volgende sector: $projectContext
+- Output ALLEEN een JSON object met keys voor iedere taal.
+- Output ALLEEN de pure JSON, zonder uitleg, zonder markdown, zonder backticks.
+- Het zijn teksten voor de site van een bedrijf dat actief is in de volgende sector: $projectContext
+- Behoud placeholders en speciale tekens zoals "#" exact. Zet geen '\' voor een '/'.
 EOD;
 
         $userContent = 'Vertaal de volgende inhoud naar de missende locales: '
             .implode(',', ChiefSites::locales())
-            .'. Hier is de input: '
-            .json_encode($texts, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+            .'. Geef de output terug in JSON, waarbij de structuur en keys identiek blijven. Hier is de input: '
+            .json_encode($texts, JSON_UNESCAPED_UNICODE);
 
         //        $systemContent = 'Je bent een professionele vertaler die consistente, natuurlijke en contextueel correcte vertalingen levert. Output ALTIJD in exact dezelfde datastructuur als de input.
         // Output altijd als JSON object. Gebruik de broninhoud en de meegegeven context om terminologie en tone of voice correct te houden. Hier is een beetje context over de site waarin de afbeelding gebruikt wordt: '.$projectContext;
@@ -52,19 +49,27 @@ EOD;
                 ]],
             ],
             'response_format' => null,
-            'max_tokens' => 8000,
+            'max_tokens' => 1000,
         ]);
 
         $content = $response->toArray()['choices'][0]['message']['content'];
 
         if (! $content) {
-            throw new \Exception('No content returned from OpenAI for texts: '.print_r($texts, true));
+            throw new \Exception('No content returned from OpenAI for texts: '.print_r($texts, true).'. Full response: '.$content);
         }
 
         $result = json_decode($content, true);
 
         if (! $result || ! is_array($result)) {
-            throw new \Exception('Invalid JSON returned from OpenAI for texts: '.print_r($texts, true));
+            throw new \Exception('Invalid JSON returned from OpenAI for texts: '.print_r($texts, true).'. Full response: '.$content);
+        }
+
+        // Assert that the result has the same keys as the input texts
+        foreach ($texts as $key => $text) {
+            if (! array_key_exists($key, $result)) {
+                dd($key, $text, $result);
+                throw new \Exception('Missing key "'.$key.'" in OpenAI response for texts: '.print_r($texts, true).'. Full response: '.$content);
+            }
         }
 
         $this->result = $result;

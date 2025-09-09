@@ -79,20 +79,14 @@ class ComposeFieldLines
             return $lines;
         }
 
-        $values = $lines
+        $linesForTranslation = $lines
             ->reject(fn ($line) => ! $line instanceof FieldLine)
-            ->filter(fn ($line) => $line->hasMissingValues())
-            ->map(fn ($line) => $line->getValues())
-            ->all();
+            ->filter(fn ($line) => $line->hasMissingValues());
 
-        if (empty($values)) {
-            return $lines;
-        }
+        foreach ($linesForTranslation as $line) {
+            $result = app(OpenAiTranslationPrompt::class)->prompt(['texts' => $line->getValues()])->getResult();
 
-        $result = app(OpenAiTranslationPrompt::class)->prompt(['texts' => $values])->getResult();
-
-        foreach ($result as $i => $value) {
-            $lines[$i]->mergeValues($value);
+            $line->mergeValues($result);
         }
 
         return $lines;
