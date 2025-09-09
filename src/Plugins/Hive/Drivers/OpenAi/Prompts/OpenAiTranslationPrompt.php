@@ -49,7 +49,7 @@ EOD;
                 ]],
             ],
             'response_format' => null,
-            'max_tokens' => 1000,
+            'max_tokens' => 4000,
         ]);
 
         $content = $response->toArray()['choices'][0]['message']['content'];
