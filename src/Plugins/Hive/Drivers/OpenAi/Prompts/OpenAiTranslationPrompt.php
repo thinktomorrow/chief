@@ -41,7 +41,7 @@ EOD;
         $response = app(OpenAiDriver::class)->chat([
             'model' => config('chief-hive.openai.model', 'gpt-4o'),
             //            'reasoning' => ['effort' => 'low'],
-            'temperature' => 0.2,
+            'temperature' => 0.4,
             'messages' => [
                 ['role' => 'system', 'content' => $systemContent],
                 ['role' => 'user', 'content' => [
