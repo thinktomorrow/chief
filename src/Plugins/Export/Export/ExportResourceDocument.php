@@ -23,6 +23,7 @@ use Thinktomorrow\Chief\Resource\Resource;
 class ExportResourceDocument implements FromCollection, WithColumnFormatting, WithColumnWidths, WithDefaultStyles, WithHeadings, WithMapping, WithStyles
 {
     use Exportable;
+    use WithConsoleOutput;
 
     private Resource $resource;
 
@@ -35,12 +36,15 @@ class ExportResourceDocument implements FromCollection, WithColumnFormatting, Wi
     /** Keep track of the already exported shared fragments, this way we only need to export them once, the first time they appear */
     private array $ignoredSharedFragments = [];
 
-    public function __construct(Resource $resource, Collection $models, array $locales, bool $ignoreNonLocalized = true)
+    private bool $hive;
+
+    public function __construct(Resource $resource, Collection $models, array $locales, bool $ignoreNonLocalized = true, bool $hive = false)
     {
         $this->resource = $resource;
         $this->models = $models;
         $this->locales = $locales;
         $this->ignoreNonLocalized = $ignoreNonLocalized;
+        $this->hive = $hive;
     }
 
     public function collection()
@@ -57,16 +61,21 @@ class ExportResourceDocument implements FromCollection, WithColumnFormatting, Wi
 
     public function map($row): array
     {
+        $this->writeOutput('Exporting '.$this->resource::resourceKey().' #'.$row->id.'...');
+
         $composeLines = app(ComposeFieldLines::class)
             ->ignoreFragments($this->ignoredSharedFragments)
             ->ignoreNonLocalized($this->ignoreNonLocalized)
             ->ignoreEmptyValues()
             ->ignoreFieldKeys(['url'])
             ->ignoreOfflineFragments()
+            ->useHive($this->hive)
             ->compose($this->resource, $row, $this->locales);
 
         // Add the new shared fragments to our ignored list
         $this->ignoredSharedFragments = array_unique(array_merge($this->ignoredSharedFragments, $composeLines->getIgnoredSharedFragments()));
+
+        $this->writeOutput('Exported '.$this->resource::resourceKey().' #'.$row->id.' ('.$composeLines->getLines()->count().' lines)', 'info');
 
         return $composeLines->getLines()->toArray();
     }

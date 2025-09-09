@@ -13,7 +13,8 @@ class ExportResourceCommand extends BaseCommand
     protected $signature = 'chief:export-resource
                                     {resource : the resource key of the model to export}
                                     {--include-static : also add the non-localized text as separate column}
-                                    {--locales= : specify the locales, comma separated, if you only want to show translations}';
+                                    {--locales= : specify the locales, comma separated, if you only want to show translations}
+                                    {--hive : AI generate any missing texts for all locales}';
 
     protected $description = 'Export model fields for translations';
 
@@ -36,7 +37,10 @@ class ExportResourceCommand extends BaseCommand
 
         $models = $this->getModels($resource::resourceKey());
 
-        (new ExportResourceDocument($resource, $models, $locales, ! $this->option('include-static')))
+        $this->info('Starting '.$resource::resourceKey().' export of '.$models->count().' items...');
+
+        (new ExportResourceDocument($resource, $models, $locales, ! $this->option('include-static'), $this->option('hive')))
+            ->setOutput($this->output)
             ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-'.$resource::resourceKey().'-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished '.$resource::resourceKey().' export. File available at: storage/app/'.$filepath);
@@ -44,6 +48,8 @@ class ExportResourceCommand extends BaseCommand
 
     private function getModels(string $resourceKey): Collection
     {
+        return app(Registry::class)->resource($resourceKey)::modelClassName()::limit(10)->get();
+
         return app(Registry::class)->resource($resourceKey)::modelClassName()::all();
     }
 }

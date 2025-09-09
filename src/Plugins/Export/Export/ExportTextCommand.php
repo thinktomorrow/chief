@@ -8,7 +8,7 @@ use Thinktomorrow\Squanto\Database\DatabaseLine;
 
 class ExportTextCommand extends BaseCommand
 {
-    protected $signature = 'chief:export-text';
+    protected $signature = 'chief:export-text {--hive : AI generate any missing texts for all locales}';
 
     protected $description = 'Export static texts';
 
@@ -21,7 +21,7 @@ class ExportTextCommand extends BaseCommand
     {
         $models = DatabaseLine::orderBy('key')->get();
 
-        (new ExportTextDocument($models, ChiefSites::locales()))
+        (new ExportTextDocument($models, ChiefSites::locales(), $this->option('hive')))
             ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-text-'.date('Y-m-d').'.xlsx');
 
         $this->info('Finished export. File available at: storage/app/'.$filepath);

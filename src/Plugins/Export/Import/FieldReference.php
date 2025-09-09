@@ -39,17 +39,18 @@ class FieldReference
 
         [$modelReference, $fieldName] = explode('|', $decryptedKey);
 
-        $model = ModelReference::fromString($modelReference)->instance();
+        $fieldModel = $model = ModelReference::fromString($modelReference)->instance();
 
         if ($model instanceof FragmentModel) {
-            $resource = app(FragmentFactory::class)->create($model);
+            $fieldModel = app(FragmentFactory::class)->create($model);
+            $resource = $fieldModel;
         } else {
             $resource = app(Registry::class)->findResourceByModel($model::class);
         }
 
         // Extract the field key and find the field by the dotted field name
         $fieldKey = strpos($fieldName, '.') !== false ? substr($fieldName, 0, strpos($fieldName, '.')) : $fieldName;
-        $field = $resource->field($model, $fieldKey);
+        $field = $resource->field($fieldModel, $fieldKey);
 
         return new static($resource, $model, $field, $fieldName);
     }
