@@ -10,6 +10,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Table columns are now rendered in given site filter. E.g. filtering on site 'nl' will now also render
   columns with localized values for 'nl'.
 - Fixed: Menu item of type 'no link' now has any existing links removed when saving.
+- Added: Hive option for exporting resource and squanto texts. Use `--hive` option on the `chief:export-resource` and
+  `chief:export-text` commands.
 - Added: Table now show the localized value based on the current site filter.
 - Added: PreviewFile is now optional parameter for `Asset::fields($previewFile)`;
 - Added: Table sorting is now stored in session.
