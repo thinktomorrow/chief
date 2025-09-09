@@ -82,7 +82,8 @@ class ComposeFieldLines
         $values = $lines
             ->reject(fn ($line) => ! $line instanceof FieldLine)
             ->filter(fn ($line) => $line->hasMissingValues())
-            ->map(fn ($line) => $line->getValues());
+            ->map(fn ($line) => $line->getValues())
+            ->all();
 
         $result = app(OpenAiTranslationPrompt::class)->prompt(['texts' => $values])->getResult();
 

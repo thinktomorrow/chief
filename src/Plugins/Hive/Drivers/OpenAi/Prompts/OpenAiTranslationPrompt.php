@@ -20,9 +20,25 @@ class OpenAiTranslationPrompt implements HivePrompt
         $texts = $payload['texts'] ?? [];
 
         $projectContext = config('chief-hive.context.default', '');
-        $systemContent = 'Je bent een professionele vertaler die consistente, natuurlijke en contextueel correcte vertalingen levert.
-Output altijd als JSON object met elke locale als key. Gebruik de broninhoud en de meegegeven context om terminologie en tone of voice correct te houden. Hier is een beetje context over de site waarin de afbeelding gebruikt wordt: '.$projectContext;
-        $userContent = 'Vertaal de volgende tekst(en) naar de locales: '.implode(',', ChiefSites::locales()).'. Geef de output exact als JSON object waarbij de keys de locale codes zijn. Bij het meegeven van een array van verschillende teksten, behoud de non-associative keys. Vertaal enkel de ontbrekende,lege teksten. laat bestaande teksten onveranderd, Laat placeholders, speciale tekens zoals "#" onveranderd. Hier is de te vertalen inhoud: '.json_encode($texts, JSON_UNESCAPED_UNICODE);
+        $systemContent = <<<'TXT'
+Je bent een professionele vertaler die consistente, natuurlijke en contextueel correcte vertalingen levert.
+Je taak: vul enkel ontbrekende of lege vertalingen in.
+- Behoud bestaande teksten exact zoals ze zijn.
+- Behoud placeholders en speciale tekens zoals "#" exact.
+- Output ALTIJD een JSON array van objecten.
+- De array moet exact dezelfde lengte, volgorde en keys hebben als de input.
+- Elke entry in de array moet dezelfde keys bevatten als in de input (bv. "nl", "fr").
+- Output mag niets anders bevatten dan de JSON array.
+TXT;
+
+        $userContent = 'Vertaal de volgende inhoud naar de missende locales: '
+            .implode(',', ChiefSites::locales())
+            .'. Hier is de input: '
+            .json_encode($texts, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+        //        $systemContent = 'Je bent een professionele vertaler die consistente, natuurlijke en contextueel correcte vertalingen levert. Output ALTIJD in exact dezelfde datastructuur als de input.
+        // Output altijd als JSON object. Gebruik de broninhoud en de meegegeven context om terminologie en tone of voice correct te houden. Hier is een beetje context over de site waarin de afbeelding gebruikt wordt: '.$projectContext;
+        //        $userContent = 'Vertaal de volgende tekst(en) naar de locales: '.implode(',', ChiefSites::locales()).'. Geef de output terug in JSON, waarbij de structuur en keys identiek blijven. Vertaal enkel de ontbrekende,lege teksten. laat bestaande teksten onveranderd, Laat placeholders, speciale tekens zoals "#" onveranderd. Hier is de te vertalen inhoud: '.json_encode($texts, JSON_UNESCAPED_UNICODE);
 
         $response = app(OpenAiDriver::class)->chat([
             'model' => config('chief-hive.openai.model', 'gpt-4o'),
@@ -34,7 +50,7 @@ Output altijd als JSON object met elke locale als key. Gebruik de broninhoud en 
                     ['type' => 'text', 'text' => $userContent],
                 ]],
             ],
-            'response_format' => ['type' => 'json_object'],
+            'response_format' => null,
             'max_tokens' => 8000,
         ]);
 

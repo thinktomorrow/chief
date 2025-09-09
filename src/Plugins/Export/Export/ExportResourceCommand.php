@@ -48,8 +48,6 @@ class ExportResourceCommand extends BaseCommand
 
     private function getModels(string $resourceKey): Collection
     {
-        return app(Registry::class)->resource($resourceKey)::modelClassName()::limit(10)->get();
-
         return app(Registry::class)->resource($resourceKey)::modelClassName()::all();
     }
 }
