@@ -39,6 +39,10 @@ trait WithActions
     {
         $action = $this->getTable()->findAction($actionKey);
 
+        if (! $action) {
+            return null;
+        }
+
         if ($action->hasDialog()) {
             $this->showActionDialog($actionKey, $this->getActionPayload($action, $payload));
 

@@ -39,8 +39,8 @@ class ContextOwnerRepository
         return ContextModel::with('owner')
             ->get()
             ->map(fn ($model) => $model->owner)
-            ->unique(fn ($owner) => $owner->modelReference()->get())
             ->reject(fn ($owner) => ! $owner instanceof ContextOwner)  // Don't allow Fragments
+            ->unique(fn ($owner) => $owner->modelReference()->get())
             ->values();
     }
 

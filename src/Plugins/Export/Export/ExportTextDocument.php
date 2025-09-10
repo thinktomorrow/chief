@@ -63,7 +63,7 @@ class ExportTextDocument implements FromCollection, WithColumnWidths, WithDefaul
 
         if ($this->hive) {
             try {
-                $texts = app(OpenAiTranslationPrompt::class)->prompt($values)->getResult();
+                $texts = app(OpenAiTranslationPrompt::class)->prompt(['texts' => $values])->getResult();
 
                 foreach ($texts as $locale => $text) {
                     $values[$locale] = $text;

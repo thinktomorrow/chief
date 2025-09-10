@@ -23,9 +23,7 @@ trait HasItems
 
     public function items(array|Closure $itemsResolver): static
     {
-        $this->itemsResolver = (! $itemsResolver instanceof Closure)
-            ? fn (): iterable => $itemsResolver
-            : $itemsResolver;
+        $this->setItemsResolver($itemsResolver);
 
         $this->usesCustomItemsResolver = true;
 
@@ -38,8 +36,8 @@ trait HasItems
             return $this->itemsFromRelationKey($key);
         }
 
-        $this->setItemsResolver(function () {
-            $value = $this->getRawValue();
+        $this->setItemsResolver(function ($model = null, $locale = null) {
+            $value = $this->getRawValue($locale);
 
             return is_iterable($value) ? $value : [$value];
         });
@@ -56,7 +54,7 @@ trait HasItems
         $relationName = substr($key, 0, strpos($key, '.'));
         $relationAttribute = substr($key, strpos($key, '.') + 1);
 
-        $this->setItemsResolver(function ($model) use ($relationName) {
+        $this->setItemsResolver(function ($model = null, $locale = null) use ($relationName) {
             return $model->{$relationName};
         })->mapValue(fn ($value) => is_array($value) ? $value[$relationAttribute] : $value->{$relationAttribute})
             ->label($relationName);
@@ -67,7 +65,7 @@ trait HasItems
     private function setItemsResolver(array|Closure $itemsResolver): static
     {
         $this->itemsResolver = (! $itemsResolver instanceof Closure)
-            ? fn (): iterable => $itemsResolver
+            ? fn ($model = null, $locale = null): iterable => $itemsResolver
             : $itemsResolver;
 
         return $this;

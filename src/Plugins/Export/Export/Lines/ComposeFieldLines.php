@@ -48,6 +48,8 @@ class ComposeFieldLines
     /** Avoid all field values of fields with one of following field keys */
     private array $ignoredFieldKeys = [];
 
+    private string $modelLabel;
+
     public function __construct(Registry $registry)
     {
         $this->registry = $registry;
