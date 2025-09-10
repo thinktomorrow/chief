@@ -5,10 +5,18 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: select options with empty values were not properly handled in forms.
 - Fixed: SelectList now filters out selected values that are not present in full options list.
 - Fixed: Table columns are now rendered in given site filter. E.g. filtering on site 'nl' will now also render
   columns with localized values for 'nl'.
-- Change: No pagination while reordering
+- Fixed: Menu item of type 'no link' now has any existing links removed when saving.
+- Added: Hive option for exporting resource and squanto texts. Use `--hive` option on the `chief:export-resource` and
+  `chief:export-text` commands.
+- Added: Table now show the localized value based on the current site filter.
+- Added: PreviewFile is now optional parameter for `Asset::fields($previewFile)`;
+- Added: Table sorting is now stored in session.
+- Changed: No pagination while reordering
+- Changed: Redirect to edit page after creation of a model
 
 ## [0.10.11] - 2025-08-25
 

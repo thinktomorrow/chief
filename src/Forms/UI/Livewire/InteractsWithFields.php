@@ -13,9 +13,10 @@ trait InteractsWithFields
 {
     private function injectFormValues(iterable $components): void
     {
-        foreach ($components as $component) {
+        foreach ($components as $i => $component) {
 
             if (! $component instanceof Field) {
+
                 if ($component instanceof HasComponents) {
                     $this->injectFormValues($component->getComponents());
                 }

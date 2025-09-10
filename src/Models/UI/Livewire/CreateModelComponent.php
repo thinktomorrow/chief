@@ -24,6 +24,10 @@ class CreateModelComponent extends Component
 
     public ?string $parentComponentId = null;
 
+    // Optional reference to a resource class as passed. This allows for any custom resource setup
+    // where the model does not reference the resource directly (e.g. polymorphic relations).
+    public ?string $resourceClass = null;
+
     public string $modelClass;
 
     public array $instanceAttributes = [];
@@ -44,6 +48,7 @@ class CreateModelComponent extends Component
     public function open($values = [])
     {
         $this->modelClass = $values['modelClass'];
+        $this->resourceClass = $values['resourceClass'] ?? null;
         $this->instanceAttributes = $values['instanceAttributes'] ?? [];
         $this->redirectAfterSave = $values['redirectAfterSave'] ?? true;
 
@@ -129,6 +134,10 @@ class CreateModelComponent extends Component
 
     private function getResource()
     {
+        if (isset($this->resourceClass)) {
+            return new $this->resourceClass;
+        }
+
         return app(Registry::class)->findResourceByModel($this->modelClass);
     }
 }

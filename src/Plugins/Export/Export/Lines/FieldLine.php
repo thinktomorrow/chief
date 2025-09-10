@@ -79,6 +79,16 @@ class FieldLine implements Line
         return $this->values[static::NON_LOCALIZED] ?? null;
     }
 
+    public function mergeValues(array $newValues): void
+    {
+        $this->values = array_merge($this->values, $newValues);
+    }
+
+    public function hasMissingValues(): bool
+    {
+        return in_array(null, $this->values, true) || in_array('', $this->values, true);
+    }
+
     public function toArray()
     {
         return $this->getColumns();

@@ -18,7 +18,9 @@ class ColumnDate extends ColumnItem
             return null;
         }
 
-        return ($value instanceof Carbon) ? $value->format($this->format) : $value;
+        $instance = ($value instanceof Carbon) ? $value : Carbon::parse($value);
+
+        return $instance->format($this->getFormat());
     }
 
     public function format(string $format): static

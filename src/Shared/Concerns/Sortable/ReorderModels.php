@@ -25,7 +25,12 @@ class ReorderModels
             throw new \InvalidArgumentException('Missing argument [itemId] for moveToParent request.');
         }
 
-        $model::findOrFail($itemId)->update([
+        if (! $instance = $model::find($itemId)) {
+            $modelClass = $model::class;
+            throw new \InvalidArgumentException("Cannot move item to parent: Model of type [{$modelClass}] with id [{$itemId}] not found. In a table, you can set the proper model class via `Table::setReorderingModelClass()`.");
+        }
+
+        $instance->update([
             'parent_id' => $parentId,
             $model->sortableAttribute() => $order,
         ]);

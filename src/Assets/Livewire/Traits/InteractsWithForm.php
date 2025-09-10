@@ -33,11 +33,14 @@ trait InteractsWithForm
     protected function addAssetComponents(string $method = 'fields')
     {
         if ($this->previewFile->assetType) {
-            $genericAssetInstance = AssetTypeFactory::instance($this->previewFile->assetType);
+            $genericAssetInstance = AssetTypeFactory::instance($this->previewFile->assetType, [
+                'id' => $this->previewFile->id ?? null,
+            ]);
+
             if (method_exists($genericAssetInstance, $method)) {
                 $this->components = [
                     ...$this->components,
-                    ...array_map(fn ($component) => $component->toLivewire(), iterator_to_array($genericAssetInstance->{$method}())),
+                    ...array_map(fn ($component) => $component->toLivewire(), iterator_to_array($genericAssetInstance->{$method}($this->previewFile))),
                 ];
             }
         }

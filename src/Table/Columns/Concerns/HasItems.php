@@ -10,11 +10,24 @@ trait HasItems
 {
     protected ?Closure $itemsResolver = null;
 
+    /**
+     * If the user has their own resolver, we won't try to refresh the data when
+     * e.g. locale changes. But rather let the custom resolver handle that.
+     */
+    protected bool $usesCustomItemsResolver = false;
+
+    public function values(array|Closure $itemsResolver): static
+    {
+        return $this->items($itemsResolver);
+    }
+
     public function items(array|Closure $itemsResolver): static
     {
         $this->itemsResolver = (! $itemsResolver instanceof Closure)
             ? fn (): iterable => $itemsResolver
             : $itemsResolver;
+
+        $this->usesCustomItemsResolver = true;
 
         return $this;
     }
@@ -25,7 +38,7 @@ trait HasItems
             return $this->itemsFromRelationKey($key);
         }
 
-        $this->items(function () {
+        $this->setItemsResolver(function () {
             $value = $this->getRawValue();
 
             return is_iterable($value) ? $value : [$value];
@@ -43,10 +56,19 @@ trait HasItems
         $relationName = substr($key, 0, strpos($key, '.'));
         $relationAttribute = substr($key, strpos($key, '.') + 1);
 
-        $this->items(function ($model) use ($relationName) {
+        $this->setItemsResolver(function ($model) use ($relationName) {
             return $model->{$relationName};
         })->mapValue(fn ($value) => is_array($value) ? $value[$relationAttribute] : $value->{$relationAttribute})
             ->label($relationName);
+
+        return $this;
+    }
+
+    private function setItemsResolver(array|Closure $itemsResolver): static
+    {
+        $this->itemsResolver = (! $itemsResolver instanceof Closure)
+            ? fn (): iterable => $itemsResolver
+            : $itemsResolver;
 
         return $this;
     }
@@ -77,21 +99,34 @@ trait HasItems
     private function resolveItems(): Collection
     {
         if (! $this->itemsResolver) {
-            $result = [$this->replicateToItem($this->getRawValue())];
+            $result = [$this->replicateToItem($this->getRawValue($this->getLocale()))];
         } else {
-            $result = call_user_func($this->itemsResolver, $this->getModel());
+            $result = call_user_func($this->itemsResolver, $this->getModel(), $this->getLocale());
         }
 
         $result = $result instanceof Collection ? $result : (! is_iterable($result) ? collect([$result]) : collect($result));
 
+        /**
+         * We ensure all resolved items are instances of ColumnItem.
+         *
+         * If not, we replicate the current column item to a new instance. Also, we mark the value as
+         * resolved with a custom resolver, so it won't be resolved again when e.g. locale changes.
+         */
         return $result->values()->map(function (mixed $rawItem) {
-            return (! $rawItem instanceof ColumnItem) ? $this->replicateToItem($rawItem) : $rawItem;
+            $item = (! $rawItem instanceof ColumnItem) ? $this->replicateToItem($rawItem) : $rawItem;
+
+            if ($this->usesCustomItemsResolver) {
+                $item->markValueAsResolved();
+            }
+
+            return $item;
         });
     }
 
     protected function replicateToItem($value): static
     {
-        $item = static::make($this->getKey())->value($value);
+        $item = static::make($this->getKey())
+            ->value($value);
 
         if ($this->locale) {
             $item->locale($this->locale);

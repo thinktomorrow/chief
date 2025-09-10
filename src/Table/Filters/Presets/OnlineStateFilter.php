@@ -6,9 +6,9 @@ use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
 
 class OnlineStateFilter extends ButtonGroupFilter
 {
-    public static function makeDefault(): self
+    public static function makeDefault(string $key = 'current_state'): self
     {
-        return static::make('current_state')
+        return static::make($key)
             ->label('Status')
             ->options([
                 '' => 'Alle',
@@ -17,9 +17,9 @@ class OnlineStateFilter extends ButtonGroupFilter
             ])->value('');
     }
 
-    public static function makeSimpleStateDefault(): self
+    public static function makeSimpleStateDefault(string $key = 'current_state'): self
     {
-        return static::make('current_state')
+        return static::make($key)
             ->label('Status')
             ->options([
                 '' => 'Alle',

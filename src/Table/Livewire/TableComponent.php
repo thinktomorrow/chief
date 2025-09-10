@@ -53,12 +53,12 @@ class TableComponent extends Component
 
     public array $customListeners = [];
 
-    public string $locale;
+    public ?string $locale = null;
 
     public function mount(Table $table)
     {
         /** Can be altered by the site filter / default filter */
-        $this->locale = app()->getLocale();
+        $this->locale = null;
 
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
@@ -202,6 +202,10 @@ class TableComponent extends Component
 
     public function isTableHeaderShown(): bool
     {
+        if ($this->isReordering) {
+            return false;
+        }
+
         return count($this->getFilters()) > 0 || count($this->getSorters()) > 1 || $this->allowColumnSelection();
     }
 

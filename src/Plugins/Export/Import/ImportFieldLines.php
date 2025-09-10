@@ -77,8 +77,8 @@ class ImportFieldLines implements ToCollection
 
         if ($this->output) {
             $this->output->info('Imported value for '.decrypt($encryptedId).' ('.$this->locale.')');
-            $this->output->writeln('Old value: '.print_r($currentValue, true));
-            $this->output->writeln('New value: '.print_r($value, true));
+            //            $this->output->writeln('Old value: '.print_r($currentValue, true));
+            //            $this->output->writeln('New value: '.print_r($value, true));
         }
     }
 

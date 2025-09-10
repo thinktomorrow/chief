@@ -60,9 +60,12 @@
             itemSelectText: '',
             uniqueItemText: 'Enkel unieke opties zijn mogelijk',
             valueComparer: (value1, value2) => {
-                // Default is strict equality, we take it loosely. Otherwise id comparison
-                // where it can be either a string or int are not matched up.
-                return value1 == value2
+                // Default is strict equality, we take it loosely.
+                // null only equals null, undefined only equals undefined
+                // numbers and strings get compared loosely but safely (123 == '123')
+                if (value1 == null || value2 == null) return value1 === value2;
+
+                return String(value1) === String(value2);
             },
         },
     }"

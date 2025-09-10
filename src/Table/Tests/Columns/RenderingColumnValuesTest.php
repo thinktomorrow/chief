@@ -41,6 +41,15 @@ class RenderingColumnValuesTest extends TestCase
         $this->assertEquals('foobar dynamic', $column->getItems()->first()->getValue());
     }
 
+    public function test_it_can_render_localized_value(): void
+    {
+        $model = new ModelFixture(['dynamic_title' => ['nl' => 'foobar dynamic nl', 'en' => 'foobar dynamic en']]);
+
+        $column = ColumnText::make('dynamic_title')->model($model);
+        $this->assertEquals('foobar dynamic nl', $column->getItems()->first()->locale('nl')->getValue('nl'));
+        $this->assertEquals('foobar dynamic en', $column->getItems()->first()->locale('en')->getValue('en'));
+    }
+
     public function test_value_originates_from_model_method()
     {
         $model = new ModelFixture;

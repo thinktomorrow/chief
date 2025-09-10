@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Plugins\Hive\Drivers\OpenAi\Prompts\OpenAiTranslationPrompt;
 use Thinktomorrow\Chief\Resource\Resource;
 
 class ComposeFieldLines
@@ -37,6 +38,9 @@ class ComposeFieldLines
 
     /** Avoid all field values that belong to an offline fragment */
     private bool $ignoreOfflineFragments = false;
+
+    /** Use Hive to generate missing texts */
+    private bool $hive = false;
 
     /** Only show shared fragment values the first time they appear */
     private array $ignoredFragments = [];
@@ -64,9 +68,28 @@ class ComposeFieldLines
             $lines = $lines->merge($this->addFragmentFieldValues($model, $locales));
         }
 
-        $this->lines = $lines;
+        $this->lines = $this->hiveTranslate($lines);
 
         return $this;
+    }
+
+    private function hiveTranslate(LinesCollection $lines): LinesCollection
+    {
+        if (! $this->hive) {
+            return $lines;
+        }
+
+        $linesForTranslation = $lines
+            ->reject(fn ($line) => ! $line instanceof FieldLine)
+            ->filter(fn ($line) => $line->hasMissingValues());
+
+        foreach ($linesForTranslation as $line) {
+            $result = app(OpenAiTranslationPrompt::class)->prompt(['texts' => $line->getValues()])->getResult();
+
+            $line->mergeValues($result);
+        }
+
+        return $lines;
     }
 
     public function ignoreFragments(array $ignoredFragments = []): static
@@ -104,6 +127,13 @@ class ComposeFieldLines
         return $this;
     }
 
+    public function useHive(bool $useHive = true): static
+    {
+        $this->hive = $useHive;
+
+        return $this;
+    }
+
     public function getLines(): LinesCollection
     {
         return $this->lines;
@@ -118,9 +148,10 @@ class ComposeFieldLines
     {
         $lines = new LinesCollection;
 
+        $fieldModel = $model;
         $model = $model instanceof Fragment ? $model->getFragmentModel() : $model;
 
-        $modelFields = Fields::makeWithoutFlatteningNestedFields($resource->fields($model))
+        $modelFields = Fields::makeWithoutFlatteningNestedFields($resource->fields($fieldModel))
             ->filterBy(fn ($field) => in_array($field::class, $this->textFields))
             ->model($model);
 

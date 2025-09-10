@@ -21,6 +21,13 @@ class Repeat extends Component implements Field, HasTaggedComponents
     protected string $previewView = 'chief-form::previews.fields.repeat';
 
     /**
+     * Repeat field itself should be localized, because in Livewire this can otherwise cause conflicts
+     * However, in some cases you can opt out and allow repeat items to be localized themselves.
+     * This is with risk of conflicts in Livewire though.
+     */
+    protected bool $protectAgainstLocalizedItems = true;
+
+    /**
      * Provide the repeated components so that they are easily presented in
      * the admin windows based on their field type of rendering.
      */
@@ -75,8 +82,19 @@ class Repeat extends Component implements Field, HasTaggedComponents
         $this->ensureItemsAreNotLocalized();
     }
 
+    public function ignoreLocalizedItemsRestriction(): static
+    {
+        $this->protectAgainstLocalizedItems = false;
+
+        return $this;
+    }
+
     private function ensureItemsAreNotLocalized(): void
     {
+        if (! $this->protectAgainstLocalizedItems) {
+            return;
+        }
+
         foreach (Fields::make($this->components)->all() as $component) {
             if ($component instanceof LocalizedField && $component->hasLocales()) {
                 throw new RepeatItemsCannotBeLocalized('
@@ -100,5 +118,13 @@ class Repeat extends Component implements Field, HasTaggedComponents
         }
 
         return $model->{$this->getColumnName()} ?: [];
+    }
+
+    protected function wireableMethods(array $components): array
+    {
+        return [
+            ...(! $this->protectAgainstLocalizedItems ? ['ignoreLocalizedItemsRestriction' => null] : []),
+            ...parent::wireableMethods($components),
+        ];
     }
 }

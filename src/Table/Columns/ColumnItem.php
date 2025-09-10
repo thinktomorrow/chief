@@ -78,11 +78,25 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     {
         $this->setDefaultValue($value);
 
-        if (isset($this->locale)) {
-            $this->valueGivenForLocale = $this->locale;
-        }
+        //        if (isset($this->locale)) {
+        //            $this->valueGivenForLocale = $this->locale;
+        //        }
 
         return $this;
+    }
+
+    private bool $valueMarkedAsResolved = false;
+
+    public function markValueAsResolved(): static
+    {
+        $this->valueMarkedAsResolved = true;
+
+        return $this;
+    }
+
+    public function isValueMarkedAsResolved(): bool
+    {
+        return $this->valueMarkedAsResolved;
     }
 
     /**
@@ -91,11 +105,16 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     public function getValue(?string $locale = null): string|int|null|float|Stringable
     {
         // Force refetch of value in case the locale has changed.
-        if (($this->locale || $this->valueGivenForLocale) && $this->valueGivenForLocale !== $this->locale) {
+        if (($locale || $this->valueGivenForLocale) && $this->valueGivenForLocale !== $locale) {
             $this->valueGiven = false;
+            $this->valueGivenForLocale = $locale;
         }
 
-        $value = $this->getDefaultValue($locale);
+        if ($this->isValueMarkedAsResolved()) {
+            $value = $this->value;
+        } else {
+            $value = $this->getDefaultValue($locale);
+        }
 
         $this->verifyValueCanBeRendered($value);
 

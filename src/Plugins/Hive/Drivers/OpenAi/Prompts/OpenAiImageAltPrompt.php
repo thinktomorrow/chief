@@ -13,7 +13,7 @@ class OpenAiImageAltPrompt implements HivePrompt
 {
     use HivePromptDefaults;
 
-    private string $label = 'Verzin alt tekst voor deze afbeelding';
+    private string $label = 'Genereer alt teksten voor een afbeelding';
 
     private array $altTexts = [];
 
@@ -42,13 +42,15 @@ class OpenAiImageAltPrompt implements HivePrompt
         $imageData = base64_encode(file_get_contents($path));
 
         $projectContext = config('chief-hive.context.default', '');
+        $systemContent = 'Je bent een seo assistent die alt-teksten genereert voor afbeeldingen. Output als JSON object met elke locale als key. Hier is een beetje context over de site waarin de afbeelding gebruikt wordt: '.$projectContext;
+        $userContent = 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst met een maximum van 125 karakters. Dit voor de volgende locales: '.implode(',', ChiefSites::locales());
 
         $response = app(OpenAiDriver::class)->chat([
             'model' => config('chief-hive.openai.model', 'gpt-4o'),
             'messages' => [
-                ['role' => 'system', 'content' => 'Je bent een seo assistent die alt-teksten genereert voor afbeeldingen. Output als JSON object met elke locale als key. Hier is een beetje context over de site waarin de afbeelding gebruikt wordt: '.$projectContext],
+                ['role' => 'system', 'content' => $systemContent],
                 ['role' => 'user', 'content' => [
-                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst met een maximum van 125 karakters. Dit voor de volgende locales: '.implode(',', ChiefSites::locales())],
+                    ['type' => 'text', 'text' => $userContent],
                     //                    ['type' => 'text', 'text' => 'Beschrijf deze afbeelding kort en duidelijk als een alt-tekst. Geef me drie voorstellen die verschillen qua creativiteit.'],
                     ['type' => 'image_url', 'image_url' => [
                         'url' => 'data:image/jpeg;base64,'.$imageData,
@@ -56,7 +58,7 @@ class OpenAiImageAltPrompt implements HivePrompt
                 ]],
             ],
             'response_format' => ['type' => 'json_object'],
-            'max_tokens' => 200,
+            'max_tokens' => 600,
         ]);
 
         $content = $response->toArray()['choices'][0]['message']['content'];

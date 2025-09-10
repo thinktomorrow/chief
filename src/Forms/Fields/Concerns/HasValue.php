@@ -142,8 +142,7 @@ trait HasValue
                     return $model->dynamic($this->getColumnName(), $locale, $this->getDefault($locale));
                 }
 
-                // Astrotomic translatable
-                return $model->{$this->getColumnName().':'.$locale};
+                // If no dynamic field, we continue and fetch it as a regular non-localized attribute
             }
 
             // Dotted syntax as support for array casts. We can fetch nested values as: days.0.am, days.0.pm, ...

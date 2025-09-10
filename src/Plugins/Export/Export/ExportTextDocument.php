@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\Export\Export;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
@@ -15,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Thinktomorrow\Chief\Plugins\Hive\Drivers\OpenAi\Prompts\OpenAiTranslationPrompt;
 use Thinktomorrow\Squanto\Database\DatabaseLine;
 use Thinktomorrow\Squanto\Domain\LineKey;
 use Thinktomorrow\Squanto\Manager\Pages\LineViewModel;
@@ -29,12 +31,15 @@ class ExportTextDocument implements FromCollection, WithColumnWidths, WithDefaul
 
     private Collection $styleCollection;
 
-    public function __construct(Collection $models, array $locales)
+    private bool $hive;
+
+    public function __construct(Collection $models, array $locales, bool $hive = false)
     {
         $this->models = $models;
         $this->locales = $locales;
 
         $this->styleCollection = collect();
+        $this->hive = $hive;
     }
 
     public function collection()
@@ -52,6 +57,24 @@ class ExportTextDocument implements FromCollection, WithColumnWidths, WithDefaul
             fn ($carry, $locale) => [...$carry, $row->dynamic('value', $locale)],
             []
         );
+
+        // Locale as key for each value
+        $values = array_combine($this->locales, $values);
+
+        if ($this->hive) {
+            try {
+                $texts = app(OpenAiTranslationPrompt::class)->prompt($values)->getResult();
+
+                foreach ($texts as $locale => $text) {
+                    $values[$locale] = $text;
+                }
+
+            } catch (\Exception $e) {
+                // If the OpenAI prompt fails, we can still export the asset without alt texts.
+                // Log the error or handle it as needed.
+                Log::error('Failed to generate text for values '.implode(',', $values).': '.$e->getMessage());
+            }
+        }
 
         $page = LineKey::fromString($row->key)->pageKey();
 

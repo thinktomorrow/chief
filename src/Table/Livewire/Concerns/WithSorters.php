@@ -13,6 +13,12 @@ trait WithSorters
 
     public bool $showSorters = false;
 
+    // Mount and set from session
+    public function mountWithSorters(): void
+    {
+        $this->sorters = session()->get($this->getSortersSessionKey(), []);
+    }
+
     /**
      * @return Sorter[]
      */
@@ -86,6 +92,9 @@ trait WithSorters
             }
         }
 
+        // Keep the personal sorting as a reference in session
+        session()->put($this->getSortersSessionKey(), $this->sorters);
+
         $this->resetPage($this->getPaginationId());
     }
 
@@ -127,5 +136,10 @@ trait WithSorters
     private function isEmptySorterValue($value): bool
     {
         return is_null($value) || empty($value) || $value === '';
+    }
+
+    private function getSortersSessionKey(): string
+    {
+        return 'table.sorters'.$this->tableReference->toUniqueString();
     }
 }

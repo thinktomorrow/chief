@@ -8,19 +8,21 @@ use Thinktomorrow\Chief\Table\Actions\Action;
 
 class CreateModelAction extends Action
 {
-    public static function makeDefault(string $resourceKey, array $instanceAttributes = []): static
+    public static function makeDefault(string $resourceKey, array $instanceAttributes = [], bool $redirectAfterSave = true): static
     {
         $resource = app(Registry::class)->resource($resourceKey);
 
         return static::make('create')
             ->label(ucfirst($resource->getLabel()).' toevoegen')
             ->prependIcon('<x-chief::icon.plus-sign />')
-            ->effect(function ($formData, $data, $action, $component) use ($resource, $instanceAttributes) {
+            ->effect(function ($formData, $data, $action, $component) use ($resource, $instanceAttributes, $redirectAfterSave) {
+
                 $component->dispatch('open-create-model', [
                     'modelClass' => $resource::modelClassName(),
+                    'resourceClass' => $resource::class,
                     'locales' => ChiefSites::locales(),
                     'instanceAttributes' => $instanceAttributes,
-                    'redirectAfterSave' => false,
+                    'redirectAfterSave' => $redirectAfterSave,
                 ]);
             });
     }
