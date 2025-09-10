@@ -67,7 +67,6 @@ EOD;
         // Assert that the result has the same keys as the input texts
         foreach ($texts as $key => $text) {
             if (! array_key_exists($key, $result)) {
-                dd($key, $text, $result);
                 throw new \Exception('Missing key "'.$key.'" in OpenAI response for texts: '.print_r($texts, true).'. Full response: '.$content);
             }
         }
