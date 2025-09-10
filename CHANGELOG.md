@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Changed: AdminToast element layout update
+
 ## [0.10.12] - 2025-09-10
 
 - Fixed: select options with empty values were not properly handled in forms.
