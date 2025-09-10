@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.13] - 2025-09-10
+
+- Fixed: Context fragments that were removed broke adding new fragments to the context.
+
 ## [0.10.12] - 2025-09-10
 
 - Fixed: select options with empty values were not properly handled in forms.
