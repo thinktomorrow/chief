@@ -1,10 +1,10 @@
 @utility badge {
-    @apply inline-block;
+    @apply inline-block font-medium;
 }
 
 /* ---------- Sizes ---------- */
 @utility badge-base {
-    @apply rounded-xl px-2 py-1.5 text-base leading-5;
+    @apply rounded-lg px-2 py-1 text-base leading-5;
 }
 @utility badge-sm {
     @apply rounded-lg px-1.5 py-1 text-sm leading-4;
@@ -27,7 +27,7 @@
     @apply bg-primary-50 text-primary-500;
 }
 @utility badge-grey {
-    @apply bg-grey-100 text-grey-800;
+    @apply bg-grey-100 text-grey-700;
 }
 @utility badge-outline-transparent {
     @apply text-grey-800 ring-grey-100 ring-1 ring-inset;
