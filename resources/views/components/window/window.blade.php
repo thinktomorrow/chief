@@ -35,7 +35,7 @@
                 match ($variant) {
                     'card' => 'border-grey-100 shadow-grey-500/10 border bg-white p-4 shadow-md',
                     'transparent' => 'p-4',
-                    default => 'border-grey-100 shadow-grey-500/10 border bg-white p-4 shadow-md',
+                    default => '',
                 },
             ])
         }}
