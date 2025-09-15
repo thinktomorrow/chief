@@ -13,9 +13,9 @@
                 </div>
             @endif
 
-            @foreach ($getComponents() as $childComponent)
+            @foreach ($getComponents() as $_component)
                 <div class="{{ $getColumnSpanStyle($getSpan($loop->index)) }}">
-                    {{ $childComponent }}
+                    {{ $_component }}
                 </div>
             @endforeach
         </div>
