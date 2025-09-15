@@ -6,7 +6,7 @@
         x-sortable-ghost-class="fragment-sort-ghost"
         x-sortable-drag-class="fragment-sort-drag"
         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-        class="border-y border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100"
+        class="border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100 border-y [&>[data-slot=fragment]+[data-slot=fragment]]:border-t"
     >
         @if ($fragments->count() > 0)
             @include(

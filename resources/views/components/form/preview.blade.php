@@ -29,7 +29,7 @@
                 $labelClass,
             ])>
                 @if ($label)
-                    <p class="mt-0.5 text-sm/5 font-medium text-grey-500">
+                    <p class="text-grey-500 mt-0.5 text-sm/5 font-medium">
                         {{ $label }}
                     </p>
                 @endif

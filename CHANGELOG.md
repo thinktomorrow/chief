@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Add: Window Layout Component
+- Changed: AdminToast element layout update
+
 ## [0.10.13] - 2025-09-10
 
 - Fixed: Context fragments that were removed broke adding new fragments to the context.
