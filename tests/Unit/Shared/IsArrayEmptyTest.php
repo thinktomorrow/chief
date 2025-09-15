@@ -29,4 +29,3 @@ class IsArrayEmptyTest extends TestCase
         $this->assertFalse(is_array_empty(['', 123]));
     }
 }
-
