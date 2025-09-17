@@ -108,19 +108,21 @@ trait PageResourceDefault
         return view('chief::manager.edit');
     }
 
-    public function getPageBreadCrumb(?string $pageType = null): ?BreadCrumb
+    public function getPageBreadCrumbs($model): array
     {
         $this->assertManager();
 
         if (! $this->manager->can('index')) {
-            return null;
+            return [$this->getPageTitle($model)];
         }
 
-        if ($pageType == 'edit' || $pageType == 'create') {
-            return new BreadCrumb('Overzicht', $this->manager->route('index'));
-        }
-
-        return null;
+        return [
+            new BreadCrumb(
+                $this->getIndexTitle(),
+                $this->manager->route('index'),
+            ),
+            $this->getPageTitle($model),
+        ];
     }
 
     public function getIndexHeaderContent(): ?string
