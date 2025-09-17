@@ -8,13 +8,10 @@ use Illuminate\Http\Request;
 
 class HiddenFilter extends Filter
 {
+    protected string $view = 'chief-table::filters.hidden';
+
     public function applicable(Request $request): bool
     {
         return true;
-    }
-
-    public function render(): string
-    {
-        return '';
     }
 }
