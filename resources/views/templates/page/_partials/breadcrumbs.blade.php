@@ -7,7 +7,7 @@
     <div class="flex flex-wrap items-start gap-x-2 gap-y-1">
         @foreach ($breadcrumbs as $breadcrumb)
             @if (is_string($breadcrumb))
-                <span class="text-sm/6 text-grey-700">
+                <span class="text-grey-700 text-sm/6">
                     {{ teaser(ucfirst($breadcrumb), 64, '...') }}
                 </span>
             @elseif (is_array($breadcrumb))
@@ -17,7 +17,7 @@
                     class="group inline-flex items-start gap-1.5 text-sm/6"
                 >
                     @if (isset($breadcrumb['icon']))
-                        <span aria-hidden="true" class="my-0.5 text-grey-400 *:size-5 group-hover:text-primary-500">
+                        <span aria-hidden="true" class="text-grey-400 group-hover:text-primary-500 my-0.5 *:size-5">
                             @if ($breadcrumb['icon'] === strip_tags($breadcrumb['icon']))
                                 <x-dynamic-component :component="'chief::icon.' . $breadcrumb['icon']" />
                             @else
@@ -37,7 +37,7 @@
                     class="group inline-flex items-start gap-1.5 text-sm/6"
                 >
                     @if ($breadcrumb->icon)
-                        <span aria-hidden="true" class="my-0.5 text-grey-400 *:size-5 group-hover:text-primary-500">
+                        <span aria-hidden="true" class="text-grey-400 group-hover:text-primary-500 my-0.5 *:size-5">
                             @if ($breadcrumb->icon === strip_tags($breadcrumb->icon))
                                 <x-dynamic-component :component="'chief::icon.' . $breadcrumb->icon" />
                             @else
@@ -53,7 +53,7 @@
             @endif
 
             @if (! $loop->last)
-                <x-chief::icon.chevron-right aria-hidden="true" class="my-1 size-4 text-grey-400" />
+                <x-chief::icon.chevron-right aria-hidden="true" class="text-grey-400 my-1 size-4" />
             @endif
         @endforeach
     </div>
