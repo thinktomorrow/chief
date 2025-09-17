@@ -1,9 +1,8 @@
-<tr
+<x-chief::table.row
     data-table-row="{{ $this->getRowKey($item) }}"
     {{-- The row, especially the checkbox, needs to be reevaluated after sorting/filtering so the alpine reactivity remains intact --}}
     wire:key="{{ $this->getRowKey($item) . '-table-checkbox-' . Str::random() }}"
-    :class="{ 'bg-grey-25 [&_[data-slot=actions]]:bg-grey-25': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
-    class="*:py-1.5 *:pl-3 [&>*:first-child]:pl-4 [&>*:last-child]:pr-4"
+    x-bind:class="{ 'bg-grey-25 [&_[data-slot=actions]]:bg-grey-25': Array.from(selection).some((item) => item == '{{ $this->getRowKey($item) }}') }"
 >
     @if ($this->hasAnyBulkActions())
         <td
@@ -23,19 +22,17 @@
     @endif
 
     @foreach ($this->getColumns($item) as $column)
-        <td class="align-center text-left">
-            <div class="flex min-h-6 items-center gap-1.5">
-                @if ($loop->first && isset($item->indent) && $item->indent > 0)
-                    <div class="flex justify-end" style="width: {{ 20 + ($item->indent - 1) * 26 }}px">
-                        <x-chief::icon.arrow-bend-down-right class="size-5 text-grey-800" />
-                    </div>
-                @endif
+        <x-chief::table.cell>
+            @if ($loop->first && isset($item->indent) && $item->indent > 0)
+                <div class="flex justify-end" style="width: {{ 20 + ($item->indent - 1) * 26 }}px">
+                    <x-chief::icon.arrow-bend-down-right class="text-grey-800 size-5" />
+                </div>
+            @endif
 
-                @foreach ($column->getItems() as $columnItem)
-                    {{ $columnItem }}
-                @endforeach
-            </div>
-        </td>
+            @foreach ($column->getItems() as $columnItem)
+                {{ $columnItem }}
+            @endforeach
+        </x-chief::table.cell>
     @endforeach
 
     <td
@@ -45,4 +42,4 @@
     >
         @include('chief-table::livewire._partials.row-actions')
     </td>
-</tr>
+</x-chief::table.row>

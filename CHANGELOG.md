@@ -9,6 +9,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: Window Layout Component
 - Added: DeleteRowAction to delete model without state
 - Added: `Table::disallowColumnSelection()` to disable column selection for a table.
+- Added: Basic Table Components. These are used by the Livewire Table Component for displaying default data. The basic
+  components can be used to build a custom table with the same layout.
 - Changed: AdminToast element layout update
 - Changed: Archivable trait now allows custom column name and archived value.
 

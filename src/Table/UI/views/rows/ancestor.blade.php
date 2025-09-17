@@ -4,7 +4,7 @@
     @endif
 
     <td colspan="9999" class="text-left">
-        <div class="flex gap-1.5 text-sm leading-5 text-grey-700">
+        <div class="text-grey-700 flex gap-1.5 text-sm leading-5">
             @foreach ($ancestors as $ancestor)
                 {{ $this->getAncestorTreeLabel($ancestor) }}
 
