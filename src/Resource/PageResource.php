@@ -20,7 +20,8 @@ interface PageResource extends Resource
 
     public function getPageView(): View;
 
-    public function getPageBreadCrumb(): ?BreadCrumb;
+    /** @return array<BreadCrumb|string> */
+    public function getPageBreadCrumbs($model): array;
 
     public function getPageTitle($model): string;
 

@@ -9,6 +9,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Add: Basic Table Components. These are used by the Livewire Table Component for displaying default data. The basic components can be used to build a custom table with the same layout.
 - Changed: AdminToast element layout update
 
+## [0.10.13] - 2025-09-10
+
+- Fixed: Context fragments that were removed broke adding new fragments to the context.
+- Changed: Archivable trait now allows custom column name and archived value.
+
 ## [0.10.12] - 2025-09-10
 
 - Fixed: select options with empty values were not properly handled in forms.

@@ -13,10 +13,7 @@
     <x-slot name="header">
         <x-chief::page.header
             :title="$resource->getPageTitle($model)"
-            :breadcrumbs="[
-                ['label' => $resource->getIndexTitle(), 'url' => $manager->route('index'), 'icon' => $resource->getNavItem()?->icon()],
-                $resource->getPageTitle($model)
-            ]"
+            :breadcrumbs="$resource->getPageBreadcrumbs($model)"
         >
             @if ($layout->hasForm('pagetitle'))
                 <x-slot name="customTitle">

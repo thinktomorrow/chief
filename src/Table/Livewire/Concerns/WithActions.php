@@ -56,6 +56,8 @@ trait WithActions
                 $this->getActionPayload($action, $payload)
             );
         }
+
+        return null;
     }
 
     public function applyRowAction($actionKey, string $modelReference): void
