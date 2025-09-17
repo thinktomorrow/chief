@@ -11,6 +11,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## [0.10.13] - 2025-09-10
 
 - Fixed: Context fragments that were removed broke adding new fragments to the context.
+- Changed: Archivable trait now allows custom column name and archived value.
 
 ## [0.10.12] - 2025-09-10
 
