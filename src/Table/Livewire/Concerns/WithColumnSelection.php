@@ -24,7 +24,7 @@ trait WithColumnSelection
 
     public function allowColumnSelection(): bool
     {
-        return true;
+        return $this->getTable()->isColumnSelectionAllowed();
     }
 
     private function getColumnSelectionSessionKey(): string

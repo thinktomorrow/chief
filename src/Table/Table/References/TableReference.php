@@ -32,13 +32,13 @@ class TableReference implements Wireable
         return [
             'resourceClass' => $this->resourceClass,
             'tableKey' => $this->tableKey,
-            'parameters' => $this->parameters,
+            'parameters' => $this->prepareParametersToLivewire(),
         ];
     }
 
     public static function fromLivewire($value)
     {
-        return new static($value['resourceClass'], $value['tableKey'], $value['parameters']);
+        return new static($value['resourceClass'], $value['tableKey'], static::restoreParametersFromLivewire($value['parameters']));
     }
 
     public function getTable(): Table
@@ -72,5 +72,33 @@ class TableReference implements Wireable
     public function toUniqueString(): string
     {
         return $this->resourceClass.'::'.$this->tableKey.'?params='.implode('|', $this->parameters);
+    }
+
+    private function prepareParametersToLivewire(): array
+    {
+        $parameters = $this->parameters;
+
+        // If any of the parameters are wireable, we need to convert them to array.
+        foreach ($parameters as $key => $parameter) {
+            if ($parameter instanceof Wireable) {
+                $parameters[$key] = $parameter->toLivewire();
+            }
+        }
+
+        return $parameters;
+    }
+
+    private static function restoreParametersFromLivewire(array $parameters): array
+    {
+        foreach ($parameters as $key => $parameter) {
+            if (is_array($parameter) && isset($parameter['class']) && class_exists($parameter['class']) && in_array(Wireable::class, class_implements($parameter['class']))) {
+                $parameters[$key] = $parameter['class']::fromLivewire($parameter);
+            } elseif (is_array($parameter) && key($parameter) == 'model-reference') {
+                // Special case for ModelReference, as it does not have a 'class' key.
+                $parameters[$key] = \Thinktomorrow\Chief\Shared\ModelReferences\ModelReference::fromLivewire($parameter);
+            }
+        }
+
+        return $parameters;
     }
 }

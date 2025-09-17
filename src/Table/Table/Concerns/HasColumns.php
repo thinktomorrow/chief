@@ -9,6 +9,8 @@ trait HasColumns
 {
     private array $columns = [];
 
+    private bool $isColumnSelectionAllowed = true;
+
     public function columns(array $columns): static
     {
         $this->columns = array_merge($this->columns, array_map(fn ($column) => ! $column instanceof Column ? Column::items([$column]) : $column, $columns));
@@ -80,5 +82,22 @@ trait HasColumns
             ->reject(fn ($column) => empty($column->getItems()))
             ->map(fn ($column) => Header::makeHeader($column->getItems()[0]->getKey(), $column->getItems()[0]->getLabel()))
             ->all();
+    }
+
+    public function isColumnSelectionAllowed(): bool
+    {
+        return $this->isColumnSelectionAllowed;
+    }
+
+    public function allowColumnSelection(bool $allow = true): static
+    {
+        $this->isColumnSelectionAllowed = $allow;
+
+        return $this;
+    }
+
+    public function disallowColumnSelection(): static
+    {
+        return $this->allowColumnSelection(false);
     }
 }
