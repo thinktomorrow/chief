@@ -8,7 +8,7 @@ trait HasDescription
 {
     protected ?string $description = null;
 
-    public function description(string $description): static
+    public function description(?string $description = null): static
     {
         $this->description = $description;
 
