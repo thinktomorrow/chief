@@ -1,14 +1,18 @@
 @php
     $threshold = 3;
-    $count = count($getItems());
+    // Filter out items that don't have a value for the current locale
+    $items = $getItems()->filter(fn ($item) => $item->getValue($getLocale()));
+    $count = count($items);
 @endphp
 
 @if ($count > 0)
     <div x-data="{ isShowingMore: false }" class="flex items-start gap-1">
-        @foreach ($getItems() as $item)
+        @foreach ($items as $item)
             @php
                 $index = $count === $threshold ? $loop->index : $loop->iteration;
             @endphp
+
+            @continue(! $item->getValue($getLocale()))
 
             @if ($item->hasLink())
                 <a

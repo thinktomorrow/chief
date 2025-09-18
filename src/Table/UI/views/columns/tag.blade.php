@@ -1,6 +1,7 @@
 @php
     $threshold = 3;
-    $items = $getItems();
+    // Filter out items that don't have a value for the current locale
+    $items = $getItems()->filter(fn ($item) => $item->getValue($getLocale()));
     $count = count($items);
 @endphp
 
