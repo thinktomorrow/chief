@@ -23,27 +23,26 @@
         x-sortable-group="{{ $sortableGroup }}"
         x-sortable-ghost-class="table-sort-ghost"
         x-sortable-drag-class="table-sort-drag"
-        x-on:end.stop="
-            (evt) => {
-                // reorder within same parent
-                if (evt.to === evt.from) {
-                    $wire.reorder(evt.target.sortable.toArray())
-
-                    return
-                }
-
-                // reorder to different parent
-                const itemId = evt.item.getAttribute('x-sortable-item')
-                const parentId =
-                    evt.to.closest('[x-sortable-item]')?.getAttribute('x-sortable-item') ||
-                    null
-                const ids = [...evt.to.children].map((el) =>
-                    el.getAttribute('x-sortable-item'),
-                )
-
-                $wire.moveToParent(itemId, parentId, ids)
+        x-data="{
+        handleEnd(evt) {
+            // reorder within same parent
+            if (evt.to === evt.from) {
+                $wire.reorder(evt.target.sortable.toArray())
+                return
             }
-        "
+
+            // reorder to different parent
+            const itemId = evt.item.getAttribute('x-sortable-item')
+            const parentId =
+                evt.to.closest('[x-sortable-item]')?.getAttribute('x-sortable-item') || null
+            const ids = [...evt.to.children].map((el) =>
+                el.getAttribute('x-sortable-item'),
+            )
+
+            $wire.moveToParent(itemId, parentId, ids)
+        }
+    }"
+        x-on:end.stop="handleEnd($event)"
         @class([
             'border-grey-100 shadow-grey-500/10 divide-grey-100 divide-y rounded-xl border px-1 py-1.5',
             'bg-white shadow-md' => $variant === 'card',

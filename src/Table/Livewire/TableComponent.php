@@ -64,7 +64,6 @@ class TableComponent extends Component
         $this->tableReference = $table->getTableReference();
         $this->setDefaultFilters();
         $this->resetTertiaryFilters();
-        $this->applyDefaultSorters();
 
         if ($table->isReorderingAllowed() && $table->isStartingWithReordering()) {
             $this->startReordering();

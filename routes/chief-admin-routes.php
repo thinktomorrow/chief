@@ -28,8 +28,8 @@ Route::delete('remove-redirect/{id}', [RemoveRedirectController::class, 'delete'
  * -----------------------------------------------------------------
  */
 Route::get('menus', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuController::class, 'index'])->name('chief.back.menus.index');
-Route::get('menus/{id}/reorder', [\Thinktomorrow\Chief\Menu\App\Controllers\ReorderMenuController::class, 'index'])->name('chief.back.menus.reorder');
-Route::post('menus/{id}/reorder', [\Thinktomorrow\Chief\Menu\App\Controllers\ReorderMenuController::class, 'update'])->name('chief.back.menus.reorder.update');
+// Route::get('menus/{id}/reorder', [\Thinktomorrow\Chief\Menu\App\Controllers\ReorderMenuController::class, 'index'])->name('chief.back.menus.reorder');
+// Route::post('menus/{id}/reorder', [\Thinktomorrow\Chief\Menu\App\Controllers\ReorderMenuController::class, 'update'])->name('chief.back.menus.reorder.update');
 Route::post('menus/{id}/menuitem', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'store'])->name('chief.back.menuitem.store');
 Route::get('menus/{id}/menuitem/create', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuItemController::class, 'create'])->name('chief.back.menuitem.create');
 Route::get('menus/{type}/{id?}', [\Thinktomorrow\Chief\Menu\App\Controllers\MenuController::class, 'show'])->name('chief.back.menus.show');

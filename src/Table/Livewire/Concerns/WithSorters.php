@@ -16,7 +16,15 @@ trait WithSorters
     // Mount and set from session
     public function mountWithSorters(): void
     {
-        $this->sorters = session()->get($this->getSortersSessionKey(), []);
+        $sessionSorters = session()->get($this->getSortersSessionKey());
+
+        if (is_array($sessionSorters) && count($sessionSorters) > 0) {
+            $this->sorters = $sessionSorters;
+
+            return;
+        }
+
+        $this->applyDefaultSorters();
     }
 
     /**
