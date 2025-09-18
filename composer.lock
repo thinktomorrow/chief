@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c42e7f7cd2da5d6fae3b9ecdfe3b231b",
+    "content-hash": "c177c9cc426040f282f97a4b44d93485",
     "packages": [
         {
             "name": "brick/math",
@@ -8567,16 +8567,16 @@
         },
         {
             "name": "openai-php/client",
-            "version": "v0.15.0",
+            "version": "v0.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openai-php/client.git",
-                "reference": "4db080738104be6a1144fa9f203c428ea4e58128"
+                "reference": "7a59e4d896d83f8c923e0b3a5ebae0a5cddad2d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openai-php/client/zipball/4db080738104be6a1144fa9f203c428ea4e58128",
-                "reference": "4db080738104be6a1144fa9f203c428ea4e58128",
+                "url": "https://api.github.com/repos/openai-php/client/zipball/7a59e4d896d83f8c923e0b3a5ebae0a5cddad2d6",
+                "reference": "7a59e4d896d83f8c923e0b3a5ebae0a5cddad2d6",
                 "shasum": ""
             },
             "require": {
@@ -8638,7 +8638,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openai-php/client/issues",
-                "source": "https://github.com/openai-php/client/tree/v0.15.0"
+                "source": "https://github.com/openai-php/client/tree/v0.16.1"
             },
             "funding": [
                 {
@@ -8654,7 +8654,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-04T17:44:21+00:00"
+            "time": "2025-09-04T14:32:16+00:00"
         },
         {
             "name": "orchestra/canvas",
