@@ -40,6 +40,9 @@ trait WithUniqueSlug
         // convert diacritics to ascii e.g. é -> e.
         $slug = Str::ascii($slug);
 
+        // Cleanup any sequential slashes e.g. "my//slug" -> "my/slug"
+        $slug = preg_replace('#/+#', '/', $slug);
+
         // Convert spaces to hyphen e.g. "my slug" -> "my-slug"
         return str_replace(' ', '-', $slug);
     }

@@ -5,7 +5,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.14] - 2025-09-18
+
+- Fixed: reordering menu items + menu tree structure was no longer visible
 - Fixed: Table Reference with a modelReference as parameter broke dialogs in table.
+- Fixed: Cleanup any sequential slashes e.g. "my//slug" -> "my/slug"
 - Added: Window Layout Component
 - Added: DeleteRowAction to delete model without state
 - Added: `Table::disallowColumnSelection()` to disable column selection for a table.

@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
 use Thinktomorrow\Chief\Urls\Exceptions\UrlAlreadyExists;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
-class EditingUrlTest extends ChiefTestCase
+class UpdatingUrlTest extends ChiefTestCase
 {
     private UrlRepository $repository;
 
@@ -125,6 +125,25 @@ class EditingUrlTest extends ChiefTestCase
         $this->assertDatabaseMissing('chief_urls', [
             'id' => $recordId,
             'slug' => 'nl-base/foo bar',
+        ]);
+    }
+
+    public function test_it_converts_two_sequential_slashes_to_one_when_prepending_base_url_segment(): void
+    {
+        $recordId = $this->application->create(new CreateUrl($this->model->modelReference(), 'nl', 'original-slug', 'online'));
+
+        $this->application->update(new UpdateUrl(
+            $recordId, '/foo/bar', 'online'
+        ));
+
+        $this->assertDatabaseHas('chief_urls', [
+            'id' => $recordId,
+            'slug' => 'nl-base/foo/bar',
+        ]);
+
+        $this->assertDatabaseMissing('chief_urls', [
+            'id' => $recordId,
+            'slug' => 'nl-base//foo/bar',
         ]);
     }
 }
