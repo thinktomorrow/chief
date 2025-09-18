@@ -50,7 +50,9 @@
                     </th>
                 </x-chief::table.header>
 
-                <x-chief::table.body class="[&>*:last-child_[data-slot=actions]]:rounded-br-xl">
+                <x-chief::table.body
+                    class="[&>*:last-child_[data-slot=actions]]:rounded-br-xl [&>*:last-child_[data-slot=actions]]:before:bottom-0"
+                >
                     @includeWhen($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table::rows.ancestor', ['ancestors' => $this->getAncestors()])
 
                     @if ($this->resultPageCount > 0)

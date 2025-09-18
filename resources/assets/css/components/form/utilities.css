@@ -8,3 +8,12 @@
         margin: 0;
     }
 }
+
+/* Hide element scrollbar */
+.scrollbar\:hidden {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

@@ -36,9 +36,18 @@
     @endforeach
 
     <td
+        x-cloak
         data-slot="actions"
-        class="align-center sticky right-0 bg-white"
-        :class="{ '*:opacity-40 *:pointer-events-none cursor-not-allowed': selection.length > 0 }"
+        @class([
+            'align-center sticky right-0 bg-white',
+            "after:absolute after:inset-0 after:w-full after:shadow-xl after:shadow-black/25 after:content-[''] after:pointer-events-none",
+            'before:border-grey-100 before:pointer-events-none before:absolute before:inset-x-0 before:-top-px before:-bottom-px before:border-y',
+            'before:opacity-0 after:opacity-0',
+        ])
+        :class="{
+            '*:opacity-40 *:pointer-events-none cursor-not-allowed': selection.length > 0,
+            'after:opacity-100! before:opacity-100!': isScrollable && !isScrolledToRight,
+        }"
     >
         @include('chief-table::livewire._partials.row-actions')
     </td>

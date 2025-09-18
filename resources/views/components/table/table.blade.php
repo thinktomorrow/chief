@@ -17,7 +17,28 @@
         {{ $header }}
     @endif
 
-    <div class="overflow-x-auto whitespace-nowrap">
+    <div
+        x-data="{
+            isScrollable: false,
+            isScrolledToLeft: false,
+            isScrolledToRight: false,
+            init() {
+                this.isScrollable = this.$el.scrollWidth > this.$el.clientWidth
+                $nextTick(() => {
+                    this.updateScrollState()
+                })
+                this.$el.addEventListener('scroll', () => this.updateScrollState())
+                window.addEventListener('resize', () => this.updateScrollState())
+            },
+            updateScrollState() {
+                this.isScrollable = this.$el.scrollWidth > this.$el.clientWidth
+                this.isScrolledToLeft = this.$el.scrollLeft <= 0
+                this.isScrolledToRight =
+                    this.$el.scrollLeft >= this.$el.scrollWidth - this.$el.clientWidth
+            },
+        }"
+        class="scrollbar:hidden overflow-x-auto whitespace-nowrap"
+    >
         <table class="divide-grey-100 min-w-full table-fixed divide-y">
             {{ $slot }}
         </table>
