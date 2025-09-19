@@ -9,6 +9,7 @@ _migration/uploads
 /storage
 /vendor
 /.idea
+/.cursor
 .env
 /report
 /docs/_site

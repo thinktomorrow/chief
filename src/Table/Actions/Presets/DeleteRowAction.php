@@ -18,11 +18,12 @@ class DeleteRowAction extends Action
                 Dialog::make('deleteModal')
                     ->title('Verwijder item')
                     ->content('
-                                <p>
-                                    Weet je zeker dat je dit item wilt verwijderen? Je kunt dit item later niet meer terughalen.
-                                </p>
-                            ')
+                        <p>
+                            Weet je zeker dat je dit item wilt verwijderen? Je kunt dit item later niet meer terughalen.
+                        </p>
+                    ')
                     ->button('Verwijderen')
+                    ->buttonVariant('red')
             )
             ->effect(function ($formData, $data) {
                 try {

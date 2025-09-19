@@ -29,7 +29,7 @@
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
                 <x-chief::button wire:click="close">Annuleer</x-chief::button>
-                <x-chief::button wire:click="save" variant="blue">
+                <x-chief::button wire:click="save" variant="{{ $this->getButtonVariant() }}">
                     {{ $this->getButton() }}
                 </x-chief::button>
             </x-chief::dialog.modal.footer>

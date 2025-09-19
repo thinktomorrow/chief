@@ -22,7 +22,7 @@
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
-                <x-chief::button wire:click="save" variant="blue" class="shrink-0">
+                <x-chief::button wire:click="save" variant="{{ $this->getButtonVariant() }}" class="shrink-0">
                     {{ $this->getButton() }}
                 </x-chief::button>
                 <x-chief::button wire:click="close" class="shrink-0">Annuleer</x-chief::button>

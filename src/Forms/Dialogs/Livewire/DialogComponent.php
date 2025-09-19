@@ -93,6 +93,11 @@ class DialogComponent extends Component
         return $this->getDialog()->getButton();
     }
 
+    public function getButtonVariant()
+    {
+        return $this->getDialog()->getButtonVariant();
+    }
+
     private function getItemsCount(): int
     {
         return count($this->data['items'] ?? []);
