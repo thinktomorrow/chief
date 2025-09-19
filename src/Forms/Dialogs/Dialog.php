@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Forms\Dialogs;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasFields;
+use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasButton;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasContent;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasDialogType;
@@ -21,6 +22,7 @@ class Dialog extends LayoutComponent
     use HasElementId;
     use HasFields;
     use HasSubTitle;
+    use HasTitle;
 
     public function __construct(string $key = 'modal')
     {

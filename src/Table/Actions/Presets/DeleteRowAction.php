@@ -16,7 +16,7 @@ class DeleteRowAction extends Action
             ->prependIcon('<x-chief::icon.delete />')
             ->dialog(
                 Dialog::make('deleteModal')
-                    ->title('Verwijder item')
+                    ->title('Verwijder itemmm')
                     ->content('
                         <p>
                             Weet je zeker dat je dit item wilt verwijderen? Je kunt dit item later niet meer terughalen.

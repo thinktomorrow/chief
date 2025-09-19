@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Layouts;
 
+use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
 use Thinktomorrow\Chief\Forms\Concerns\HasFields;
+use Thinktomorrow\Chief\Forms\Concerns\HasTitle;
 use Thinktomorrow\Chief\Forms\Layouts\Concerns\HasFormDisplay;
 use Thinktomorrow\Chief\Forms\Layouts\Concerns\WithLocalizedFields;
 
 class Form extends LayoutComponent implements Layout
 {
+    use HasDescription;
     use HasFields;
     use HasFormDisplay;
+    use HasTitle;
     use WithLocalizedFields;
 
     protected string $view = 'chief-form::layouts.form';
@@ -38,7 +42,9 @@ class Form extends LayoutComponent implements Layout
     protected function wireableMethods(array $components): array
     {
         return array_merge(parent::wireableMethods($components), [
+            ...(isset($this->description) ? ['description' => $this->description] : []),
             ...(isset($this->formDisplay) ? ['setFormDisplay' => $this->formDisplay] : []),
+            ...(isset($this->title) ? ['title' => $this->title] : []),
         ]);
     }
 }
