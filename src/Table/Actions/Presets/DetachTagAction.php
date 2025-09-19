@@ -4,10 +4,8 @@ namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
 use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
-use Thinktomorrow\Chief\Plugins\Tags\App\Read\TagReadRepository;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 use Thinktomorrow\Chief\Plugins\Tags\Domain\Model\TagModel;
-use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\BulkAction;
 
 class DetachTagAction extends BulkAction
@@ -17,7 +15,6 @@ class DetachTagAction extends BulkAction
         return static::make('detach-tag')
             ->label('Tags verwijderen')
             ->dialog(function ($data) use ($resourceKey) {
-
                 $modelIds = $data['items'];
 
                 // Get all tags belonging to the model selection
@@ -36,23 +33,11 @@ class DetachTagAction extends BulkAction
                             ->multiple()
                             ->options($tagsForSelect),
                     ])
-                    ->button('Verwijderen');
+                    ->button('Verwijderen')
+                    ->buttonVariant('red');
 
             })
-//            ->dialog(
-//                Dialog::make('tagModal')
-//                    ->title('Verwijder tags van aan selectie')
-//                    // TODO(ben): make it so that the subtitle of a bulk action modal displays the amount of selected items
-//                    ->subTitle(':count items geselecteerd')
-//                    ->form([
-//                        MultiSelect::make('tags')
-//                            ->multiple()
-//                            ->options(fn () => app(TagReadRepository::class)->getAllForSelect()),
-//                    ])
-//                    ->button('Verwijderen')
-//            )
             ->effect(function ($formData, $data) use ($resourceKey) {
-
                 $tagIds = (array) ($formData['tags'] ?? []);
                 $modelIds = $data['items'];
 
