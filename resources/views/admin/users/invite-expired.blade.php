@@ -34,7 +34,7 @@
                 class="flex w-full justify-center"
             >
                 Naar login pagina
-            </a>
+            </x-chief::button>
         </div>
     </div>
 </x-chief::solo.template>

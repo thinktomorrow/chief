@@ -9,7 +9,7 @@
     'subtitle' => null,
 ])
 
-<header {{ $attributes->class(['flex shrink-0 items-start justify-between border-b border-grey-100 p-4']) }}>
+<header {{ $attributes->class(['border-grey-100 flex shrink-0 items-start justify-between border-b p-4']) }}>
     <div class="flex items-start gap-2">
         @if ($backButton)
             {{ $backButton }}
@@ -30,7 +30,7 @@
                 @if ($title || count($badges) > 0)
                     <div class="flex flex-wrap items-start gap-2">
                         @if ($title)
-                            <h2 class="font-display text-xl/6 font-semibold text-grey-950">
+                            <h2 class="font-display text-grey-950 text-xl/6 font-semibold">
                                 {{ $title }}
                             </h2>
                         @endif

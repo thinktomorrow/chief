@@ -11,20 +11,20 @@
     </x-slot>
 
     <x-chief::window>
-        <div class="-my-4 divide-y divide-grey-100">
+        <div class="divide-grey-100 -my-4 divide-y">
             @foreach ($users as $user)
                 <div class="flex items-start justify-between py-4">
                     <div class="space-y-1">
                         <div class="flex items-start gap-2">
                             @if (! chiefAdmin()->can('update-user') || ($user->hasRole('developer') && ! chiefAdmin()->hasRole('developer')))
-                                <span class="body-dark font-medium leading-5">
+                                <span class="body-dark leading-5 font-medium">
                                     {{ ucfirst($user->firstname) }} {{ ucfirst($user->lastname) }}
                                 </span>
                             @else
                                 <a
                                     href="{{ route('chief.back.users.edit', $user->id) }}"
                                     title="Aanpassen"
-                                    class="body-dark font-medium leading-5"
+                                    class="body-dark leading-5 font-medium"
                                 >
                                     {{ ucfirst($user->firstname) }} {{ ucfirst($user->lastname) }}
                                 </a>
@@ -39,7 +39,7 @@
                             </x-chief::badge>
                         </div>
 
-                        <div class="text-sm text-grey-400">
+                        <div class="text-grey-400 text-sm">
                             {{ ucfirst(implode(', ', $user->roleNames())) }}
                         </div>
                     </div>
