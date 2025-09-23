@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.15] - 2025-09-23
+
+- Fixed: bug in user invitation views
+
 ## [0.10.14] - 2025-09-18
 
 - Fixed: reordering menu items + menu tree structure was no longer visible
