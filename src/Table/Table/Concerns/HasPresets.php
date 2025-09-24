@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Table\Actions\Presets\DetachTagAction;
 use Thinktomorrow\Chief\Table\Actions\Presets\ViewOnSiteAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnTag;
 use Thinktomorrow\Chief\Table\Filters\Presets\TagFilter;
-use Thinktomorrow\Chief\Table\Sorters\Sort;
+use Thinktomorrow\Chief\Table\Sorters\ManualSort;
 
 trait HasPresets
 {
@@ -52,12 +52,25 @@ trait HasPresets
             return $this;
         }
 
+        $manualSort = ManualSort::default($model->sortableAttribute());
+
+        if (! $this->alreadyHasDefaultSorter()) {
+            $manualSort->actAsDefault();
+        }
+
         return $this->sorters([
-            Sort::make('manual_order')
-                ->label('Volgorde volgens site')
-                ->query(function ($query) use ($model) {
-                    $query->orderBy($model->sortableAttribute(), 'asc');
-                })->actAsDefault(),
+            $manualSort,
         ]);
+    }
+
+    private function alreadyHasDefaultSorter(): bool
+    {
+        foreach ($this->sorters as $sorter) {
+            if ($sorter->actsAsDefault()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
