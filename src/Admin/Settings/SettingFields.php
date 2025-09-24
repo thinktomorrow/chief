@@ -44,6 +44,11 @@ class SettingFields
             ->required()
             ->label('Webmaster naam')
             ->description('Voor en achternaam van de webmaster.');
+
+        yield Text::make('from_email')
+            ->rules('required|email')
+            ->label('Emailadres van waaruit wordt verstuurd')
+            ->description('Dit dient hetzelfde te zijn als de effectieve SMTP afzender.');
     }
 
     public function populatedFields(): Fields
