@@ -38,7 +38,7 @@ trait HasPresets
         return $this->addQuery(function ($builder) {
             $builder->with(['urls']);
         })->rowActions([
-            ViewOnSiteAction::makeDefault($resourceKey)->tertiary(),
+            ViewOnSiteAction::makeDefault($resourceKey)->primary(),
         ]);
     }
 
