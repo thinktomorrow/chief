@@ -8,6 +8,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## [0.10.15] - 2025-09-23
 
 - Fixed: bug in user invitation views
+- Changed: Default table now has view on site as primary row action
 
 ## [0.10.14] - 2025-09-18
 
