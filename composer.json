@@ -35,7 +35,7 @@
         "mockery/mockery": "^1.6",
         "openai-php/client": "^0.15.0",
         "orchestra/testbench": "^9.14",
-        "phpunit/phpunit": "^11.5",
+        "phpunit/phpunit": "^12.3",
         "spatie/opening-hours": "^2.41"
     },
     "autoload": {
