@@ -25,7 +25,7 @@
                     @if ($this->hasAnyBulkActions())
                         <th scope="col" class="w-5">
                             <div class="flex items-center">
-                                <x-chief::form.input.checkbox x-ref="tableHeaderCheckbox" />
+                                <x-chief::form.input.checkbox id="table-header-checkbox" />
                             </div>
                         </th>
                     @endif

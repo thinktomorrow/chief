@@ -6,12 +6,15 @@ const Bulkselect = (config) => ({
     isAllSelectedOnPage: false,
     isIndeterminateOnPage: false, // One or more but not all selected on page
     hasSelectionAcrossPages: false,
+    tableHeaderCheckbox: null,
 
     init() {
         // If the table header checkbox is not found, don't do anything
-        if (!this.$refs.tableHeaderCheckbox) return;
+        this.tableHeaderCheckbox = document.querySelector('input[id="table-header-checkbox"]');
 
-        this.$refs.tableHeaderCheckbox.addEventListener('change', (event) => {
+        if (!this.tableHeaderCheckbox) return;
+
+        this.tableHeaderCheckbox.addEventListener('change', (event) => {
             if (event.target.checked) {
                 const checkboxes = document.querySelectorAll('[data-table-row-checkbox]');
 
@@ -36,11 +39,11 @@ const Bulkselect = (config) => ({
         });
 
         this.$watch('isIndeterminateOnPage', (value) => {
-            this.$refs.tableHeaderCheckbox.indeterminate = value;
+            this.tableHeaderCheckbox.indeterminate = value;
         });
 
         this.$watch('isAllSelectedOnPage', (value) => {
-            this.$refs.tableHeaderCheckbox.checked = value;
+            this.tableHeaderCheckbox.checked = value;
         });
 
         this.$watch('paginators', () => {
@@ -76,7 +79,7 @@ const Bulkselect = (config) => ({
         if (this.selection.length < 1) {
             this.isAllSelectedOnPage = false;
             this.isIndeterminateOnPage = false;
-            this.$refs.tableHeaderCheckbox.checked = false;
+            this.tableHeaderCheckbox.checked = false;
         } else {
             this.isAllSelectedOnPage =
                 pageItems.length > 0 &&
