@@ -2,15 +2,16 @@ const Bulkselect = (config) => ({
     showCheckboxes: config.showCheckboxes || false,
     selection: config.selection || [],
     paginators: config.paginators || [],
+    tableHeaderCheckboxSelector: config.tableHeaderCheckboxSelector || '#table-header-checkbox',
+    tableHeaderCheckbox: null,
     pageItems: [],
     isAllSelectedOnPage: false,
     isIndeterminateOnPage: false, // One or more but not all selected on page
     hasSelectionAcrossPages: false,
-    tableHeaderCheckbox: null,
 
     init() {
         // If the table header checkbox is not found, don't do anything
-        this.tableHeaderCheckbox = document.querySelector('input[id="table-header-checkbox"]');
+        this.tableHeaderCheckbox = document.querySelector(this.tableHeaderCheckboxSelector);
 
         if (!this.tableHeaderCheckbox) return;
 

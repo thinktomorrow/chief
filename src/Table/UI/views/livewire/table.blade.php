@@ -9,6 +9,7 @@
                         showCheckboxes: @js($this->hasAnyBulkActions() ? true : false),
                         selection: @entangle('bulkSelection'),
                         paginators: @entangle('paginators'),
+                        tableHeaderCheckboxSelector: '#table-header-checkbox-{{ $this->getId() }}',
                     })"
             class="space-y-4"
             wire:loading.delay.class="animate-pulse"
@@ -25,7 +26,7 @@
                     @if ($this->hasAnyBulkActions())
                         <th scope="col" class="w-5">
                             <div class="flex items-center">
-                                <x-chief::form.input.checkbox id="table-header-checkbox" />
+                                <x-chief::form.input.checkbox id="table-header-checkbox-{{ $this->getId() }}" />
                             </div>
                         </th>
                     @endif
