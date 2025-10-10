@@ -43,7 +43,7 @@ class DialogComponent extends Component
         // how to convert to model(s) from data;
         $this->data = $value['data'];
 
-        $this->setlocalesOnOpen($this->data, $this->getFields());
+        $this->initializeLocales($this->data, $this->getFields());
 
         $this->isOpen = true;
     }

@@ -42,7 +42,7 @@ class SiteSelection extends Component
         return view('chief-sites::site-selection.site-selection');
     }
 
-    public function isAllowedToSelectSites(): bool
+    public function modelAllowsLocaleSelection(): bool
     {
         return $this->model instanceof HasAllowedSites && $this->model->allowSiteSelection();
     }

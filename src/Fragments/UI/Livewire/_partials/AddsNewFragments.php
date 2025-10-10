@@ -27,7 +27,7 @@ trait AddsNewFragments
 
         $fields = $this->getFields();
 
-        $this->setLocalesOnOpen($this->localeValuesForNewFragment, $fields);
+        $this->initializeLocales($this->localeValuesForNewFragment, $fields);
 
         /**
          * Inject all field values in the Livewire form object

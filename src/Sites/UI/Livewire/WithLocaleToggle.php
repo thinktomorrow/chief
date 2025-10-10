@@ -12,15 +12,23 @@ trait WithLocaleToggle
 
     public ?string $scopedLocale = null;
 
-    protected function setLocalesOnOpen(array $values, iterable $components): void
+    protected bool $shouldShowLocaleToggle = false;
+
+    protected function initializeLocales(array $values, iterable $components): void
     {
-        if ($this->showsLocalesForAnyField($components)) {
-            $this->locales = $values['locales'] ?? ($this->isAllowedToSelectSites() ? [] : ChiefSites::locales());
-            $this->scopedLocale = $values['scopedLocale'] ?? ($this->locales[0] ?? null);
+        $this->determineIfLocalesShouldBeShown($components);
+
+        if (! $this->shouldShowLocaleToggle) {
+            return;
         }
+
+        $this->locales = $values['locales'] ?? ($this->modelAllowsLocaleSelection() ? [] : ChiefSites::locales());
+        $this->scopedLocale = $values['scopedLocale'] ?? ($this->locales[0] ?? null);
     }
 
     /**
+     * Ensure the active locale remains in sync with the available locales.
+     *
      * In the case that the locales are editable, like in the create model component,
      * we need to make sure that the scoped locale is in the list of allowed locales.
      */
@@ -31,33 +39,45 @@ trait WithLocaleToggle
         }
     }
 
-    public function isAllowedToSelectSites(): bool
+    public function modelAllowsLocaleSelection(): bool
     {
         if (! isset($this->modelClass)) {
             return false;
         }
 
-        return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class) && (new $this->modelClass)->allowSiteSelection();
+        $class = new \ReflectionClass($this->modelClass);
+
+        return $class->implementsInterface(HasAllowedSites::class)
+            && (new $this->modelClass)->allowSiteSelection();
+    }
+
+    protected function shouldShowLocaleToggle(): bool
+    {
+        return $this->modelAllowsLocaleSelection() && $this->shouldShowLocaleToggle;
     }
 
     /**
      * Check if the locale toggle is needed for the given fields.
      */
-    protected function showsLocalesForAnyField(iterable $components): bool
+    protected function determineIfLocalesShouldBeShown(iterable $components): void
     {
         $fields = Fields::makeWithoutFlatteningNestedFields($components)->all();
 
+        $this->shouldShowLocaleToggle = false;
+
         // If the fragment allows fragments, we always show the locale toggle
         if (isset($this->fragment) && $this->fragment->allowsFragments) {
-            return true;
+            $this->shouldShowLocaleToggle = true;
+
+            return;
         }
 
         foreach ($fields as $field) {
             if ($field->showsLocales()) {
-                return true;
+                $this->shouldShowLocaleToggle = true;
+
+                return;
             }
         }
-
-        return false;
     }
 }

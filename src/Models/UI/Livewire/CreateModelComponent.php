@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Models\App\Actions\CreateModel;
 use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
-use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 use Thinktomorrow\Chief\Table\Table;
 
@@ -56,7 +55,7 @@ class CreateModelComponent extends Component
 
         $fields = $this->getFields();
 
-        $this->setLocalesOnOpen(array_merge(['locales' => []], $values), $fields);
+        $this->initializeLocales(array_merge(['locales' => []], $values), $fields);
 
         /**
          * Inject all field values in the Livewire form object
@@ -91,7 +90,7 @@ class CreateModelComponent extends Component
 
     public function save()
     {
-        if ($this->shouldShowAllowedSites()) {
+        if ($this->shouldShowLocaleToggle()) {
             $this->validate([
                 'locales' => ['required', 'array', 'min:1'],
             ], [
@@ -120,11 +119,6 @@ class CreateModelComponent extends Component
     public function getTitle(): string
     {
         return 'Nieuwe '.$this->getResource()->getLabel().' aanmaken';
-    }
-
-    public function shouldShowAllowedSites(): bool
-    {
-        return (new \ReflectionClass($this->modelClass))->implementsInterface(HasAllowedSites::class);
     }
 
     public function render()

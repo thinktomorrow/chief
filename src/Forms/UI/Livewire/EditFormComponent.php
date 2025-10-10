@@ -48,7 +48,7 @@ class EditFormComponent extends Component
 
         $components = $this->getComponents();
 
-        $this->setLocalesOnOpen($values, $components);
+        $this->initializeLocales($values, $components);
 
         /**
          * Inject all field values in the Livewire form object

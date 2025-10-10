@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: table bulk select was broken due to table components
+- Fixed: creation of non-localized models in multisite setup
+
 ## [0.10.15] - 2025-09-23
 
 - Fixed: bug in user invitation views

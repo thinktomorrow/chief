@@ -84,7 +84,7 @@ class EditFragment extends Component
 
         $fields = $this->getFields();
 
-        $this->setLocalesOnOpen($values, $fields);
+        $this->initializeLocales($values, $fields);
 
         // Load any child fragments
         $this->refreshFragments();

@@ -16,7 +16,7 @@
             </x-chief::dialog.drawer.header>
         </x-slot>
 
-        @if ($this->isAllowedToSelectSites())
+        @if ($this->modelAllowsLocaleSelection())
             @include('chief-models::livewire._partials.locale-selection')
         @endif
 

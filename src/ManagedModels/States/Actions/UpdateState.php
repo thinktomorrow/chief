@@ -21,7 +21,6 @@ class UpdateState
 
     public function __construct(FieldValidator $fieldValidator, Registry $registry)
     {
-
         $this->fieldValidator = $fieldValidator;
         $this->registry = $registry;
     }
