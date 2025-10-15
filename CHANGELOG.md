@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Allow to hide field in preview if empty via `hideIfEmpty()` method on field.
 - Fixed: table bulk select was broken due to table components
 - Fixed: creation of non-localized models in multisite setup
 
