@@ -48,6 +48,8 @@ final class Registry
         return $this->managers[$key];
     }
 
+    // TODO: optimize so we can use same model for different resources (e.g. Taxon in Trader)
+    // -> A second callback filter on top of the modelClass filter to distinguish between them.
     public function findResourceByModel(string $modelClass): Resource
     {
         try {
