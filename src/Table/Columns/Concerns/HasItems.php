@@ -146,6 +146,10 @@ trait HasItems
             $item->openInNewTab();
         }
 
+        if ($this->variant) {
+            $item->variant($this->variant);
+        }
+
         return $item;
     }
 }
