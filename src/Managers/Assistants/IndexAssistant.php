@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
@@ -51,8 +50,6 @@ trait IndexAssistant
     public function index(Request $request)
     {
         $this->guard('index');
-
-        app(VisitedUrl::class)->add(request()->fullUrl());
 
         View::share('manager', $this);
         View::share('resource', $this->resource);

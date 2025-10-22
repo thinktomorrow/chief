@@ -133,6 +133,8 @@ trait WithSorters
     private function clearSorters()
     {
         $this->sorters = [];
+
+        session()->forget($this->getSortersSessionKey());
     }
 
     public function addSorter()

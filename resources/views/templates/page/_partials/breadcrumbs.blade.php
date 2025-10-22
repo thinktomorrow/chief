@@ -12,7 +12,7 @@
                 </span>
             @elseif (is_array($breadcrumb))
                 <a
-                    href="{{ visitedUrl($breadcrumb['url']) }}"
+                    href="{{ $breadcrumb['url'] }}"
                     title="{{ $breadcrumb['label'] }}"
                     class="group inline-flex items-start gap-1.5 text-sm/6"
                 >
@@ -32,7 +32,7 @@
                 </a>
             @else
                 <a
-                    href="{{ visitedUrl($breadcrumb->url) }}"
+                    href="{{ $breadcrumb->url }}"
                     title="{{ $breadcrumb->label }}"
                     class="group inline-flex items-start gap-1.5 text-sm/6"
                 >

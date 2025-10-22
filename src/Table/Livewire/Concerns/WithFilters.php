@@ -17,6 +17,14 @@ trait WithFilters
     /** @var bool flag indicates if filter bar should be shown */
     public bool $showFilters = false;
 
+    public function mountWithFilters(): void
+    {
+        // Alleen restoren als er nog geen filters via URL zijn ingesteld
+        if ($this->isUsingDefaultFilters() && session()->has($this->getFilterSessionKey())) {
+            $this->filters = session($this->getFilterSessionKey());
+        }
+    }
+
     /** @return Filter[] */
     public function getFilters(): iterable
     {
@@ -57,6 +65,31 @@ trait WithFilters
         $this->syncLocaleWithSiteFilter();
     }
 
+    private function isUsingDefaultFilters(): bool
+    {
+        foreach ($this->getFilters() as $filter) {
+            $activeFilterValue = $this->findActiveFilterValue($filter->getKey());
+
+            if ($activeFilterValue != $filter->getValue()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Remove empty values out of the active filters
+     */
+    public function removeEmptyFilters(): void
+    {
+        foreach ($this->filters as $key => $filterValue) {
+            if ($this->isEmptyFilterValue($filterValue)) {
+                unset($this->filters[$key]);
+            }
+        }
+    }
+
     private function applyQueryFilters(Builder $builder): void
     {
         foreach ($this->filters as $filterKey => $filterValue) {
@@ -79,16 +112,14 @@ trait WithFilters
 
     public function updatedFilters()
     {
-        // Remove empty values out of the active filters
-        foreach ($this->filters as $key => $filterValue) {
-            if ($this->isEmptyFilterValue($filterValue)) {
-                unset($this->filters[$key]);
-            }
-        }
-
-        $this->resetPage($this->getPaginationId());
+        $this->removeEmptyFilters();
 
         $this->syncLocaleWithSiteFilter();
+
+        // Keep in session
+        session()->put($this->getFilterSessionKey(), $this->filters);
+
+        $this->resetPage($this->getPaginationId());
 
         // Allow Alpine to listen to this event
         $this->dispatch($this->getFiltersUpdatedEvent());
@@ -149,6 +180,8 @@ trait WithFilters
         $this->clearFilters();
         $this->setDefaultFilters();
         $this->updatedFilters();
+
+        session()->forget($this->getFilterSessionKey());
     }
 
     public function clearFilters()
@@ -169,5 +202,10 @@ trait WithFilters
         }
 
         return is_null($value) || $value === '' || (is_array($value) && empty($value));
+    }
+
+    private function getFilterSessionKey(): string
+    {
+        return 'table.filters.'.$this->tableReference->toUniqueString();
     }
 }
