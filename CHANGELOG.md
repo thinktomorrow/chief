@@ -7,6 +7,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Added: Allow to hide field in preview if empty via `hideIfEmpty()` method on field.
 - Added: Preserve table filtering and sorting across page reloads.
+- Added: empty fragment view for contentless fragment preview in admin. Place this in the renderInAdmin method:
+  `return view('chief-fragments::empty');`
 - Fixed: table bulk select was broken due to table components
 - Fixed: creation of non-localized models in multisite setup
 
