@@ -10,7 +10,7 @@
     "devDependencies": {
         "@babel/preset-env": "^7.28.3",
         "@eslint/js": "^9.37.0",
-        "@tailwindcss/vite": "^4.1.14",
+        "@tailwindcss/vite": "^4.1.16",
         "dotenv": "^16.6.1",
         "eslint": "^9.37.0",
         "husky": "^9.1.7",
