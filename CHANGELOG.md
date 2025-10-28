@@ -11,6 +11,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   `return view('chief-fragments::empty');`
 - Fixed: table bulk select was broken due to table components
 - Fixed: creation of non-localized models in multisite setup
+- Fixed: DeepCopy package as required dependency for Chief. Was previously only in dev dependencies.
 
 ## [0.10.15] - 2025-09-23
 
