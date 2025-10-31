@@ -1,1 +1,1 @@
-<!-- ghosting 👻 - view intentionally left empty for displaying empty fragments on backend side -->
+{{-- Ghosting 👻 - view intentionally left empty for displaying empty fragments on backend side --}}
