@@ -30,6 +30,7 @@
                     @php
                         $this->prepareFormComponent($formComponent, $index);
                     @endphp
+
                     {!! $formComponent->render() !!}
                 @endforeach
             </div>
@@ -47,7 +48,7 @@
     @endforeach
 
     <div class="pointer-events-none relative">
-        <div class="absolute z-[1] flex h-8 w-full justify-center">
+        <div class="absolute z-1 flex h-8 w-full justify-center">
             <x-chief::button wire:click="addSection" size="sm" class="pointer-events-auto absolute -top-3.5">
                 <x-chief::icon.plus-sign />
             </x-chief::button>
