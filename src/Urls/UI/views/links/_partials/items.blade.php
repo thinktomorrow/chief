@@ -3,7 +3,8 @@
 @endphp
 
 @foreach ($this->links as $i => $link)
-    <x-chief::callout :title="$link->site->name" wire:key="{{ $link->locale }}" variant="outline-white">
+    <x-chief::callout :title="count($this->links) > 1 ? $link->site->name : ''" wire:key="{{ $link->locale }}"
+                      variant="outline-white">
         <div
             class="space-y-3"
             x-data="{
@@ -53,33 +54,36 @@
             </div>
 
             @if (! $this->queuedForDeletion($link->locale))
-                <div class="space-y-4">
-                    <x-chief::form.fieldset rule="form.{{$link->locale}}.slug">
-                        <x-chief::form.label for="form.{{$link->locale}}.slug" required>Link</x-chief::form.label>
-                        <x-chief::form.input.text
-                            id="form.{{$link->locale}}.slug"
-                            x-on:input="url = $event.target.value"
-                            wire:model="form.{{ $link->locale }}.slug"
-                        />
-                    </x-chief::form.fieldset>
+                <div class="w-full flex justify-between gap-4 space-y-4">
+                    <div class="w-2/3">
+                        <x-chief::form.fieldset rule="form.{{$link->locale}}.slug">
+                            <x-chief::form.label for="form.{{$link->locale}}.slug" required>Link</x-chief::form.label>
+                            <x-chief::form.input.text
+                                id="form.{{$link->locale}}.slug"
+                                x-on:input="url = $event.target.value"
+                                wire:model="form.{{ $link->locale }}.slug"
+                            />
+                        </x-chief::form.fieldset>
+                    </div>
+                    <div class="w-1/3">
+                        <x-chief::form.fieldset rule="form.{{$link->locale}}.status">
+                            @if ($this->allowedSite($link->locale))
+                                <x-chief::form.label for="form.{{$link->locale}}.status">Status</x-chief::form.label>
 
-                    <x-chief::form.fieldset rule="form.{{$link->locale}}.status">
-                        @if ($this->allowedSite($link->locale))
-                            <x-chief::form.label for="form.{{$link->locale}}.status">Status</x-chief::form.label>
-
-                            <x-chief::form.input.select
-                                id="form.{{$link->locale}}.status"
-                                wire:model="form.{{ $link->locale }}.status"
-                                x-on:change="status = $event.target.value"
-                            >
-                                @foreach (\Thinktomorrow\Chief\Urls\Models\LinkStatus::options() as $optionValue => $optionLabel)
-                                    <option wire:key="status-option-{{ $optionValue }}" value="{{ $optionValue }}">
-                                        {{ $optionLabel }}
-                                    </option>
-                                @endforeach
-                            </x-chief::form.input.select>
-                        @endif
-                    </x-chief::form.fieldset>
+                                <x-chief::form.input.select
+                                    id="form.{{$link->locale}}.status"
+                                    wire:model="form.{{ $link->locale }}.status"
+                                    x-on:change="status = $event.target.value"
+                                >
+                                    @foreach (\Thinktomorrow\Chief\Urls\Models\LinkStatus::options() as $optionValue => $optionLabel)
+                                        <option wire:key="status-option-{{ $optionValue }}" value="{{ $optionValue }}">
+                                            {{ $optionLabel }}
+                                        </option>
+                                    @endforeach
+                                </x-chief::form.input.select>
+                            @endif
+                        </x-chief::form.fieldset>
+                    </div>
 
                     @php
                         $redirectsPerSiteCount = $redirects->get($link->locale) ? count($redirects->get($link->locale)) : 0;

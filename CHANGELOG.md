@@ -12,6 +12,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: table bulk select was broken due to table components
 - Fixed: creation of non-localized models in multisite setup
 - Fixed: DeepCopy package as required dependency for Chief. Was previously only in dev dependencies.
+- Fixed: Repeat field now shows redactor field in new repeat additions
+- Fixed: Form tags now work for all underlying fields. Form tagged as not-on-model-create will no longer show the fields
+  on the model create form.
+- Changed: Link form has better display when only one locale is active.
 
 ## [0.10.15] - 2025-09-23
 
