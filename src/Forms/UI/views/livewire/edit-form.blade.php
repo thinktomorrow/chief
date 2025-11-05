@@ -11,17 +11,19 @@
             @include('chief-form::livewire._partials.locale-toggle')
         @endif
 
-        @foreach ($this->getComponents() as $childComponent)
-            {{ $childComponent->render() }}
-        @endforeach
+        <form id="edit-form" wire:submit.prevent="save">
+            @foreach ($this->getComponents() as $childComponent)
+                {{ $childComponent->render() }}
+            @endforeach
+        </form>
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
                 <x-chief::button
-                    wire:click="save"
+                    form="edit-form"
                     wire:loading.attr="disabled"
                     variant="blue"
-                    type="button"
+                    type="submit"
                     class="shrink-0"
                 >
                     <span>Bewaren</span>

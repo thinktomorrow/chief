@@ -9,6 +9,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: Preserve table filtering and sorting across page reloads.
 - Added: empty fragment view for contentless fragment preview in admin. Place this in the renderInAdmin method:
   `return view('chief-fragments::empty');`
+- Added: sidebar form can now be saved on enter key press.
 - Fixed: table bulk select was broken due to table components
 - Fixed: creation of non-localized models in multisite setup
 - Fixed: DeepCopy package as required dependency for Chief. Was previously only in dev dependencies.

@@ -34,18 +34,21 @@
 
         @include('chief-form::livewire._partials.locale-toggle')
 
-        @foreach ($this->getComponents() as $field)
-            {{ $field }}
-        @endforeach
+        <form id="edit-model-form" wire:submit.prevent="save">
+            @foreach ($this->getComponents() as $field)
+                {{ $field }}
+            @endforeach
+        </form>
+
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>
                 <x-chief::button
                     class="flex items-center"
-                    wire:click="save"
+                    form="edit-model-form"
                     wire:loading.attr="disabled"
                     variant="blue"
-                    type="button"
+                    type="submit"
                 >
                     <span>Bewaren</span>
                     <x-chief::icon.loading wire:loading.delay class="animate-spin" />
