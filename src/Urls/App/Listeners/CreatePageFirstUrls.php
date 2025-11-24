@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Urls\App\Listeners;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -45,7 +46,7 @@ class CreatePageFirstUrls
                 $this->application->create(new CreateUrl($model->modelReference(), $site, $slug, 'offline'));
             }
         } catch (\Exception $e) {
-            report($e);
+            Log::error('Error creating initial URLs for model '.get_class($model).' with ID '.$model->getKey().': '.$e->getMessage());
         }
     }
 
