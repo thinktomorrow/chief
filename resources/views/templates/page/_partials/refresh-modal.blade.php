@@ -34,6 +34,11 @@
             window.Livewire.hook('request', ({ fail }) => {
                 fail(({ status, preventDefault }) => {
 
+                    // In debug mode, let Livewire handle the error to show the detailed error page
+                    if ({{ config('app.debug') ? 'true' : 'false' }}) {
+                        return true;
+                    }
+
                     // Handle 419 errors - Show refresh modal
                     if (status === 419) {
                         preventDefault();
@@ -44,6 +49,7 @@
 
                     // Handle 500 errors - Show Chief error page
                     if (status >= 500) {
+
                         preventDefault();
 
                         window.dispatchEvent(new CustomEvent('open-dialog', { detail: { id: 'error-modal' } }));
