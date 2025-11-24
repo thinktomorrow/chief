@@ -40,7 +40,7 @@ class SaveFields
             // Set standard non-localized attribute on the model or handle this
             if (! $field->hasLocales()) {
                 $value = $field->hasPrepForSaving()
-                    ? call_user_func_array($field->getPrepForSaving(), [data_get($input, $field->getKey()), $input])
+                    ? call_user_func_array($field->getPrepForSaving(), [$field, data_get($input, $field->getKey()), $input])
                     : data_get($input, $field->getKey());
 
                 $model->{$field->getColumnName()} = $value;
@@ -100,7 +100,7 @@ class SaveFields
             }
 
             $value = $field->hasPrepForSaving()
-                ? call_user_func_array($field->getPrepForSaving(), [$value, $input, $locale])
+                ? call_user_func_array($field->getPrepForSaving(), [$field, $value, $input, $locale])
                 : $value;
 
             if ($this->isFieldForDynamicValue($model, $field)) {

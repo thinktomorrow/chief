@@ -71,7 +71,7 @@ class SavingFieldsTest extends FormsTestCase
     {
         $article = new ArticlePage;
 
-        $field = Text::make('title')->prepForSaving(function ($value, $input) {
+        $field = Text::make('title')->prepForSaving(function ($field, $value, $input) {
             return $value.'-foobar';
         });
 
@@ -86,7 +86,7 @@ class SavingFieldsTest extends FormsTestCase
     {
         $article = new ArticlePage;
 
-        $field = Text::make('title_trans')->locales(['nl', 'en'])->prepForSaving(function ($value, $input, $locale) {
+        $field = Text::make('title_trans')->locales(['nl', 'en'])->prepForSaving(function ($field, $value, $input, $locale) {
             return $value.'-foobar';
         });
 
@@ -105,7 +105,7 @@ class SavingFieldsTest extends FormsTestCase
     {
         $article = new ArticlePage;
 
-        $field = Text::make('title_trans')->setFieldNameTemplate('trans.:locale.:name')->locales(['nl', 'en'])->prepForSaving(function ($value, $input) {
+        $field = Text::make('title_trans')->setFieldNameTemplate('trans.:locale.:name')->locales(['nl', 'en'])->prepForSaving(function ($field, $value, $input) {
             return $value.'-foobar';
         });
 

@@ -22,8 +22,8 @@ trait HasMultiple
 
     protected function prepForSavingMultipleValues()
     {
-        $this->prepForSaving(function ($value) {
-            if ($this->allowMultiple()) {
+        $this->prepForSaving(function ($field, $value) {
+            if ($field->allowMultiple()) {
                 return is_array($value) ? $value : (is_null($value) ? [] : [$value]);
             }
 
