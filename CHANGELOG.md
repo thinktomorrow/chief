@@ -17,6 +17,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Form tags now work for all underlying fields. Form tagged as not-on-model-create will no longer show the fields
   on the model create form.
 - Changed: Link form has better display when only one locale is active.
+- Changed: Consistent save behaviour for fields with multiple values. Primitive or null value for non multiple, array or
+  empty array when set to multiple. Applies to Select, MultiSelect, Checkbox, SelectList.
 
 ## [0.10.15] - 2025-09-23
 

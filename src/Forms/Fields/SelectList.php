@@ -23,6 +23,13 @@ class SelectList extends Component implements Field
 
     protected string $previewView = 'chief-form::previews.fields.select';
 
+    public function __construct(string $key)
+    {
+        parent::__construct($key);
+
+        $this->prepForSavingMultipleValues();
+    }
+
     public function getMultiSelectFieldOptions(?string $locale = null): array
     {
         return PairOptions::convertOptionsToChoices($this->getOptions($locale));
