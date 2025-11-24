@@ -17,6 +17,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Repeat field now shows redactor field in new repeat additions
 - Fixed: Form tags now work for all underlying fields. Form tagged as not-on-model-create will no longer show the fields
   on the model create form.
+- Fixed: Livewire errors now show a custom dialog instead of trying to show the frontend error page.
 - Changed: Link form has better display when only one locale is active.
 - Changed: Consistent save behaviour for fields with multiple values. Primitive or null value for non multiple, array or
   empty array when set to multiple. Applies to Select, MultiSelect, Checkbox, SelectList.
