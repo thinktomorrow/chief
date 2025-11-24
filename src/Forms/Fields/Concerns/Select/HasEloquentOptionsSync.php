@@ -15,7 +15,6 @@ trait HasEloquentOptionsSync
 
         $this->whenModelIsSet(function ($model) use ($relation, $valueKey, $labelKey, $afterSaveCallback, $syncInOrder, $pivotOrderColumn) {
             $relationModel = $model->{$relation}()->getModel();
-
             $options = ($relationModel instanceof Nestable)
                 ? app(MemoizedSelectOptions::class)->getOptions($relationModel::class)
                 : $relationModel::all()->pluck($labelKey, $valueKey)->toArray();
