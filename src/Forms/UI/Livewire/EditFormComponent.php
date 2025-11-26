@@ -81,10 +81,12 @@ class EditFormComponent extends Component
         $model = $this->modelReference->instance();
         $resource = app(Registry::class)->findResourceByModel($model::class);
 
-        return PageLayout::make($resource->fields($model))
+        $components = PageLayout::make($resource->fields($model))
             ->findForm($this->formComponent->getId())
             ->model($model)
             ->getComponents();
+
+        return $this->applyFieldDependencies($components);
     }
 
     public function save()

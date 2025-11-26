@@ -89,6 +89,10 @@ interface Field extends HasTags, LocalizedField, Validatable
 
     public function getFieldToggles(): array;
 
+    public function dependsOn(string|array $fieldNames, Closure $callback): static;
+
+    public function getFieldDependencies(): array;
+
     // TODO: no more getTYPE: conditional fields now still depend on it...
     //    public function getType(): FieldType;
     //

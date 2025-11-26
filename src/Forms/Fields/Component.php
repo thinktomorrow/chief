@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasColumnName;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomFillForSaving;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomPrepForSaving;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasDefault;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasFieldDependencies;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasFieldToggle;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasHideIfEmpty;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasId;
@@ -53,6 +54,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasDefault;
     use HasDescription;
     use HasElementId;
+    use HasFieldDependencies;
     use HasFieldToggle;
     use HasHideIfEmpty;
     use HasId;
