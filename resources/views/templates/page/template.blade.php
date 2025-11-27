@@ -57,7 +57,6 @@
                         {{ $sidebar }}
                     </section>
                 @endif
-
             </div>
         </div>
     </div>

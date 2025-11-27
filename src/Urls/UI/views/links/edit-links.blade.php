@@ -1,4 +1,4 @@
-<x-chief::dialog.drawer wired size="sm" title="Bewerk links">
+<x-chief::dialog.drawer wired size="sm" title="Links aanpassen">
     @if ($isOpen)
         <div class="space-y-4">
             @include('chief-urls::links._partials.items')

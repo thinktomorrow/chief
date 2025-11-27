@@ -19,4 +19,11 @@ class Select extends Component implements Field
     protected string $view = 'chief-form::fields.select';
 
     protected string $previewView = 'chief-form::previews.fields.select';
+
+    public function __construct(string $key)
+    {
+        parent::__construct($key);
+
+        $this->prepForSavingMultipleValues();
+    }
 }

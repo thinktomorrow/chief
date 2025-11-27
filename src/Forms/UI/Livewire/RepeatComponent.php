@@ -64,6 +64,12 @@ class RepeatComponent extends Component
         $section = $this->form[0];
 
         $this->form[] = $this->clearValues($section);
+
+        // Emit event to trigger redactor initialization
+        $this->dispatch('form-dialog-opened', ...[
+            'componentId' => $this->getId(),
+            'parentComponentId' => $this->parentComponentId,
+        ]);
     }
 
     public function removeSection(int $index): void

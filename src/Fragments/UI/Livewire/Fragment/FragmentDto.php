@@ -46,7 +46,7 @@ class FragmentDto implements Wireable
             $fragment->pivot->order,
             $fragment->getLabel(),
             $fragment->getIcon(),
-            $fragment->renderInAdmin()->render(),
+            $fragment->with(['owner' => $owner])->renderInAdmin()->render(),
             count($fragment->allowedFragments()) > 0,
             $fragment->isOnline(),
             $fragment->isShared(),

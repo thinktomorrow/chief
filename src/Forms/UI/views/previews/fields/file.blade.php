@@ -19,24 +19,24 @@
                 target="_blank"
                 rel="noopener"
                 @class([
-                    'rounded-lg border-2 border-white' => $count > 1,
+                    'overflow-hidden rounded-lg border-2 border-white' => $count > 1,
                 ])
             >
-                <div class="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-grey-100">
+                <div class="bg-grey-100 flex size-14 shrink-0 items-center justify-center overflow-hidden">
                     @if ($asset->isImage())
                         <img
                             src="{{ $asset->getUrl('thumb') }}"
                             alt="{{ $asset->getFileName() }}"
-                            class="h-full w-full object-contain"
+                            class="size-full object-contain"
                         />
                     @elseif ($asset instanceof ExternalAssetContract)
                         <img
                             src="{{ $asset->getPreviewUrl('thumb') }}"
                             alt="{{ $asset->getFileName() }}"
-                            class="h-full w-full object-contain"
+                            class="size-full object-contain"
                         />
                     @elseif ($asset->getMimeType())
-                        <div class="flex h-full w-full items-center justify-center text-grey-400">
+                        <div class="text-grey-400 flex size-full items-center justify-center">
                             <x-dynamic-component
                                 :component="MimetypeIcon::fromString($asset->getMimeType())->icon()"
                                 class="size-6"
@@ -52,7 +52,7 @@
                         {{ $asset->getFileName() }}
                     </p>
 
-                    <p class="text-sm text-grey-500">
+                    <p class="text-grey-500 text-sm">
                         @if ($asset->hasData('external'))
                             {{ ucfirst($asset->getData('external.type')) }}
 
@@ -62,7 +62,7 @@
                         @else
                             {{ $asset->getHumanReadableSize() }} -
                             @if ($asset->isImage())
-                                {{ $asset->getWidth() }}x{{ $asset->getHeight() }} -
+                                    {{ $asset->getWidth() }}x{{ $asset->getHeight() }} -
                             @endif
 
                             {{ strtoupper($asset->getExtension()) }}
@@ -72,8 +72,8 @@
             @endif
         </div>
     @empty
-        <div class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-grey-100">
-            <x-chief::icon.attachment class="h-6 w-6 text-grey-400" />
+        <div class="bg-grey-100 flex size-14 shrink-0 items-center justify-center rounded-lg">
+            <x-chief::icon.attachment class="text-grey-400 size-6" />
         </div>
     @endforelse
 </div>

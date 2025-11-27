@@ -17,11 +17,12 @@ use Thinktomorrow\Chief\Forms\Concerns\HasView;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasModel;
 use Thinktomorrow\Chief\Forms\Tags\HasTaggedComponents;
+use Thinktomorrow\Chief\Forms\Tags\HasTags;
 use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTags;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithWireableFieldDefaults;
 
-abstract class LayoutComponent extends \Illuminate\View\Component implements HasTaggedComponents, Htmlable, Wireable
+abstract class LayoutComponent extends \Illuminate\View\Component implements HasTaggedComponents, HasTags, Htmlable, Wireable
 {
     use HasComponentRendering;
     use HasCustomAttributes;

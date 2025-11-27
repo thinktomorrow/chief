@@ -20,11 +20,13 @@
                     ])
                 >
                     <div class="flex items-start justify-between gap-2">
-                        <p class="text-grey-500 text-sm/5 font-medium">{{ $link->site->name }}</p>
+                        @if(count($links) > 1)
+                            <p class="text-grey-500 text-sm/5 font-medium">{{ $link->site->name }}</p>
 
-                        <x-chief::badge :variant="$link->stateVariant">
-                            {{ $link->stateLabel }}
-                        </x-chief::badge>
+                            <x-chief::badge :variant="$link->stateVariant">
+                                {{ $link->stateLabel }}
+                            </x-chief::badge>
+                        @endif
                     </div>
 
                     @if ($link->url)
@@ -39,6 +41,12 @@
                                 <span>{{ $link->url->url }}</span>
                                 <x-chief::icon.link-square />
                             </x-chief::link>
+
+                            @if(count($links) == 1)
+                                <x-chief::badge :variant="$link->stateVariant">
+                                    {{ $link->stateLabel }}
+                                </x-chief::badge>
+                            @endif
                         </div>
                     @endif
                 </div>

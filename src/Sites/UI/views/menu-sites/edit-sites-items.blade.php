@@ -4,7 +4,7 @@
             <div class="space-y-3">
                 <div class="flex items-start justify-between gap-2">
                     <div class="mt-[0.1875rem] flex items-center gap-2">
-                        <p class="text-sm/6 font-medium text-grey-500">{{ $site->url }}</p>
+                        <p class="text-grey-500 text-sm/6 font-medium">{{ $site->url }}</p>
                     </div>
                 </div>
 

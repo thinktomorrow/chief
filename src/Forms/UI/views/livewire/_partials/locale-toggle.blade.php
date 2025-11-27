@@ -1,5 +1,6 @@
-<div
-    x-data="{
+@if (count($locales) > 1)
+    <div
+        x-data="{
         scopedLocale: '{{ $scopedLocale }}',
         init() {
             this.$nextTick(() => {
@@ -15,9 +16,8 @@
 
         }
     }"
-    data-slot="form-group"
->
-    @if (count($locales) > 1)
+        data-slot="form-group"
+    >
         <x-chief::button-group size="base">
             @foreach ($locales as $i => $locale)
                 <x-chief::button-group.button
@@ -33,5 +33,5 @@
                 </x-chief::button-group.button>
             @endforeach
         </x-chief::button-group>
-    @endif
-</div>
+    </div>
+@endif

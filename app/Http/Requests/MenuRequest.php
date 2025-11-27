@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Url\Root;
 use Thinktomorrow\Url\Url;
 
@@ -42,14 +43,20 @@ class MenuRequest extends FormRequest
         $rules['type'] = 'required|in:custom,internal,nolink';
         $rules['owner_reference'] = 'required_if:type,internal';
 
-        foreach ($translations as $locale => $trans) {
-            if ($this->isCompletelyEmpty(['label'], $trans) && $locale !== config('app.locale')) {
-                continue;
-            }
+        foreach ($translations as $key => $trans) {
 
-            $rules['trans.'.$locale.'.label'] = 'required';
-            if ($this->request->get('trans.'.$locale.'.url') != null) {
-                $rules['trans.'.$locale.'.url'] = 'url';
+            if ($key == 'label') {
+                foreach ($trans as $locale => $value) {
+                    if ($this->isCompletelyEmpty(['label'], $trans) && $locale !== config('app.locale')) {
+                        continue;
+                    }
+
+                    $rules['trans.label.'.$locale] = 'required';
+
+                    if ($this->request->get('trans.url.'.$locale) != null) {
+                        $rules['trans.url.'.$locale] = 'url';
+                    }
+                }
             }
         }
 
@@ -60,9 +67,9 @@ class MenuRequest extends FormRequest
     {
         $attributes = [];
 
-        foreach (array_keys($this->request->all('trans')) as $locale) {
-            $attributes['trans.'.$locale.'.label'] = $locale.' label';
-            $attributes['trans.'.$locale.'.url'] = $locale.' link';
+        foreach (ChiefSites::locales() as $locale) {
+            $attributes['trans.label.'.$locale] = $locale.' label';
+            $attributes['trans.url.'.$locale] = $locale.' link';
         }
 
         $attributes['owner_reference'] = 'Interne pagina';
@@ -84,18 +91,21 @@ class MenuRequest extends FormRequest
      */
     protected function sanitizeUrl(array $data)
     {
-        foreach ($data['trans'] as $locale => $trans) {
-            if (empty($trans['url'])) {
+        $urlTranslations = $data['trans']['url'] ?? [];
+
+        foreach ($urlTranslations as $locale => $value) {
+
+            if (empty($value)) {
                 continue;
             }
 
             // Check if it is a relative
-            if ($this->isRelativeUrl($trans['url'])) {
-                $data['trans'][$locale]['url'] = '/'.trim($trans['url'], '/');
-            } elseif (Str::startsWith($trans['url'], ['mailto:', 'tel:', 'https://', 'http://'])) {
-                $data['trans'][$locale]['url'] = $trans['url'];
+            if ($this->isRelativeUrl($value)) {
+                $data['trans']['url'][$locale] = '/'.trim($value, '/');
+            } elseif (Str::startsWith($value, ['mailto:', 'tel:', 'https://', 'http://'])) {
+                $data['trans']['url'][$locale] = $value;
             } else {
-                $data['trans'][$locale]['url'] = Url::fromString($trans['url'])->secure()->get();
+                $data['trans']['url'][$locale] = Url::fromString($value)->secure()->get();
             }
 
             $this->request->set('trans', $data['trans']);

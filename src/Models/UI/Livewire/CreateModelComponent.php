@@ -84,6 +84,7 @@ class CreateModelComponent extends Component
 
         return PageLayout::make($resource->fields($model))
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
+            ->model($model)
             ->getComponentsWithoutForms()
             ->reject(fn ($component) => $component instanceof Table);
     }

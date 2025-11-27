@@ -9,9 +9,21 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: Preserve table filtering and sorting across page reloads.
 - Added: empty fragment view for contentless fragment preview in admin. Place this in the renderInAdmin method:
   `return view('chief-fragments::empty');`
+- Added: sidebar form can now be saved on enter key press.
+- Added: Docs plugin: basic user docs via markdown per project
 - Fixed: table bulk select was broken due to table components
 - Fixed: creation of non-localized models in multisite setup
+- Fixed: Menu item validation
 - Fixed: DeepCopy package as required dependency for Chief. Was previously only in dev dependencies.
+- Fixed: Repeat field now shows redactor field in new repeat additions
+- Fixed: Html field in table dialog wasn't loaded as wysiwyg editor.
+- Fixed: Form tags now work for all underlying fields. Form tagged as not-on-model-create will no longer show the fields
+  on the model create form.
+- Fixed: Livewire errors now show a custom dialog instead of trying to show the frontend error page.
+- Fixed: Relations via select::sync() where not loaded on create model form.
+- Changed: Link form has better display when only one locale is active.
+- Changed: Consistent save behaviour for fields with multiple values. Primitive or null value for non multiple, array or
+  empty array when set to multiple. Applies to Select, MultiSelect, Checkbox, SelectList.
 
 ## [0.10.15] - 2025-09-23
 

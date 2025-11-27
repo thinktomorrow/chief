@@ -19,4 +19,15 @@ trait HasMultiple
     {
         return $this->allowMultiple;
     }
+
+    protected function prepForSavingMultipleValues()
+    {
+        $this->prepForSaving(function ($field, $value) {
+            if ($field->allowMultiple()) {
+                return is_array($value) ? $value : (is_null($value) ? [] : [$value]);
+            }
+
+            return is_array($value) && count($value) ? reset($value) : $value;
+        });
+    }
 }
