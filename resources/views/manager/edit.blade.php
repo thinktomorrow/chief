@@ -8,7 +8,6 @@
 
     $showSidebar = $hasAnyAsideTopComponents || $hasLinks || $hasAnyAsideComponents;
 @endphp
-
 <x-chief::page.template :title="$resource->getPageTitle($model)" :container="$showSidebar ? '2xl' : 'lg'">
     <x-slot name="header">
         <x-chief::page.header

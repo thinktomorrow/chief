@@ -16,6 +16,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Menu item validation
 - Fixed: DeepCopy package as required dependency for Chief. Was previously only in dev dependencies.
 - Fixed: Repeat field now shows redactor field in new repeat additions
+- Fixed: Html field in table dialog wasn't loaded as wysiwyg editor.
 - Fixed: Form tags now work for all underlying fields. Form tagged as not-on-model-create will no longer show the fields
   on the model create form.
 - Fixed: Livewire errors now show a custom dialog instead of trying to show the frontend error page.

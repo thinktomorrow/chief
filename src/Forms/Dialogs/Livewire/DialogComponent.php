@@ -45,6 +45,11 @@ class DialogComponent extends Component
 
         $this->initializeLocales($this->data, $this->getFields());
 
+        $this->dispatch('form-dialog-opened', ...[
+            'componentId' => $this->getId(),
+            'parentComponentId' => $this->parentId,
+        ]);
+
         $this->isOpen = true;
     }
 
