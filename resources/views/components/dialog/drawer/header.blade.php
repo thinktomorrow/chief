@@ -10,7 +10,7 @@
 ])
 
 <header {{ $attributes->class(['border-grey-100 flex shrink-0 items-start justify-between border-b p-4']) }}>
-    <div class="flex items-start gap-2">
+    <div class="flex shrink-0 items-start gap-2">
         @if ($backButton)
             {{ $backButton }}
         @else
@@ -57,7 +57,7 @@
     </div>
 
     @if ($slot->isNotEmpty())
-        <div>
+        <div class="flex flex-wrap items-start justify-end gap-2">
             {{ $slot }}
         </div>
     @endif

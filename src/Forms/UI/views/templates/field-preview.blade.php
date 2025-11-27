@@ -2,8 +2,7 @@
     $component->ignoreDefault();
 @endphp
 
-@if(!$shouldHideInPreview())
-
+@if (! $shouldHideInPreview())
     <x-chief::form.preview :label="ucfirst($getPreviewLabel())">
         @if ($hasLocales() && count($getLocales()) == 1)
             @include($getPreviewView(), ['component' => $component, 'locale' => $getLocales()[0]])
@@ -19,5 +18,4 @@
             @include($getPreviewView())
         @endif
     </x-chief::form.preview>
-
 @endif
