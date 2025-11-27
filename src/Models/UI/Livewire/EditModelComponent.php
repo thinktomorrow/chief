@@ -83,7 +83,8 @@ class EditModelComponent extends Component
         return PageLayout::make($this->getResource()->fields($this->getModel()))
             ->filterByNotTagged(['create', 'not-on-model-edit', 'not-on-edit'])
             ->model($this->getModel())
-            ->getComponentsWithoutForms();
+            ->getComponentsWithoutForms()
+            ->pipe(fn ($components) => $this->applyFieldDependencies($components));
     }
 
     public function save()
