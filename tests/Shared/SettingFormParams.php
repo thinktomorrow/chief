@@ -16,6 +16,8 @@ trait SettingFormParams
             'app_name' => 'updated app_name',
             'contact_email' => 'valid@mail.com',
             'contact_name' => 'foobar',
+            'from_email' => 'from@mailboy.com',
+            'from_name' => 'from name',
         ];
 
         foreach ($overrides as $key => $value) {
