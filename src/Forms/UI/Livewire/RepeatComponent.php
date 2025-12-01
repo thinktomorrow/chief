@@ -15,7 +15,7 @@ class RepeatComponent extends Component
 
     public Repeat $field;
 
-    public ?string $parentComponentId;
+    public ?string $parentComponentId = null;
 
     public ?string $locale = null;
 
