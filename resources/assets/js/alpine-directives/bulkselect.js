@@ -11,13 +11,13 @@ const Bulkselect = (config) => ({
 
     init() {
         // If the table header checkbox is not found, don't do anything
-        this.tableHeaderCheckbox = document.querySelector(this.tableHeaderCheckboxSelector);
+        this.tableHeaderCheckbox = this.$el.querySelector(this.tableHeaderCheckboxSelector);
 
         if (!this.tableHeaderCheckbox) return;
 
         this.tableHeaderCheckbox.addEventListener('change', (event) => {
             if (event.target.checked) {
-                const checkboxes = document.querySelectorAll('[data-table-row-checkbox]');
+                const checkboxes = this.$el.querySelectorAll('[data-table-row-checkbox]');
 
                 // Merge with current selection and make sure they are unique
                 this.selection = [

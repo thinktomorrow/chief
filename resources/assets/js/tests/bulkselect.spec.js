@@ -10,8 +10,9 @@ describe('Bulkselect alpine Component', () => {
                     showCheckboxes: true,
                     selection: [],
                     paginators: [],
+                    tableHeaderCheckboxSelector: '#tableHeaderCheckbox'
                 })">
-                <input type="checkbox" x-ref="tableHeaderCheckbox" />
+                <input type="checkbox" id="tableHeaderCheckbox" />
                 <input x-model="selection" type="checkbox" data-table-row-checkbox value="1" />
                 <input x-model="selection" type="checkbox" data-table-row-checkbox value="2" />
                 <input x-model="selection" type="checkbox" data-table-row-checkbox value="3" />
@@ -25,18 +26,14 @@ describe('Bulkselect alpine Component', () => {
             showCheckboxes: true,
             selection: [],
             paginators: [],
+            tableHeaderCheckboxSelector: '#tableHeaderCheckbox',
         });
 
         instance.$el = container; // Mock Alpine.js $el
 
-        // Mock the Alpine.js $refs manually by setting the tableHeaderCheckbox
-        instance.$refs = {
-            tableHeaderCheckbox: container.querySelector('input[x-ref="tableHeaderCheckbox"]'),
-        };
-
         // Manually mock $watch functionality
         instance.$watch = (property, callback) => {
-            callback(property); // Mock the $watch function to immediately execute the callback
+            callback(property);
         };
 
         // Mock $nextTick to simulate DOM update cycle
@@ -46,13 +43,13 @@ describe('Bulkselect alpine Component', () => {
     });
 
     it('initializes with the correct configuration', () => {
-        // expect(instance.showCheckboxes).toBe(true);
-        // expect(instance.selection).toEqual([]);
-        // expect(instance.paginators).toEqual([]);
+        expect(instance.showCheckboxes).toBe(true);
+        expect(instance.selection).toEqual([]);
+        expect(instance.paginators).toEqual([]);
     });
 
     it('selects all items on the current page when header checkbox is checked', () => {
-        const headerCheckbox = container.querySelector('input[x-ref="tableHeaderCheckbox"]');
+        const headerCheckbox = container.querySelector('input[id="tableHeaderCheckbox"]');
         const checkboxes = container.querySelectorAll('[data-table-row-checkbox]');
 
         expect(instance.selection).toEqual([]); // No checkboxes are selected
@@ -66,7 +63,7 @@ describe('Bulkselect alpine Component', () => {
     });
 
     it('unselects all items on the current page when header checkbox is unchecked', () => {
-        const headerCheckbox = container.querySelector('input[x-ref="tableHeaderCheckbox"]');
+        const headerCheckbox = container.querySelector('input[id="tableHeaderCheckbox"]');
 
         expect(instance.selection).toEqual([]);
 
@@ -84,7 +81,7 @@ describe('Bulkselect alpine Component', () => {
     });
 
     it('sets indeterminate state when some but not all items are selected', () => {
-        const headerCheckbox = container.querySelector('input[x-ref="tableHeaderCheckbox"]');
+        const headerCheckbox = container.querySelector('input[id="tableHeaderCheckbox"]');
         const rowCheckbox = container.querySelector('[data-table-row-checkbox][value="1"]');
 
         // Simulate checking one row checkbox
@@ -101,7 +98,7 @@ describe('Bulkselect alpine Component', () => {
     });
 
     it('maintains selection across pages and updates when paginator changes', () => {
-        const headerCheckbox = container.querySelector('input[x-ref="tableHeaderCheckbox"]');
+        const headerCheckbox = container.querySelector('input[id="tableHeaderCheckbox"]');
 
         // Simulate selecting some items on the first page
         instance.selection = ['1', '2'];
