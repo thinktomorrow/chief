@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.16] - 2025-12-01
+
 - Added: Allow to hide field in preview if empty via `hideIfEmpty()` method on field.
 - Added: Preserve table filtering and sorting across page reloads.
 - Added: empty fragment view for contentless fragment preview in admin. Place this in the renderInAdmin method:
