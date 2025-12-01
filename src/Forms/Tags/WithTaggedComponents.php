@@ -57,7 +57,7 @@ trait WithTaggedComponents
             }
         }
 
-        $parentComponent->components(array_values($components));
+        $parentComponent->components($components);
 
         return $this;
     }
