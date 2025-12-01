@@ -68,7 +68,13 @@
     box-shadow: 0 0 0 2px var(--color-primary-500);
 }
 .choices[data-type*='select-one'] .choices__item[data-value=''] .choices__button {
-    display: none;
+    opacity: 0.5;
+    right: 1.75rem;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="%237E7881" fill="none"> <path d="M17.4677 5.46966C17.7606 5.17678 18.2354 5.17677 18.5283 5.46966C18.8211 5.76255 18.8211 6.23733 18.5283 6.5302L13.0576 11.9999L18.5273 17.4696C18.8201 17.7625 18.8201 18.2373 18.5273 18.5302C18.2344 18.823 17.7596 18.823 17.4668 18.5302L11.997 13.0604L6.52921 18.5292C6.23635 18.8221 5.76156 18.822 5.46866 18.5292C5.17577 18.2363 5.17577 17.7615 5.46866 17.4687L10.9365 11.9999L5.46769 6.53118C5.17481 6.23831 5.17486 5.76353 5.46769 5.47063C5.76058 5.17776 6.23535 5.17775 6.52823 5.47063L11.997 10.9394L17.4677 5.46966Z" fill="%237E7881" /></svg>');
+    background-size: 20px;
+    &:hover {
+        opacity: 1;
+    }
 }
 .choices::after {
     /* content: '';
