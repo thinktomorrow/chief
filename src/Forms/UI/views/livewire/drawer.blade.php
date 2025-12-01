@@ -1,4 +1,4 @@
-<x-chief::dialog.drawer wired size="sm">
+<x-chief::dialog.drawer wired :size="$this->getDialog() ? $this->getDialog()->getDialogSize() : 'md'">
     @if ($isOpen)
         <x-slot name="title">
             {{ $this->getTitle() }}

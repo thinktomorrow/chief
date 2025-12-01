@@ -1,4 +1,4 @@
-<x-chief::dialog.modal wired size="xxs">
+<x-chief::dialog.modal wired :size="$this->getDialog() ? $this->getDialog()->getDialogSize() : 'xss'">
     @if ($isOpen)
         <x-slot name="title">
             {{ $this->getTitle() }}

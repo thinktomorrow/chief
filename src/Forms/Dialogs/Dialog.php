@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Forms\Concerns\HasElementId;
 use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasButton;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasContent;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasDialogSize;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasDialogType;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasSubTitle;
 use Thinktomorrow\Chief\Forms\Layouts\LayoutComponent;
@@ -17,6 +18,7 @@ class Dialog extends LayoutComponent
 {
     use HasButton;
     use HasContent;
+    use HasDialogSize;
     use HasDialogType;
     use HasElementId;
     use HasFields;
