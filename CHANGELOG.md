@@ -11,6 +11,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   `return view('chief-fragments::empty');`
 - Added: sidebar form can now be saved on enter key press.
 - Added: Docs plugin: basic user docs via markdown per project
+- Added: HasDialogSize trait to change the size of modals and drawers in forms
 - Fixed: table bulk select was broken due to table components
 - Fixed: creation of non-localized models in multisite setup
 - Fixed: Menu item validation
