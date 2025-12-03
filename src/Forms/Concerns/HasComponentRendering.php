@@ -15,6 +15,7 @@ trait HasComponentRendering
     {
         return view($this->getView(), array_merge($this->data(), [
             'component' => $this,
+            ...$this->getViewData(),
         ]));
     }
 
@@ -22,6 +23,7 @@ trait HasComponentRendering
     {
         return view($this->getPreviewView(), array_merge($this->data(), [
             'component' => $this,
+            ...$this->getPreviewViewData(),
         ]));
     }
 }
