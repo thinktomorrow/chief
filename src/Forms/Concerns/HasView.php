@@ -25,12 +25,17 @@ trait HasView
         return $this;
     }
 
-    public function previewView(string $previewView, array $viewData = []): static
+    public function setPreviewView(string $previewView, array $viewData = []): static
     {
         $this->previewView = $previewView;
         $this->previewViewData = $viewData;
 
         return $this;
+    }
+
+    public function previewView(string $previewView, array $viewData = []): static
+    {
+        return $this->setPreviewView($previewView, $viewData);
     }
 
     public function getPreviewView(): string

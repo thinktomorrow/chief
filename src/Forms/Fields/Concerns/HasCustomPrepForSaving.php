@@ -4,10 +4,18 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Fields\Concerns;
 
+use Thinktomorrow\Chief\Forms\Fields\Field;
+
 trait HasCustomPrepForSaving
 {
     protected ?\Closure $prepForSaving = null;
 
+    /**
+     * Register a preparation for saving callback.
+     *
+     * @param  \Closure(Field $field, mixed $value, array $input, ?string $locale): void  $prepareModelValue
+     * @return $this
+     */
     public function prepForSaving(\Closure $prepareModelValue): static
     {
         $this->prepForSaving = $prepareModelValue;

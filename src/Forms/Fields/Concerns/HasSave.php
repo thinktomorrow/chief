@@ -8,6 +8,15 @@ trait HasSave
 {
     protected ?\Closure $save = null;
 
+    /**
+     * Register a save callback.
+     *
+     * @param \Closure(\Illuminate\Database\Eloquent\Model $model,
+     *                 \Thinktomorrow\Chief\Forms\Fields\Field $field,
+     *                 array $input,
+     *                 array $files): void $save
+     * @return $this
+     */
     public function save(\Closure $save): static
     {
         $this->save = $save;

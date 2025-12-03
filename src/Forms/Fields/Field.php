@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Forms\Fields;
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldName;
 use Thinktomorrow\Chief\Forms\Fields\Locales\LocalizedField;
 use Thinktomorrow\Chief\Forms\Fields\Validation\Validatable;
@@ -44,18 +45,39 @@ interface Field extends HasTags, LocalizedField, Validatable
 
     public function getColumnName(): string;
 
+    /**
+     * Register a preparation for saving callback.
+     *
+     * @param  \Closure(Field $field, mixed $value, array $input, ?string $locale): void  $prepareModelValue
+     * @return $this
+     */
     public function prepForSaving(Closure $prepForSaving): static;
 
     public function hasPrepForSaving(): bool;
 
     public function getPrepForSaving(): ?Closure;
 
+    /**
+     * Register a custom fill for saving callback.
+     *
+     * @param  Closure(Model $model, Field $field, array $input, array $files): void  $fillForSaving
+     * @return $this
+     */
     public function fillForSaving(Closure $fillForSaving): static;
 
     public function hasFillForSaving(): bool;
 
     public function getFillForSaving(): ?Closure;
 
+    /**
+     * Register a save callback.
+     *
+     * @param \Closure(\Illuminate\Database\Eloquent\Model $model,
+     *                 \Thinktomorrow\Chief\Forms\Fields\Field $field,
+     *                 array $input,
+     *                 array $files): void $save
+     * @return $this
+     */
     public function save(Closure $save): static;
 
     public function hasSave(): bool;
