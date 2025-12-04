@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Added: viewData parameter to setView() and setPreviewView() on Form layout/field classes.
 - Fixed: selection option could not be removed in select field. X buttton was missing.
+- Fixed: Table action with dialog can now handle a response such as download or redirect.
 
 ## [0.10.16] - 2025-12-01
 

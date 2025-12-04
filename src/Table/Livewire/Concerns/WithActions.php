@@ -138,9 +138,9 @@ trait WithActions
         ]);
     }
 
-    public function onActionDialogSaved($values): void
+    public function onActionDialogSaved($values): ?SymfonyResponse
     {
-        $this->applyActionEffect(
+        return $this->applyActionEffect(
             $values['dialogReference']['actionKey'],
             $values['form'],
             $values['data']
