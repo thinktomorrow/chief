@@ -15,7 +15,8 @@ final class ModelReference implements Wireable
 
     private function __construct(string $className, string $id)
     {
-        $this->validateClassName($className);
+        $this->validateParameters($className, $id);
+
         $this->className = $className;
         $this->id = $id;
     }
@@ -161,10 +162,14 @@ final class ModelReference implements Wireable
         return $className;
     }
 
-    private function validateClassName(string $className)
+    private function validateParameters(string $className, string $id)
     {
         if (! $className) {
-            throw new InvalidModelReference('['.$className.'] is not a valid class reference.');
+            throw new InvalidModelReference('['.$className.'@'.$id.'] is missing a valid class reference.');
+        }
+
+        if (! trim($id)) {
+            throw new InvalidModelReference('['.$className.'@'.$id.'] is missing a valid id reference.');
         }
     }
 
