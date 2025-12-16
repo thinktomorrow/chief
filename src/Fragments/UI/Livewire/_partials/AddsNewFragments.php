@@ -58,7 +58,7 @@ trait AddsNewFragments
             ->filterByNotTagged(['edit', 'not-on-create'])
             ->setLocales($this->localeValuesForNewFragment['locales']);
 
-        return $layout->getComponentsWithoutForms();
+        return $this->applyFieldDependencies($layout->getComponentsWithoutForms());
     }
 
     public function save()
