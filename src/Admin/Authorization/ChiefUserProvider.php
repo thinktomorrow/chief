@@ -5,32 +5,22 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Admin\Authorization;
 
 use Illuminate\Auth\EloquentUserProvider;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
 class ChiefUserProvider extends EloquentUserProvider implements UserProvider
 {
-    /**
-     * Retrieve a user by the given credentials.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    public function retrieveByCredentials(array $credentials)
+    protected function newModelQuery($model = null)
     {
-        $user = parent::retrieveByCredentials($credentials);
-
-        return ($user && $user->isEnabled()) ? $user : null;
+        return parent::newModelQuery($model);
     }
 
-    /**
-     * Retrieve a user by their unique identifier.
-     *
-     * @param  mixed  $identifier
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    public function retrieveById($identifier)
+    public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        $user = parent::retrieveById($identifier);
+        if (! $user->isEnabled()) {
+            return false;
+        }
 
-        return ($user && $user->isEnabled()) ? $user : null;
+        return parent::validateCredentials($user, $credentials);
     }
 }

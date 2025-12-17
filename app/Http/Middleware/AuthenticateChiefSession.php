@@ -3,76 +3,67 @@
 namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Thinktomorrow\Chief\Admin\Authentication\ChiefLogoutService;
+use Thinktomorrow\Chief\Admin\Users\User;
 
 class AuthenticateChiefSession
 {
-    protected $auth;
-
-    public function __construct()
-    {
-        $this->auth = Auth::guard('chief');
-    }
-
     public function handle($request, Closure $next)
     {
-        if (! $request->user('chief') || ! $request->session()) {
+        if (! $request->hasSession()) {
             return $next($request);
         }
 
-        if ($this->auth->viaRemember()) {
-            $passwordHash = explode('|', $request->cookies->get($this->auth->getRecallerName()))[2];
+        /** @var User|null $admin */
+        $admin = $request->user('chief');
 
-            if ($passwordHash != $request->user('chief')->getAuthPassword()) {
-                $this->logout($request);
-            }
+        if (! $admin) {
+            return $next($request);
         }
 
-        if (! $request->session()->has('chief_password_hash')) {
-            $this->storePasswordHashInSession($request);
+        if (! $admin->isEnabled()) {
+            return $this->logoutAndRedirect($request);
         }
 
-        if ($request->session()->get('chief_password_hash') !== $request->user('chief')->getAuthPassword()) {
-            $this->logout($request);
+        if (! $this->getPasswordHashFromSession($request)) {
+            $this->storePasswordHashInSession($request, $admin);
         }
 
-        return tap($next($request), function () use ($request) {
-            $this->storePasswordHashInSession($request);
+        if ($this->getPasswordHashFromSession($request) !== $admin->getAuthPassword()) {
+            return $this->logoutAndRedirect($request);
+        }
+
+        return tap($next($request), function () use ($request, $admin) {
+            $this->storePasswordHashInSession($request, $admin);
         });
     }
 
-    /**
-     * Store the user's current password hash in the session.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     */
-    protected function storePasswordHashInSession($request)
+    protected function storePasswordHashInSession(Request $request, User $admin): void
     {
-        if (! $request->user('chief')) {
-            return;
-        }
+        $currentHash = $this->getPasswordHashFromSession($request);
+        $actualHash = $admin->getAuthPassword();
 
-        $request->session()->put([
-            'chief_password_hash' => $request->user('chief')->getAuthPassword(),
-        ]);
+        if ($currentHash !== $actualHash) {
+            $request->session()->put('chief_password_hash', $actualHash);
+        }
     }
 
-    /**
-     * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     *
-     * @throws \Illuminate\Auth\AuthenticationException
-     */
-    protected function logout($request)
+    private function logoutAndRedirect(Request $request): Response
     {
-        $this->auth->logout();
+        app(ChiefLogoutService::class)->logout($request);
 
-        $request->session()->remove('chief_password_hash');
+        // JSON callers correct afhandelen
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Unauthenticated.'], 401);
+        }
 
-        throw new AuthenticationException;
+        return redirect()->guest('/admin/login');
+    }
+
+    private function getPasswordHashFromSession(Request $request): ?string
+    {
+        return $request->session()->get('chief_password_hash');
     }
 }

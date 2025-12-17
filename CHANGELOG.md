@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Authentication middleware did not properly log the admin out.
+- Fixed: Disabled users stayed logged in when a remember me cookie was used.
+- Changed: Cleaner authentication logic
+
 ## [0.10.17] - 2025-12-08
 
 - Added: viewData parameter to setView() and setPreviewView() on Form layout/field classes.

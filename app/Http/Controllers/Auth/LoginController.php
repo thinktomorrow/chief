@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\Admin\Authentication\ChiefLogoutService;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class LoginController extends Controller
@@ -43,11 +44,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function logout(Request $request)
+    public function logout(Request $request, ChiefLogoutService $logoutService)
     {
-        Auth::guard('chief')->logout();
-
-        $request->session()->forget('chief_password_hash');
+        $logoutService->logout($request);
 
         return redirect('/');
     }

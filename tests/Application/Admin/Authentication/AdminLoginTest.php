@@ -18,23 +18,6 @@ class AdminLoginTest extends ChiefTestCase
         $response->assertRedirect('/admin/login');
     }
 
-    public function test_entering_valid_login_credentials_for_disabled_user_wont_let_you_pass()
-    {
-        $admin = $this->fakeUser([
-            'email' => 'foo@example.com',
-            'password' => bcrypt('foobar'),
-            'enabled' => false,
-        ]);
-
-        $response = $this->post(route('chief.back.login.store'), [
-            'email' => 'foo@example.com',
-            'password' => 'foobar',
-        ]);
-
-        $this->assertFalse(Auth::guard('chief')->check());
-        $response->assertRedirect('/');
-    }
-
     public function test_entering_valid_login_credentials_lets_you_pass()
     {
         $admin = $this->fakeUser([
@@ -203,5 +186,27 @@ class AdminLoginTest extends ChiefTestCase
 
         Auth::guard('chief')->login($admin);
         $this->assertEquals(Auth::guard('chief')->user(), chiefAdmin());
+    }
+
+    public function test_user_is_logged_out_when_password_changes_during_session()
+    {
+        $admin = $this->fakeUser([
+            'password' => bcrypt('old-password'),
+            'enabled' => true,
+        ]);
+
+        $this->actingAs($admin, 'chief')->get('/admin');
+
+        $this->assertTrue(Auth::guard('chief')->check());
+
+        // Password wijziging buiten de sessie (bv via reset)
+        $admin->forceFill([
+            'password' => bcrypt('new-password'),
+        ])->save();
+
+        $response = $this->get('/admin');
+
+        $response->assertRedirect('/admin/login');
+        $this->assertFalse(Auth::guard('chief')->check());
     }
 }

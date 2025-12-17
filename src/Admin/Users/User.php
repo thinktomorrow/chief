@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Users;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Validation\UnauthorizedException;
 use Spatie\Permission\Traits\HasRoles;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\InteractsWithAssets;
@@ -17,7 +17,6 @@ use Thinktomorrow\Chief\Shared\Concerns\Enablable;
 class User extends Authenticatable implements HasAsset
 {
     use Enablable;
-    use HasFactory;
     use HasRoles;
     use InteractsWithAssets;
     use Notifiable;
@@ -60,6 +59,10 @@ class User extends Authenticatable implements HasAsset
 
     public function sendPasswordResetNotification($token)
     {
+        if (! $this->isEnabled()) {
+            throw new UnauthorizedException('This user is disabled and not allowed to reset password.');
+        }
+
         $this->notify(new ResetAdminPassword($token));
     }
 

@@ -25,7 +25,7 @@ trait Enablable
 
     public function scopeEnabled($query): void
     {
-        $query->where($this->enablable_field, $this->getEnabledValue());
+        $query->where($this->getEnabledField(), $this->getEnabledValue());
     }
 
     private function getEnabledField()

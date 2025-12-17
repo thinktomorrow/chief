@@ -99,6 +99,7 @@ trait TestHelpers
             'firstname' => 'Ben',
             'lastname' => Str::random(),
             'email' => Str::random().'@example.com',
+            'enabled' => 1,
         ], $values));
     }
 

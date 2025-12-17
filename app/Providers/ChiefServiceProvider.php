@@ -19,6 +19,7 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Application\SendInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\Admin\Users\UserObserver;
 use Thinktomorrow\Chief\App\Console\GenerateImageSitemap;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
@@ -174,6 +175,8 @@ class ChiefServiceProvider extends ServiceProvider
         Auth::provider('chief-eloquent', function ($app, array $config) {
             return new ChiefUserProvider($app['hash'], $config['model']);
         });
+
+        User::observe(UserObserver::class);
     }
 
     private function bootChiefSquanto(): void
@@ -243,8 +246,6 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app->singleton(Settings::class, function () {
             return new Settings;
         });
-
-        $this->app->bind(NestableRepository::class, MemoizedMysqlNestableRepository::class);
 
         (new SitesServiceProvider($this->app))->register();
         (new StatesServiceProvider($this->app))->register();
