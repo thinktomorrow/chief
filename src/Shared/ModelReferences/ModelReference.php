@@ -13,6 +13,8 @@ final class ModelReference implements Wireable
 
     protected string $id;
 
+    private static $staticKey = 'STATIC';
+
     private function __construct(string $className, string $id)
     {
         $this->validateParameters($className, $id);
@@ -23,7 +25,7 @@ final class ModelReference implements Wireable
 
     public static function fromStatic(string $className): self
     {
-        return new self(self::convertToFullClass($className), '0');
+        return new self(self::convertToFullClass($className), self::$staticKey);
     }
 
     public static function make(string $className, $id): self
@@ -140,7 +142,7 @@ final class ModelReference implements Wireable
 
     private function refersToStaticObject(): bool
     {
-        return $this->id === '0';
+        return $this->id === 'STATIC';
     }
 
     public function __toString(): string
