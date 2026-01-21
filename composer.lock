@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f7752b495c39a2842bde42796a43971",
+    "content-hash": "90652947c3eb81312d3f8ac52af05bae",
     "packages": [
         {
             "name": "brick/math",
@@ -8547,16 +8547,16 @@
         },
         {
             "name": "openai-php/client",
-            "version": "v0.15.0",
+            "version": "v0.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openai-php/client.git",
-                "reference": "4db080738104be6a1144fa9f203c428ea4e58128"
+                "reference": "3362ab004fcfc9d77df3aff7671fbcbe70177cae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openai-php/client/zipball/4db080738104be6a1144fa9f203c428ea4e58128",
-                "reference": "4db080738104be6a1144fa9f203c428ea4e58128",
+                "url": "https://api.github.com/repos/openai-php/client/zipball/3362ab004fcfc9d77df3aff7671fbcbe70177cae",
+                "reference": "3362ab004fcfc9d77df3aff7671fbcbe70177cae",
                 "shasum": ""
             },
             "require": {
@@ -8618,7 +8618,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openai-php/client/issues",
-                "source": "https://github.com/openai-php/client/tree/v0.15.0"
+                "source": "https://github.com/openai-php/client/tree/v0.18.0"
             },
             "funding": [
                 {
@@ -8634,7 +8634,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-04T17:44:21+00:00"
+            "time": "2025-10-31T18:58:57+00:00"
         },
         {
             "name": "orchestra/canvas",
@@ -11368,5 +11368,5 @@
         "ext-json": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
