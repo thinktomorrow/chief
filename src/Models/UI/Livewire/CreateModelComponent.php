@@ -80,7 +80,7 @@ class CreateModelComponent extends Component
     public function getFields(): Collection
     {
         $resource = $this->getResource();
-        $model = new $this->modelClass($resource->getAttributesOnCreate($this->instanceAttributes));
+        $model = new $this->modelClass(array_merge($this->instanceAttributes, $resource->getAttributesOnCreate($this->instanceAttributes)));
 
         return PageLayout::make($resource->fields($model))
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
@@ -98,7 +98,6 @@ class CreateModelComponent extends Component
                 'locales.required' => 'Duid minstens één site aan.',
             ]);
         }
-
         $form = $this->prepareFormDataForSubmission();
 
         $modelId = app(ModelApplication::class)->create(new CreateModel(
