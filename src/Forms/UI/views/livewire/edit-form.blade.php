@@ -8,7 +8,9 @@
         </x-slot>
 
         @if (count($locales) > 1)
-            @include('chief-form::livewire._partials.locale-toggle')
+            <div class="mb-6">
+                @include('chief-form::livewire._partials.locale-toggle')
+            </div>
         @endif
 
         <form id="edit-form" wire:submit.prevent="save">

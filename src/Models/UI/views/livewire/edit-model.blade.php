@@ -22,24 +22,17 @@
             </x-chief::dialog.drawer.header>
         </x-slot>
 
-        {{--
-            @if ($errors->any())
-            <x-chief::callout size="sm" variant="red" class="mt-2">
-            @foreach ($errors->all() as $error)
-            <p>{{ ucfirst($error) }}</p>
-            @endforeach
-            </x-chief::callout>
-            @endif
-        --}}
-
-        @include('chief-form::livewire._partials.locale-toggle')
+        @if (count($locales) > 1)
+            <div class="mb-6">
+                @include('chief-form::livewire._partials.locale-toggle')
+            </div>
+        @endif
 
         <form id="edit-model-form" wire:submit.prevent="save">
             @foreach ($this->getComponents() as $field)
                 {{ $field }}
             @endforeach
         </form>
-
 
         <x-slot name="footer">
             <x-chief::dialog.drawer.footer>

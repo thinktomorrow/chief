@@ -20,7 +20,11 @@
             @include('chief-models::livewire._partials.locale-selection')
         @endif
 
-        @include('chief-form::livewire._partials.locale-toggle')
+        @if (count($locales) > 1)
+            <div class="mb-6">
+                @include('chief-form::livewire._partials.locale-toggle')
+            </div>
+        @endif
 
         <form id="create-model-form" wire:submit.prevent="save">
             @foreach ($this->getFields() as $field)
