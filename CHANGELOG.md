@@ -8,6 +8,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Instance attributes on create model component were not properly set.
 - Fixed: Authentication middleware did not properly log the admin out.
 - Fixed: Disabled users stayed logged in when a remember me cookie was used.
+- Fixed: Editor scripts were loading twice in squanto, causing multiple redactor instances. Just a single include now!
 - Changed: Cleaner authentication logic
 
 ## [0.10.17] - 2025-12-08

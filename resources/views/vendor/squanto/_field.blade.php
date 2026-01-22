@@ -15,8 +15,8 @@
 
             <div class="flex w-full gap-2">
                 @if (count(ChiefSites::locales()) > 1)
-                    <div class="flex w-8 shrink-0 items-center justify-center rounded-lg bg-grey-50 p-2">
-                        <span class="text-xs font-medium uppercase text-grey-500">{{ $locale }}</span>
+                    <div class="bg-grey-50 flex w-8 shrink-0 items-center justify-center rounded-lg p-2">
+                        <span class="text-grey-500 text-xs font-medium uppercase">{{ $locale }}</span>
                     </div>
                 @endif
 

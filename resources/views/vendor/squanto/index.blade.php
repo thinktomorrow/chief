@@ -1,6 +1,6 @@
 <x-chief::page.template title="Vaste teksten" container="md">
     <x-chief::window>
-        <div class="divide-y divide-grey-100">
+        <div class="divide-grey-100 divide-y">
             @foreach ($pages as $page)
                 <div
                     @class([
@@ -9,11 +9,11 @@
                         'pb-3' => ! $loop->last,
                     ])
                 >
-                    <div class="mt-[0.1875rem] flex items-start gap-1.5">
+                    <div class="mt-0.75 flex items-start gap-1.5">
                         <a
                             href="{{ route('squanto.edit', $page->slug()) }}"
                             title="{{ ucfirst($page->label()) }}"
-                            class="leading-6 text-grey-800 hover:underline hover:underline-offset-2"
+                            class="text-grey-800 leading-6 hover:underline hover:underline-offset-2"
                         >
                             {{ ucfirst($page->label()) }}
                         </a>
