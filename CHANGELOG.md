@@ -11,7 +11,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Authentication middleware did not properly log the admin out.
 - Fixed: Disabled users stayed logged in when a remember me cookie was used.
 - Fixed: Editor scripts were loading twice in squanto, causing multiple redactor instances. Just a single include now!
+- Fixed: An issue where file upload could not be used in create form. Fixed by unidentified model reference (see below).
 - Changed: Cleaner authentication logic
+- Added: ModelReference now has 'unidentified' status for model that isn't persisted yet.
 
 ## [0.10.17] - 2025-12-08
 
