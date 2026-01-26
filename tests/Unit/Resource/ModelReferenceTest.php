@@ -22,12 +22,23 @@ class ModelReferenceTest extends TestCase
         $this->assertTrue($reference->equals(ModelReference::fromString('classname@1')));
     }
 
-    public function test_it_can_make_incomplete_reference(): void
+    public function test_it_can_make_unidentified_reference(): void
     {
-        $reference = ModelReference::fromIncomplete('classname');
+        $reference = ModelReference::fromUnidentified('classname');
 
         $this->assertEquals('classname', $reference->className());
-        $this->assertNull($reference->id());
+        $this->assertEquals('UNIDENTIFIED', $reference->id());
+        $this->assertTrue($reference->isUnidentified());
+        $this->assertEquals('classname@', $reference->get());
+    }
+
+    public function test_it_can_make_static_reference(): void
+    {
+        $reference = ModelReference::fromStatic('classname');
+
+        $this->assertEquals('classname', $reference->className());
+        $this->assertEquals('STATIC', $reference->id());
+        $this->assertTrue($reference->isStatic());
         $this->assertEquals('classname@', $reference->get());
     }
 
