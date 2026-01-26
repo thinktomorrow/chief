@@ -19,6 +19,7 @@ class ChangePasswordTest extends ChiefTestCase
         $this->user->firstname = 'firstname';
         $this->user->lastname = 'lastname';
         $this->user->password = Hash::make('password');
+        $this->user->enabled = true;
         $this->user->save();
     }
 

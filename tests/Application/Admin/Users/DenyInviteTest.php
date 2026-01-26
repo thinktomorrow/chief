@@ -19,7 +19,7 @@ class DenyInviteTest extends ChiefTestCase
     {
         parent::setUp();
 
-        $this->invitee = $this->developer();
+        $this->invitee = $this->developer(['enabled' => false]);
         $this->inviter = $this->developer();
 
         $this->invitation = Invitation::make($this->invitee->id, $this->inviter->id);

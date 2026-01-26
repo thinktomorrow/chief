@@ -18,6 +18,7 @@ class UpdateYouTest extends ChiefTestCase
         $this->newUser->email = 'new@example.com';
         $this->newUser->firstname = 'new firstname';
         $this->newUser->lastname = 'new lastname';
+        $this->newUser->enabled = true;
         $this->newUser->save();
         $this->newUser->assignRole('author');
     }

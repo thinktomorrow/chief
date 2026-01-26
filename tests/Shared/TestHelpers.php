@@ -85,9 +85,9 @@ trait TestHelpers
         return $response;
     }
 
-    protected function developer()
+    protected function developer(array $values = [])
     {
-        $developer = $this->fakeUser();
+        $developer = $this->fakeUser($values);
         $developer->assignRole(Role::firstOrCreate(['name' => 'developer']));
 
         return $developer;
