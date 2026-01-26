@@ -22,11 +22,20 @@ class ModelReferenceTest extends TestCase
         $this->assertTrue($reference->equals(ModelReference::fromString('classname@1')));
     }
 
+    public function test_it_can_make_incomplete_reference(): void
+    {
+        $reference = ModelReference::fromIncomplete('classname');
+
+        $this->assertEquals('classname', $reference->className());
+        $this->assertNull($reference->id());
+        $this->assertEquals('classname@', $reference->get());
+    }
+
     public function test_it_cannot_make_a_reference_from_invalid_string()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        ModelReference::fromString('classname@'); // missing id
+        ModelReference::fromString('classname'); // missing @
     }
 
     public function test_it_can_create_a_collection_from_model_references()

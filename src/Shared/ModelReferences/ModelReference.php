@@ -39,7 +39,7 @@ final class ModelReference implements Wireable
         return new self(self::convertToFullClass($className), (string) $id);
     }
 
-    public static function incomplete(string $className): self
+    public static function fromIncomplete(string $className): self
     {
         return new self(self::convertToFullClass($className), '');
     }
