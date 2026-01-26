@@ -11,12 +11,18 @@ final class ModelReference implements Wireable
 {
     private string $className;
 
-    protected string $id;
+    // If id is not given, this means that the reference is incomplete -
+    // this can occur on form bindings where the model does not exist yet
+    protected ?string $id;
 
     private static $staticKey = 'STATIC';
 
-    private function __construct(string $className, string $id)
+    private function __construct(string $className, ?string $id)
     {
+        if ($id === '') {
+            $id = null;
+        }
+
         $this->validateParameters($className, $id);
 
         $this->className = $className;
@@ -33,6 +39,11 @@ final class ModelReference implements Wireable
         return new self(self::convertToFullClass($className), (string) $id);
     }
 
+    public static function incomplete(string $className): self
+    {
+        return new self(self::convertToFullClass($className), '');
+    }
+
     public static function fromString(string $reference): self
     {
         if (strpos($reference, '@') == false) {
@@ -41,11 +52,7 @@ final class ModelReference implements Wireable
 
         [$className, $id] = explode('@', $reference);
 
-        if ($id === '') {
-            throw new \InvalidArgumentException('Missing id on model reference. ['.$reference.'] was passed.');
-        }
-
-        return new self(self::convertToFullClass($className), (string) $id);
+        return new self(self::convertToFullClass($className), $id);
     }
 
     /**
@@ -98,7 +105,7 @@ final class ModelReference implements Wireable
         return $model;
     }
 
-    public function id(): string
+    public function id(): ?string
     {
         return $this->id;
     }
@@ -135,7 +142,7 @@ final class ModelReference implements Wireable
         return $this->get() === $modelReferenceString || $this->getShort() === $modelReferenceString;
     }
 
-    private function hasValidId(): bool
+    public function hasValidId(): bool
     {
         return (bool) $this->id;
     }
@@ -164,13 +171,13 @@ final class ModelReference implements Wireable
         return $className;
     }
 
-    private function validateParameters(string $className, string $id)
+    private function validateParameters(string $className, ?string $id)
     {
         if (! $className) {
             throw new InvalidModelReference('['.$className.'@'.$id.'] is missing a valid class reference.');
         }
 
-        if (! trim($id)) {
+        if (! is_null($id) && ! trim($id)) {
             throw new InvalidModelReference('['.$className.'@'.$id.'] is missing a valid id reference.');
         }
     }
