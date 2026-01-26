@@ -1,35 +1,35 @@
 name: Fix Code Style
 
-on: [push]
+on: [ push ]
 
 jobs:
-    lint:
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: true
-            matrix:
-                php: [8.4]
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [ 8.5 ]
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                  ref: ${{ github.head_ref }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
-                  extensions: json, dom, curl, libxml, mbstring
-                  coverage: none
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: json, dom, curl, libxml, mbstring
+          coverage: none
 
-            - name: Install Pint
-              run: composer require laravel/pint:1.24
+      - name: Install Pint
+        run: composer require laravel/pint:1.24
 
-            - name: Run Pint
-              run: vendor/bin/pint
+      - name: Run Pint
+        run: vendor/bin/pint
 
-            - name: Commit linted files
-              uses: stefanzweifel/git-auto-commit-action@v5
-              with:
-                  commit_message: Pint formatting
+      - name: Commit linted files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Pint formatting

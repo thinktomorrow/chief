@@ -145,7 +145,7 @@ class AdminDisabledLoginTest extends ChiefTestCase
         $this->assertGuest('chief');
 
         // Re-enable user
-        $admin->update(['enabled' => truech]);
+        $admin->update(['enabled' => true]);
 
         // Simuleer nieuwe request met oude cookies
         $this->app['session']->flush();

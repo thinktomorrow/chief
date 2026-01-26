@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.18] - 2026-01-26
+
 - Fixed: Instance attributes on create model component were not properly set.
 - Fixed: Authentication middleware did not properly log the admin out.
 - Fixed: Disabled users stayed logged in when a remember me cookie was used.
