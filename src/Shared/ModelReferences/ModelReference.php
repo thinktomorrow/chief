@@ -41,7 +41,7 @@ final class ModelReference implements Wireable
 
     public static function make(string $className, $id): self
     {
-        if (is_null($id) || $id === '') {
+        if (! $id) {
             return self::fromUnidentified($className);
         }
 
