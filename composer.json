@@ -9,7 +9,7 @@
     "license": "none",
     "type": "chief-cms",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4|^8.5",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.45|^12.0",
@@ -23,10 +23,10 @@
         "spatie/laravel-permission": "^6.20",
         "spatie/laravel-sitemap": "^7.3.6",
         "thinktomorrow/assetlibrary": "^1.0.2",
-        "thinktomorrow/dynamic-attributes": "^2.0.2",
-        "thinktomorrow/squanto": "^5.0.0",
+        "thinktomorrow/dynamic-attributes": "^2.0.3",
+        "thinktomorrow/squanto": "^5.0.2",
         "thinktomorrow/url": "^4.0.0",
-        "thinktomorrow/vine": "^0.5.1"
+        "thinktomorrow/vine": "^0.5.3"
     },
     "require-dev": {
         "astrotomic/laravel-translatable": "^11.11",
@@ -36,7 +36,7 @@
         "maatwebsite/excel": "^3.1  ",
         "mockery/mockery": "^1.6",
         "openai-php/client": "^0.15.0",
-        "orchestra/testbench": "^9.14",
+        "orchestra/testbench": "^10.9",
         "phpunit/phpunit": "^11.5",
         "spatie/opening-hours": "^2.41"
     },
