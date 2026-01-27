@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.19] - 2026-01-27
+
+- Changed: Support for php 8.5
+
 ## [0.10.18] - 2026-01-26
 
 - Fixed: Instance attributes on create model component were not properly set.
