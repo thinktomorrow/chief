@@ -9,7 +9,7 @@
     "license": "none",
     "type": "chief-cms",
     "require": {
-        "php": "^8.4|^8.5",
+        "php": "^8.3|^8.4|^8.5",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.45|^12.0",
