@@ -13,7 +13,7 @@
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.45|^12.0",
-        "laravel/pint": "^1.24",
+        "laravel/pint": "1.24",
         "laravel/ui": "^4.6",
         "league/commonmark": "^2.7",
         "livewire/livewire": "^3.6.3",
