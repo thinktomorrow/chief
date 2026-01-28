@@ -7,7 +7,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [0.10.19] - 2026-01-27
 
-- Changed: Support for php 8.5
+- Added: Support for php 8.5
+- Changed: Checkbox is now multiple by default since this is the default behaviour of checkboxes.
 
 ## [0.10.18] - 2026-01-26
 

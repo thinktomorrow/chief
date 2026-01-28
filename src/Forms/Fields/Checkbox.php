@@ -20,6 +20,9 @@ class Checkbox extends Component implements Field
     {
         parent::__construct($key);
 
+        // Checkboxes are multiple by default
+        $this->multiple();
+
         $this->prepForSavingMultipleValues();
     }
 }
