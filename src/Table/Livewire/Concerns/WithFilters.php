@@ -22,6 +22,9 @@ trait WithFilters
         // Alleen restoren als er nog geen filters via URL zijn ingesteld
         if ($this->isUsingDefaultFilters() && session()->has($this->getFilterSessionKey())) {
             $this->filters = session($this->getFilterSessionKey());
+
+            // Clear session to avoid stale filters
+            session()->forget($this->getFilterSessionKey());
         }
     }
 
