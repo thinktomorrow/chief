@@ -7,6 +7,11 @@ namespace Thinktomorrow\Chief\Fragments;
 interface ContextOwner
 {
     /**
+     * Show the context management UI for this owner.
+     */
+    public function allowContexts(): bool;
+
+    /**
      * List of allowed fragments for all contexts of this owner.
      */
     public function allowedFragments(): array;

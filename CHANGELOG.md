@@ -9,6 +9,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Added: Support for php 8.5
 - Changed: Checkbox is now multiple by default since this is the default behaviour of checkboxes.
+- Changed: ContextOwner now requires `allowContexts()` method to indicate if a model allows to manage fragment contexts
+  or not
 
 ## [0.10.18] - 2026-01-26
 

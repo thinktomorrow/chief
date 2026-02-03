@@ -22,7 +22,7 @@ class CreateFirstContextForPage
     {
         $model = $event->modelReference->instance();
 
-        if (! $model instanceof ContextOwner) {
+        if (! $model instanceof ContextOwner || ! $model->allowContexts()) {
             return;
         }
 

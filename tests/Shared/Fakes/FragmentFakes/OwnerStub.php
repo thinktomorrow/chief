@@ -38,4 +38,14 @@ class OwnerStub extends Model implements ContextOwner
     //    {
     //        // TODO: Implement fields() method.
     //    }
+
+    public function allowContexts(): bool
+    {
+        return true;
+    }
+
+    public function allowMultipleContexts(): bool
+    {
+        return true;
+    }
 }

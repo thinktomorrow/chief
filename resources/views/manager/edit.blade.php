@@ -1,6 +1,6 @@
 @php
     $hasAnyAsideTopComponents = count($layout->filterByPosition('aside-top')->getComponents()) > 0;
-    $hasContexts = $model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner;
+    $hasContexts = $model instanceof \Thinktomorrow\Chief\Fragments\ContextOwner && $model->allowContexts();
     $hasSites = $model instanceof \Thinktomorrow\Chief\Sites\HasAllowedSites;
     $hasLinks = $model instanceof \Thinktomorrow\Chief\Site\Visitable\Visitable;
     $hasStates = $model instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract && chiefAdmin()->can('update-page') && count($model->getStateKeys()) > 0;
