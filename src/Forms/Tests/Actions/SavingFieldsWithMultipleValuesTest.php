@@ -24,17 +24,11 @@ class SavingFieldsWithMultipleValuesTest extends FormsTestCase
     private function fields(bool $allowMultiple = false): array
     {
         $fields = [
-            Checkbox::make('tags_checkbox'),
-            Select::make('tags_select'),
-            MultiSelect::make('tags_multiselect'),
-            SelectList::make('tags_selectlist'),
+            Checkbox::make('tags_checkbox')->multiple($allowMultiple),
+            Select::make('tags_select')->multiple($allowMultiple),
+            MultiSelect::make('tags_multiselect')->multiple($allowMultiple),
+            SelectList::make('tags_selectlist')->multiple($allowMultiple),
         ];
-
-        if ($allowMultiple) {
-            foreach ($fields as $field) {
-                $field->multiple();
-            }
-        }
 
         return $fields;
     }
