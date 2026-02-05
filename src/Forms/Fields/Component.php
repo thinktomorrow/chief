@@ -21,7 +21,7 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomFillForSaving;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasCustomPrepForSaving;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasDefault;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasFieldToggle;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\HasHideIfEmpty;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\HasHideInPreview;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasId;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasKey;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\HasLabel;
@@ -54,7 +54,7 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
     use HasDescription;
     use HasElementId;
     use HasFieldToggle;
-    use HasHideIfEmpty;
+    use HasHideInPreview;
     use HasId;
 
     // Field concerns
@@ -201,7 +201,8 @@ abstract class Component extends \Illuminate\View\Component implements Htmlable,
             ...(isset($this->prepend) ? ['prepend' => $this->prepend] : []),
             ...(isset($this->append) ? ['append' => $this->append] : []),
             ...(isset($this->hivePrompts) || (isset($this->hiveEnabled) && $this->hiveEnabled) ? ['hive' => $this->hivePrompts] : []),
-            ...(isset($this->hideIfEmpty) ? ['hideIfEmpty' => $this->hideIfEmpty] : []),
+            ...(isset($this->hideInPreview) ? ['hideInPreview' => $this->hideInPreview] : []),
+            ...(isset($this->hideInPreviewIfEmpty) ? ['hideInPreviewIfEmpty' => $this->hideInPreviewIfEmpty] : []),
         ];
     }
 }

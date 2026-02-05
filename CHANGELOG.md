@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Field::hideInPreview() to only show form field in form and not in form preview.
+- Deprecated: hideIfEmpty(). Use hideInPreviewIfEmpty() instead to only hide field in preview when empty.
+
 ## [0.10.19] - 2026-01-27
 
 - Added: Support for php 8.5
