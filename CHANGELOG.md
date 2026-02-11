@@ -6,6 +6,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## Unreleased
 
 - Added: Field::hideInPreview() to only show form field in form and not in form preview.
+- Added: Table ArchiveRowAction preset.
 - Deprecated: hideIfEmpty(). Use hideInPreviewIfEmpty() instead to only hide field in preview when empty.
 
 ## [0.10.19] - 2026-01-27
