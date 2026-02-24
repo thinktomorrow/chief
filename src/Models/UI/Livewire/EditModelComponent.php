@@ -104,7 +104,7 @@ class EditModelComponent extends Component
 
     public function getTitle(): string
     {
-        return $this->getResource()->getPageTitle($this->getModel()).' bewerken';
+        return ucfirst($this->getResource()->getPageTitle($this->getModel())).' bewerken';
     }
 
     public function render()

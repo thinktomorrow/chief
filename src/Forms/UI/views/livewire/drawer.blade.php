@@ -1,8 +1,6 @@
 <x-chief::dialog.drawer wired :size="$this->getDialog() ? $this->getDialog()->getDialogSize() : 'md'">
     @if ($isOpen)
-        <x-slot name="title">
-            {{ $this->getTitle() }}
-        </x-slot>
+        <x-slot name="title">{{ $this->getTitle() }}</x-slot>
 
         <x-slot name="subtitle">
             {{ $this->getSubTitle() }}

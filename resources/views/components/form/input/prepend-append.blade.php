@@ -6,8 +6,9 @@
 <div {{ $attributes->merge(['data-slot' => 'control'])->class('flex') }}>
     @if ($prepend)
         <div
+            data-slot="prepend"
             @class([
-                'border-grey-100 text-grey-500 inline-flex shrink-0 items-center border px-3 py-2 shadow-xs',
+                'border-grey-200 text-grey-500 inline-flex shrink-0 items-center border px-3 py-2 shadow-xs',
                 'rounded-l-[0.625rem] border-r-0',
             ])
         >
@@ -21,8 +22,9 @@
 
     @if ($append)
         <div
+            data-slot="append"
             @class([
-                'border-grey-100 text-grey-500 inline-flex shrink-0 items-center border px-3 py-2 shadow-xs',
+                'border-grey-200 text-grey-500 inline-flex shrink-0 items-center border px-3 py-2 shadow-xs',
                 'rounded-r-[0.625rem] border-l-0',
             ])
         >

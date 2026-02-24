@@ -25,7 +25,7 @@ trait HasHideInPreview
     }
 
     /**
-     * @deprecated use shouldHideInPreview() instead
+     * @deprecated use hideInPreviewIfEmpty() instead
      */
     public function hideIfEmpty(bool $hideIfEmpty = true): static
     {

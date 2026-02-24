@@ -20,6 +20,8 @@
                 '[&_[data-slot=control]:has(+[data-slot=charactercount])]:rounded-b-none',
                 '[&_[data-slot=control]:has(+[data-slot=charactercount])_.form-input-field]:rounded-b-none',
                 '[&_[data-slot=control]:has(+[data-slot=charactercount])_.redactor-box]:rounded-b-none!',
+                '[&_[data-slot=control]:has(+[data-slot=charactercount])_[data-slot=prepend]]:rounded-b-none',
+                '[&_[data-slot=control]:has(+[data-slot=charactercount])_[data-slot=append]]:rounded-b-none',
             ])
         }}
     >
