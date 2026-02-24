@@ -4,11 +4,11 @@
 @endphp
 
 @if ($selected)
-    <x-chief::badge size="sm" variant="grey" class="inline-flex items-start">
-        <x-chief::icon.tick class="-m-0.5 size-5" />
-    </x-chief::badge>
+    <div class="bg-grey-100 inline-block rounded-full">
+        <x-chief::icon.cancel-circle class="text-grey-500 -m-0.5 size-6" />
+    </div>
 @else
-    <x-chief::badge size="sm" variant="grey" class="inline-flex items-start">
-        <x-chief::icon.cancel class="size-4" />
-    </x-chief::badge>
+    <div class="bg-grey-100 inline-block rounded-full">
+        <x-chief::icon.checkmark-circle class="text-grey-500 -m-0.5 size-6" />
+    </div>
 @endif

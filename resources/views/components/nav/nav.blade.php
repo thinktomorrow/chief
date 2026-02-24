@@ -8,7 +8,7 @@
 ])
 
 @php
-    foreach($items as $item) {
+    foreach ($items as $item) {
         $item->detectActive();
     }
 @endphp
@@ -18,31 +18,37 @@
         $icon = ($firstItem = $items->first()) && $firstItem->icon() ? $firstItem->icon() : '';
         $isGroupActive = false;
 
-        foreach($items as $item) {
-            if($item->isActive()) {
+        foreach ($items as $item) {
+            if ($item->isActive()) {
                 $isGroupActive = true;
             }
         }
     @endphp
 
     @if ($title)
-        <div class="mb-2 mt-6 px-2">
-            <span class="body text-xs text-grey-500">
+        <div class="mt-6 mb-2 px-2">
+            <span class="body text-grey-500 text-xs">
                 {{ ucfirst($title) }}
             </span>
         </div>
     @endif
 
-    <x-chief::nav.item label="{{ $label }}" icon="{!! $icon !!}"
-                       {{ $attributes->merge(['open' => $isGroupActive]) }}
-                       url="{{ $items->first()?->url() }}">
+    <x-chief::nav.item
+        label="{{ $label }}"
+        icon="{!! $icon !!}"
+        {{ $attributes->merge(['open' => $isGroupActive]) }}
+        url="{{ $items->first()?->url() }}"
+    >
         @if (! isset($append))
             {{ $slot }}
         @endif
 
         @foreach ($items as $item)
-            <x-chief::nav.item label="{{ ucfirst($item->label()) }}" url="{{ $item->url() }}"
-                               :is-active="$item->isActive()" />
+            <x-chief::nav.item
+                label="{{ ucfirst($item->label()) }}"
+                url="{{ $item->url() }}"
+                :is-active="$item->isActive()"
+            />
         @endforeach
 
         @if (isset($append))
@@ -51,8 +57,8 @@
     </x-chief::nav.item>
 @elseif (isset($append) || $items->count() > 0)
     @if ($title)
-        <div class="mb-2 mt-6 px-2">
-            <span class="body text-xs text-grey-500">
+        <div class="mt-6 mb-2 px-2">
+            <span class="body text-grey-500 text-xs">
                 {{ ucfirst($title) }}
             </span>
         </div>

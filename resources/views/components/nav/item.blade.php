@@ -14,11 +14,7 @@
 @endphp
 
 <div x-data="{ isOpen: @js($open) }" class="group">
-    <div
-        @class([
-            'hover:bg-grey-100 cursor-pointer rounded-lg',
-            'bg-grey-100' => $isActive ?? false,
-        ])>
+    <div @class(['hover:bg-grey-100 cursor-pointer rounded-lg', 'bg-grey-100' => $isActive ?? false])>
         <div class="flex items-start justify-between gap-3 px-2">
             <div class="flex grow gap-2">
                 @isset($icon)
@@ -60,11 +56,12 @@
                     </a>
                 @else
                     <span
-                    @class([
-                        'text-grey-700 group-hover:text-grey-950 inline-block w-full py-1.5 text-sm/6',
-                        'text-grey-950' => $isActive ?? false,
-                    ])>
-                    {!! $label !!}
+                        @class([
+                            'text-grey-700 group-hover:text-grey-950 inline-block w-full py-1.5 text-sm/6',
+                            'text-grey-950' => $isActive ?? false,
+                        ])
+                    >
+                        {!! $label !!}
                     </span>
                 @endisset
             </div>

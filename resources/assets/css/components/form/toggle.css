@@ -33,3 +33,19 @@ input:checked + .form-input-toggle {
         transform: translateX(1.75rem);
     }
 }
+
+input:disabled + .form-input-toggle {
+    &:before {
+        @apply bg-grey-200 cursor-default;
+    }
+
+    &:after {
+        @apply shadow-none;
+    }
+}
+
+input:checked:disabled + .form-input-toggle {
+    &:before {
+        @apply bg-grey-400;
+    }
+}
