@@ -13,9 +13,9 @@
     // adding item to list is done by selecting from the multiselect
     // After adding, the value is removed from select
     // And is not shown in the select dropdown list
-
+    
     // Test: saving + livewire saving (e.g. in file field)
-
+    
     // Testing:
     // - the already selected values are shown in the list
     // - the selected values are updated after adding an item
@@ -25,9 +25,9 @@
     // - the select dropdown is updated after removing an item
     // - the select dropdown is hidden after adding an item
     // - the selected values are updated after sorting
-
+    
     // https://dev.to/thormeier/simple-and-effective-unit-testing-alpine-js-components-with-jest-13ig
-
+    
     // TODO: check if wire:model is possible to use here
     // TODO: allow rich html for each option in the list
 --}}
@@ -67,7 +67,7 @@
             },
         },
     }"
-    {{ $attributes->merge(['data-slot' => 'control'])->class(['space-y-2']) }}
+    {{ $attributes->merge(['data-slot' => 'control']) }}
 >
     <div
         x-sortable
@@ -107,15 +107,15 @@
             type="button"
             x-show="$data.allowSelectBox && !$data.showingSelectBox"
             x-on:click="$data.showSelectBox()"
-            class="origin-center border border-transparent"
+            class="block origin-center border border-transparent"
         >
-            <x-chief::badge size="base">
+            <x-chief::badge size="base" class="block border border-transparent">
                 <x-chief::icon.plus-sign class="hover:body-dark text-grey-400 my-0.5 size-4" />
             </x-chief::badge>
         </button>
     </div>
 
-    <div x-show="$data.showingSelectBox">
+    <div x-show="$data.showingSelectBox" x-bind:class="{ 'mt-2': $data.selectedOptions.length > 0 }">
         <select name="{{ $name }}" x-ref="selectEl" x-on:change="$data.addItem()" multiple></select>
     </div>
 
