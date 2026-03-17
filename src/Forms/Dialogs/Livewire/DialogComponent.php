@@ -6,11 +6,13 @@ use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
+use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
 class DialogComponent extends Component
 {
     use HasForm;
+    use InteractsWithFields;
     use ShowsAsDialog;
     use WithLocaleToggle;
 
@@ -44,6 +46,7 @@ class DialogComponent extends Component
         $this->data = $value['data'];
 
         $this->initializeLocales($this->data, $this->getFields());
+        $this->injectFormValues($this->getFields());
 
         $this->dispatch('form-dialog-opened', ...[
             'componentId' => $this->getId(),
