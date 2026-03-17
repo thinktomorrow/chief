@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.20] - 2026-03-17
+
 - Fixed: Initial field values were not showing in Dialog component
 - Added: Field::hideInPreview() to only show form field in form and not in form preview.
 - Added: Table ArchiveRowAction preset.

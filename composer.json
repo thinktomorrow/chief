@@ -33,7 +33,7 @@
         "barryvdh/laravel-debugbar": "^3.14",
         "filp/whoops": "^2.15",
         "larastan/larastan": "^3.0",
-        "maatwebsite/excel": "^3.1  ",
+        "maatwebsite/excel": "^3.1",
         "mockery/mockery": "^1.6",
         "openai-php/client": "^0.15.0",
         "orchestra/testbench": "^10.9",
@@ -66,6 +66,9 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true,
+        "platform": {
+            "php": "8.3.0"
+        },
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "php-http/discovery": true
