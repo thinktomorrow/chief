@@ -59,6 +59,11 @@ trait WithTreeResults
         }
 
         // Only if tree sorting is active, we show the tree structure
+        return $this->isTreeSortingActive();
+    }
+
+    private function isTreeSortingActive(): bool
+    {
         return count($this->sorters) == 1 && key($this->sorters) == TreeSort::TREE_SORTING;
     }
 }

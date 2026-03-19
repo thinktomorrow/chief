@@ -33,6 +33,20 @@
                 {{ $columnItem }}
             @endforeach
         </x-chief::table.cell>
+
+        @if ($loop->first && $this->shouldShowTreeBreadcrumbColumn() && $this->isTreeBreadcrumbColumnSelected())
+            <x-chief::table.cell>
+                <div class="text-grey-500 flex gap-1.5 text-sm leading-5">
+                    @foreach ($this->getTreeAncestors($item) as $ancestor)
+                        {{ $this->getAncestorTreeLabel($ancestor) }}
+
+                        @if (! $loop->last)
+                            <x-chief::icon.chevron-right class="my-1 size-3" />
+                        @endif
+                    @endforeach
+                </div>
+            </x-chief::table.cell>
+        @endif
     @endforeach
 
     <td

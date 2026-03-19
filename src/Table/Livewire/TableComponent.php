@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Thinktomorrow\Chief\Table\Filters\Presets\SiteFilter;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithActions;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBreadcrumbColumn;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkActions;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithColumns;
@@ -27,6 +28,7 @@ use Thinktomorrow\Chief\Table\Table\References\TableReference;
 class TableComponent extends Component
 {
     use WithActions;
+    use WithBreadcrumbColumn;
     use WithBulkActions;
     use WithBulkSelection;
     use WithColumns;
@@ -146,6 +148,7 @@ class TableComponent extends Component
 
         $this->resultPageCount = $results->count();
         $this->resultTotal = method_exists($results, 'total') ? $results->total() : $this->resultPageCount;
+        $this->setTreeBreadcrumbsForResults($results);
 
         return $results;
     }

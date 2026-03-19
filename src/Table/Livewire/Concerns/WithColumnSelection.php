@@ -4,6 +4,8 @@ namespace Thinktomorrow\Chief\Table\Livewire\Concerns;
 
 trait WithColumnSelection
 {
+    public const TREE_BREADCRUMB_COLUMN_KEY = 'tree_breadcrumbs';
+
     public array $columnSelection = [];
 
     // Mount and set from session
@@ -43,7 +45,7 @@ trait WithColumnSelection
         $columns = $this->getTable()->getColumns();
         $options = [];
 
-        foreach ($columns as $column) {
+        foreach ($columns as $i => $column) {
 
             if (! $firstItem = $column->getItems()[0] ?? null) {
                 continue;
@@ -55,8 +57,26 @@ trait WithColumnSelection
                 'disabled' => ! $firstItem->isColumnSelectionAllowed(),
                 'selected_by_default' => $firstItem->isColumnSelectedByDefault(),
             ];
+
+            if ($i == 0 && $this->allowsTreeBreadcrumbColumnSelection()) {
+                $options[] = [
+                    'key' => static::TREE_BREADCRUMB_COLUMN_KEY,
+                    'label' => 'Structuur',
+                    'disabled' => false,
+                    'selected_by_default' => true,
+                ];
+            }
         }
 
         return $options;
+    }
+
+    public function isTreeBreadcrumbColumnSelected(): bool
+    {
+        if (! $this->allowColumnSelection()) {
+            return true;
+        }
+
+        return in_array(static::TREE_BREADCRUMB_COLUMN_KEY, $this->getColumnSelection());
     }
 }

@@ -24,12 +24,22 @@ trait WithColumns
 
     public function getHeaders(): array
     {
-        $headers = $this->getTable()->getHeaders();
+        $headers = array_values($this->getTable()->getHeaders());
 
         // Only show headers that are selected by the admin
-        $headers = array_filter($headers, function (Header $column) {
+        $headers = array_values(array_filter($headers, function (Header $column) {
             return in_array($column->getKey(), $this->getColumnSelection());
-        });
+        }));
+
+        if ($this->shouldShowTreeBreadcrumbColumn() && $this->isTreeBreadcrumbColumnSelected()) {
+            $breadcrumbHeader = Header::makeHeader('tree_breadcrumbs', 'Structuur');
+
+            if (count($headers) > 0) {
+                array_splice($headers, 1, 0, [$breadcrumbHeader]);
+            } else {
+                $headers[] = $breadcrumbHeader;
+            }
+        }
 
         return $headers;
     }

@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Show a new tree breadcrumbs column when in Table filtering/sorting mode. This can be (de)selected as column
+
 ## [0.10.20] - 2026-03-17
 
 - Fixed: Initial field values were not showing in Dialog component
