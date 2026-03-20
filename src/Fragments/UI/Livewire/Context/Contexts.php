@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire\Context;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Fragments\App\Actions\CreateFirstContextForPage;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\Items;
@@ -20,6 +21,8 @@ class Contexts extends Items
     public function mount(ReferableModel&ContextOwner $model, ?string $activeContextId = null)
     {
         $this->model = $model;
+
+        app(CreateFirstContextForPage::class)->handle($model);
 
         $locales = $model instanceof HasAllowedSites ? ChiefSites::verifiedLocales($model->getAllowedSites()) : ChiefSites::locales();
 
