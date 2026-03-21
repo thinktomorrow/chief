@@ -9,6 +9,7 @@ use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FileFieldEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class FileFieldEditTest extends ChiefTestCase
@@ -134,5 +135,42 @@ class FileFieldEditTest extends ChiefTestCase
 
         // Check if the fieldValues match after submit
         $this->livewireInstance->assertDispatched('assetUpdated-xxx', $previewFile->toLivewire());
+    }
+
+    public function test_it_hides_file_edit_site_toggle_for_single_locale_project()
+    {
+        config()->set('chief.sites', [
+            ['locale' => 'nl'],
+        ]);
+        ChiefSites::clearCache();
+
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        $previewFile = PreviewFile::fromAsset($asset);
+
+        $this->livewireInstance
+            ->call('open', ['previewfile' => $previewFile])
+            ->assertDontSee('file-edit-site-toggle');
+    }
+
+    public function test_it_shows_file_edit_site_toggle_for_multiple_locales_project()
+    {
+        config()->set('chief.sites', [
+            ['locale' => 'nl'],
+            ['locale' => 'en'],
+        ]);
+        ChiefSites::clearCache();
+
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        $previewFile = PreviewFile::fromAsset($asset);
+
+        $this->livewireInstance
+            ->call('open', ['previewfile' => $previewFile])
+            ->assertSee('file-edit-site-toggle');
     }
 }
