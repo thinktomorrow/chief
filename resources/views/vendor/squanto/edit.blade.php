@@ -34,7 +34,7 @@
             @foreach ($collectedLines as $sectionKey => $groupedLines)
                 <x-chief::window :title="ucfirst(str_replace('_', ' ', $sectionKey))">
                     @foreach ($groupedLines as $lineViewModel)
-                        <div @class(['border-grey-100 mt-4 border-t pt-4' => ! $loop->first])>
+                        <div id="{{ $lineViewModel->id() }}" @class(['border-grey-100 mt-4 border-t pt-4 scroll-mt-24' => ! $loop->first, 'scroll-mt-24' => $loop->first])>
                             @include('squanto::_field')
                         </div>
                     @endforeach

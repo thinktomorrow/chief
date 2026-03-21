@@ -1,5 +1,16 @@
 <x-chief::page.template title="Vaste teksten" container="md">
     <x-chief::window>
+        <form method="GET" action="{{ route('squanto.index') }}" class="mb-6 flex items-center gap-2">
+            <div class="form-light w-full">
+                <x-chief::form.input.text name="search" placeholder="Zoek in teksten" autofocus />
+            </div>
+
+            <x-chief::button type="submit" variant="grey" size="sm">
+                <x-chief::icon.search />
+                <span>Zoek</span>
+            </x-chief::button>
+        </form>
+
         <div class="divide-grey-100 divide-y">
             @foreach ($pages as $page)
                 <div
