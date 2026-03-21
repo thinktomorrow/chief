@@ -7,7 +7,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: Context owning model now always has at least one context. This fixes the issue where model becomes context
   owner after creation, no context was available so no fragments could be added.
-- Fixed: boolean field rendered incorrect preview
+- Fixed: Loolean field rendered incorrect preview
+- Fixed: Grid fields were always placed at the end of the form
 - Added: Squanto basic search
 - Added: Show a new tree breadcrumbs column when in Table filtering/sorting mode. This can be (de)selected as column
 

@@ -29,25 +29,27 @@ class PageLayout implements HasTaggedComponents
     public static function make(iterable $generator = []): self
     {
         $self = new static([]);
-        $createdForm = null;
+        $activeAutoForm = null;
 
         foreach (ResolveIterables::resolve($generator) as $i => $component) {
 
             /** Bundle wandering fields together into a Form Component */
             if (! $component instanceof Layout) {
 
-                if (! $createdForm) {
+                if (! $activeAutoForm) {
                     $self = $self->add(
-                        $createdForm = Form::make('form_'.$i)
+                        $activeAutoForm = Form::make('form_'.$i)
                     );
                 }
 
-                $createdForm->addComponent($component);
+                $activeAutoForm->addComponent($component);
 
                 continue;
             }
 
             self::protectAgainstNestedForms($component);
+
+            $activeAutoForm = null;
 
             $self = $self->add($component);
         }
