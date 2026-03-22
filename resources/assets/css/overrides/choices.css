@@ -316,6 +316,17 @@
     opacity: 0.5;
 }
 
+.choices__list--dropdown .choices__item.is-selected,
+.choices__list[aria-expanded] .choices__item.is-selected {
+    background-color: var(--color-grey-50);
+    @apply text-grey-900 font-medium;
+}
+
+.choices__list--dropdown .choices__item.is-selected.is-highlighted,
+.choices__list[aria-expanded] .choices__item.is-selected.is-highlighted {
+    background-color: var(--color-grey-100);
+}
+
 .choices__item {
     cursor: default;
     @apply text-grey-700 leading-5;
