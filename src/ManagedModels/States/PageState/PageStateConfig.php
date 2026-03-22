@@ -187,11 +187,11 @@ class PageStateConfig implements StateAdminConfig
             'publish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
                 ? 'De pagina zal onmiddellijk online komen te staan.'
                 : ($this->visitableModelHasAnyLinks($statefulContract)
-                    ? 'Deze pagina heeft nog geen online links. Om de pagina zichtbaar te maken voor bezoekers, moet je ook nog de links online zetten.'
+                    ? 'De pagina zal onmiddellijk online komen te staan.'
                     : 'Deze pagina heeft nog geen links. Om de pagina zichtbaar te maken voor bezoekers, moet je ook nog links toevoegen.'
                 ),
             'unpublish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
-                ? 'De pagina wordt offline gehaald en alle links zullen niet langer werken. Ze werken pas weer zodra de pagina opnieuw wordt gepubliceerd.'
+                ? 'De pagina wordt offline gehaald. De links zullen niet langer werken. Ze zijn opnieuw toegankelijk zodra de pagina opnieuw wordt gepubliceerd.'
                 : 'De pagina is nog niet klaar voor publicatie en wordt terug in draft gezet.',
             'archive' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
                 ? 'Na het archiveren zullen alle links naar deze pagina niet meer werken. Zorg best voor een redirect naar een andere pagina zodat bezoekers altijd op een bestaande pagina terechtkomen.'

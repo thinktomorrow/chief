@@ -57,6 +57,7 @@ use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
 use Thinktomorrow\Chief\Urls\App\Listeners\CreatePageFirstUrls;
 use Thinktomorrow\Chief\Urls\App\Listeners\PropagateUrlChange;
+use Thinktomorrow\Chief\Urls\App\Listeners\PublishFirstUrls;
 use Thinktomorrow\Chief\Urls\UrlsServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
@@ -208,6 +209,7 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(ManagedModelUpdated::class, [ProjectModelData::class, 'onManagedModelUpdated']);
         Event::listen(ManagedModelArchived::class, [PropagateArchivedUrl::class, 'onManagedModelArchived']);
         Event::listen(ManagedModelArchived::class, [ProjectModelData::class, 'onManagedModelArchived']);
+        Event::listen(ManagedModelPublished::class, [PublishFirstUrls::class, 'onManagedModelPublished']);
         Event::listen(ManagedModelPublished::class, [ProjectModelData::class, 'onManagedModelPublished']);
         Event::listen(ManagedModelUnPublished::class, [ProjectModelData::class, 'onManagedModelUnPublished']);
         Event::listen(ManagedModelQueuedForDeletion::class, [DeleteModel::class, 'onManagedModelQueuedForDeletion']);
