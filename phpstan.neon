@@ -1,6 +1,7 @@
 includes:
     - vendor/larastan/larastan/extension.neon
     - vendor/nesbot/carbon/extension.neon
+    - phpstan-baseline.neon
 
 parameters:
     paths:
@@ -21,4 +22,3 @@ parameters:
 
     ignoreErrors:
         - '#Unsafe usage of new static#'
-

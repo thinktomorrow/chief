@@ -15,9 +15,14 @@ class OptionFilter extends Filter
 
     private bool $multiple = false;
 
-    public static function make(string $queryKey, Closure $query): self
+    public static function make(string $queryKey, ?Closure $query = null): static
     {
-        $filter = new static($queryKey, $query);
+        $filter = new static($queryKey);
+
+        if ($query) {
+            $filter->query($query);
+        }
+
         $filter->displayAsSelect();
 
         return $filter;
@@ -71,7 +76,7 @@ class OptionFilter extends Filter
 
     protected function viewData(): array
     {
-        return array_merge(parent::viewData(), [
+        return array_merge($this->getViewData(), [
             'options' => $this->displayType == 'select' ? PairOptions::toMultiSelectPairs($this->options) : $this->options,
             'multiple' => $this->multiple,
         ]);

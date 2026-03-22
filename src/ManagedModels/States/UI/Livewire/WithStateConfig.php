@@ -44,6 +44,8 @@ trait WithStateConfig
         if ($this->hasAdminConfig()) {
             return $this->adminConfig = $this->getStateConfig();
         }
+
+        return null;
     }
 
     private function getStateMachine(): StateMachine

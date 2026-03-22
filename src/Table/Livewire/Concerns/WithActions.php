@@ -113,6 +113,8 @@ trait WithActions
         if ($action->shouldRefreshTable()) {
             $this->dispatch('requestRefresh')->self();
         }
+
+        return null;
     }
 
     public function openActionDialog($params): void

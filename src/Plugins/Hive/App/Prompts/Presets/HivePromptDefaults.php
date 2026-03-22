@@ -4,6 +4,11 @@ namespace Thinktomorrow\Chief\Plugins\Hive\App\Prompts\Presets;
 
 trait HivePromptDefaults
 {
+    public function prompt(array $payload): static
+    {
+        return $this;
+    }
+
     public function getLabel(): string
     {
         return $this->label;

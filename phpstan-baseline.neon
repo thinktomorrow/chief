@@ -1,0 +1,415 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Admin\\Users\\User\:\:\$firstname\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Admin/Users/User.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Admin\\Users\\User\:\:\$lastname\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Admin/Users/User.php
+
+		-
+			message: '#^Access to an undefined property \$this\(Thinktomorrow\\Chief\\Forms\\Fields\\Component\)\:\:\$valueGivenForLocale\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Forms/Fields/Component.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Forms\\Tests\\TestSupport\\PageWithAssets\:\:\$allowed_sites\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Forms/Tests/TestSupport/PageWithAssets.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Forms\\Tests\\TestSupport\\PageWithAssets\:\:\$current_state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Forms/Tests/TestSupport/PageWithAssets.php
+
+		-
+			message: '#^Access to an undefined static property static\(Thinktomorrow\\Chief\\Forms\\Tests\\TestSupport\\PageWithAssets\)\:\:\$baseUrlSegment\.$#'
+			identifier: staticProperty.notFound
+			count: 1
+			path: src/Forms/Tests/TestSupport/PageWithAssets.php
+
+		-
+			message: '#^Relation ''owner'' is not found in Thinktomorrow\\Chief\\Fragments\\Models\\ContextModel model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Fragments/App/Repositories/ContextOwnerRepository.php
+
+		-
+			message: '#^Relation ''owner'' is not found in Thinktomorrow\\Chief\\Fragments\\Models\\ContextModel model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: src/Fragments/App/Repositories/ContextRepository.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\Models\\ContextModel\:\:\$active_sites\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Fragments/Models/ContextModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\Models\\ContextModel\:\:\$allowed_sites\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Fragments/Models/ContextModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\Models\\FragmentModel\:\:\$meta\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Fragments/Models/FragmentModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\Models\\FragmentModel\:\:\$online_status\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Fragments/Models/FragmentModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\Tests\\Livewire\\ContextTest\:\:\$componentId\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Fragments/Tests/Livewire/ContextTest.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\UI\\Livewire\\TabItems\\Items\:\:\$item\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Fragments/UI/Livewire/TabItems/Items.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Fragments\\UI\\Livewire\\TabItems\\Items\:\:getItemModels\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Fragments/UI/Livewire/TabItems/Items.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\ManagedModels\\Filters\\Presets\\SelectFilter\:\:\$grouped\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/ManagedModels/Filters/Presets/SelectFilter.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\Menu\:\:\$active_sites\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Menu/Menu.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\Menu\:\:\$allowed_sites\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Menu/Menu.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\Menu\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Menu/Menu.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\Menu\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Menu/Menu.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$allowed_sites\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$label\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$locale\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$menu_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$parent_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Menu\\MenuItem\:\:\$url\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Menu/MenuItem.php
+
+		-
+			message: '#^Call to an undefined static method Illuminate\\Support\\Collection\<\(int\|string\), mixed\>\:\:current\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Plugins/Export/Export/Lines/LinesCollection.php
+
+		-
+			message: '#^Method Thinktomorrow\\Chief\\Plugins\\Hive\\App\\Processor\:\:process\(\) has invalid return type Thinktomorrow\\Chief\\Plugins\\Hive\\App\\Prompts\\HivePromptResponse\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Plugins/Hive/App/Processor.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\Hive\\App\\Prompts\\Presets\\AltHivePrompt\:\:\$label\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Plugins/Hive/App/Prompts/Presets/AltHivePrompt.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\Hive\\App\\Prompts\\Presets\\CustomHivePrompt\:\:\$label\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Plugins/Hive/App/Prompts/Presets/CustomHivePrompt.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\Hive\\App\\Prompts\\Presets\\CustomHivePrompt\:\:\$maxTokens\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Plugins/Hive/App/Prompts/Presets/CustomHivePrompt.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\Hive\\App\\Prompts\\Presets\\CustomHivePrompt\:\:\$temperature\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Plugins/Hive/App/Prompts/Presets/CustomHivePrompt.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 9
+			path: src/Plugins/Hive/config/chief-hive.php
+
+		-
+			message: '#^Class Thinktomorrow\\Chief\\Plugins\\Hive\\Drivers\\ChatGPT not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Plugins/Hive/config/chief-hive.php
+
+		-
+			message: '#^Class Thinktomorrow\\Chief\\Plugins\\Hive\\Drivers\\DeepL not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Plugins/Hive/config/chief-hive.php
+
+		-
+			message: '#^Class Thinktomorrow\\Chief\\Plugins\\Hive\\Drivers\\Gemini not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Plugins/Hive/config/chief-hive.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\TimeTable\\Infrastructure\\Models\\DateModel\:\:\$data\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Plugins/TimeTable/Infrastructure/Models/DateModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\TimeTable\\Infrastructure\\Models\\DateModel\:\:\$date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Plugins/TimeTable/Infrastructure/Models/DateModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\TimeTable\\Infrastructure\\Models\\DateModel\:\:\$slots\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Plugins/TimeTable/Infrastructure/Models/DateModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\TimeTable\\Infrastructure\\Models\\DayModel\:\:\$data\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Plugins/TimeTable/Infrastructure/Models/DayModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\TimeTable\\Infrastructure\\Models\\DayModel\:\:\$slots\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Plugins/TimeTable/Infrastructure/Models/DayModel.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Plugins\\TimeTable\\Infrastructure\\Models\\DayModel\:\:\$weekday\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Plugins/TimeTable/Infrastructure/Models/DayModel.php
+
+		-
+			message: '#^Class Thinktomorrow\\Chief\\Plugins\\TimeTable\\Domain\\Model\\TimeTableId referenced with incorrect case\: Thinktomorrow\\Chief\\Plugins\\TimeTable\\Domain\\Model\\timetableId\.$#'
+			identifier: class.nameCase
+			count: 2
+			path: src/Plugins/TimeTable/Infrastructure/Models/DefaultTimeTableRead.php
+
+		-
+			message: '#^Called ''first'' on Laravel collection, but could have been retrieved as a query\.$#'
+			identifier: larastan.noUnnecessaryCollectionCall
+			count: 1
+			path: src/Shared/Concerns/Nestable/Actions/NestableQueries.php
+
+		-
+			message: '#^Method Thinktomorrow\\Chief\\Site\\Sitemap\\SitemapXml\:\:rejectNonVisitableUrls\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Site/Sitemap/SitemapXml.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Sites\\Tests\\Fixtures\\LocalizedFixture\:\:\$allowed_sites\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Sites/Tests/Fixtures/LocalizedFixture.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Sites\\Tests\\Fixtures\\LocalizedPageFixture\:\:\$allowed_sites\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Sites/Tests/Fixtures/LocalizedPageFixture.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Sites\\Tests\\Fixtures\\LocalizedPageFixture\:\:\$current_state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Sites/Tests/Fixtures/LocalizedPageFixture.php
+
+		-
+			message: '#^Access to an undefined static property static\(Thinktomorrow\\Chief\\Sites\\Tests\\Fixtures\\LocalizedPageFixture\)\:\:\$baseUrlSegment\.$#'
+			identifier: staticProperty.notFound
+			count: 1
+			path: src/Sites/Tests/Fixtures/LocalizedPageFixture.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Actions\\Action\:\:getPreviewView\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Actions/Action.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Actions\\Action\:\:getPreviewViewData\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Actions/Action.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Actions\\Action\:\:getView\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Actions/Action.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Actions\\Action\:\:getViewData\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Actions/Action.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Columns\\ColumnItem\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Columns/ColumnItem.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Columns\\ColumnItem\:\:getPreviewView\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Columns/ColumnItem.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Columns\\ColumnItem\:\:getPreviewViewData\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Columns/ColumnItem.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\ButtonGroupFilter\:\:getModel\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Filters/ButtonGroupFilter.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\ButtonGroupFilter\:\:prepForSaving\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Filters/ButtonGroupFilter.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\CheckboxFilter\:\:getModel\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Filters/CheckboxFilter.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\CheckboxFilter\:\:prepForSaving\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Filters/CheckboxFilter.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\RadioFilter\:\:getModel\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Filters/RadioFilter.php
+
+		-
+			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\SelectFilter\:\:prepForSaving\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/Filters/SelectFilter.php
+
+		-
+			message: '#^Variable \$value in empty\(\) is never defined\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Table/Livewire/TableComponent.php
+
+		-
+			message: '#^Static method Thinktomorrow\\Chief\\Table\\Filters\\Presets\\SiteFilter\:\:makeDefault\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Table/Table/Presets/PageTable.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:whereJsonLike\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Table/TableServiceProvider.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Table\\Tests\\Fixtures\\TreeModelFixture\:\:\$parent_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Table/Tests/Fixtures/TreeModelFixture.php
+
+		-
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Table\\Tests\\Livewire\\TreeModelsTest\:\:\$resource\.$#'
+			identifier: property.notFound
+			count: 6
+			path: src/Table/Tests/Livewire/TreeModelsTest.php

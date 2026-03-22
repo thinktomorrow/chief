@@ -2,24 +2,32 @@
 
 namespace Thinktomorrow\Chief\Plugins\ExternalFiles\Cloudinary;
 
-use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\AssetContract;
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\Driver;
 
 class CloudinaryDriver implements Driver
 {
+    public function createAsset(string $idOrUrl): AssetContract
+    {
+        throw new \RuntimeException('Cloudinary external files driver is not implemented.');
+    }
+
     /**
      * This will fetch the actual file values via the driver API and
      * updates the media database record with the new values
      */
-    public function updateMedia(Asset $asset, string $url, array $data): void
+    public function updateAsset(AssetContract $asset, string $id): AssetContract
     {
-        // dd($url);
-        // Extract ID from url
+        throw new \RuntimeException('Cloudinary external files driver is not implemented.');
+    }
 
-        // CALL API for new info
+    public function getCreateFormLabel(): string
+    {
+        return 'Cloudinary URL';
+    }
 
-        // Set media record values:
-        // filename,
-        // thumbnail image
+    public function getCreateFormDescription(): string
+    {
+        return 'Voeg een Cloudinary asset toe via URL of id.';
     }
 }
