@@ -54,7 +54,9 @@ trait HasPresets
 
         $manualSort = ManualSort::default($model->sortableAttribute());
 
-        if (! $this->alreadyHasDefaultSorter()) {
+        if ($this->alreadyHasDefaultSorter()) {
+            $manualSort->actAsDefault(false);
+        } else {
             $manualSort->actAsDefault();
         }
 
