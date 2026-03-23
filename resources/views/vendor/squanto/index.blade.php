@@ -1,23 +1,20 @@
 <x-chief::page.template title="Vaste teksten" container="md">
+    <form data-slot="window" method="GET" action="{{ route('squanto.index') }}" class="flex items-center gap-1">
+        <x-chief::form.input.search name="search" placeholder="Zoek in vaste teksten ..." autofocus />
+
+        <x-chief::button type="submit" variant="grey">
+            <span>Zoek</span>
+        </x-chief::button>
+    </form>
+
     <x-chief::window>
-        <form method="GET" action="{{ route('squanto.index') }}" class="mb-6 flex items-center gap-2">
-            <div class="form-light w-full">
-                <x-chief::form.input.text name="search" placeholder="Zoek in teksten" autofocus />
-            </div>
-
-            <x-chief::button type="submit" variant="grey" size="sm">
-                <x-chief::icon.search />
-                <span>Zoek</span>
-            </x-chief::button>
-        </form>
-
         <div class="divide-grey-100 divide-y">
             @foreach ($pages as $page)
                 <div
                     @class([
                         'flex items-center justify-between gap-4',
-                        'pt-3' => ! $loop->first,
-                        'pb-3' => ! $loop->last,
+                        'pt-2.5' => ! $loop->first,
+                        'pb-2.5' => ! $loop->last,
                     ])
                 >
                     <div class="mt-0.75 flex items-start gap-1.5">
