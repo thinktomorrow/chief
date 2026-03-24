@@ -38,7 +38,7 @@
     & > [data-slot='icon'],
     & > svg {
         @apply size-[1.125rem] shrink-0;
-        @apply first:-ml-0.5 last:-mr-0.5;
+        @apply first:-ml-0.75 last:-mr-0.75;
     }
 }
 
