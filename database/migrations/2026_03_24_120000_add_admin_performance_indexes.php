@@ -15,7 +15,7 @@ return new class extends Migration
     {
         if (Schema::hasTable('assets_pivot') && ! $this->indexExists('assets_pivot', self::ASSETS_PIVOT_INDEX)) {
             Schema::table('assets_pivot', function (Blueprint $table) {
-                $table->index(['entity_type', 'entity_id', 'type', 'locale', 'order'], self::ASSETS_PIVOT_INDEX);
+                $table->index(['entity_type', 'entity_id', 'order', 'asset_id'], self::ASSETS_PIVOT_INDEX);
             });
         }
 
