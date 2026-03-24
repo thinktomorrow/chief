@@ -86,7 +86,6 @@ const Selectlist = (config) => ({
 
         // Notify wired model
         this.$dispatch('input', this.rawSelection);
-
         this.updateSelectOptions();
     },
     updateSelectOptions() {
@@ -100,6 +99,10 @@ const Selectlist = (config) => ({
         this.$el.choices.containerOuter.element.classList.remove('hidden');
         this.$el.choices.input.element.focus();
         this.showingSelectBox = true;
+
+        if (this.searchTerm) {
+            this.forceSearch(this.searchTerm);
+        }
     },
     hideSelectBox() {
         if (this.rawSelection.length > 0) {
@@ -127,13 +130,27 @@ const Selectlist = (config) => ({
 
     // Choices js resets the search term after adding an item. Here we override this behaviour.
     preserveSearchTerm() {
+        let restoreQueued = false;
+
         this.$el.addEventListener('search', (event) => {
-            this.searchTerm = event.detail.value;
+            if (event.detail.value) {
+                this.searchTerm = event.detail.value;
+            }
         });
 
         this.$el.addEventListener('addItem', () => {
+            if (restoreQueued) {
+                return;
+            }
+
+            restoreQueued = true;
+
             setTimeout(() => {
-                if (this.searchTerm) this.forceSearch(this.searchTerm);
+                if (this.searchTerm) {
+                    this.forceSearch(this.searchTerm);
+                }
+
+                restoreQueued = false;
             }, 0);
         });
     },

@@ -17,6 +17,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: phpstan baseline to temporary ignore error stack
 - Added: better indices on asset pivot table (Run migrations)
 - Changed: On first publication of visitable model, all links are put online automatically
+- Changed: selectList search input is preserved after adding items
 
 ## [0.10.20] - 2026-03-17
 
