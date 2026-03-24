@@ -4,7 +4,7 @@
         $currentOwner = isset($modelReference) ? $previewFile->findOwner($modelReference) : null;
     @endphp
 
-    <form class="space-y-4">
+    <form id="file-edit-external-form" class="space-y-4" wire:submit.prevent="submit">
         <div class="border-grey-200 flex gap-6 rounded-xl border p-3 shadow-xs max-sm:flex-wrap sm:pr-6">
             <div
                 class="bg-grey-100 flex h-64 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl sm:h-48 sm:w-48"
@@ -75,7 +75,7 @@
     <x-slot name="footer">
         <x-chief::dialog.modal.footer>
             <x-chief::button wire:click.prevent="close" type="button">Annuleer</x-chief::button>
-            <x-chief::button wire:click.prevent="submit" variant="blue" type="submit">Bewaar bestand</x-chief::button>
+            <x-chief::button form="file-edit-external-form" variant="blue" type="submit">Bewaar bestand</x-chief::button>
         </x-chief::dialog.modal.footer>
     </x-slot>
 @endif
