@@ -127,6 +127,15 @@ class AddFragmentTest extends ChiefTestCase
         $this->assertTrue($component->instance()->showExisting());
     }
 
+    public function test_it_lazy_loads_existing_tab_content_on_first_existing_tab_click()
+    {
+        $this->mountComponent()
+            ->call('open', ['locales' => ['nl', 'en'], 'scopedLocale' => 'en', 'parentId' => null, 'order' => 1])
+            ->assertDontSee('Kies een pagina')
+            ->call('onTabChanged', 'existing')
+            ->assertSee('Kies een pagina');
+    }
+
     public function test_it_returns_allowed_fragments()
     {
         $component = $this->mountComponent();

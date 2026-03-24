@@ -69,6 +69,7 @@ class AddFragment extends Component
             'form', 'parentId', 'insertAfterOrder',
             'showCreate', 'fragmentKey', // properties for new fragments
             'filters', // properties for existing fragments
+            'existingTabLoaded', 'existingTabActive',
             'locales', 'scopedLocale',
             'localeValuesForNewFragment',
         ]);

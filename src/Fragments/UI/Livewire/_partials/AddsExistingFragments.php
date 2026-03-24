@@ -12,6 +12,35 @@ trait AddsExistingFragments
 {
     public array $filters = [];
 
+    public bool $existingTabLoaded = false;
+
+    public bool $existingTabActive = false;
+
+    public function onTabChanged(string $tabId): void
+    {
+        $this->existingTabActive = $tabId === 'existing';
+
+        if (! $this->existingTabActive) {
+            return;
+        }
+
+        $this->loadExistingTab();
+    }
+
+    public function loadExistingTab(): void
+    {
+        if ($this->existingTabLoaded) {
+            return;
+        }
+
+        $this->existingTabLoaded = true;
+    }
+
+    public function shouldRenderExistingTab(): bool
+    {
+        return $this->existingTabLoaded || count($this->filters) > 0;
+    }
+
     /** @return Collection<\Thinktomorrow\Chief\Fragments\Fragment> */
     public function getShareableFragments(): Collection
     {
@@ -48,7 +77,7 @@ trait AddsExistingFragments
      */
     public function showExisting(): bool
     {
-        return count($this->filters) > 0;
+        return $this->existingTabActive || count($this->filters) > 0;
     }
 
     public function getOwnerFilterValues(): array

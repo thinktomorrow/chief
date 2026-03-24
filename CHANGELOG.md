@@ -16,6 +16,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: Show a new tree breadcrumbs column when in Table filtering/sorting mode. This can be (de)selected as column
 - Added: phpstan baseline to temporary ignore error stack
 - Added: better indices on asset pivot table (Run migrations)
+- Added: lazy load existing fragments tab (speeds up adding fragments sidebar)
 - Changed: Fragments are now lazy loaded on scroll intersection. This is still a bit experimental but should already
   give you a speed increase.
 - Changed: On first publication of visitable model, all links are put online automatically
