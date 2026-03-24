@@ -126,13 +126,26 @@ trait WithFragments
 
     private function refreshFragments(): void
     {
+        $loadedFragmentIds = isset($this->fragments)
+            ? $this->fragments
+                ->filter(fn (FragmentDto $fragment) => $fragment->contentLoaded)
+                ->pluck('fragmentId')
+                ->all()
+            : [];
+
         $fragmentCollection = app(FragmentRepository::class)->getFragmentCollection(
             $this->context->id,
             isset($this->fragment) ? $this->fragment->fragmentId : null
         );
 
         $this->fragments = collect($fragmentCollection->all())
-            ->map(fn ($fragment) => $this->composeFragmentDtoInScopedLocale($fragment, withContent: false, withFields: false));
+            ->map(function ($fragment) use ($loadedFragmentIds) {
+                return $this->composeFragmentDtoInScopedLocale(
+                    $fragment,
+                    withContent: in_array($fragment->getFragmentId(), $loadedFragmentIds, true),
+                    withFields: false,
+                );
+            });
     }
 
     /**

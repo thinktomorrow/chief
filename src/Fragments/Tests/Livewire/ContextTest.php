@@ -65,6 +65,41 @@ class ContextTest extends ChiefTestCase
         ]);
     }
 
+    public function test_it_keeps_loaded_preview_content_after_deleting_another_fragment(): void
+    {
+        [, $fragmentToDelete] = FragmentTestHelpers::createContextAndAttachFragment(
+            $this->model,
+            Hero::class,
+            null,
+            1,
+            ['title' => 'Fragment to delete']
+        );
+
+        $component = $this->mountComponent();
+
+        $component->call('loadFragmentContent', $this->fragment->getFragmentId());
+
+        $loadedFragment = $component->instance()->fragments->first(
+            fn ($fragment) => $fragment->fragmentId === $this->fragment->getFragmentId()
+        );
+
+        $this->assertNotNull($loadedFragment);
+        $this->assertTrue($loadedFragment->contentLoaded);
+        $this->assertNotSame('', $loadedFragment->content);
+
+        $component->call('onFragmentDeleting', $fragmentToDelete->getFragmentId(), ContextModel::first()->id, null)
+            ->assertStatus(200);
+
+        $remainingFragment = $component->instance()->fragments->first(
+            fn ($fragment) => $fragment->fragmentId === $this->fragment->getFragmentId()
+        );
+
+        $this->assertCount(1, $component->instance()->fragments);
+        $this->assertNotNull($remainingFragment);
+        $this->assertTrue($remainingFragment->contentLoaded);
+        $this->assertNotSame('', $remainingFragment->content);
+    }
+
     public function test_it_can_reorder_fragments()
     {
         // Add a second fragment
