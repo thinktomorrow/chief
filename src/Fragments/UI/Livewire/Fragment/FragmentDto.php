@@ -27,6 +27,7 @@ class FragmentDto implements Wireable
         public string $label,
         public string $icon,
         public string $content,
+        public bool $contentLoaded,
         public bool $allowsFragments, // Has child fragments
         public bool $isOnline,
         public bool $isShared,
@@ -36,8 +37,24 @@ class FragmentDto implements Wireable
         public Collection $fields,
     ) {}
 
-    public static function fromFragment(Fragment $fragment, ContextDto $context, ContextOwner&ReferableModel $owner): self
-    {
+    public static function fromFragment(
+        Fragment $fragment,
+        ContextDto $context,
+        ContextOwner&ReferableModel $owner,
+        bool $withContent = false,
+        bool $withFields = true,
+    ): self {
+        $content = '';
+        $fields = collect();
+
+        if ($withContent) {
+            $content = $fragment->with(['owner' => $owner])->renderInAdmin()->render();
+        }
+
+        if ($withFields) {
+            $fields = self::composeFields($fragment);
+        }
+
         return new static(
             $fragment->getFragmentId(),
             $context->id,
@@ -46,14 +63,15 @@ class FragmentDto implements Wireable
             $fragment->pivot->order,
             $fragment->getLabel(),
             $fragment->getIcon(),
-            $fragment->with(['owner' => $owner])->renderInAdmin()->render(),
+            $content,
+            $withContent,
             count($fragment->allowedFragments()) > 0,
             $fragment->isOnline(),
             $fragment->isShared(),
             $fragment->getBookmark(),
             [], // TODO: provide urls per site
             $context,
-            self::composeFields($fragment),
+            $fields,
         );
     }
 
@@ -62,11 +80,6 @@ class FragmentDto implements Wireable
         return PageLayout::make($fragment->fields($fragment))->getComponentsWithoutForms();
     }
 
-    //    private static function composeSharedFragmentDtos(string $fragmentId, ContextOwner $owner): Collection
-    //    {
-    //        return app(ComposeLivewireDto::class)->getSharedFragmentDtos($fragmentId, $owner);
-    //    }
-    //
     public function getSharedFragmentDtos(): Collection
     {
         return app(ComposeLivewireDto::class)->getSharedFragmentDtos($this->fragmentId, $this->ownerReference);
@@ -84,6 +97,7 @@ class FragmentDto implements Wireable
             'label' => $this->label,
             'icon' => $this->icon,
             'content' => $this->content,
+            'contentLoaded' => $this->contentLoaded,
             'allowsFragments' => $this->allowsFragments,
             'isOnline' => $this->isOnline,
             'isShared' => $this->isShared,
@@ -105,6 +119,7 @@ class FragmentDto implements Wireable
             $value['label'],
             $value['icon'],
             $value['content'],
+            $value['contentLoaded'],
             $value['allowsFragments'],
             $value['isOnline'],
             $value['isShared'],

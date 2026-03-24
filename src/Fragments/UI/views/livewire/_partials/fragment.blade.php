@@ -2,6 +2,8 @@
     data-slot="fragment"
     wire:key="{{ 'context-fragment-' . $fragment->getId() }}"
     x-sortable-item="{{ $fragment->fragmentId }}"
+    x-data="{ previewLoaded: @js($fragment->contentLoaded) }"
+    x-intersect.once="if (! previewLoaded) { previewLoaded = true; $wire.loadFragmentContent('{{ $fragment->fragmentId }}') }"
     @class([
         '[&.fragment-sort-ghost]:rounded-md',
         '[&.fragment-sort-ghost]:bg-grey-50',
@@ -52,7 +54,11 @@
             </x-chief::button>
         </div>
 
-        @if ($fragment->content)
+        <div x-cloak x-show="! previewLoaded" class="px-10 py-1.5">
+            <div class="h-3.5 w-3/5 animate-pulse rounded bg-grey-100"></div>
+        </div>
+
+        @if ($fragment->contentLoaded && $fragment->content)
             <div class="px-10">
                 {!! $fragment->content !!}
             </div>

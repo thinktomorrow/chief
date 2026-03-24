@@ -103,6 +103,27 @@ trait WithFragments
             ->sortBy('order');
     }
 
+    public function loadFragmentContent(string $fragmentId): void
+    {
+        $currentFragment = $this->findFragment($fragmentId);
+
+        if (! $currentFragment || $currentFragment->contentLoaded) {
+            return;
+        }
+
+        $fragment = $currentFragment->allowsFragments
+            ? app(FragmentRepository::class)->findInFragmentCollection($this->context->id, $fragmentId)
+            : app(FragmentRepository::class)->findInContext($fragmentId, $this->context->id);
+
+        $updatedFragment = $this->composeFragmentDtoInScopedLocale($fragment, withContent: true, withFields: false);
+
+        foreach ($this->fragments as $index => $fragmentDto) {
+            if ($fragmentDto->fragmentId === $fragmentId) {
+                $this->fragments[$index] = $updatedFragment;
+            }
+        }
+    }
+
     private function refreshFragments(): void
     {
         $fragmentCollection = app(FragmentRepository::class)->getFragmentCollection(
@@ -111,7 +132,7 @@ trait WithFragments
         );
 
         $this->fragments = collect($fragmentCollection->all())
-            ->map(fn ($fragment) => $this->composeFragmentDtoInScopedLocale($fragment));
+            ->map(fn ($fragment) => $this->composeFragmentDtoInScopedLocale($fragment, withContent: false, withFields: false));
     }
 
     /**
@@ -122,20 +143,32 @@ trait WithFragments
      */
     private function refreshOneFragment(string $fragmentId, ?string $formerFragmentId = null): void
     {
+        $currentFragment = $this->findFragment($formerFragmentId ?: $fragmentId);
+
+        if (! $currentFragment) {
+            return;
+        }
+
         // Include all children as well to provide consistent preview content
-        $updatedFragment = $this->findFragment($formerFragmentId ?: $fragmentId)->allowsFragments
+        $updatedFragment = $currentFragment->allowsFragments
             ? app(FragmentRepository::class)->findInFragmentCollection($this->context->id, $fragmentId)
             : app(FragmentRepository::class)->findInContext($fragmentId, $this->context->id);
+
+        $updatedFragmentDto = $this->composeFragmentDtoInScopedLocale(
+            $updatedFragment,
+            withContent: $currentFragment->contentLoaded,
+            withFields: false,
+        );
 
         // Update given fragment in the fragment collection
         foreach ($this->fragments as $i => $fragment) {
             if ($fragment->fragmentId === ($formerFragmentId ?: $fragmentId)) {
-                $this->fragments[$i] = $this->composeFragmentDtoInScopedLocale($updatedFragment);
+                $this->fragments[$i] = $updatedFragmentDto;
             }
         }
     }
 
-    private function composeFragmentDtoInScopedLocale(Fragment $fragment): FragmentDto
+    private function composeFragmentDtoInScopedLocale(Fragment $fragment, bool $withContent = false, bool $withFields = false): FragmentDto
     {
         $localeReference = app()->getLocale();
 
@@ -143,7 +176,7 @@ trait WithFragments
             app()->setLocale($this->scopedLocale);
         }
 
-        $result = FragmentDto::fromFragment($fragment, $this->context, $this->getModel());
+        $result = FragmentDto::fromFragment($fragment, $this->context, $this->getModel(), $withContent, $withFields);
 
         if ($localeReference !== app()->getLocale()) {
             app()->setLocale($localeReference);
@@ -152,7 +185,7 @@ trait WithFragments
         return $result;
     }
 
-    private function findFragment(string $fragmentId): FragmentDto
+    private function findFragment(string $fragmentId): ?FragmentDto
     {
         return $this->fragments->first(fn (FragmentDto $fragment) => $fragment->fragmentId === $fragmentId);
     }
