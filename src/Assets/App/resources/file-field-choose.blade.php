@@ -21,8 +21,8 @@
                 </div>
 
                 <x-chief::form.input.select wire:model.live="sort" class="w-64 shrink-0">
-                    <option value="created_at_desc">Datum laatst toegevoegd</option>
-                    <option value="created_at_asc">Datum eerst toegevoegd</option>
+                    <option value="created_at_desc">Recente eerst</option>
+                    <option value="created_at_asc">Oudste eerst</option>
                 </x-chief::form.input.select>
             </div>
         </x-slot>
