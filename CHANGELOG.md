@@ -12,6 +12,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: single-locale fields in file form showed a locale toggle which was excessive UX.
 - Fixed: selected option was not highlighted in multiselect options list
 - Fixed: Prefer table tree view as default instead of manually sorted view
+- Added: basic artisan support
+- Added: Laravel boost skills
 - Added: Squanto basic search
 - Added: Show a new tree breadcrumbs column when in Table filtering/sorting mode. This can be (de)selected as column
 - Added: phpstan baseline to temporary ignore error stack
