@@ -5,7 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
-- Fixed: Context owning model now always has at least one context. This fixes the issue where model becomes context
+- Fixed: Context owning model now always have at least one context. This fixes the issue where model becomes context
   owner after creation, no context was available so no fragments could be added.
 - Fixed: Boolean field rendered incorrect preview
 - Fixed: Grid fields were always placed at the end of the form

@@ -1,4 +1,4 @@
-#  Chief admin package
+# Chief admin package
 
 [![Latest Version](https://img.shields.io/github/release/thinktomorrow/chief.svg?style=flat-square)](https://github.com/thinktomorrow/chief/releases)
 [![Build Status](https://img.shields.io/travis/thinktomorrow/chief/master.svg?style=flat-square)](https://travis-ci.org/thinktomorrow/chief)
@@ -9,9 +9,21 @@
 Chief is a laravel package that adds a site management system to your project. Out of the box you'll get page, url and menu management provided through a well-crafted admin UI. All of this with localization in mind.
 
 ## Documentation
+
 You can find the documentation on:
 [https://thinktomorrow.github.io/package-docs/src/chief/installation.html](https://thinktomorrow.github.io/package-docs/src/chief/installation.html)
 
-## License
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+## Local artisan in package development
 
+For local package development, this repository includes a root `artisan` proxy script.
+It forwards commands to Orchestra Testbench so you can run Artisan-style commands from the package root.
+
+Examples:
+
+- `php artisan list`
+- `php artisan chief:seed`
+- `php artisan boost:install` (if Boost is installed in this dev environment)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

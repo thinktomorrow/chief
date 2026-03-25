@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$testbenchBinary = __DIR__.'/vendor/bin/testbench';
+
+if (! file_exists($testbenchBinary)) {
+    fwrite(STDERR, "Could not find vendor/bin/testbench. Run composer install first.\n");
+    exit(1);
+}
+
+$command = escapeshellarg(PHP_BINARY).' '.escapeshellarg($testbenchBinary);
+
+foreach (array_slice($_SERVER['argv'] ?? [], 1) as $arg) {
+    $command .= ' '.escapeshellarg((string) $arg);
+}
+
+passthru($command, $exitCode);
+
+exit($exitCode);
