@@ -23,7 +23,7 @@
                     </div>
 
                     @if ($actions)
-                        <div {{ $actions->attributes->class('ml-auto mt-0.5 flex shrink-0 items-start gap-2') }}>
+                        <div {{ $actions->attributes->class('mt-0.5 ml-auto flex shrink-0 items-start gap-2') }}>
                             {{ $actions }}
                         </div>
                     @endif
