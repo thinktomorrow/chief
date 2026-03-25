@@ -30,9 +30,18 @@
     </x-chief::tabs.tab>
 
     <x-chief::tabs.tab wire:key="add-fragment-tab-content-existing" tab-id="existing">
-        @if ($this->shouldRenderExistingTab())
-            @include('chief-fragments::livewire._partials.add-fragment-existing')
-        @endif
+        <div wire:loading wire:target="onTabChanged">
+            <div class="flex justify-start gap-1.5">
+                <x-chief::icon.loading class="body-dark size-5 animate-spin" />
+                <p class="body body-dark leading-5">Even wachten...</p>
+            </div>
+        </div>
+
+        <div wire:loading.remove wire:target="onTabChanged">
+            @if ($this->shouldRenderExistingTab())
+                @include('chief-fragments::livewire._partials.add-fragment-existing')
+            @endif
+        </div>
     </x-chief::tabs.tab>
 </x-chief::tabs>
 
