@@ -4,7 +4,7 @@
 ])
 
 @if ($content || $slot->isNotEmpty())
-    <p {{ $attributes->class('h6 body-dark') }}>
+    <p {{ $attributes->class('h6 body-dark wrap-anywhere') }}>
         @if ($content)
             {{ teaser($content, $characters, '...') }}
         @else

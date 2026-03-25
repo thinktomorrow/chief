@@ -8,7 +8,7 @@
         @foreach ($breadcrumbs as $breadcrumb)
             @if (is_string($breadcrumb))
                 <span class="text-grey-700 text-sm/6">
-                    {{ teaser(ucfirst($breadcrumb), 64, '...') }}
+                    {{ $breadcrumb }}
                 </span>
             @elseif (is_array($breadcrumb))
                 <a
@@ -27,7 +27,7 @@
                     @endif
 
                     <span class="text-grey-700 group-hover:text-grey-950">
-                        {{ teaser(ucfirst($breadcrumb['label']), 64, '...') }}
+                        {{ $breadcrumb['label'] }}
                     </span>
                 </a>
             @else
@@ -47,7 +47,7 @@
                     @endif
 
                     <span class="text-grey-700 group-hover:text-grey-950">
-                        {{ teaser(ucfirst($breadcrumb->label), 64, '...') }}
+                        {{ $breadcrumb->label }}
                     </span>
                 </a>
             @endif

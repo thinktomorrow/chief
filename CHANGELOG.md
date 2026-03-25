@@ -21,6 +21,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   give you a speed increase.
 - Changed: On first publication of visitable model, all links are put online automatically
 - Changed: selectList search input is preserved after adding items
+- Changed: breadcrumbs teasers are now generated in PageResourceDefault instead of breadcrumbs component
 
 ## [0.10.20] - 2026-03-17
 

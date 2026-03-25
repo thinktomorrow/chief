@@ -113,15 +113,15 @@ trait PageResourceDefault
         $this->assertManager();
 
         if (! $this->manager->can('index')) {
-            return [$this->getPageTitle($model)];
+            return [teaser(ucfirst($this->getPageTitle($model)), 48, '...')];
         }
 
         return [
             new BreadCrumb(
-                $this->getIndexTitle(),
+                teaser(ucfirst($this->getIndexTitle()), 48, '...'),
                 $this->manager->route('index'),
             ),
-            $this->getPageTitle($model),
+            teaser(ucfirst($this->getPageTitle($model)), 48, '...'),
         ];
     }
 
