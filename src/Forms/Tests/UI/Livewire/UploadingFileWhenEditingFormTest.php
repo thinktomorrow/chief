@@ -87,6 +87,30 @@ class UploadingFileWhenEditingFormTest extends ChiefTestCase
         $this->assertDatabaseCount('assets_pivot', 1);
     }
 
+    public function test_it_dispatches_reload_event_after_save_when_enabled(): void
+    {
+        Livewire::test(EditFormComponent::class, [
+            'modelReference' => $this->model->modelReference(),
+            'formComponent' => Form::make('main')->reloadPageAfterSave(),
+            'parentComponentId' => 'xxx',
+        ])
+            ->call('open', ['locales' => ['nl', 'en']])
+            ->call('save')
+            ->assertDispatched('reload-page-after-save');
+    }
+
+    public function test_it_does_not_dispatch_reload_event_after_save_by_default(): void
+    {
+        Livewire::test(EditFormComponent::class, [
+            'modelReference' => $this->model->modelReference(),
+            'formComponent' => Form::make('main'),
+            'parentComponentId' => 'xxx',
+        ])
+            ->call('open', ['locales' => ['nl', 'en']])
+            ->call('save')
+            ->assertNotDispatched('reload-page-after-save');
+    }
+
     public function test_it_attaches_file()
     {
         $asset = app(CreateAsset::class)

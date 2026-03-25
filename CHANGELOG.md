@@ -15,6 +15,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: basic artisan support
 - Added: Laravel boost skills
 - Added: Squanto basic search
+- Added: Form::reloadAfterSave method to reload page after saving this form
 - Added: Show a new tree breadcrumbs column when in Table filtering/sorting mode. This can be (de)selected as column
 - Added: phpstan baseline to temporary ignore error stack
 - Added: better indices on asset pivot table (Run migrations)

@@ -1,4 +1,13 @@
-<x-chief::dialog.drawer wired>
+<x-chief::dialog.drawer
+    wired
+    x-data="{
+        init() {
+            $wire.on('reload-page-after-save', () => {
+                window.location.reload();
+            });
+        }
+    }"
+>
     @if ($isOpen)
         <x-slot name="header">
             <x-chief::dialog.drawer.header

@@ -397,12 +397,6 @@ parameters:
 			path: src/Table/Table/Presets/PageTable.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:whereJsonLike\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Table/TableServiceProvider.php
-
-		-
 			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Table\\Tests\\Fixtures\\TreeModelFixture\:\:\$parent_id\.$#'
 			identifier: property.notFound
 			count: 2

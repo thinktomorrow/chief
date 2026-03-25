@@ -104,6 +104,10 @@ class EditFormComponent extends Component
             'parentComponentId' => $this->parentComponentId,
         ]);
 
+        if ($this->formComponent->shouldReloadPageAfterSave()) {
+            $this->dispatch('reload-page-after-save');
+        }
+
         $this->close();
     }
 

@@ -6,12 +6,14 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 
 use Thinktomorrow\Chief\Forms\Concerns\HasFields;
 use Thinktomorrow\Chief\Forms\Layouts\Concerns\HasFormDisplay;
+use Thinktomorrow\Chief\Forms\Layouts\Concerns\HasReloadPageAfterSave;
 use Thinktomorrow\Chief\Forms\Layouts\Concerns\WithLocalizedFields;
 
 class Form extends LayoutComponent implements Layout
 {
     use HasFields;
     use HasFormDisplay;
+    use HasReloadPageAfterSave;
     use WithLocalizedFields;
 
     protected string $view = 'chief-form::layouts.form';
@@ -39,6 +41,7 @@ class Form extends LayoutComponent implements Layout
     {
         return array_merge(parent::wireableMethods($components), [
             ...(isset($this->formDisplay) ? ['setFormDisplay' => $this->formDisplay] : []),
+            ...(isset($this->reloadPageAfterSave) ? ['setReloadPageAfterSave' => $this->reloadPageAfterSave] : []),
         ]);
     }
 }
