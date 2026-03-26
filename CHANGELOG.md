@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Error modal was not visible when a modal was opened. (z-index issue)
+
 ## [0.10.21] - 2026-03-25
 
 - Fixed: Context owning model now always have at least one context. This fixes the issue where model becomes context
