@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Authentication;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -158,5 +159,27 @@ class AdminDisabledLoginTest extends ChiefTestCase
 
         $response->assertRedirect('/admin/login');
         $this->assertGuest('chief');
+    }
+
+    public function test_disabled_user_cannot_be_retrieved_by_remember_token_provider_check(): void
+    {
+        $admin = $this->fakeUser([
+            'enabled' => true,
+        ]);
+
+        DB::table('chief_users')
+            ->where('id', $admin->id)
+            ->update([
+                'enabled' => false,
+                'remember_token' => 'stale-token',
+            ]);
+
+        $this->app['auth']->forgetGuards();
+
+        $provider = app('auth')->createUserProvider(config('auth.guards.chief.provider'));
+
+        $retrieved = $provider->retrieveByToken($admin->getAuthIdentifier(), 'stale-token');
+
+        $this->assertNull($retrieved);
     }
 }

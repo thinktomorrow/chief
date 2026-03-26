@@ -8,6 +8,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Error modal was not visible when a modal was opened. (z-index issue)
 - Fixed: file-edit submit no longer crashes when model reference is missing in Livewire hydration.
 - Fixed: menu links are now refreshed after changing homepage in settings.
+- Fixed: blocked users can no longer be re-authenticated via remember-me token.
 
 ## [0.10.21] - 2026-03-25
 
