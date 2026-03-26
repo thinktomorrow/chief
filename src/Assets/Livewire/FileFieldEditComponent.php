@@ -20,7 +20,7 @@ class FileFieldEditComponent extends Component
 
     public $parentId;
 
-    public ?string $modelReference;
+    public ?string $modelReference = null;
 
     public string $fieldKey;
 
@@ -185,7 +185,9 @@ class FileFieldEditComponent extends Component
         if ($this->previewFile->mediaId) {
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
 
-            app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
+            if ($this->modelReference) {
+                app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
+            }
         }
 
         $this->dispatch('assetUpdated-'.$this->parentId, $this->previewFile);

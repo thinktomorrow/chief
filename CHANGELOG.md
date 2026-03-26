@@ -6,6 +6,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## Unreleased
 
 - Fixed: Error modal was not visible when a modal was opened. (z-index issue)
+- Fixed: file-edit submit no longer crashes when model reference is missing in Livewire hydration.
 
 ## [0.10.21] - 2026-03-25
 

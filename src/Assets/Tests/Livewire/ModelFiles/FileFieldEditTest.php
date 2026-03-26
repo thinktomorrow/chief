@@ -137,6 +137,29 @@ class FileFieldEditTest extends ChiefTestCase
         $this->livewireInstance->assertDispatched('assetUpdated-xxx', $previewFile->toLivewire());
     }
 
+    public function test_it_can_submit_without_model_reference(): void
+    {
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('image.png'))
+            ->save();
+
+        $previewFile = PreviewFile::fromAsset($asset);
+
+        Livewire::test(FileFieldEditComponent::class, [
+            'modelReference' => null,
+            'fieldKey' => 'thumb',
+            'locale' => 'nl',
+            'parentId' => 'xxx',
+            'previewFiles' => [],
+            'components' => [
+                Text::make('alt'),
+            ],
+        ])
+            ->call('open', ['previewfile' => $previewFile])
+            ->call('submit')
+            ->assertDispatched('assetUpdated-xxx');
+    }
+
     public function test_it_hides_file_edit_site_toggle_for_single_locale_project()
     {
         config()->set('chief.sites', [
