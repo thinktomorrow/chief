@@ -50,7 +50,9 @@
 
         @include('chief::templates.page._partials.notifications')
         @include('chief::templates.page._partials.refresh-modal')
+
         @livewireScripts
+
         @stack('custom-scripts')
 
         @if (request()->input('site') && \Thinktomorrow\Chief\Sites\ChiefSites::verify(request()->input('site')))

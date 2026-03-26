@@ -9,7 +9,7 @@
 
 <x-chief::dialog :wired="isset($wired)">
     <div
-        {{ $attributes->class(['fixed inset-0 z-[100] flex items-center justify-center']) }}
+        {{ $attributes->class(['fixed inset-0 z-100 flex items-center justify-center']) }}
     >
         <div
             x-on:click.stop="close()"
