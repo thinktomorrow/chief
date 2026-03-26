@@ -166,6 +166,8 @@ class UrlApplication
         if ($activeRecord) {
             $this->redirectApplication->addRedirect(new AddRedirect($activeRecord->id, $record->id));
         }
+
+        event(new ManagedModelUrlUpdated(ModelReference::make($record->model_type, $record->model_id)));
     }
 
     public function changeHomepageUrl(ChangeHomepageUrl $command): void

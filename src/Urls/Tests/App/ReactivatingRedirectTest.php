@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Urls\Tests\App;
 
+use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Urls\App\Actions\ReactivateUrl;
@@ -29,6 +31,8 @@ class ReactivatingRedirectTest extends ChiefTestCase
 
     public function test_it_can_reactivate_redirect_url(): void
     {
+        Event::fake();
+
         $activeId = $this->repository->create($this->model->modelReference(), [
             'site' => 'nl',
             'slug' => 'active-slug',
@@ -55,5 +59,9 @@ class ReactivatingRedirectTest extends ChiefTestCase
             'slug' => 'active-slug',
             'redirect_id' => $redirectId,
         ]);
+
+        Event::assertDispatched(ManagedModelUrlUpdated::class, function (ManagedModelUrlUpdated $event) {
+            return $event->modelReference->get() === $this->model->modelReference()->get();
+        });
     }
 }
