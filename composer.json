@@ -16,7 +16,7 @@
         "laravel/pint": "1.24",
         "laravel/ui": "^4.6",
         "league/commonmark": "^2.8",
-        "livewire/livewire": "^3.7.6",
+        "livewire/livewire": "^4.2.2",
         "myclabs/deep-copy": "^1.13",
         "ramsey/uuid": "^4.7.3",
         "spatie/laravel-activitylog": "^4.10.2",
