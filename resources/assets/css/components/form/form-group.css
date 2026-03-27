@@ -1,3 +1,4 @@
-[data-slot='form-group']:not([data-field-type='hidden']) + [data-slot='form-group'] {
+[data-slot='form-group']:not([data-field-type='hidden']) + [data-slot='form-group'],
+[data-slot='form-group'][data-field-type='hidden']:not(:first-child) + [data-slot='form-group'] {
     @apply mt-6;
 }
