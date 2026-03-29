@@ -26,22 +26,26 @@ final class AttachFragment
             throw new FragmentAlreadyAdded('Fragment ['.$fragmentId.'] was already added to context ['.$context->id.']');
         }
 
-        $indices = $this->fetchSortIndices($context, $order, $fragmentId);
+        $indices = $this->fetchSortIndices($context, $order, $fragmentId, $parentId);
 
         $context->fragments()->attach($fragmentId, array_merge(['parent_id' => $parentId], $data));
 
-        $this->reorderFragments->handle($contextId, $indices);
+        $this->reorderFragments->handle($contextId, $indices, $parentId);
 
         event(new FragmentAttached($fragmentId, $context->id));
     }
 
-    /**
-     * @param  int  $fragmentId
-     * @return mixed
-     */
-    private function fetchSortIndices(ContextModel $context, int $order, string $fragmentId): array
+    private function fetchSortIndices(ContextModel $context, int $order, string $fragmentId, ?string $parentId): array
     {
-        $indices = $context->fragments()->get()->map(function ($fragment) {
+        $query = $context->fragments();
+
+        if ($parentId) {
+            $query->wherePivot('parent_id', $parentId);
+        } else {
+            $query->wherePivotNull('parent_id');
+        }
+
+        $indices = $query->get()->map(function ($fragment) {
             return $fragment->id;
         })->values()->all();
 

@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Fragments\Tests\App\Actions;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Fragments\App\Actions\AttachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\AttachRootFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
@@ -98,5 +100,38 @@ class AttachFragmentTest extends ChiefTestCase
 
         $this->assertEquals(1, FragmentModel::count());
         $this->assertTrue(FragmentModel::find($fragment->getFragmentId())->isShared());
+    }
+
+    public function test_it_reorders_only_fragments_within_the_same_parent_scope_when_attaching()
+    {
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+
+        $rootA = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, null, 0);
+        $rootB = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, null, 1);
+        $child = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, $rootA->getFragmentId(), 0);
+
+        $existingRoot = FragmentTestHelpers::createFragment(SnippetStub::class);
+
+        app(AttachFragment::class)->handle($context->id, $existingRoot->getFragmentId(), null, 1);
+
+        $rootRows = DB::table('context_fragment_tree')
+            ->where('context_id', $context->id)
+            ->whereNull('parent_id')
+            ->orderBy('order')
+            ->pluck('child_id')
+            ->all();
+
+        $this->assertSame([
+            $rootA->getFragmentId(),
+            $existingRoot->getFragmentId(),
+            $rootB->getFragmentId(),
+        ], $rootRows);
+
+        $this->assertDatabaseHas('context_fragment_tree', [
+            'context_id' => $context->id,
+            'child_id' => $child->getFragmentId(),
+            'parent_id' => $rootA->getFragmentId(),
+            'order' => 0,
+        ]);
     }
 }

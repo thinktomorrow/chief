@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: adding an existing fragment now respects the selected insertion position instead of being appended at the end.
 - Fixed: Error modal was not visible when a modal was opened. (z-index issue)
 - Fixed: file-edit submit no longer crashes when model reference is missing in Livewire hydration.
 - Fixed: menu links are now refreshed after changing homepage in settings.
