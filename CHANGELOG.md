@@ -10,6 +10,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: file-edit submit no longer crashes when model reference is missing in Livewire hydration.
 - Fixed: menu links are now refreshed after changing homepage in settings.
 - Fixed: blocked users can no longer be re-authenticated via remember-me token.
+- Changed: Title filter in table now defaults to searching combo of multiple input values (separated by spaces) - and
+  not the entire input value.
 
 ## [0.10.21] - 2026-03-25
 

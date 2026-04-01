@@ -40,26 +40,37 @@ class FilterPresets
      * Search on a column, relation column or dynamic key.
      * Relation column can be searched by via relation.column
      */
-    public static function searchQuery(string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): callable
+    public static function searchQuery(string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values', bool $strictSearch = false): callable
     {
-        return function ($query, $value) use ($dynamicKeys, $columns, $dynamicColumn) {
-            return $query->where(function ($builder) use ($value, $dynamicKeys, $columns, $dynamicColumn) {
+        return function ($query, $value) use ($dynamicKeys, $columns, $dynamicColumn, $strictSearch) {
+            $searchValues = static::extractSearchValues($value, $strictSearch);
 
-                // Extract relation searches
-                foreach ($columns as $i => $column) {
-                    if (strpos($column, '.') !== false) {
-                        [$relation, $columnName] = explode('.', $column);
+            if (count($searchValues) < 1) {
+                return $query;
+            }
 
-                        $builder->whereHas($relation, function ($query) use ($value, $columnName, $dynamicColumn) {
-                            return static::queryColumnsOrDynamicAttributes($query->whereRaw('1=0'), $value, [$columnName], [], $dynamicColumn);
-                        });
+            return $query->where(function ($builder) use ($searchValues, $dynamicKeys, $columns, $dynamicColumn) {
+                foreach ($searchValues as $searchValue) {
+                    $builder->where(function ($nestedBuilder) use ($searchValue, $dynamicKeys, $columns, $dynamicColumn) {
+                        $directColumns = [];
 
-                        unset($columns[$i]);
-                    }
+                        foreach ((array) $columns as $column) {
+                            if (strpos($column, '.') !== false) {
+                                [$relation, $columnName] = explode('.', $column);
+
+                                $nestedBuilder->orWhereHas($relation, function ($query) use ($searchValue, $columnName, $dynamicColumn) {
+                                    return static::queryColumnsOrDynamicAttributes($query->whereRaw('1=0'), $searchValue, [$columnName], [], $dynamicColumn);
+                                });
+
+                                continue;
+                            }
+
+                            $directColumns[] = $column;
+                        }
+
+                        return static::queryColumnsOrDynamicAttributes($nestedBuilder, $searchValue, $directColumns, $dynamicKeys, $dynamicColumn);
+                    });
                 }
-
-                // Columns or dynamic keys
-                return static::queryColumnsOrDynamicAttributes($builder, $value, $columns, $dynamicKeys, $dynamicColumn);
             });
         };
     }
@@ -68,18 +79,39 @@ class FilterPresets
      * Search on a column, relation column or dynamic key.
      * Relation column can be searched by via relation.column
      */
-    public static function input(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): Filter
+    public static function input(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values', bool $strictSearch = false): Filter
     {
-        return TextFilter::make($name)->query(static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
+        return TextFilter::make($name)->query(static::searchQuery($columns, $dynamicKeys, $dynamicColumn, $strictSearch));
     }
 
     /**
      * Search on a column, relation column or dynamic key.
      * Relation column can be searched by via relation.column
      */
-    public static function search(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values'): Filter
+    public static function search(string $name, string|array $columns = [], string|array $dynamicKeys = [], string $dynamicColumn = 'values', bool $strictSearch = false): Filter
     {
-        return SearchFilter::make($name)->query(static::searchQuery($columns, $dynamicKeys, $dynamicColumn));
+        return SearchFilter::make($name)->query(static::searchQuery($columns, $dynamicKeys, $dynamicColumn, $strictSearch));
+    }
+
+    private static function extractSearchValues(string|array $value, bool $strictSearch): array
+    {
+        $values = is_array($value) ? $value : [trim($value)];
+        $values = array_values(array_filter(array_map('trim', $values), fn (string $item) => $item !== ''));
+
+        if ($strictSearch || count($values) < 1) {
+            return $values;
+        }
+
+        $searchValues = [];
+
+        foreach ($values as $item) {
+            $searchValues = [
+                ...$searchValues,
+                ...preg_split('/\s+/', $item, flags: PREG_SPLIT_NO_EMPTY),
+            ];
+        }
+
+        return $searchValues;
     }
 
     private static function queryColumnsOrDynamicAttributes(Builder $builder, $value, $columns, $dynamicKeys, $dynamicColumn): Builder
