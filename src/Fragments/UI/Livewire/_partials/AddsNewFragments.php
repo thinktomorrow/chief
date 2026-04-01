@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFragment;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
+use Thinktomorrow\Chief\Fragments\ContextOwner;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
@@ -79,6 +80,14 @@ trait AddsNewFragments
     /** Reference of fragment for create form */
     private function getFragment(): Fragment
     {
-        return app(FragmentFactory::class)->createObject($this->fragmentKey);
+        $fragment = app(FragmentFactory::class)->createObject($this->fragmentKey);
+
+        $owner = $this->context->ownerReference->instance();
+
+        if ($owner instanceof ContextOwner) {
+            $fragment->setContextOwner($owner);
+        }
+
+        return $fragment;
     }
 }

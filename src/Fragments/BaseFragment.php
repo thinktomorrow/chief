@@ -31,6 +31,8 @@ abstract class BaseFragment extends Component implements Fragment
 
     protected ?FragmentModel $fragmentModel = null;
 
+    protected ?ContextOwner $contextOwner = null;
+
     public function render(): View
     {
         return view($this->viewPath(), $this->viewData());
@@ -114,6 +116,18 @@ abstract class BaseFragment extends Component implements Fragment
         }
 
         return $this->fragmentModel;
+    }
+
+    public function setContextOwner(ContextOwner $contextOwner): static
+    {
+        $this->contextOwner = $contextOwner;
+
+        return $this;
+    }
+
+    public function getContextOwner(): ?ContextOwner
+    {
+        return $this->contextOwner;
     }
 
     public function modelReference(): ModelReference

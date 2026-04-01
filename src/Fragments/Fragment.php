@@ -33,6 +33,10 @@ interface Fragment extends FragmentResource, HasBookmark, Htmlable, Node, Refera
 
     public function getFragmentModel(): FragmentModel;
 
+    public function setContextOwner(ContextOwner $contextOwner): self;
+
+    public function getContextOwner(): ?ContextOwner;
+
     public function isOffline(): bool;
 
     public function isOnline(): bool;

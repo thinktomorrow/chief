@@ -47,6 +47,8 @@ class FragmentDto implements Wireable
         $content = '';
         $fields = collect();
 
+        $fragment->setContextOwner($owner);
+
         if ($withContent) {
             $content = $fragment->with(['owner' => $owner])->renderInAdmin()->render();
         }

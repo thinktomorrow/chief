@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\AddFragment;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\OwnerAwareFragment;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class AddFragmentTest extends ChiefTestCase
@@ -113,6 +114,23 @@ class AddFragmentTest extends ChiefTestCase
             ->assertSet('locales', [])
             ->assertSet('scopedLocale', null)
             ->assertSet('showCreate', true);
+    }
+
+    public function test_it_sets_context_owner_on_new_fragment_fields(): void
+    {
+        chiefRegister()->fragment(OwnerAwareFragment::class);
+
+        $component = $this->mountComponent();
+
+        $component
+            ->call('open', ['locales' => ['nl', 'en'], 'scopedLocale' => 'en', 'parentId' => null, 'order' => 1])
+            ->call('showCreateForm', OwnerAwareFragment::resourceKey())
+            ->assertSet('showCreate', true);
+
+        $field = $component->instance()->getFields()->first();
+
+        $this->assertCount(1, $field->getOptions());
+        $this->assertEquals($this->model->modelReference()->get(), data_get($field->getOptions(), '0.value'));
     }
 
     public function test_it_updates_filters_and_toggles_existing_view()
