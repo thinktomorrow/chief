@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\Fragments\ActiveContextId;
+use Thinktomorrow\Chief\Shared\ModelReferences\CannotInstantiateModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound;
@@ -94,6 +95,7 @@ final class ChiefResponse
             HttpException::class,
             HttpResponseException::class,
             ModelNotFoundException::class,
+            CannotInstantiateModelReference::class,
         ];
     }
 }
