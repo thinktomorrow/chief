@@ -10,7 +10,7 @@
     @foreach ($form as $index => $values)
         <div
             data-slot="repeat-item"
-            wire:key="{{ $elementId . '-' . $index }}"
+            wire:key="{{ $elementId . '-' . $formRefreshKey . '-' . $this->getRowUid($index) }}"
             x-sortable-item="{{ $index }}"
             class="flex items-start gap-3 p-3"
         >

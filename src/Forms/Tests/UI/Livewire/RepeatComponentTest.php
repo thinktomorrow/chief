@@ -40,13 +40,16 @@ final class RepeatComponentTest extends ChiefTestCase
             Text::make('title'),
         ]);
 
-        Livewire::test(RepeatComponent::class, [
+        $component = Livewire::test(RepeatComponent::class, [
             'field' => $repeat,
         ])
             ->set('form', [['title' => 'First'], ['title' => 'Second']])
             ->call('removeSection', 0)
             ->assertSet('form.0.title', 'Second')
             ->assertCount('form', 1);
+
+        $this->assertCount(1, $component->get('rowUids'));
+        $this->assertSame(1, $component->get('formRefreshKey'));
     }
 
     public function test_it_can_reorder_sections()
@@ -55,18 +58,27 @@ final class RepeatComponentTest extends ChiefTestCase
             Text::make('title'),
         ]);
 
-        Livewire::test(RepeatComponent::class, [
+        $component = Livewire::test(RepeatComponent::class, [
             'field' => $repeat,
-        ])
-            ->set('form', [
-                ['title' => 'A'],
-                ['title' => 'B'],
-                ['title' => 'C'],
-            ])
+        ])->set('form', [
+            ['title' => 'A'],
+            ['title' => 'B'],
+            ['title' => 'C'],
+        ]);
+
+        $before = $component->get('rowUids');
+
+        $component
             ->call('reorder', [2, 0, 1])
             ->assertSet('form.0.title', 'C')
             ->assertSet('form.1.title', 'A')
             ->assertSet('form.2.title', 'B');
+
+        $rowUids = $component->get('rowUids');
+
+        $this->assertCount(3, $rowUids);
+        $this->assertSame([$before[2], $before[0], $before[1]], $rowUids);
+        $this->assertSame(1, $component->get('formRefreshKey'));
     }
 
     public function test_it_can_set_form_data()

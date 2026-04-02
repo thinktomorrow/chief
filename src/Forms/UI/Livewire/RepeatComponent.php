@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
@@ -21,6 +22,10 @@ class RepeatComponent extends Component
 
     public string $elementId;
 
+    public array $rowUids = [];
+
+    public int $formRefreshKey = 0;
+
     public function mount(Repeat $field, ?string $locale = null, ?string $parentComponentId = null)
     {
         $this->field = $field;
@@ -28,6 +33,13 @@ class RepeatComponent extends Component
         $this->parentComponentId = $parentComponentId;
         $this->locale = $locale;
         $this->elementId = $field->getElementId($locale);
+
+        $this->syncRowUidsWithForm();
+    }
+
+    public function updatedForm(): void
+    {
+        $this->syncRowUidsWithForm();
     }
 
     public function getListeners()
@@ -64,6 +76,7 @@ class RepeatComponent extends Component
         $section = $this->form[0];
 
         $this->form[] = $this->clearValues($section);
+        $this->rowUids[] = $this->newRowUid();
 
         // Emit event to trigger redactor initialization
         $this->dispatch('form-dialog-opened', ...[
@@ -75,8 +88,11 @@ class RepeatComponent extends Component
     public function removeSection(int $index): void
     {
         unset($this->form[$index]);
+        unset($this->rowUids[$index]);
 
         $this->form = array_values($this->form);
+        $this->rowUids = array_values($this->rowUids);
+        $this->formRefreshKey++;
     }
 
     public function reorder($indices)
@@ -85,6 +101,19 @@ class RepeatComponent extends Component
         $this->form = array_map(function ($index) {
             return $this->form[$index];
         }, $indices);
+
+        $this->rowUids = array_map(function ($index) {
+            return $this->rowUids[$index] ?? $this->newRowUid();
+        }, $indices);
+
+        $this->formRefreshKey++;
+    }
+
+    public function getRowUid(int|string $index): string
+    {
+        $index = (int) $index;
+
+        return $this->rowUids[$index] ?? (string) $index;
     }
 
     private function clearValues(array $values): array
@@ -92,6 +121,22 @@ class RepeatComponent extends Component
         return array_map(function ($value) {
             return is_array($value) ? $this->clearValues($value) : null;
         }, $values);
+    }
+
+    private function syncRowUidsWithForm(): void
+    {
+        $count = is_array($this->form) ? count($this->form) : 0;
+
+        $this->rowUids = array_slice(array_values($this->rowUids), 0, $count);
+
+        while (count($this->rowUids) < $count) {
+            $this->rowUids[] = $this->newRowUid();
+        }
+    }
+
+    private function newRowUid(): string
+    {
+        return (string) Str::uuid();
     }
 
     public function render()
