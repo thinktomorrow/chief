@@ -1,6 +1,7 @@
 import './forms/index';
 import './sortable/index';
 import './tables/index';
+import './livewire-session-handler';
 
 /* Alpine directives */
 import buttonGroup from './alpine-directives/button-group';

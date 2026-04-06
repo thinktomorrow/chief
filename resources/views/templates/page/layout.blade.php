@@ -36,6 +36,12 @@
         <link rel="preload" as="style" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
         <link rel="modulepreload" href="{{ Vite::buildAsset('resources/assets/js/main.js') }}" />
         <link rel="stylesheet" href="{{ Vite::buildAsset('resources/assets/css/main.css') }}" />
+        <script>
+            window.chiefSessionHandlerConfig = @json([
+                'pingUrl' => route('chief.back.session.ping'),
+                'debug' => (bool) config('app.debug'),
+            ]);
+        </script>
         <script type="module" src="{{ Vite::buildAsset('resources/assets/js/main.js') }}"></script>
 
         @livewireStyles

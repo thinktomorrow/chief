@@ -14,6 +14,11 @@ use Thinktomorrow\Chief\Assets\App\Http\MediaGalleryController;
 use Thinktomorrow\Chief\Urls\App\Controllers\RemoveRedirectController;
 
 Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
+Route::get('session/ping', function () {
+    session()->put('_last_keepalive_at', now()->timestamp);
+
+    return response()->noContent();
+})->name('chief.back.session.ping');
 
 // Sitemap
 Route::get('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@index')->name('chief.back.sitemap.show');
