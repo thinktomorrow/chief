@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "astrotomic/laravel-translatable": "^11.11",
-        "barryvdh/laravel-debugbar": "^3.14",
+        "barryvdh/laravel-debugbar": "^4.2",
         "filp/whoops": "^2.15",
         "larastan/larastan": "^3.0",
         "laravel/boost": "^2.4",
