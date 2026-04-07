@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: centralised Livewire session handling in admin with graceful 419 recovery (auto-reload once, then refresh dialog) and retained 500 error dialog handling.
 - Added: admin keep-alive endpoint and periodic session ping to reduce 419 errors on long-lived Chief screens.
+- Fixed: teased text columns now keep full values in the hover tooltip title.
 - Fixed: adding an existing fragment now respects the selected insertion position instead of being appended at the end.
 - Fixed: Error modal was not visible when a modal was opened. (z-index issue)
 - Fixed: file-edit submit no longer crashes when model reference is missing in Livewire hydration.
