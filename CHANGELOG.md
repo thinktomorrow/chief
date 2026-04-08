@@ -5,7 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
-- Fixed: centralised Livewire session handling in admin with graceful 419 recovery (auto-reload once, then refresh dialog) and retained 500 error dialog handling.
+- Fixed: centralised Livewire session handling in admin with graceful 419 recovery (auto-reload once, then refresh
+  dialog) and retained 500 error dialog handling.
 - Added: admin keep-alive endpoint and periodic session ping to reduce 419 errors on long-lived Chief screens.
 - Fixed: teased text columns now keep full values in the hover tooltip title.
 - Fixed: adding an existing fragment now respects the selected insertion position instead of being appended at the end.
@@ -14,6 +15,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: menu links are now refreshed after changing homepage in settings.
 - Fixed: blocked users can no longer be re-authenticated via remember-me token.
 - Fixed: Repeat rows now keep field state attached to the correct row after deleting or reordering items.
+- Added: updated dependencies to latest version both composer.json and package.json
 - Added: `Fragment:setContextOwner()` and `Fragment::getContextOwner()` to allow to have owner model for e.g. fields().
 - Changed: Title filter in table now defaults to searching combo of multiple input values (separated by spaces) - and
   not the entire input value.
