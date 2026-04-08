@@ -47,6 +47,10 @@ final class ChiefResponse
             if (config('chief.strict') || ! self::shouldBeIgnored($e)) {
                 throw $e;
             }
+
+            if ($e instanceof CannotInstantiateModelReference) {
+                report($e);
+            }
         }
 
         throw new NotFoundHttpException('No url or model found for request ['.$slug.'] for locale ['.$locale.'].');
