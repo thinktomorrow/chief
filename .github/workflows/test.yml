@@ -1,60 +1,60 @@
 name: Test
 
-on: [ push ]
+on: [push]
 
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ ubuntu-latest ]
-        php: [ 8.3, 8.4, 8.5 ]
-        dependency-version: [ prefer-lowest, prefer-stable ]
+    test:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: true
+            matrix:
+                os: [ubuntu-latest]
+                php: [8.3, 8.4, 8.5]
+                dependency-version: [prefer-lowest, prefer-stable]
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+        name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v5
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
-          coverage: none
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+                  coverage: none
 
-      - name: Install dependencies
-        run: |
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+            - name: Install dependencies
+              run: |
+                  composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
-      - name: Execute unit tests
-        run: vendor/bin/phpunit --no-coverage --testsuite unit
+            - name: Execute unit tests
+              run: vendor/bin/phpunit --no-coverage --testsuite unit
 
-      - name: Execute application tests
-        run: vendor/bin/phpunit --no-coverage --testsuite application
+            - name: Execute application tests
+              run: vendor/bin/phpunit --no-coverage --testsuite application
 
-      - name: Execute forms tests
-        run: vendor/bin/phpunit --no-coverage --testsuite forms
+            - name: Execute forms tests
+              run: vendor/bin/phpunit --no-coverage --testsuite forms
 
-      - name: Execute assets tests
-        run: vendor/bin/phpunit --no-coverage --testsuite assets
+            - name: Execute assets tests
+              run: vendor/bin/phpunit --no-coverage --testsuite assets
 
-      - name: Execute models tests
-        run: vendor/bin/phpunit --no-coverage --testsuite models
+            - name: Execute models tests
+              run: vendor/bin/phpunit --no-coverage --testsuite models
 
-      - name: Execute fragments tests
-        run: vendor/bin/phpunit --no-coverage --testsuite fragments
+            - name: Execute fragments tests
+              run: vendor/bin/phpunit --no-coverage --testsuite fragments
 
-      - name: Execute menu tests
-        run: vendor/bin/phpunit --no-coverage --testsuite menu
+            - name: Execute menu tests
+              run: vendor/bin/phpunit --no-coverage --testsuite menu
 
-      - name: Execute table tests
-        run: vendor/bin/phpunit --no-coverage --testsuite table
+            - name: Execute table tests
+              run: vendor/bin/phpunit --no-coverage --testsuite table
 
-      - name: Execute urls tests
-        run: vendor/bin/phpunit --no-coverage --testsuite urls
+            - name: Execute urls tests
+              run: vendor/bin/phpunit --no-coverage --testsuite urls
 
-      - name: Execute sites tests
-        run: vendor/bin/phpunit --no-coverage --testsuite sites
+            - name: Execute sites tests
+              run: vendor/bin/phpunit --no-coverage --testsuite sites

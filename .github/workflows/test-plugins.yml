@@ -1,42 +1,42 @@
 name: Plugin tests
 
-on: [ push ]
+on: [push]
 
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ ubuntu-latest ]
-        php: [ 8.3, 8.4, 8.5 ]
-        dependency-version: [ prefer-lowest, prefer-stable ]
+    test:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: true
+            matrix:
+                os: [ubuntu-latest]
+                php: [8.3, 8.4, 8.5]
+                dependency-version: [prefer-lowest, prefer-stable]
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+        name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v5
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
-          coverage: none
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+                  coverage: none
 
-      - name: Install dependencies
-        run: |
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+            - name: Install dependencies
+              run: |
+                  composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
-      - name: Execute AdminToast tests
-        run: vendor/bin/phpunit --no-coverage src/Plugins/AdminToast
+            - name: Execute AdminToast tests
+              run: vendor/bin/phpunit --no-coverage src/Plugins/AdminToast
 
-      - name: Execute Tags tests
-        run: vendor/bin/phpunit --no-coverage src/Plugins/Tags
+            - name: Execute Tags tests
+              run: vendor/bin/phpunit --no-coverage src/Plugins/Tags
 
-      - name: Execute TimeTable tests
-        run: vendor/bin/phpunit --no-coverage src/Plugins/TimeTable
+            - name: Execute TimeTable tests
+              run: vendor/bin/phpunit --no-coverage src/Plugins/TimeTable
 
-      - name: Execute Export tests
-        run: vendor/bin/phpunit --no-coverage src/Plugins/Export
+            - name: Execute Export tests
+              run: vendor/bin/phpunit --no-coverage src/Plugins/Export
