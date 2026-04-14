@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.22] - 2026-04-14
+
 - Fixed: centralised Livewire session handling in admin with graceful 419 recovery (auto-reload once, then refresh
   dialog) and retained 500 error dialog handling.
 - Added: admin keep-alive endpoint and periodic session ping to reduce 419 errors on long-lived Chief screens.
