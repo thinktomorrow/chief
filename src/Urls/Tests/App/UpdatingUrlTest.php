@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Thinktomorrow\Chief\Urls\Tests\App;
 
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

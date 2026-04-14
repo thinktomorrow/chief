@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Livewire;
+namespace Thinktomorrow\Chief\Fragments\Tests\Livewire;
 
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;

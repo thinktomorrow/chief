@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace Thinktomorrow\Chief\Models\Tests\App;
 
 use Illuminate\Validation\ValidationException;
 use Thinktomorrow\Chief\Forms\Fields\Text;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Export\Tests\Import;
+namespace Thinktomorrow\Chief\Plugins\Export\Tests\Import;
 
 use Illuminate\Support\Facades\Storage;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;

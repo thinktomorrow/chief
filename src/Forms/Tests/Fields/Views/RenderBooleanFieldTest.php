@@ -1,6 +1,6 @@
 <?php
 
-namespace Fields\Views;
+namespace Thinktomorrow\Chief\Forms\Tests\Fields\Views;
 
 use Thinktomorrow\Chief\Forms\Fields\Boolean;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;

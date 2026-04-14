@@ -1,6 +1,6 @@
 <?php
 
-namespace Actions;
+namespace Thinktomorrow\Chief\Forms\Tests\Actions;
 
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
