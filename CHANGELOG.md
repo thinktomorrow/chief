@@ -17,6 +17,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Repeat rows now keep field state attached to the correct row after deleting or reordering items.
 - Added: updated dependencies to latest version both composer.json and package.json
 - Added: `Fragment:setContextOwner()` and `Fragment::getContextOwner()` to allow to have owner model for e.g. fields().
+- Added: Boost guideline doc
 - Changed: Title filter in table now defaults to searching combo of multiple input values (separated by spaces) - and
   not the entire input value.
 
