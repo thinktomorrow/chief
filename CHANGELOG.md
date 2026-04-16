@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: not-found error page
+
 ## [0.10.22] - 2026-04-14
 
 - Fixed: centralised Livewire session handling in admin with graceful 419 recovery (auto-reload once, then refresh

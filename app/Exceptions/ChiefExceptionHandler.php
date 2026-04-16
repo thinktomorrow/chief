@@ -4,12 +4,14 @@ namespace Thinktomorrow\Chief\App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class ChiefExceptionHandler extends ExceptionHandler
@@ -67,6 +69,14 @@ class ChiefExceptionHandler extends ExceptionHandler
 
     protected function renderChiefException(Request $request, Throwable $exception)
     {
+        if ($this->isNotFoundException($exception)) {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Not Found.'], 404);
+            }
+
+            return response()->view('chief::errors.not-found', [], 404);
+        }
+
         if (! config('app.debug')) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Something went wrong.'], 404);
@@ -76,6 +86,11 @@ class ChiefExceptionHandler extends ExceptionHandler
         }
 
         return parent::render($request, $exception);
+    }
+
+    private function isNotFoundException(Throwable $exception): bool
+    {
+        return $exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException;
     }
 
     protected function unauthorized(Request $request, AuthorizationException $exception)
