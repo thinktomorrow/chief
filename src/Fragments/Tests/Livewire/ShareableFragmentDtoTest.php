@@ -52,4 +52,22 @@ class ShareableFragmentDtoTest extends ChiefTestCase
         $this->assertEquals($ownerResource->getPageTitle($this->owner), $sharedFragmentDtos->first()->ownerLabel);
         $this->assertEquals($ownerResource->getPageTitle($owner2), $sharedFragmentDtos->last()->ownerLabel);
     }
+
+    public function test_it_ignores_orphaned_context_owners_when_composing_shared_fragment_dtos()
+    {
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $fragment = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id);
+
+        $owner2 = ArticlePage::create([]);
+        $context2 = FragmentTestHelpers::createContext($owner2);
+        FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
+
+        $owner2->forceDelete();
+
+        $sharedFragmentDtos = $this->composer->getSharedFragmentDtos($fragment->getFragmentId(), $this->owner->modelReference());
+
+        $this->assertCount(1, $sharedFragmentDtos);
+        $this->assertEquals($context->id, $sharedFragmentDtos->first()->contextId);
+        $this->assertEquals($this->owner->modelReference()->get(), $sharedFragmentDtos->first()->ownerReference);
+    }
 }

@@ -113,6 +113,10 @@ class ComposeLivewireDto
                     ? $owner
                     : $context->owner;
 
+                if (! $contextOwner) {
+                    return null;
+                }
+
                 $ownerResource = $this->registry->findResourceByModel($contextOwner::class);
 
                 return SharedFragmentDto::fromContext(
@@ -122,6 +126,8 @@ class ComposeLivewireDto
                     $ownerResource->getPageTitle($contextOwner),
                     $this->registry->findManagerByModel($contextOwner::class)->route('edit', $contextOwner).'?context='.$context->id,
                 );
-            });
+            })
+            ->filter()
+            ->values();
     }
 }
