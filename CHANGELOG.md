@@ -5,8 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
-- Fixed: Ignore non-found owners for orphaned fragments (can occur on shared fragments where one of the parents is
-  deleted)
+## [0.10.23] - 2026-04-20
+
+- Fixed: Ignore non-found owners for orphaned fragments (can occur on shared fragments where a parent is deleted)
 - Added: not-found error page
 
 ## [0.10.22] - 2026-04-14
