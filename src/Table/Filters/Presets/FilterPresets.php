@@ -52,15 +52,22 @@ class FilterPresets
             return $query->where(function ($builder) use ($searchValues, $dynamicKeys, $columns, $dynamicColumn) {
                 foreach ($searchValues as $searchValue) {
                     $builder->where(function ($nestedBuilder) use ($searchValue, $dynamicKeys, $columns, $dynamicColumn) {
+                        $model = $nestedBuilder->getModel();
                         $directColumns = [];
 
                         foreach ((array) $columns as $column) {
                             if (strpos($column, '.') !== false) {
                                 [$relation, $columnName] = explode('.', $column);
 
-                                $nestedBuilder->orWhereHas($relation, function ($query) use ($searchValue, $columnName, $dynamicColumn) {
-                                    return static::queryColumnsOrDynamicAttributes($query->whereRaw('1=0'), $searchValue, [$columnName], [], $dynamicColumn);
-                                });
+                                if ($model->isRelation($relation)) {
+                                    $nestedBuilder->orWhereHas($relation, function ($query) use ($searchValue, $columnName, $dynamicColumn) {
+                                        return static::queryColumnsOrDynamicAttributes($query->whereRaw('1=0'), $searchValue, [$columnName], [], $dynamicColumn);
+                                    });
+
+                                    continue;
+                                }
+
+                                $directColumns[] = $column;
 
                                 continue;
                             }

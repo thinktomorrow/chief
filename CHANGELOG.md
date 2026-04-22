@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: use db table in Table filter conflicted with relation search. e.g. shopper.title expected shopper to be
+  relation of model, not per se a table.
+
 ## [0.10.23] - 2026-04-20
 
 - Fixed: Ignore non-found owners for orphaned fragments (can occur on shared fragments where a parent is deleted)
