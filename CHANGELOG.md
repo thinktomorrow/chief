@@ -5,8 +5,12 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.24] - 2026-04-27
+
+- Fixed: Password reset token expired after 60 seconds instead of 60 minutes.
 - Fixed: use db table in Table filter conflicted with relation search. e.g. shopper.title expected shopper to be
   relation of model, not per se a table.
+- Changed: Using Laravel Password broker and resolver instead of custom classes.
 
 ## [0.10.23] - 2026-04-20
 

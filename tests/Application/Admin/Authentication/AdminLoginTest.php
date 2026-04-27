@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Password;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -146,6 +147,32 @@ class AdminLoginTest extends ChiefTestCase
         ]);
 
         $this->assertFalse(session()->has('errors'));
+        $response->assertRedirect(route('chief.back.dashboard'));
+    }
+
+    public function test_password_reset_token_remains_valid_after_two_minutes()
+    {
+        $admin = $this->fakeUser([
+            'email' => 'foo@example.com',
+            'password' => 'IForgotThisPassword',
+            'enabled' => true,
+        ]);
+
+        $token = Password::broker('chief')->createToken($admin);
+
+        try {
+            Carbon::setTestNow(Carbon::now()->addMinutes(2));
+
+            $response = $this->post(route('chief.back.password.request'), [
+                'token' => $token,
+                'email' => 'foo@example.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
+            ]);
+        } finally {
+            Carbon::setTestNow();
+        }
+
         $response->assertRedirect(route('chief.back.dashboard'));
     }
 
