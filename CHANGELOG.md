@@ -5,6 +5,17 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+This release contains breaking changes!
+
+## [0.10.25] - 2026-04-30
+
+- Changed: Chief now writes `sitemap.xml`, `sitemap-{locale}.xml`, `image-sitemap.xml`, and
+  `image-sitemap-{locale}.xml` to `storage/app/feeds` instead of `public/`.
+- Breaking/upgrade note: expose `storage/app/feeds` publicly in your host app, by adding a `feeds`
+  filesystem disk and a `filesystems.links` entry, then running `php artisan storage:link`.
+- Breaking/upgrade note: review and update sitemap references after upgrading, such as in `robots.txt`, Google
+  Search Console, and any other external integrations.
+
 ## [0.10.24] - 2026-04-27
 
 - Fixed: Password reset token expired after 60 seconds instead of 60 minutes.

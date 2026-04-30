@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Sitemap;
 
+use Illuminate\Support\Facades\File;
+
 class ImageSitemapXmlFile
 {
     /** @var ImageSitemapXml */
@@ -18,11 +20,12 @@ class ImageSitemapXmlFile
     {
         $xmlString = $this->sitemapXml->generate($locale);
 
+        File::ensureDirectoryExists(dirname($filepath));
         file_put_contents($filepath, $xmlString);
 
         // If this is the default locale, we'll create a default sitemap.xml as well
         if ($locale == config('app.fallback_locale')) {
-            file_put_contents(public_path('image-sitemap.xml'), $xmlString);
+            file_put_contents(dirname($filepath).'/image-sitemap.xml', $xmlString);
         }
     }
 }
