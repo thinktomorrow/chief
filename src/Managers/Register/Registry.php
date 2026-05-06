@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
 use Thinktomorrow\Chief\Managers\Exceptions\MissingTreeResource;
 use Thinktomorrow\Chief\Managers\Exceptions\ResourceAlreadyRegistered;
 use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Resource\FragmentResource;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Resource\TreeResource;
@@ -83,6 +84,14 @@ final class Registry
     public function pageResources(): array
     {
         return $this->filter(fn ($resource) => $resource instanceof PageResource)->all();
+    }
+
+    /**
+     * @return FragmentResource[]
+     */
+    public function fragments(): array
+    {
+        return $this->filter(fn ($resource) => $resource instanceof FragmentResource)->all();
     }
 
     private function all(): array

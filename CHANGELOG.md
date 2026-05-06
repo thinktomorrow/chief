@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Register::fragments() to get all registered fragments
+
 This release contains breaking changes!
 
 ## [0.10.25] - 2026-04-30
