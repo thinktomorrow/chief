@@ -12,17 +12,27 @@
     @foreach ($timeTables as $timeTableModel)
         <x-chief::window>
             <div class="space-y-4">
-                <a
-                    href="{{ route('chief.timetables.edit', $timeTableModel->id) }}"
-                    title="Aanpassen"
-                    class="group flex items-start justify-between gap-4"
-                >
-                    <span class="h1-dark body font-medium leading-8 group-hover:underline">
-                        {{ $timeTableModel->label }}
-                    </span>
+                <div class="flex items-start justify-between gap-4">
+                    <a
+                        href="{{ route('chief.timetables.edit', $timeTableModel->id) }}"
+                        title="Aanpassen"
+                        class="group min-w-0"
+                    >
+                        <span class="h1-dark body leading-8 font-medium group-hover:underline">
+                            {{ $timeTableModel->label }}
+                        </span>
+                    </a>
 
-                    <x-chief::icon.quill-write class="text-grey-500" />
-                </a>
+                    <x-chief::button
+                        href="{{ route('chief.timetables.edit', $timeTableModel->id) }}"
+                        title="Aanpassen"
+                        variant="grey"
+                        size="sm"
+                        class="shrink-0"
+                    >
+                        <x-chief::icon.quill-write />
+                    </x-chief::button>
+                </div>
 
                 <x-chief-timetable::time-table
                     :time-table="$timeTableModel->timeTable"

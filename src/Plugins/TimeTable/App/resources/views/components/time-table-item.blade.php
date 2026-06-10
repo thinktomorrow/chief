@@ -19,7 +19,7 @@
 
 <div
     @class([
-        'block w-full shrink-0 grow border-grey-100 sm:w-32 sm:p-2',
+        'border-grey-100 block w-full shrink-0 grow sm:w-32 sm:p-2',
         'sm:border-r' => $loop->iteration % 7 != 0,
         'sm:border-b' => count($days) - $loop->index > 7,
     ])
@@ -29,7 +29,7 @@
             @if ($title)
                 <div
                     @class([
-                        'body body-dark mt-1 text-sm font-medium leading-5',
+                        'body body-dark mt-1 text-sm leading-5 font-medium',
                         'text-primary-500' => $isToday,
                     ])
                 >
@@ -46,13 +46,15 @@
             @endif
 
             @if (! $isCalendar && isset($dayModel))
-                <x-chief::link
+                <x-chief::button
                     href="{{ route('chief.timetable_days.edit', $dayModel->id) }}"
                     title="Dag aanpassen"
+                    variant="grey"
                     size="sm"
+                    class="shrink-0"
                 >
                     <x-chief::icon.quill-write />
-                </x-chief::link>
+                </x-chief::button>
             @endif
         </div>
 
@@ -66,7 +68,7 @@
             @endforelse
 
             @if ($day->getData())
-                <p class="body text-xs text-grey-500">
+                <p class="body text-grey-500 text-xs">
                     {{ $day->getData() }}
                 </p>
             @endif

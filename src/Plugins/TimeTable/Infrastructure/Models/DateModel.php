@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Forms\Fields\Checkbox;
+use Thinktomorrow\Chief\Forms\Fields\Boolean;
 use Thinktomorrow\Chief\Forms\Fields\Date;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -58,12 +58,9 @@ class DateModel extends Model
                     Time::make('slots[1][until]')->step(1 * 60)->columnName('slots.1.until')->tag(['not-on-model-create', 'not-on-create'])->default('17:00'),
                 ]),
 
-                Checkbox::make('closed')
-                    ->options([
-                        1 => 'Hele dag gesloten',
-                    ])
-                    ->value(fn () => ($model->exists && empty($model->slots)) ? 1 : null)
-                    ->showAsToggle(),
+                Boolean::make('closed')
+                    ->optionLabel('Hele dag gesloten')
+                    ->value(fn () => $model->exists && empty($model->slots)),
             ]);
 
         yield Text::make('content')

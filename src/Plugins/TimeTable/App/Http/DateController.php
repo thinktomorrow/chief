@@ -30,11 +30,11 @@ class DateController extends Controller
     {
         $this->authorize('update-page');
 
-        [$model, $fields] = $this->getModelAndFields();
+        [$model] = $this->getModelAndFields();
 
-        // Enrich fields with the layout components
-        $forms = PageLayout::make($model->fields($model))->model($model)->getComponents();
-        $fields = $forms[0]->getComponents();
+        $fields = PageLayout::make($model->fields($model))
+            ->model($model)
+            ->getComponentsWithoutForms();
 
         return view('chief-timetable::dates.create', [
             'fields' => $fields,
@@ -79,11 +79,11 @@ class DateController extends Controller
     {
         $this->authorize('update-page');
 
-        [$model, $fields] = $this->getModelAndFields($dateId);
+        [$model] = $this->getModelAndFields($dateId);
 
-        // Enrich fields with the layout components
-        $forms = PageLayout::make($model->fields($model))->model($model)->getComponents();
-        $fields = $forms[0]->getComponents();
+        $fields = PageLayout::make($model->fields($model))
+            ->model($model)
+            ->getComponentsWithoutForms();
 
         return view('chief-timetable::dates.edit', [
             'model' => $model,

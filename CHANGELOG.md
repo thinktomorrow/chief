@@ -5,8 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
-- Fixed: issue where TimeTable exceptions were collections but are now expected to be arrays by the Spatie/OpeningHours
+- Fixed: Issue where TimeTable exceptions were collections but are now expected to be arrays by the Spatie/OpeningHours
   package.
+- Fixed: TimeTable plugin was outdated and is now updated to latest Chief version.
 - Added: Register::fragments() to get all registered fragments
 
 This release contains breaking changes!
