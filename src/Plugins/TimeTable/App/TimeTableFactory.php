@@ -19,7 +19,7 @@ class TimeTableFactory
         $items['exceptions'] = $model->exceptions->mapWithKeys(fn (DateModel $dateModel) => [$dateModel->date->format('Y-m-d') => [
             ...$dateModel->getSlots()->getSlotsAsString(),
             ...($content = $model->exceptions->first(fn ($exception) => $exception->date->format('Y-m-d') == $dateModel->date->format('Y-m-d'))?->getContent($locale)) ? ['data' => $content] : [],
-        ]]);
+        ]])->all();
 
         return $this->createTimeTable($items);
 
