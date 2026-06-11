@@ -73,7 +73,7 @@ class PageTable extends Table
                     return '/admin/'.$resourceKey.'/'.$model->getKey().'/edit';
                 })->disallowColumnSelection()
                     ->tease(54, '...'),
-                ...(($primaryStateKey = GetPrimaryStateKeyOfModel::get($resourceKey)) ? [ColumnBadge::make($primaryStateKey)->pageStates()->label('Status')->columnNotSelectedByDefault()] : []),
+                ...(($primaryStateKey = GetPrimaryStateKeyOfModel::get($resourceKey)) ? [ColumnBadge::make($primaryStateKey)->pageStates()->label('Status')] : []),
                 ...(($reflection->implementsInterface(HasAllowedSites::class) && $reflection->implementsInterface(Visitable::class)) ? [SiteLinksColumnBadge::makeDefault()] : []),
                 ...(($reflection->implementsInterface(HasAllowedSites::class) && ! $reflection->implementsInterface(Visitable::class)) ? [SitesColumnBadge::makeDefault()] : []),
                 ...(($reflection->implementsInterface(Visitable::class) && ! $reflection->implementsInterface(HasAllowedSites::class)) ? [LinksColumnBadge::makeDefault()] : []),
