@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: time preview now shows in 24-h format instead of 12-h
 - Fixed: Issue where TimeTable exceptions were collections but are now expected to be arrays by the Spatie/OpeningHours
   package.
 - Fixed: TimeTable plugin was outdated and is now updated to latest Chief version.
