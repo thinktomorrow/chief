@@ -10,6 +10,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   package.
 - Fixed: TimeTable plugin was outdated and is now updated to latest Chief version.
 - Added: Register::fragments() to get all registered fragments
+- Changed: updated packages for security vulnerabilities
 
 This release contains breaking changes!
 
