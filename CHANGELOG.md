@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.26] - 2026-06-16
+
 - Fixed: time preview now shows in 24-h format instead of 12-h
 - Fixed: Issue where TimeTable exceptions were collections but are now expected to be arrays by the Spatie/OpeningHours
   package.
@@ -12,9 +14,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: Register::fragments() to get all registered fragments
 - Changed: updated packages for security vulnerabilities
 
-This release contains breaking changes!
-
 ## [0.10.25] - 2026-04-30
+
+**This release contains breaking changes!**
 
 - Changed: Chief now writes `sitemap.xml`, `sitemap-{locale}.xml`, `image-sitemap.xml`, and
   `image-sitemap-{locale}.xml` to `storage/app/feeds` instead of `public/`.
