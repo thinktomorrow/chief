@@ -20,7 +20,7 @@
         "myclabs/deep-copy": "^1.13",
         "ramsey/uuid": "^4.7.3",
         "spatie/laravel-activitylog": "^4.10.2",
-        "spatie/laravel-permission": "^6.20",
+        "spatie/laravel-permission": "^7.3",
         "spatie/laravel-sitemap": "^7.3.6",
         "thinktomorrow/assetlibrary": "^1.0.2",
         "thinktomorrow/dynamic-attributes": "^2.0.3",
