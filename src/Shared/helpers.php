@@ -105,16 +105,21 @@ if (! function_exists('str_slug_slashed')) {
 if (! function_exists('is_array_empty')) {
     function is_array_empty(array $values): bool
     {
-        $empty = true;
-
         foreach ($values as $value) {
-            if (! $value || ! trim($value)) {
+            if (is_string($value)) {
+                if (trim($value) !== '') {
+                    return false;
+                }
+
                 continue;
             }
-            $empty = false;
+
+            if (! empty($value) || $value === 0) {
+                return false;
+            }
         }
 
-        return $empty;
+        return true;
     }
 }
 
