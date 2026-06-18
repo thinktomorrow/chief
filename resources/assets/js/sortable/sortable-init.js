@@ -8,19 +8,17 @@ import SortableGroup from './sortable';
  * @param options
  */
 const initSortable = (selector, container = document, options = {}) => {
-    Array.from(container.querySelectorAll(selector)).forEach((el) => {
+    for (const el of container.querySelectorAll(selector)) {
         new SortableGroup(el, {
-            ...{
-                sortableGroupId: el.getAttribute('data-sortable-group') || 'models',
-                endpoint: el.getAttribute('data-sortable-endpoint'),
-                nestedEndpoint: el.getAttribute('data-sortable-nested-endpoint'),
-                handle: '[data-sortable-handle]',
-                isSorting: el.hasAttribute('data-sortable-is-sorting'),
-                sortableIdType: el.getAttribute('data-sortable-id-type') || 'int',
-            },
+            sortableGroupId: el.dataset.sortableGroup || 'models',
+            endpoint: el.dataset.sortableEndpoint,
+            nestedEndpoint: el.dataset.sortableNestedEndpoint,
+            handle: '[data-sortable-handle]',
+            isSorting: Object.hasOwn(el.dataset, 'sortableIsSorting'),
+            sortableIdType: el.dataset.sortableIdType || 'int',
             ...options,
         });
-    });
+    }
 };
 
-export { initSortable as default };
+export default initSortable;

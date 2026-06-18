@@ -30,4 +30,4 @@ const dropdown = (config) => ({
     },
 });
 
-export { dropdown as default };
+export default dropdown;

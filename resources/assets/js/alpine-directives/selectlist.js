@@ -8,14 +8,12 @@ const Selectlist = (config) => ({
     searchTerm: '',
     get filteredOptions() {
         if (this.grouped) {
-            return this.options.map((group) => {
-                const newGroup = { ...group };
-
-                newGroup.choices = group.choices.filter(
+            return this.options.map((group) => ({
+                ...group,
+                choices: group.choices.filter(
                     (option) => !this.rawSelection.some((value) => option.value.toString() === value.toString())
-                );
-                return newGroup;
-            });
+                ),
+            }));
         }
 
         return this.options.filter(
@@ -156,4 +154,4 @@ const Selectlist = (config) => ({
     },
 });
 
-export { Selectlist as default };
+export default Selectlist;

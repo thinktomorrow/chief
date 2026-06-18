@@ -8,10 +8,10 @@ class RadioFieldTrigger extends ConditionalFieldTrigger {
     }
 
     _getCurrentValuesFromRadioElements() {
-        return Array.from(this.element.querySelectorAll('input[type="radio"]'))
+        return [...this.element.querySelectorAll('input[type="radio"]')]
             .filter((element) => element.checked)
             .map((element) => element.value);
     }
 }
 
-export { RadioFieldTrigger as default };
+export default RadioFieldTrigger;

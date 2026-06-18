@@ -31,23 +31,23 @@ const startKeepAlive = () => {
         return;
     }
 
-    const keepSessionAlive = () => {
-        const pingUrl = getConfig().pingUrl || '/admin/session/ping';
-
-        fetch(pingUrl, {
-            method: 'GET',
-            credentials: 'same-origin',
-            cache: 'no-store',
-            headers: {
-                Accept: 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        }).catch(() => {
-            // Keep-alive failures should never block the admin UI.
-        });
-    };
-
     keepAliveTimerId = window.setInterval(keepSessionAlive, KEEP_ALIVE_INTERVAL_MS);
+};
+
+const keepSessionAlive = () => {
+    const pingUrl = getConfig().pingUrl || '/admin/session/ping';
+
+    fetch(pingUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        cache: 'no-store',
+        headers: {
+            Accept: 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    }).catch(() => {
+        // Keep-alive failures should never block the admin UI.
+    });
 };
 
 const registerLivewireRequestHook = () => {

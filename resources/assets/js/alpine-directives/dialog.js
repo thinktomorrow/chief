@@ -50,4 +50,4 @@ const Dialog = (config) => ({
     },
 });
 
-export { Dialog as default };
+export default Dialog;

@@ -20,11 +20,11 @@ class AnimatedToggle {
     }
 
     _init() {
-        this.toggles.forEach((toggle) => {
+        for (const toggle of this.toggles) {
             toggle.addEventListener('click', () => {
                 this._toggle();
             });
-        });
+        }
     }
 
     open() {
@@ -52,15 +52,15 @@ class AnimatedToggle {
     _close() {
         this.container.style.animationDirection = 'reverse';
 
-        this.animationClasses.forEach((animationClass) => {
+        for (const animationClass of this.animationClasses) {
             this.container.classList.remove(animationClass);
-        });
+        }
 
         void this.container.offsetWidth;
 
-        this.animationClasses.forEach((animationClass) => {
+        for (const animationClass of this.animationClasses) {
             this.container.classList.add(animationClass);
-        });
+        }
 
         const onAnimationEnd = () => {
             this.container.classList.add('hidden');
@@ -80,9 +80,9 @@ const initAnimatedToggle = (
     options = {}
 ) => {
     const container = document.querySelector(containerSelector);
-    const toggles = Array.from(document.querySelectorAll(toggleSelector));
+    const toggles = [...document.querySelectorAll(toggleSelector)];
 
     new AnimatedToggle(container, toggles, options);
 };
 
-export { initAnimatedToggle as default };
+export default initAnimatedToggle;

@@ -51,10 +51,10 @@ class ConditionalFieldTrigger {
      * Otherwise, hide the conditional field.
      */
     _toggleConditionalFields() {
-        this.conditionalFields.forEach((conditionalField) => {
-            const isConditionalFieldToBeTriggered = conditionalField.values.find((conditionalFieldValue) => {
+        for (const conditionalField of this.conditionalFields) {
+            const isConditionalFieldToBeTriggered = conditionalField.values.some((conditionalFieldValue) => {
                 if (this.constructor._isValidRegexExpression(conditionalFieldValue)) {
-                    return this.currentValues.find((currentValue) => {
+                    return this.currentValues.some((currentValue) => {
                         const regex = this.constructor._createRegexFromString(conditionalFieldValue);
 
                         return currentValue.match(regex);
@@ -69,7 +69,7 @@ class ConditionalFieldTrigger {
             } else {
                 this._hideConditionalField(conditionalField.element);
             }
-        });
+        }
     }
 
     /**
@@ -120,9 +120,9 @@ class ConditionalFieldTrigger {
      * Hide all conditional fields, if the formgroup toggle attribute is not present.
      */
     _hideConditionalFields() {
-        this.conditionalFields.forEach((conditionalField) => {
+        for (const conditionalField of this.conditionalFields) {
             conditionalField.element.classList.add('hidden');
-        });
+        }
     }
 
     /**
@@ -134,17 +134,17 @@ class ConditionalFieldTrigger {
         const output = [];
 
         for (const [key, value] of Object.entries(data)) {
-            const element = document.querySelector(`[data-field-key="${key}"]`);
+            const element = document.querySelector(`[data-field-key="${CSS.escape(key)}"]`);
 
-            if (!element) {
-                console.error(
-                    `Error while trying to create conditional fields: Couldn't find formgroup with key ${key}. Make sure this field exists on this model.`
-                );
-            } else {
+            if (element) {
                 output.push({
                     element,
                     values: value,
                 });
+            } else {
+                console.error(
+                    `Error while trying to create conditional fields: Couldn't find formgroup with key ${key}. Make sure this field exists on this model.`
+                );
             }
         }
 
@@ -172,4 +172,4 @@ class ConditionalFieldTrigger {
     }
 }
 
-export { ConditionalFieldTrigger as default };
+export default ConditionalFieldTrigger;

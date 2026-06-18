@@ -10,10 +10,10 @@ class SelectFieldTrigger extends ConditionalFieldTrigger {
     _getCurrentValuesFromSelectElement() {
         const selectElement = this.element.querySelector('select');
 
-        return Array.from(selectElement.querySelectorAll('option'))
+        return [...selectElement.querySelectorAll('option')]
             .filter((option) => option.selected)
             .map((option) => option.value);
     }
 }
 
-export { SelectFieldTrigger as default };
+export default SelectFieldTrigger;

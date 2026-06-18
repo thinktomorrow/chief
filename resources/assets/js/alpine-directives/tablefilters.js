@@ -9,21 +9,21 @@ const tableFilters = () => ({
     },
     getContentWidth(element) {
         const styles = window.getComputedStyle(element);
-        const paddingLeft = parseFloat(styles.paddingLeft);
-        const paddingRight = parseFloat(styles.paddingRight);
+        const paddingLeft = Number.parseFloat(styles.paddingLeft);
+        const paddingRight = Number.parseFloat(styles.paddingRight);
         return element.offsetWidth - paddingLeft - paddingRight;
     },
     moveLastFilterToDrawer() {
-        const tableHeaderWidth = this.getContentWidth(document.getElementById('table-container-header'));
+        const tableHeaderWidth = this.getContentWidth(document.querySelector('#table-container-header'));
         const tableHeaderFiltersWidth = this.getContentWidth(this.$el);
-        const tableHeaderSortersWidth = this.getContentWidth(document.getElementById('table-container-header-sorters'));
+        const tableHeaderSortersWidth = this.getContentWidth(document.querySelector('#table-container-header-sorters'));
 
         // Adding in 64px for the drawer button
         if (tableHeaderFiltersWidth > tableHeaderWidth - tableHeaderSortersWidth - 64) {
-            const visibleFilters = Array.from(document.querySelectorAll('[data-filter-key]'));
-            const lastFilter = visibleFilters[visibleFilters.length - 1];
+            const visibleFilters = [...document.querySelectorAll('[data-filter-key]')];
+            const lastFilter = visibleFilters.at(-1);
 
-            this.$wire.setFilterAsTertiary(lastFilter.getAttribute('data-filter-key'));
+            this.$wire.setFilterAsTertiary(lastFilter.dataset.filterKey);
 
             lastFilter.remove();
 
@@ -32,4 +32,4 @@ const tableFilters = () => ({
     },
 });
 
-export { tableFilters as default };
+export default tableFilters;

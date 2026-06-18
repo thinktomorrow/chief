@@ -40,10 +40,11 @@ const SortableGroup = function (el, options) {
 };
 
 SortableGroup.prototype.destroy = function () {
-    this.Sortables.forEach((sortable) => sortable.destroy());
+    for (const sortable of this.Sortables) sortable.destroy();
 };
 
 SortableGroup.prototype._init = function () {
+    // eslint-disable-next-line unicorn/no-this-assignment
     const self = this;
 
     this.Sortables.push(
@@ -111,7 +112,7 @@ SortableGroup.prototype._init = function () {
                 set(sortable) {
                     const indices = self._filterSortableIndices(sortable.toArray());
 
-                    if (indices.length < 1) return;
+                    if (indices.length === 0) return;
 
                     fetch(self.endpoint, {
                         method: 'post',
@@ -162,4 +163,4 @@ SortableGroup.prototype._filterSortableIndices = function (indices) {
     return indices;
 };
 
-export { SortableGroup as default };
+export default SortableGroup;

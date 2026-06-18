@@ -14,8 +14,8 @@
             >
                 <x-chief::icon.filter-edit />
                 @if (($tertiaryFilterCount = $this->getTertiaryFilterCount()) > 0)
-                    <div class="absolute -bottom-1.5 -right-1.5">
-                        <div class="flex size-5 items-center justify-center rounded-full bg-primary-500">
+                    <div class="absolute -right-1.5 -bottom-1.5">
+                        <div class="bg-primary-500 flex size-5 items-center justify-center rounded-full">
                             <span class="text-xs font-medium text-white">
                                 {{ $tertiaryFilterCount }}
                             </span>
@@ -52,7 +52,7 @@
             <x-slot name="footer">
                 <x-chief::dialog.drawer.footer>
                     <x-chief::button variant="blue" x-on:click="close">Bekijk resultaten</x-chief::button>
-                    <span class="my-2 leading-5 text-grey-500">{{ $this->resultTotal }} resultaten gevonden</span>
+                    <span class="text-grey-500 my-2 leading-5">{{ $this->resultTotal }} resultaten gevonden</span>
                 </x-chief::dialog.drawer.footer>
             </x-slot>
         </x-chief::dialog.drawer>

@@ -18,12 +18,14 @@ class BulkActions {
         this.bulkActionsContainer = container.querySelector(this.bulkActionsContainerSelector);
         if (!this.bulkActionsContainer) return;
 
-        this.bulkActionsCounter = this.bulkActionsContainer.querySelector(`[${this.bulkActionsCounterAttribute}]`);
+        this.bulkActionsCounter = this.bulkActionsContainer.querySelector(
+            `[${CSS.escape(this.bulkActionsCounterAttribute)}]`
+        );
         if (!this.bulkActionsCounter) return;
 
         this.parentCheckbox = container.querySelector(this.parentCheckboxSelector);
-        this.itemCheckboxes = Array.from(container.querySelectorAll(this.itemCheckboxSelector));
-        this.bulkActionItemFields = Array.from(container.querySelectorAll(this.bulkActionItemFieldSelector));
+        this.itemCheckboxes = [...container.querySelectorAll(this.itemCheckboxSelector)];
+        this.bulkActionItemFields = [...container.querySelectorAll(this.bulkActionItemFieldSelector)];
 
         if (!this.parentCheckbox || _isEmpty(this.itemCheckboxes)) return;
 
@@ -40,7 +42,7 @@ class BulkActions {
             this._syncBulkItemsFields();
         });
 
-        this.itemCheckboxes.forEach((checkbox) => {
+        for (const checkbox of this.itemCheckboxes) {
             checkbox.addEventListener('change', () => {
                 this._updateParentCheckbox();
                 this.constructor._updateItemRowStyle(checkbox);
@@ -50,14 +52,14 @@ class BulkActions {
                 this._updateBulkActionsCounter(count);
                 this._syncBulkItemsFields();
             });
-        });
+        }
     }
 
     _updateItemCheckboxes() {
-        this.itemCheckboxes.forEach((checkbox) => {
+        for (const checkbox of this.itemCheckboxes) {
             checkbox.checked = this.parentCheckbox.checked;
             this.constructor._updateItemRowStyle(checkbox);
-        });
+        }
     }
 
     _updateParentCheckbox() {
@@ -126,9 +128,9 @@ class BulkActions {
         const selectedValues = this._getSelectedValues();
 
         // Get all input elements of the target forms and populate each with the selected values
-        this.bulkActionItemFields.forEach((el) => {
+        for (const el of this.bulkActionItemFields) {
             el.value = JSON.stringify(selectedValues);
-        });
+        }
     }
 
     _getSelectedValues() {
@@ -137,11 +139,11 @@ class BulkActions {
 }
 
 const initBulkActions = (containerSelector = '[data-table-container]') => {
-    const containers = Array.from(document.querySelectorAll(containerSelector));
+    const containers = [...document.querySelectorAll(containerSelector)];
 
-    containers.forEach((container) => {
+    for (const container of containers) {
         new BulkActions(container);
-    });
+    }
 };
 
-export { initBulkActions as default };
+export default initBulkActions;

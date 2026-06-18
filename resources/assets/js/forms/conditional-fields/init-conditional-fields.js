@@ -18,44 +18,51 @@ const initConditionalFieldsInContainer = (
     formgroupTypeAttribute = 'data-field-type',
     conditionalFieldsDataAttribute = 'data-conditional-toggle'
 ) => {
-    const formgroupElements = Array.from(container.querySelectorAll(`[${formgroupAttribute}]`));
+    const formgroupElements = [...container.querySelectorAll(`[${CSS.escape(formgroupAttribute)}]`)];
 
     // To store all fields that are toggled by other fields
     window.conditionalFieldsToggledByState = [];
 
-    formgroupElements.forEach((element) => {
+    for (const element of formgroupElements) {
         const name = element.getAttribute(formgroupAttribute);
         const type = element.getAttribute(formgroupTypeAttribute);
         const conditionalFieldsData = JSON.parse(element.getAttribute(conditionalFieldsDataAttribute));
 
         // If any of the above is not present, don't initialize a ConditionalFieldTrigger for this formgroup
-        if (!name || !type || !conditionalFieldsData) return;
+        if (!name || !type || !conditionalFieldsData) continue;
 
         switch (type) {
-            case 'input':
+            case 'input': {
                 new InputFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'radio':
+            }
+            case 'radio': {
                 new RadioFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'checkbox':
+            }
+            case 'checkbox': {
                 new CheckboxFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'boolean':
+            }
+            case 'boolean': {
                 new BooleanFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'select':
+            }
+            case 'select': {
                 new SelectFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            case 'multiselect':
+            }
+            case 'multiselect': {
                 new MultiSelectFieldTrigger(name, element, conditionalFieldsData);
                 break;
-            default:
+            }
+            default: {
                 console.error(
                     `Error while trying to initialise conditional fields: Trigger handling for type ${type} is not implemented yet ...`
                 );
+            }
         }
-    });
+    }
 };
 
 const initConditionalFields = () => {

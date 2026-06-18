@@ -16,4 +16,4 @@ const sortableDirective = (el) => {
     });
 };
 
-export { sortableDirective as default };
+export default sortableDirective;

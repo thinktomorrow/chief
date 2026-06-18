@@ -31,8 +31,8 @@ const hiveAssistant = (config) => ({
 
                 this.$dispatch('open-dialog', { id: this.dialogId });
             }
-        } catch (e) {
-            console.error('Hive suggestie mislukt', e);
+        } catch (error) {
+            console.error('Hive suggestie mislukt', error);
         } finally {
             this.loading = false;
         }
@@ -44,4 +44,4 @@ const hiveAssistant = (config) => ({
     },
 });
 
-export { hiveAssistant as default };
+export default hiveAssistant;

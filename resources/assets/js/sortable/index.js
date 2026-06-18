@@ -11,8 +11,8 @@ window.Sortable = Sortable;
  */
 window.Livewire.directive('sortable', ({ el }) => {
     el.sortable = Sortable.create(el, {
-        draggable: '[wire\\:sortable\\.item]',
-        handle: '[wire\\:sortable\\.handle]',
+        draggable: String.raw`[wire\:sortable\.item]`,
+        handle: String.raw`[wire\:sortable\.handle]`,
         dataIdAttr: 'wire:sortable.item',
         ghostClass: 'bg-primary-50',
         dragClass: 'bg-white',

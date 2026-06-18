@@ -1,6 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'vite';
-import eslint from 'vite-plugin-eslint';
+import eslint from 'vite-plugin-eslint2';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import shell from 'shelljs';
@@ -15,8 +15,8 @@ export default defineConfig({
     plugins: [
         eslint({
             include: ['resources/assets/**/*.js'],
-            failOnWarning: false,
-            failOnError: false,
+            build: true,
+            emitErrorAsWarning: true,
         }),
         laravel({
             input: ['resources/assets/css/main.css', 'resources/assets/js/main.js'],

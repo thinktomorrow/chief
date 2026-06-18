@@ -6,4 +6,4 @@ const multiselectDirective = (el, { expression }, { evaluate }) => {
     el.choices = new Choices(args.selectEl, args.options);
 };
 
-export { multiselectDirective as default };
+export default multiselectDirective;

@@ -7,4 +7,4 @@ class BooleanFieldTrigger extends CheckboxFieldTrigger {
     }
 }
 
-export { BooleanFieldTrigger as default };
+export default BooleanFieldTrigger;

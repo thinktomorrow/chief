@@ -10,4 +10,4 @@ class InputFieldTrigger extends ConditionalFieldTrigger {
     }
 }
 
-export { InputFieldTrigger as default };
+export default InputFieldTrigger;

@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Eslint unicorn plugin for better, recommended js linting. Fixed all eslint errors/warnings that surfaced after implementing this new plugin.
+- Fixed: Table select filter horizontal scroll without scrollbar + larger dropdown width
+
 ## [0.10.26] - 2026-06-16
 
 - Fixed: time preview now shows in 24-h format instead of 12-h

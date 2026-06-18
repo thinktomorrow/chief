@@ -3,7 +3,7 @@ const CharacterCount = (config) => ({
     fieldId: config.fieldId,
     max: config.max,
     init() {
-        const formField = document.querySelector(`#${this.fieldId.replaceAll('.', '\\.')}`);
+        const formField = document.querySelector(`#${this.fieldId.replaceAll('.', String.raw`\.`)}`);
 
         if (!formField) {
             console.error(`Character count not initiated: No formField found by selector: #${this.fieldId}`);
@@ -19,8 +19,8 @@ const CharacterCount = (config) => ({
     removeHTML(input) {
         let tmp = document.createElement('div');
         tmp.innerHTML = input;
-        return tmp.textContent || tmp.innerText || '';
+        return tmp.textContent || '';
     },
 });
 
-export { CharacterCount as default };
+export default CharacterCount;

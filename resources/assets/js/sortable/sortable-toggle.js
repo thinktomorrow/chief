@@ -5,16 +5,16 @@ const SortableToggle = function (Sortables, options = {}) {
     this.onShowSorting = options.onShowSorting || function () {};
     this.onHideSorting = options.onHideSorting || function () {};
 
-    this.sortToggles = Array.from(document.querySelectorAll('[data-sortable-toggle]'));
-    this.hiddenWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-hide-when-sorting]'));
-    this.showWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-show-when-sorting]'));
+    this.sortToggles = [...document.querySelectorAll('[data-sortable-toggle]')];
+    this.hiddenWhenSortingEls = [...document.querySelectorAll('[data-sortable-hide-when-sorting]')];
+    this.showWhenSortingEls = [...document.querySelectorAll('[data-sortable-show-when-sorting]')];
 
-    this.classWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-class-when-sorting]'));
-    this.classWhenNotSortingEls = Array.from(document.querySelectorAll('[data-sortable-class-when-not-sorting]'));
+    this.classWhenSortingEls = [...document.querySelectorAll('[data-sortable-class-when-sorting]')];
+    this.classWhenNotSortingEls = [...document.querySelectorAll('[data-sortable-class-when-not-sorting]')];
 
-    this.sortToggles.forEach((toggle) => {
+    for (const toggle of this.sortToggles) {
         toggle.addEventListener('click', this.toggle.bind(this));
-    });
+    }
 
     // Default view
     if (this.isSorting) {
@@ -28,60 +28,60 @@ SortableToggle.prototype.toggle = function (e) {
     this.isSorting = !this.isSorting;
 
     if (this.isSorting) {
-        e.target.innerText = 'Stop met sorteren';
+        e.target.textContent = 'Stop met sorteren';
         this.showSorting();
     } else {
-        e.target.innerText = 'Pas volgorde aan';
+        e.target.textContent = 'Pas volgorde aan';
         this.hideSorting();
     }
 };
 
 SortableToggle.prototype.showSorting = function () {
-    this.hiddenWhenSortingEls.forEach((el) => {
+    for (const el of this.hiddenWhenSortingEls) {
         el.style.display = 'none';
-    });
+    }
 
-    this.showWhenSortingEls.forEach((el) => {
+    for (const el of this.showWhenSortingEls) {
         el.style.removeProperty('display');
-    });
+    }
 
-    this.classWhenSortingEls.forEach((el) => {
-        el.classList.add(el.getAttribute('data-sortable-class-when-sorting').split(','));
-    });
+    for (const el of this.classWhenSortingEls) {
+        el.classList.add(el.dataset.sortableClassWhenSorting.split(','));
+    }
 
-    this.classWhenNotSortingEls.forEach((el) => {
-        el.classList.remove(el.getAttribute('data-sortable-class-when-not-sorting').split(','));
-    });
+    for (const el of this.classWhenNotSortingEls) {
+        el.classList.remove(el.dataset.sortableClassWhenNotSorting.split(','));
+    }
 
-    this.Sortables.forEach((sortableInstance) => {
+    for (const sortableInstance of this.Sortables) {
         sortableInstance.option('disabled', false);
-    });
+    }
 
     this.onShowSorting();
 };
 
 SortableToggle.prototype.hideSorting = function () {
-    this.hiddenWhenSortingEls.forEach((el) => {
+    for (const el of this.hiddenWhenSortingEls) {
         el.style.removeProperty('display');
-    });
+    }
 
-    this.showWhenSortingEls.forEach((el) => {
+    for (const el of this.showWhenSortingEls) {
         el.style.display = 'none';
-    });
+    }
 
-    this.classWhenSortingEls.forEach((el) => {
-        el.classList.remove(el.getAttribute('data-sortable-class-when-sorting').split(','));
-    });
+    for (const el of this.classWhenSortingEls) {
+        el.classList.remove(el.dataset.sortableClassWhenSorting.split(','));
+    }
 
-    this.classWhenNotSortingEls.forEach((el) => {
-        el.classList.add(el.getAttribute('data-sortable-class-when-not-sorting').split(','));
-    });
+    for (const el of this.classWhenNotSortingEls) {
+        el.classList.add(el.dataset.sortableClassWhenNotSorting.split(','));
+    }
 
-    this.Sortables.forEach((sortableInstance) => {
+    for (const sortableInstance of this.Sortables) {
         sortableInstance.option('disabled', true);
-    });
+    }
 
     this.onHideSorting();
 };
 
-export { SortableToggle as default };
+export default SortableToggle;

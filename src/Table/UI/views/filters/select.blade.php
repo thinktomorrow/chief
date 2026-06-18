@@ -7,10 +7,10 @@
         {{ $getLabel() ?? $getKey() }}
 
         @if ($this->getActiveFilterValue($getKey()))
-            <div class="flex max-w-64 items-start gap-1 overflow-x-auto">
+            <div class="flex max-w-64 scrollbar-none items-start gap-1 overflow-x-auto">
                 <span class="text-grey-200">|</span>
 
-                <span class="text-nowrap text-primary-500">{{ $this->getActiveFilterValue($getKey()) }}</span>
+                <span class="text-primary-500 text-nowrap">{{ $this->getActiveFilterValue($getKey()) }}</span>
             </div>
         @endif
     </x-chief-table::filter.select>
@@ -24,7 +24,7 @@
             :selection='$getValue() ?: $getDefault()'
             :multiple='$allowMultiple()'
             dropdown-position="static"
-            class="w-64"
+            class="w-96"
         />
 
         <div class="flex items-start justify-between gap-2">

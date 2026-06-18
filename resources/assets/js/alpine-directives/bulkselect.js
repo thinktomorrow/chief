@@ -20,10 +20,9 @@ const Bulkselect = (config) => ({
                 const checkboxes = this.$el.querySelectorAll('[data-table-row-checkbox]');
 
                 // Merge with current selection and make sure they are unique
-                this.selection = [
-                    ...this.selection,
-                    ...Array.from(checkboxes).map((checkbox) => checkbox.value),
-                ].filter((value, index, self) => self.indexOf(value) === index);
+                this.selection = [...this.selection, ...[...checkboxes].map((checkbox) => checkbox.value)].filter(
+                    (value, index, self) => self.indexOf(value) === index
+                );
             } else {
                 // Remove all items from current page from selection
                 this.selection = this.selection.filter(
@@ -64,9 +63,7 @@ const Bulkselect = (config) => ({
         return this.pageItems;
     },
     setPageItems() {
-        this.pageItems = Array.from(this.$el.querySelectorAll('[data-table-row-checkbox]')).map(
-            (checkbox) => checkbox.value
-        );
+        this.pageItems = [...this.$el.querySelectorAll('[data-table-row-checkbox]')].map((checkbox) => checkbox.value);
     },
     getSelectedPageItems() {
         return this.pageItems.filter((item) => {
@@ -77,7 +74,7 @@ const Bulkselect = (config) => ({
         const pageItems = this.getPageItems();
         const selectedPageItems = this.getSelectedPageItems();
 
-        if (this.selection.length < 1) {
+        if (this.selection.length === 0) {
             this.isAllSelectedOnPage = false;
             this.isIndeterminateOnPage = false;
             this.tableHeaderCheckbox.checked = false;
@@ -100,4 +97,4 @@ const Bulkselect = (config) => ({
     },
 });
 
-export { Bulkselect as default };
+export default Bulkselect;

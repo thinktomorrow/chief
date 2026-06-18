@@ -37,7 +37,7 @@
                     this.$el.scrollLeft >= this.$el.scrollWidth - this.$el.clientWidth
             },
         }"
-        class="scrollbar:hidden overflow-x-auto whitespace-nowrap"
+        class="scrollbar-none overflow-x-auto whitespace-nowrap"
     >
         <table class="divide-grey-100 min-w-full table-fixed divide-y">
             {{ $slot }}

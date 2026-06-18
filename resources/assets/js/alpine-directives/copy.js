@@ -18,4 +18,4 @@ const copyDirective = (el, { expression }, { evaluate }) => {
     });
 };
 
-export { copyDirective as default };
+export default copyDirective;

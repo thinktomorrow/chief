@@ -7,9 +7,9 @@ const Tabs = (config) => ({
     showTabs: config.showTabs,
     tabs: [],
     init() {
-        this.tabs = Array.from(this.$refs.tabs.children).map((node) => ({
-            id: node.getAttribute('data-tab-id'),
-            label: JSON.parse(node.getAttribute('data-tab-label')),
+        this.tabs = [...this.$refs.tabs.children].map((node) => ({
+            id: node.dataset.tabId,
+            label: JSON.parse(node.dataset.tabLabel),
         }));
 
         if (!this.activeTab) {
@@ -36,11 +36,11 @@ const Tabs = (config) => ({
         if (this.activeTab === e.detail.id) return;
 
         // Check if this tabs accepts the given external tab
-        this.tabs.forEach(({ id }) => {
+        for (const { id } of this.tabs) {
             if (id === e.detail.id) {
                 this.activeTab = e.detail.id;
             }
-        });
+        }
 
         this.repositionTabMarker();
     },
@@ -55,7 +55,7 @@ const Tabs = (config) => ({
     },
     repositionTabMarker() {
         this.$nextTick(() => {
-            const tabElement = Array.from(this.$root.querySelectorAll('[role="tablist"] [role="tab"]')).find(
+            const tabElement = [...this.$root.querySelectorAll('[role="tablist"] [role="tab"]')].find(
                 (tab) => tab.getAttribute('aria-selected') === 'true'
             );
 
@@ -68,14 +68,14 @@ const Tabs = (config) => ({
     // Src: https://stackoverflow.com/questions/1462138/event-listener-for-when-element-becomes-visible#answer-66394121
     onVisible(element, callback) {
         new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry) => {
+            for (const entry of entries) {
                 if (entry.intersectionRatio > 0) {
                     callback(element);
                     observer.disconnect();
                 }
-            });
+            }
         }).observe(element);
     },
 });
 
-export { Tabs as default };
+export default Tabs;
