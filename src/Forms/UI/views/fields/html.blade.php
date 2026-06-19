@@ -18,4 +18,4 @@
     </x-chief::form.input.textarea>
 </div>
 
-@include('chief-form::fields._partials.charactercount')
+@include ('chief-form::fields._partials.charactercount')

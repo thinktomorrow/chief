@@ -82,6 +82,24 @@ class RenderTextualFieldsTest extends ChiefTestCase
         );
     }
 
+    public function test_localized_text_redactor_options_reference_the_localized_toolbar()
+    {
+        $component = Text::make('xxx')
+            ->elementId('xxx_id')
+            ->locales(['nl'])
+            ->redactorOptions(['buttons' => ['bold']]);
+
+        $this->assertSame(
+            '#js-external-editor-toolbar-xxx_id_nl',
+            $component->getRedactorOptions('nl')['toolbarExternal']
+        );
+
+        $render = $component->toHtml();
+
+        $this->assertStringContainsString('id="js-external-editor-toolbar-xxx_id_nl"', $render);
+        $this->assertStringContainsString('&quot;toolbarExternal&quot;:&quot;#js-external-editor-toolbar-xxx_id_nl&quot;', $render);
+    }
+
     public function test_number_field_accepts_floats()
     {
         $numberField = Number::make('number')->step(0.2)->value(2.5);

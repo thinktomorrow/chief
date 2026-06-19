@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Added: Eslint unicorn plugin for better, recommended js linting. Fixed all eslint errors/warnings that surfaced after implementing this new plugin.
 - Changed: TimeTable styling tweaks for a more compact and uniform layout
+- Fixed: Redactor toolbar is now correctly showing up if custom redactor options are defined on a text field
 - Fixed: Table select filter horizontal scroll without scrollbar + larger dropdown width
 - Fixed: Field preview slot now doesn't overflow content of windows anymore
 - Fixed: Chief favicon path doesn't break while running Vite dev build
