@@ -9,6 +9,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Changed: TimeTable styling tweaks for a more compact and uniform layout
 - Fixed: Table select filter horizontal scroll without scrollbar + larger dropdown width
 - Fixed: Field preview slot now doesn't overflow content of windows anymore
+- Fixed: Chief favicon path doesn't break while running Vite dev build
 
 ## [0.10.26] - 2026-06-16
 
