@@ -20,7 +20,7 @@
             method="POST"
         >
             @csrf
-            @method('PUT')
+            @method ('PUT')
 
             @foreach ($fields as $field)
                 {!! $field->render() !!}

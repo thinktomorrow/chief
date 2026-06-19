@@ -5,11 +5,12 @@
 @endphp
 
 @if ($timeTable)
-    <x-chief-timetable::time-table :time-table="$timeTable" />
-
-    <x-chief::link href="{{ route('chief.timetables.edit', $timetable_id) }}" size="sm" variant="blue" class="mt-4">
-        Bewerk deze openingsuren
-    </x-chief::link>
+    <div class="space-y-3">
+        <x-chief-timetable::time-table :time-table="$timeTable" />
+        <x-chief::button href="{{ route('chief.timetables.edit', $timetable_id) }}" size="sm" variant="grey">
+            Bewerk deze openingsuren
+        </x-chief::button>
+    </div>
 @else
     <p class="body body-dark">Er is nog geen weekschema geselecteerd.</p>
 @endif

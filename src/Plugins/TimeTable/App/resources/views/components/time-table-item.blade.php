@@ -18,18 +18,18 @@
 @endphp
 
 <div
-    @class([
+    @class ([
         'border-grey-100 block w-full shrink-0 grow sm:w-32 sm:p-2',
         'sm:border-r' => $loop->iteration % 7 != 0,
         'sm:border-b' => count($days) - $loop->index > 7,
     ])
 >
-    <div {{ $attributes->class('space-y-1') }}>
+    <div {{ $attributes->class('space-y-1.5') }}>
         <div class="flex items-start justify-between gap-2">
             @if ($title)
                 <div
-                    @class([
-                        'body body-dark mt-1 text-sm leading-5 font-medium',
+                    @class ([
+                        'body body-dark mt-0.5 text-sm leading-5 font-medium',
                         'text-primary-500' => $isToday,
                     ])
                 >
@@ -42,7 +42,7 @@
             @endif
 
             @if ($exception)
-                <x-chief::icon.alert-circle class="m-1.5 size-5 text-orange-500" />
+                <x-chief::icon.alert-circle class="mt-0.5 size-5 text-orange-500" />
             @endif
 
             @if (! $isCalendar && isset($dayModel))
@@ -50,7 +50,7 @@
                     href="{{ route('chief.timetable_days.edit', $dayModel->id) }}"
                     title="Dag aanpassen"
                     variant="grey"
-                    size="sm"
+                    size="xs"
                     class="shrink-0"
                 >
                     <x-chief::icon.quill-write />
@@ -58,19 +58,15 @@
             @endif
         </div>
 
-        <div @class(['space-y-1'])>
+        <div @class (['flex flex-col items-start gap-1.5'])>
             @forelse (iterator_to_array($day->getIterator()) as $slot)
-                <p @class(['label label-xs', 'label-grey' => ! $exception, 'label-warning' => $exception])>
-                    {{ $slot }}
-                </p>
+                <x-chief::badge :variant="$exception ? 'orange' : 'grey'">{{ $slot }}</x-chief::badge>
             @empty
-                <p @class(['label label-xs', 'label-grey' => ! $exception, 'label-warning' => $exception])>Gesloten</p>
+                <x-chief::badge :variant="$exception ? 'orange' : 'grey'">Gesloten</x-chief::badge>
             @endforelse
 
             @if ($day->getData())
-                <p class="body text-grey-500 text-xs">
-                    {{ $day->getData() }}
-                </p>
+                <p class="body text-grey-500 text-xs">{{ $day->getData() }}</p>
             @endif
         </div>
     </div>

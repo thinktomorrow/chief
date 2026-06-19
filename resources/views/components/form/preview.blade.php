@@ -1,4 +1,4 @@
-@props([
+@props ([
     'label' => null,
     'description' => null,
     'size' => 'base',
@@ -18,32 +18,26 @@
     };
 @endphp
 
-<div {{ $attributes }} data-slot="form-preview" @class(['@container' => $label || $description])>
-    <div @class([
+<div {{ $attributes }} data-slot="form-preview" @class (['@container' => $label || $description])>
+    <div @class ([
         'flex flex-wrap items-start gap-x-4 gap-y-1',
         $containerClass,
     ])>
         @if ($label || $description)
-            <div @class([
+            <div @class ([
                 'shrink-0 space-y-2',
                 $labelClass,
             ])>
                 @if ($label)
-                    <p class="text-grey-500 mt-0.5 text-sm/5 font-medium">
-                        {{ $label }}
-                    </p>
+                    <p class="text-grey-500 mt-0.5 text-sm/5 font-medium">{{ $label }}</p>
                 @endif
 
                 @if ($description)
-                    <x-chief::form.description class="text-grey-700">
-                        {{ $description }}
-                    </x-chief::form.description>
+                    <x-chief::form.description class="text-grey-700"> {{ $description }} </x-chief::form.description>
                 @endif
             </div>
         @endif
 
-        <div class="grow">
-            {{ $slot }}
-        </div>
+        <div class="max-w-full grow">{{ $slot }}</div>
     </div>
 </div>

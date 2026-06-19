@@ -6,7 +6,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## Unreleased
 
 - Added: Eslint unicorn plugin for better, recommended js linting. Fixed all eslint errors/warnings that surfaced after implementing this new plugin.
+- Changed: TimeTable styling tweaks for a more compact and uniform layout
 - Fixed: Table select filter horizontal scroll without scrollbar + larger dropdown width
+- Fixed: Field preview slot now doesn't overflow content of windows anymore
 
 ## [0.10.26] - 2026-06-16
 

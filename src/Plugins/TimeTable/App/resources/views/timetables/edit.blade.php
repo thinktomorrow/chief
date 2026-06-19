@@ -16,7 +16,7 @@
     <x-chief::window>
         <form id="timeTableEditForm" action="{{ route('chief.timetables.update', $model->id) }}" method="POST">
             @csrf
-            @method('PUT')
+            @method ('PUT')
 
             @foreach ($fields as $field)
                 {!! $field->render() !!}
@@ -45,6 +45,7 @@
                     size="sm"
                 >
                     <x-chief::icon.plus-sign />
+                    <span>Voeg toe</span>
                 </x-chief::button>
             </x-slot>
 
@@ -53,43 +54,37 @@
                     @php
                         $title = \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromDateTime($date->date)->getLabel() . ' ' . $date->date->format('d/m/Y');
                     @endphp
-
                     <div
-                        @class([
-                            'w-full space-y-1',
+                        @class ([
+                            'w-full space-y-1.5',
                             'pt-3' => ! $loop->first,
-                            'border-b border-grey-100 pb-4' => ! $loop->last,
+                            'border-b border-grey-100 pb-3' => ! $loop->last,
                         ])
                     >
                         <div class="flex items-start justify-between gap-2">
                             @if ($title)
-                                <div class="body body-dark mt-1 text-sm font-medium leading-5">
-                                    {{ $title }}
-                                </div>
+                                <div class="body text-grey-800 mt-0.5 text-sm leading-5 font-medium">{{ $title }}</div>
                             @endif
 
                             <x-chief::button
                                 href="{{ route('chief.timetable_dates.edit', [$model->id, $date->id]) }}"
+                                title="Uitzondering aanpassen"
                                 variant="grey"
-                                size="sm"
+                                size="xs"
                             >
                                 <x-chief::icon.quill-write />
                             </x-chief::button>
                         </div>
 
-                        <div class="flex flex-col items-start gap-1">
+                        <div class="flex flex-col items-start gap-1.5">
                             @forelse ($date->getSlots()->getSlots() as $slot)
-                                <p class="label label-xs label-grey">
-                                    {{ $slot->getAsString() }}
-                                </p>
+                                <x-chief::badge variant="grey">{{ $slot->getAsString() }}</x-chief::badge>
                             @empty
-                                <p class="label label-xs label-grey">Gesloten</p>
+                                <x-chief::badge variant="grey">Gesloten</x-chief::badge>
                             @endforelse
 
                             @if ($date->content)
-                                <p class="body text-xs text-grey-500">
-                                    {{ $date->content }}
-                                </p>
+                                <p class="body text-grey-500 text-xs">{{ $date->content }}</p>
                             @endif
                         </div>
                     </div>

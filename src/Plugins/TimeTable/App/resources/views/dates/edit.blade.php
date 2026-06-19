@@ -15,7 +15,7 @@
     <x-chief::window>
         <form id="tagsEditForm" action="{{ route('chief.timetable_dates.update', $model->id) }}" method="POST">
             @csrf
-            @method('PUT')
+            @method ('PUT')
 
             @foreach ($fields as $field)
                 {!! $field->render() !!}
