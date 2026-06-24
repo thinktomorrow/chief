@@ -49,9 +49,9 @@
         </div>
 
         @foreach (app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
-            <div>
+            <template x-teleport="body">
                 <livewire:is component="{{ $livewireFileComponent }}" parent-id="{{ $this->getId() }}" />
-            </div>
+            </template>
         @endforeach
     </x-chief::window>
 </div>
