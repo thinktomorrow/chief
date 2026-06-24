@@ -38,7 +38,7 @@
     </template>
 
     @foreach (app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
-        <div>
+        <template x-teleport="body">
             <livewire:is
                 component="{{ $livewireFileComponent }}"
                 parent-id="{{ $this->getId() }}"
@@ -46,6 +46,6 @@
                 field-key="{{ $fieldKey }}"
                 locale="{{ $locale }}"
             />
-        </div>
+        </template>
     @endforeach
 </x-chief-assets::upload-and-dropzone>
