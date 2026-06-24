@@ -15,6 +15,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Table select filter horizontal scroll without scrollbar + larger dropdown width
 - Fixed: Field preview slot now doesn't overflow content of windows anymore
 - Fixed: Chief favicon path doesn't break while running Vite dev build
+- Fixed: HotSpots plugin now supports localized fields — locale toggle is rendered when multiple locales are active, and localized field values are correctly stored and validated per locale.
+- Fixed: HotSpots file-edit-action button now correctly opens its modal on top of existing modals/drawers.
 
 ## [0.10.26] - 2026-06-16
 
