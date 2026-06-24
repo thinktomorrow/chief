@@ -43,7 +43,7 @@
                                 x-on:click.stop="$wire.activateHotSpot('{{ $hotSpot['id'] }}')"
                                 class="hover:bg-primary relative h-4 w-4 cursor-pointer rounded-full bg-white shadow-lg ring-2 ring-black/10 transition-all duration-100 ease-in-out"
                                 x-bind:class="{
-                                    '!bg-primary-500 !border !border-primary-600':
+                                    'bg-primary-500! border! border-primary-600!':
                                         '{{ $hotSpot['id'] }}' === activeIndex,
                                 }"
                             ></div>
@@ -61,6 +61,20 @@
             </div>
 
             <div class="w-full sm:w-2/5">
+                @if ($errors->any())
+                    <x-chief::callout variant="red" class="mt-6">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ ucfirst($error) }}</p>
+                        @endforeach
+                    </x-chief::callout>
+                @endif
+
+                @if (count($locales) > 1)
+                    <div class="mb-6">
+                        @include ('chief-form::livewire._partials.locale-toggle', ['entangleScopedLocale' => true])
+                    </div>
+                @endif
+
                 @forelse ($this->getGroupedComponents() as $hotSpotId => $componentsPerHotSpot)
                     <div wire:key="{{ $hotSpotId }}" x-show="activeIndex == '{{ $hotSpotId }}'" class="space-y-6">
                         @foreach ($componentsPerHotSpot as $component)
@@ -75,20 +89,9 @@
                     <div class="space-y-2">
                         <h2 class="body-dark body font-medium">Je hebt nog geen hotspots toegevoegd.</h2>
 
-                        <p class="body text-grey-500">
-                            Om een hotspot toe te voegen klik je op de afbeelding op de plaats waar je een hotspot wil
-                            toevoegen. Daarna kan je hier de inhoud van de hotspot aanpassen.
-                        </p>
+                        <p class="body text-grey-500">Om een hotspot toe te voegen klik je op de afbeelding op de plaats waar je een hotspot wil toevoegen. Daarna kan je hier de inhoud van de hotspot aanpassen.</p>
                     </div>
                 @endforelse
-
-                @if ($errors->any())
-                    <x-chief::callout variant="red" class="mt-6">
-                        @foreach ($errors->all() as $error)
-                            <p>{{ ucfirst($error) }}</p>
-                        @endforeach
-                    </x-chief::callout>
-                @endif
 
                 <x-slot name="footer">
                     <x-chief::dialog.modal.footer>

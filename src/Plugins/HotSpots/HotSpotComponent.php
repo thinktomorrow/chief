@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithForm;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithGroupedForms;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
 
 class HotSpotComponent extends Component
 {
@@ -18,6 +19,7 @@ class HotSpotComponent extends Component
     use InteractsWithGroupedForms;
     use ShowsAsDialog;
     use WithFileUploads;
+    use WithLocaleToggle;
 
     public $parentId;
 
@@ -39,6 +41,7 @@ class HotSpotComponent extends Component
         return [
             'open' => 'open',
             'open-'.$this->parentId => 'open',
+            'scoped-to-locale' => 'onScopedToLocale',
         ];
     }
 
@@ -58,6 +61,13 @@ class HotSpotComponent extends Component
         }
 
         $this->extractGroupedFormComponents();
+
+        $this->initializeLocales($value, $this->getComponents());
+    }
+
+    public function onScopedToLocale(string $locale): void
+    {
+        $this->scopedLocale = $locale;
     }
 
     private function setFile(PreviewFile $previewFile)
@@ -133,7 +143,7 @@ class HotSpotComponent extends Component
 
     public function close()
     {
-        $this->reset(['previewFile', 'form', 'components', 'hotSpots', 'activeHotSpotId']);
+        $this->reset(['previewFile', 'form', 'components', 'hotSpots', 'activeHotSpotId', 'locales', 'scopedLocale']);
         $this->hotSpots = [];
 
         $this->isOpen = false;
