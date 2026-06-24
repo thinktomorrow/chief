@@ -62,7 +62,7 @@
 
             <div class="w-full sm:w-2/5">
                 @if ($errors->any())
-                    <x-chief::callout variant="red" class="mt-6">
+                    <x-chief::callout variant="red" class="mb-6">
                         @foreach ($errors->all() as $error)
                             <p>{{ ucfirst($error) }}</p>
                         @endforeach
