@@ -30,6 +30,7 @@ class MenuItemApplication
             'menu_id' => $command->getMenuId(),
             'type' => $command->getLinkType(),
             'parent_id' => $command->getParentId(),
+            'order' => $this->getNextOrder($command->getMenuId(), $command->getParentId()),
         ]);
 
         if ($command->getOwnerReference()) {
@@ -60,8 +61,14 @@ class MenuItemApplication
         }
 
         $model = MenuItem::findorFail($command->getMenuItemId());
+        $parentChanged = $model->parent_id != $command->getParentId();
+
         $model->type = $command->getLinkType();
         $model->parent_id = $command->getParentId();
+
+        if ($parentChanged) {
+            $model->order = $this->getNextOrder($model->menu_id, $command->getParentId(), (int) $model->id);
+        }
 
         if ($command->getOwnerReference()) {
             $model->owner_type = $command->getOwnerReference()->shortClassName();
@@ -85,6 +92,17 @@ class MenuItemApplication
         $model->save();
 
         event(new MenuItemUpdated((string) $model->id));
+    }
+
+    private function getNextOrder(string|int $menuId, ?string $parentId, ?int $ignoreMenuItemId = null): int
+    {
+        $highestOrder = MenuItem::query()
+            ->where('menu_id', $menuId)
+            ->where('parent_id', $parentId)
+            ->when($ignoreMenuItemId, fn ($query) => $query->where('id', '<>', $ignoreMenuItemId))
+            ->max('order');
+
+        return is_null($highestOrder) ? 0 : $highestOrder + 1;
     }
 
     public function delete(DeleteMenuItem $command): void

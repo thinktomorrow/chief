@@ -173,6 +173,90 @@ class MenuItemApplicationTest extends ChiefTestCase
         });
     }
 
+    public function test_it_places_a_new_child_item_at_the_end_of_its_parent_scope(): void
+    {
+        $parentMenuItem = MenuItem::create([
+            'menu_id' => 1,
+            'type' => 'custom',
+        ]);
+
+        MenuItem::create([
+            'menu_id' => 1,
+            'parent_id' => $parentMenuItem->id,
+            'type' => 'custom',
+            'order' => 0,
+        ]);
+
+        MenuItem::create([
+            'menu_id' => 1,
+            'parent_id' => $parentMenuItem->id,
+            'type' => 'custom',
+            'order' => 1,
+        ]);
+
+        $menuItemId = $this->menuItemApplication->create(new CreateMenuItem(
+            menuId: 1,
+            linkType: 'custom',
+            parentId: (string) $parentMenuItem->id,
+            ownerReference: null,
+            data: ['url' => ['nl' => '/child']]
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'parent_id' => $parentMenuItem->id,
+            'order' => 2,
+        ]);
+    }
+
+    public function test_it_places_a_reparented_item_at_the_end_of_the_new_parent_scope(): void
+    {
+        $firstParent = MenuItem::create([
+            'menu_id' => 1,
+            'type' => 'custom',
+        ]);
+
+        $secondParent = MenuItem::create([
+            'menu_id' => 1,
+            'type' => 'custom',
+        ]);
+
+        $menuItem = MenuItem::create([
+            'menu_id' => 1,
+            'parent_id' => $firstParent->id,
+            'type' => 'custom',
+            'order' => 0,
+        ]);
+
+        MenuItem::create([
+            'menu_id' => 1,
+            'parent_id' => $secondParent->id,
+            'type' => 'custom',
+            'order' => 0,
+        ]);
+
+        MenuItem::create([
+            'menu_id' => 1,
+            'parent_id' => $secondParent->id,
+            'type' => 'custom',
+            'order' => 1,
+        ]);
+
+        $this->menuItemApplication->update(new UpdateMenuItem(
+            menuItemId: (string) $menuItem->id,
+            linkType: 'custom',
+            ownerReference: null,
+            parentId: (string) $secondParent->id,
+            data: ['url' => ['nl' => '/moved-child']]
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItem->id,
+            'parent_id' => $secondParent->id,
+            'order' => 2,
+        ]);
+    }
+
     public function test_it_can_create_a_menu_item_with_owner_reference(): void
     {
         Event::fake();
