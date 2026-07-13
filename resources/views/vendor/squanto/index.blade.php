@@ -7,42 +7,53 @@
         </x-chief::button>
     </form>
 
-    <x-chief::window>
-        <div class="divide-grey-100 divide-y">
-            @foreach ($pages as $page)
-                <div
-                    @class([
-                        'flex items-center justify-between gap-4',
-                        'pt-2.5' => ! $loop->first,
-                        'pb-2.5' => ! $loop->last,
-                    ])
-                >
-                    <div class="mt-0.75 flex items-start gap-1.5">
-                        <a
-                            href="{{ route('squanto.edit', $page->slug()) }}"
-                            title="{{ ucfirst($page->label()) }}"
-                            class="text-grey-800 leading-6 hover:underline hover:underline-offset-2"
+    <div class="space-y-4">
+        @foreach ($pageGroups as $sourceLabel => $groupedPages)
+            <x-chief::window :title="$sourceLabel">
+                <div class="divide-grey-100 divide-y">
+                    @foreach ($groupedPages as $page)
+                        <div
+                            @class([
+                                'flex items-center justify-between gap-4',
+                                'pt-2.5' => ! $loop->first,
+                                'pb-2.5' => ! $loop->last,
+                            ])
                         >
-                            {{ ucfirst($page->label()) }}
-                        </a>
+                            <div class="mt-0.75 flex items-start gap-1.5">
+                                <div>
+                                    <a
+                                        href="{{ route('squanto.edit', $page->slug()) }}"
+                                        title="{{ ucfirst($page->label()) }}"
+                                        class="text-grey-800 leading-6 hover:underline hover:underline-offset-2"
+                                    >
+                                        {{ ucfirst($page->label()) }}
+                                    </a>
 
-                        @if ($percentage = $page->completionPercentage())
-                            <x-chief::badge :variant="$percentage == 100 ? 'green' : 'orange'" size="sm">
-                                {{ $page->completionPercentage() }}%
-                            </x-chief::badge>
-                        @endif
-                    </div>
+                                    @if (method_exists($page, 'namespace') && $page->namespace())
+                                        <div class="text-grey-500 text-xs">{{ $page->namespace() }}
+                                            ::{{ $page->group() }}</div>
+                                    @endif
+                                </div>
 
-                    <x-chief::button
-                        href="{{ route('squanto.edit',$page->slug()) }}"
-                        title="Bewerk"
-                        variant="grey"
-                        size="sm"
-                    >
-                        <x-chief::icon.quill-write />
-                    </x-chief::button>
+                                @if ($percentage = $page->completionPercentage())
+                                    <x-chief::badge :variant="$percentage == 100 ? 'green' : 'orange'" size="sm">
+                                        {{ $page->completionPercentage() }}%
+                                    </x-chief::badge>
+                                @endif
+                            </div>
+
+                            <x-chief::button
+                                href="{{ route('squanto.edit', $page->slug()) }}"
+                                title="Bewerk"
+                                variant="grey"
+                                size="sm"
+                            >
+                                <x-chief::icon.quill-write />
+                            </x-chief::button>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
-    </x-chief::window>
+            </x-chief::window>
+        @endforeach
+    </div>
 </x-chief::page.template>

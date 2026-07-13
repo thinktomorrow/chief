@@ -24,7 +24,7 @@
         "spatie/laravel-sitemap": "^7.3.6",
         "thinktomorrow/assetlibrary": "^1.0.2",
         "thinktomorrow/dynamic-attributes": "^2.0.3",
-        "thinktomorrow/squanto": "^5.1.0",
+        "thinktomorrow/squanto": "@dev",
         "thinktomorrow/url": "^4.0.0",
         "thinktomorrow/vine": "^0.5.3"
     },
@@ -41,6 +41,15 @@
         "phpunit/phpunit": "^11.5",
         "spatie/opening-hours": "^2.41"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../squanto",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Thinktomorrow\\Chief\\App\\": "app/",
