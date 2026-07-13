@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f98e0b1baad68b82d75c7bd2b1d1e80",
+    "content-hash": "6b49b63762d02b02561fc20c3c02bd22",
     "packages": [
         {
             "name": "brick/math",
@@ -7161,7 +7161,7 @@
             "dist": {
                 "type": "path",
                 "url": "../squanto",
-                "reference": "c32a1e9d4f2c354b2582ef753a647193b8646367"
+                "reference": "ce686961d129ab9928341e68ef9ec9b3cb0c7ef5"
             },
             "require": {
                 "ext-json": "*",
