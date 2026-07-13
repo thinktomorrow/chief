@@ -4,10 +4,11 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin\Squanto;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Squanto\Database\DatabaseLine;
-use Thinktomorrow\Squanto\Squanto;
 
 class IndexTranslationTest extends ChiefTestCase
 {
+    use InteractsWithSquantoSources;
+
     public function test_admin_can_view_the_translation_index(): void
     {
         $response = $this->asAdmin()->get(route('squanto.index'));
@@ -140,17 +141,5 @@ class IndexTranslationTest extends ChiefTestCase
             ->assertStatus(200)
             ->assertViewIs('squanto::index')
             ->assertDontSee('home.hero.title');
-    }
-
-    private function registerPluginSource(): void
-    {
-        Squanto::registerPlugin(dirname((string) config('squanto.lang_path')).'/plugin/lang', 'chief-form-plugin', 'Form plugin');
-    }
-
-    private function skipWithoutNamespacedSquantoSupport(): void
-    {
-        if (! class_exists(Squanto::class) || ! method_exists(Squanto::class, 'register')) {
-            $this->markTestSkipped('Requires Squanto source registry support.');
-        }
     }
 }

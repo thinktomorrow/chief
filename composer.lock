@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b49b63762d02b02561fc20c3c02bd22",
+    "content-hash": "19e075fdd4de8dc2cbd918aa4c1b029d",
     "packages": [
         {
             "name": "brick/math",
@@ -7158,10 +7158,16 @@
         {
             "name": "thinktomorrow/squanto",
             "version": "dev-squanto-source",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thinktomorrow/squanto.git",
+                "reference": "ea99da4b2a85efceca52c0770f0d29742e643367"
+            },
             "dist": {
-                "type": "path",
-                "url": "../squanto",
-                "reference": "ce686961d129ab9928341e68ef9ec9b3cb0c7ef5"
+                "type": "zip",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/ea99da4b2a85efceca52c0770f0d29742e643367",
+                "reference": "ea99da4b2a85efceca52c0770f0d29742e643367",
+                "shasum": ""
             },
             "require": {
                 "ext-json": "*",
@@ -7224,10 +7230,11 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/thinktomorrow/squanto/tree/squanto-source",
+                "issues": "https://github.com/thinktomorrow/squanto/issues"
+            },
+            "time": "2026-07-13T14:07:33+00:00"
         },
         {
             "name": "thinktomorrow/url",
