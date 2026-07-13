@@ -30,8 +30,9 @@
                                     </a>
 
                                     @if (method_exists($page, 'namespace') && $page->namespace())
-                                        <div class="text-grey-500 text-xs">{{ $page->namespace() }}
-                                            ::{{ $page->group() }}</div>
+                                        <div class="text-grey-500 text-xs">
+                                            {{ $page->namespace() }}@if (method_exists($page, 'group'))::{{ $page->group() }}@endif
+                                        </div>
                                     @endif
                                 </div>
 
