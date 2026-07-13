@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin\Squanto;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Squanto\Database\DatabaseLine;
+use Thinktomorrow\Squanto\Squanto;
 
 class EditTranslationTest extends ChiefTestCase
 {
@@ -34,5 +35,37 @@ class EditTranslationTest extends ChiefTestCase
 
         $response->assertStatus(200)
             ->assertSee('id="homeherotitle"', false);
+    }
+
+    public function test_admin_can_view_the_edit_form_for_a_namespaced_page_slug(): void
+    {
+        $this->skipWithoutNamespacedSquantoSupport();
+
+        $this->registerPluginSource();
+
+        DatabaseLine::create([
+            'key' => 'chief-form-plugin::general.title',
+            'values' => ['value' => [
+                'nl' => 'Plugin title',
+            ]],
+        ]);
+
+        $response = $this->asAdmin()->get(route('squanto.edit', 'chief-form-plugin::general'));
+
+        $response->assertViewIs('squanto::edit')
+            ->assertStatus(200)
+            ->assertSee('id="chief-form-plugingeneraltitle"', false);
+    }
+
+    private function registerPluginSource(): void
+    {
+        Squanto::registerPlugin(dirname((string) config('squanto.lang_path')).'/plugin/lang', 'chief-form-plugin', 'Form plugin');
+    }
+
+    private function skipWithoutNamespacedSquantoSupport(): void
+    {
+        if (! class_exists(Squanto::class) || ! method_exists(Squanto::class, 'register')) {
+            $this->markTestSkipped('Requires Squanto source registry support.');
+        }
     }
 }
