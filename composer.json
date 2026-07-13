@@ -41,15 +41,6 @@
         "phpunit/phpunit": "^11.5",
         "spatie/opening-hours": "^2.41"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../squanto",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Thinktomorrow\\Chief\\App\\": "app/",
