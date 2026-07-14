@@ -22,6 +22,7 @@ class AdminToastTest extends TestCase
         $response = $this->get(route('chief.toast.get'));
 
         $response->assertSuccessful()
+            ->assertHeader('X-Robots-Tag', 'noindex, nofollow')
             ->assertJson(['data' => null]);
     }
 
@@ -46,7 +47,8 @@ class AdminToastTest extends TestCase
         $this->assertNull(session('preview-mode'));
         $response = $this->asAdmin()->get(route('chief.toast.toggle'));
 
-        $response->assertRedirect();
+        $response->assertRedirect()
+            ->assertHeader('X-Robots-Tag', 'noindex, nofollow');
 
         $this->assertTrue(session('preview-mode'));
     }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Thinktomorrow\Chief\Admin\HealthMonitor\Middleware\MonitorMiddleware;
+use Thinktomorrow\Chief\App\Http\Middleware\AddNoIndexHeaders;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefAdminLocale;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefNavigation;
@@ -50,7 +51,7 @@ class RoutesServiceProvider extends ServiceProvider
 
     private function loadOpenAdminRoutes(): void
     {
-        Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
+        Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web', AddNoIndexHeaders::class]], function () {
             $this->loadRoutesFrom(__DIR__.'/../../routes/chief-open-routes.php');
         });
     }
@@ -79,6 +80,7 @@ class RoutesServiceProvider extends ServiceProvider
             ShareErrorsFromSession::class,
 
             // Chief admin specific middleware
+            AddNoIndexHeaders::class,
             AuthenticateChiefSession::class,
             MonitorMiddleware::class,
             ChiefNavigation::class,

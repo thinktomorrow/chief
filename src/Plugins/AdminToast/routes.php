@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\App\Http\Middleware\AddNoIndexHeaders;
 use Thinktomorrow\Chief\Plugins\AdminToast\ToastController;
 
 // Toggles frontend preview mode via frontend toast widget
@@ -10,5 +11,5 @@ Route::get('admin/toast/toggle', [ToastController::class, 'toggle'])
 
 // Retrieve the toast html - which is fetched async (to avoid loading chief auth logic on every site visit).
 Route::get('admin/toast', [ToastController::class, 'get'])
-    ->middleware(['web'])
+    ->middleware(['web', AddNoIndexHeaders::class])
     ->name('chief.toast.get');
