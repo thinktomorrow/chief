@@ -132,7 +132,7 @@ class EditFragment extends Component
         //            //            $layout->setScopedLocale($this->scopedLocale);
         //        }
 
-        return $layout->getComponentsWithoutForms();
+        return $this->applyFieldDependencies($layout->getComponentsWithoutForms());
     }
 
     public function deleteFragment(): void
