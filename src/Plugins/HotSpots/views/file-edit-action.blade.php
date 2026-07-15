@@ -1,5 +1,5 @@
 <div>
-    @if ($previewFile->isImage() && $previewFile->mediaId)
+    @if ($previewFile->isImage() && ($previewFile->mediaId || $replacedPreviewFile?->mediaId))
         <x-chief::button
             wire:click="openImageHotSpots()"
             title="Image hotspot tool"
