@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
-use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
@@ -17,19 +16,14 @@ final class AttachFragment
 
     private FragmentRepository $fragmentRepository;
 
-    private ContextRepository $contextRepository;
-
-    public function __construct(ReorderFragments $reorderFragments, FragmentRepository $fragmentRepository, ContextRepository $contextRepository)
+    public function __construct(ReorderFragments $reorderFragments, FragmentRepository $fragmentRepository)
     {
         $this->reorderFragments = $reorderFragments;
         $this->fragmentRepository = $fragmentRepository;
-        $this->contextRepository = $contextRepository;
     }
 
-    public function handle(string $contextId, string $fragmentId, ?string $parentId, int $order, array $data = []): void
+    public function handle(string $contextId, string $fragmentId, ?string $parentId, int $order, array $data = [], ?string $sourceContextId = null): void
     {
-        $sourceContextId = $this->findSourceContextId($fragmentId, $contextId);
-
         $context = ContextModel::findOrFail($contextId);
 
         // Protect against duplicate addition...
@@ -67,16 +61,10 @@ final class AttachFragment
                 $child->getFragmentId(),
                 $parentFragmentId,
                 $child->getFragmentModel()->pivot->order,
+                [],
+                $sourceContextId,
             );
         }
-    }
-
-    private function findSourceContextId(string $fragmentId, string $targetContextId): ?string
-    {
-        return $this->contextRepository
-            ->getContextsByFragment($fragmentId)
-            ->first(fn (ContextModel $context) => $context->id !== $targetContextId)
-            ?->id;
     }
 
     private function fetchSortIndices(ContextModel $context, int $order, string $fragmentId, ?string $parentId): array

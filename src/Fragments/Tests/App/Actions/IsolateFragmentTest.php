@@ -56,7 +56,7 @@ class IsolateFragmentTest extends ChiefTestCase
         $child = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, $fragment->getFragmentId());
 
         $context2 = FragmentTestHelpers::createContext($this->owner2);
-        FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
+        FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId(), sourceContextId: $context->id);
 
         $this->assertEquals(2, FragmentModel::count());
         FragmentTestHelpers::assertFragmentCount($context->id, 2);

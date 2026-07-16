@@ -119,13 +119,20 @@ class GetShareableFragments
                 $sourceContextId = $fragmentModel->source_context_id;
 
                 if (! $sourceContextId) {
-                    return $this->fragmentFactory->create($fragmentModel);
+                    $fragment = $this->fragmentFactory->create($fragmentModel);
+                    $fragment->source_context_id = null;
+
+                    return $fragment;
                 }
 
-                return $this->fragmentRepository
+                $fragment = $this->fragmentRepository
                     ->getFragmentCollection((string) $sourceContextId)
                     ->find(fn ($fragment) => $fragment->getFragmentId() === $fragmentModel->id)
                     ?: $this->fragmentFactory->create($fragmentModel);
+
+                $fragment->source_context_id = (string) $sourceContextId;
+
+                return $fragment;
             })
             ->map(function ($fragment) use ($currentFragmentIds) {
                 $fragment->is_already_selected = in_array($fragment->getFragmentId(), $currentFragmentIds);

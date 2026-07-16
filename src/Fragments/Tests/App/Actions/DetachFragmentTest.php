@@ -45,7 +45,7 @@ class DetachFragmentTest extends ChiefTestCase
         $child = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, $fragment->getFragmentId());
 
         $context2 = FragmentTestHelpers::createContext($this->owner);
-        FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
+        FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId(), sourceContextId: $context->id);
 
         FragmentTestHelpers::assertFragmentCount($context->id, 2);
         FragmentTestHelpers::assertFragmentCount($context2->id, 2);

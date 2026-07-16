@@ -61,7 +61,7 @@ class AttachFragmentTest extends ChiefTestCase
         $parent = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id);
         $child = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, $parent->getFragmentId());
 
-        app(AttachRootFragment::class)->handle($context2->id, $parent->getFragmentId(), 0);
+        app(AttachFragment::class)->handle($context2->id, $parent->getFragmentId(), null, 0, [], $context->id);
 
         FragmentTestHelpers::assertFragmentCount($context2->id, 2);
         FragmentTestHelpers::assertFragmentCount($context2->id, 1, $child->getFragmentId(), $parent->getFragmentId());

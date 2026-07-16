@@ -126,7 +126,7 @@ class DuplicateContextTest extends ChiefTestCase
     {
         $nestedFragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $this->context->id, $this->fragment->getFragmentId());
         $otherContext = FragmentTestHelpers::createContext($this->owner2);
-        FragmentTestHelpers::attachFragment($otherContext->id, $this->fragment->getFragmentId());
+        FragmentTestHelpers::attachFragment($otherContext->id, $this->fragment->getFragmentId(), sourceContextId: $this->context->id);
 
         app(ContextApplication::class)->duplicate(new DuplicateContext($this->context->id, ArticlePage::create()));
 

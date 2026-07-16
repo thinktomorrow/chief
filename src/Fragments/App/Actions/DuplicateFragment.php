@@ -37,7 +37,7 @@ class DuplicateFragment
     {
         // If it's already a shared fragment, we'll use the original and share it as well
         if (! $forceDuplicateSharedFragment && $fragmentModel->isShared()) {
-            $this->attachFragment->handle($targetContextId, $fragmentModel->id, $parentFragmentId, $index);
+            $this->attachFragment->handle($targetContextId, $fragmentModel->id, $parentFragmentId, $index, [], $sourceContextId);
 
             return $fragmentModel->id;
         }
