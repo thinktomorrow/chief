@@ -53,6 +53,22 @@ class AttachFragmentTest extends ChiefTestCase
         $this->assertEquals($fragmentId, $context2->fragments()->first()->id);
     }
 
+    public function test_it_attaches_nested_fragments_when_attaching_existing_fragment_to_other_context()
+    {
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner, ['nl']);
+        $context2 = FragmentTestHelpers::createContext($this->owner);
+
+        $parent = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id);
+        $child = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, $parent->getFragmentId());
+
+        app(AttachRootFragment::class)->handle($context2->id, $parent->getFragmentId(), 0);
+
+        FragmentTestHelpers::assertFragmentCount($context2->id, 2);
+        FragmentTestHelpers::assertFragmentCount($context2->id, 1, $child->getFragmentId(), $parent->getFragmentId());
+        $this->assertTrue(FragmentModel::find($parent->getFragmentId())->isShared());
+        $this->assertTrue(FragmentModel::find($child->getFragmentId())->isShared());
+    }
+
     public function test_it_cannot_attach_same_fragment_to_same_context()
     {
         $context = FragmentTestHelpers::findOrCreateContext($this->owner, ['nl']);

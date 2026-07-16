@@ -39,6 +39,25 @@ class DetachFragmentTest extends ChiefTestCase
         $this->assertNotNull(FragmentModel::find($fragment->getFragmentId()));
     }
 
+    public function test_it_detaches_nested_fragments_when_detaching_parent_fragment()
+    {
+        [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class);
+        $child = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, $fragment->getFragmentId());
+
+        $context2 = FragmentTestHelpers::createContext($this->owner);
+        FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId());
+
+        FragmentTestHelpers::assertFragmentCount($context->id, 2);
+        FragmentTestHelpers::assertFragmentCount($context2->id, 2);
+
+        app(DetachFragment::class)->handle($context->id, $fragment->getFragmentId());
+
+        FragmentTestHelpers::assertFragmentCount($context->id, 0);
+        FragmentTestHelpers::assertFragmentCount($context2->id, 2);
+        $this->assertFalse(FragmentModel::find($fragment->getFragmentId())->isShared());
+        $this->assertFalse(FragmentModel::find($child->getFragmentId())->isShared());
+    }
+
     public function test_it_deletes_fragment_when_after_detachment_the_fragment_no_longer_has_an_owner()
     {
         $context = FragmentTestHelpers::findOrCreateContext($this->owner);

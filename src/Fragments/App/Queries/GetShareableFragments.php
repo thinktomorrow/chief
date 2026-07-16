@@ -85,6 +85,8 @@ class GetShareableFragments
             ->join('context_fragment_tree', 'context_fragments.id', '=', 'context_fragment_tree.child_id')
             ->join('contexts', 'context_fragment_tree.context_id', '=', 'contexts.id')
             ->select('context_fragments.*')
+            // Pick one source context so we can hydrate nested fragments for the preview.
+            ->addSelect(DB::raw('MIN(contexts.id) AS source_context_id'))
             ->groupBy('context_fragments.id');
 
         if ($isFilteringByType = isset($this->filters['types']) && count($this->filters['types']) > 0) {
@@ -113,7 +115,18 @@ class GetShareableFragments
 
         $collection = $builder
             ->get()
-            ->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory->create($fragmentModel))
+            ->map(function (FragmentModel $fragmentModel) {
+                $sourceContextId = $fragmentModel->source_context_id;
+
+                if (! $sourceContextId) {
+                    return $this->fragmentFactory->create($fragmentModel);
+                }
+
+                return $this->fragmentRepository
+                    ->getFragmentCollection((string) $sourceContextId)
+                    ->find(fn ($fragment) => $fragment->getFragmentId() === $fragmentModel->id)
+                    ?: $this->fragmentFactory->create($fragmentModel);
+            })
             ->map(function ($fragment) use ($currentFragmentIds) {
                 $fragment->is_already_selected = in_array($fragment->getFragmentId(), $currentFragmentIds);
 
