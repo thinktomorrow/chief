@@ -15,6 +15,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   unstable position
 - Fixed: Redactor toolbar is now correctly showing up if custom redactor options are defined on a text field
 - Fixed: Table select filter horizontal scroll without scrollbar + larger dropdown width
+- Fixed: Table button group filters now keep their active marker aligned while Livewire updates option labels
 - Fixed: Field preview slot now doesn't overflow content of windows anymore
 - Fixed: Chief favicon path doesn't break while running Vite dev build
 
