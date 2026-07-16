@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.27] - 2026-07-16
+
 - Added: no index headers for all admin routes to prevent search engines from indexing admin pages
 - Added: Eslint unicorn plugin for better, recommended js linting. Fixed all eslint errors/warnings that surfaced after
   implementing this new plugin.
