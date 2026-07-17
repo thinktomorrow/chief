@@ -10,6 +10,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   tab.
 - Fixed: Table button group filters now keep their active marker aligned while Livewire updates option labels
 - Fixed: Tabs now keep their active marker aligned while Livewire updates
+- Changed: Squanto index grid UI instead of list in window
 
 ## [0.10.27] - 2026-07-16
 
