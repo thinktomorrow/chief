@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Table\Tests\Livewire;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
+use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 use Thinktomorrow\Chief\Table\Livewire\TableComponent;
 use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\FilteredTreeBreadcrumbTableFixture;
@@ -52,6 +53,26 @@ class TableComponentTest extends TestCase
         $component->assertSee('child1 title');
         $component->assertSee('child2 title');
         $component->assertSee('grandchild title');
+    }
+
+    public function test_it_shows_select_filter_label_for_scalar_default_value(): void
+    {
+        $table = Table::make()
+            ->setTableReference(new Table\References\TableReference('xxx', 'table'))
+            ->query(fn () => TreeModelFixture::query())
+            ->filters([
+                SelectFilter::make('period')
+                    ->options(['current' => 'Huidige'])
+                    ->value('current'),
+            ])
+            ->columns([
+                ColumnText::make('id'),
+                ColumnText::make('title'),
+            ]);
+
+        $component = Livewire::test(TableComponent::class, ['table' => $table]);
+
+        $this->assertSame('Huidige', $component->instance()->getActiveFilterValue('period'));
     }
 
     public function test_it_shows_filtered_tree_breadcrumbs_per_item(): void

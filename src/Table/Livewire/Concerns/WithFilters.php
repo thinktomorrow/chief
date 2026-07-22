@@ -46,11 +46,7 @@ trait WithFilters
     public function getActiveFilterValue(string $filterKey): string
     {
         if (($filterValue = $this->findActiveFilterValue($filterKey))) {
-            if (is_array($filterValue)) {
-                return implode(', ', $this->getFilterValueFromOptions($filterKey, $filterValue));
-            } else {
-                return $filterValue;
-            }
+            return implode(', ', $this->getFilterValueFromOptions($filterKey, (array) $filterValue));
         }
 
         return '';
