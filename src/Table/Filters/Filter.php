@@ -16,12 +16,14 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasOrdinalLevel;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanBeDefault;
+use Thinktomorrow\Chief\Table\Filters\Concerns\CanScope;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasValue;
 
 abstract class Filter extends Component
 {
     use CanBeDefault;
+    use CanScope;
     use HasComponentRendering;
     use HasDefault;
     use HasDescription;

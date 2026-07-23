@@ -17,15 +17,16 @@ trait WithFilters
     /** @var bool flag indicates if filter bar should be shown */
     public bool $showFilters = false;
 
+    public array $tableFilterScopeState = [];
+
     public function mountWithFilters(): void
     {
         // Alleen restoren als er nog geen filters via URL zijn ingesteld
         if ($this->isUsingDefaultFilters() && session()->has($this->getFilterSessionKey())) {
             $this->filters = session($this->getFilterSessionKey());
-
-            // Clear session to avoid stale filters
-            session()->forget($this->getFilterSessionKey());
         }
+
+        $this->tableFilterScopeState = $this->scopeState($this->filters);
     }
 
     /** @return Filter[] */
@@ -115,8 +116,11 @@ trait WithFilters
 
         $this->syncLocaleWithSiteFilter();
 
-        // Keep in session
+        $this->restoreFiltersForChangedScope();
+
         session()->put($this->getFilterSessionKey(), $this->filters);
+
+        $this->tableFilterScopeState = $this->scopeState($this->filters);
 
         $this->resetPage($this->getPaginationId());
 
@@ -151,7 +155,7 @@ trait WithFilters
         return $filterValue;
     }
 
-    private function findFilter(string $filterKey): Filter
+    protected function findFilter(string $filterKey): Filter
     {
         foreach ($this->getFilters() as $filter) {
             if ($filter->getKey() == $filterKey) {
@@ -203,8 +207,147 @@ trait WithFilters
         return is_null($value) || $value === '' || (is_array($value) && empty($value));
     }
 
-    private function getFilterSessionKey(): string
+    protected function getFilterSessionKey(): string
     {
-        return 'table.filters.'.$this->tableReference->toUniqueString();
+        return 'table.filters.'.$this->tableReference->toUniqueString().$this->getTableScopeSessionKeySuffix();
+    }
+
+    /**
+     * Build the optional session-key suffix for the active scoped filter values.
+     */
+    protected function getTableScopeSessionKeySuffix(?array $filters = null): string
+    {
+        if (! $this->hasScopeFilters()) {
+            return '';
+        }
+
+        return '.'.md5(json_encode($this->normalizedScopeState($filters ?? $this->filters)));
+    }
+
+    private function hasScopeFilters(): bool
+    {
+        return count($this->getScopeFilters()) > 0;
+    }
+
+    /** @return Filter[] */
+    private function getScopeFilters(): array
+    {
+        return array_values(array_filter($this->getFilters(), fn (Filter $filter): bool => $filter->scopesTableState()));
+    }
+
+    /**
+     * Extract only the active scope-defining filter values from the given filter state.
+     */
+    private function scopeState(array $filters): array
+    {
+        return collect($this->getScopeFilters())
+            ->mapWithKeys(fn (Filter $filter): array => [$filter->getKey() => $filters[$filter->getKey()] ?? $filter->getValue()])
+            ->all();
+    }
+
+    /**
+     * Normalize scope values before hashing so filter order and multi-select order do not matter.
+     */
+    private function normalizedScopeState(array $filters): array
+    {
+        $scopeState = $this->scopeState($filters);
+
+        ksort($scopeState);
+
+        return array_map(function ($value) {
+            if (is_array($value)) {
+                sort($value);
+            }
+
+            return $value;
+        }, $scopeState);
+    }
+
+    /**
+     * Swap scoped filters and sorters when a scope-defining filter changes.
+     */
+    private function restoreFiltersForChangedScope(): void
+    {
+        if (! $this->hasScopeFilters()) {
+            return;
+        }
+
+        $currentScopeState = $this->scopeState($this->filters);
+
+        if ($this->tableFilterScopeState === [] || $this->tableFilterScopeState === $currentScopeState) {
+            return;
+        }
+
+        $this->filters = array_merge(
+            session($this->getFilterSessionKey(), []),
+            $this->filtersWithoutScopedTableState($this->filters),
+            $currentScopeState,
+        );
+
+        if (property_exists($this, 'sorters')) {
+            $this->sorters = array_merge(
+                session($this->getSortersSessionKey(), []),
+                $this->sortersWithoutScopedTableState($this->sorters),
+            );
+        }
+    }
+
+    /**
+     * Keep non-scoped filter values when switching between scoped session keys.
+     */
+    private function filtersWithoutScopedTableState(array $filters): array
+    {
+        foreach ($this->scopedFilterKeys() as $filterKey) {
+            unset($filters[$filterKey]);
+        }
+
+        return $filters;
+    }
+
+    /**
+     * Keep non-scoped sorter values when switching between scoped session keys.
+     */
+    protected function sortersWithoutScopedTableState(array $sorters): array
+    {
+        foreach ($this->scopedSorterKeys() as $sorterKey) {
+            unset($sorters[$sorterKey]);
+        }
+
+        return $sorters;
+    }
+
+    /**
+     * List filter keys whose state should be isolated by the active scope filters.
+     */
+    private function scopedFilterKeys(): array
+    {
+        return collect($this->getFilters())
+            ->reject(fn (Filter $filter): bool => $filter->scopesTableState())
+            ->filter(fn (Filter $filter): bool => $this->isScopedTableStateKey($filter->getKey()))
+            ->map(fn (Filter $filter): string => $filter->getKey())
+            ->values()
+            ->all();
+    }
+
+    /**
+     * List sorter keys whose state should be isolated by the active scope filters.
+     */
+    private function scopedSorterKeys(): array
+    {
+        if (! method_exists($this, 'getSorters')) {
+            return [];
+        }
+
+        return collect($this->getSorters())
+            ->filter(fn ($sorter): bool => $this->isScopedTableStateKey($sorter->getKey()))
+            ->map(fn ($sorter): string => $sorter->getKey())
+            ->values()
+            ->all();
+    }
+
+    private function isScopedTableStateKey(string $key): bool
+    {
+        return collect($this->getScopeFilters())
+            ->contains(fn (Filter $scopeFilter): bool => $scopeFilter->scopesTableStateKey($key));
     }
 }

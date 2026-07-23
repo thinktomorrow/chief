@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 use Thinktomorrow\Chief\Table\Livewire\TableComponent;
 use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\FilteredTreeBreadcrumbTableFixture;
+use Thinktomorrow\Chief\Table\Tests\Fixtures\ScopedTableStateFixture;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TreeModelFixture;
 use Thinktomorrow\Chief\Table\Tests\TestCase;
 
@@ -121,5 +122,55 @@ class TableComponentTest extends TestCase
             ->set('sorters', ['tree-sorting' => 'tree-sorting']);
 
         $this->assertFalse($component->instance()->shouldShowTreeBreadcrumbColumn());
+    }
+
+    public function test_it_keeps_filter_state_per_scoped_filter_value(): void
+    {
+        $table = ScopedTableStateFixture::scopedFilters();
+
+        $component = Livewire::test(TableComponent::class, ['table' => $table])
+            ->set('filters.title', 'child1 title')
+            ->set('filters.period', 'archived');
+
+        $this->assertArrayNotHasKey('title', $component->instance()->filters);
+
+        $component
+            ->set('filters.title', 'child2 title')
+            ->set('filters.period', 'current')
+            ->assertSet('filters.title', 'child1 title')
+            ->set('filters.period', 'archived')
+            ->assertSet('filters.title', 'child2 title');
+
+        $this->assertStringNotContainsString('scoped_state', json_encode(session()->all()));
+    }
+
+    public function test_scoped_filter_can_limit_the_keys_it_scopes(): void
+    {
+        $table = ScopedTableStateFixture::limitedScopedFilters();
+
+        Livewire::test(TableComponent::class, ['table' => $table])
+            ->set('filters.title', 'child1 title')
+            ->set('filters.status', 'open')
+            ->set('filters.period', 'archived')
+            ->assertSet('filters.status', 'open')
+            ->assertSet('filters.title', null);
+    }
+
+    public function test_it_keeps_sorter_state_per_scoped_filter_value(): void
+    {
+        $table = ScopedTableStateFixture::scopedSorters();
+
+        $component = Livewire::test(TableComponent::class, ['table' => $table])
+            ->set('sorters.title_desc', 'desc')
+            ->set('filters.period', 'archived');
+
+        $this->assertArrayNotHasKey('title_desc', $component->instance()->sorters);
+
+        $component
+            ->set('sorters.title_desc', 'asc')
+            ->set('filters.period', 'current')
+            ->assertSet('sorters.title_desc', 'desc')
+            ->set('filters.period', 'archived')
+            ->assertSet('sorters.title_desc', 'asc');
     }
 }
