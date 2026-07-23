@@ -179,6 +179,7 @@ final class ResourcePermissionTest extends ChiefTestCase
         $this->assertContains('create-page', $permissionNames);
         $this->assertContains('update-page', $permissionNames);
         $this->assertContains('delete-page', $permissionNames);
+        $this->assertContains('view-role', $permissionNames);
     }
 
     public function test_audit_command_without_sync_reports_missing_permissions_without_creating_them(): void
@@ -187,8 +188,8 @@ final class ResourcePermissionTest extends ChiefTestCase
         chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
         $this->artisan('chief:permissions:audit')
-            ->expectsOutput('Expected resource permissions: 4')
-            ->expectsOutput('Missing permissions: 4')
+            ->expectsOutput('Expected permissions: 20')
+            ->expectsOutput('Missing permissions: 20')
             ->expectsOutput('- create-page')
             ->assertExitCode(0);
 
@@ -201,16 +202,16 @@ final class ResourcePermissionTest extends ChiefTestCase
         chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
         $this->artisan('chief:permissions:audit', ['--sync' => true])
-            ->expectsOutput('4 missing permission(s) created.')
+            ->expectsOutput('20 missing permission(s) created.')
             ->assertExitCode(0);
 
-        $this->assertCount(4, Permission::all());
+        $this->assertCount(20, Permission::all());
 
         $this->artisan('chief:permissions:audit', ['--sync' => true])
             ->expectsOutput('0 missing permission(s) created.')
             ->assertExitCode(0);
 
-        $this->assertCount(4, Permission::all());
+        $this->assertCount(20, Permission::all());
     }
 
     public function test_audit_command_reports_unused_permissions(): void
@@ -218,7 +219,7 @@ final class ResourcePermissionTest extends ChiefTestCase
         Permission::create(['name' => 'old-custom-permission']);
 
         $this->artisan('chief:permissions:audit')
-            ->expectsOutput('Expected resource permissions: 0')
+            ->expectsOutput('Expected permissions: 20')
             ->expectsOutput('Unused permissions: 1')
             ->expectsOutput('- old-custom-permission')
             ->assertExitCode(0);

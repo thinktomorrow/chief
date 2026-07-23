@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Admin\Authorization\Console;
 
 use Illuminate\Console\Command;
+use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -40,7 +41,7 @@ final class AuditPermissionsCommand extends Command
             $unusedPermissions = array_values(array_diff($existingPermissions, $expectedPermissions));
         }
 
-        $this->line('Expected resource permissions: '.count($expectedPermissions));
+        $this->line('Expected permissions: '.count($expectedPermissions));
 
         $this->reportPermissions('Missing permissions', $missingPermissions, 'warn');
         $this->reportPermissions('Unused permissions', $unusedPermissions, 'line');
@@ -53,7 +54,7 @@ final class AuditPermissionsCommand extends Command
      */
     private function expectedPermissions(Registry $registry): array
     {
-        $permissions = [];
+        $permissions = AuthorizationDefaults::permissions()->all();
 
         foreach ($registry->resources() as $resource) {
             if (! $resource instanceof PermissionScopedResource) {
