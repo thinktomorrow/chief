@@ -7,6 +7,8 @@ use Thinktomorrow\Squanto\Database\DatabaseLine;
 
 class EditTranslationTest extends ChiefTestCase
 {
+    use InteractsWithSquantoSources;
+
     public function test_admin_can_view_the_edit_form()
     {
         $response = $this->asAdmin()->get(route('squanto.edit', 'home'));
@@ -34,5 +36,25 @@ class EditTranslationTest extends ChiefTestCase
 
         $response->assertStatus(200)
             ->assertSee('id="homeherotitle"', false);
+    }
+
+    public function test_admin_can_view_the_edit_form_for_a_namespaced_page_slug(): void
+    {
+        $this->skipWithoutNamespacedSquantoSupport();
+
+        $this->registerPluginSource();
+
+        DatabaseLine::create([
+            'key' => 'chief-form-plugin::general.title',
+            'values' => ['value' => [
+                'nl' => 'Plugin title',
+            ]],
+        ]);
+
+        $response = $this->asAdmin()->get(route('squanto.edit', 'chief-form-plugin::general'));
+
+        $response->assertViewIs('squanto::edit')
+            ->assertStatus(200)
+            ->assertSee('id="chief-form-plugingeneraltitle"', false);
     }
 }

@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
+use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 
 final class AttachFragment
 {
     private ReorderFragments $reorderFragments;
 
-    public function __construct(ReorderFragments $reorderFragments)
+    private FragmentRepository $fragmentRepository;
+
+    public function __construct(ReorderFragments $reorderFragments, FragmentRepository $fragmentRepository)
     {
         $this->reorderFragments = $reorderFragments;
+        $this->fragmentRepository = $fragmentRepository;
     }
 
-    public function handle(string $contextId, string $fragmentId, ?string $parentId, int $order, array $data = []): void
+    public function handle(string $contextId, string $fragmentId, ?string $parentId, int $order, array $data = [], ?string $sourceContextId = null): void
     {
         $context = ContextModel::findOrFail($contextId);
 
@@ -33,6 +38,33 @@ final class AttachFragment
         $this->reorderFragments->handle($contextId, $indices, $parentId);
 
         event(new FragmentAttached($fragmentId, $context->id));
+
+        if (! $sourceContextId) {
+            return;
+        }
+
+        $this->attachNestedFragments($sourceContextId, $contextId, $fragmentId);
+    }
+
+    private function attachNestedFragments(string $sourceContextId, string $targetContextId, string $parentFragmentId): void
+    {
+        $parent = $this->fragmentRepository->getFragmentCollection($sourceContextId)
+            ->find(fn (Fragment $fragment) => $fragment->getFragmentId() === $parentFragmentId);
+
+        if (! $parent) {
+            return;
+        }
+
+        foreach ($parent->getChildNodes() as $child) {
+            $this->handle(
+                $targetContextId,
+                $child->getFragmentId(),
+                $parentFragmentId,
+                $child->getFragmentModel()->pivot->order,
+                [],
+                $sourceContextId,
+            );
+        }
     }
 
     private function fetchSortIndices(ContextModel $context, int $order, string $fragmentId, ?string $parentId): array

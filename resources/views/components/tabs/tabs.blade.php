@@ -63,6 +63,7 @@
                 class="relative flex items-start justify-start border border-transparent"
             >
                 <div
+                    wire:ignore
                     x-ref="tabMarker"
                     x-show="activeTab"
                     @class([

@@ -5,6 +5,16 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Duplicating nested fragments is now supported.
+- Added: Filter::scoped - Table filters can now scope filter and sorter session state per active scope value.
+- Added: Table select filter option callbacks now receive the active table filters.
+- Fixed: The content of fragments with nested fragments now shows the correct preview in 'existing fragments' sidebar
+  tab.
+- Fixed: Table button group filters now keep their active marker aligned while Livewire updates option labels
+- Fixed: Tabs now keep their active marker aligned while Livewire updates
+- Fixed: Scalar filter values are now also retrieved in getFilterValueFromOptions
+- Changed: Squanto index grid UI instead of list in window
+
 ## [0.10.27] - 2026-07-16
 
 - Added: no index headers for all admin routes to prevent search engines from indexing admin pages
@@ -24,7 +34,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Issue where TimeTable exceptions were collections but are now expected to be arrays by the Spatie/OpeningHours
   package.
 - Fixed: TimeTable plugin was outdated and is now updated to latest Chief version.
-- Added: Register::fragments() to get all registered fragments
+- Added: Register::fragments () to get all registered fragments
 - Changed: updated packages for security vulnerabilities
 
 ## [0.10.25] - 2026-04-30
@@ -35,8 +45,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   `image-sitemap-{locale}.xml` to `storage/app/feeds` instead of `public/`.
 - Breaking/upgrade note: expose `storage/app/feeds` publicly in your host app, by adding a `feeds`
   filesystem disk and a `filesystems.links` entry, then running `php artisan storage:link`.
-- Breaking/upgrade note: review and update sitemap references after upgrading, such as in `robots.txt`, Google
-  Search Console, and any other external integrations.
+- Breaking/upgrade note: review and update sitemap references after upgrading, such as in `robots.txt`, Google Search
+  Console, and any other external integrations.
 
 ## [0.10.24] - 2026-04-27
 
@@ -63,7 +73,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: blocked users can no longer be re-authenticated via remember-me token.
 - Fixed: Repeat rows now keep field state attached to the correct row after deleting or reordering items.
 - Added: updated dependencies to latest version both composer.json and package.json
-- Added: `Fragment:setContextOwner()` and `Fragment::getContextOwner()` to allow to have owner model for e.g. fields().
+- Added: `Fragment:setContextOwner()` and `Fragment::getContextOwner()` to allow to have owner model for e.g. fields ().
 - Added: Boost guideline doc
 - Changed: Title filter in table now defaults to searching combo of multiple input values (separated by spaces) - and
   not the entire input value.
@@ -94,9 +104,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## [0.10.20] - 2026-03-17
 
 - Fixed: Initial field values were not showing in Dialog component
-- Added: Field::hideInPreview() to only show form field in form and not in form preview.
+- Added: Field::hideInPreview () to only show form field in form and not in form preview.
 - Added: Table ArchiveRowAction preset.
-- Deprecated: hideIfEmpty(). Use hideInPreviewIfEmpty() instead to only hide field in preview when empty.
+- Deprecated: hideIfEmpty (). Use hideInPreviewIfEmpty () instead to only hide field in preview when empty.
 
 ## [0.10.19] - 2026-01-27
 
@@ -117,7 +127,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [0.10.17] - 2025-12-08
 
-- Added: viewData parameter to setView() and setPreviewView() on Form layout/field classes.
+- Added: viewData parameter to setView () and setPreviewView () on Form layout/field classes.
 - Fixed: selection option could not be removed in select field. X button was missing.
 - Fixed: Table action with dialog can now handle a response such as download or redirect.
 
@@ -139,7 +149,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Form tags now work for all underlying fields. Form tagged as not-on-model-create will no longer show the fields
   on the model create form.
 - Fixed: Livewire errors now show a custom dialog instead of trying to show the frontend error page.
-- Fixed: Relations via select::sync() where not loaded on create model form.
+- Fixed: Relations via select::sync () where not loaded on create model form.
 - Changed: Link form has better display when only one locale is active.
 - Changed: Consistent save behaviour for fields with multiple values. Primitive or null value for non multiple, array or
   empty array when set to multiple. Applies to Select, MultiSelect, Checkbox, SelectList.
@@ -170,8 +180,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: select options with empty values were not properly handled in forms.
 - Fixed: SelectList now filters out selected values that are not present in full options list.
-- Fixed: Table columns are now rendered in given site filter. E.g. filtering on site 'nl' will now also render
-  columns with localized values for 'nl'.
+- Fixed: Table columns are now rendered in given site filter. E.g. filtering on site 'nl' will now also render columns
+  with localized values for 'nl'.
 - Fixed: Menu item of type 'no link' now has any existing links removed when saving.
 - Added: Hive option for exporting resource and squanto texts. Use `--hive` option on the `chief:export-resource` and
   `chief:export-text` commands.
@@ -194,12 +204,12 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ### Overview
 
-- Introduces column-selection UI in tables with backend support via new Livewire concerns
-  (`WithColumns`, `WithColumnSelection`).
+- Introduces column-selection UI in tables with backend support via new Livewire concerns (`WithColumns`,
+  `WithColumnSelection`).
 - Adds a Chief SEO plugin (Livewire tables, controllers, routes, Blade views, and console commands)
   to export / import asset filenames and alt texts.
-- Integrates a Hive AI plugin: Alpine directives, service providers, prompts, and form-field enhancements
-  for AI-powered text suggestions.
+- Integrates a Hive AI plugin: Alpine directives, service providers, prompts, and form-field enhancements for AI-powered
+  text suggestions.
 - Added a new SelectList field and Boolean field.
 
 ### Forms
@@ -242,17 +252,15 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: Parameter `redirectAfterSave` to instruct CreateModelComponent to close or redirect to the new page after save.
 - Added: option on `getTreeModels(?array $ids = null, array $eagerLoading = ['urls', 'tags']))` to select eager
   relations. This parameter is also available on the `SelectOptions::getTree()` method.
-- Added: `MemoizedSelectOptions` to avoid duplicate queries when using the same select options in multiple
-  places.
-- Changed: `Resource::getAttributesOnCreate` now has input values as its parameter, which allows you to
-  set any of these values as model attributes on create.
+- Added: `MemoizedSelectOptions` to avoid duplicate queries when using the same select options in multiple places.
+- Changed: `Resource::getAttributesOnCreate` now has input values as its parameter, which allows you to set any of these
+  values as model attributes on create.
 
 ### Seo Asset table
 
 Introduces first version of asset management, which allows you to easily manage filename and alt attributes of each
-asset.
-Every Asset model should implement the `HasAlt` interface as well as the `ReferencesModel` to be able to use the seo
-table.
+asset. Every Asset model should implement the `HasAlt` interface as well as the `ReferencesModel` to be able to use the
+seo table.
 
 The alt field definition on an Asset class should look like this:
 
@@ -281,7 +289,7 @@ logic!
   interface.
 - Changed: **⚠ BC break** Renamed `Thinktomorrow\Chief\Shared\Concerns\Sortable` trait to
   `Thinktomorrow\Chief\Shared\Concerns\Sortable\SortableDefault`.
-- Changed: Actions::when() closure has now a first parameter of `component` instead of `model`, which is now second
+- Changed: Actions::when () closure has now a first parameter of `component` instead of `model`, which is now second
   parameter.
 - Changed: Make password 'missing login' error less clear for security reasons.
 
@@ -354,15 +362,15 @@ by setting following config:
 
 - Changed: (breaking) Repeat items are no longer allowed to be localized. Localize the repeat field instead. You can run
   the migrate command `chief:localize-repeat-field {classes} {key}` to convert the json data to the new format.
-- Removed: The previously deprecated `custom-scripts-after-vue` stack (loaded in the page layout) was removed.
-  Use the `custom-scripts` stack instead.
+- Removed: The previously deprecated `custom-scripts-after-vue` stack (loaded in the page layout) was removed. Use the
+  `custom-scripts` stack instead.
 - Removed: SVG symbols file. All projects referring to SVG icons by id with `xlink:href`, should now use full SVG icons
   instead.
 
 ## 0.10.0 - 2025-05-08
 
-You should follow the upgrade guide for upgrading any existing projects from 0.9 to 0.10.
-Please run migrations, as this update involves database changes, especially for the fragment tables.
+You should follow the upgrade guide for upgrading any existing projects from 0.9 to 0.10. Please run migrations, as this
+update involves database changes, especially for the fragment tables.
 
 ---
 

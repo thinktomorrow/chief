@@ -121,4 +121,17 @@ class DuplicateContextTest extends ChiefTestCase
             $this->assertEquals($originalFragment->values, $duplicatedFragment->values);
         }
     }
+
+    public function test_shared_nested_fragments_stay_shared_when_context_is_duplicated()
+    {
+        $nestedFragment = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $this->context->id, $this->fragment->getFragmentId());
+        $otherContext = FragmentTestHelpers::createContext($this->owner2);
+        FragmentTestHelpers::attachFragment($otherContext->id, $this->fragment->getFragmentId(), sourceContextId: $this->context->id);
+
+        app(ContextApplication::class)->duplicate(new DuplicateContext($this->context->id, ArticlePage::create()));
+
+        $this->assertEquals(2, FragmentModel::count());
+        $this->assertTrue(FragmentModel::find($this->fragment->getFragmentId())->isShared());
+        $this->assertTrue(FragmentModel::find($nestedFragment->getFragmentId())->isShared());
+    }
 }

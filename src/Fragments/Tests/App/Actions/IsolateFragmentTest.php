@@ -50,6 +50,29 @@ class IsolateFragmentTest extends ChiefTestCase
         $this->assertEquals($fragment2->fragmentModel()->values, $fragment1->fragmentModel()->values);
     }
 
+    public function test_isolate_fragment_duplicates_nested_fragments()
+    {
+        [$context, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class);
+        $child = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, $fragment->getFragmentId());
+
+        $context2 = FragmentTestHelpers::createContext($this->owner2);
+        FragmentTestHelpers::attachFragment($context2->id, $fragment->getFragmentId(), sourceContextId: $context->id);
+
+        $this->assertEquals(2, FragmentModel::count());
+        FragmentTestHelpers::assertFragmentCount($context->id, 2);
+        FragmentTestHelpers::assertFragmentCount($context2->id, 2);
+
+        app(IsolateFragment::class)->handle($context->id, $fragment->getFragmentId());
+
+        $this->assertEquals(4, FragmentModel::count());
+        FragmentTestHelpers::assertFragmentCount($context->id, 2);
+        FragmentTestHelpers::assertFragmentCount($context2->id, 2);
+        FragmentTestHelpers::assertFragmentCount($context->id, 0, $fragment->getFragmentId());
+        FragmentTestHelpers::assertFragmentCount($context->id, 0, $child->getFragmentId());
+        FragmentTestHelpers::assertFragmentCount($context2->id, 1, $fragment->getFragmentId());
+        FragmentTestHelpers::assertFragmentCount($context2->id, 1, $child->getFragmentId(), $fragment->getFragmentId());
+    }
+
     public function test_when_it_belongs_to_more_then_two_contexts_it_stays_shared_when_isolated()
     {
         $context = FragmentTestHelpers::findOrCreateContext($this->owner);
