@@ -38,6 +38,20 @@ class ScopedTableStateFixture
             ]);
     }
 
+    public static function optionsFromActiveFilters(): Table
+    {
+        return static::base('optionsFromActiveFilters')
+            ->filters([
+                SelectFilter::make('period')
+                    ->options(['current' => 'Current', 'archived' => 'Archived'])
+                    ->value('current'),
+                SelectFilter::make('title')
+                    ->options(fn ($filter, $locale, array $filters): array => ($filters['period'] ?? 'current') === 'archived'
+                        ? ['archived title' => 'Archived title']
+                        : ['current title' => 'Current title']),
+            ]);
+    }
+
     public static function scopedSorters(): Table
     {
         return static::base('scopedSorters')

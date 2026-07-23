@@ -36,6 +36,8 @@ abstract class Filter extends Component
     use HasValue;
     use HasView;
 
+    private array $tableFilters = [];
+
     public function __construct(string $key)
     {
         $this->key($key);
@@ -67,5 +69,23 @@ abstract class Filter extends Component
     public static function make(string $key): static
     {
         return new static($key);
+    }
+
+    /**
+     * Provide the filter with the Livewire table's active filters for render-time callbacks.
+     */
+    public function withTableFilters(array $filters): static
+    {
+        $this->tableFilters = $filters;
+
+        return $this;
+    }
+
+    /**
+     * Return the active table filters that were available when this filter was rendered.
+     */
+    public function getTableFilters(): array
+    {
+        return $this->tableFilters;
     }
 }

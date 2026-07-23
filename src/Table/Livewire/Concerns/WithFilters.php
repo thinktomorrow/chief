@@ -32,7 +32,9 @@ trait WithFilters
     /** @return Filter[] */
     public function getFilters(): iterable
     {
-        return $this->getTable()->getFilters();
+        return collect($this->getTable()->getFilters())
+            ->map(fn (Filter $filter): Filter => $filter->withTableFilters($this->filters))
+            ->all();
     }
 
     public function getActiveFilters(): array
@@ -181,15 +183,16 @@ trait WithFilters
     public function resetFilters()
     {
         $previousFilterSessionKey = $this->getFilterSessionKey();
+        $scopeState = $this->scopeState($this->filters);
 
         $this->clearFilters();
         $this->setDefaultFilters();
+        $this->filters = array_merge($this->filters, $scopeState);
 
         $this->removeEmptyFilters();
         $this->syncLocaleWithSiteFilter();
 
         session()->forget($previousFilterSessionKey);
-        session()->forget($this->getFilterSessionKey());
 
         $this->tableFilterScopeState = $this->scopeState($this->filters);
 

@@ -6,6 +6,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## Unreleased
 
 - Added: Duplicating nested fragments is now supported.
+- Added: Filter::scoped - Table filters can now scope filter and sorter session state per active scope value.
+- Added: Table select filter option callbacks now receive the active table filters.
 - Fixed: The content of fragments with nested fragments now shows the correct preview in 'existing fragments' sidebar
   tab.
 - Fixed: Table button group filters now keep their active marker aligned while Livewire updates option labels

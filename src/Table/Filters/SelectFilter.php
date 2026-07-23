@@ -47,8 +47,11 @@ class SelectFilter extends Filter
         return null;
     }
 
+    /**
+     * Pass the active table filters to dynamic option callbacks.
+     */
     private function getOptionsCallableParameters(?string $locale = null): array
     {
-        return [$this, $locale];
+        return [$this, $locale, $this->getTableFilters()];
     }
 }

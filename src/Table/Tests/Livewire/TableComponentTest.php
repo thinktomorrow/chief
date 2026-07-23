@@ -152,10 +152,14 @@ class TableComponentTest extends TestCase
             ->set('filters.period', 'archived')
             ->set('filters.title', 'child2 title')
             ->call('resetFilters')
-            ->assertSet('filters.period', 'current')
+            ->assertSet('filters.period', 'archived')
             ->assertSet('filters.title', null)
+            ->set('filters.period', 'current')
+            ->set('filters.title', 'child1 title')
             ->set('filters.period', 'archived')
-            ->assertSet('filters.title', null);
+            ->assertSet('filters.title', null)
+            ->set('filters.period', 'current')
+            ->assertSet('filters.title', 'child1 title');
     }
 
     public function test_scoped_filter_can_limit_the_keys_it_scopes(): void
@@ -186,5 +190,18 @@ class TableComponentTest extends TestCase
             ->assertSet('sorters.title_desc', 'desc')
             ->set('filters.period', 'archived')
             ->assertSet('sorters.title_desc', 'asc');
+    }
+
+    public function test_select_filter_options_receive_active_table_filters(): void
+    {
+        $component = Livewire::test(TableComponent::class, ['table' => ScopedTableStateFixture::optionsFromActiveFilters()])
+            ->set('filters.period', 'archived');
+
+        $titleFilter = collect($component->instance()->getFilters())
+            ->first(fn ($filter) => $filter->getKey() === 'title');
+
+        $this->assertSame([
+            ['value' => 'archived title', 'label' => 'Archived title'],
+        ], $titleFilter->getOptions());
     }
 }
