@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+Improved permissions; Scoped table filters; Updated Squanto package and UI;
+
+- Added: permissionScope () method to Resource interface to allow scoping permissions per resource type.
+- Added: permissionAbilities () method to Resource interface to allow scoping permissions per resource type.
 - Added: Duplicating nested fragments is now supported.
 - Added: Filter::scoped - Table filters can now scope filter and sorter session state per active scope value.
 - Added: Table select filter option callbacks now receive the active table filters.

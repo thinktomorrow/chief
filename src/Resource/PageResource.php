@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Table\Table;
 
 // App specific resource methods
-interface PageResource extends Resource
+interface PageResource extends PermissionScopedResource, Resource
 {
     // Nav
     public function getNavItem(): ?NavItem;

@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Table\Table\References\TableReference;
 
 trait PageResourceDefault
 {
+    use PermissionScopedResourceDefault;
     use ResourceDefault;
 
     public function allowedFragments(): array

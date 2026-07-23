@@ -37,7 +37,7 @@ trait EditAssistant
         }
 
         try {
-            $this->authorize('update-page');
+            $this->authorizeResourcePermission('update');
         } catch (NotAllowedManagerAction $e) {
             return false;
         }

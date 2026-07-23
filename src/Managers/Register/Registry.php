@@ -99,6 +99,14 @@ final class Registry
         return $this->resources;
     }
 
+    /**
+     * @return array<string, resource>
+     */
+    public function resources(): array
+    {
+        return $this->all();
+    }
+
     private function first(): Resource
     {
         if (count($this->resources) < 1) {

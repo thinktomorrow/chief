@@ -35,7 +35,7 @@ trait IndexAssistant
         }
 
         try {
-            $this->authorize('view-page');
+            $this->authorizeResourcePermission('view');
         } catch (NotAllowedManagerAction $e) {
             return false;
         }
