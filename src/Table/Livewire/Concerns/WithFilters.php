@@ -180,11 +180,23 @@ trait WithFilters
 
     public function resetFilters()
     {
+        $previousFilterSessionKey = $this->getFilterSessionKey();
+
         $this->clearFilters();
         $this->setDefaultFilters();
-        $this->updatedFilters();
 
+        $this->removeEmptyFilters();
+        $this->syncLocaleWithSiteFilter();
+
+        session()->forget($previousFilterSessionKey);
         session()->forget($this->getFilterSessionKey());
+
+        $this->tableFilterScopeState = $this->scopeState($this->filters);
+
+        $this->resetPage($this->getPaginationId());
+
+        // Allow Alpine to listen to this event
+        $this->dispatch($this->getFiltersUpdatedEvent());
     }
 
     public function clearFilters()

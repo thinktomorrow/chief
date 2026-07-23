@@ -144,6 +144,20 @@ class TableComponentTest extends TestCase
         $this->assertStringNotContainsString('scoped_state', json_encode(session()->all()));
     }
 
+    public function test_reset_filters_forgets_the_previous_scoped_filter_session_key(): void
+    {
+        $table = ScopedTableStateFixture::scopedFilters();
+
+        Livewire::test(TableComponent::class, ['table' => $table])
+            ->set('filters.period', 'archived')
+            ->set('filters.title', 'child2 title')
+            ->call('resetFilters')
+            ->assertSet('filters.period', 'current')
+            ->assertSet('filters.title', null)
+            ->set('filters.period', 'archived')
+            ->assertSet('filters.title', null);
+    }
+
     public function test_scoped_filter_can_limit_the_keys_it_scopes(): void
     {
         $table = ScopedTableStateFixture::limitedScopedFilters();
