@@ -7,16 +7,17 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 Improved permissions; Scoped table filters; Updated Squanto package and UI;
 
-- Added: permissionScope () method to Resource interface to allow scoping permissions per resource type.
-- Added: permissionAbilities () method to Resource interface to allow scoping permissions per resource type.
+- Added: `permissionScope` method to Resource interface to allow scoping permissions per resource type.
+- Added: `permissionAbilities` method to Resource interface to allow scoping permissions per resource type.
 - Added: Duplicating nested fragments is now supported.
-- Added: Filter::scoped - Table filters can now scope filter and sorter session state per active scope value.
+- Added: `Filter::scoped` - Table filters can now scope filter and sorter session state per active scope value.
 - Added: Table select filter option callbacks now receive the active table filters.
 - Fixed: The content of fragments with nested fragments now shows the correct preview in 'existing fragments' sidebar
   tab.
 - Fixed: Table button group filters now keep their active marker aligned while Livewire updates option labels
 - Fixed: Tabs now keep their active marker aligned while Livewire updates
 - Fixed: Scalar filter values are now also retrieved in getFilterValueFromOptions
+- Fixed: download button in media gallery is working again
 - Changed: Squanto index grid UI instead of list in window
 
 ## [0.10.27] - 2026-07-16
