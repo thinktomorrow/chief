@@ -26,6 +26,10 @@ trait WithFilters
             $this->filters = session($this->getFilterSessionKey());
         }
 
+        if (request()->query('filters')) {
+            session()->put($this->getFilterSessionKey(), $this->filters);
+        }
+
         $this->tableFilterScopeState = $this->scopeState($this->filters);
     }
 
@@ -95,7 +99,7 @@ trait WithFilters
     private function applyQueryFilters(Builder $builder): void
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery() && $filterValue) {
+            if (($filter = $this->findFilterOrNull($filterKey)) && $filter->hasQuery() && $filterValue) {
                 $filter->getQuery()($builder, $filterValue);
             }
         }
@@ -104,7 +108,7 @@ trait WithFilters
     private function applyCollectionFilters(Collection $rows): Collection
     {
         foreach ($this->filters as $filterKey => $filterValue) {
-            if (($filter = $this->findFilter($filterKey)) && $filter->hasQuery() && $filterValue) {
+            if (($filter = $this->findFilterOrNull($filterKey)) && $filter->hasQuery() && $filterValue) {
                 $rows = $filter->getQuery()($rows, $filterValue);
             }
         }
@@ -159,13 +163,24 @@ trait WithFilters
 
     protected function findFilter(string $filterKey): Filter
     {
+        if ($filter = $this->findFilterOrNull($filterKey)) {
+            return $filter;
+        }
+
+        throw new \InvalidArgumentException('No filter found by key '.$filterKey);
+    }
+
+    protected function findFilterOrNull(string $filterKey): ?Filter
+    {
         foreach ($this->getFilters() as $filter) {
             if ($filter->getKey() == $filterKey) {
                 return $filter;
             }
         }
 
-        throw new \InvalidArgumentException('No filter found by key '.$filterKey);
+        unset($this->filters[$filterKey]);
+
+        return null;
     }
 
     private function findActiveFilterValue(string $filterKey): mixed

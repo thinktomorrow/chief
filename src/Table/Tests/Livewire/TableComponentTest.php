@@ -144,6 +144,38 @@ class TableComponentTest extends TestCase
         $this->assertStringNotContainsString('scoped_state', json_encode(session()->all()));
     }
 
+    public function test_it_keeps_url_filter_state_per_scoped_filter_value(): void
+    {
+        $table = ScopedTableStateFixture::scopedFilters();
+
+        Livewire::withQueryParams([
+            'filters' => [
+                'period' => 'archived',
+                'title' => 'child2 title',
+            ],
+        ])
+            ->test(TableComponent::class, ['table' => $table])
+            ->set('filters.period', 'current')
+            ->assertSet('filters.title', null)
+            ->set('filters.period', 'archived')
+            ->assertSet('filters.title', 'child2 title');
+    }
+
+    public function test_it_ignores_unknown_url_filters(): void
+    {
+        $table = ScopedTableStateFixture::scopedFilters();
+
+        Livewire::withQueryParams([
+            'filters' => [
+                'period' => 'current',
+                'state' => 'accepted',
+            ],
+        ])
+            ->test(TableComponent::class, ['table' => $table])
+            ->assertSuccessful()
+            ->assertSet('filters.state', null);
+    }
+
     public function test_reset_filters_forgets_the_previous_scoped_filter_session_key(): void
     {
         $table = ScopedTableStateFixture::scopedFilters();
