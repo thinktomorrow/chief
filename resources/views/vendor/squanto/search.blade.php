@@ -3,7 +3,7 @@
     $results = $results ?? [];
 @endphp
 
-<x-chief::page.template title="Vaste teksten" container="md">
+<x-chief::page.template title="Vaste teksten">
     <form data-slot="window" method="GET" action="{{ route('squanto.index') }}" class="flex items-center gap-1">
         <x-chief::form.input.search
             name="search"

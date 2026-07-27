@@ -8,8 +8,9 @@
     </form>
 
     @foreach ($pageGroups as $sourceLabel => $groupedPages)
+
         <section data-slot="window" class="space-y-3">
-            <h2 class="font-display text-grey-950 text-lg font-semibold">{{ $sourceLabel }}</h2>
+            <h2 class="font-display text-grey-950 text-lg font-semibold">{{ $sourceLabel == 'App' ? 'Algemene teksten' : $sourceLabel }}</h2>
 
             <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 @foreach ($groupedPages as $page)
@@ -64,25 +65,9 @@
 
                             <div class="flex items-center justify-between gap-2">
                                 <span class="text-grey-500 body text-sm leading-5">
-                                    {{ $sectionsCount }} {{ $sectionsCount == 1 ? 'sectie' : 'secties' }} · {{ $totalTranslations }} {{ $totalTranslations == 1 ? 'veld' : 'velden' }}
+                                    {{ $totalTranslations }} {{ $totalTranslations == 1 ? 'veld' : 'velden' }}
                                 </span>
                             </div>
-                        </div>
-
-                        <div class="bg-grey-100 mt-auto h-1">
-                            @if ($sectionsCount > 0)
-                                <div
-                                    @class ([
-                                    'h-full',
-                                    'bg-linear-to-r from-green-500 to-green-400' => $percentage == 100,
-                                    'bg-linear-to-r from-orange-400 to-orange-300' => $percentage < 100 && $percentage >= 50,
-                                    'bg-linear-to-r from-red-500 to-red-400' => $percentage < 50,
-                                ])
-                                    style="width: {{ $percentage }}%"
-                                ></div>
-                            @else
-                                <div class="bg-grey-200 h-full"></div>
-                            @endif
                         </div>
                     </a>
                 @endforeach
