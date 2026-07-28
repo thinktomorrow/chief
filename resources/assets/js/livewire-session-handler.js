@@ -59,10 +59,6 @@ const registerLivewireRequestHook = () => {
 
     window.Livewire.hook('request', ({ fail }) => {
         fail(({ status, preventDefault }) => {
-            if (getConfig().debug) {
-                return;
-            }
-
             if (status === 419) {
                 preventDefault();
 
@@ -74,6 +70,10 @@ const registerLivewireRequestHook = () => {
 
                 openDialog('refresh-modal');
 
+                return;
+            }
+
+            if (getConfig().debug) {
                 return;
             }
 

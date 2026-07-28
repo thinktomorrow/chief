@@ -18,6 +18,7 @@ Improved permissions; Scoped table filters; Updated Squanto package and UI;
 - Fixed: Tabs now keep their active marker aligned while Livewire updates
 - Fixed: Scalar filter values are now also retrieved in getFilterValueFromOptions
 - Fixed: download button in media gallery is working again
+- Fixed: Show livewire stale session modal when debug mode is enabled
 - Changed: Squanto index grid UI instead of list in window
 
 ## [0.10.27] - 2026-07-16
