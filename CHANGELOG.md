@@ -5,7 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
-Improved permissions; Scoped table filters; Updated Squanto package and UI;
+## [0.10.28] - 2026-07-28
+
+Improved permissions; Scoped table filters; Updated Squanto package and UI; Requires thinktomorrow/squanto:6.*
 
 - Added: `permissionScope` method to Resource interface to allow scoping permissions per resource type.
 - Added: `permissionAbilities` method to Resource interface to allow scoping permissions per resource type.
