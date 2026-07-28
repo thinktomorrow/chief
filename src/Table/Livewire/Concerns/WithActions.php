@@ -142,10 +142,16 @@ trait WithActions
 
     public function onActionDialogSaved($values): ?SymfonyResponse
     {
-        return $this->applyActionEffect(
+        $response = $this->applyActionEffect(
             $values['dialogReference']['actionKey'],
             $values['form'],
             $values['data']
         );
+
+        $action = $this->getTable()->findAction($values['dialogReference']['actionKey']);
+
+        $this->dispatch('actionCompleted-'.$this->getId(), close: ! $action || $action->shouldCloseDialog());
+
+        return $response;
     }
 }

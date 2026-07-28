@@ -4,6 +4,8 @@ namespace Thinktomorrow\Chief\Table\Tests\Livewire;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
+use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 use Thinktomorrow\Chief\Table\Livewire\TableComponent;
@@ -235,5 +237,69 @@ class TableComponentTest extends TestCase
         $this->assertSame([
             ['value' => 'archived title', 'label' => 'Archived title'],
         ], $titleFilter->getOptions());
+    }
+
+    public function test_it_closes_action_dialog_after_action_effect_is_applied(): void
+    {
+        $table = DialogActionTableFixture::makeTable();
+
+        $component = Livewire::test(TableComponent::class, ['table' => $table]);
+
+        $component
+            ->call('onActionDialogSaved', [
+                'dialogReference' => [
+                    'actionKey' => 'publish',
+                ],
+                'form' => [],
+                'data' => ['items' => [1, 2]],
+            ])
+            ->assertDispatched(
+                'actionCompleted-'.$component->instance()->getId(),
+                fn (string $event, array $params): bool => $params['close'] === true
+            );
+    }
+
+    public function test_it_can_keep_action_dialog_open_after_action_effect_is_applied(): void
+    {
+        $table = DialogActionTableFixture::makeTable(false);
+
+        $component = Livewire::test(TableComponent::class, ['table' => $table]);
+
+        $component
+            ->call('onActionDialogSaved', [
+                'dialogReference' => [
+                    'actionKey' => 'publish',
+                ],
+                'form' => [],
+                'data' => ['items' => [1, 2]],
+            ])
+            ->assertDispatched(
+                'actionCompleted-'.$component->instance()->getId(),
+                fn (string $event, array $params): bool => $params['close'] === false
+            );
+    }
+}
+
+final class DialogActionTableFixture
+{
+    public function table(bool $closeDialog = true): Table
+    {
+        return self::makeTable($closeDialog);
+    }
+
+    public static function makeTable(bool $closeDialog = true): Table
+    {
+        $action = Action::make('publish')
+            ->dialog(Dialog::make('publish-modal'))
+            ->effect(fn () => true)
+            ->closeDialog($closeDialog);
+
+        return Table::make()
+            ->setTableReference(new Table\References\TableReference(self::class, 'table', $closeDialog ? [] : [false]))
+            ->query(fn () => TreeModelFixture::query())
+            ->columns([
+                ColumnText::make('id'),
+            ])
+            ->bulkActions([$action]);
     }
 }

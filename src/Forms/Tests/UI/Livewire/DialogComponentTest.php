@@ -22,6 +22,45 @@ final class DialogComponentTest extends ChiefTestCase
             ])
             ->assertSet('form.foobar', 'example value');
     }
+
+    public function test_it_keeps_dialog_open_while_save_is_handled_by_parent_component(): void
+    {
+        Livewire::test(DialogComponent::class, ['parentId' => 'table-component'])
+            ->call('open', [
+                'dialogReference' => (new TestDialogReference)->toLivewire(),
+                'data' => [],
+            ])
+            ->call('save')
+            ->assertSet('isOpen', true)
+            ->assertSet('isSaving', true)
+            ->assertDispatched('dialogSaved-table-component');
+    }
+
+    public function test_it_closes_dialog_after_parent_component_completes_save(): void
+    {
+        Livewire::test(DialogComponent::class, ['parentId' => 'table-component'])
+            ->call('open', [
+                'dialogReference' => (new TestDialogReference)->toLivewire(),
+                'data' => [],
+            ])
+            ->call('save')
+            ->dispatch('actionCompleted-table-component')
+            ->assertSet('isOpen', false)
+            ->assertSet('isSaving', false);
+    }
+
+    public function test_it_can_keep_dialog_open_after_parent_component_completes_save(): void
+    {
+        Livewire::test(DialogComponent::class, ['parentId' => 'table-component'])
+            ->call('open', [
+                'dialogReference' => (new TestDialogReference)->toLivewire(),
+                'data' => [],
+            ])
+            ->call('save')
+            ->dispatch('actionCompleted-table-component', close: false)
+            ->assertSet('isOpen', true)
+            ->assertSet('isSaving', false);
+    }
 }
 
 final class TestDialogReference implements DialogReference

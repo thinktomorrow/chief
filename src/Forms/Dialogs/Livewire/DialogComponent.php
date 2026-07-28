@@ -23,6 +23,8 @@ class DialogComponent extends Component
 
     public ?DialogReference $dialogReference = null;
 
+    public bool $isSaving = false;
+
     private ?Dialog $dialog = null;
 
     public function mount(string $parentId)
@@ -35,11 +37,14 @@ class DialogComponent extends Component
         return [
             'open' => 'open',
             'open-'.$this->parentId => 'open',
+            'actionCompleted-'.$this->parentId => 'completeSave',
         ];
     }
 
     public function open($value)
     {
+        $this->isSaving = false;
+
         $this->dialogReference = $value['dialogReference']['class']::fromLivewire($value['dialogReference']);
 
         // how to convert to model(s) from data;
@@ -61,6 +66,15 @@ class DialogComponent extends Component
         $this->resetExcept(['parentId']);
 
         $this->isOpen = false;
+    }
+
+    public function completeSave(bool $close = true): void
+    {
+        $this->isSaving = false;
+
+        if ($close) {
+            $this->close();
+        }
     }
 
     private function getDialog(): ?Dialog
@@ -115,6 +129,8 @@ class DialogComponent extends Component
     {
         $this->validateForm();
 
+        $this->isSaving = true;
+
         $this->dispatch('dialogSaved-'.$this->parentId, [
             'dialogReference' => $this->dialogReference->toLivewire(),
             'form' => $this->form,
@@ -132,9 +148,7 @@ class DialogComponent extends Component
 
         // $this->getModal()->getEffect()($model, $data);
 
-        $this->resetExcept(['parentId']);
-
-        $this->close();
+        // The parent component executes the effect and closes this dialog when it is done.
     }
 
     public function render()

@@ -3,16 +3,12 @@
         <x-slot name="title">
             {{ $this->getTitle() }}
         </x-slot>
-
         <x-slot name="subtitle">
             {{ $this->getSubTitle() }}
         </x-slot>
-
         <div class="space-y-4">
             @if ($this->getContent())
-                <div class="prose prose-dark prose-spacing">
-                    {!! $this->getContent() !!}
-                </div>
+                <div class="prose prose-dark prose-spacing">{!! $this->getContent() !!}</div>
             @endif
 
             @foreach ($this->getFields() as $field)
@@ -21,16 +17,18 @@
                         $field->dropdownPositionStatic();
                     }
                 @endphp
-
                 {{ $field }}
             @endforeach
         </div>
-
         <x-slot name="footer">
             <x-chief::dialog.modal.footer>
-                <x-chief::button wire:click="close">Annuleer</x-chief::button>
-                <x-chief::button wire:click="save" variant="{{ $this->getButtonVariant() }}">
-                    {{ $this->getButton() }}
+                <x-chief::button wire:click="close" :disabled="$isSaving">Annuleer</x-chief::button>
+                <x-chief::button wire:click="save" variant="{{ $this->getButtonVariant() }}" :disabled="$isSaving">
+                    @if ($isSaving)
+                        <x-chief::icon.loading class="animate-spin" />
+                    @endif
+
+                    <span>{{ $this->getButton() }}</span>
                 </x-chief::button>
             </x-chief::dialog.modal.footer>
         </x-slot>
