@@ -51,3 +51,15 @@ Use the `untagged` attribute to fetch those models that have no tags at all.
 
 By default a nav component shows its links inside a dropdown. Use the `ìnline` attribute if you want to show all links next to each other in the navigation, instead of in a dropdown.
 The title attribute controls the dropdown title.
+
+## Setting the group icon
+Use the `icon` attribute to set the icon of a dropdown group. When omitted, the icon of the first tagged resource is used, as returned by its `getNavIcon()`.
+```
+<x-chief::nav title="Bedrijf" tagged="nav-company" :icon="Blade::render('<x-chief::icon.folder-library />')"></x-chief::nav>
+```
+The icon is echoed as raw html and is never parsed as blade. So passing a component tag - e.g. `icon="<x-chief::icon.folder-library />"` - won't work.
+Pass rendered markup instead, either via `Blade::render()` as shown above, or as a plain svg. Note that a raw svg must be single quoted since blade cannot parse double quotes inside a double quoted attribute value:
+```
+<x-chief::nav title="Bedrijf" tagged="nav-company" icon='<svg viewBox="0 0 24 24">...</svg>'></x-chief::nav>
+```
+The `icon` attribute only applies to a dropdown group. Inline nav items always render the icon of their own resource.

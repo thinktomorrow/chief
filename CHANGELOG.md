@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: The `icon` attribute on a grouped `<x-chief::nav>` is no longer ignored. It now sets the icon of the dropdown
+  group, and only falls back to the icon of the first tagged resource when omitted.
+
 ## [0.10.28] - 2026-07-28
 
 Improved permissions; Scoped table filters; Updated Squanto package and UI; Requires thinktomorrow/squanto:6.*
