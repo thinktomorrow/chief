@@ -7,6 +7,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: The `icon` attribute on a grouped `<x-chief::nav>` is no longer ignored. It now sets the icon of the dropdown
   group, and only falls back to the icon of the first tagged resource when omitted.
+- Changed: renamed default simple state label to 'online' and 'offline' (was 'gepubliceerd' and 'draft')
 
 ## [0.10.28] - 2026-07-28
 
