@@ -19,7 +19,7 @@ class OnlineStateRowAction extends Action
         $stateKey = $stateKey ?: $primaryStateKey;
 
         return static::make('online-state-row')
-            ->label('Publiceer de pagina')
+            ->label('Zet online')
             ->variant('green')
             ->prependIcon('<x-chief::icon.view />')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
@@ -34,7 +34,7 @@ class OnlineStateRowAction extends Action
 
                 return true;
             })
-            ->notifyOnSuccess('Is nu gepubliceerd!')->notifyOnFailure('Er is iets misgegaan bij het publiceren.')
+            ->notifyOnSuccess('Is nu online!')->notifyOnFailure('Er is iets misgegaan bij het zetten naar online.')
             ->when(function ($component, $model) use ($stateKey, $transitionKey) {
 
                 $stateConfig = $model->getStateConfig($stateKey);
