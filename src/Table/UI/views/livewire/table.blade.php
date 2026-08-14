@@ -74,7 +74,13 @@
         @include('chief-table::index-no-records')
     @endif
 
-    <livewire:chief-wire::create-model :parent-component-id="$this->getId()" />
-    <livewire:chief-wire::edit-model :parent-component-id="$this->getId()" />
-    <livewire:chief-form::dialog :parent-id="$this->getId()" />
+    <template x-teleport="body">
+        <livewire:chief-wire::create-model :parent-component-id="$this->getId()" />
+    </template>
+    <template x-teleport="body">
+        <livewire:chief-wire::edit-model :parent-component-id="$this->getId()" />
+    </template>
+    <template x-teleport="body">
+        <livewire:chief-form::dialog :parent-id="$this->getId()" />
+    </template>
 </div>

@@ -24,16 +24,16 @@
                     </x-chief::button>
 
                     <x-chief::dialog.dropdown id="fragment-actions-{{ $fragment->getId() }}">
-                        @include('chief-fragments::livewire._partials.status-fragment-actions')
-                        @include('chief-fragments::livewire._partials.delete-fragment-action')
+                        @include ('chief-fragments::livewire._partials.status-fragment-actions')
+                        @include ('chief-fragments::livewire._partials.delete-fragment-action')
                     </x-chief::dialog.dropdown>
                 </div>
             </x-chief::dialog.drawer.header>
         </x-slot>
 
-        @include('chief-fragments::livewire._partials.shared-fragment-actions')
-        @include('chief-fragments::livewire._partials.bookmarks')
-        @include('chief-form::livewire._partials.locale-toggle', ['entangleScopedLocale' => true])
+        @include ('chief-fragments::livewire._partials.shared-fragment-actions')
+        @include ('chief-fragments::livewire._partials.bookmarks')
+        @include ('chief-form::livewire._partials.locale-toggle', ['entangleScopedLocale' => true])
 
         @foreach ($this->getFields() as $field)
             {{ $field }}
@@ -51,10 +51,10 @@
                     x-sortable-ghost-class="fragment-sort-ghost"
                     x-sortable-drag-class="fragment-sort-drag"
                     x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-                    class="border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100 rounded-xl border px-4 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t"
+                    class="border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t rounded-xl border px-4"
                 >
                     @if ($fragments->count() > 0)
-                        @include(
+                        @include (
                             'chief-fragments::livewire._partials.add-fragment-button',
                             [
                                 'order' => -1,
@@ -63,7 +63,7 @@
                         )
 
                         @foreach ($fragments as $childFragment)
-                            @include(
+                            @include (
                                 'chief-fragments::livewire._partials.fragment',
                                 [
                                     'fragment' => $childFragment,
@@ -72,7 +72,7 @@
                             )
                         @endforeach
                     @else
-                        @include(
+                        @include (
                             'chief-fragments::livewire._partials.empty-context',
                             [
                                 'parentId' => $fragment->fragmentId,

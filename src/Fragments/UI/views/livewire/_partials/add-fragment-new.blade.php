@@ -1,7 +1,7 @@
 <div class="-my-2 columns-2 gap-6">
     @forelse ($this->getAllowedFragmentsGrouped() as $category => $fragmentsByCategory)
         <div class="inline-block w-full space-y-1 py-2">
-            <p class="text-sm/6 font-normal text-grey-500">
+            <p class="text-grey-500 text-sm/6 font-normal">
                 @if ($category)
                     {{ ucfirst($category) }}
                 @else
@@ -14,21 +14,19 @@
                     <button
                         type="button"
                         wire:click="showCreateForm('{{ $allowedFragment::resourceKey() }}')"
-                        class="group flex w-full items-start gap-2 rounded-xl p-2 text-left hover:bg-grey-50"
+                        class="group hover:bg-grey-50 flex w-full items-start gap-2 rounded-xl p-2 text-left"
                     >
-                        <div class="shrink-0 text-grey-400 *:size-6 group-hover:text-primary-500">
+                        <div class="text-grey-400 group-hover:text-primary-500 shrink-0 *:size-6">
                             {!! $allowedFragment->getIcon() !!}
                         </div>
 
                         <div class="grow space-y-0.5">
-                            <h3 class="text-base/6 text-grey-800 group-hover:text-grey-950">
+                            <h3 class="text-grey-800 group-hover:text-grey-950 text-base/6">
                                 {{ ucfirst($allowedFragment->getLabel()) }}
                             </h3>
 
                             @if ($hint = $allowedFragment->getHint())
-                                <p class="body text-sm text-grey-500">
-                                    {!! $hint !!}
-                                </p>
+                                <p class="body text-grey-500 text-sm">{!! $hint !!}</p>
                             @endif
                         </div>
                     </button>

@@ -16,14 +16,8 @@
 
         @if ($driverType)
             <x-chief::form.fieldset>
-                <x-chief::form.label for="driverId">
-                    {{ $this->getLabel() }}
-                </x-chief::form.label>
-
-                <x-chief::form.description>
-                    {!! $this->getDescription() !!}
-                </x-chief::form.description>
-
+                <x-chief::form.label for="driverId"> {{ $this->getLabel() }} </x-chief::form.label>
+                <x-chief::form.description> {!! $this->getDescription() !!} </x-chief::form.description>
                 <x-chief::form.input.text
                     x-data="{}"
                     {{-- Prevents directive to be triggered twice --}}

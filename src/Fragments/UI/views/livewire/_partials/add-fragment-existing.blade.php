@@ -41,9 +41,7 @@
                     </h3>
 
                     @if ($adminView = $shareableFragment->renderInAdmin())
-                        <div>
-                            {!! $adminView !!}
-                        </div>
+                        <div>{!! $adminView !!}</div>
                     @endif
                 </div>
             </button>

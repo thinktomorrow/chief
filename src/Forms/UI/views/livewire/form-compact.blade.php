@@ -15,10 +15,12 @@
         </x-chief::button>
     </div>
 
-    <livewire:chief-wire::edit-form
-        :key="'edit-form-'.$this->getId()"
-        :model-reference="$modelReference"
-        :form-component="$form"
-        :parent-component-id="$this->getId()"
-    />
+    <template x-teleport="body">
+        <livewire:chief-wire::edit-form
+            :key="'edit-form-'.$this->getId()"
+            :model-reference="$modelReference"
+            :form-component="$form"
+            :parent-component-id="$this->getId()"
+        />
+    </template>
 </div>

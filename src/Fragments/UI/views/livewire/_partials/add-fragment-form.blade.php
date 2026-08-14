@@ -6,7 +6,7 @@
                 variant="grey"
                 type="button"
                 wire:click="$set('showCreate', false)"
-                class="mt-[0.1875rem] shrink-0"
+                class="mt-0.75 shrink-0"
             >
                 <x-chief::icon.arrow-left />
             </x-chief::button>

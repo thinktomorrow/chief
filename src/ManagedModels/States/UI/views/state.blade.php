@@ -6,10 +6,12 @@
         </x-chief::button>
     @endif
 
-    <livewire:chief-wire::edit-state
-        :key="$modelReference . $stateKey"
-        :parent-component-id="$this->getId()"
-        :state-key="$stateKey"
-        :model="$this->getModel()"
-    />
+    <template x-teleport="body">
+        <livewire:chief-wire::edit-state
+            :key="$modelReference . $stateKey"
+            :parent-component-id="$this->getId()"
+            :state-key="$stateKey"
+            :model="$this->getModel()"
+        />
+    </template>
 </div>

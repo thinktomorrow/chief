@@ -18,7 +18,7 @@
             x-cloak
             x-show="formUpdated"
             variant="green"
-            class="animate-pop-in-badge mt-[0.3125rem] inline-flex items-center gap-0.5"
+            class="animate-pop-in-badge mt-1.25 inline-flex items-center gap-0.5"
         >
             <span>Opgeslagen</span>
         </x-chief::badge>
@@ -32,10 +32,12 @@
         {{ $childComponent->renderPreview() }}
     @endforeach
 
-    <livewire:chief-wire::edit-form
-        :key="'edit-form-'.$this->getId()"
-        :model-reference="$modelReference"
-        :form-component="$form"
-        :parent-component-id="$this->getId()"
-    />
+    <template x-teleport="body">
+        <livewire:chief-wire::edit-form
+            :key="'edit-form-'.$this->getId()"
+            :model-reference="$modelReference"
+            :form-component="$form"
+            :parent-component-id="$this->getId()"
+        />
+    </template>
 </x-chief::window>

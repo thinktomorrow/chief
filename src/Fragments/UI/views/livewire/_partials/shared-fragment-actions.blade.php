@@ -10,13 +10,10 @@
             id="shared-fragment-modal-{{ $this->getId() }}"
             title="Dit fragment wordt gebruikt op {{ $ownerCount == 1 ? ' één plaats' : $ownerCount . ' plaatsen' }}"
         >
-            <p class="body text-grey-500">
-                Het aanpassen of vervangen van dit fragment is van toepassing op volgende
-                {{ $ownerCount == 1 ? 'plaats' : 'plaatsen' }}:
-            </p>
+            <p class="body text-grey-500">Het aanpassen of vervangen van dit fragment is van toepassing op volgende {{ $ownerCount == 1 ? 'plaats' : 'plaatsen' }}:</p>
 
-            <div class="mt-2 overflow-hidden rounded-md border border-grey-100">
-                <div class="max-h-48 divide-y divide-grey-100 overflow-y-auto">
+            <div class="border-grey-100 mt-2 overflow-hidden rounded-md border">
+                <div class="divide-grey-100 max-h-48 divide-y overflow-y-auto">
                     @foreach ($sharedFragmentDtos as $sharedFragmentDto)
                         <div class="flex items-start justify-between gap-3 px-3 py-2.5">
                             <div class="body-dark body leading-6">
@@ -36,16 +33,19 @@
                 </div>
             </div>
 
-            <p class="body mt-4 text-grey-500">
-                Wil je aanpassingen enkel op deze plaats doorvoeren? Kies dan om het fragment te ontkoppelen en apart te
-                bewerken.
-            </p>
+            <p class="body text-grey-500 mt-4">Wil je aanpassingen enkel op deze plaats doorvoeren? Kies dan om het fragment te ontkoppelen en apart te bewerken.</p>
 
             <x-slot name="footer">
                 <x-chief::dialog.modal.footer>
                     <x-chief::button x-on:click.stop="close" type="button">Sluit</x-chief::button>
 
-                    <x-chief::button x-on:click="$wire.isolateFragment(); close();" variant="orange">
+                    <x-chief::button
+                        x-on:click="
+                            $wire.isolateFragment();
+                            close();
+                        "
+                        variant="orange"
+                    >
                         Ontkoppel en bewerk dit fragment apart
                     </x-chief::button>
                 </x-chief::dialog.modal.footer>

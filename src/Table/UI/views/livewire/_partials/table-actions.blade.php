@@ -23,14 +23,14 @@
 
             @if (count($this->getTertiaryActions()) > 0)
                 <x-chief::button
-                    x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-actions' })"
+                    x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-actions-{{ $this->getId() }}' })"
                     variant="outline-white"
                 >
                     <span>Meer acties</span>
                     <x-chief::icon.chevron-down />
                 </x-chief::button>
 
-                <x-chief::dialog.dropdown id="table-tertiary-actions" placement="bottom-start">
+                <x-chief::dialog.dropdown id="table-tertiary-actions-{{ $this->getId() }}" placement="bottom-start">
                     @foreach ($this->getTertiaryActions() as $action)
                         <x-chief-table::action.dropdown.item
                             :action="$action"

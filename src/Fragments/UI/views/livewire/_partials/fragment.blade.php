@@ -4,7 +4,7 @@
     x-sortable-item="{{ $fragment->fragmentId }}"
     x-data="{ previewLoaded: @js($fragment->contentLoaded) }"
     x-intersect.once="if (! previewLoaded) { previewLoaded = true; $wire.loadFragmentContent('{{ $fragment->fragmentId }}') }"
-    @class([
+    @class ([
         '[&.fragment-sort-ghost]:rounded-md',
         '[&.fragment-sort-ghost]:bg-grey-50',
         '[&.fragment-sort-ghost]:px-4',
@@ -23,14 +23,10 @@
                 <x-chief::icon.drag-drop-arrows />
             </x-chief::button>
 
-            <div class="mt-[0.1875rem] flex grow flex-wrap items-start gap-1.5">
-                <h3 class="font-display text-lg/6 font-medium text-grey-950">
-                    {{ ucfirst($fragment->label) }}
-                </h3>
+            <div class="mt-0.75 flex grow flex-wrap items-start gap-1.5">
+                <h3 class="font-display text-grey-950 text-lg/6 font-medium">{{ ucfirst($fragment->label) }}</h3>
 
-                <div class="shrink-0 text-grey-400 *:size-6">
-                    {!! $fragment->icon !!}
-                </div>
+                <div class="text-grey-400 shrink-0 *:size-6">{!! $fragment->icon !!}</div>
 
                 <div class="flex flex-wrap items-start gap-1">
                     @if (! $fragment->isOnline)
@@ -54,18 +50,16 @@
             </x-chief::button>
         </div>
 
-        <div x-cloak x-show="! previewLoaded" class="px-10 py-1.5">
-            <div class="h-3.5 w-3/5 animate-pulse rounded bg-grey-100"></div>
+        <div x-cloak x-show="!previewLoaded" class="px-10 py-1.5">
+            <div class="bg-grey-100 h-3.5 w-3/5 animate-pulse rounded"></div>
         </div>
 
         @if ($fragment->contentLoaded && $fragment->content)
-            <div class="px-10">
-                {!! $fragment->content !!}
-            </div>
+            <div class="px-10">{!! $fragment->content !!}</div>
         @endif
     </div>
 
-    @include(
+    @include (
         'chief-fragments::livewire._partials.add-fragment-button',
         [
             'order' => $fragment->order,

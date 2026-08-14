@@ -6,10 +6,10 @@
         x-sortable-ghost-class="fragment-sort-ghost"
         x-sortable-drag-class="fragment-sort-drag"
         x-on:end.stop="$wire.reorder($event.target.sortable.toArray())"
-        class="border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100 border-y [&>[data-slot=fragment]+[data-slot=fragment]]:border-t"
+        class="border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-grey-100 [&>[data-slot=fragment]+[data-slot=fragment]]:border-t border-y"
     >
         @if ($fragments->count() > 0)
-            @include(
+            @include (
                 'chief-fragments::livewire._partials.add-fragment-button',
                 [
                     'order' => -1,
@@ -18,7 +18,7 @@
             )
 
             @foreach ($fragments as $fragment)
-                @include(
+                @include (
                     'chief-fragments::livewire._partials.fragment',
                     [
                         'parentId' => $fragment->parentId,
@@ -26,7 +26,7 @@
                 )
             @endforeach
         @else
-            @include(
+            @include (
                 'chief-fragments::livewire._partials.empty-context',
                 [
                     'parentId' => null,
@@ -35,16 +35,20 @@
         @endif
     </div>
 
-    <livewire:chief-fragments::edit-fragment
-        :key="$context->id . '-edit-fragment'"
-        :model="$this->getModel()"
-        :context="$context"
-        :parent-component-id="$this->getId()"
-    />
+    <template x-teleport="body">
+        <livewire:chief-fragments::edit-fragment
+            :key="$context->id . '-edit-fragment'"
+            :model="$this->getModel()"
+            :context="$context"
+            :parent-component-id="$this->getId()"
+        />
+    </template>
 
-    <livewire:chief-fragments::add-fragment
-        :key="$context->id . '-add-fragment'"
-        :context="$context"
-        :parent-component-id="$this->getId()"
-    />
+    <template x-teleport="body">
+        <livewire:chief-fragments::add-fragment
+            :key="$context->id . '-add-fragment'"
+            :context="$context"
+            :parent-component-id="$this->getId()"
+        />
+    </template>
 </div>

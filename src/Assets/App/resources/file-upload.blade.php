@@ -8,7 +8,7 @@
             <x-chief-assets::upload-and-dropzone>
                 {{ $this->filePreview }}
 
-                @error('files.0')
+                @error ('files.0')
                     <x-chief::callout size="small" variant="red" class="mt-2">
                         <p>{{ ucfirst($message) }}</p>
                     </x-chief::callout>
@@ -16,16 +16,16 @@
 
                 {{ $this->fileSelect }}
 
-                <div>
+                <template x-teleport="body">
                     <livewire:chief-wire::file-field-choose-external
                         parent-id="{{ $this->getId() }}"
                         allowMultiple="{{ $allowMultiple }}"
                     />
-                </div>
+                </template>
 
-                <div>
+                <template x-teleport="body">
                     <livewire:chief-wire::file-edit parent-id="{{ $this->getId() }}" :components="$this->components" />
-                </div>
+                </template>
             </x-chief-assets::upload-and-dropzone>
         </form>
 
@@ -33,15 +33,11 @@
             <x-chief::dialog.modal.footer>
                 @if ($this->countUploadedOrSelectedFiles() < 1)
                     <x-chief::button variant="blue" type="submit" form="file-upload-form-{{ $this->getId() }}" disabled>
-                        Voeg
-                        {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
-                        toe
+                        Voeg {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }} toe
                     </x-chief::button>
                 @else
                     <x-chief::button variant="blue" type="submit" form="file-upload-form-{{ $this->getId() }}">
-                        Voeg
-                        {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }}
-                        toe
+                        Voeg {{ $this->countUploadedOrSelectedFiles() > 1 ? $this->countUploadedOrSelectedFiles() . ' bestanden' : 'bestand' }} toe
                     </x-chief::button>
                 @endif
             </x-chief::dialog.modal.footer>

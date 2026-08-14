@@ -7,6 +7,15 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: The `icon` attribute on a grouped `<x-chief::nav>` is no longer ignored. It now sets the icon of the dropdown
   group, and only falls back to the icon of the first tagged resource when omitted.
+- Fixed: Dialog components (modals, drawers, dropdowns) are now teleported to the body instead of being rendered in
+  place. This prevents them from being clipped or stacked incorrectly when they live inside another dialog, window or
+  overflow container. Applies to fragments, contexts, menus, links, site selection, forms, state, file upload/edit and
+  the table dialogs.
+- Fixed: Multiple tables on the same page no longer share dialog ids. The filters drawer, sorting dropdown, column
+  selection, table actions and bulk actions dialogs are now scoped per table component, so opening one no longer
+  triggers the dialog of another table.
+- Fixed: The table filter overflow calculation now only looks at its own table header instead of the first one on the
+  page, and no longer loops endlessly when there are no filters left to move to the drawer.
 - Changed: renamed default simple state label to 'online' and 'offline' (was 'gepubliceerd' and 'draft')
 
 ## [0.10.28] - 2026-07-28

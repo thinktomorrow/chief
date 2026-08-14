@@ -52,14 +52,14 @@
             @if (count($this->getTertiaryBulkActions()) > 0)
                 <div>
                     <x-chief::button
-                        x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-bulk-actions' })"
+                        x-on:click="$dispatch('open-dialog', { 'id': 'table-tertiary-bulk-actions-{{ $this->getId() }}' })"
                         size="xs"
                         variant="outline-white"
                     >
                         <x-chief::icon.more-vertical-circle />
                     </x-chief::button>
 
-                    <x-chief::dialog.dropdown id="table-tertiary-bulk-actions" placement="bottom-end">
+                    <x-chief::dialog.dropdown id="table-tertiary-bulk-actions-{{ $this->getId() }}" placement="bottom-end">
                         @foreach ($this->getTertiaryBulkActions() as $action)
                             <x-chief-table::action.dropdown.item
                                 :action="$action"

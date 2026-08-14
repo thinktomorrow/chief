@@ -18,7 +18,7 @@
         </x-slot>
 
         <x-slot name="tabs">
-            @include('chief-fragments::livewire.tabitems.nav')
+            @include ('chief-fragments::livewire.tabitems.nav')
         </x-slot>
     @endif
 
@@ -27,7 +27,7 @@
             <div wire:key="context-tab-content-{{ $item->id }}">
                 @if ($item->id === $activeItemId)
                     @if ($this->allowMultipleItems() || count($items) > 1)
-                        @include('chief-fragments::livewire.tabitems.actions')
+                        @include ('chief-fragments::livewire.tabitems.actions')
                     @endif
 
                     <livewire:chief-fragments::context
@@ -41,6 +41,10 @@
         @endforeach
     </div>
 
-    <livewire:chief-wire::add-context :model-reference="$model->modelReference()" :locales="$locales" />
-    <livewire:chief-wire::edit-context :model-reference="$model->modelReference()" :locales="$locales" />
+    <template x-teleport="body">
+        <livewire:chief-wire::add-context :model-reference="$model->modelReference()" :locales="$locales" />
+    </template>
+    <template x-teleport="body">
+        <livewire:chief-wire::edit-context :model-reference="$model->modelReference()" :locales="$locales" />
+    </template>
 </x-chief::window>

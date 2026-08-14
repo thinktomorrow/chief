@@ -27,14 +27,14 @@
 
             <div class="flex grow items-center">
                 <div class="grow space-y-4">
-                    @include('chief-assets::_partials.file-edit-preview-url')
-                    @include('chief-assets::_partials.file-edit-external-metadata')
+                    @include ('chief-assets::_partials.file-edit-preview-url')
+                    @include ('chief-assets::_partials.file-edit-external-metadata')
                 </div>
             </div>
         </div>
 
         <div class="space-y-2">
-            @include('chief-assets::_partials.file-edit-owner-info')
+            @include ('chief-assets::_partials.file-edit-owner-info')
 
             <div class="flex flex-wrap gap-2">
                 <x-chief::button wire:click="openFilesChooseExternal" variant="grey" size="sm">
@@ -47,13 +47,13 @@
                     <span>Haal thumbnail opnieuw op van {{ ucfirst($previewFile->getData('external.type')) }}</span>
                 </x-chief::button>
 
-                @include('chief-assets::_partials.file-edit-owner-action')
+                @include ('chief-assets::_partials.file-edit-owner-action')
             </div>
         </div>
 
         @if (count($this->getComponents()) > 0)
             <div data-slot="form-group">
-                @include('chief-assets::_partials.file-edit-site-toggle')
+                @include ('chief-assets::_partials.file-edit-site-toggle')
 
                 @foreach ($this->getComponents() as $component)
                     {{ $component }}
@@ -70,12 +70,16 @@
         @endif
     </form>
 
-    <livewire:chief-wire::file-field-choose-external parent-id="{{ $this->getId() }}" />
+    <template x-teleport="body">
+        <livewire:chief-wire::file-field-choose-external parent-id="{{ $this->getId() }}" />
+    </template>
 
     <x-slot name="footer">
         <x-chief::dialog.modal.footer>
             <x-chief::button wire:click.prevent="close" type="button">Annuleer</x-chief::button>
-            <x-chief::button form="file-edit-external-form" variant="blue" type="submit">Bewaar bestand</x-chief::button>
+            <x-chief::button form="file-edit-external-form" variant="blue" type="submit"
+                >Bewaar bestand</x-chief::button
+            >
         </x-chief::dialog.modal.footer>
     </x-slot>
 @endif

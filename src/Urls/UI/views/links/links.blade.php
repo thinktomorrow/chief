@@ -14,18 +14,16 @@
             @foreach ($links as $link)
                 <div
                     wire:key="site-link-{{ $link->locale }}"
-                    @class([
+                    @class ([
                         'space-y-1',
                         'border-grey-100 mt-3 border-t pt-3' => ! $loop->first,
                     ])
                 >
                     <div class="flex items-start justify-between gap-2">
-                        @if(count($links) > 1)
+                        @if (count($links) > 1)
                             <p class="text-grey-500 text-sm/5 font-medium">{{ $link->site->name }}</p>
 
-                            <x-chief::badge :variant="$link->stateVariant">
-                                {{ $link->stateLabel }}
-                            </x-chief::badge>
+                            <x-chief::badge :variant="$link->stateVariant"> {{ $link->stateLabel }} </x-chief::badge>
                         @endif
                     </div>
 
@@ -42,7 +40,7 @@
                                 <x-chief::icon.link-square />
                             </x-chief::link>
 
-                            @if(count($links) == 1)
+                            @if (count($links) == 1)
                                 <x-chief::badge :variant="$link->stateVariant">
                                     {{ $link->stateLabel }}
                                 </x-chief::badge>
@@ -56,5 +54,7 @@
         <p class="body text-grey-500">Nog geen links toegevoegd.</p>
     @endif
 
-    <livewire:chief-wire::edit-links key="edit-links" :model="$this->getModel()" />
+    <template x-teleport="body">
+        <livewire:chief-wire::edit-links key="edit-links" :model="$this->getModel()" />
+    </template>
 </x-chief::window>

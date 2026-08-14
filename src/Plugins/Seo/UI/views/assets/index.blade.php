@@ -10,7 +10,7 @@
 
     <livewire:chief-wire::table key="seo-assets-table" :table="$table" />
 
-    <livewire:chief-wire::file-edit parent-id="seo-asset" />
-    {{--    <livewire:chief-wire::edit-asset />--}}
-
+    <template x-teleport="body">
+        <livewire:chief-wire::file-edit parent-id="seo-asset" />
+    </template>
 </x-chief::page.template>

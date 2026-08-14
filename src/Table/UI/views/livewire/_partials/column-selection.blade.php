@@ -1,8 +1,11 @@
-<x-chief::button x-on:click="$dispatch('open-dialog', { 'id': 'table-column-selection' })" variant="outline-white">
+<x-chief::button
+    x-on:click="$dispatch('open-dialog', { 'id': 'table-column-selection-{{ $this->getId() }}' })"
+    variant="outline-white"
+>
     <x-chief::icon.layout-column />
 </x-chief::button>
 
-<x-chief::dialog.dropdown id="table-column-selection" placement="bottom-end">
+<x-chief::dialog.dropdown id="table-column-selection-{{ $this->getId() }}" placement="bottom-end">
     <div class="min-w-48 space-y-3.5 p-3.5">
         <div class="space-y-2">
             @foreach ($this->getOptionsForColumnSelection() as $columnSelection)

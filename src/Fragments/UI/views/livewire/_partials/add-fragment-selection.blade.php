@@ -2,7 +2,11 @@
     <x-chief::dialog.drawer.header
         title="Fragment toevoegen"
         x-data
-        x-on:chieftab.window="if ($event.detail.reference === 'add-fragment-tabs') { $wire.onTabChanged($event.detail.id) }"
+        x-on:chieftab.window="
+            if ($event.detail.reference === 'add-fragment-tabs') {
+                $wire.onTabChanged($event.detail.id);
+            }
+        "
     >
         <x-chief::tabs
             size="base"
@@ -26,7 +30,7 @@
     :should-listen-for-external-tab="true"
 >
     <x-chief::tabs.tab wire:key="add-fragment-tab-content-new" tab-id="new">
-        @include('chief-fragments::livewire._partials.add-fragment-new')
+        @include ('chief-fragments::livewire._partials.add-fragment-new')
     </x-chief::tabs.tab>
 
     <x-chief::tabs.tab wire:key="add-fragment-tab-content-existing" tab-id="existing">
@@ -39,7 +43,7 @@
 
         <div wire:loading.remove wire:target="onTabChanged">
             @if ($this->shouldRenderExistingTab())
-                @include('chief-fragments::livewire._partials.add-fragment-existing')
+                @include ('chief-fragments::livewire._partials.add-fragment-existing')
             @endif
         </div>
     </x-chief::tabs.tab>

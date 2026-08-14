@@ -32,21 +32,21 @@
             {{ $this->table }}
         </div>
 
-        <div>
+        <template x-teleport="body">
             <livewire:chief-wire::file-upload
                 parent-id="{{ $this->getId() }}"
                 field-name="files"
                 :allow-multiple="true"
             />
-        </div>
+        </template>
 
-        <div>
+        <template x-teleport="body">
             <livewire:chief-wire::file-edit parent-id="{{ $this->getId() }}" />
-        </div>
+        </template>
 
-        <div>
+        <template x-teleport="body">
             <livewire:chief-wire::asset-delete parent-id="{{ $this->getId() }}" />
-        </div>
+        </template>
 
         @foreach (app(ChiefPluginSections::class)->getLivewireFileComponents() as $livewireFileComponent)
             <template x-teleport="body">
