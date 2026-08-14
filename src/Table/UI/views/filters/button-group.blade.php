@@ -1,16 +1,18 @@
 @php
-    $id = 'button-group-' . mt_rand(0, 9999);
+    $id = 'button-group-' . $this->getId() . '-' . $getKey();
 @endphp
 
 <div
-    wire:ignore
+    wire:ignore.self
     x-cloak
     x-data="{
         activeRadio: null,
-        repositionOptionMarker(optionElement) {
+        repositionOptionMarker(optionElement, force = false) {
+            if (! optionElement) return
+
             const radioInput = optionElement.querySelector('input')
 
-            if (! radioInput.checked) return
+            if (! radioInput || (! force && ! radioInput.checked)) return
 
             this.activeRadio = radioInput
 
@@ -19,12 +21,22 @@
         },
         repositionCheckedOptionMarker() {
             $nextTick(() => {
-                const activeRadio = Array.from(
+                let activeRadio = Array.from(
                     this.$root.querySelectorAll('input'),
                 ).find((radio) => radio.checked)
 
+                if (! activeRadio) {
+                    activeRadio = Array.from(
+                        this.$root.querySelectorAll('input'),
+                    ).find((radio) => radio.value === '')
+                }
+
+                if (! activeRadio) {
+                    activeRadio = this.$root.querySelector('input')
+                }
+
                 if (activeRadio) {
-                    this.repositionOptionMarker(activeRadio.parentElement)
+                    this.repositionOptionMarker(activeRadio.parentElement, true)
                 }
             })
         },
@@ -40,6 +52,7 @@
 >
     <div class="relative flex items-start justify-start border border-transparent">
         <div
+            wire:ignore
             x-ref="optionMarker"
             x-show="activeRadio"
             class="btn btn-base btn-outline-white absolute left-0 rounded-[0.5625rem] py-[0.4375rem] font-normal ring-0 transition-all duration-150 ease-out"

@@ -30,6 +30,16 @@ return [
     'allow_multiple_menus' => false,
 
     /**
+     * Chief permissions are scoped to the chief guard. Missing permissions are reported but
+     * denied safely. Enable strict_missing to throw Spatie's missing permission exception.
+     */
+    'permissions' => [
+        'strict_missing' => env('CHIEF_PERMISSIONS_STRICT', false),
+        'report_missing' => true,
+        'log_missing' => true,
+    ],
+
+    /**
      * Sites
      *
      * Define the different sites that are available in your application.

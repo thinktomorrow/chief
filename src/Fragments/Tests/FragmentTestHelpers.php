@@ -90,9 +90,9 @@ class FragmentTestHelpers
         return (new $fragmentClass)->setFragmentModel(FragmentModel::find(app(CreateFragment::class)->handle($fragmentKey, $scopedLocales, $data)));
     }
 
-    public static function attachFragment($contextId, $fragmentId, ?string $parentFragmentId = null, $order = 0, array $data = []): void
+    public static function attachFragment($contextId, $fragmentId, ?string $parentFragmentId = null, $order = 0, array $data = [], ?string $sourceContextId = null): void
     {
-        app(AttachFragment::class)->handle($contextId, $fragmentId, $parentFragmentId, $order, $data);
+        app(AttachFragment::class)->handle($contextId, $fragmentId, $parentFragmentId, $order, $data, $sourceContextId);
     }
 
     public static function createAndAttachFragment(string $fragmentClass, $contextId, ?string $parentFragmentId = null, $order = 0, array $data = [], bool $register = true): Fragment

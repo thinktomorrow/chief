@@ -18,7 +18,7 @@ class OfflineStateRowAction extends Action
         $stateKey = $stateKey ?: $primaryStateKey;
 
         return static::make('offline-state-row')
-            ->label('Zet terug in draft')
+            ->label('Zet offline')
             ->variant('red')
             ->prependIcon('<x-chief::icon.view-off-slash />')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
@@ -33,7 +33,7 @@ class OfflineStateRowAction extends Action
                 return true;
             })
             ->keepDialogOpen()
-            ->notifyOnSuccess('Staat in draft')->notifyOnFailure('Er is iets misgegaan bij het in draft zetten.')
+            ->notifyOnSuccess('Staat offline')->notifyOnFailure('Er is iets misgegaan bij het zetten naar offline.')
             ->when(function ($component, $model) {
                 return $model->inOnlineState();
             });

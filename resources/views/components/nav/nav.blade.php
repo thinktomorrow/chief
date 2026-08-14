@@ -1,6 +1,7 @@
 @props([
     'label' => null,
     'title' => null,
+    'icon' => null,
     'items' => collect(),
     'inline',
     'append',
@@ -15,7 +16,7 @@
 
 @if (! isset($inline) && $items->count() > 0)
     @php
-        $icon = ($firstItem = $items->first()) && $firstItem->icon() ? $firstItem->icon() : '';
+        $groupIcon = $icon ?: ($items->first()?->icon() ?: null);
         $isGroupActive = false;
 
         foreach ($items as $item) {
@@ -35,7 +36,7 @@
 
     <x-chief::nav.item
         label="{{ $label }}"
-        icon="{!! $icon !!}"
+        :icon="$groupIcon"
         {{ $attributes->merge(['open' => $isGroupActive]) }}
         url="{{ $items->first()?->url() }}"
     >

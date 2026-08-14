@@ -76,8 +76,8 @@ class SimpleStateConfig implements StateAdminConfig
     public function getStateLabel(StatefulContract $statefulContract): ?string
     {
         return match ($statefulContract->getState($this->getStateKey())) {
-            SimpleState::online => 'Gepubliceerd',
-            SimpleState::offline => 'Draft',
+            SimpleState::online => 'Online',
+            SimpleState::offline => 'Offline',
             SimpleState::deleted => 'Verwijderd',
             default => $statefulContract->getState($this->getStateKey())?->getValueAsString(),
         };

@@ -64,6 +64,7 @@ class TranslationController extends ManagerController
         if ($searchTerm === '') {
             return view('squanto::index', [
                 'pages' => $pages->all(),
+                'pageGroups' => $pages->groupedBySource(),
             ]);
         }
 

@@ -28,7 +28,7 @@
         @forelse ($this->getShareableFragments() as $shareableFragment)
             <button
                 type="button"
-                wire:click="attachFragment('{{ $shareableFragment->getFragmentId() }}')"
+                wire:click="attachFragment('{{ $shareableFragment->getFragmentId() }}', '{{ $shareableFragment->source_context_id }}')"
                 class="group hover:bg-grey-50 flex w-full items-start gap-2 rounded-xl p-2 text-left"
             >
                 <div class="text-grey-400 group-hover:text-primary-500 shrink-0 *:size-6">

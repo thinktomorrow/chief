@@ -16,12 +16,14 @@ use Thinktomorrow\Chief\Forms\Fields\Concerns\HasPlaceholder;
 use Thinktomorrow\Chief\Forms\Fields\Locales\HasLocalizableProperties;
 use Thinktomorrow\Chief\Table\Actions\Concerns\HasOrdinalLevel;
 use Thinktomorrow\Chief\Table\Filters\Concerns\CanBeDefault;
+use Thinktomorrow\Chief\Table\Filters\Concerns\CanScope;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasQuery;
 use Thinktomorrow\Chief\Table\Filters\Concerns\HasValue;
 
 abstract class Filter extends Component
 {
     use CanBeDefault;
+    use CanScope;
     use HasComponentRendering;
     use HasDefault;
     use HasDescription;
@@ -33,6 +35,8 @@ abstract class Filter extends Component
     use HasQuery;
     use HasValue;
     use HasView;
+
+    private array $tableFilters = [];
 
     public function __construct(string $key)
     {
@@ -65,5 +69,23 @@ abstract class Filter extends Component
     public static function make(string $key): static
     {
         return new static($key);
+    }
+
+    /**
+     * Provide the filter with the Livewire table's active filters for render-time callbacks.
+     */
+    public function withTableFilters(array $filters): static
+    {
+        $this->tableFilters = $filters;
+
+        return $this;
+    }
+
+    /**
+     * Return the active table filters that were available when this filter was rendered.
+     */
+    public function getTableFilters(): array
+    {
+        return $this->tableFilters;
     }
 }

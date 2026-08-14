@@ -3,7 +3,7 @@
     $results = $results ?? [];
 @endphp
 
-<x-chief::page.template title="Vaste teksten" container="md">
+<x-chief::page.template title="Vaste teksten">
     <form data-slot="window" method="GET" action="{{ route('squanto.index') }}" class="flex items-center gap-1">
         <x-chief::form.input.search
             name="search"
@@ -62,7 +62,7 @@
                 @endphp
 
                 <div
-                    @class([
+                    @class ([
                         'flex items-start justify-between gap-4',
                         'pt-2.5' => ! $loop->first,
                         'pb-2.5' => ! $loop->last,
@@ -82,7 +82,7 @@
                         </div>
 
                         @if ($matchingText)
-                            <div class="text-grey-500 [&_strong]:text-grey-800 body text-sm [&_strong]:font-semibold">
+                            <div class="text-grey-500 [&_strong]:text-grey-800 body [&_strong]:font-semibold text-sm">
                                 {!! $highlightedMatchingText !!}
                             </div>
                         @endif

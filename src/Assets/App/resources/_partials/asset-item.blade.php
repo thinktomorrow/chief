@@ -77,7 +77,8 @@
                         <x-chief::icon.link-square />
                     </x-chief::button>
                 @else
-                    <x-chief::button size="sm" variant="grey" href="{{ $asset->getUrl() }}" title="Download" download>
+                    <x-chief::button size="sm" variant="grey" href="{{ $asset->getUrl() }}" title="Download" download
+                                     class="pointer-events-auto">
                         <x-chief::icon.download />
                     </x-chief::button>
                 @endif

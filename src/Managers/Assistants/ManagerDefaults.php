@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
@@ -79,7 +80,16 @@ trait ManagerDefaults
      */
     private function authorize(string $permission): void
     {
-        if (! chiefAdmin() || ! chiefAdmin()->hasPermissionTo($permission)) {
+        if (! ChiefResourcePermissions::adminCan(chiefAdmin(), $permission)) {
+            throw NotAllowedManagerAction::notAllowedPermission($permission, get_class($this));
+        }
+    }
+
+    private function authorizeResourcePermission(string $ability): void
+    {
+        $permission = ChiefResourcePermissions::permissionFor($this->resource, $ability);
+
+        if (! ChiefResourcePermissions::adminCanResource(chiefAdmin(), $this->resource, $ability)) {
             throw NotAllowedManagerAction::notAllowedPermission($permission, get_class($this));
         }
     }

@@ -105,7 +105,7 @@ class AddFragment extends Component
             ->map(fn ($fragmentClass) => app($fragmentClass));
     }
 
-    public function attachFragment(string $fragmentId)
+    public function attachFragment(string $fragmentId, ?string $sourceContextId = null)
     {
         $order = $this->insertAfterOrder + 1;
 
@@ -114,6 +114,8 @@ class AddFragment extends Component
             $fragmentId,
             $this->parentId,
             $order,
+            [],
+            $sourceContextId,
         );
 
         $eventPayload = [

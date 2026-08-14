@@ -143,13 +143,13 @@ trait WithSorters
         // synchronizes the sorter values on button click
     }
 
-    private function isEmptySorterValue($value): bool
+    protected function isEmptySorterValue($value): bool
     {
         return is_null($value) || empty($value) || $value === '';
     }
 
-    private function getSortersSessionKey(): string
+    protected function getSortersSessionKey(): string
     {
-        return 'table.sorters'.$this->tableReference->toUniqueString();
+        return 'table.sorters'.$this->tableReference->toUniqueString().(method_exists($this, 'getTableScopeSessionKeySuffix') ? $this->getTableScopeSessionKeySuffix() : '');
     }
 }

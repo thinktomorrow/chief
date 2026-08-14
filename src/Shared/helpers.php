@@ -31,6 +31,27 @@ if (! function_exists('chiefAdmin')) {
     }
 }
 
+if (! function_exists('chiefPermission')) {
+    function chiefPermission(\Thinktomorrow\Chief\Resource\Resource|string $resource, string $ability): string
+    {
+        return \Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions::permissionFor($resource, $ability);
+    }
+}
+
+if (! function_exists('chiefAdminCan')) {
+    function chiefAdminCan(string $permission): bool
+    {
+        return \Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions::adminCan(chiefAdmin(), $permission);
+    }
+}
+
+if (! function_exists('chiefAdminCanResource')) {
+    function chiefAdminCanResource(\Thinktomorrow\Chief\Resource\Resource|string $resource, string $ability): bool
+    {
+        return \Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions::adminCanResource(chiefAdmin(), $resource, $ability);
+    }
+}
+
 // Retrieve the online fragments of the given or active context
 if (! function_exists('getFragments')) {
     function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\Models\FragmentCollection

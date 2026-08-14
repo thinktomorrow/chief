@@ -19,7 +19,7 @@ class OnlineStateBulkAction extends Action
         $stateKey = $stateKey ?: $primaryStateKey;
 
         return static::make('online-state-bulk')
-            ->label('Publiceer')
+            ->label('Zet online')
             ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
 
                 $modelIds = $data['items'];
@@ -46,6 +46,6 @@ class OnlineStateBulkAction extends Action
 
                 return true;
             })
-            ->notifyOnSuccess('De selectie is gepubliceerd!')->notifyOnFailure('Er is iets misgegaan bij het publiceren.');
+            ->notifyOnSuccess('De selectie is online!')->notifyOnFailure('Er is iets misgegaan bij het zetten naar online.');
     }
 }

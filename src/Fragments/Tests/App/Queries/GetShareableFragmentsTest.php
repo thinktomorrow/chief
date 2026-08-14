@@ -143,6 +143,20 @@ class GetShareableFragmentsTest extends ChiefTestCase
         $this->assertTrue($results->contains(fn ($f) => $f->getFragmentId() === $child->getFragmentId()));
     }
 
+    public function test_it_hydrates_nested_fragments_for_root_fragments()
+    {
+        $context = FragmentTestHelpers::findOrCreateContext($this->owner);
+        $parent = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id, null);
+        $child = FragmentTestHelpers::createAndAttachFragment(Hero::class, $context->id, $parent->getFragmentId());
+
+        $results = $this->query->get($context->id);
+
+        $result = $results->first(fn ($fragment) => $fragment->getFragmentId() === $parent->getFragmentId());
+
+        $this->assertNotNull($result);
+        $this->assertTrue(collect($result->getFragments()->all())->contains(fn ($fragment) => $fragment->getFragmentId() === $child->getFragmentId()));
+    }
+
     public function test_it_filters_by_shared_meta()
     {
         $context = FragmentTestHelpers::findOrCreateContext($this->owner);

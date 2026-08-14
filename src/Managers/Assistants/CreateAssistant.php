@@ -28,7 +28,7 @@ trait CreateAssistant
         }
 
         try {
-            $this->authorize('create-page');
+            $this->authorizeResourcePermission('create');
         } catch (NotAllowedManagerAction $e) {
             return false;
         }
