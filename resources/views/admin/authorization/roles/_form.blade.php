@@ -13,7 +13,7 @@
 
     <x-chief::multiselect
         id="permission_names"
-        name="permission_names"
+        name="permission_names[]"
         :options="$permission_names"
         :selection="old('permission_names', $role->permissionNames())"
         :multiple="true"

@@ -18,6 +18,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   page, and no longer loops endlessly when there are no filters left to move to the drawer.
 - Changed: renamed default simple state label to 'online' and 'offline' (was 'gepubliceerd' and 'draft')
 - Fixed: The site/locale toggle on the settings page is no longer shown when only one site is active.
+- Fixed: The permissions multiselect on the role form now submits its values as an array, so selecting multiple
+  permissions no longer overwrites the role's permissions with only the last selected one.
 
 ## [0.10.28] - 2026-07-28
 
