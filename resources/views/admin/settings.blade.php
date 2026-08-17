@@ -14,7 +14,7 @@
 
     <form action="{{ route('chief.back.settings.update') }}" id="updateForm" method="POST" role="form">
         @csrf
-        @method('put')
+        @method ('put')
 
         <x-chief::window title="Algemene instellingen" class="mt-4">
             @foreach ($fieldsWithoutLocales as $field)
@@ -22,17 +22,24 @@
             @endforeach
         </x-chief::window>
 
-
-        <div class="mt-6">
-            <x-chief::tabs :show-nav="true" :should-listen-for-external-tab="false" reference="settings-site-toggle">
-                @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
-                    <x-chief::tabs.tab tab-id="{{ $locale }}"
-                                       tab-label="{{ \Thinktomorrow\Chief\Sites\ChiefSites::name($locale) }}"></x-chief::tabs.tab>
-                @endforeach
-            </x-chief::tabs>
+        <div data-slot="window">
+            @if (count(\Thinktomorrow\Chief\Sites\ChiefSites::locales()) > 1)
+                <x-chief::tabs
+                    :show-nav="true"
+                    :should-listen-for-external-tab="false"
+                    reference="settings-site-toggle"
+                    size="base"
+                >
+                    @foreach (\Thinktomorrow\Chief\Sites\ChiefSites::locales() as $locale)
+                        <x-chief::tabs.tab
+                            tab-id="{{ $locale }}"
+                            tab-label="{{ \Thinktomorrow\Chief\Sites\ChiefSites::name($locale) }}"
+                        />
+                    @endforeach
+                </x-chief::tabs>
+            @endif
 
             <x-chief::window title="Instellingen per site">
-
                 @foreach ($fieldsWithLocales as $field)
                     {!! $field->render() !!}
                 @endforeach
@@ -42,6 +49,5 @@
         <div class="mt-6">
             <x-chief::button type="submit" variant="blue">Wijzigingen opslaan</x-chief::button>
         </div>
-
     </form>
 </x-chief::page.template>
