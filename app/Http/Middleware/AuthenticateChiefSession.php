@@ -35,8 +35,10 @@ class AuthenticateChiefSession
             return $this->logoutAndRedirect($request);
         }
 
-        return tap($next($request), function () use ($request, $admin) {
-            $this->storePasswordHashInSession($request, $admin);
+        return tap($next($request), function () use ($request) {
+            if ($admin = $request->user('chief')) {
+                $this->storePasswordHashInSession($request, $admin);
+            }
         });
     }
 

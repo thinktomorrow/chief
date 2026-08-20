@@ -21,6 +21,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: The permissions multiselect on the role form now submits its values as an array, so selecting multiple
   permissions no longer overwrites the role's permissions with only the last selected one.
 - Fixed: The table now shows a scrollbar when its content overflows horizontally, instead of hiding it.
+- Fixed: Logging back in right after logging out could bounce you back to the login form on the first attempt. The
+  session middleware no longer re-stores the admin's password hash after a logout has already invalidated the
+  session.
 
 ## [0.10.28] - 2026-07-28
 

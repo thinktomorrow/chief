@@ -215,6 +215,30 @@ class AdminLoginTest extends ChiefTestCase
         $this->assertEquals(Auth::guard('chief')->user(), chiefAdmin());
     }
 
+    public function test_logging_in_right_after_logout_does_not_bounce_you_back_to_login()
+    {
+        $admin = $this->fakeUser([
+            'email' => 'foo@example.com',
+            'password' => bcrypt('foobar'),
+            'enabled' => true,
+        ]);
+
+        $this->actingAs($admin, 'chief')->get('/admin');
+        $this->assertTrue(session()->has('chief_password_hash'));
+
+        $this->get(route('chief.back.logout'));
+        $this->assertFalse(session()->has('chief_password_hash'));
+
+        $this->post(route('chief.back.login.store'), [
+            'email' => 'foo@example.com',
+            'password' => 'foobar',
+        ]);
+
+        $response = $this->get('/admin');
+        $response->assertStatus(200);
+        $this->assertTrue(Auth::guard('chief')->check());
+    }
+
     public function test_user_is_logged_out_when_password_changes_during_session()
     {
         $admin = $this->fakeUser([
