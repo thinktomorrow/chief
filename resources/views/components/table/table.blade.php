@@ -1,4 +1,4 @@
-@props([
+@props ([
     'header' => null,
     'footer' => null,
     'variant' => 'card',
@@ -23,21 +23,20 @@
             isScrolledToLeft: false,
             isScrolledToRight: false,
             init() {
-                this.isScrollable = this.$el.scrollWidth > this.$el.clientWidth
+                this.isScrollable = this.$el.scrollWidth > this.$el.clientWidth;
                 $nextTick(() => {
-                    this.updateScrollState()
-                })
-                this.$el.addEventListener('scroll', () => this.updateScrollState())
-                window.addEventListener('resize', () => this.updateScrollState())
+                    this.updateScrollState();
+                });
+                this.$el.addEventListener('scroll', () => this.updateScrollState());
+                window.addEventListener('resize', () => this.updateScrollState());
             },
             updateScrollState() {
-                this.isScrollable = this.$el.scrollWidth > this.$el.clientWidth
-                this.isScrolledToLeft = this.$el.scrollLeft <= 0
-                this.isScrolledToRight =
-                    this.$el.scrollLeft >= this.$el.scrollWidth - this.$el.clientWidth
+                this.isScrollable = this.$el.scrollWidth > this.$el.clientWidth;
+                this.isScrolledToLeft = this.$el.scrollLeft <= 0;
+                this.isScrolledToRight = this.$el.scrollLeft >= this.$el.scrollWidth - this.$el.clientWidth;
             },
         }"
-        class="scrollbar-none overflow-x-auto whitespace-nowrap"
+        class="scrollbar-thumb-grey-300 scrollbar-thin scrollbar-track-transparent overflow-x-auto whitespace-nowrap"
     >
         <table class="divide-grey-100 min-w-full table-fixed divide-y">
             {{ $slot }}
