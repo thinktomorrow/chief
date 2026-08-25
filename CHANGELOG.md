@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.29] - 2026-08-25
+
 - Fixed: The `icon` attribute on a grouped `<x-chief::nav>` is no longer ignored. It now sets the icon of the dropdown
   group, and only falls back to the icon of the first tagged resource when omitted.
 - Fixed: Dialog components (modals, drawers, dropdowns) are now teleported to the body instead of being rendered in
@@ -16,14 +18,13 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   triggers the dialog of another table.
 - Fixed: The table filter overflow calculation now only looks at its own table header instead of the first one on the
   page, and no longer loops endlessly when there are no filters left to move to the drawer.
-- Changed: renamed default simple state label to 'online' and 'offline' (was 'gepubliceerd' and 'draft')
 - Fixed: The site/locale toggle on the settings page is no longer shown when only one site is active.
 - Fixed: The permissions multiselect on the role form now submits its values as an array, so selecting multiple
   permissions no longer overwrites the role's permissions with only the last selected one.
 - Fixed: The table now shows a scrollbar when its content overflows horizontally, instead of hiding it.
 - Fixed: Logging back in right after logging out could bounce you back to the login form on the first attempt. The
-  session middleware no longer re-stores the admin's password hash after a logout has already invalidated the
-  session.
+  session middleware no longer re-stores the admin's password hash after a logout has already invalidated the session.
+- Changed: renamed default simple state label to 'online' and 'offline' (was 'gepubliceerd' and 'draft')
 
 ## [0.10.28] - 2026-07-28
 
@@ -56,7 +57,8 @@ Improved permissions; Scoped table filters; Updated Squanto package and UI; Requ
 - Fixed: Table select filter horizontal scroll without scrollbar + larger dropdown width
 - Fixed: Field preview slot now doesn't overflow content of windows anymore
 - Fixed: Chief favicon path doesn't break while running Vite dev build
-- Fixed: HotSpots plugin now supports localized fields — locale toggle is rendered when multiple locales are active, and localized field values are correctly stored and validated per locale.
+- Fixed: HotSpots plugin now supports localized fields — locale toggle is rendered when multiple locales are active, and
+  localized field values are correctly stored and validated per locale.
 - Fixed: HotSpots file-edit-action button now correctly opens its modal on top of existing modals/drawers.
 
 ## [0.10.26] - 2026-06-16
