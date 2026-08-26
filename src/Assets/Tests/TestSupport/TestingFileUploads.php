@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\TestResponse;
 use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
 use Livewire\Features\SupportFileUploads\FileUploadController;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use RuntimeException;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFileField;
 use Thinktomorrow\Chief\Forms\Tests\TestSupport\PageWithAssets;
@@ -100,7 +102,7 @@ trait TestingFileUploads
         );
     }
 
-    protected function storeFakeImageOnLivewireDisk(string $filename, $width = 10, $height = 20)
+    protected function storeFakeImageOnLivewireDisk(string $filename, $width = 10, $height = 20): string
     {
         $uploadedFile = UploadedFile::fake()->image($filename, $width, $height);
 
@@ -110,7 +112,13 @@ trait TestingFileUploads
             $uploadedFile,
         ], FileUploadConfiguration::disk());
 
-        return ltrim($paths[0], '/');
+        $path = TemporaryUploadedFile::extractPathFromSignedPath(ltrim($paths[0], '/'));
+
+        if ($path === false) {
+            throw new RuntimeException('Livewire returned an invalid signed temporary upload path.');
+        }
+
+        return $path;
     }
 
     private function fileFormPayload(array $values = []): array

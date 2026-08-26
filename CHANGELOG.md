@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: File upload tests now support the signed temporary upload paths returned by Livewire 3.8.6.
 - **Breaking change**: `FileApplication::updateAssociatedAssetData()` now requires an `associatedFieldKeys` array.
   Callers must explicitly pass the keys of fields whose values should be stored on the asset association.
 - Fixed: default field values in state confirmations modals are now correctly set to the current/default value of the
