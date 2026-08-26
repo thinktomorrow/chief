@@ -53,9 +53,15 @@ class InviteUserTest extends ChiefTestCase
         $invitee = $this->fakeUser();
         $inviter = $this->developer();
 
-        $invitation = Invitation::make($invitee->id, $inviter->id);
+        $invitation = Invitation::make($invitee, $inviter);
 
-        $this->verifyMailRender((new InvitationMail($invitation))->toMail('foobar@example.com'));
+        $inviter->update(['firstname' => 'Changed']);
+
+        $mail = (new InvitationMail($invitation->fresh()))->toMail('foobar@example.com');
+
+        $this->verifyMailRender($mail);
+        $this->assertStringContainsString($invitation->inviter_snapshot['firstname'], $mail->render());
+        $this->assertStringNotContainsString('Changed', $mail->render());
     }
 
     public function test_only_authenticated_admin_can_invite_an_user()

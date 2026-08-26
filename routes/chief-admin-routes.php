@@ -65,6 +65,7 @@ Route::get('users', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserCon
 Route::post('users', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@store')->name('chief.back.users.store');
 Route::get('users/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@create')->name('chief.back.users.create');
 Route::put('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@update')->name('chief.back.users.update');
+Route::delete('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\DeleteUserController@destroy')->name('chief.back.users.destroy');
 Route::get('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@show')->name('chief.back.users.show');
 Route::get('users/{user}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@edit')->name('chief.back.users.edit');
 

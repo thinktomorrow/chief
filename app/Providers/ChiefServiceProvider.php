@@ -257,14 +257,14 @@ class ChiefServiceProvider extends ServiceProvider
         (new ModelsServiceProvider($this->app))->register();
         (new MenuServiceProvider($this->app))->register();
 
+        Relation::morphMap(['chiefuser' => User::class]);
+
         if ($this->app->make(AdminEnvironment::class)->check(request())) {
             $this->app->when(SettingsController::class)
                 ->needs(SettingFields::class)
                 ->give(function () {
                     return new SettingFields(new Settings);
                 });
-            Relation::morphMap(['chiefuser' => User::class]);
-
             // Global chief nav singleton
             $this->app->singleton(Nav::class, function () {
                 return new Nav;

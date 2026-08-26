@@ -11,13 +11,13 @@
                         </div>
 
                         <div class="flex items-center justify-between">
-                            @if ($event->causer)
+                            @if ($event->causerSnapshot())
                                 <x-chief::link
                                     href="{{ route('chief.back.audit.show', $event->causer_id) }}"
-                                    title="{{ $event->causer->fullname }}"
+                                    title="{{ $event->causerName() }}"
                                     variant="blue"
                                 >
-                                    {{ $event->causer->fullname }}
+                                    {{ $event->causerName() }}
                                 </x-chief::link>
                             @endif
 

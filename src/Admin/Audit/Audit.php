@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Admin\Users\User;
 
 class Audit extends Activity
 {
-    public $with = ['causer'];
+    private const CAUSER_SNAPSHOT_PROPERTY = 'causer_snapshot';
 
     public function getReadableSubject()
     {
@@ -36,7 +36,21 @@ class Audit extends Activity
     {
         $defaultLogName = config('activitylog.default_log_name');
 
-        return app(ActivityLogger::class)->useLog($logName ?? $defaultLogName);
+        $activity = app(ActivityLogger::class)->useLog($logName ?? $defaultLogName);
+        $causer = auth()->guard('chief')->user();
+
+        if (! $causer instanceof User) {
+            return $activity;
+        }
+
+        return $activity
+            ->causedBy($causer)
+            ->withProperty(self::CAUSER_SNAPSHOT_PROPERTY, [
+                'id' => (int) $causer->id,
+                'firstname' => $causer->firstname,
+                'lastname' => $causer->lastname,
+                'fullname' => $causer->fullname,
+            ]);
     }
 
     public static function getAllActivityFor(Model $subject)
@@ -55,8 +69,42 @@ class Audit extends Activity
         return static::orderBy('created_at', 'DESC')->paginate($perPage);
     }
 
-    public static function getPaginatedAuditBy(User $causer, int $perPage = 50): Paginator
+    public static function getPaginatedAuditByCauserId(int $causerId, int $perPage = 50): Paginator
     {
-        return static::causedBy($causer)->orderBy('created_at', 'DESC')->paginate($perPage);
+        return static::query()
+            ->where('causer_type', (new User)->getMorphClass())
+            ->where('causer_id', $causerId)
+            ->orderBy('created_at', 'DESC')
+            ->paginate($perPage);
+    }
+
+    /**
+     * @return array{id: int, firstname: string, lastname: string, fullname: string}|null
+     */
+    public static function findCauserSnapshot(int $causerId): ?array
+    {
+        $activity = static::query()
+            ->where('causer_type', (new User)->getMorphClass())
+            ->where('causer_id', $causerId)
+            ->whereNotNull('properties->'.self::CAUSER_SNAPSHOT_PROPERTY)
+            ->oldest('created_at')
+            ->first();
+
+        return $activity?->causerSnapshot();
+    }
+
+    /**
+     * @return array{id: int, firstname: string, lastname: string, fullname: string}|null
+     */
+    public function causerSnapshot(): ?array
+    {
+        $snapshot = $this->properties?->get(self::CAUSER_SNAPSHOT_PROPERTY);
+
+        return is_array($snapshot) ? $snapshot : null;
+    }
+
+    public function causerName(): ?string
+    {
+        return $this->causerSnapshot()['fullname'] ?? null;
     }
 }

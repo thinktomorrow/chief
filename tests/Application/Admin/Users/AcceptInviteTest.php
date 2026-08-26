@@ -25,7 +25,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->invitee = $this->developer(['enabled' => false]);
         $this->inviter = $this->developer();
 
-        $this->invitation = Invitation::make($this->invitee->id, $this->inviter->id);
+        $this->invitation = Invitation::make($this->invitee, $this->inviter);
         $this->invitation->changeState(InvitationState::KEY, InvitationState::pending);
 
         // Fake password so we can login with a known value

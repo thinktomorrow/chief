@@ -16,7 +16,8 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 /**
  * @property string $token
  * @property int $invitee_id
- * @property int $inviter_id
+ * @property int|null $inviter_id
+ * @property array{id: int, firstname: string, lastname: string, fullname: string, email: string|null} $inviter_snapshot
  * @property string $state
  * @property \Illuminate\Support\Carbon $expires_at
  */
@@ -31,17 +32,27 @@ class Invitation extends Model implements StatefulContract
 
     public $guarded = [];
 
+    protected $table = 'chief_users_invitations';
+
     protected $casts = [
         'expires_at' => 'datetime',
+        'inviter_snapshot' => 'array',
     ];
 
-    public static function make(string $invitee_id, string $inviter_id, $expires = null)
+    public static function make(User $invitee, User $inviter, ?int $expires = null): self
     {
         $token = InvitationToken::generate();
 
         return self::create([
-            'invitee_id' => $invitee_id,
-            'inviter_id' => $inviter_id,
+            'invitee_id' => $invitee->id,
+            'inviter_id' => $inviter->id,
+            'inviter_snapshot' => [
+                'id' => (int) $inviter->id,
+                'firstname' => $inviter->firstname,
+                'lastname' => $inviter->lastname,
+                'fullname' => $inviter->fullname,
+                'email' => $inviter->email,
+            ],
             'state' => InvitationState::none->getValueAsString(),
             'token' => $token,
             'expires_at' => now()->addMinutes($expires ?? self::$expires),
@@ -61,6 +72,11 @@ class Invitation extends Model implements StatefulContract
     public function inviter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'inviter_id');
+    }
+
+    public function inviterFirstname(): string
+    {
+        return $this->inviter_snapshot['firstname'];
     }
 
     public function acceptUrl(): string

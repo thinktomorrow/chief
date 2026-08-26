@@ -19,7 +19,7 @@
                     <span>Bewaar</span>
                 </x-chief::button>
 
-                <x-chief::button x-data x-on:click="$dispatch('open-dialog', { 'id': 'user-edit-options' });">
+                <x-chief::button x-data x-on:click="$dispatch('open-dialog', { id: 'user-edit-options' })">
                     <x-chief::icon.more-vertical-circle />
                 </x-chief::button>
 
@@ -45,6 +45,18 @@
                             />
                         </x-chief::dialog.dropdown.item>
                     @endif
+
+                    @if (chiefAdmin()->can('delete-user') && chiefAdmin()->id !== $user->id)
+                        <x-chief::dialog.dropdown.item
+                            variant="red"
+                            x-on:click="$dispatch('open-dialog', { id: 'delete-user-confirmation' })"
+                        >
+                            <x-chief::icon.delete />
+                            <x-chief::dialog.dropdown.item.content
+                                label="{{ ucfirst($user->firstname) }} verwijderen"
+                            />
+                        </x-chief::dialog.dropdown.item>
+                    @endif
                 </x-chief::dialog.dropdown>
             </x-slot>
         </x-chief::page.header>
@@ -66,6 +78,28 @@
     @else
         <form id="enableUserForm" method="POST" action="{{ route('chief.back.users.enable', $user->id) }}">
             @csrf
+        </form>
+    @endif
+
+    @if (chiefAdmin()->can('delete-user') && chiefAdmin()->id !== $user->id)
+        <x-chief::dialog.modal id="delete-user-confirmation" title="Gebruiker definitief verwijderen?" size="xs">
+            <div class="prose prose-dark prose-spacing">
+                <p>
+                    De account van {{ $user->fullname }} wordt definitief verwijderd. Auditlogs en door deze
+                    gebruiker verstuurde uitnodigingen blijven bewaard.
+                </p>
+            </div>
+
+            <x-slot name="footer">
+                <x-chief::dialog.modal.footer>
+                    <x-chief::button type="button" variant="grey" x-on:click="close()">Annuleer</x-chief::button>
+                    <x-chief::button type="submit" form="deleteUserForm" variant="red">Verwijder gebruiker</x-chief::button>
+                </x-chief::dialog.modal.footer>
+            </x-slot>
+        </x-chief::dialog.modal>
+        <form id="deleteUserForm" method="POST" action="{{ route('chief.back.users.destroy', $user->id) }}">
+            @csrf
+            @method('delete')
         </form>
     @endif
 </x-chief::page.template>

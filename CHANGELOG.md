@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Chief users can now be permanently deleted while audit history and invitations sent by the user retain
+  immutable user snapshots.
+- Changed: The `invitations` table is renamed to `chief_users_invitations`. The migration backfills inviter and audit
+  snapshots, cascades invitations when their invitee is deleted, and retains invitations with a nullable inviter.
 - Fixed: State transitions now redirect to the resource index when their model was already deleted, and confirmation
   buttons are disabled while the transition request is running.
 - Fixed: The save button is now shown when editing invited or blocked admin users.

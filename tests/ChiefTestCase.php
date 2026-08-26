@@ -184,6 +184,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
             'prefix' => '',
+            'foreign_key_constraints' => true,
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
         ]);

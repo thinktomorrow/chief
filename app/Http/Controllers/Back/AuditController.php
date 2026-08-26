@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class AuditController extends Controller
@@ -27,11 +26,13 @@ class AuditController extends Controller
     {
         $this->authorize('view-audit');
 
-        $causer = User::findOrFail($id);
+        $causerSnapshot = Audit::findCauserSnapshot((int) $id);
+
+        abort_if($causerSnapshot === null, 404);
 
         return view('chief::admin.audit.show', [
-            'audit' => Audit::getPaginatedAuditBy($causer),
-            'causer' => $causer,
+            'audit' => Audit::getPaginatedAuditByCauserId((int) $id),
+            'causerSnapshot' => $causerSnapshot,
         ]);
     }
 }

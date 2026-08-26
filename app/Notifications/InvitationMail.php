@@ -43,8 +43,7 @@ class InvitationMail extends Notification implements ShouldQueue
             ->subject('Uitnodiging tot Chief')
             ->from(chiefSetting('from_email', null, chiefSetting('contact_email')), chiefSetting('from_name', null, chiefSetting('contact_name')))
             ->view('chief::mails.invitation', [
-                'invitee' => $this->invitation->invitee,
-                'inviter' => $this->invitation->inviter,
+                'inviterFirstname' => $this->invitation->inviterFirstname(),
                 'accept_url' => $this->invitation->acceptUrl(),
                 'deny_url' => $this->invitation->denyUrl(),
             ]);

@@ -9,7 +9,7 @@
     @include('chief::templates.mail._partials.title', ['content' => $title])
 
     <p style="margin: 0; margin-top: 12px; margin-bottom: 24px;">
-        Je bent uitgenodigd door jouw collega {{ $inviter->firstname }}.
+        Je bent uitgenodigd door jouw collega {{ $inviterFirstname }}.
         Hierbij krijg je toegang tot het beheer van {{ chiefSetting('app_name') }}.
         Opgelet deze uitnodiging is slechts 3 dagen geldig.
         Klik op volgende link op de uitnodiging te aanvaarden:
