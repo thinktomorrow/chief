@@ -21,7 +21,6 @@
             </div>
         @endif
     </div>
-
 </div>
 
 <x-slot name="footer">
@@ -29,6 +28,8 @@
         <x-chief::button
             x-data="{}"
             x-on:click="$wire.saveState('{{ $transitionInConfirm->key }}')"
+            wire:loading.attr="disabled"
+            wire:target="saveState"
             variant="{{ $transitionInConfirm->variant }}"
         >
             {{ $transitionInConfirm->confirmationLabel }}

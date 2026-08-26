@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\CannotInstantiateModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
@@ -115,9 +116,8 @@ class EditState extends Component
 
     public function saveState(string $transitionKey): void
     {
-        $transition = $this->findTransition($transitionKey);
-
         try {
+            $transition = $this->findTransition($transitionKey);
 
             // TODO: guard with permission: $this->guard('state-edit', $model);
 
@@ -132,6 +132,10 @@ class EditState extends Component
                 $this->form,
                 [], // files... TODO: implement file handling
             );
+        } catch (CannotInstantiateModelReference) {
+            $this->redirectToIndex();
+
+            return;
         } catch (StateException $e) {
             $this->errorMessage = 'Transition ['.$transitionKey.'] not applied';
 
@@ -160,6 +164,13 @@ class EditState extends Component
         ]);
 
         $this->close();
+    }
+
+    private function redirectToIndex(): void
+    {
+        $manager = app(Registry::class)->findManagerByModel($this->modelReference->className());
+
+        $this->redirect($manager->route('index'));
     }
 
     public function render()

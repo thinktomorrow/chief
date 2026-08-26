@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: State transitions now redirect to the resource index when their model was already deleted, and confirmation
+  buttons are disabled while the transition request is running.
 - Fixed: The save button is now shown when editing invited or blocked admin users.
 - **Breaking change**: `FileApplication::updateAssociatedAssetData()` now requires an `associatedFieldKeys` array.
   Callers must explicitly pass the keys of fields whose values should be stored on the asset association.

@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Unit\States;
 
 use Illuminate\Support\Collection;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\DB;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Forms\Fields\Boolean;
 use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditState;
 use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\TransitionDto;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleWithStateAdminConfig;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 final class EditStateTest extends TestCase
 {
@@ -25,6 +29,26 @@ final class EditStateTest extends TestCase
         $component->transition('default-off');
 
         $this->assertSame(['delete_registrations' => false], $component->getFormData());
+    }
+
+    public function test_it_redirects_to_the_resource_index_when_the_model_no_longer_exists(): void
+    {
+        ArticleWithStateAdminConfig::migrateUp();
+        chiefRegister()->resource(ArticleWithStateAdminConfig::class, PageManager::class);
+
+        $article = ArticleWithStateAdminConfig::create(['article_state' => 'offline']);
+
+        $component = Livewire::test(EditStateWithConfirmationFields::class, [
+            'parentComponentId' => 'parent-component',
+            'stateKey' => 'article_state',
+            'model' => $article,
+        ]);
+
+        DB::table($article->getTable())->where('id', $article->getKey())->delete();
+
+        $component
+            ->call('saveState', 'default-on')
+            ->assertRedirect($this->manager($article)->route('index'));
     }
 }
 
