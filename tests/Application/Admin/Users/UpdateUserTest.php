@@ -29,6 +29,16 @@ class UpdateUserTest extends ChiefTestCase
             ->assertStatus(200);
     }
 
+    public function test_full_admin_sees_save_button_for_a_disabled_user()
+    {
+        $this->assertFalse($this->newUser->isEnabled());
+
+        $this->asAdmin()
+            ->get(route('chief.back.users.edit', $this->newUser->id))
+            ->assertSee('form="updateForm"', false)
+            ->assertSee('Bewaar');
+    }
+
     public function test_regular_author_cannot_view_the_edit_view()
     {
         $response = $this->asAuthor()->get(route('chief.back.users.edit', $this->newUser->id));

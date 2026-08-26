@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: The save button is now shown when editing invited or blocked admin users.
 - **Breaking change**: `FileApplication::updateAssociatedAssetData()` now requires an `associatedFieldKeys` array.
   Callers must explicitly pass the keys of fields whose values should be stored on the asset association.
 - Fixed: default field values in state confirmations modals are now correctly set to the current/default value of the

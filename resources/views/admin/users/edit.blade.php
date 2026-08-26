@@ -15,11 +15,9 @@
                     {{ $badge['label'] }}
                 </x-chief::badge>
 
-                @if ($user->isEnabled())
-                    <x-chief::button form="updateForm" type="submit" variant="blue">
-                        <span>Bewaar</span>
-                    </x-chief::button>
-                @endif
+                <x-chief::button form="updateForm" type="submit" variant="blue">
+                    <span>Bewaar</span>
+                </x-chief::button>
 
                 <x-chief::button x-data x-on:click="$dispatch('open-dialog', { 'id': 'user-edit-options' });">
                     <x-chief::icon.more-vertical-circle />
