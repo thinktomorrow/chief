@@ -118,7 +118,7 @@ trait TestingFileUploads
             throw new RuntimeException('Livewire returned an invalid signed temporary upload path.');
         }
 
-        return $path;
+        return ltrim($path, '/');
     }
 
     private function fileFormPayload(array $values = []): array
