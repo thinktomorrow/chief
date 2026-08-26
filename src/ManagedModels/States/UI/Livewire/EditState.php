@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Livewire\Component;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
@@ -17,6 +18,7 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 class EditState extends Component
 {
     use HasForm;
+    use InteractsWithFields;
     use ShowsAsDialog;
     use WithMemoizedModel;
     use WithStateConfig;
@@ -82,6 +84,8 @@ class EditState extends Component
         $transition = $this->findTransition($transitionKey);
 
         if ($transition->hasConfirmation && ! $this->transitionInConfirmationState) {
+            $this->setFormData([]);
+            $this->injectFormValues($transition->confirmationFields);
             $this->transitionInConfirmationState = $transitionKey;
 
             return;
