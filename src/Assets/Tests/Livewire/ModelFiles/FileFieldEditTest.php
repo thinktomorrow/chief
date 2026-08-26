@@ -122,6 +122,8 @@ class FileFieldEditTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
+        app(AddAsset::class)->handle($this->model, $asset, 'thumb', 'nl', 0, []);
+
         $previewFile = PreviewFile::fromAsset($asset);
         $previewFile->fieldValues = [
             'basename' => 'image', // This is for test comparison because basename is present in fieldvalues automatically
@@ -138,6 +140,8 @@ class FileFieldEditTest extends ChiefTestCase
 
         // Check if the fieldValues match after submit
         $this->livewireInstance->assertDispatched('assetUpdated-xxx', $previewFile->toLivewire());
+
+        $this->assertSame('alt text', $this->model->fresh()->asset('thumb', 'nl')->getPivotData('alt'));
     }
 
     public function test_it_can_submit_without_model_reference(): void

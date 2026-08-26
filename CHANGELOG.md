@@ -10,6 +10,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: default field values in state confirmations modals are now correctly set to the current/default value of the
   field.
 - Fixed: File upload tests now support the signed temporary upload paths returned by Livewire 3.8.6.
+- Changed: The minimum `thinktomorrow/assetlibrary` version is now 1.0.3.
 - Added: `MenuItemResource` interface to allow projects to define their own menu item resource with custom fields and
   table layout. See `DefaultMenuItemResource` for an example implementation.
 - Added: Menu items can now be configured with custom project fields and table layout. This is done via a custom
