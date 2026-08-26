@@ -11,7 +11,7 @@
                     $badge = $user->present()->getStateBadge();
                 @endphp
 
-                <x-chief::badge variant="{{ $badge['variant'] }}" size="sm">
+                <x-chief::badge variant="{{ $badge['variant'] }}" size="sm" class="mt-1.25">
                     {{ $badge['label'] }}
                 </x-chief::badge>
 
@@ -93,7 +93,8 @@
             <x-slot name="footer">
                 <x-chief::dialog.modal.footer>
                     <x-chief::button type="button" variant="grey" x-on:click="close()">Annuleer</x-chief::button>
-                    <x-chief::button type="submit" form="deleteUserForm" variant="red">Verwijder gebruiker</x-chief::button>
+                    <x-chief::button type="submit" form="deleteUserForm" variant="red">Verwijder gebruiker
+                    </x-chief::button>
                 </x-chief::dialog.modal.footer>
             </x-slot>
         </x-chief::dialog.modal>
