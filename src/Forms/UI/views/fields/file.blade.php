@@ -1,5 +1,6 @@
 @php
     // Assets always expect a locale. We enforce this even when locales are missing
+    use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
     use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
     use Thinktomorrow\Chief\Sites\ChiefSites;
 
@@ -8,8 +9,13 @@
     // Check if component is used inside a parent Livewire component (such as AddFragment)
     $insideComponent = isset($this) && method_exists($this, 'getId');
 
-    if($insideComponent) {
+    if ($insideComponent) {
         $currentPreviewFiles = data_get($this->form, LivewireFieldName::get($getName($locale ?? null), null));
+    } else {
+        $currentPreviewFiles = array_map(
+            fn ($file) => $file instanceof PreviewFile ? $file : PreviewFile::fromAsset($file),
+            $field->getValue($locale),
+        );
     }
 @endphp
 
@@ -23,8 +29,7 @@
         :locale="$locale"
         :field-name="$field->getName($locale)"
         :allow-multiple="$field->allowMultiple()"
-        :assets="$field->getValue($locale)"
-        :preview-files="$currentPreviewFiles ?? []"
+        :preview-files="$currentPreviewFiles"
         :components="$field->getComponents()"
         :rules="$field->getRules()"
         :validation-messages="$field->getValidationMessages()"

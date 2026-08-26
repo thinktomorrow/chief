@@ -37,7 +37,7 @@ class UpdatingAssociatedFileValuesTest extends ChiefTestCase
     {
         app(FileApplication::class)->updateAssociatedAssetData($this->model->modelReference()->get(), 'thumb', 'nl', $this->assetId, [
             'caption' => 'I belong to this file',
-        ]);
+        ], []);
 
         $this->assertEquals('I belong to this file', $this->model->fresh()->asset('thumb', 'nl')->getData('caption'));
     }
@@ -46,9 +46,23 @@ class UpdatingAssociatedFileValuesTest extends ChiefTestCase
     {
         app(FileApplication::class)->updateAssociatedAssetData($this->model->modelReference()->get(), 'thumb', 'nl', $this->assetId, [
             'caption' => ['nl' => 'I belong to this file in Dutch', 'en' => 'I belong to this file in English'],
-        ]);
+        ], []);
 
         $this->assertEquals('I belong to this file in Dutch', $this->model->fresh()->asset('thumb', 'nl')->getData('caption.nl'));
         $this->assertEquals('I belong to this file in English', $this->model->fresh()->asset('thumb', 'nl')->getData('caption.en'));
+    }
+
+    public function test_it_splits_associated_and_generic_asset_values_by_explicit_field_keys(): void
+    {
+        app(FileApplication::class)->updateAssociatedAssetData($this->model->modelReference()->get(), 'thumb', 'nl', $this->assetId, [
+            'caption' => 'Associated caption',
+            'alt' => 'Generic alt',
+        ], ['caption']);
+
+        $asset = $this->model->fresh()->asset('thumb', 'nl');
+
+        $this->assertEquals('Associated caption', $asset->getPivotData('caption'));
+        $this->assertEquals('Generic alt', $asset->getData('alt'));
+        $this->assertNull($asset->getData('caption'));
     }
 }

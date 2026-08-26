@@ -5,10 +5,13 @@ namespace Thinktomorrow\Chief\Assets\Tests\Livewire\ModelFiles;
 use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Assets\Livewire\FileFieldEditComponent;
 use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Menu\Menu;
+use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -158,6 +161,35 @@ class FileFieldEditTest extends ChiefTestCase
             ->call('open', ['previewfile' => $previewFile])
             ->call('submit')
             ->assertDispatched('assetUpdated-xxx');
+    }
+
+    public function test_it_can_rename_a_file_associated_with_an_unregistered_menu_item_resource(): void
+    {
+        $menu = Menu::create(['type' => 'main']);
+        $menuItem = MenuItem::create([
+            'menu_id' => $menu->id,
+            'type' => 'custom',
+        ]);
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('menu-thumbnail.png'))
+            ->save();
+
+        app(AddAsset::class)->handle($menuItem, $asset, 'thumbnail', 'nl', 0, []);
+
+        Livewire::test(FileFieldEditComponent::class, [
+            'modelReference' => $menuItem->modelReference()->get(),
+            'fieldKey' => 'thumbnail',
+            'locale' => 'nl',
+            'parentId' => 'xxx',
+            'components' => [],
+        ])
+            ->call('open', ['previewfile' => PreviewFile::fromAsset($asset)])
+            ->set('form.basename', 'renamed-thumbnail')
+            ->call('submit')
+            ->assertHasNoErrors()
+            ->assertDispatched('assetUpdated-xxx');
+
+        $this->assertSame('renamed-thumbnail.png', $asset->fresh()->getFirstMedia()->file_name);
     }
 
     public function test_it_hides_file_edit_site_toggle_for_single_locale_project()

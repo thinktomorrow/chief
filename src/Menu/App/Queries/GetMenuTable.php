@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Menu\App\Queries;
 
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\Resources\MenuItemResource;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
 use Thinktomorrow\Chief\Table\Actions\RowAction;
@@ -13,12 +14,16 @@ use Thinktomorrow\Chief\Table\Table;
 
 class GetMenuTable
 {
+    public function __construct(private MenuItemResource $resource) {}
+
     public function getTable(string $menuId): Table
     {
-        return Table::make()->query(function () use ($menuId) {
-            return MenuItem::where('menu_id', $menuId);
+        $table = Table::make()->query(function () use ($menuId) {
+            return MenuItem::with('assetRelation', 'assetRelation.media')
+                ->where('menu_id', $menuId);
         })->setReordering(MenuItem::class)
             ->returnResultsAsTree()
+            ->treeLabelColumn('label')
             ->setTreeResource(new MenuItem)
             ->setTableReference(new Table\References\TableReference(static::class, 'getTable', [$menuId]))
             ->columns([
@@ -77,5 +82,7 @@ class GetMenuTable
             ])->sorters([
                 TreeSort::default(),
             ]);
+
+        return $this->resource->configureTable($table);
     }
 }

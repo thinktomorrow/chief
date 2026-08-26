@@ -12,10 +12,6 @@ use Thinktomorrow\AssetLibrary\Application\UpdateAssetData;
 use Thinktomorrow\AssetLibrary\Application\UpdateAssociatedAssetData;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\AssetContract;
-use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentFactory;
-use Thinktomorrow\Chief\Fragments\Fragment;
-use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class FileApplication
@@ -28,36 +24,24 @@ class FileApplication
 
     private UpdateAssetData $updateAssetData;
 
-    private Registry $registry;
-
-    public function __construct(Registry $registry, UpdateAssociatedAssetData $updateAssociatedAssetData, UpdateAssetData $updateAssetData, CreateAsset $createAsset, ReplaceMedia $replaceMedia)
+    public function __construct(UpdateAssociatedAssetData $updateAssociatedAssetData, UpdateAssetData $updateAssetData, CreateAsset $createAsset, ReplaceMedia $replaceMedia)
     {
         $this->updateAssociatedAssetData = $updateAssociatedAssetData;
         $this->createAsset = $createAsset;
         $this->replaceMedia = $replaceMedia;
         $this->updateAssetData = $updateAssetData;
-        $this->registry = $registry;
     }
 
     /**
      * Update the asset data associated with a specified model.
      */
-    public function updateAssociatedAssetData(string $modelReference, string $fieldKey, string $locale, string $assetId, array $values): void
+    public function updateAssociatedAssetData(string $modelReference, string $fieldKey, string $locale, string $assetId, array $values, array $associatedFieldKeys): void
     {
         $model = ModelReference::fromString($modelReference)->instance();
 
-        if ($model instanceof FragmentModel) {
-            $fragment = $this->fragmentFactory($model);
-            $field = $fragment->field($model, $fieldKey);
-        } else {
-            $resource = $this->registry->findResourceByModel($model::class);
-            $field = $resource->field($model, $fieldKey);
-        }
-
         // Split model specific values and generic ones
-        $fieldKeys = array_map(fn ($_field) => $_field->getKey(), $field->getComponents());
-        $modelValues = Arr::only($values, $fieldKeys);
-        $genericValues = Arr::except($values, $fieldKeys);
+        $modelValues = Arr::only($values, $associatedFieldKeys);
+        $genericValues = Arr::except($values, $associatedFieldKeys);
 
         if (count($modelValues) > 0) {
             $this->updateAssociatedAssetData->handle(
@@ -145,10 +129,5 @@ class FileApplication
         app(AddAsset::class)->handle($model, $newAsset, $fieldKey, $locale, $existingAsset->pivot->order, $existingAsset->pivot->data ?? []);
 
         return $model->fresh()->assets($fieldKey)->firstWhere(fn ($asset) => $asset->id == $newAsset->id && $asset->pivot->locale == $locale);
-    }
-
-    private function fragmentFactory(FragmentModel $fragmentModel): Fragment
-    {
-        return app(FragmentFactory::class)->create($fragmentModel);
     }
 }

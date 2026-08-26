@@ -2,6 +2,10 @@
 
 namespace Thinktomorrow\Chief\Menu\Tests\Unit;
 
+use Illuminate\Support\Facades\DB;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Forms\Tests\TestSupport\CustomAsset;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Menu\App\Queries\MenuTree;
 use Thinktomorrow\Chief\Menu\Menu;
@@ -29,6 +33,39 @@ class MenuItemTest extends ChiefTestCase
 
         $this->assertEquals(1, $collection->count());
         $this->assertEquals(2, $collection->total());
+    }
+
+    public function test_it_supports_dynamic_project_values(): void
+    {
+        $menuItem = new MenuItem;
+        $menuItem->description = 'Beschrijving';
+        $menuItem->show_children = true;
+
+        $this->assertSame('Beschrijving', $menuItem->dynamic('description'));
+        $this->assertTrue($menuItem->dynamic('show_children'));
+    }
+
+    public function test_it_supports_assets_and_removes_pivots_when_deleted(): void
+    {
+        config()->set('thinktomorrow.assetlibrary.types.custom', CustomAsset::class);
+
+        $menu = Menu::create(['type' => 'main']);
+        $menuItem = MenuItem::create(['menu_id' => $menu->id, 'type' => 'custom']);
+        $asset = Asset::create(['asset_type' => 'custom']);
+
+        $menuItem->assetRelation()->attach($asset->id, [
+            'type' => 'thumbnail',
+            'locale' => 'nl',
+            'order' => 0,
+        ]);
+
+        $this->assertInstanceOf(HasAsset::class, $menuItem);
+        $this->assertTrue(DB::table('assets_pivot')->where('entity_type', 'menuitem')->where('entity_id', $menuItem->id)->exists());
+
+        $menuItem->delete();
+
+        $this->assertFalse(DB::table('assets_pivot')->where('entity_type', 'menuitem')->where('entity_id', $menuItem->id)->exists());
+        $this->assertDatabaseHas('assets', ['id' => $asset->id]);
     }
 
     public function test_it_can_reference_an_internal_page()

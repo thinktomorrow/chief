@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu\App\Actions;
 
+use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Menu\Exceptions\OwnerReferenceIsRequiredForInternalLinkType;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\MenuLinkType;
+use Thinktomorrow\Chief\Menu\Resources\MenuItemResource;
 
 class MenuItemApplication
 {
-    private SanitizeUrl $sanitizeUrl;
-
-    public function __construct(SanitizeUrl $sanitizeUrl)
-    {
-        $this->sanitizeUrl = $sanitizeUrl;
-    }
+    public function __construct(
+        private SanitizeUrl $sanitizeUrl,
+        private MenuItemResource $resource,
+        private FieldValidator $fieldValidator,
+    ) {}
 
     public function create(CreateMenuItem $command): string
     {
@@ -26,7 +29,7 @@ class MenuItemApplication
             throw new OwnerReferenceIsRequiredForInternalLinkType('An owner reference is required for internal link types.');
         }
 
-        $model = MenuItem::create([
+        $model = new MenuItem([
             'menu_id' => $command->getMenuId(),
             'type' => $command->getLinkType(),
             'parent_id' => $command->getParentId(),
@@ -47,7 +50,9 @@ class MenuItemApplication
             }
         }
 
-        $model->save();
+        $fields = $this->fieldsForCreate($model);
+        $this->fieldValidator->handle($fields, $command->getInput());
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $command->getInput(), $command->getFiles());
 
         event(new MenuItemCreated((string) $model->id));
 
@@ -89,7 +94,9 @@ class MenuItemApplication
             }
         }
 
-        $model->save();
+        $fields = $this->fieldsForUpdate($model);
+        $this->fieldValidator->handle($fields, $command->getInput());
+        app($this->resource->getSaveFieldsClass())->save($model, $fields, $command->getInput(), $command->getFiles());
 
         event(new MenuItemUpdated((string) $model->id));
     }
@@ -112,5 +119,20 @@ class MenuItemApplication
         $model->delete();
 
         event(new MenuItemDeleted((string) $model->id));
+    }
+
+    private function fieldsForCreate(MenuItem $menuItem): Fields
+    {
+        return PageLayout::make($this->resource->fields($menuItem))
+            ->model($menuItem)
+            ->getFields()
+            ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']);
+    }
+
+    private function fieldsForUpdate(MenuItem $menuItem): Fields
+    {
+        return PageLayout::make($this->resource->fields($menuItem))
+            ->model($menuItem)
+            ->getFields();
     }
 }

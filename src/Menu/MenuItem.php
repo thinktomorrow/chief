@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\AssetLibrary\InteractsWithAssets;
 use Thinktomorrow\Chief\Resource\TreeResource;
 use Thinktomorrow\Chief\Shared\Concerns\Nestable\NestableTree;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\Sortable;
 use Thinktomorrow\Chief\Shared\Concerns\Sortable\SortableDefault;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSites;
 use Thinktomorrow\Chief\Sites\HasAllowedSitesDefaults;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
@@ -21,16 +24,34 @@ use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\NodeDefaults;
 
-class MenuItem extends Model implements HasAllowedSites, Node, ReferableModel, Sortable, TreeResource
+class MenuItem extends Model implements HasAllowedSites, HasAsset, Node, ReferableModel, Sortable, TreeResource
 {
     use HasAllowedSitesDefaults;
     use HasDynamicAttributes;
+    use InteractsWithAssets;
     use NodeDefaults;
     use ReferableModelDefault;
     use SortableDefault;
 
-    public $dynamicKeys = [
-        'label', 'url', 'owner_label',
+    public $dynamicKeys = ['*'];
+
+    public $dynamicKeysBlacklist = [
+        'id',
+        'menu_id',
+        'parent_id',
+        'type',
+        'owner_type',
+        'owner_id',
+        'status',
+        'order',
+        'values',
+        'children',
+        'locale',
+        'menu',
+        'owner',
+        'parent',
+        'assetRelation',
+        'allowed_sites',
     ];
 
     public $timestamps = false;
@@ -151,7 +172,12 @@ class MenuItem extends Model implements HasAllowedSites, Node, ReferableModel, S
 
     public function getDynamicLocales(): array
     {
-        return \Thinktomorrow\Chief\Sites\ChiefSites::locales();
+        return ChiefSites::locales();
+    }
+
+    protected function getAssetFallbackLocales(): array
+    {
+        return ChiefSites::assetFallbackLocales();
     }
 
     public function getId()
@@ -181,6 +207,7 @@ class MenuItem extends Model implements HasAllowedSites, Node, ReferableModel, S
     public function getTreeModels(?array $ids = null): Collection
     {
         $models = static::withoutGlobalScopes()
+            ->with('assetRelation', 'assetRelation.media')
             ->orderBy('order')
             ->when($ids, fn ($query) => $query->whereIn('id', $ids))
             ->get();

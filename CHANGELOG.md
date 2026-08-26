@@ -5,6 +5,15 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- **Breaking change**: `FileApplication::updateAssociatedAssetData()` now requires an `associatedFieldKeys` array.
+  Callers must explicitly pass the keys of fields whose values should be stored on the asset association.
+- Fixed: default field values in state confirmations modals are now correctly set to the current/default value of the
+  field.
+- Added: `MenuItemResource` interface to allow projects to define their own menu item resource with custom fields and
+  table layout. See `DefaultMenuItemResource` for an example implementation.
+- Added: Menu items can now be configured with custom project fields and table layout. This is done via a custom
+  `MenuItemResource` class.
+
 ## [0.10.29] - 2026-08-25
 
 - Fixed: The `icon` attribute on a grouped `<x-chief::nav>` is no longer ignored. It now sets the icon of the dropdown

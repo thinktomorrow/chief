@@ -27,7 +27,9 @@ class MenuTree
     public static function byMenu(string $menuId): NodeCollection
     {
         return NodeCollection::fromIterable(
-            MenuItem::where('menu_id', $menuId)->get()
+            MenuItem::with('assetRelation', 'assetRelation.media')
+                ->where('menu_id', $menuId)
+                ->get()
         )->sort('order');
     }
 }

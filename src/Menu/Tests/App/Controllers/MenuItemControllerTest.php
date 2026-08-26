@@ -2,16 +2,121 @@
 
 namespace Thinktomorrow\Chief\Menu\Tests\App\Controllers;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\Chief\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\Resources\MenuItemResource;
+use Thinktomorrow\Chief\Menu\Tests\TestSupport\ProjectMenuItemResource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MenuItemControllerTest extends ChiefTestCase
 {
+    public function test_project_resource_fields_are_rendered(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        $menu = Menu::create(['type' => 'main']);
+
+        $this->asAdmin()
+            ->get(route('chief.back.menuitem.create', $menu->id))
+            ->assertOk()
+            ->assertSee('Beschrijving')
+            ->assertSee('Onderliggende items tonen');
+    }
+
+    public function test_editing_a_menu_item_shows_its_existing_thumbnail(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        $menu = Menu::create(['type' => 'main']);
+        $menuItem = MenuItem::create([
+            'menu_id' => $menu->id,
+            'type' => 'custom',
+        ]);
+        $asset = app(CreateAsset::class)
+            ->uploadedFile(UploadedFile::fake()->image('menu-thumbnail.png'))
+            ->save();
+
+        app(AddAsset::class)->handle($menuItem, $asset, 'thumbnail', 'nl', 0, []);
+
+        $this->asAdmin()
+            ->get(route('chief.back.menuitem.edit', $menuItem->id))
+            ->assertOk()
+            ->assertSee('menu-thumbnail.png');
+    }
+
+    public function test_project_resource_fields_are_validated_and_stored_as_dynamic_values(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        $menu = Menu::create(['type' => 'main']);
+
+        $this->asAdmin()
+            ->post(route('chief.back.menuitem.store', $menu->id), $this->validParams([
+                'description' => [
+                    'nl' => 'Nederlandse beschrijving',
+                    'en' => 'English description',
+                ],
+                'show_children' => '1',
+            ]))
+            ->assertSessionHasNoErrors();
+
+        $menuItem = MenuItem::firstOrFail();
+
+        $this->assertSame('Nederlandse beschrijving', $menuItem->dynamic('description', 'nl'));
+        $this->assertSame('English description', $menuItem->dynamic('description', 'en'));
+        $this->assertSame('1', $menuItem->dynamic('show_children'));
+    }
+
+    public function test_project_resource_validation_errors_are_returned(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        $menu = Menu::create(['type' => 'main']);
+
+        $this->asAdmin()
+            ->post(route('chief.back.menuitem.store', $menu->id), $this->validParams())
+            ->assertSessionHasErrors(['description.nl', 'description.en']);
+
+        $this->assertDatabaseCount('menu_items', 0);
+    }
+
+    public function test_project_resource_fields_are_updated(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        $menu = Menu::create(['type' => 'main']);
+        $menuItem = MenuItem::create([
+            'menu_id' => $menu->id,
+            'type' => 'custom',
+            'description.nl' => 'Oud',
+            'description.en' => 'Old',
+            'show_children' => '0',
+        ]);
+
+        $this->asAdmin()
+            ->put(route('chief.back.menuitem.update', $menuItem->id), $this->validParams([
+                'description' => [
+                    'nl' => 'Nieuw',
+                    'en' => 'New',
+                ],
+                'show_children' => '1',
+            ]))
+            ->assertSessionHasNoErrors();
+
+        $menuItem->refresh();
+
+        $this->assertSame('Nieuw', $menuItem->dynamic('description', 'nl'));
+        $this->assertSame('New', $menuItem->dynamic('description', 'en'));
+        $this->assertSame('1', $menuItem->dynamic('show_children'));
+    }
+
     public function test_creating_a_new_menu_item()
     {
         $menu = Menu::create(['type' => 'main']);

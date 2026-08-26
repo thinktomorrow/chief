@@ -20,13 +20,19 @@ class UpdateMenuItem
 
     private array $data;
 
-    public function __construct(string $menuItemId, string $linkType, ?string $ownerReference, ?string $parentId, array $data)
+    private array $input;
+
+    private array $files;
+
+    public function __construct(string $menuItemId, string $linkType, ?string $ownerReference, ?string $parentId, array $data, array $input = [], array $files = [])
     {
         $this->menuItemId = $menuItemId;
         $this->linkType = $linkType;
         $this->ownerReference = $ownerReference;
         $this->parentId = $parentId;
         $this->data = $data;
+        $this->input = $input;
+        $this->files = $files;
     }
 
     public static function fromRequest(string $menuItemId, MenuRequest $request): self
@@ -36,7 +42,9 @@ class UpdateMenuItem
             $request->input('type'),
             $request->input('owner_reference'),
             ($request->input('allow_parent') && $request->input('parent_id')) ? $request->input('parent_id') : null,
-            $request->input('trans', [])
+            $request->input('trans', []),
+            $request->all(),
+            $request->allFiles(),
         );
     }
 
@@ -63,5 +71,15 @@ class UpdateMenuItem
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function getInput(): array
+    {
+        return $this->input;
+    }
+
+    public function getFiles(): array
+    {
+        return $this->files;
     }
 }

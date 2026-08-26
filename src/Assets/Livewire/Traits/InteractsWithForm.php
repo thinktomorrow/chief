@@ -109,6 +109,13 @@ trait InteractsWithForm
         }, $this->components);
     }
 
+    public function getInitialComponents(): array
+    {
+        return array_map(function ($componentArray) {
+            return $componentArray['class']::fromLivewire($componentArray);
+        }, $this->initialComponents);
+    }
+
     protected function setComponents(array $components): void
     {
         $this->components = $this->initialComponents = array_map(fn ($component) => $component->toLivewire(), $components);

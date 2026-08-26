@@ -9,6 +9,8 @@ use Livewire\Livewire;
 use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
+use Thinktomorrow\Chief\Menu\Resources\DefaultMenuItemResource;
+use Thinktomorrow\Chief\Menu\Resources\MenuItemResource;
 use Thinktomorrow\Chief\Menu\UI\Livewire\AddMenu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\EditMenu;
 use Thinktomorrow\Chief\Menu\UI\Livewire\Menus;
@@ -33,5 +35,7 @@ class MenuServiceProvider extends ServiceProvider
     public function register(): void
     {
         Relation::morphMap(['menuitem' => MenuItem::class]);
+
+        $this->app->bind(MenuItemResource::class, DefaultMenuItemResource::class);
     }
 }

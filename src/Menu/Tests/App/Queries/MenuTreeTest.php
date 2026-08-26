@@ -2,6 +2,9 @@
 
 namespace Thinktomorrow\Chief\Menu\Tests\App\Queries;
 
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Forms\Tests\TestSupport\CustomAsset;
+use Thinktomorrow\Chief\Menu\App\Queries\MenuTree;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\MenuItemStatus;
@@ -87,5 +90,32 @@ class MenuTreeTest extends ChiefTestCase
         $collection = chiefmenu('main');
 
         $this->assertCount(1, $collection);
+    }
+
+    public function test_it_eager_loads_assets_and_their_media(): void
+    {
+        config()->set('thinktomorrow.assetlibrary.types.custom', CustomAsset::class);
+
+        $menu = Menu::create([
+            'type' => 'main',
+            'allowed_sites' => ['nl'],
+        ]);
+
+        $menuItem = MenuItem::create([
+            'menu_id' => $menu->id,
+            'type' => 'custom',
+        ]);
+
+        $asset = Asset::create(['asset_type' => 'custom']);
+        $menuItem->assetRelation()->attach($asset->id, [
+            'type' => 'thumbnail',
+            'locale' => 'nl',
+            'order' => 0,
+        ]);
+
+        $loadedMenuItem = MenuTree::byMenu((string) $menu->id)->first();
+
+        $this->assertTrue($loadedMenuItem->relationLoaded('assetRelation'));
+        $this->assertTrue($loadedMenuItem->assetRelation->first()->relationLoaded('media'));
     }
 }

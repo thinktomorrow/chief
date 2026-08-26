@@ -109,7 +109,8 @@ class SaveFileField
                     $field->getKey(),
                     $locale,
                     $asset->id,
-                    $value['fieldValues']
+                    $value['fieldValues'],
+                    array_map(fn ($component) => $component->getKey(), $field->getComponents()),
                 );
             }
 

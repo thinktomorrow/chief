@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Assets\App\FileApplication;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\EmitsToNestables;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\InteractsWithForm;
 use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Forms\Fields\Field;
 
 class FileFieldEditComponent extends Component
 {
@@ -186,7 +187,12 @@ class FileFieldEditComponent extends Component
             app(FileApplication::class)->updateFileName($this->previewFile->mediaId, $this->form['basename']);
 
             if ($this->modelReference) {
-                app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form);
+                $associatedFieldKeys = collect($this->getInitialComponents())
+                    ->filter(fn ($component) => $component instanceof Field)
+                    ->map(fn (Field $field) => $field->getKey())
+                    ->all();
+
+                app(FileApplication::class)->updateAssociatedAssetData($this->modelReference, $this->fieldKey, $this->locale, $this->previewFile->mediaId, $this->form, $associatedFieldKeys);
             }
         }
 
