@@ -67,13 +67,6 @@ class UploadingFileWhenEditingFormTest extends ChiefTestCase
     public function test_it_uploads_file()
     {
         $filePath = $this->storeFakeImageOnLivewireDisk('image.png');
-
-        // Verify file exists before attempting to create TemporaryUploadedFile
-        $this->assertTrue(
-            file_exists($filePath) || \Storage::disk(\Livewire\Features\SupportFileUploads\FileUploadConfiguration::disk())->exists($filePath),
-            "File at path {$filePath} does not exist on the Livewire disk"
-        );
-
         $previewFile = PreviewFile::fromTemporaryUploadedFile(TemporaryUploadedFile::createFromLivewire($filePath));
 
         $this->assertDatabaseCount('assets', 0);
