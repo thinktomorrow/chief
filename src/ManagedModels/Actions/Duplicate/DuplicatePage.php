@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
-use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
@@ -29,11 +28,11 @@ class DuplicatePage
 
     public function handle(Model&ReferableModel $model, string $titleKey = 'title'): Model
     {
-        $copiedModel = $this->duplicateModel->handle($model, $titleKey);
+        $stateKeys = $model instanceof StatefulContract ? $model->getStateKeys() : [];
+        $copiedModel = $this->duplicateModel->handle($model, $titleKey, $stateKeys);
 
-        if ($copiedModel instanceof StatefulContract && in_array(PageState::draft, $copiedModel->getStateConfig(PageState::KEY)->getStates())) {
-            $copiedModel->changeState(PageState::KEY, PageState::draft);
-            $copiedModel->save();
+        if ($stateKeys !== []) {
+            $copiedModel->refresh();
         }
 
         foreach ($this->contextRepository->getByOwner($model->modelReference()) as $context) {

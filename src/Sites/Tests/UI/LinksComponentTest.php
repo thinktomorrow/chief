@@ -39,4 +39,18 @@ class LinksComponentTest extends ChiefTestCase
             ->assertSeeHtml('http://localhost/nl-base/test-nl')
             ->assertSeeHtml('http://localhost/en-base/test-en');
     }
+
+    public function test_it_shows_an_action_when_a_link_is_missing()
+    {
+        $model = $this->setUpAndCreateArticle(['allowed_sites' => ['nl']]);
+
+        Livewire::test(Links::class, [
+            'resourceKey' => ArticlePageResource::resourceKey(),
+            'model' => $model,
+        ])
+            ->assertSee('Voeg een link toe')
+            ->assertSeeHtml('wire:click="edit"')
+            ->call('edit')
+            ->assertDispatched('open-edit-links');
+    }
 }

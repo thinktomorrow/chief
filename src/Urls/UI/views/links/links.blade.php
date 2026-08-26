@@ -22,7 +22,6 @@
                     <div class="flex items-start justify-between gap-2">
                         @if (count($links) > 1)
                             <p class="text-grey-500 text-sm/5 font-medium">{{ $link->site->name }}</p>
-
                             <x-chief::badge :variant="$link->stateVariant"> {{ $link->stateLabel }} </x-chief::badge>
                         @endif
                     </div>
@@ -46,6 +45,8 @@
                                 </x-chief::badge>
                             @endif
                         </div>
+                    @else
+                        <x-chief::link size="sm" variant="blue" wire:click="edit"> Voeg een link toe </x-chief::link>
                     @endif
                 </div>
             @endforeach

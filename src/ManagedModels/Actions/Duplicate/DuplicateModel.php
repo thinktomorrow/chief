@@ -18,9 +18,9 @@ class DuplicateModel
         $this->registry = $registry;
     }
 
-    public function handle(Model $model, string $titleKey = 'title'): Model
+    public function handle(Model $model, string $titleKey = 'title', array $except = []): Model
     {
-        $copiedModel = $model->replicate(['id', 'created_at', 'updated_at']);
+        $copiedModel = $model->replicate(['id', 'created_at', 'updated_at', ...$except]);
 
         $this->resetAstrotomicTranslations($copiedModel);
 

@@ -14,7 +14,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   table layout. See `DefaultMenuItemResource` for an example implementation.
 - Added: Menu items can now be configured with custom project fields and table layout. This is done via a custom
   `MenuItemResource` class.
--
+- Fixed: Duplicated model no longer keeps state of the original model, such as archived, published, ... And always
+  resets the state to default values.
+- Fixed: On an detailpage, now shows a explicit message in case of a missing link
 
 ## [0.10.29] - 2026-08-25
 
