@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu\Resources;
 
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Resource\ResourceDefault;
 use Thinktomorrow\Chief\Table\Filters\Presets\FilterPresets;
@@ -23,7 +24,7 @@ class DefaultMenuItemResource implements MenuItemResource
         return [];
     }
 
-    public function configureTable(Table $table): Table
+    public function configureTable(Table $table, Menu $menu): Table
     {
         return $table->filters([
             FilterPresets::search('search', dynamicKeys: ['label', 'url'])

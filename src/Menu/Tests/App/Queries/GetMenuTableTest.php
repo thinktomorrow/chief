@@ -84,6 +84,21 @@ class GetMenuTableTest extends ChiefTestCase
             ->assertSee('Projectbeschrijving');
     }
 
+    public function test_project_resource_can_configure_columns_per_menu(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        $menu = Menu::create(['type' => 'footer']);
+        $table = app(GetMenuTable::class)->getTable((string) $menu->id);
+        $columnKeys = collect($table->getColumns())
+            ->flatMap(fn ($column) => collect($column->getItems())->map(fn ($item) => $item->getKey()))
+            ->all();
+
+        $this->assertNotContains('thumbnail', $columnKeys);
+        $this->assertNotContains('description', $columnKeys);
+        $this->assertSame('search', $table->getFilters()[0]->getKey());
+    }
+
     public function test_table_and_tree_results_eager_load_assets_and_media(): void
     {
         config()->set('thinktomorrow.assetlibrary.types.custom', CustomAsset::class);

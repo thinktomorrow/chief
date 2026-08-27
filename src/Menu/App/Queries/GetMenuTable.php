@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Menu\App\Queries;
 
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\Resources\MenuItemResource;
 use Thinktomorrow\Chief\Table\Actions\Action;
@@ -18,6 +19,8 @@ class GetMenuTable
 
     public function getTable(string $menuId): Table
     {
+        $menu = Menu::findOrFail($menuId);
+
         $table = Table::make()->query(function () use ($menuId) {
             return MenuItem::with('assetRelation', 'assetRelation.media')
                 ->where('menu_id', $menuId);
@@ -83,6 +86,6 @@ class GetMenuTable
                 TreeSort::default(),
             ]);
 
-        return $this->resource->configureTable($table);
+        return $this->resource->configureTable($table, $menu);
     }
 }

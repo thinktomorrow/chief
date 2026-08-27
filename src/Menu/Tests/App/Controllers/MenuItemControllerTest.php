@@ -87,6 +87,29 @@ class MenuItemControllerTest extends ChiefTestCase
         $this->assertDatabaseCount('menu_items', 0);
     }
 
+    public function test_project_resource_fields_can_differ_per_menu(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        $menu = Menu::create(['type' => 'footer']);
+
+        $this->asAdmin()
+            ->get(route('chief.back.menuitem.create', $menu->id))
+            ->assertOk()
+            ->assertDontSee('Beschrijving')
+            ->assertDontSee('Onderliggende items tonen')
+            ->assertDontSee('Thumbnail');
+
+        $this->asAdmin()
+            ->post(route('chief.back.menuitem.store', $menu->id), $this->validParams())
+            ->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('menu_items', [
+            'menu_id' => $menu->id,
+            'type' => 'custom',
+        ]);
+    }
+
     public function test_project_resource_fields_are_updated(): void
     {
         $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);

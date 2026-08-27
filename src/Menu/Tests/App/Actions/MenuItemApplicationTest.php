@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Menu\Exceptions\OwnerReferenceIsRequiredForInternalLinkType;
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\MenuLinkType;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -26,6 +27,7 @@ class MenuItemApplicationTest extends ChiefTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Menu::create(['type' => 'main']);
         $this->menuItemApplication = app(MenuItemApplication::class);
     }
 

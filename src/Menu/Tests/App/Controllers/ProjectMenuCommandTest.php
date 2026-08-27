@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Menu\Tests\App\Controllers;
 
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -24,8 +25,10 @@ class ProjectMenuCommandTest extends ChiefTestCase
             'current_state' => PageState::published,
         ]);
 
+        $menu = Menu::create(['type' => 'main']);
+
         MenuItem::create([
-            'menu_id' => 1,
+            'menu_id' => $menu->id,
             'label' => ['nl' => 'label nl', 'en' => 'label en'],
             'type' => 'internal',
             'owner_type' => $this->page->getMorphClass(),

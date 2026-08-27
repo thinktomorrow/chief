@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Menu\Tests\TestSupport;
 use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Textarea;
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\Resources\DefaultMenuItemResource;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
@@ -17,6 +18,10 @@ class ProjectMenuItemResource extends DefaultMenuItemResource
 {
     public function fields($model): iterable
     {
+        if ($model->menu?->type !== 'main') {
+            return [];
+        }
+
         yield Textarea::make('description')
             ->label('Beschrijving')
             ->locales(['nl', 'en'])
@@ -30,9 +35,15 @@ class ProjectMenuItemResource extends DefaultMenuItemResource
         yield Image::make('thumbnail')->label('Thumbnail');
     }
 
-    public function configureTable(Table $table): Table
+    public function configureTable(Table $table, Menu $menu): Table
     {
-        return parent::configureTable($table)->columns([
+        $table = parent::configureTable($table, $menu);
+
+        if ($menu->type !== 'main') {
+            return $table;
+        }
+
+        return $table->columns([
             AssetColumnImage::makeDefault('thumbnail')->label('Thumbnail'),
             ColumnText::make('description')
                 ->label('Beschrijving')

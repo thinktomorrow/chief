@@ -36,9 +36,11 @@ class MenuItemController extends Controller
     {
         $this->authorize('create-page');
 
+        $menu = Menu::findOrFail($id);
         $menuitem = new MenuItem;
         $menuitem->menu_id = $id;
         $menuitem->type = MenuLinkType::internal->value;  // Default menu type
+        $menuitem->setRelation('menu', $menu);
 
         $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
             MenuTree::byMenu($id),
@@ -49,7 +51,7 @@ class MenuItemController extends Controller
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']);
 
         return view('chief-menu::create', [
-            'menu' => Menu::findOrFail($id),
+            'menu' => $menu,
             'menuitem' => $menuitem,
             'pages' => UrlHelper::allOnlineModels(),
             'ownerReference' => null,
@@ -76,7 +78,7 @@ class MenuItemController extends Controller
     {
         $this->authorize('update-page');
 
-        $menuitem = MenuItem::with('assetRelation', 'assetRelation.media')->findOrFail($id);
+        $menuitem = MenuItem::with('menu', 'assetRelation', 'assetRelation.media')->findOrFail($id);
 
         $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
             MenuTree::byMenu($menuitem->menu_id),

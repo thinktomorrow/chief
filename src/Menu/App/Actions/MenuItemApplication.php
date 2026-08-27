@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Menu\Events\MenuItemCreated;
 use Thinktomorrow\Chief\Menu\Events\MenuItemDeleted;
 use Thinktomorrow\Chief\Menu\Events\MenuItemUpdated;
 use Thinktomorrow\Chief\Menu\Exceptions\OwnerReferenceIsRequiredForInternalLinkType;
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\MenuLinkType;
 use Thinktomorrow\Chief\Menu\Resources\MenuItemResource;
@@ -35,6 +36,8 @@ class MenuItemApplication
             'parent_id' => $command->getParentId(),
             'order' => $this->getNextOrder($command->getMenuId(), $command->getParentId()),
         ]);
+
+        $model->setRelation('menu', Menu::findOrFail($command->getMenuId()));
 
         if ($command->getOwnerReference()) {
             $model->owner_type = $command->getOwnerReference()->shortClassName();
@@ -65,7 +68,7 @@ class MenuItemApplication
             throw new OwnerReferenceIsRequiredForInternalLinkType('An owner reference is required for internal link types.');
         }
 
-        $model = MenuItem::findorFail($command->getMenuItemId());
+        $model = MenuItem::with('menu')->findorFail($command->getMenuItemId());
         $parentChanged = $model->parent_id != $command->getParentId();
 
         $model->type = $command->getLinkType();
