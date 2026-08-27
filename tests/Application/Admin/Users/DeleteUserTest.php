@@ -69,7 +69,7 @@ class DeleteUserTest extends ChiefTestCase
         $response = $this->actingAs($admin, 'chief')
             ->delete(route('chief.back.users.destroy', $admin->id));
 
-        $response->assertSessionHas('messages.error', 'U kan uw eigen account niet verwijderen.');
+        $response->assertSessionHas('messages.error', 'Je kan jouw eigen account niet verwijderen.');
         $this->assertDatabaseHas('chief_users', ['id' => $admin->id]);
     }
 
