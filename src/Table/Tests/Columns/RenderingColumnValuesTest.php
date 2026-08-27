@@ -61,6 +61,30 @@ class RenderingColumnValuesTest extends TestCase
         $this->assertEquals('second category', $column->getItems()[1]->getValue());
     }
 
+    public function test_value_originates_from_model_attribute_with_protected_mutator(): void
+    {
+        $model = new ModelFixture(['slug' => 'Mixed Case']);
+
+        $column = ColumnText::make('slug')->model($model);
+
+        $this->assertSame('mixed case', $column->getItems()->first()->getValue());
+    }
+
+    public function test_unrenderable_model_value_has_actionable_error_context(): void
+    {
+        $column = ColumnText::make('unrenderableValue')->model(new ModelFixture);
+
+        try {
+            $column->getItems()->first()->getValue();
+            $this->fail('Expected the column value to be rejected.');
+        } catch (\InvalidArgumentException $exception) {
+            $this->assertStringContainsString('Table column [unrenderablevalue] could not render attribute [unrenderablevalue]', $exception->getMessage());
+            $this->assertStringContainsString('model ['.ModelFixture::class.']', $exception->getMessage());
+            $this->assertStringContainsString('resolved [stdClass]', $exception->getMessage());
+            $this->assertStringContainsString('explicit value() or items() resolver', $exception->getMessage());
+        }
+    }
+
     public function test_value_originates_from_array()
     {
         $model = (object) (['titles' => [

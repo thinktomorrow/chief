@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Table columns now resolve protected Eloquent attribute mutators as properties and provide actionable context
+  when a model value cannot be rendered.
 - Added: Chief users can now be permanently deleted while audit history and invitations sent by the user retain
   immutable user snapshots.
 - Changed: The `invitations` table is renamed to `chief_users_invitations`. The migration backfills inviter and audit

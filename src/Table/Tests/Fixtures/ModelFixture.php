@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Tests\Fixtures;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Schema\Blueprint;
@@ -37,6 +38,18 @@ class ModelFixture extends Model
     public function categories()
     {
         return collect(['first category', 'second category']);
+    }
+
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value): string => strtolower($value),
+        );
+    }
+
+    public function unrenderableValue(): object
+    {
+        return new \stdClass;
     }
 
     public function parent(): BelongsTo

@@ -124,11 +124,21 @@ abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
     private function verifyValueCanBeRendered($value): void
     {
         if (is_iterable($value)) {
-            throw new \Exception('Non expected iterable value. The column item ['.$this->getKey().'] is expected to have a scalar value.');
+            throw new \InvalidArgumentException($this->invalidValueMessage($value));
         }
 
         if (! is_string($value) && ! is_int($value) && ! is_float($value) && ! is_null($value) && ! $value instanceof Stringable) {
-            throw new \InvalidArgumentException('The table column value for ['.$this->getKey().'] cannot be rendered. Value must be a string, int, float, null or an instance of Stringable. Got: '.gettype($value).'. Check if no conflicting model method or property exists for the given ['.$this->getColumnName().'] attribute.');
+            throw new \InvalidArgumentException($this->invalidValueMessage($value));
         }
+    }
+
+    private function invalidValueMessage(mixed $value): string
+    {
+        $model = $this->getModel();
+        $modelType = is_object($model) ? $model::class : get_debug_type($model);
+
+        return 'Table column ['.$this->getKey().'] could not render attribute ['.$this->getColumnName().']'
+            .' from model ['.$modelType.']. Expected a scalar, null, or Stringable value, but resolved ['.get_debug_type($value).'].'
+            .' Check for a conflicting model method or property, or define an explicit value() or items() resolver.';
     }
 }
