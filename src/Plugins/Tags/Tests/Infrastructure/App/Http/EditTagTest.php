@@ -30,14 +30,14 @@ class EditTagTest extends TestCase
 
     public function test_it_can_update_a_tag()
     {
-        $this->createTaggroupModel();
+        $tagGroup = $this->createTaggroupModel();
         $model = $this->createTagModel();
-        $this->performTagUpdate($model->id);
+        $this->performTagUpdate($model->id, ['taggroup_id' => $tagGroup->id]);
 
         $model->refresh();
 
         $this->assertEquals('reviewed', $model->label);
-        $this->assertEquals('2', $model->taggroup_id);
+        $this->assertEquals($tagGroup->id, $model->taggroup_id);
         $this->assertEquals('#666666', $model->color);
     }
 

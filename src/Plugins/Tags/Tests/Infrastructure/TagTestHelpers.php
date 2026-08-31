@@ -12,7 +12,7 @@ trait TagTestHelpers
     {
         return TagModel::create(array_merge([
             'color' => '#333333',
-            'taggroup_id' => '666',
+            'taggroup_id' => null,
             'label' => 'in review',
         ], $values));
     }
@@ -22,7 +22,7 @@ trait TagTestHelpers
         return $this->asAdmin()->post(route('chief.tags.store'), array_merge([
             'label' => 'reviewing',
             'color' => '#333333',
-            'taggroup_id' => '1',
+            'taggroup_id' => null,
         ], $values));
     }
 
@@ -31,7 +31,7 @@ trait TagTestHelpers
         return $this->asAdmin()->put(route('chief.tags.update', $tagId), array_merge([
             'label' => 'reviewed',
             'color' => '#666666',
-            'taggroup_id' => '2',
+            'taggroup_id' => null,
         ], $values));
     }
 

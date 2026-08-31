@@ -27,15 +27,15 @@ class CreateTagTest extends TestCase
     public function test_it_can_create_a_tag()
     {
         // Provide taggroup so tag can have a taggroup associated.
-        $this->createTaggroupModel();
-        $this->performTagStore();
+        $tagGroup = $this->createTaggroupModel();
+        $this->performTagStore(['taggroup_id' => $tagGroup->id]);
 
         $this->assertEquals(1, TagModel::count());
 
         $tag = TagModel::first();
 
         $this->assertEquals('reviewing', $tag->label);
-        $this->assertEquals('1', $tag->taggroup_id);
+        $this->assertEquals($tagGroup->id, $tag->taggroup_id);
         $this->assertEquals('#333333', $tag->color);
     }
 

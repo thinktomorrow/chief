@@ -118,7 +118,7 @@ class UrlRepositoryTest extends ChiefTestCase
     public function test_it_finds_only_active_slug()
     {
         // One active, one redirect
-        $this->repository->create($this->model->modelReference(), [
+        $activeId = $this->repository->create($this->model->modelReference(), [
             'slug' => 'sluggy',
             'site' => 'nl',
             'status' => 'online',
@@ -128,13 +128,15 @@ class UrlRepositoryTest extends ChiefTestCase
             'slug' => 'sluggy-non-active',
             'site' => 'nl',
             'status' => 'online',
-            'redirect_id' => 999,
+            'redirect_id' => $activeId,
         ]);
 
         $active = $this->repository->findActiveUrlBySlug('sluggy', 'nl');
+        $redirect = $this->repository->findActiveUrlBySlug('sluggy-non-active', 'nl');
 
         $this->assertNotNull($active);
         $this->assertNull($active->redirect_id);
+        $this->assertNull($redirect);
     }
 
     public function test_it_finds_identical_urls_of_model_excluding_id()
