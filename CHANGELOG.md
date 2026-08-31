@@ -5,6 +5,14 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: A Datetime field to enter a combined date and time value. `\Thinktomorrow\Chief\Forms\Fields\Datetime::class`.
+- Fixed: Date, time and datetime fields now format immutable date values. A `CarbonImmutable` value was passed
+  through unformatted, which the browser rejected and rendered as an empty input.
+- Fixed: The `min`, `max` and `step` of a date, time, datetime, number or slider field are no longer lost when the
+  field is nested in a repeat field. A custom `step` silently reverted to the field's own default.
+- Fixed: Field previews no longer throw when the stored value cannot be parsed as a date. The raw value is shown
+  instead.
+
 ## [0.10.30] - 2026-08-31
 
 - **Breaking change**: The `invitations` table is renamed to `chief_users_invitations`.
