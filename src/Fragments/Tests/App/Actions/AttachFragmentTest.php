@@ -32,7 +32,7 @@ class AttachFragmentTest extends ChiefTestCase
         $context = FragmentTestHelpers::findOrCreateContext($this->owner);
         $this->assertCount(0, $context->fragments()->get());
 
-        $fragmentId = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, 1)->getFragmentId();
+        $fragmentId = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, null)->getFragmentId();
 
         $this->assertCount(1, $context->fragments()->get());
         $this->assertEquals($fragmentId, $context->fragments()->first()->id);
@@ -44,7 +44,7 @@ class AttachFragmentTest extends ChiefTestCase
         $context2 = FragmentTestHelpers::createContext($this->owner);
         $this->assertCount(0, $context->fragments()->get());
 
-        $fragmentId = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, 1)->getFragmentId();
+        $fragmentId = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, null)->getFragmentId();
         app(AttachRootFragment::class)->handle($context2->id, $fragmentId, 0);
 
         $this->assertCount(1, $context->fragments()->get());
@@ -75,7 +75,7 @@ class AttachFragmentTest extends ChiefTestCase
 
         $this->assertCount(0, $context->fragments()->get());
 
-        $fragmentId = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, 1)->getFragmentId();
+        $fragmentId = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $context->id, null)->getFragmentId();
 
         $this->expectException(FragmentAlreadyAdded::class);
         app(AttachRootFragment::class)->handle($context->id, $fragmentId, 2);

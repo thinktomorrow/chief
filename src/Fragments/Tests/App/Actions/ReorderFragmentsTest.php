@@ -25,9 +25,9 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_can_reorder_fragments()
     {
-        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
-        [, $snippet2] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 2);
-        [, $snippet3] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 3);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 1);
+        [, $snippet2] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 2);
+        [, $snippet3] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 3);
 
         app(ReorderFragments::class)->handle($context->id, [
             $snippet3->getFragmentId(),
@@ -50,7 +50,7 @@ class ReorderFragmentsTest extends ChiefTestCase
 
     public function test_it_ignores_unknown_fragment_ids()
     {
-        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 1);
 
         app(ReorderFragments::class)->handle($context->id, [
             300,
@@ -82,7 +82,7 @@ class ReorderFragmentsTest extends ChiefTestCase
     {
         Event::fake();
 
-        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, 1);
+        [$context, $snippet1] = FragmentTestHelpers::createContextAndAttachFragment($this->owner, SnippetStub::class, null, 1);
 
         app(ReorderFragments::class)->handle($context->id, [
             $snippet1->getFragmentId(),
