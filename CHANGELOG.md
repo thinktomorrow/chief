@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: option to add project nav items to the settings nav. Tag your nav item with `nav-settings`
+
 ## [0.10.30] - 2026-08-31
 
 - **Breaking change**: The `invitations` table is renamed to `chief_users_invitations`.
