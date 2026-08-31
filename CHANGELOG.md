@@ -11,6 +11,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - **Breaking change**: `FileApplication::updateAssociatedAssetData()` now requires an `associatedFieldKeys` array.
   Callers must explicitly pass the keys of fields whose values should be stored on the asset association.
 
+- Fixed: Pint 1.30 formatting across the entire codebase.
 - Fixed: Table columns now resolve protected Eloquent attribute mutators as properties and provide actionable context
   when a model value cannot be rendered. This resolves the $model->key () issue where key is a protected eloquent
   method.
