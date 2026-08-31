@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Urls\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\PreviewMode;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
@@ -19,8 +21,8 @@ use Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound;
  * @property int $model_id
  * @property int|null $redirect_id
  * @property string $status
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class UrlRecord extends Model
 {
@@ -52,7 +54,7 @@ class UrlRecord extends Model
         return $record;
     }
 
-    public function model(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    public function model(): MorphTo
     {
         return $this->morphTo('model')->withoutGlobalScopes();
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Nestable;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Thinktomorrow\Chief\Managers\Register\Registry;
@@ -83,7 +84,7 @@ trait NestableDefault
         return $this->ancestors()->all();
     }
 
-    private function ancestors(): \Illuminate\Database\Eloquent\Collection
+    private function ancestors(): Collection
     {
         $ancestorIds = app(NestableQueries::class)->getAncestorIds($this);
 

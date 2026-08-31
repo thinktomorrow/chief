@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapFiles;
@@ -9,7 +11,7 @@ use Thinktomorrow\Chief\Site\Sitemap\SitemapFiles;
 class SitemapController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function index()
     {

@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\PairOptions;
 use Thinktomorrow\Chief\Fragments\App\Queries\GetShareableFragments;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
+use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 trait AddsExistingFragments
@@ -41,7 +42,7 @@ trait AddsExistingFragments
         return $this->existingTabLoaded || count($this->filters) > 0;
     }
 
-    /** @return Collection<\Thinktomorrow\Chief\Fragments\Fragment> */
+    /** @return Collection<Fragment> */
     public function getShareableFragments(): Collection
     {
         $builder = app(GetShareableFragments::class)

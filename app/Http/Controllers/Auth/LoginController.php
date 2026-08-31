@@ -2,7 +2,11 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Admin\Authentication\ChiefLogoutService;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -15,7 +19,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function showLoginForm()
     {
@@ -42,7 +46,7 @@ class LoginController extends Controller
      * Log the admin out of the application.
      *
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function logout(Request $request, ChiefLogoutService $logoutService)
     {

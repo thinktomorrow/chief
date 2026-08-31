@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Http\Requests;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class MenuRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): ?\Illuminate\Contracts\Auth\Authenticatable
+    public function authorize(): ?Authenticatable
     {
         return Auth::guard('chief')->user();
     }

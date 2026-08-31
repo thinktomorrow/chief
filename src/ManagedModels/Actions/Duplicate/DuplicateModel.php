@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class DuplicateModel
 {
@@ -65,9 +69,9 @@ class DuplicateModel
     }
 
     /**
-     * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+     * @return Repository|Application|mixed
      *
-     * @throws \Thinktomorrow\Chief\Managers\Exceptions\MissingResourceRegistration
+     * @throws MissingResourceRegistration
      */
     private function copyTitle(Model $model, string $titleKey, Model $copiedModel): void
     {
@@ -83,7 +87,7 @@ class DuplicateModel
         $isTitleLocalized = $field ? $field->hasLocales() : false;
 
         if ($isTitleLocalized) {
-            $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
+            $locales = ChiefSites::locales();
             $defaultLocale = reset($locales);
             $copiedModel->setDynamic($titleKey, $model->dynamic($titleKey, $defaultLocale, $model->dynamic($titleKey)).' [Copy]', $defaultLocale);
         } else {

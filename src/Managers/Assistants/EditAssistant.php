@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
@@ -44,14 +45,14 @@ trait EditAssistant
 
         // Model cannot be in deleted state for editing purposes.
         if ($model && $model instanceof StatefulContract) {
-            return ! ($model->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) == PageState::deleted);
+            return ! ($model->getState(PageState::KEY) == PageState::deleted);
         }
 
         return true;
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Request $request, $id)
     {

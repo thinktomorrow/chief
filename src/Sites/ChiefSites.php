@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites;
 
 use ArrayIterator;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Admin\Users\LocaleScope;
 use Traversable;
 
@@ -115,7 +116,7 @@ class ChiefSites implements \Countable, \IteratorAggregate
         return array_map(fn (ChiefSite $site) => $site->toArray(), $this->sites);
     }
 
-    public function toCollection(): \Illuminate\Support\Collection
+    public function toCollection(): Collection
     {
         return collect($this->sites);
     }

@@ -5,7 +5,21 @@
  * dd function has been called so you won't be in the dark when finding it again.
  */
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
+use Thinktomorrow\Chief\Admin\Settings\Settings;
+use Thinktomorrow\Chief\Admin\Users\VisitedUrl;
+use Thinktomorrow\Chief\Fragments\ActiveContextId;
+use Thinktomorrow\Chief\Fragments\App\Queries\GetFragments;
 use Thinktomorrow\Chief\Fragments\Models\FragmentCollection;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Menu\App\Queries\MenuTree;
+use Thinktomorrow\Chief\Shared\Helpers\Memoize;
+use Thinktomorrow\Url\Url;
+use Thinktomorrow\Vine\NodeCollection;
 
 if (! function_exists('trap')) {
     function trap($var, ...$moreVars): void
@@ -25,46 +39,46 @@ if (! function_exists('trap')) {
 
 // Retrieve the logged in admin
 if (! function_exists('chiefAdmin')) {
-    function chiefAdmin(): ?Illuminate\Contracts\Auth\Authenticatable
+    function chiefAdmin(): ?Authenticatable
     {
-        return \Illuminate\Support\Facades\Auth::guard('chief')->user();
+        return Auth::guard('chief')->user();
     }
 }
 
 if (! function_exists('chiefPermission')) {
-    function chiefPermission(\Thinktomorrow\Chief\Resource\Resource|string $resource, string $ability): string
+    function chiefPermission(Thinktomorrow\Chief\Resource\Resource|string $resource, string $ability): string
     {
-        return \Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions::permissionFor($resource, $ability);
+        return ChiefResourcePermissions::permissionFor($resource, $ability);
     }
 }
 
 if (! function_exists('chiefAdminCan')) {
     function chiefAdminCan(string $permission): bool
     {
-        return \Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions::adminCan(chiefAdmin(), $permission);
+        return ChiefResourcePermissions::adminCan(chiefAdmin(), $permission);
     }
 }
 
 if (! function_exists('chiefAdminCanResource')) {
-    function chiefAdminCanResource(\Thinktomorrow\Chief\Resource\Resource|string $resource, string $ability): bool
+    function chiefAdminCanResource(Thinktomorrow\Chief\Resource\Resource|string $resource, string $ability): bool
     {
-        return \Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions::adminCanResource(chiefAdmin(), $resource, $ability);
+        return ChiefResourcePermissions::adminCanResource(chiefAdmin(), $resource, $ability);
     }
 }
 
 // Retrieve the online fragments of the given or active context
 if (! function_exists('getFragments')) {
-    function getFragments(?string $contextId = null): \Thinktomorrow\Chief\Fragments\Models\FragmentCollection
+    function getFragments(?string $contextId = null): FragmentCollection
     {
-        if (! $contextId && \Thinktomorrow\Chief\Fragments\ActiveContextId::exists()) {
-            $contextId = \Thinktomorrow\Chief\Fragments\ActiveContextId::get();
+        if (! $contextId && ActiveContextId::exists()) {
+            $contextId = ActiveContextId::get();
         }
 
         if (! $contextId) {
             return new FragmentCollection;
         }
 
-        return app(\Thinktomorrow\Chief\Fragments\App\Queries\GetFragments::class)->get(
+        return app(GetFragments::class)->get(
             $contextId
         );
     }
@@ -73,7 +87,7 @@ if (! function_exists('getFragments')) {
 if (! function_exists('chiefSetting')) {
     function chiefSetting($key = null, $locale = null, $default = null)
     {
-        $settings = app(\Thinktomorrow\Chief\Admin\Settings\Settings::class);
+        $settings = app(Settings::class);
 
         if (is_null($key)) {
             return $settings;
@@ -87,18 +101,18 @@ if (! function_exists('chiefSetting')) {
 if (! function_exists('chiefRegister')) {
     function chiefRegister()
     {
-        return app(\Thinktomorrow\Chief\Managers\Register\Register::class);
+        return app(Register::class);
     }
 }
 
 if (! function_exists('chiefmenu')) {
-    function chiefmenu(string $key, ?string $locale = null): \Thinktomorrow\Vine\NodeCollection
+    function chiefmenu(string $key, ?string $locale = null): NodeCollection
     {
         if (! $locale) {
             $locale = app()->getLocale();
         }
 
-        return \Thinktomorrow\Chief\Menu\App\Queries\MenuTree::bySite($locale, $key);
+        return MenuTree::bySite($locale, $key);
     }
 }
 
@@ -106,7 +120,7 @@ if (! function_exists('chiefmenu')) {
 if (! function_exists('visitedUrl')) {
     function visitedUrl(string $url): string
     {
-        return app(\Thinktomorrow\Chief\Admin\Users\VisitedUrl::class)->get($url);
+        return app(VisitedUrl::class)->get($url);
     }
 }
 
@@ -116,7 +130,7 @@ if (! function_exists('str_slug_slashed')) {
         $parts = explode('/', $title);
 
         foreach ($parts as $i => $part) {
-            $parts[$i] = Illuminate\Support\Str::slug($part, $separator, $language);
+            $parts[$i] = Str::slug($part, $separator, $language);
         }
 
         return implode('/', $parts);
@@ -254,9 +268,9 @@ if (! function_exists('cleanupHTML')) {
 if (! function_exists('isActiveUrl')) {
     function isActiveUrl($name, $parameters = []): bool
     {
-        if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
+        if (Route::currentRouteNamed($name)) {
             $flag = true;
-            $current = \Illuminate\Support\Facades\Route::current();
+            $current = Route::current();
 
             /*
              * If a single parameter is passed as string, we will convert this to
@@ -285,7 +299,7 @@ if (! function_exists('isActiveUrl')) {
             return (bool) preg_match("#{$pattern}#", request()->path());
         }
 
-        $url = \Thinktomorrow\Url\Url::fromString(request()->fullUrl());
+        $url = Url::fromString(request()->fullUrl());
         $fullUrlWithoutQuery = $url->getScheme().'://'.$url->getHost().'/'.$url->getPath();
 
         return request()->is($name) || $name == request()->path() || $name == request()->fullUrl() || $name == $fullUrlWithoutQuery;
@@ -355,6 +369,6 @@ if (! function_exists('chiefMemoize')) {
      */
     function chiefMemoize($key, Closure $closure, array $parameters = [])
     {
-        return (new \Thinktomorrow\Chief\Shared\Helpers\Memoize($key))->run($closure, $parameters);
+        return (new Memoize($key))->run($closure, $parameters);
     }
 }

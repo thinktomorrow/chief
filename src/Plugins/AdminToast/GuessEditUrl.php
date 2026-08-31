@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\AdminToast;
 
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Shared\ModelReferences\CannotInstantiateModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound;
 use Thinktomorrow\Chief\Urls\Models\UrlRecord;
@@ -47,8 +48,8 @@ class GuessEditUrl
     }
 
     /**
-     * @throws \Thinktomorrow\Chief\Urls\Exceptions\UrlRecordNotFound
-     * @throws \Thinktomorrow\Chief\Shared\ModelReferences\CannotInstantiateModelReference
+     * @throws UrlRecordNotFound
+     * @throws CannotInstantiateModelReference
      */
     private function findModelByUrl(string $slug, string $locale)
     {

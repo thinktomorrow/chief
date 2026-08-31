@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Forms\UI\Livewire\InteractsWithFields;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
 use Thinktomorrow\Chief\Models\App\Actions\UpdateModel;
@@ -119,7 +120,7 @@ class EditModelComponent extends Component
 
     public function getStateKeys(): array
     {
-        if ($this->getModel() instanceof \Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract) {
+        if ($this->getModel() instanceof StatefulContract) {
             return $this->getModel()->getStateKeys();
         }
 

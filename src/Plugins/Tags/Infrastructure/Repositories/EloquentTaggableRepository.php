@@ -4,8 +4,9 @@ namespace Thinktomorrow\Chief\Plugins\Tags\Infrastructure\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\Taggable;
+use Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository;
 
-class EloquentTaggableRepository implements \Thinktomorrow\Chief\Plugins\Tags\App\Taggable\TaggableRepository
+class EloquentTaggableRepository implements TaggableRepository
 {
     public function attachTags(string $ownerType, array $taggableIds, array $tagIds): void
     {

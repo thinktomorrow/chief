@@ -26,7 +26,7 @@ trait Publishable
 
     public function isDraft(): bool
     {
-        return $this->getState(\Thinktomorrow\Chief\ManagedModels\States\PageState\PageState::KEY) === PageState::draft;
+        return $this->getState(PageState::KEY) === PageState::draft;
     }
 
     /**

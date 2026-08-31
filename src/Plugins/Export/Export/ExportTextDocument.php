@@ -144,7 +144,7 @@ class ExportTextDocument implements FromCollection, WithColumnWidths, WithDefaul
     /**
      * Style options: fill, font, borders, alignment, numberFormat, protection
      *
-     * @return \array[][]
+     * @return array[][]
      */
     public function styles(Worksheet $sheet)
     {

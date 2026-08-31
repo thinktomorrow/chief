@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -32,7 +34,7 @@ class ForgotPasswordController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function showLinkRequestForm()
     {

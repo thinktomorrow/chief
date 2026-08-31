@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\SettingFields;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -20,7 +22,7 @@ class SettingsController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function edit()
     {

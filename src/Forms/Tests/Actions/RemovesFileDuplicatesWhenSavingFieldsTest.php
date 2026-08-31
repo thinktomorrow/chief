@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Forms\Tests\Actions;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
 use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 
@@ -22,8 +23,8 @@ class RemovesFileDuplicatesWhenSavingFieldsTest extends FormsTestCase
 
         [$newInput, $newFiles] = $method->invoke(new SaveFields, $input, $files);
 
-        $this->assertArrayNotHasKey('foo', \Illuminate\Support\Arr::dot($newInput));
-        $this->assertArrayHasKey('foo', \Illuminate\Support\Arr::dot($newFiles));
+        $this->assertArrayNotHasKey('foo', Arr::dot($newInput));
+        $this->assertArrayHasKey('foo', Arr::dot($newFiles));
     }
 
     public function test_it_does_not_remove_non_matching_files()
@@ -39,7 +40,7 @@ class RemovesFileDuplicatesWhenSavingFieldsTest extends FormsTestCase
 
         [$newInput, $newFiles] = $method->invoke(new SaveFields, $input, $files);
 
-        $this->assertArrayHasKey('foo', \Illuminate\Support\Arr::dot($newInput));
-        $this->assertArrayHasKey('foo2', \Illuminate\Support\Arr::dot($newFiles));
+        $this->assertArrayHasKey('foo', Arr::dot($newInput));
+        $this->assertArrayHasKey('foo2', Arr::dot($newFiles));
     }
 }

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
 
@@ -11,7 +12,7 @@ class ChiefValidateInvite
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return mixed
      */
     public function handle($request, Closure $next)

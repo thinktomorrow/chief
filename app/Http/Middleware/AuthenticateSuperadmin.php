@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 
 class AuthenticateSuperadmin
 {
@@ -30,7 +31,7 @@ class AuthenticateSuperadmin
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return mixed
      */
     public function handle($request, Closure $next)

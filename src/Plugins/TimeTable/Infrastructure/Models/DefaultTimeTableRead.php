@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 
 class DefaultTimeTableRead implements TimeTableRead
 {
-    private TimeTableId $timeTableId;
+    private timetableId $timeTableId;
 
     /** @var SlotsByDay[] */
     private array $days;
@@ -23,7 +23,7 @@ class DefaultTimeTableRead implements TimeTableRead
     {
         $model = new static;
 
-        $model->timeTableId = TimeTableId::fromString($data['id']);
+        $model->timeTableId = timetableId::fromString($data['id']);
         $model->days = array_map(fn ($day) => SlotsByDay::fromMappedData($day['key'], json_decode($day['slots'], true)), $days);
         $model->label = $data['label'];
         $model->data = $data['data'] ?? [];

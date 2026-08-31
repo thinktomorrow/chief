@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\ComposeFieldLines;
+use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -15,7 +16,7 @@ class ExtractingRepeatLinesTest extends ChiefTestCase
 {
     private ArticlePage $article;
 
-    private \Thinktomorrow\Chief\Resource\PageResource $resource;
+    private PageResource $resource;
 
     protected function setUp(): void
     {

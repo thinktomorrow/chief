@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\Tags\Domain\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Thinktomorrow\Chief\Forms\Fields\Common\FieldPresets;
 use Thinktomorrow\Chief\Forms\Fields\MultiSelect;
 use Thinktomorrow\Chief\Forms\Fields\Text;
@@ -86,7 +87,7 @@ class TagModel extends Model implements PageResource, ReferableModel
         }
     }
 
-    public function taggroups(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function taggroups(): BelongsTo
     {
         return $this->belongsTo(app(TagGroupModel::class), 'taggroup_id');
     }

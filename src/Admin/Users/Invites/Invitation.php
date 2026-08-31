@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Admin\Users\Invites;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
@@ -19,7 +20,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
  * @property int|null $inviter_id
  * @property array{id: int, firstname: string, lastname: string, fullname: string, email: string|null} $inviter_snapshot
  * @property string $state
- * @property \Illuminate\Support\Carbon $expires_at
+ * @property Carbon $expires_at
  */
 class Invitation extends Model implements StatefulContract
 {

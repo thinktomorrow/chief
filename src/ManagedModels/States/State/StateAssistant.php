@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
@@ -62,7 +64,7 @@ trait StateAssistant
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function stateEdit(Request $request, $id, $key)
     {

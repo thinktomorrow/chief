@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Forms\Layouts;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
+use Illuminate\View\Component;
 use Livewire\Wireable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
@@ -22,7 +23,7 @@ use Thinktomorrow\Chief\Forms\Tags\WithTaggedComponents;
 use Thinktomorrow\Chief\Forms\Tags\WithTags;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithWireableFieldDefaults;
 
-abstract class LayoutComponent extends \Illuminate\View\Component implements HasTaggedComponents, HasTags, Htmlable, Wireable
+abstract class LayoutComponent extends Component implements HasTaggedComponents, HasTags, Htmlable, Wireable
 {
     use HasComponentRendering;
     use HasCustomAttributes;

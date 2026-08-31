@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Menu\App\Controllers;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
 use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
@@ -30,7 +32,7 @@ class MenuItemController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function create(string $id)
     {
@@ -72,7 +74,7 @@ class MenuItemController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function edit($id)
     {

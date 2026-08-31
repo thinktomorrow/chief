@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelsSorted;
@@ -99,7 +100,7 @@ trait SortAssistant
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|\Illuminate\Contracts\View\View
      */
     public function indexForSorting()
     {

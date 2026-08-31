@@ -93,7 +93,7 @@ trait TestingFileUploads
 
         $fullPath = Storage::disk($disk)->path($realPath);
 
-        return new \Illuminate\Http\UploadedFile(
+        return new UploadedFile(
             $fullPath,
             $filename,
             null,

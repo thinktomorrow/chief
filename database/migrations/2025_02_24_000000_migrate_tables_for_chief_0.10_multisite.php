@@ -4,6 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Menu\App\Actions\CreateMenu;
+use Thinktomorrow\Chief\Menu\App\Actions\MenuApplication;
+use Thinktomorrow\Chief\Sites\ChiefSites;
+use Thinktomorrow\Chief\Urls\Models\LinkStatus;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 return new class extends Migration
 {
@@ -61,7 +66,7 @@ return new class extends Migration
 
     private function insertDefaultContextLocales(): void
     {
-        $sites = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
+        $sites = ChiefSites::locales();
 
         DB::table('contexts')->update([
             'allowed_sites' => json_encode($sites),
@@ -77,13 +82,13 @@ return new class extends Migration
 
     public function changeStateAccordingToOwnerState(): void
     {
-        $records = \Thinktomorrow\Chief\Urls\Models\UrlRecord::all();
+        $records = UrlRecord::all();
 
         foreach ($records as $record) {
             $owner = $record->model;
 
             if ($owner && $owner->inOnlineState()) {
-                $record->status = \Thinktomorrow\Chief\Urls\Models\LinkStatus::online->value;
+                $record->status = LinkStatus::online->value;
                 $record->save();
             }
         }
@@ -198,8 +203,8 @@ return new class extends Migration
 
             $label = is_array($values) ? $values['label'] : $values;
 
-            app(\Thinktomorrow\Chief\Menu\App\Actions\MenuApplication::class)->create(
-                new \Thinktomorrow\Chief\Menu\App\Actions\CreateMenu($type, \Thinktomorrow\Chief\Sites\ChiefSites::locales(), \Thinktomorrow\Chief\Sites\ChiefSites::locales(), $label));
+            app(MenuApplication::class)->create(
+                new CreateMenu($type, ChiefSites::locales(), ChiefSites::locales(), $label));
         }
 
         Schema::table('menu_items', function (Blueprint $table) {

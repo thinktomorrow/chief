@@ -28,7 +28,7 @@ return new class extends Migration
             $table->char('entity_id', 60)->change();
         });
 
-        $assetIds = \Illuminate\Support\Facades\DB::table('assets')
+        $assetIds = Illuminate\Support\Facades\DB::table('assets')
             ->select('id')
             ->get()
             ->pluck('id')
@@ -44,7 +44,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
         });
 
-        \Illuminate\Support\Facades\DB::table('media')
+        Illuminate\Support\Facades\DB::table('media')
             ->where('model_type', 'Thinktomorrow\\AssetLibrary\\Asset')
             ->update(['model_type' => 'asset']);
     }

@@ -4,6 +4,8 @@ namespace Thinktomorrow\Chief\Models\Tests\UI;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Models\UI\Livewire\EditModelComponent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -22,8 +24,8 @@ class EditModelComponentTest extends ChiefTestCase
 
         ArticlePageResource::setFieldsDefinition(function () {
             return [
-                \Thinktomorrow\Chief\Forms\Layouts\Form::make('main')->items([
-                    \Thinktomorrow\Chief\Forms\Fields\Text::make('title')->locales()->required(),
+                Form::make('main')->items([
+                    Text::make('title')->locales()->required(),
                 ]),
             ];
         });

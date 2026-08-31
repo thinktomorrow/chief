@@ -48,7 +48,7 @@ interface Field extends HasTags, LocalizedField, Validatable
     /**
      * Register a preparation for saving callback.
      *
-     * @param  \Closure(Field $field, mixed $value, array $input, ?string $locale): void  $prepareModelValue
+     * @param  Closure(Field $field, mixed $value, array $input, ?string $locale): void  $prepareModelValue
      * @return $this
      */
     public function prepForSaving(Closure $prepForSaving): static;

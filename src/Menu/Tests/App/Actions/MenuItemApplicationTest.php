@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Menu\Tests\App\Actions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Menu\App\Actions\CreateMenuItem;
@@ -124,7 +125,7 @@ class MenuItemApplicationTest extends ChiefTestCase
             'https://example.com',
             []);
 
-        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        $this->expectException(ModelNotFoundException::class);
         $this->menuItemApplication->update($command);
 
         Event::assertNotDispatched(MenuItemUpdated::class);
@@ -136,7 +137,7 @@ class MenuItemApplicationTest extends ChiefTestCase
 
         $command = new DeleteMenuItem(999);
 
-        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        $this->expectException(ModelNotFoundException::class);
         $this->menuItemApplication->delete($command);
 
         Event::assertNotDispatched(MenuItemDeleted::class);

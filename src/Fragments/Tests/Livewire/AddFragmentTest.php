@@ -161,7 +161,7 @@ class AddFragmentTest extends ChiefTestCase
         $allowed = $component->instance()->getAllowedFragments();
 
         $this->assertInstanceOf(Collection::class, $allowed);
-        $this->assertTrue($allowed->first() instanceof \Thinktomorrow\Chief\Fragments\Fragment);
+        $this->assertTrue($allowed->first() instanceof Fragment);
     }
 
     public function test_it_returns_allowed_fragments_grouped()

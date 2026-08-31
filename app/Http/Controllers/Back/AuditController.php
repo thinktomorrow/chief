@@ -2,13 +2,15 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class AuditController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -20,7 +22,7 @@ class AuditController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function show($id)
     {

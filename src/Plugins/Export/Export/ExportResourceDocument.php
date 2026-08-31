@@ -138,7 +138,7 @@ class ExportResourceDocument implements FromCollection, WithColumnFormatting, Wi
     /**
      * Style options: fill, font, borders, alignment, numberFormat, protection
      *
-     * @return \array[][]
+     * @return array[][]
      */
     public function styles(Worksheet $sheet)
     {

@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Urls\App\Listeners;
 use Thinktomorrow\Chief\Admin\Settings\Setting;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Urls\App\Actions\ChangeHomepageUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\ReactivateUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
@@ -31,7 +32,7 @@ class ChangeHomepage
 
         $modelReferences = is_array($setting->value)
             ? $setting->value
-            : array_fill_keys(\Thinktomorrow\Chief\Sites\ChiefSites::locales(), $setting->value);
+            : array_fill_keys(ChiefSites::locales(), $setting->value);
 
         $this->assertNoEmptyValues($modelReferences);
 

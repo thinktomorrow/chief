@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Assets\App;
 
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\Support\File;
 
 class FileHelper
 {
@@ -27,7 +28,7 @@ class FileHelper
 
     public static function getHumanReadableSize(int $sizeInBytes): string
     {
-        [$size, $unit] = explode(' ', \Spatie\MediaLibrary\Support\File::getHumanReadableSize($sizeInBytes));
+        [$size, $unit] = explode(' ', File::getHumanReadableSize($sizeInBytes));
 
         return round($size).' '.$unit;
     }

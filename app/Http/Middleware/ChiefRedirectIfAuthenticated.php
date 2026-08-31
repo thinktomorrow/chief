@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ChiefRedirectIfAuthenticated
@@ -10,7 +11,7 @@ class ChiefRedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  string|null  $guard
      * @return mixed
      */

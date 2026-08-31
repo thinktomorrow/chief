@@ -13,7 +13,7 @@
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.45|^12.0",
-        "laravel/pint": "1.24",
+        "laravel/pint": "^1.30",
         "laravel/ui": "^4.6",
         "league/commonmark": "^2.8",
         "livewire/livewire": "^3.8.6",
@@ -81,7 +81,7 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html build/html-coverage",
-        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+        "format": "vendor/bin/pint"
     },
     "minimum-stability": "stable",
     "prefer-stable": true

@@ -27,7 +27,7 @@ class EditFormComponent extends Component
 
     public Form $formComponent;
 
-    public function mount(ModelReference $modelReference, \Thinktomorrow\Chief\Forms\Layouts\Form $formComponent, string $parentComponentId)
+    public function mount(ModelReference $modelReference, Form $formComponent, string $parentComponentId)
     {
         $this->modelReference = $modelReference;
         $this->formComponent = $formComponent;

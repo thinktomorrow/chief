@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\Menu\MenuItemStatus;
 use Thinktomorrow\Chief\Menu\MenuLinkType;
 use Thinktomorrow\Chief\Resource\PageResource;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Url\Url;
 
 class ProjectModelData
@@ -110,7 +111,7 @@ class ProjectModelData
         $resource = $this->registry->findResourceByModel($model::class);
 
         $originalLocale = app()->getLocale();
-        $locales = \Thinktomorrow\Chief\Sites\ChiefSites::locales();
+        $locales = ChiefSites::locales();
 
         foreach ($locales as $locale) {
             app()->setLocale($locale); // only way to get localized pagetitle

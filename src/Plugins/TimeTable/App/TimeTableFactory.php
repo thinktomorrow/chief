@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Plugins\TimeTable\App;
 
 use Spatie\OpeningHours\Exceptions\OverlappingTimeRanges;
+use Spatie\OpeningHours\OpeningHours;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DateModel;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\DayModel;
 use Thinktomorrow\Chief\Plugins\TimeTable\Infrastructure\Models\TimeTableModel;
@@ -35,7 +36,7 @@ class TimeTableFactory
         return $this->createTimeTable($items);
     }
 
-    public function createTimeTable($items): \Spatie\OpeningHours\OpeningHours|TimeTable
+    public function createTimeTable($items): OpeningHours|TimeTable
     {
         try {
             return TimeTable::create($items->all());

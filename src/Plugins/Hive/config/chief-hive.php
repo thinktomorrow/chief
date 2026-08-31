@@ -1,5 +1,10 @@
 <?php
 
+use Thinktomorrow\Chief\Plugins\Hive\Drivers\ChatGPT;
+use Thinktomorrow\Chief\Plugins\Hive\Drivers\DeepL;
+use Thinktomorrow\Chief\Plugins\Hive\Drivers\DummyDriver;
+use Thinktomorrow\Chief\Plugins\Hive\Drivers\Gemini;
+
 return [
 
     'default_suggester' => env('CHIEF_HIVE_DEFAULT_SUGGESTER', 'chatgpt'),
@@ -9,10 +14,10 @@ return [
      * Available AI / Translation Drivers
      */
     'drivers' => [
-        'dummy' => \Thinktomorrow\Chief\Plugins\Hive\Drivers\DummyDriver::class,
-        'chatgpt' => \Thinktomorrow\Chief\Plugins\Hive\Drivers\ChatGPT::class,
-        'gemini' => \Thinktomorrow\Chief\Plugins\Hive\Drivers\Gemini::class,
-        'deepl' => \Thinktomorrow\Chief\Plugins\Hive\Drivers\DeepL::class,
+        'dummy' => DummyDriver::class,
+        'chatgpt' => ChatGPT::class,
+        'gemini' => Gemini::class,
+        'deepl' => DeepL::class,
     ],
 
     'openai' => [

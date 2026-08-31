@@ -2,11 +2,13 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
+use Thinktomorrow\Chief\Managers\Register\Registry;
+
 class GetPrimaryStateKeyOfModel
 {
     public static function get(string $resourceKey): ?string
     {
-        $resource = app(\Thinktomorrow\Chief\Managers\Register\Registry::class)->resource($resourceKey);
+        $resource = app(Registry::class)->resource($resourceKey);
         $modelClassName = $resource::modelClassName();
         $model = new $modelClassName;
 

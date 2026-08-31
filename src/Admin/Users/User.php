@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Users;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Validation\UnauthorizedException;
@@ -42,7 +43,7 @@ class User extends Authenticatable implements HasAsset
         return self::where('email', $email)->first();
     }
 
-    public function invitation(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function invitation(): HasMany
     {
         return $this->hasMany(Invitation::class, 'invitee_id');
     }

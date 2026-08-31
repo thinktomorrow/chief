@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Table\Columns;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\View\Component;
 use Stringable;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
@@ -27,7 +28,7 @@ use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariant;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariantMapping;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasView;
 
-abstract class ColumnItem extends \Illuminate\View\Component implements Htmlable
+abstract class ColumnItem extends Component implements Htmlable
 {
     use HasColumnName;
     use HasColumnSelection;

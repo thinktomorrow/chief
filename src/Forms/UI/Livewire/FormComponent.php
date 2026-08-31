@@ -21,7 +21,7 @@ class FormComponent extends Component
 
     public string $scopedLocale;
 
-    public function mount(ReferableModel $model, \Thinktomorrow\Chief\Forms\Layouts\Form $form)
+    public function mount(ReferableModel $model, Form $form)
     {
         $this->modelReference = $model->modelReference();
         $this->form = $form;

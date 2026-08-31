@@ -20,9 +20,11 @@ use Spatie\MediaLibrary\Conversions\ImageGenerators\Svg;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Video;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Webp;
 use Spatie\Permission\PermissionServiceProvider;
+use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\Forms\Tests\TestSupport\PageWithAssets;
 use Thinktomorrow\Chief\Fragments\ActiveContextId;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Sites\ChiefSites;
@@ -137,7 +139,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
     {
         SnippetStub::resetFieldsDefinition();
         ArticlePageResource::resetFieldsDefinition();
-        \Thinktomorrow\Chief\Forms\Tests\TestSupport\PageWithAssets::resetFieldsDefinition();
+        PageWithAssets::resetFieldsDefinition();
 
         // Clear out any memoized values
         Memoize::clear();
@@ -196,7 +198,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
         $app['config']->set('activitylog.default_log_name', 'default');
         $app['config']->set('activitylog.default_auth_driver', 'chief');
-        $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Admin\Audit\Audit::class);
+        $app['config']->set('activitylog.activity_model', Audit::class);
 
         $app['config']->set('filesystems.disks.public', [
             'driver' => 'local',

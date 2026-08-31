@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -10,7 +12,7 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 class ChangePasswordController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function edit()
     {

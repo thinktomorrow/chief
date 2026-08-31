@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\InviteUser;
@@ -23,7 +25,7 @@ class UserController extends Controller
     /**
      * Show the invite form
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -63,7 +65,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function edit($id)
     {

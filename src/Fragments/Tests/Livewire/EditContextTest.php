@@ -10,8 +10,9 @@ use Thinktomorrow\Chief\Fragments\Exceptions\SafeContextDeleteException;
 use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\EditContext;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class EditContextTest extends \Thinktomorrow\Chief\Tests\ChiefTestCase
+class EditContextTest extends ChiefTestCase
 {
     private ContextOwner $model;
 

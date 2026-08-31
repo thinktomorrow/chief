@@ -1,0 +1,14 @@
+{
+    "name": "vendor_name/Actions",
+    "description": "description",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "bencavens",
+            "email": "email@example.com"
+        }
+    ],
+    "require": {
+    }
+}

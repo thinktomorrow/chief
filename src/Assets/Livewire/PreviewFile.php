@@ -329,7 +329,7 @@ class PreviewFile implements Wireable
                 continue;
             }
 
-            if ($model instanceof \Thinktomorrow\Chief\Fragments\Models\FragmentModel) {
+            if ($model instanceof FragmentModel) {
                 $ownerModels = app(ContextOwnerRepository::class)->getOwnersByFragment($model->id);
 
                 foreach ($ownerModels as $ownerModel) {

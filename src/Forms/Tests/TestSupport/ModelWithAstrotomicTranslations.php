@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Forms\Tests\TestSupport;
 
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +17,9 @@ use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 class ModelWithAstrotomicTranslations extends Model implements PageResource, ReferableModel
 {
-    use \Astrotomic\Translatable\Translatable;
     use PageResourceDefault;
     use ReferableModelDefault;
+    use Translatable;
 
     public $table = 'astrotomic_models';
 

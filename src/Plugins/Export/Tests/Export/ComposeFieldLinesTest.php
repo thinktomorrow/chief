@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Export\Tests\Export;
 
+use Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Export\Export\Lines\ComposeFieldLines;
@@ -122,7 +123,7 @@ class ComposeFieldLinesTest extends TestCase
 
         [, $fragment] = FragmentTestHelpers::createContextAndAttachFragment($article, SnippetStub::class, null, 0, ['title' => 'quote title', 'title_trans' => ['nl' => 'title quote nl', 'en' => 'title quote en']]);
 
-        app(\Thinktomorrow\Chief\Fragments\App\Actions\PutFragmentOffline::class)->handle($fragment->getFragmentId());
+        app(PutFragmentOffline::class)->handle($fragment->getFragmentId());
         $this->assertTrue($fragment->getFragmentModel()->fresh()->isOffline());
 
         $composeLines = app(ComposeFieldLines::class)

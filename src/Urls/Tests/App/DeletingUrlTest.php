@@ -8,6 +8,8 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Urls\App\Actions\DeleteUrl;
 use Thinktomorrow\Chief\Urls\App\Actions\UrlApplication;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlRepository;
+use Thinktomorrow\Chief\Urls\Events\UrlDeleted;
+use Thinktomorrow\Chief\Urls\Exceptions\CannotDeleteHomepageSlug;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
 class DeletingUrlTest extends ChiefTestCase
@@ -42,12 +44,12 @@ class DeletingUrlTest extends ChiefTestCase
 
         $this->assertDatabaseMissing('chief_urls', ['id' => $existingId]);
 
-        Event::assertDispatched(\Thinktomorrow\Chief\Urls\Events\UrlDeleted::class);
+        Event::assertDispatched(UrlDeleted::class);
     }
 
     public function test_it_can_protect_against_deleting_homepage_url(): void
     {
-        $this->expectException(\Thinktomorrow\Chief\Urls\Exceptions\CannotDeleteHomepageSlug::class);
+        $this->expectException(CannotDeleteHomepageSlug::class);
 
         $existingId = $this->repository->create($this->model->modelReference(), [
             'site' => 'nl',

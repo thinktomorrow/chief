@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\HasAsset;
@@ -143,13 +144,13 @@ class MenuItem extends Model implements HasAllowedSites, HasAsset, Node, Referab
         return $this->type == $type;
     }
 
-    public function owner(): \Illuminate\Database\Eloquent\Relations\MorphTo
+    public function owner(): MorphTo
     {
         return $this->morphTo('owner', 'owner_type', 'owner_id')
             ->withoutGlobalScopes();
     }
 
-    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(MenuItem::class, 'parent_id');
     }

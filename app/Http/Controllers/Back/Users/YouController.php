@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -9,7 +11,7 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 class YouController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function edit()
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Table\Actions;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\View\Component;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponentRendering;
 use Thinktomorrow\Chief\Forms\Concerns\HasCustomAttributes;
 use Thinktomorrow\Chief\Forms\Concerns\HasDescription;
@@ -24,7 +25,7 @@ use Thinktomorrow\Chief\Table\Columns\Concerns\HasIcon;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasLink;
 use Thinktomorrow\Chief\Table\Columns\Concerns\HasVariant;
 
-class Action extends \Illuminate\View\Component implements Htmlable
+class Action extends Component implements Htmlable
 {
     use CloseDialog;
     use HasComponentRendering;

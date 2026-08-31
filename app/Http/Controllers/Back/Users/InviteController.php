@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\AcceptInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\DenyInvite;
@@ -16,7 +18,7 @@ class InviteController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function expired()
     {
@@ -40,7 +42,7 @@ class InviteController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function deny(Request $request)
     {

@@ -2,7 +2,11 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
@@ -34,7 +38,7 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     * @return Guard|StatefulGuard
      */
     protected function guard()
     {
@@ -54,7 +58,7 @@ class ResetPasswordController extends Controller
     // Override the reset method because chief uses different lang keys and
     // laravel internals expects this to be of a specific value.
     /**
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
     public function reset(Request $request)
     {

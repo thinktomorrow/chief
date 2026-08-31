@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\App\View\Components;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Admin\Nav\Nav as NavItems;
@@ -21,7 +23,7 @@ final class Nav extends Component
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Factory|View
      */
     public function render()
     {

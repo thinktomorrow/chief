@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Translatable;
 
+use Illuminate\Config\Repository;
 use InvalidArgumentException;
 
 /**
@@ -94,7 +95,7 @@ trait Translatable
     }
 
     /**
-     * @return \Illuminate\Config\Repository|mixed
+     * @return Repository|mixed
      *
      * @deprecated use availableLocales instead
      */

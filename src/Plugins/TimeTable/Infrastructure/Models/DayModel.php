@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Fields\Time;
 use Thinktomorrow\Chief\Forms\Layouts\Card;
 use Thinktomorrow\Chief\Forms\Layouts\Grid;
+use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day;
 use Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\SlotsByDay;
 
 class DayModel extends Model
@@ -63,7 +64,7 @@ class DayModel extends Model
 
     public function getLabel()
     {
-        return \Thinktomorrow\Chief\Plugins\TimeTable\Domain\Values\Day::fromIso8601Format($this->weekday)->getLabel();
+        return Day::fromIso8601Format($this->weekday)->getLabel();
     }
 
     public static function createWeekWithDefaults(TimeTableModel $model)

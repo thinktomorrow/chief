@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Table\Table\References;
 
 use Livewire\Wireable;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Table;
 
 class TableReference implements Wireable
@@ -95,7 +96,7 @@ class TableReference implements Wireable
                 $parameters[$key] = $parameter['class']::fromLivewire($parameter);
             } elseif (is_array($parameter) && key($parameter) == 'model-reference') {
                 // Special case for ModelReference, as it does not have a 'class' key.
-                $parameters[$key] = \Thinktomorrow\Chief\Shared\ModelReferences\ModelReference::fromLivewire($parameter);
+                $parameters[$key] = ModelReference::fromLivewire($parameter);
             }
         }
 
