@@ -3,7 +3,7 @@
     :prepend="isset($getPrepend) ? $getPrepend($locale ?? null) : null"
     :append="isset($getAppend) ? $getAppend($locale ?? null) : null"
 >
-    <x-chief::form.input.date
+    <x-chief::form.input.datetime
         id="{{ $getElementId($locale ?? null) }}"
         name="{{ $getName($locale ?? null) }}"
         value="{{ $getActiveValue($locale ?? null) }}"

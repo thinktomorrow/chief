@@ -1,6 +1,6 @@
 <p class="body body-dark wrap-anywhere">
-    @if ($getValueOrFallback($locale ?? null))
-        {{ \Carbon\Carbon::parse($getValueOrFallback($locale ?? null))->format('H:i') }}
+    @if (! is_null($value = $getValueOrFallback($locale ?? null)) && $value !== '')
+        {{ rescue(fn () => \Carbon\Carbon::parse($value)->format('H:i'), $value, false) }}
     @else
         ...
     @endif

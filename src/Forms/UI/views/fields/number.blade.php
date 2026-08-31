@@ -8,9 +8,9 @@
         name="{{ $getName($locale ?? null) }}"
         placeholder="{{ $getPlaceholder($locale ?? null) }}"
         value="{{ $getActiveValue($locale ?? null) }}"
-        min="{{ $getMin() ?? null }}"
-        max="{{ $getMax() ?? null }}"
-        step="{{ $getStep() ?? null }}"
+        :min="$getMin()"
+        :max="$getMax()"
+        :step="$getStep()"
         :autofocus="$hasAutofocus()"
         :attributes="$attributes
             ->merge($getCustomAttributes())
@@ -18,4 +18,4 @@
     />
 </x-chief::form.input.prepend-append>
 
-@include('chief-form::fields._partials.charactercount')
+@include ('chief-form::fields._partials.charactercount')

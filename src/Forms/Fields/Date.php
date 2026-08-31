@@ -20,7 +20,7 @@ class Date extends Component implements Field
     {
         $value = parent::getValue($locale);
 
-        return $value instanceof \DateTime
+        return $value instanceof \DateTimeInterface
             ? $value->format('Y-m-d')
             : $value;
     }
