@@ -5,30 +5,35 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.30] - 2026-08-31
+
+- **Breaking change**: The `invitations` table is renamed to `chief_users_invitations`.
+- **Breaking change**: `FileApplication::updateAssociatedAssetData()` now requires an `associatedFieldKeys` array.
+  Callers must explicitly pass the keys of fields whose values should be stored on the asset association.
+
 - Fixed: Table columns now resolve protected Eloquent attribute mutators as properties and provide actionable context
-  when a model value cannot be rendered.
-- Added: Chief users can now be permanently deleted while audit history and invitations sent by the user retain
-  immutable user snapshots.
-- Changed: The `invitations` table is renamed to `chief_users_invitations`. The migration backfills inviter and audit
-  snapshots, cascades invitations when their invitee is deleted, and retains invitations with a nullable inviter.
+  when a model value cannot be rendered. This resolves the $model->key () issue where key is a protected eloquent
+  method.
 - Fixed: State transitions now redirect to the resource index when their model was already deleted, and confirmation
   buttons are disabled while the transition request is running.
 - Fixed: The save button is now shown when editing invited or blocked admin users.
-- **Breaking change**: `FileApplication::updateAssociatedAssetData()` now requires an `associatedFieldKeys` array.
-  Callers must explicitly pass the keys of fields whose values should be stored on the asset association.
 - Fixed: default field values in state confirmations modals are now correctly set to the current/default value of the
   field.
+- Fixed: Duplicated model no longer keeps state of the original model, such as archived, published, ... And always
+  resets the state to default values.
+- Fixed: On an detailpage, the link window now shows a helpful message in case of a missing link
 - Fixed: File upload tests now support the signed temporary upload paths returned by Livewire 3.8.6.
-- Changed: The minimum `thinktomorrow/assetlibrary` version is now 1.0.3.
 - Added: `MenuItemResource` interface to allow projects to define their own menu item resource with custom fields and
   table layout. See `DefaultMenuItemResource` for an example implementation.
 - Added: Menu items can now be configured with custom project fields and table layout. This is done via a custom
   `MenuItemResource` class.
 - Added: Menu item fields and table configuration can vary per `Menu`; field definitions receive a `MenuItem` with its
   `menu` relation loaded and `configureTable()` receives the active `Menu` explicitly.
-- Fixed: Duplicated model no longer keeps state of the original model, such as archived, published, ... And always
-  resets the state to default values.
-- Fixed: On an detailpage, now shows a explicit message in case of a missing link
+- Added: Chief users can now be permanently deleted while audit history and invitations sent by the user retain
+  immutable user snapshots.
+- Changed: The `invitations` table is renamed to `chief_users_invitations`. The migration backfills inviter and audit
+  snapshots, cascades invitations when their invitee is deleted, and retains invitations with a nullable inviter.
+- Changed: The minimum `thinktomorrow/assetlibrary` version is now 1.0.3.
 
 ## [0.10.29] - 2026-08-25
 
