@@ -13,6 +13,7 @@
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.45|^12.0",
+        "laravel/pint": "1.24",
         "laravel/ui": "^4.6",
         "league/commonmark": "^2.8",
         "livewire/livewire": "^3.8.6",
@@ -30,7 +31,6 @@
     "require-dev": {
         "astrotomic/laravel-translatable": "^11.17",
         "barryvdh/laravel-debugbar": "^4.2",
-        "laravel/pint": "^1.30",
         "filp/whoops": "^2.15",
         "larastan/larastan": "^3.0",
         "laravel/boost": "^2.4.1",
