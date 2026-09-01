@@ -7,7 +7,11 @@ use Livewire\Livewire;
 use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
+use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
+use Thinktomorrow\Chief\Table\Filters\OptionFilter;
+use Thinktomorrow\Chief\Table\Filters\RadioFilter;
 use Thinktomorrow\Chief\Table\Filters\SelectFilter;
+use Thinktomorrow\Chief\Table\Filters\TextFilter;
 use Thinktomorrow\Chief\Table\Livewire\TableComponent;
 use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\FilteredTreeBreadcrumbTableFixture;
@@ -76,6 +80,47 @@ class TableComponentTest extends TestCase
         $component = Livewire::test(TableComponent::class, ['table' => $table]);
 
         $this->assertSame('Huidige', $component->instance()->getActiveFilterValue('period'));
+    }
+
+    public function test_it_hides_option_filters_without_initial_options(): void
+    {
+        $table = Table::make()
+            ->setTableReference(new Table\References\TableReference('empty-options', 'table'))
+            ->query(fn () => TreeModelFixture::query())
+            ->filters([
+                SelectFilter::make('select')->options([]),
+                RadioFilter::make('radio')->options([]),
+                ButtonGroupFilter::make('button-group')->options([]),
+                OptionFilter::make('option')->options([]),
+                TextFilter::make('text'),
+            ])
+            ->columns([
+                ColumnText::make('id'),
+                ColumnText::make('title'),
+            ]);
+
+        $component = Livewire::test(TableComponent::class, ['table' => $table]);
+
+        $this->assertSame(
+            ['text'],
+            collect($component->instance()->getSecondaryFilters())->map->getKey()->values()->all()
+        );
+        $this->assertCount(5, $component->instance()->getFilters());
+    }
+
+    public function test_initial_filter_visibility_is_preserved_when_dynamic_options_become_empty(): void
+    {
+        $component = Livewire::test(TableComponent::class, ['table' => ScopedTableStateFixture::optionsCanBecomeEmpty()])
+            ->set('filters.period', 'archived');
+
+        $titleFilter = collect($component->instance()->getFilters())
+            ->first(fn ($filter) => $filter->getKey() === 'title');
+
+        $this->assertSame([], $titleFilter->getOptions());
+        $this->assertContains(
+            'title',
+            collect($component->instance()->getSecondaryFilters())->map->getKey()->all()
+        );
     }
 
     public function test_it_shows_filtered_tree_breadcrumbs_per_item(): void

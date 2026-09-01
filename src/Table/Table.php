@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Table\Table\Concerns\HasBulkActions;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasColumns;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasFilters;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasHeaders;
+use Thinktomorrow\Chief\Table\Table\Concerns\HasItemsPerPageSelection;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireComponent;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasLivewireListeners;
 use Thinktomorrow\Chief\Table\Table\Concerns\HasModelKeyName;
@@ -39,6 +40,7 @@ class Table extends Component implements Htmlable, Layout
     use HasColumns;
     use HasFilters;
     use HasHeaders;
+    use HasItemsPerPageSelection;
     use HasLivewireComponent;
     use HasLivewireListeners;
     use HasModelKeyName;

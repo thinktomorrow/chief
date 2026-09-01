@@ -11,8 +11,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   is nested in a repeat field. A custom `step` silently reverted to the field's own default.
 - Fixed: Field previews no longer throw when the stored value cannot be parsed as a date. The raw value is shown
   instead.
+- Fixed: Don't render table filter if no options are available.
 - Added: option to add project nav items to the settings nav. Tag your nav item with `nav-settings`
 - Added: A Datetime field to enter a combined date and time value. `\Thinktomorrow\Chief\Forms\Fields\Datetime::class`.
+- Added: Table option to set amount of items per page.
+- Added: `Table::paginate()` now accepts second parameter to set the default items per page.
 - Changed: new require laravel/pint: ^1.30
 
 ## [0.10.30] - 2026-08-31

@@ -88,4 +88,9 @@ abstract class Filter extends Component
     {
         return $this->tableFilters;
     }
+
+    public function shouldInitiallyRender(): bool
+    {
+        return true;
+    }
 }

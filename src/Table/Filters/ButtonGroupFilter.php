@@ -13,4 +13,9 @@ class ButtonGroupFilter extends Filter
     use HasOptions;
 
     protected string $view = 'chief-table::filters.button-group';
+
+    public function shouldInitiallyRender(): bool
+    {
+        return $this->getOptions() !== [];
+    }
 }

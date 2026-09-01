@@ -43,7 +43,7 @@ trait WithTreeResults
             return collect($treeModels);
         }
 
-        return (new LengthAwarePaginator($treeModels, count($result), 20, $this->getCurrentPageIndex()))
+        return (new LengthAwarePaginator($treeModels, count($result), $this->getPaginationPerPage(), $this->getCurrentPageIndex()))
             ->setPageName($this->getPaginationId());
     }
 

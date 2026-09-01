@@ -47,6 +47,11 @@ class SelectFilter extends Filter
         return null;
     }
 
+    public function shouldInitiallyRender(): bool
+    {
+        return $this->getOptions() !== [];
+    }
+
     /**
      * Pass the active table filters to dynamic option callbacks.
      */

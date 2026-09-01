@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\Table\Livewire\Concerns\WithBulkSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithColumns;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithColumnSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithFilters;
+use Thinktomorrow\Chief\Table\Livewire\Concerns\WithItemsPerPageSelection;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithNotifications;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithPagination as WithPaginationControl;
 use Thinktomorrow\Chief\Table\Livewire\Concerns\WithReordering;
@@ -34,6 +35,7 @@ class TableComponent extends Component
     use WithColumns;
     use WithColumnSelection;
     use WithFilters;
+    use WithItemsPerPageSelection;
     use WithNotifications;
     use WithPagination;
     use WithPaginationControl;
@@ -65,6 +67,7 @@ class TableComponent extends Component
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
         $this->setDefaultFilters();
+        $this->initializeVisibleFilters();
         $this->resetTertiaryFilters();
 
         if ($table->isReorderingAllowed() && $table->isStartingWithReordering()) {
@@ -198,7 +201,15 @@ class TableComponent extends Component
             return $rows;
         }
 
-        return (new LengthAwarePaginator($rows, count($rows), $this->getPaginationPerPage()))
+        $currentPage = $this->getCurrentPageIndex();
+        $itemsPerPage = $this->getPaginationPerPage();
+
+        return (new LengthAwarePaginator(
+            $rows->forPage($currentPage, $itemsPerPage)->values(),
+            $rows->count(),
+            $itemsPerPage,
+            $currentPage,
+        ))
             ->setPageName($this->getPaginationId());
     }
 

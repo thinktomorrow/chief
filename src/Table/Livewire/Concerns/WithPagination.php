@@ -18,11 +18,31 @@ trait WithPagination
 
     private function getPaginationPerPage(): int
     {
-        return $this->getTable()->getPaginatePerPage();
+        return $this->getSelectedItemsPerPage();
     }
 
     private function getCurrentPageIndex(): int
     {
         return $this->getPage($this->getPaginationId());
+    }
+
+    public function updatedPaginators(int $page, string $pageName): void
+    {
+        if ($pageName === $this->getPaginationId()) {
+            $this->storePaginationState($page);
+        }
+    }
+
+    protected function getPaginationSessionKey(): string
+    {
+        return 'table.pagination.'.$this->tableReference->toUniqueString();
+    }
+
+    protected function storePaginationState(int $page): void
+    {
+        session()->put($this->getPaginationSessionKey(), [
+            'itemsPerPage' => $this->getSelectedItemsPerPage(),
+            'page' => $page,
+        ]);
     }
 }

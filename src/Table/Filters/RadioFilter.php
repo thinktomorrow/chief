@@ -22,4 +22,9 @@ class RadioFilter extends Filter
     //
     //        return $filter->value([]);
     //    }
+
+    public function shouldInitiallyRender(): bool
+    {
+        return $this->getOptions() !== [];
+    }
 }

@@ -74,6 +74,11 @@ class OptionFilter extends Filter
         return $this;
     }
 
+    public function shouldInitiallyRender(): bool
+    {
+        return $this->options !== [];
+    }
+
     protected function viewData(): array
     {
         return array_merge($this->getViewData(), [
