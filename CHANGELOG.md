@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.31] - 2026-09-01
+
 - Added: State configs can implement `StateTransitionGuard` to reject a transition before any changes are persisted.
 - Fixed: Date, time and datetime fields now format immutable date values. A `CarbonImmutable` value was passed through
   unformatted, which the browser rejected and rendered as an empty input.
