@@ -137,7 +137,7 @@ class EditState extends Component
 
             return;
         } catch (StateException $e) {
-            $this->errorMessage = 'Transition ['.$transitionKey.'] not applied';
+            $this->errorMessage = $e->getMessage();
 
             return;
         }

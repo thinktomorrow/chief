@@ -8,9 +8,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Forms\Fields\Boolean;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateTransitionGuard;
 use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditState;
 use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\TransitionDto;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleStateAdminConfig;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleWithStateAdminConfig;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -50,6 +55,24 @@ final class EditStateTest extends TestCase
             ->call('saveState', 'default-on')
             ->assertRedirect($this->manager($article)->route('index'));
     }
+
+    public function test_it_shows_the_guard_message_without_persisting_the_transition(): void
+    {
+        GuardedArticleWithStateAdminConfig::migrateUp();
+        chiefRegister()->resource(GuardedArticleWithStateAdminConfig::class, PageManager::class);
+
+        $article = GuardedArticleWithStateAdminConfig::create(['article_state' => 'offline']);
+
+        Livewire::test(EditState::class, [
+            'parentComponentId' => 'parent-component',
+            'stateKey' => 'article_state',
+            'model' => $article,
+        ])
+            ->call('saveState', 'publish')
+            ->assertSet('errorMessage', 'Publishing is not allowed.');
+
+        $this->assertSame('offline', $article->fresh()->article_state);
+    }
 }
 
 final class EditStateWithConfirmationFields extends EditState
@@ -79,5 +102,26 @@ final class EditStateWithConfirmationFields extends EditState
             redirectTo: null,
             redirectNotification: null,
         );
+    }
+}
+
+final class GuardedArticleWithStateAdminConfig extends ArticleWithStateAdminConfig
+{
+    public function getStateConfig(string $stateKey): StateConfig
+    {
+        return new GuardedArticleStateAdminConfig;
+    }
+}
+
+final class GuardedArticleStateAdminConfig extends ArticleStateAdminConfig implements StateTransitionGuard
+{
+    public function getTransitionType(StatefulContract $statefulContract, string $transitionKey): ?string
+    {
+        return 'grey';
+    }
+
+    public function assertCanTransition(StatefulContract $statefulContract, string $transition, array $data): void
+    {
+        throw new StateException('Publishing is not allowed.');
     }
 }

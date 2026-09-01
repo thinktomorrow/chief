@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\ManagedModels\States\Events\ModelStateUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateTransitionGuard;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -35,6 +36,10 @@ class UpdateState
         }
 
         $stateConfig = $model->getStateConfig($stateKey);
+
+        if ($stateConfig instanceof StateTransitionGuard) {
+            $stateConfig->assertCanTransition($model, $transitionKey, $data);
+        }
 
         if ($stateConfig instanceof StateAdminConfig) {
             $this->saveTransitionFields($resource, $model, $stateConfig->getConfirmationFields($model, $transitionKey), $data, $files);

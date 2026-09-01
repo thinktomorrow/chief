@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: State configs can implement `StateTransitionGuard` to reject a transition before any changes are persisted.
 - Fixed: Date, time and datetime fields now format immutable date values. A `CarbonImmutable` value was passed through
   unformatted, which the browser rejected and rendered as an empty input.
 - Fixed: The `min`, `max` and `step` of a date, time, datetime, number or slider field are no longer lost when the field
