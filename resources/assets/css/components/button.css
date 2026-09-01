@@ -26,18 +26,18 @@
     }
 }
 @utility btn-sm {
-    @apply gap-[0.1875rem] rounded-lg px-[0.5625rem] py-1.5 text-sm leading-[1.125rem];
+    @apply gap-0.75 rounded-lg px-2.25 py-1.5 text-sm leading-4.5;
     & > [data-slot='icon'],
     & > svg {
-        @apply size-[1.125rem] shrink-0;
-        @apply first:-ml-[0.1875rem] last:-mr-[0.1875rem];
+        @apply size-4.5 shrink-0;
+        @apply first:-ml-0.75 last:-mr-0.75;
     }
 }
 @utility btn-xs {
-    @apply gap-0.5 rounded-md px-[0.375rem] py-[0.1875rem] text-xs leading-[1.125rem];
+    @apply gap-0.5 rounded-md px-1.5 py-0.75 text-xs leading-4.5;
     & > [data-slot='icon'],
     & > svg {
-        @apply size-[1.125rem] shrink-0;
+        @apply size-4.5 shrink-0;
         @apply first:-ml-0.75 last:-mr-0.75;
     }
 }

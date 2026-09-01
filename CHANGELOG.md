@@ -16,6 +16,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: A Datetime field to enter a combined date and time value. `\Thinktomorrow\Chief\Forms\Fields\Datetime::class`.
 - Added: Table option to set amount of items per page.
 - Added: `Table::paginate()` now accepts second parameter to set the default items per page.
+- Added: `size` attribute on the `x-chief::form.input.select` component to render a small (`sm`) or default (`md`)
+  variant. Backed by the new `form-input-field-sm` and `form-input-field-md` css utilities.
 - Changed: new require laravel/pint: ^1.30
 
 ## [0.10.30] - 2026-08-31
