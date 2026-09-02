@@ -26,7 +26,8 @@ export default defineConfig({
         {
             closeBundle() {
                 const currentDir = process.cwd();
-                const symlinkedProjectDir = dotenv.config().parsed.SYMLINKED_PROJECT_PATH;
+                const symlinkedProjectDir =
+                    process.env.SYMLINKED_PROJECT_PATH ?? dotenv.config().parsed?.SYMLINKED_PROJECT_PATH;
 
                 // If SYMLINKED_PROJECT_PATH is defined but empty, do nothing.
                 if (symlinkedProjectDir === '') return;

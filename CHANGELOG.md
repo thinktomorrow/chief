@@ -8,6 +8,15 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: Squanto section headings can use the `section_label` line metadata.
 - Changed: publishing a page now requires a link to be added first
 
+## [0.11.0]
+
+- **Breaking change**: Livewire 3 bumped to Livewire 4
+- **Breaking change**: Chief Livewire components now use domain-specific aliases and `UI\Livewire` class namespaces.
+  Update custom components, Blade tags and package-view overrides using `UPGRADE-0.10-to-0.11.md`.
+- **Breaking change**: php minimum requirement set to 8.4
+- **Breaking change**: Laravel minimum requirement set to 12.0
+- Fixed: Admin request detection now recognises Livewire 4's hashed update and upload endpoint prefixes.
+
 ## [0.10.31] - 2026-09-01
 
 - Added: State configs can implement `StateTransitionGuard` to reject a transition before any changes are persisted.

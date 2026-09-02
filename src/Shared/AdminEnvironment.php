@@ -25,6 +25,8 @@ class AdminEnvironment
 
         $adminPrefix = config('chief.route.prefix', 'admin');
 
-        return Str::startsWith($request->path(), [$adminPrefix.'/', 'livewire/']) || $request->path() == $adminPrefix;
+        return Str::startsWith($request->path(), [$adminPrefix.'/', 'livewire/'])
+            || preg_match('/^livewire-[a-f0-9]{8}\//', $request->path()) === 1
+            || $request->path() == $adminPrefix;
     }
 }
