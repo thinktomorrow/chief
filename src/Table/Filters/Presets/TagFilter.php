@@ -119,7 +119,7 @@ class TagFilter extends SelectFilter
             return $this->tags;
         }
 
-        return match ($this->optionType) {
+        return $this->tags = match ($this->optionType) {
             'used' => app(TagReadRepository::class)->getAll()->reject(fn (TagRead $tagRead) => $tagRead->getUsages() < 1),
             'owner_type' => app(TagReadRepository::class)->getAll()->filter(function (TagRead $tagRead) {
                 return $tagRead->getOwnerReferences()->contains(fn ($pivotRow) => in_array($pivotRow->owner_type, $this->ownerTypes));

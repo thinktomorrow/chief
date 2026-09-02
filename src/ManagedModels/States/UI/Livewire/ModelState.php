@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States\UI\Livewire;
 
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -33,6 +34,7 @@ class ModelState extends Component
         ];
     }
 
+    #[Renderless]
     public function edit(): void
     {
         $this->dispatch('open-edit-model-state-'.$this->getId())->to('chief-wire-states::edit-model-state');

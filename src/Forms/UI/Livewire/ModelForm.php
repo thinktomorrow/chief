@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Forms\UI\Livewire;
 
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
@@ -55,6 +56,7 @@ class ModelForm extends Component
             ->getComponents();
     }
 
+    #[Renderless]
     public function editForm(): void
     {
         $model = $this->getModel();

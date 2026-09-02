@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Urls\UI\Livewire;
 
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Thinktomorrow\Chief\Forms\UI\Livewire\WithMemoizedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -34,6 +35,7 @@ class ModelLinks extends Component
         ];
     }
 
+    #[Renderless]
     public function edit(): void
     {
         $this->dispatch('open-edit-model-links')->to('chief-wire-urls::edit-model-links');

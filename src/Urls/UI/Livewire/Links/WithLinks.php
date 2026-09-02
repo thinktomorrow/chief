@@ -24,6 +24,7 @@ trait WithLinks
             ? ChiefSites::all()->filterByLocales($model->getAllowedSites())
             : ChiefSites::all();
         $activeRecords = $model->urls;
+        $baseUrls = null;
 
         /** @var UrlRecord $record */
         foreach ($activeRecords as $record) {
@@ -39,7 +40,7 @@ trait WithLinks
                 $status,
                 $stateLabel,
                 $stateVariant,
-                app(GetBaseUrls::class)->get($model),
+                $baseUrls ??= app(GetBaseUrls::class)->get($model),
             ));
         }
 

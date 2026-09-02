@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire\_partials;
 
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Renderless;
 use Thinktomorrow\Chief\Fragments\App\Actions\DetachFragment;
 use Thinktomorrow\Chief\Fragments\App\Actions\ReorderFragments;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
@@ -26,6 +27,7 @@ trait WithFragments
         ];
     }
 
+    #[Renderless]
     public function editFragment(string $fragmentId): void
     {
         $this->dispatch('open-'.$this->getId(), [
@@ -35,6 +37,7 @@ trait WithFragments
         ])->to('chief-wire-fragments::edit-fragment');
     }
 
+    #[Renderless]
     public function addFragment(int $order, ?string $parentId = null): void
     {
         $this->dispatch('open-'.$this->getId(), [

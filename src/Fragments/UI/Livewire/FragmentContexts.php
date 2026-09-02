@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fragments\UI\Livewire;
 
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Renderless;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFirstContextForPage;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
@@ -47,11 +48,13 @@ class FragmentContexts extends Items
         $this->contexts = null;
     }
 
+    #[Renderless]
     public function addItem(): void
     {
         $this->dispatch('open-add-item')->to('chief-wire-fragments::add-context');
     }
 
+    #[Renderless]
     public function editItem(string $itemId): void
     {
         $this->dispatch('open-edit-item', [

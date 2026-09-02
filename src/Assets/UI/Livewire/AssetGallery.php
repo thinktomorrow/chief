@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Assets\UI\Livewire;
 
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Assets\Components\Gallery;
@@ -31,6 +32,7 @@ class AssetGallery extends Component
         $this->table = new Gallery($this);
     }
 
+    #[Renderless]
     public function openAssetEdit($assetId)
     {
         $previewFile = PreviewFile::fromAsset(Asset::find($assetId));
@@ -38,11 +40,13 @@ class AssetGallery extends Component
         $this->emitDownTo('chief-wire-assets::gallery-asset-editor', 'open', ['previewfile' => $previewFile]);
     }
 
+    #[Renderless]
     public function openFileUpload()
     {
         $this->emitDownTo('chief-wire-assets::gallery-asset-uploader', 'open');
     }
 
+    #[Renderless]
     public function deleteAsset($assetId)
     {
         $this->emitDownTo('chief-wire-assets::asset-delete-dialog', 'open', ['assetIds' => [$assetId]]);

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Menu\UI\Livewire;
 
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Renderless;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems\Items;
 use Thinktomorrow\Chief\Menu\App\Queries\GetMenuTable;
@@ -12,6 +13,8 @@ use Thinktomorrow\Chief\Table\Table;
 class MenuList extends Items
 {
     public string $type;
+
+    private ?Collection $menus = null;
 
     public function mount(string $type, ?string $activeMenuId = null)
     {
@@ -25,11 +28,13 @@ class MenuList extends Items
         return app(GetMenuTable::class)->getTable($menuId);
     }
 
+    #[Renderless]
     public function addItem(): void
     {
         $this->dispatch('open-add-item')->to('chief-wire-menu::add-menu');
     }
 
+    #[Renderless]
     public function editItem(string $itemId): void
     {
         $this->dispatch('open-edit-item', [
@@ -44,7 +49,11 @@ class MenuList extends Items
 
     public function getItems(): Collection
     {
-        return app(ComposeLivewireDto::class)->getMenus($this->type);
+        if ($this->menus) {
+            return $this->menus;
+        }
+
+        return $this->menus = app(ComposeLivewireDto::class)->getMenus($this->type);
     }
 
     public function allowMultipleItems(): bool

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Sites\UI\Livewire;
 
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 use Thinktomorrow\Chief\Sites\ChiefSite;
@@ -25,6 +26,7 @@ class ModelSiteSelection extends Component
         ];
     }
 
+    #[Renderless]
     public function edit(): void
     {
         $this->dispatch('open-edit-model-site-selection')->to('chief-wire-sites::edit-model-site-selection');
