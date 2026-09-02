@@ -14,9 +14,9 @@
 
 <div class="space-y-6">
     <div class="space-y-3">
-        @if ($errors->any())
+        @if ($errorMessage || $errors->any())
             <x-chief::callout variant="red">
-                <p>{!! $errors->first() !!}</p>
+                <p>{!! $errorMessage ?: $errors->first() !!}</p>
             </x-chief::callout>
         @endif
         @foreach ($this->getTransitions() as $transition)
@@ -30,7 +30,14 @@
                 }"
             >
                 <div class="space-y-2">
-                    @if ($transition->content)
+                    @if ($this->shouldShowAddLinkAction($transition->key))
+                        <p class="body">
+                            <x-chief::link wire:click="editLinks" size="sm" variant="blue">
+                                Voeg eerst een link toe
+                            </x-chief::link>
+                            om de pagina zichtbaar te maken voor bezoekers.
+                        </p>
+                    @elseif ($transition->content)
                         <p class="body">{!! $transition->content !!}</p>
                     @endif
 

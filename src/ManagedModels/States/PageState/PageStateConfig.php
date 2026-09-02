@@ -12,14 +12,16 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUnPublished;
 use Thinktomorrow\Chief\ManagedModels\States\State\State;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfigDefaults;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateTransitionGuard;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
 use Thinktomorrow\Chief\Urls\App\Repositories\UrlHelper;
 use Thinktomorrow\Chief\Urls\Models\LinkStatus;
 
-class PageStateConfig implements StateAdminConfig
+class PageStateConfig implements StateAdminConfig, StateTransitionGuard
 {
     use StateAdminConfigDefaults;
 
@@ -62,6 +64,15 @@ class PageStateConfig implements StateAdminConfig
                 'to' => PageState::deleted,
             ],
         ];
+    }
+
+    public function assertCanTransition(StatefulContract $statefulContract, string $transition, array $data): void
+    {
+        if ($transition === 'publish'
+            && $statefulContract instanceof Visitable
+            && ! $this->visitableModelHasAnyLinks($statefulContract)) {
+            throw new StateException('Publiceren kan pas zodra er minstens één link is toegevoegd.');
+        }
     }
 
     public function emitEvent(StatefulContract $statefulContract, string $transition, array $data): void
@@ -113,7 +124,7 @@ class PageStateConfig implements StateAdminConfig
         };
 
         if ($statefulContract->inOnlineState() && ! $this->visitableModelHasAnyLinks($statefulContract)) {
-            $stateLabel .= ' (link ontbreekt)';
+            $stateLabel = 'Klaar voor publicatie (link ontbreekt nog)';
         }
 
         return $stateLabel;
@@ -188,7 +199,7 @@ class PageStateConfig implements StateAdminConfig
                 ? 'De pagina zal onmiddellijk online komen te staan.'
                 : ($this->visitableModelHasAnyLinks($statefulContract)
                     ? 'De pagina zal onmiddellijk online komen te staan.'
-                    : 'Deze pagina heeft nog geen links. Om de pagina zichtbaar te maken voor bezoekers, moet je ook nog links toevoegen.'
+                    : 'Voeg eerst een link toe om de pagina zichtbaar te maken voor bezoekers.'
                 ),
             'unpublish' => $this->visitableModelHasAnyOnlineLinks($statefulContract)
                 ? 'De pagina wordt offline gehaald. De links zullen niet langer werken. Ze zijn opnieuw toegankelijk zodra de pagina opnieuw wordt gepubliceerd.'

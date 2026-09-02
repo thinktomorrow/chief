@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\State\GetPrimaryStateKeyOfModel;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Actions\Action;
@@ -22,15 +23,21 @@ class OnlineStateRowAction extends Action
             ->label('Zet online')
             ->variant('green')
             ->prependIcon('<x-chief::icon.view />')
-            ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
+            ->effect(function ($formData, $data, Action $action) use ($resourceKey, $stateKey, $transitionKey) {
 
-                app(UpdateState::class)->handle(
-                    $resourceKey,
-                    ModelReference::fromString($data['item']),
-                    $stateKey,
-                    $transitionKey,
-                    []
-                );
+                try {
+                    app(UpdateState::class)->handle(
+                        $resourceKey,
+                        ModelReference::fromString($data['item']),
+                        $stateKey,
+                        $transitionKey,
+                        []
+                    );
+                } catch (StateException $e) {
+                    $action->notifyOnFailure($e->getMessage());
+
+                    return false;
+                }
 
                 return true;
             })

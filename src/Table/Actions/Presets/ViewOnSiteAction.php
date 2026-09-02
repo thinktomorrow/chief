@@ -9,6 +9,7 @@ class ViewOnSiteAction extends Action
     public static function makeDefault(string $resourceKey): static
     {
         return static::make('view')
+            ->when(fn ($component, $model) => $model->url() !== null)
             ->link(function ($model) {
                 return $model->url();
             })

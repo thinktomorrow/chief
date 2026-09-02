@@ -20,10 +20,10 @@ class OnlineStateBulkAction extends Action
 
         return static::make('online-state-bulk')
             ->label('Zet online')
-            ->effect(function ($formData, $data) use ($resourceKey, $stateKey, $transitionKey) {
+            ->effect(function ($formData, $data, Action $action) use ($resourceKey, $stateKey, $transitionKey) {
 
                 $modelIds = $data['items'];
-                $failedModelIds = [];
+                $failureMessages = [];
 
                 foreach ($modelIds as $modelId) {
                     try {
@@ -35,14 +35,15 @@ class OnlineStateBulkAction extends Action
                             []
                         );
                     } catch (StateException $e) {
-                        $failedModelIds[] = $modelId;
+                        $failureMessages[] = $e->getMessage();
                     }
                 }
 
-                // TODO: allow to pass effect data to notification to show amount of fails...
-                //                if(count($failedModelIds) > 0) {
-                //                    return false;
-                //                }
+                if (count($failureMessages) > 0) {
+                    $action->notifyOnFailure(implode(' ', array_unique($failureMessages)));
+
+                    return false;
+                }
 
                 return true;
             })

@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: Squanto section headings can use the `section_label` line metadata.
+- Changed: publishing a page now requires a link to be added first
+
 ## [0.10.31] - 2026-09-01
 
 - Added: State configs can implement `StateTransitionGuard` to reject a transition before any changes are persisted.

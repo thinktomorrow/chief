@@ -15,6 +15,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\CannotInstantiateModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
+use Thinktomorrow\Chief\Site\Visitable\Visitable;
 
 class EditState extends Component
 {
@@ -61,6 +62,25 @@ class EditState extends Component
         $this->resetErrorBag();
 
         $this->isOpen = false;
+    }
+
+    public function shouldShowAddLinkAction(string $transitionKey): bool
+    {
+        $model = $this->getModel();
+
+        return $transitionKey === 'publish'
+            && $model instanceof Visitable
+            && $model->urls->isEmpty();
+    }
+
+    public function editLinks(): void
+    {
+        if (! $this->getModel() instanceof Visitable) {
+            return;
+        }
+
+        $this->close();
+        $this->dispatch('open-edit-links')->to('chief-wire::edit-links');
     }
 
     public function getTitle(): ?string

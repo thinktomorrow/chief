@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin\Squanto;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Squanto\Database\DatabaseLine;
+use Thinktomorrow\Squanto\Manager\Pages\LineViewModel;
 
 class EditTranslationTest extends ChiefTestCase
 {
@@ -36,6 +37,33 @@ class EditTranslationTest extends ChiefTestCase
 
         $response->assertStatus(200)
             ->assertSee('id="homeherotitle"', false);
+    }
+
+    public function test_edit_view_uses_section_label_from_line_metadata(): void
+    {
+        if (! method_exists(LineViewModel::class, 'sectionLabel')) {
+            $this->markTestSkipped('Requires Squanto section label support.');
+        }
+
+        DatabaseLine::create([
+            'key' => 'mails.registration-rejected.content',
+            'values' => ['value' => [
+                'nl' => 'Je inschrijving is afgewezen.',
+            ]],
+        ]);
+
+        DatabaseLine::create([
+            'key' => 'mails.registration-rejected.subject',
+            'values' => ['value' => [
+                'nl' => 'Afwijzing inschrijving',
+            ]],
+            'metadata' => ['section_label' => 'E-mail afwijzing inschrijving'],
+        ]);
+
+        $response = $this->asAdmin()->get(route('squanto.edit', 'mails'));
+
+        $response->assertStatus(200)
+            ->assertSee('E-mail afwijzing inschrijving');
     }
 
     public function test_admin_can_view_the_edit_form_for_a_namespaced_page_slug(): void

@@ -32,7 +32,14 @@
             <input type="hidden" name="_method" value="PUT" />
 
             @foreach ($collectedLines as $sectionKey => $groupedLines)
-                <x-chief::window :title="ucfirst(str_replace('_', ' ', $sectionKey))">
+                @php
+                    $sectionLabel = method_exists($groupedLines->first(), 'sectionLabel')
+                        ? $groupedLines->map->sectionLabel()->filter()->first()
+                        : null;
+                    $sectionLabel ??= ucfirst(str_replace('_', ' ', $sectionKey));
+                @endphp
+
+                <x-chief::window :title="$sectionLabel">
                     @foreach ($groupedLines as $lineViewModel)
                         <div id="{{ $lineViewModel->id() }}" @class(['border-grey-100 mt-4 border-t pt-4 scroll-mt-24' => ! $loop->first, 'scroll-mt-24' => $loop->first])>
                             @include('squanto::_field')

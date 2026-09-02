@@ -110,6 +110,8 @@ class ProjectModelDataTest extends ChiefTestCase
 
     public function test_it_can_project_page_data_when_page_has_published()
     {
+        $this->updateLinks($this->page, ['nl' => 'foobar-nl']);
+
         app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'unpublish');
         app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'publish');
 
