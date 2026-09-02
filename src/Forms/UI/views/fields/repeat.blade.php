@@ -1,4 +1,4 @@
-<livewire:chief-wire::repeat
+<livewire:chief-wire-form::repeat-field-editor
     wire:key="{{ $getWireModelValue($locale ?? null) }}"
     :field="$field"
     :locale="$locale ?? null"

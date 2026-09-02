@@ -1,6 +1,6 @@
 @php
     // Assets always expect a locale. We enforce this even when locales are missing
-    use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
+    use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
     use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
     use Thinktomorrow\Chief\Sites\ChiefSites;
 
@@ -20,7 +20,7 @@
 @endphp
 
 <div data-slot="control">
-    <livewire:chief-wire::file-field-upload
+    <livewire:chief-wire-assets::file-field-asset-uploader
         wire:key="{{ $getWireModelValue($locale ?? null) }}"
         wire:model="{{ $getWireModelValue($locale ?? null) }}"
         parent-component-id="{{ $insideComponent ? $this->getId() : null }}"

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Plugins\Seo\UI\Livewire;
 
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Table\Actions\RowAction;
 

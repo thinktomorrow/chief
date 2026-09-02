@@ -7,8 +7,8 @@ use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\FileFieldEditComponent;
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\UI\Livewire\FileFieldAssetEditor;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
@@ -29,7 +29,7 @@ class FileFieldEditTest extends ChiefTestCase
 
         $this->model = $this->setUpAndCreateArticle();
 
-        $this->livewireInstance = Livewire::test(FileFieldEditComponent::class, [
+        $this->livewireInstance = Livewire::test(FileFieldAssetEditor::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'locale' => 'nl',
@@ -152,7 +152,7 @@ class FileFieldEditTest extends ChiefTestCase
 
         $previewFile = PreviewFile::fromAsset($asset);
 
-        Livewire::test(FileFieldEditComponent::class, [
+        Livewire::test(FileFieldAssetEditor::class, [
             'modelReference' => null,
             'fieldKey' => 'thumb',
             'locale' => 'nl',
@@ -180,7 +180,7 @@ class FileFieldEditTest extends ChiefTestCase
 
         app(AddAsset::class)->handle($menuItem, $asset, 'thumbnail', 'nl', 0, []);
 
-        Livewire::test(FileFieldEditComponent::class, [
+        Livewire::test(FileFieldAssetEditor::class, [
             'modelReference' => $menuItem->modelReference()->get(),
             'fieldKey' => 'thumbnail',
             'locale' => 'nl',

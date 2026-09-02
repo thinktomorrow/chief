@@ -22,11 +22,11 @@
             @endif
 
             <div class="flex justify-between">
-                <livewire:chief-wire::site-selection :model="$model" />
+                <livewire:chief-wire-sites::model-site-selection :model="$model" />
 
                 @if ($hasSites && $hasStates)
                     @foreach ($model->getStateKeys() as $stateKey)
-                        <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                        <livewire:chief-wire-states::model-state :model="$model" :state-key="$stateKey" />
                     @endforeach
                 @endif
             </div>
@@ -35,7 +35,7 @@
                 <x-slot name="actions">
                     @if ($hasStates)
                         @foreach ($model->getStateKeys() as $stateKey)
-                            <livewire:chief-wire::state :model="$model" :state-key="$stateKey" />
+                            <livewire:chief-wire-states::model-state :model="$model" :state-key="$stateKey" />
                         @endforeach
                     @endif
                 </x-slot>
@@ -48,7 +48,7 @@
     @endforeach
 
     @if ($hasContexts)
-        <livewire:chief-fragments::contexts
+        <livewire:chief-wire-fragments::fragment-contexts
             :resource-key="$resource::resourceKey()"
             :model="$model"
             :active-context-id="request()->input('context')"
@@ -66,7 +66,7 @@
             @endforeach
 
             @if ($hasLinks)
-                <livewire:chief-wire::links :model="$model" />
+                <livewire:chief-wire-urls::model-links :model="$model" />
             @endif
 
             @foreach ($layout->filterByPosition('aside')->getComponents() as $component)

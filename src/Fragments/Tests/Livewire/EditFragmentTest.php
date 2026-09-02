@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Fragments\Models\ContextModel;
 use Thinktomorrow\Chief\Fragments\Models\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
-use Thinktomorrow\Chief\Fragments\UI\Livewire\Fragment\EditFragment;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\EditFragment;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\OwnerAwareFragment;

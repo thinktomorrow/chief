@@ -16,7 +16,7 @@
 
                 @if (count($this->getStateKeys()) > 0)
                     @foreach ($this->getStateKeys() as $stateKey)
-                        <livewire:chief-wire::state :model="$this->getModel()" :state-key="$stateKey" />
+                        <livewire:chief-wire-states::model-state :model="$this->getModel()" :state-key="$stateKey" />
                     @endforeach
                 @endif
             </x-chief::dialog.drawer.header>

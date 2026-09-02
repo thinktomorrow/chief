@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Assets\Tests\Livewire\ModelFiles;
 
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Assets\Livewire\FileFieldUploadComponent;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
+use Thinktomorrow\Chief\Assets\UI\Livewire\FileFieldAssetUploader;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -22,7 +22,7 @@ class UploadingModelFileTest extends ChiefTestCase
         ArticlePage::migrateUp();
         $model = ArticlePage::create();
 
-        $this->fileFieldUploadComponent = Livewire::test(FileFieldUploadComponent::class, [
+        $this->fileFieldUploadComponent = Livewire::test(FileFieldAssetUploader::class, [
             'modelReference' => $model->modelReference()->get(),
             'previewFiles' => [],
             'fieldKey' => 'thumb',

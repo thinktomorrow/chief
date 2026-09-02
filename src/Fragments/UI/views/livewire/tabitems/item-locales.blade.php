@@ -8,7 +8,7 @@
                     :disabled="in_array($locale, $form['active_sites'])"
                     id="item-locales-{{ $locale }}"
                     wire:key="item-locales-{{ $locale }}"
-                    wire:model.change="form.locales"
+                    wire:model.live.change="form.locales"
                     value="{{ $locale }}"
                 />
 

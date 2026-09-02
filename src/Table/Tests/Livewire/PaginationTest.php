@@ -6,13 +6,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use InvalidArgumentException;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
-use Thinktomorrow\Chief\Table\Livewire\TableComponent;
 use Thinktomorrow\Chief\Table\Sorters\TreeSort;
 use Thinktomorrow\Chief\Table\Table;
 use Thinktomorrow\Chief\Table\Table\References\TableReference;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TreeModelFixture;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TreeResourceFixture;
 use Thinktomorrow\Chief\Table\Tests\TestCase;
+use Thinktomorrow\Chief\Table\UI\Livewire\DataTable;
 
 class PaginationTest extends TestCase
 {
@@ -58,7 +58,7 @@ class PaginationTest extends TestCase
 
     public function test_it_changes_the_query_page_size_and_resets_the_page(): void
     {
-        $component = Livewire::test(TableComponent::class, ['table' => PaginationTableFixture::queryTable()])
+        $component = Livewire::test(DataTable::class, ['table' => PaginationTableFixture::queryTable()])
             ->call('gotoPage', 2, 'pagequerytable')
             ->set('selectedItemsPerPage', 50)
             ->assertSet('selectedItemsPerPage', 50)
@@ -78,7 +78,7 @@ class PaginationTest extends TestCase
             'page' => 2,
         ]);
 
-        $component = Livewire::test(TableComponent::class, ['table' => PaginationTableFixture::queryTable()])
+        $component = Livewire::test(DataTable::class, ['table' => PaginationTableFixture::queryTable()])
             ->assertSet('selectedItemsPerPage', 50)
             ->assertSet('paginators.pagequerytable', 2);
 
@@ -93,7 +93,7 @@ class PaginationTest extends TestCase
         ]);
 
         $component = Livewire::withQueryParams(['pagequerytable' => 2])
-            ->test(TableComponent::class, ['table' => PaginationTableFixture::queryTable()])
+            ->test(DataTable::class, ['table' => PaginationTableFixture::queryTable()])
             ->assertSet('selectedItemsPerPage', 20)
             ->assertSet('paginators.pagequerytable', 2);
 
@@ -108,7 +108,7 @@ class PaginationTest extends TestCase
             'page' => 1,
         ]);
 
-        Livewire::test(TableComponent::class, ['table' => PaginationTableFixture::queryTable()])
+        Livewire::test(DataTable::class, ['table' => PaginationTableFixture::queryTable()])
             ->assertSet('selectedItemsPerPage', 20)
             ->set('selectedItemsPerPage', 999)
             ->assertSet('selectedItemsPerPage', 20);
@@ -123,7 +123,7 @@ class PaginationTest extends TestCase
             'page' => 1,
         ]);
 
-        $component = Livewire::test(TableComponent::class, ['table' => PaginationTableFixture::fixedTable()])
+        $component = Livewire::test(DataTable::class, ['table' => PaginationTableFixture::fixedTable()])
             ->assertSet('selectedItemsPerPage', 30)
             ->assertDontSee('Aantal resultaten per pagina');
 
@@ -132,7 +132,7 @@ class PaginationTest extends TestCase
 
     public function test_it_paginates_collection_results(): void
     {
-        $component = Livewire::test(TableComponent::class, ['table' => PaginationTableFixture::collectionTable()])
+        $component = Livewire::test(DataTable::class, ['table' => PaginationTableFixture::collectionTable()])
             ->set('selectedItemsPerPage', 50);
 
         $this->assertSame(50, $component->instance()->resultPageCount);
@@ -140,7 +140,7 @@ class PaginationTest extends TestCase
 
     public function test_it_paginates_tree_results_with_the_selected_page_size(): void
     {
-        $component = Livewire::test(TableComponent::class, ['table' => PaginationTableFixture::treeTable()])
+        $component = Livewire::test(DataTable::class, ['table' => PaginationTableFixture::treeTable()])
             ->set('selectedItemsPerPage', 50);
 
         $this->assertSame(50, $component->instance()->resultPageCount);
@@ -148,9 +148,9 @@ class PaginationTest extends TestCase
 
     public function test_it_renders_the_items_per_page_selection(): void
     {
-        Livewire::test(TableComponent::class, ['table' => PaginationTableFixture::queryTable()])
+        Livewire::test(DataTable::class, ['table' => PaginationTableFixture::queryTable()])
             ->assertSee('Aantal resultaten per pagina')
-            ->assertSeeHtml('wire:model.change.number="selectedItemsPerPage"');
+            ->assertSeeHtml('wire:model.live.change.number="selectedItemsPerPage"');
     }
 
     private function paginationSessionKey(string $tableMethod): string

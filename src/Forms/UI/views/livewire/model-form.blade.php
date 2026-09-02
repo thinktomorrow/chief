@@ -1,0 +1,43 @@
+<x-chief::window
+    :title="$form->getTitle()"
+    :variant="$form->getFormDisplay()"
+    x-data="{
+        formUpdated: false,
+        init() {
+            $wire.on('form-updated-{{ $this->getId() }}', () => {
+                this.formUpdated = true;
+                setTimeout(() => {
+                    this.formUpdated = false;
+                }, 2500);
+            });
+        }
+    }"
+>
+    <x-slot name="actions">
+        <x-chief::badge
+            x-cloak
+            x-show="formUpdated"
+            variant="green"
+            class="animate-pop-in-badge mt-1.25 inline-flex items-center gap-0.5"
+        >
+            <span>Opgeslagen</span>
+        </x-chief::badge>
+
+        <x-chief::button wire:click="editForm" title="Aanpassen" size="sm" variant="grey">
+            <x-chief::icon.quill-write />
+        </x-chief::button>
+    </x-slot>
+
+    @foreach ($this->getComponents() as $childComponent)
+        {{ $childComponent->renderPreview() }}
+    @endforeach
+
+    <template x-teleport="body">
+        <livewire:chief-wire-form::edit-model-form
+            :key="'edit-form-'.$this->getId()"
+            :model-reference="$modelReference"
+            :form-component="$form"
+            :parent-component-id="$this->getId()"
+        />
+    </template>
+</x-chief::window>

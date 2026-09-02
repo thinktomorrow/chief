@@ -67,7 +67,7 @@
                 class="relative"
             >
                 <x-chief::form.input.radio
-                    wire:model.change="filters.{{ $getKey() }}"
+                    wire:model.live.change="filters.{{ $getKey() }}"
                     id="{{ $id }}-{{ $option['value'] }}"
                     value="{{ $option['value'] }}"
                     class="peer hidden"

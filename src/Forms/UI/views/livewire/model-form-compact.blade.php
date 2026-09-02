@@ -1,0 +1,26 @@
+<div>
+    <div class="flex items-start justify-stretch gap-3">
+        @foreach ($this->getComponents() as $childComponent)
+            {{ $childComponent->label('')->renderPreview() }}
+        @endforeach
+
+        <x-chief::button
+            wire:click="editForm"
+            title="Aanpassen"
+            size="sm"
+            variant="grey"
+            class="mt-[0.4375rem] shrink-0"
+        >
+            <x-chief::icon.quill-write />
+        </x-chief::button>
+    </div>
+
+    <template x-teleport="body">
+        <livewire:chief-wire-form::edit-model-form
+            :key="'edit-form-'.$this->getId()"
+            :model-reference="$modelReference"
+            :form-component="$form"
+            :parent-component-id="$this->getId()"
+        />
+    </template>
+</div>

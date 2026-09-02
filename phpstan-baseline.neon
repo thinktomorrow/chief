@@ -73,10 +73,10 @@ parameters:
 			path: src/Fragments/Models/FragmentModel.php
 
 		-
-			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\Tests\\Livewire\\ContextTest\:\:\$componentId\.$#'
+			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\Tests\\Livewire\\FragmentContextTest\:\:\$componentId\.$#'
 			identifier: property.notFound
 			count: 1
-			path: src/Fragments/Tests/Livewire/ContextTest.php
+			path: src/Fragments/Tests/Livewire/FragmentContextTest.php
 
 		-
 			message: '#^Access to an undefined property Thinktomorrow\\Chief\\Fragments\\UI\\Livewire\\TabItems\\Items\:\:\$item\.$#'
@@ -388,7 +388,7 @@ parameters:
 			message: '#^Variable \$value in empty\(\) is never defined\.$#'
 			identifier: empty.variable
 			count: 1
-			path: src/Table/Livewire/TableComponent.php
+			path: src/Table/UI/Livewire/Concerns/WithFilters.php
 
 		-
 			message: '#^Static method Thinktomorrow\\Chief\\Table\\Filters\\Presets\\SiteFilter\:\:makeDefault\(\) invoked with 1 parameter, 0 required\.$#'

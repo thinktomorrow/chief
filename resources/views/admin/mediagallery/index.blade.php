@@ -1,3 +1,3 @@
 <x-chief::page.template title="Media">
-    <livewire:chief-wire::file-gallery />
+    <livewire:chief-wire-assets::asset-gallery />
 </x-chief::page.template>

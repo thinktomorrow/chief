@@ -1,0 +1,118 @@
+<?php
+
+namespace Thinktomorrow\Chief\Forms\UI\Livewire;
+
+use Livewire\Component;
+use Thinktomorrow\Chief\Assets\UI\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
+use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
+use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Sites\UI\Livewire\WithLocaleToggle;
+
+class EditModelForm extends Component
+{
+    use HasForm;
+    use InteractsWithFields;
+    use ShowsAsDialog;
+    use WithLocaleToggle;
+
+    // parent livewire component id
+    public string $parentComponentId;
+
+    public ModelReference $modelReference;
+
+    public Form $formComponent;
+
+    public function mount(ModelReference $modelReference, Form $formComponent, string $parentComponentId)
+    {
+        $this->modelReference = $modelReference;
+        $this->formComponent = $formComponent;
+        $this->parentComponentId = $parentComponentId;
+    }
+
+    public function getListeners()
+    {
+        return [
+            'open-'.$this->parentComponentId => 'open',
+            'files-updated' => 'onFilesUpdated', // Allow sync with file component
+        ];
+    }
+
+    public function open($values = [])
+    {
+        $this->isOpen = true;
+
+        $components = $this->getComponents();
+
+        $this->initializeLocales($values, $components);
+
+        /**
+         * Inject all field values in the Livewire form object
+         * From then on we can use the form object to access the values
+         */
+        $this->injectFormValues($components);
+
+        $this->dispatch('form-dialog-opened', ...[
+            'componentId' => $this->getId(),
+            'parentComponentId' => $this->parentComponentId,
+            'formId' => $this->formComponent->getId(),
+        ]);
+    }
+
+    // TODO(ben): this also closes parent dialogs
+    public function close()
+    {
+        $this->reset(['form', 'locales', 'scopedLocale']);
+        $this->resetErrorBag();
+
+        $this->isOpen = false;
+    }
+
+    /**
+     * Compose the form again so we get all the closures
+     * and such of all fields and layouts
+     */
+    public function getComponents(): array
+    {
+        $model = $this->modelReference->instance();
+        $resource = app(Registry::class)->findResourceByModel($model::class);
+
+        return PageLayout::make($resource->fields($model))
+            ->findForm($this->formComponent->getId())
+            ->model($model)
+            ->getComponents();
+    }
+
+    public function save()
+    {
+        $form = $this->prepareFormDataForSubmission();
+
+        app(ModelApplication::class)->updateForm(new UpdateForm(
+            $this->modelReference,
+            $this->locales, // Used to be scopedLocale but why???
+            $this->formComponent->getId(),
+            $form,
+            [])
+        );
+
+        $this->dispatch('form-updated-'.$this->parentComponentId, ...[
+            'formId' => $this->formComponent->getId(),
+            'parentComponentId' => $this->parentComponentId,
+        ]);
+
+        if ($this->formComponent->shouldReloadPageAfterSave()) {
+            $this->dispatch('reload-page-after-save');
+        }
+
+        $this->close();
+    }
+
+    public function render()
+    {
+        return view('chief-form::livewire.edit-model-form');
+    }
+}

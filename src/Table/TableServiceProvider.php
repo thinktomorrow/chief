@@ -8,13 +8,17 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Table\Livewire\TableComponent;
 
 class TableServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        Livewire::component('chief-wire::table', TableComponent::class);
+        Livewire::addNamespace(
+            'chief-wire-table',
+            classNamespace: 'Thinktomorrow\\Chief\\Table\\UI\\Livewire',
+            classPath: __DIR__.'/UI/Livewire',
+            classViewPath: __DIR__.'/UI/views/livewire',
+        );
 
         $this->app['view']->addNamespace('chief-table', __DIR__.'/UI/views');
 

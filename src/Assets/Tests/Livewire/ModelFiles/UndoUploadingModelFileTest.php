@@ -6,8 +6,8 @@ use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\FileFieldUploadComponent;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
+use Thinktomorrow\Chief\Assets\UI\Livewire\FileFieldAssetUploader;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -26,7 +26,7 @@ class UndoUploadingModelFileTest extends ChiefTestCase
         ArticlePage::migrateUp();
         $this->model = ArticlePage::create();
 
-        $this->fileFieldUploadComponent = Livewire::test(FileFieldUploadComponent::class, [
+        $this->fileFieldUploadComponent = Livewire::test(FileFieldAssetUploader::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'previewFiles' => [],
             'fieldKey' => 'thumb',

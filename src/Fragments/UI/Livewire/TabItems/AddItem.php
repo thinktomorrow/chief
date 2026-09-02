@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Fragments\UI\Livewire\TabItems;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Thinktomorrow\Chief\Assets\Livewire\Traits\ShowsAsDialog;
+use Thinktomorrow\Chief\Assets\UI\Livewire\Traits\ShowsAsDialog;
 use Thinktomorrow\Chief\Forms\Dialogs\Concerns\HasForm;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 

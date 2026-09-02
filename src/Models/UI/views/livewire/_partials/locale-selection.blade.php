@@ -12,7 +12,7 @@
             ])
         >
             <x-chief::form.input.checkbox
-                wire:model.change="locales"
+                wire:model.live.change="locales"
                 id="{{ $site->locale }}"
                 value="{{ $site->locale }}"
                 class="shrink-0"

@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Assets\Tests\Livewire\GalleryFiles;
 
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Assets\Livewire\FileUploadComponent;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
+use Thinktomorrow\Chief\Assets\UI\Livewire\GalleryAssetUploader;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class UndoUploadingFileTest extends ChiefTestCase
@@ -18,7 +18,7 @@ class UndoUploadingFileTest extends ChiefTestCase
     {
         parent::setUp();
 
-        $this->fileUploadComponent = Livewire::test(FileUploadComponent::class, [
+        $this->fileUploadComponent = Livewire::test(GalleryAssetUploader::class, [
             'parentId' => 'xxx',
             'fieldName' => 'thumb',
             'allowMultiple' => true,

@@ -8,13 +8,7 @@ class CloudinaryServiceProvider extends ChiefPluginServiceProvider
 {
     public function boot(): void
     {
-        //        $this->app['view']->addNamespace('chief-hotspots', __DIR__ . '/views');
         //
-        //        Livewire::component('chief-wire::hotspots', HotSpotComponent::class);
-        //
-        //        $this->app->make(ChiefPluginSections::class)
-        //            ->addFooterSection('chief-hotspots::footer')
-        //            ->addLivewireFileComponent('chief-wire::hotspots');
     }
 
     public function register()

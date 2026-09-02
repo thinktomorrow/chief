@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\Resources\MenuItemResource;
 use Thinktomorrow\Chief\Menu\Tests\TestSupport\ProjectMenuItemResource;
-use Thinktomorrow\Chief\Table\Livewire\TableComponent;
+use Thinktomorrow\Chief\Table\UI\Livewire\DataTable;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class GetMenuTableTest extends ChiefTestCase
@@ -43,7 +43,7 @@ class GetMenuTableTest extends ChiefTestCase
             'label.en' => 'English needle',
         ]);
 
-        $component = Livewire::test(TableComponent::class, [
+        $component = Livewire::test(DataTable::class, [
             'table' => app(GetMenuTable::class)->getTable((string) $menu->id),
         ]);
 
@@ -78,7 +78,7 @@ class GetMenuTableTest extends ChiefTestCase
         $this->assertContains('description', $columnKeys);
         $this->assertSame('search', $table->getFilters()[0]->getKey());
 
-        Livewire::test(TableComponent::class, ['table' => $table])
+        Livewire::test(DataTable::class, ['table' => $table])
             ->assertSee('Thumbnail')
             ->assertSee('Beschrijving')
             ->assertSee('Projectbeschrijving');

@@ -7,9 +7,9 @@ use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
 use Thinktomorrow\AssetLibrary\AssetContract;
-use Thinktomorrow\Chief\Assets\Livewire\FileFieldUploadComponent;
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
+use Thinktomorrow\Chief\Assets\UI\Livewire\FileFieldAssetUploader;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -34,7 +34,7 @@ class ShowsExistingModelFileTest extends ChiefTestCase
             ->uploadedFile(UploadedFile::fake()->image('image.png'))
             ->save();
 
-        $this->fileFieldUploadComponent = Livewire::test(FileFieldUploadComponent::class, [
+        $this->fileFieldUploadComponent = Livewire::test(FileFieldAssetUploader::class, [
             'modelReference' => $this->model->modelReference()->get(),
             'fieldKey' => 'thumb',
             'previewFiles' => [PreviewFile::fromAsset($this->asset)],

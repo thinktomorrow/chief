@@ -7,12 +7,12 @@ use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
-use Thinktomorrow\Chief\Models\UI\Livewire\CreateModelComponent;
+use Thinktomorrow\Chief\Models\UI\Livewire\CreateModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -47,7 +47,7 @@ class UploadingFileWhenCreatingModelTest extends ChiefTestCase
         $this->assertDatabaseCount('assets', 0);
         $this->assertDatabaseCount('assets_pivot', 0);
 
-        Livewire::test(CreateModelComponent::class)
+        Livewire::test(CreateModel::class)
             ->dispatch('open-create-model', ['modelClass' => ArticlePage::class])
             ->set('locales', ['nl'])
             ->set('form', [
@@ -71,7 +71,7 @@ class UploadingFileWhenCreatingModelTest extends ChiefTestCase
         $this->assertDatabaseCount('assets', 1);
         $this->assertDatabaseCount('assets_pivot', 0);
 
-        Livewire::test(CreateModelComponent::class)
+        Livewire::test(CreateModel::class)
             ->dispatch('open-create-model', ['modelClass' => ArticlePage::class])
             ->set('locales', ['nl'])
             ->set('form', [

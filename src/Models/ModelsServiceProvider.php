@@ -4,8 +4,6 @@ namespace Thinktomorrow\Chief\Models;
 
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Models\UI\Livewire\CreateModelComponent;
-use Thinktomorrow\Chief\Models\UI\Livewire\EditModelComponent;
 
 class ModelsServiceProvider extends ServiceProvider
 {
@@ -15,7 +13,11 @@ class ModelsServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-models', __DIR__.'/UI/views');
 
-        Livewire::component('chief-wire::create-model', CreateModelComponent::class);
-        Livewire::component('chief-wire::edit-model', EditModelComponent::class);
+        Livewire::addNamespace(
+            'chief-wire-models',
+            classNamespace: 'Thinktomorrow\\Chief\\Models\\UI\\Livewire',
+            classPath: __DIR__.'/UI/Livewire',
+            classViewPath: __DIR__.'/UI/views/livewire',
+        );
     }
 }

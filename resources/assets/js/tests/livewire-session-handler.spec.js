@@ -1,7 +1,7 @@
 const SESSION_EXPIRED_RELOAD_KEY = 'chief:livewire:419-reload-at';
 
 const importHandler = async ({ debug = false } = {}) => {
-    let requestHook;
+    let requestInterceptor;
 
     window.chiefSessionHandlerConfig = {
         debug,
@@ -9,24 +9,22 @@ const importHandler = async ({ debug = false } = {}) => {
     };
 
     window.Livewire = {
-        hook: jest.fn((name, callback) => {
-            if (name === 'request') {
-                requestHook = callback;
-            }
+        interceptRequest: jest.fn((callback) => {
+            requestInterceptor = callback;
         }),
     };
 
     await import('../livewire-session-handler');
 
-    let failHandler;
+    let errorHandler;
 
-    requestHook({
-        fail: (callback) => {
-            failHandler = callback;
+    requestInterceptor({
+        onError: (callback) => {
+            errorHandler = callback;
         },
     });
 
-    return failHandler;
+    return errorHandler;
 };
 
 describe('Livewire session handler', () => {
@@ -55,9 +53,9 @@ describe('Livewire session handler', () => {
         sessionStorage.setItem(SESSION_EXPIRED_RELOAD_KEY, String(Date.now()));
         window.addEventListener('open-dialog', (event) => openedDialogs.push(event.detail.id));
 
-        const failHandler = await importHandler({ debug: true });
+        const errorHandler = await importHandler({ debug: true });
 
-        failHandler({ status: 419, preventDefault });
+        errorHandler({ response: { status: 419 }, preventDefault });
 
         expect(preventDefault).toHaveBeenCalled();
         expect(openedDialogs).toEqual(['refresh-modal']);
@@ -65,9 +63,9 @@ describe('Livewire session handler', () => {
 
     it('keeps native Livewire error handling for server errors in debug mode', async () => {
         const preventDefault = jest.fn();
-        const failHandler = await importHandler({ debug: true });
+        const errorHandler = await importHandler({ debug: true });
 
-        failHandler({ status: 500, preventDefault });
+        errorHandler({ response: { status: 500 }, preventDefault });
 
         expect(preventDefault).not.toHaveBeenCalled();
     });
@@ -78,9 +76,9 @@ describe('Livewire session handler', () => {
 
         window.addEventListener('open-dialog', (event) => openedDialogs.push(event.detail.id));
 
-        const failHandler = await importHandler({ debug: false });
+        const errorHandler = await importHandler({ debug: false });
 
-        failHandler({ status: 500, preventDefault });
+        errorHandler({ response: { status: 500 }, preventDefault });
 
         expect(preventDefault).toHaveBeenCalled();
         expect(openedDialogs).toEqual(['error-modal']);

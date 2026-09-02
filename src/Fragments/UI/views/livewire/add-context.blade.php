@@ -17,7 +17,7 @@
                 <div class="flex items-start gap-2">
                     <x-chief::form.input.radio
                         id="duplicate-from-no"
-                        wire:model.change="form.duplicate_from"
+                        wire:model.live.change="form.duplicate_from"
                         x-model="duplicateFromSelection"
                         value="0"
                     />
@@ -30,7 +30,7 @@
                 <div class="flex items-start gap-2">
                     <x-chief::form.input.radio
                         id="duplicate-from-yes"
-                        wire:model.change="form.duplicate_from"
+                        wire:model.live.change="form.duplicate_from"
                         x-model="duplicateFromSelection"
                         value="1"
                     />
@@ -44,7 +44,7 @@
 
         <x-chief::form.fieldset x-show="duplicateFromSelection === '1'">
             <x-chief::form.label>Kies een versie</x-chief::form.label>
-            <x-chief::form.input.select wire:model.change="form.duplicate_from_item_id">
+            <x-chief::form.input.select wire:model.live.change="form.duplicate_from_item_id">
                 @foreach ($this->getItems() as $item)
                     <option wire:key="duplicate-from-item-{{ $item->id }}" value="{{ $item->getId() }}">
                         {{ $item->getTitle() }}

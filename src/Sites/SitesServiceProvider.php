@@ -6,10 +6,6 @@ use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\EditSiteSelection;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteSelect\SiteSelection;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\GlobalSiteToggle;
-use Thinktomorrow\Chief\Sites\UI\Livewire\SiteToggle\ModelSiteToggle;
 
 class SitesServiceProvider extends ServiceProvider
 {
@@ -17,12 +13,12 @@ class SitesServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-sites', __DIR__.'/UI/views');
 
-        Livewire::component('chief-wire::site-toggle', GlobalSiteToggle::class);
-        Livewire::component('chief-wire::model-site-toggle', ModelSiteToggle::class);
-
-        // Site selection for non-visitable model (model without links)
-        Livewire::component('chief-wire::site-selection', SiteSelection::class);
-        Livewire::component('chief-wire::edit-site-selection', EditSiteSelection::class);
+        Livewire::addNamespace(
+            'chief-wire-sites',
+            classNamespace: 'Thinktomorrow\\Chief\\Sites\\UI\\Livewire',
+            classPath: __DIR__.'/UI/Livewire',
+            classViewPath: __DIR__.'/UI/views/livewire',
+        );
     }
 
     public function register()

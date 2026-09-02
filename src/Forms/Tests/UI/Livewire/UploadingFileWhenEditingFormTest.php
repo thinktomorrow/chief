@@ -8,13 +8,13 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Assets\Tests\TestSupport\TestingFileUploads;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Image;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
-use Thinktomorrow\Chief\Forms\UI\Livewire\EditFormComponent;
-use Thinktomorrow\Chief\Models\UI\Livewire\CreateModelComponent;
+use Thinktomorrow\Chief\Forms\UI\Livewire\EditModelForm;
+use Thinktomorrow\Chief\Models\UI\Livewire\CreateModel;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -55,7 +55,7 @@ class UploadingFileWhenEditingFormTest extends ChiefTestCase
 
         app(AddAsset::class)->handle($this->model, $asset, 'image', 'nl', 0, []);
 
-        $component = Livewire::test(EditFormComponent::class, [
+        $component = Livewire::test(EditModelForm::class, [
             'modelReference' => $this->model->modelReference(),
             'formComponent' => Form::make('main'),
             'parentComponentId' => 'xxx',
@@ -72,7 +72,7 @@ class UploadingFileWhenEditingFormTest extends ChiefTestCase
         $this->assertDatabaseCount('assets', 0);
         $this->assertDatabaseCount('assets_pivot', 0);
 
-        $component = Livewire::test(EditFormComponent::class, [
+        $component = Livewire::test(EditModelForm::class, [
             'modelReference' => $this->model->modelReference(),
             'formComponent' => Form::make('main'),
             'parentComponentId' => 'xxx',
@@ -89,7 +89,7 @@ class UploadingFileWhenEditingFormTest extends ChiefTestCase
 
     public function test_it_dispatches_reload_event_after_save_when_enabled(): void
     {
-        Livewire::test(EditFormComponent::class, [
+        Livewire::test(EditModelForm::class, [
             'modelReference' => $this->model->modelReference(),
             'formComponent' => Form::make('main')->reloadPageAfterSave(),
             'parentComponentId' => 'xxx',
@@ -101,7 +101,7 @@ class UploadingFileWhenEditingFormTest extends ChiefTestCase
 
     public function test_it_does_not_dispatch_reload_event_after_save_by_default(): void
     {
-        Livewire::test(EditFormComponent::class, [
+        Livewire::test(EditModelForm::class, [
             'modelReference' => $this->model->modelReference(),
             'formComponent' => Form::make('main'),
             'parentComponentId' => 'xxx',
@@ -122,7 +122,7 @@ class UploadingFileWhenEditingFormTest extends ChiefTestCase
         $this->assertDatabaseCount('assets', 1);
         $this->assertDatabaseCount('assets_pivot', 0);
 
-        Livewire::test(CreateModelComponent::class)
+        Livewire::test(CreateModel::class)
             ->dispatch('open-create-model', ['modelClass' => ArticlePage::class])
             ->set('locales', ['nl'])
             ->set('form', [

@@ -82,7 +82,7 @@
                 </div>
 
                 <template x-teleport="body">
-                    <livewire:chief-fragments::edit-fragment
+                    <livewire:chief-wire-fragments::edit-fragment
                         :key="$fragment->getId() . '-edit-fragment'"
                         :context="$context"
                         :model="$this->getModel()"
@@ -91,7 +91,7 @@
                 </template>
 
                 <template x-teleport="body">
-                    <livewire:chief-fragments::add-fragment
+                    <livewire:chief-wire-fragments::add-fragment
                         :key="$fragment->getId() . '-add-fragment'"
                         :context="$context"
                         :parent-component-id="$this->getId()"

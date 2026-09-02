@@ -2,7 +2,7 @@
     <div class="flex gap-2 px-4 py-2.5 sm:flex-row sm:items-center">
         @if ($this->shouldShowItemsPerPageSelection())
             <x-chief::form.input.select
-                wire:model.change.number="selectedItemsPerPage"
+                wire:model.live.change.number="selectedItemsPerPage"
                 aria-label="Aantal resultaten per pagina"
                 size="sm"
             >

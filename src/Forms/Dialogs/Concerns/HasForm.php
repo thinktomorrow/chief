@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Forms\Dialogs\Concerns;
 
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Modelable;
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Forms\Fields\Field;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
 use Thinktomorrow\Chief\Forms\Fields\FieldName\LivewireFieldName;
@@ -116,7 +116,7 @@ trait HasForm
      */
     public function onFilesUpdated(string $fieldName, array $files, ?string $parentComponentId = null)
     {
-        // Make sure that the FileFieldUploadComponent is a child component of this component
+        // Make sure that the FileFieldAssetUploader is a child component of this component
         if ($this->getId() !== $parentComponentId) {
             return;
         }

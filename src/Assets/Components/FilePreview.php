@@ -6,8 +6,8 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
-use Thinktomorrow\Chief\Assets\Livewire\HasPreviewFiles;
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\UI\Livewire\HasPreviewFiles;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 
 class FilePreview extends Component implements Htmlable
 {

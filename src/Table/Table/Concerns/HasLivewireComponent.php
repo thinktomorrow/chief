@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Table\Table\Concerns;
 
-use Thinktomorrow\Chief\Table\Livewire\TableComponent;
+use Thinktomorrow\Chief\Table\UI\Livewire\DataTable;
 
 trait HasLivewireComponent
 {
     // Default Livewire table component
-    private string $livewireComponentClass = TableComponent::class;
+    private string $livewireComponentClass = DataTable::class;
 
     public function usesLivewireComponent(string $livewireComponentClass): static
     {

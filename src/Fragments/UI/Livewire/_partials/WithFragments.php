@@ -32,7 +32,7 @@ trait WithFragments
             'fragmentId' => $fragmentId,
             'locales' => $this->context->allowedSites,
             'scopedLocale' => $this->scopedLocale,
-        ])->to('chief-fragments::edit-fragment');
+        ])->to('chief-wire-fragments::edit-fragment');
     }
 
     public function addFragment(int $order, ?string $parentId = null): void
@@ -42,7 +42,7 @@ trait WithFragments
             'parentId' => $parentId,
             'locales' => $this->context->allowedSites,
             'scopedLocale' => $this->scopedLocale,
-        ])->to('chief-fragments::add-fragment');
+        ])->to('chief-wire-fragments::add-fragment');
     }
 
     public function onFragmentUpdated(string $fragmentId, string $contextId, ?string $parentId)

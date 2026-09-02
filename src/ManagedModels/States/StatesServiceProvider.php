@@ -4,8 +4,6 @@ namespace Thinktomorrow\Chief\ManagedModels\States;
 
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditState;
-use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\State;
 
 class StatesServiceProvider extends ServiceProvider
 {
@@ -13,8 +11,12 @@ class StatesServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-states', __DIR__.'/UI/views');
 
-        Livewire::component('chief-wire::state', State::class);
-        Livewire::component('chief-wire::edit-state', EditState::class);
+        Livewire::addNamespace(
+            'chief-wire-states',
+            classNamespace: 'Thinktomorrow\\Chief\\ManagedModels\\States\\UI\\Livewire',
+            classPath: __DIR__.'/UI/Livewire',
+            classViewPath: __DIR__.'/UI/views/livewire',
+        );
     }
 
     public function register() {}

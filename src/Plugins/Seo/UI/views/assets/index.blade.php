@@ -8,9 +8,9 @@
         />
     </x-slot>
 
-    <livewire:chief-wire::table key="seo-assets-table" :table="$table" />
+    <livewire:chief-wire-table::data-table key="seo-assets-table" :table="$table" />
 
     <template x-teleport="body">
-        <livewire:chief-wire::file-edit parent-id="seo-asset" />
+        <livewire:chief-wire-assets::gallery-asset-editor parent-id="seo-asset" />
     </template>
 </x-chief::page.template>

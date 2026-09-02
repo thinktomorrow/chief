@@ -1,0 +1,11 @@
+<x-chief::dialog.modal
+    wired
+    size="md"
+    title="{{ $previewFile && $previewFile->isExternalAsset ? 'Pas extern bestand aan' : 'Pas bestand aan' }}"
+>
+    @if ($previewFile && $previewFile->isExternalAsset)
+        @include('chief-assets::livewire._partials.file-edit-external')
+    @else
+        @include('chief-assets::livewire._partials.file-edit-local')
+    @endif
+</x-chief::dialog.modal>

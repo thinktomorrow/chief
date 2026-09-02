@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateTransitionGuard;
-use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditState;
+use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditModelState;
 use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\TransitionDto;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticleStateAdminConfig;
@@ -26,12 +26,12 @@ final class EditStateTest extends TestCase
         $component = new EditStateWithConfirmationFields;
         $component->setFormData(['stale_value' => true]);
 
-        $component->transition('default-on');
+        $component->applyTransition('default-on');
 
         $this->assertSame(['delete_registrations' => true], $component->getFormData());
 
         $component->closeConfirm();
-        $component->transition('default-off');
+        $component->applyTransition('default-off');
 
         $this->assertSame(['delete_registrations' => false], $component->getFormData());
     }
@@ -63,7 +63,7 @@ final class EditStateTest extends TestCase
 
         $article = GuardedArticleWithStateAdminConfig::create(['article_state' => 'offline']);
 
-        Livewire::test(EditState::class, [
+        Livewire::test(EditModelState::class, [
             'parentComponentId' => 'parent-component',
             'stateKey' => 'article_state',
             'model' => $article,
@@ -75,7 +75,7 @@ final class EditStateTest extends TestCase
     }
 }
 
-final class EditStateWithConfirmationFields extends EditState
+final class EditStateWithConfirmationFields extends EditModelState
 {
     /** @return Collection<int, TransitionDto> */
     public function getTransitions(): Collection

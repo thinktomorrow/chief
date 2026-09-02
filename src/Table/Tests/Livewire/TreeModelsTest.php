@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Table\Tests\Livewire;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Thinktomorrow\Chief\Table\Livewire\TreeModels;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TreeModelFixture;
 use Thinktomorrow\Chief\Table\Tests\Fixtures\TreeResourceFixture;
 use Thinktomorrow\Chief\Table\Tests\TestCase;
+use Thinktomorrow\Chief\Table\UI\Livewire\TreeModels;
 
 class TreeModelsTest extends TestCase
 {

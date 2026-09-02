@@ -6,8 +6,8 @@ use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
 use Thinktomorrow\AssetLibrary\Application\CreateAsset;
-use Thinktomorrow\Chief\Assets\Livewire\FileEditComponent;
-use Thinktomorrow\Chief\Assets\Livewire\PreviewFile;
+use Thinktomorrow\Chief\Assets\UI\Livewire\GalleryAssetEditor;
+use Thinktomorrow\Chief\Assets\UI\Livewire\PreviewFile;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class FileEditTest extends ChiefTestCase
@@ -22,7 +22,7 @@ class FileEditTest extends ChiefTestCase
 
         $this->model = $this->setUpAndCreateArticle();
 
-        $this->livewireInstance = Livewire::test(FileEditComponent::class, [
+        $this->livewireInstance = Livewire::test(GalleryAssetEditor::class, [
             'parentId' => 'xxx',
         ]);
     }

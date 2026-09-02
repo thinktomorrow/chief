@@ -4,8 +4,6 @@ namespace Thinktomorrow\Chief\Urls;
 
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
-use Thinktomorrow\Chief\Urls\UI\Livewire\Links\EditLinks;
-use Thinktomorrow\Chief\Urls\UI\Livewire\Links\Links;
 
 class UrlsServiceProvider extends ServiceProvider
 {
@@ -13,10 +11,12 @@ class UrlsServiceProvider extends ServiceProvider
     {
         $this->app['view']->addNamespace('chief-urls', __DIR__.'/UI/views');
 
-        // Site & link management for visitable model
-        Livewire::component('chief-wire::links', Links::class);
-        Livewire::component('chief-wire::edit-links', EditLinks::class);
-
+        Livewire::addNamespace(
+            'chief-wire-urls',
+            classNamespace: 'Thinktomorrow\\Chief\\Urls\\UI\\Livewire',
+            classPath: __DIR__.'/UI/Livewire',
+            classViewPath: __DIR__.'/UI/views/livewire',
+        );
     }
 
     public function bootAdmin(): void {}

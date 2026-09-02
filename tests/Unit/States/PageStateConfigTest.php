@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\States;
 use Livewire\Livewire;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
-use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditState;
+use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditModelState;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -28,7 +28,7 @@ final class PageStateConfigTest extends ChiefTestCase
     {
         $page = ArticlePage::create(['current_state' => PageState::draft->getValueAsString()]);
 
-        Livewire::test(EditState::class, [
+        Livewire::test(EditModelState::class, [
             'parentComponentId' => 'parent-component',
             'stateKey' => PageState::KEY,
             'model' => $page,
@@ -60,7 +60,7 @@ final class PageStateConfigTest extends ChiefTestCase
     {
         $page = ArticlePage::create(['current_state' => PageState::draft->getValueAsString()]);
 
-        Livewire::test(EditState::class, [
+        Livewire::test(EditModelState::class, [
             'parentComponentId' => 'parent-component',
             'stateKey' => PageState::KEY,
             'model' => $page,
@@ -70,7 +70,7 @@ final class PageStateConfigTest extends ChiefTestCase
             ->assertSeeHtml('wire:click="editLinks"')
             ->call('editLinks')
             ->assertSet('isOpen', false)
-            ->assertDispatched('open-edit-links');
+            ->assertDispatched('open-edit-model-links');
     }
 
     public function test_add_link_action_is_hidden_when_the_page_has_a_link(): void
@@ -79,7 +79,7 @@ final class PageStateConfigTest extends ChiefTestCase
         $this->createUrl($page);
         $page->unsetRelation('urls');
 
-        Livewire::test(EditState::class, [
+        Livewire::test(EditModelState::class, [
             'parentComponentId' => 'parent-component',
             'stateKey' => PageState::KEY,
             'model' => $page,

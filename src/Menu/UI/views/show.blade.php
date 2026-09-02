@@ -8,6 +8,6 @@
         />
     </x-slot>
 
-    <livewire:chief-wire::menus :type="$type" :active-menu-id="$activeMenuId" />
+    <livewire:chief-wire-menu::menu-list :type="$type" :active-menu-id="$activeMenuId" />
     
 </x-chief::page.template>

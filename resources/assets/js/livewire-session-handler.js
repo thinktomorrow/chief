@@ -2,7 +2,7 @@ const SESSION_EXPIRED_RELOAD_KEY = 'chief:livewire:419-reload-at';
 const SESSION_EXPIRED_RELOAD_COOLDOWN_MS = 2 * 60 * 1000;
 const KEEP_ALIVE_INTERVAL_MS = 10 * 60 * 1000;
 
-let hasRegisteredLivewireRequestHook = false;
+let hasRegisteredLivewireRequestInterceptor = false;
 let keepAliveTimerId = null;
 
 const getConfig = () => {
@@ -50,15 +50,17 @@ const keepSessionAlive = () => {
     });
 };
 
-const registerLivewireRequestHook = () => {
-    if (hasRegisteredLivewireRequestHook || !window.Livewire?.hook) {
+const registerLivewireRequestInterceptor = () => {
+    if (hasRegisteredLivewireRequestInterceptor || !window.Livewire?.interceptRequest) {
         return;
     }
 
-    hasRegisteredLivewireRequestHook = true;
+    hasRegisteredLivewireRequestInterceptor = true;
 
-    window.Livewire.hook('request', ({ fail }) => {
-        fail(({ status, preventDefault }) => {
+    window.Livewire.interceptRequest(({ onError }) => {
+        onError(({ response, preventDefault }) => {
+            const status = response.status;
+
             if (status === 419) {
                 preventDefault();
 
@@ -95,10 +97,10 @@ const initLivewireSessionHandler = () => {
     startKeepAlive();
 
     if (window.Livewire) {
-        registerLivewireRequestHook();
+        registerLivewireRequestInterceptor();
     }
 
-    document.addEventListener('livewire:init', registerLivewireRequestHook);
+    document.addEventListener('livewire:init', registerLivewireRequestInterceptor);
 };
 
 initLivewireSessionHandler();
