@@ -1,36 +1,30 @@
-@props([
+@props ([
     'badges' => [],
     'backButton' => null,
 ])
 
 {{-- Always declare @aware after @props, otherwise the default values will not be applied. --}}
-@aware([
+@aware ([
     'title' => null,
     'subtitle' => null,
 ])
 
 <header {{ $attributes->class(['border-grey-100 flex shrink-0 items-start justify-between border-b p-4']) }}>
-    <div class="flex shrink-0 items-start gap-2">
+    <div class="flex min-w-0 items-start gap-2">
         @if ($backButton)
             {{ $backButton }}
         @else
-            <x-chief::button
-                size="sm"
-                variant="grey"
-                type="button"
-                x-on:click.stop="close()"
-                class="mt-[0.1875rem] shrink-0"
-            >
+            <x-chief::button size="sm" variant="grey" type="button" x-on:click.stop="close()" class="mt-0.75 shrink-0">
                 <x-chief::icon.arrow-left />
             </x-chief::button>
         @endif
 
         @if ($title || $subtitle || count($badges) > 0)
-            <div class="mt-[0.375rem] space-y-1.5">
+            <div class="mt-1.5 min-w-0 space-y-1.5">
                 @if ($title || count($badges) > 0)
                     <div class="flex flex-wrap items-start gap-2">
                         @if ($title)
-                            <h2 class="font-display text-grey-950 text-xl/6 font-semibold">
+                            <h2 class="font-display text-grey-950 text-xl/6 font-semibold wrap-break-word">
                                 {{ $title }}
                             </h2>
                         @endif
@@ -48,17 +42,13 @@
                 @endif
 
                 @if ($subtitle)
-                    <p class="body text-grey-500">
-                        {!! $subtitle !!}
-                    </p>
+                    <p class="body text-grey-500">{!! $subtitle !!}</p>
                 @endif
             </div>
         @endif
     </div>
 
     @if ($slot->isNotEmpty())
-        <div class="flex flex-wrap items-start justify-end gap-2">
-            {{ $slot }}
-        </div>
+        <div class="flex shrink-0 flex-wrap items-start justify-end gap-2">{{ $slot }}</div>
     @endif
 </header>
