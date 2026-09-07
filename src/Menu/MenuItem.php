@@ -123,8 +123,21 @@ class MenuItem extends Model implements HasAllowedSites, HasAsset, Node, Referab
 
     public function getUrl(?string $locale = null): ?string
     {
+        if (! $this->hasLink()) {
+            return null;
+        }
+
         // Prefer localized version over non-localized
         return $this->dynamic('url', $this->getLocale($locale), $this->url);
+    }
+
+    /**
+     * The link type is the single authority on whether this menu item points somewhere.
+     * Any url left behind in the dynamic values is ignored for a nolink item.
+     */
+    public function hasLink(): bool
+    {
+        return ! $this->ofType(MenuLinkType::nolink->value);
     }
 
     public function setUrl(?string $url, string $locale): void

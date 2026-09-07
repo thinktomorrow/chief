@@ -57,6 +57,7 @@
                                         name="trans[url][{{ $locale }}]"
                                         value="{{ old('trans.url.'.$locale, $menuitem->dynamic('url', $locale)) }}"
                                         placeholder="e.g. https://google.com"
+                                        x-bind:disabled="type !== 'custom'"
                                     />
                                 </x-chief::form.fieldset>
                             </x-chief::tabs.tab>
@@ -70,6 +71,7 @@
                                 name="trans[url][{{ $locale }}]"
                                 value="{{ old('trans.url.'.$locale, $menuitem->dynamic('url', $locale)) }}"
                                 placeholder="e.g. https://google.com"
+                                x-bind:disabled="type !== 'custom'"
                             />
                         </x-chief::form.fieldset>
                     @endforeach

@@ -13,6 +13,8 @@ use Thinktomorrow\Chief\Models\App\Actions\UpdateForm;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Urls\Models\LinkStatus;
+use Thinktomorrow\Chief\Urls\Models\UrlRecord;
 
 class ProjectModelDataTest extends ChiefTestCase
 {
@@ -121,6 +123,10 @@ class ProjectModelDataTest extends ChiefTestCase
 
     public function test_it_can_project_page_data_when_page_is_deleted()
     {
+        $this->updateLinks($this->page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
+
+        $this->assertEquals('/nl-base/foobar-nl', MenuItem::first()->getUrl('nl'));
+
         app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'unpublish');
         app(UpdateState::class)->handle('article_page', $this->page->modelReference(), 'current_state', 'delete');
 
@@ -133,5 +139,20 @@ class ProjectModelDataTest extends ChiefTestCase
         $this->assertEquals('artikel titel nl', $collection->first()->getOwnerLabel());
         $this->assertEquals(null, $collection->first()->getUrl());
         $this->assertTrue($collection->first()->isOffline());
+    }
+
+    public function test_it_clears_the_url_when_the_owner_loses_its_online_url()
+    {
+        $this->updateLinks($this->page, ['nl' => 'foobar-nl', 'en' => 'foobar-en']);
+
+        $this->assertEquals('/nl-base/foobar-nl', MenuItem::first()->getUrl('nl'));
+        $this->assertEquals('/en-base/foobar-en', MenuItem::first()->getUrl('en'));
+
+        UrlRecord::query()->where('site', 'en')->update(['status' => LinkStatus::offline->value]);
+
+        app(ProjectModelData::class)->handleByOwner($this->page->getMorphClass(), $this->page->id);
+
+        $this->assertEquals('/nl-base/foobar-nl', MenuItem::first()->getUrl('nl'));
+        $this->assertNull(MenuItem::first()->getUrl('en'));
     }
 }

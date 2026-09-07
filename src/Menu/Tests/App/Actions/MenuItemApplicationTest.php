@@ -277,11 +277,12 @@ class MenuItemApplicationTest extends ChiefTestCase
 
         $menuItemId = $this->menuItemApplication->create($command);
 
+        // The submitted url is ignored: an internal type has its url projected from the owner
         $this->assertDatabaseHas('menu_items', [
             'id' => $menuItemId,
             'menu_id' => 1,
             'type' => 'internal',
-            'values' => json_encode(['url' => ['nl' => '/page']]),
+            'values' => null,
             'owner_type' => $owner->getMorphClass(),
             'owner_id' => $owner->id,
         ]);
@@ -359,6 +360,161 @@ class MenuItemApplicationTest extends ChiefTestCase
             'type' => MenuLinkType::nolink->value,
             'values' => json_encode([]),
             'parent_id' => null,
+        ]);
+    }
+
+    public function test_url_is_removed_when_switching_to_no_link_even_when_submitted()
+    {
+        Event::fake();
+
+        $menuItemId = $this->menuItemApplication->create(new CreateMenuItem(
+            menuId: 1,
+            linkType: 'custom',
+            parentId: null,
+            ownerReference: null,
+            data: ['label' => ['nl' => 'Home'], 'url' => ['nl' => 'thinktomorrow.be']]
+        ));
+
+        /**
+         * The custom url input is hidden but never disabled by the form, so the
+         * previous url is submitted again along with the nolink type.
+         */
+        $this->menuItemApplication->update(new UpdateMenuItem(
+            menuItemId: $menuItemId,
+            linkType: MenuLinkType::nolink->value,
+            ownerReference: null,
+            parentId: null,
+            data: ['label' => ['nl' => 'Home'], 'url' => ['nl' => 'https://thinktomorrow.be']]
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'type' => MenuLinkType::nolink->value,
+            'values' => json_encode(['label' => ['nl' => 'Home']]),
+        ]);
+
+        $this->assertNull(MenuItem::find($menuItemId)->getUrl('nl'));
+    }
+
+    public function test_url_is_not_stored_when_creating_a_no_link_item()
+    {
+        Event::fake();
+
+        $menuItemId = $this->menuItemApplication->create(new CreateMenuItem(
+            menuId: 1,
+            linkType: MenuLinkType::nolink->value,
+            parentId: null,
+            ownerReference: null,
+            data: ['label' => ['nl' => 'Home'], 'url' => ['nl' => 'thinktomorrow.be']]
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'type' => MenuLinkType::nolink->value,
+            'values' => json_encode(['label' => ['nl' => 'Home']]),
+        ]);
+
+        $this->assertNull(MenuItem::find($menuItemId)->getUrl('nl'));
+    }
+
+    public function test_a_submitted_url_is_ignored_for_the_internal_link_type()
+    {
+        Event::fake();
+
+        ArticlePage::migrateUp();
+        $page = ArticlePage::create();
+
+        $menuItemId = $this->menuItemApplication->create(new CreateMenuItem(
+            menuId: 1,
+            linkType: MenuLinkType::internal->value,
+            parentId: null,
+            ownerReference: $page->modelReference()->getShort(),
+            data: ['label' => ['nl' => 'Home'], 'url' => ['nl' => 'thinktomorrow.be']]
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'type' => MenuLinkType::internal->value,
+            'values' => json_encode(['label' => ['nl' => 'Home']]),
+        ]);
+    }
+
+    public function test_a_stale_custom_url_is_removed_when_switching_to_an_internal_link()
+    {
+        Event::fake();
+
+        ArticlePage::migrateUp();
+        $page = ArticlePage::create();
+
+        $menuItemId = $this->menuItemApplication->create(new CreateMenuItem(
+            menuId: 1,
+            linkType: MenuLinkType::custom->value,
+            parentId: null,
+            ownerReference: null,
+            data: ['label' => ['nl' => 'Home'], 'url' => ['nl' => 'thinktomorrow.be']]
+        ));
+
+        $this->assertEquals('https://thinktomorrow.be', MenuItem::find($menuItemId)->getUrl('nl'));
+
+        $this->menuItemApplication->update(new UpdateMenuItem(
+            menuItemId: $menuItemId,
+            linkType: MenuLinkType::internal->value,
+            ownerReference: $page->modelReference()->getShort(),
+            parentId: null,
+            data: ['label' => ['nl' => 'Home'], 'url' => ['nl' => 'thinktomorrow.be']]
+        ));
+
+        /**
+         * The url of an internal item is projected from its owner page. The previous custom
+         * url must not survive the switch, since projection is not guaranteed to overwrite
+         * it: an owner that is not visitable or no longer present leaves the url untouched.
+         */
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'type' => MenuLinkType::internal->value,
+            'values' => json_encode(['label' => ['nl' => 'Home']]),
+        ]);
+
+        $this->assertNull(MenuItem::find($menuItemId)->getUrl('nl'));
+    }
+
+    public function test_owner_is_cleared_when_switching_away_from_an_internal_link()
+    {
+        Event::fake();
+
+        ArticlePage::migrateUp();
+        $page = ArticlePage::create();
+
+        $menuItemId = $this->menuItemApplication->create(new CreateMenuItem(
+            menuId: 1,
+            linkType: MenuLinkType::internal->value,
+            parentId: null,
+            ownerReference: $page->modelReference()->getShort(),
+            data: ['label' => ['nl' => 'Home']]
+        ));
+
+        MenuItem::find($menuItemId)->setOwnerLabel('artikel titel', 'nl');
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'owner_type' => $page->modelReference()->shortClassName(),
+            'owner_id' => $page->id,
+        ]);
+
+        $this->menuItemApplication->update(new UpdateMenuItem(
+            menuItemId: $menuItemId,
+            linkType: MenuLinkType::custom->value,
+            ownerReference: $page->modelReference()->getShort(),
+            parentId: null,
+            data: ['label' => ['nl' => 'Home'], 'url' => ['nl' => 'thinktomorrow.be']]
+        ));
+
+        $this->assertDatabaseHas('menu_items', [
+            'id' => $menuItemId,
+            'type' => MenuLinkType::custom->value,
+            'owner_type' => null,
+            'owner_id' => null,
+            'values' => json_encode(['label' => ['nl' => 'Home'], 'url' => ['nl' => 'https://thinktomorrow.be']]),
         ]);
     }
 }

@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Menu\App\Queries\MenuTree;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\MenuLinkType;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Vine\NodeCollection;
 
@@ -119,6 +120,50 @@ class MenuItemTest extends ChiefTestCase
         $this->assertNotNull($collection->find(function ($node) {
             return $node->getUrl() == 'https://google.com';
         }));
+    }
+
+    public function test_get_url_returns_null_for_a_no_link_item()
+    {
+        $menu = Menu::create(['type' => 'main', 'allowed_sites' => ['nl']]);
+        $item = MenuItem::create([
+            'menu_id' => $menu->id,
+            'label' => ['nl' => 'no link item'],
+            'type' => MenuLinkType::nolink->value,
+            'url' => ['nl' => '/about'],
+        ]);
+
+        $this->assertFalse($item->hasLink());
+        $this->assertNull($item->getUrl('nl'));
+
+        // The stored value is untouched, it is simply not exposed as a url
+        $this->assertEquals('/about', $item->dynamic('url', 'nl'));
+    }
+
+    public function test_get_url_does_not_fall_back_to_another_locale_for_a_no_link_item()
+    {
+        $menu = Menu::create(['type' => 'main', 'allowed_sites' => ['nl']]);
+        $item = MenuItem::create([
+            'menu_id' => $menu->id,
+            'label' => ['nl' => 'no link item'],
+            'type' => MenuLinkType::nolink->value,
+            'url' => ['nl' => '/about'],
+        ]);
+
+        $this->assertNull($item->getUrl('en'));
+    }
+
+    public function test_a_custom_item_still_reports_a_link()
+    {
+        $menu = Menu::create(['type' => 'main', 'allowed_sites' => ['nl']]);
+        $item = MenuItem::create([
+            'menu_id' => $menu->id,
+            'label' => ['nl' => 'custom item'],
+            'type' => 'custom',
+            'url' => ['nl' => 'https://google.com'],
+        ]);
+
+        $this->assertTrue($item->hasLink());
+        $this->assertEquals('https://google.com', $item->getUrl('nl'));
     }
 
     public function test_a_menuitem_can_be_nested()

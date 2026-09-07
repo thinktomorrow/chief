@@ -6,7 +6,19 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 ## Unreleased
 
 - Added: Squanto section headings can use the `section_label` line metadata.
+- Added: `MenuItem::hasLink()` to check whether a menu item points somewhere. The link type is the single authority: a
+  'no link' item reports no link even when a url is still stored in its dynamic values.
 - Changed: publishing a page now requires a link to be added first
+- Fixed: A menu item of type 'no link' no longer keeps a url. The url input is disabled while another link type is
+  active, a submitted url is ignored for the 'no link' and internal link types, and `MenuItem::getUrl()` returns null
+  for a 'no link' item instead of falling back to a leftover value.
+- Fixed: Switching a menu item away from the internal link type now clears its owner reference and the page label that
+  was projected onto the item.
+- Fixed: Switching a menu item to the internal or 'no link' type now also drops a url stored by a previous link type.
+  A custom url could survive a switch to an internal type, since the projection of the owner page only overwrites the
+  url of an owner that is visitable and still present.
+- Fixed: A menu item now clears its url per site when its owner page loses the online url for that site, instead of
+  keeping the last known url.
 
 ## [0.10.31] - 2026-09-01
 
