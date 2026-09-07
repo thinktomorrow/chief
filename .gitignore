@@ -18,6 +18,7 @@ _migration/uploads
 .php_cs.cache
 .php-cs-fixer.cache
 /docs/.obsidian
+.eslintcache
 
 ##########################################
 # BUILDING

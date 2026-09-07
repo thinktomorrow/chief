@@ -1,4 +1,4 @@
-@props([
+@props ([
     'size' => 'base',
     'variant' => 'grey',
 ])
@@ -23,11 +23,7 @@
 @endphp
 
 @if ($attributes->has('href'))
-    <a {{ $attributes }}>
-        {{ $slot }}
-    </a>
+    <a {{ $attributes }}> {{ $slot }} </a>
 @else
-    <button {{ $attributes->merge(['type' => 'button']) }}>
-        {{ $slot }}
-    </button>
+    <button {{ $attributes->merge(['type' => 'button']) }}>{{ $slot }}</button>
 @endif
