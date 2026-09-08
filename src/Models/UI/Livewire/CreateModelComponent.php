@@ -86,6 +86,7 @@ class CreateModelComponent extends Component
             ->filterByNotTagged(['edit', 'not-on-model-create', 'not-on-create']) // TODO: make consistent tags...
             ->model($model)
             ->getComponentsWithoutForms()
+            ->pipe(fn ($components) => $this->applyFieldDependencies($components))
             ->reject(fn ($component) => $component instanceof Table);
     }
 
