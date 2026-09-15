@@ -17,6 +17,61 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MenuItemControllerTest extends ChiefTestCase
 {
+    public function test_parent_selection_is_only_shown_for_nestable_menus(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+
+        foreach (['main' => true, 'footer' => false] as $type => $isNestable) {
+            $menu = Menu::create(['type' => $type]);
+            MenuItem::create(['menu_id' => $menu->id, 'type' => 'custom']);
+            $item = MenuItem::create(['menu_id' => $menu->id, 'type' => 'custom']);
+
+            foreach ([route('chief.back.menuitem.create', $menu->id), route('chief.back.menuitem.edit', $item->id)] as $url) {
+                $response = $this->asAdmin()->get($url)->assertOk();
+                if ($isNestable) {
+                    $response->assertSee('name="allow_parent"', false);
+                } else {
+                    $response->assertDontSee('name="allow_parent"', false);
+                }
+            }
+        }
+    }
+
+    public function test_creating_a_non_nestable_menu_item_ignores_parent_input(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+        $menu = Menu::create(['type' => 'footer']);
+        $parent = MenuItem::create(['menu_id' => $menu->id]);
+
+        $this->asAdmin()->post(route('chief.back.menuitem.store', $menu->id), $this->validParams([
+            'allow_parent' => true,
+            'parent_id' => $parent->id,
+        ]))->assertSessionHasNoErrors()->assertRedirect();
+
+        $this->assertNull(MenuItem::where('id', '!=', $parent->id)->firstOrFail()->parent_id);
+    }
+
+    public function test_updating_non_nestable_menu_items_preserves_existing_parent_and_order(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+        $menu = Menu::create(['type' => 'footer']);
+        $parent = MenuItem::create(['menu_id' => $menu->id]);
+
+        foreach ([null, $parent->id] as $parentId) {
+            $item = MenuItem::create(['menu_id' => $menu->id, 'parent_id' => $parentId, 'order' => 7]);
+
+            foreach ([[], ['allow_parent' => true, 'parent_id' => $item->id]] as $parentInput) {
+                $params = array_replace(Arr::except($this->validParams(), ['allow_parent', 'parent_id']), $parentInput);
+                $this->asAdmin()->put(route('chief.back.menuitem.update', $item->id), $params)
+                    ->assertSessionHasNoErrors()->assertRedirect();
+
+                $this->assertEquals($parentId, $item->fresh()->parent_id);
+                $this->assertEquals(7, $item->fresh()->order);
+                $this->assertEquals('nieuw label', $item->fresh()->label);
+            }
+        }
+    }
+
     public function test_project_resource_fields_are_rendered(): void
     {
         $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);

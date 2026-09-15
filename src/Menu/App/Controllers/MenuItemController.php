@@ -44,9 +44,10 @@ class MenuItemController extends Controller
         $menuitem->type = MenuLinkType::internal->value;  // Default menu type
         $menuitem->setRelation('menu', $menu);
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
+        $isNestable = $this->resource->isNestable($menu);
+        $menuitems = $isNestable ? $this->prepareMenuItemsForAdminSelect->prepare(
             MenuTree::byMenu($id),
-        );
+        ) : [];
 
         $layout = PageLayout::make($this->resource->fields($menuitem))
             ->model($menuitem)
@@ -58,6 +59,7 @@ class MenuItemController extends Controller
             'pages' => UrlHelper::allOnlineModels(),
             'ownerReference' => null,
             'parents' => $menuitems,
+            'isNestable' => $isNestable,
             'layout' => $layout,
         ]);
     }
@@ -67,6 +69,10 @@ class MenuItemController extends Controller
         $this->authorize('create-page');
 
         $menu = Menu::findOrFail($id);
+
+        if (! $this->resource->isNestable($menu)) {
+            $request->merge(['allow_parent' => false, 'parent_id' => null]);
+        }
 
         $menuItemId = app(MenuItemApplication::class)->create(CreateMenuItem::fromRequest($id, $request));
 
@@ -82,10 +88,11 @@ class MenuItemController extends Controller
 
         $menuitem = MenuItem::with('menu', 'assetRelation', 'assetRelation.media')->findOrFail($id);
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
+        $isNestable = $this->resource->isNestable($menuitem->menu);
+        $menuitems = $isNestable ? $this->prepareMenuItemsForAdminSelect->prepare(
             MenuTree::byMenu($menuitem->menu_id),
             $menuitem
-        );
+        ) : [];
 
         return view('chief-menu::edit', [
             'menu' => $menuitem->menu,
@@ -93,6 +100,7 @@ class MenuItemController extends Controller
             'pages' => UrlHelper::allOnlineModels(),
             'ownerReference' => $menuitem->owner ? $menuitem->owner->modelReference()->getShort() : null,
             'parents' => $menuitems,
+            'isNestable' => $isNestable,
             'layout' => PageLayout::make($this->resource->fields($menuitem))->model($menuitem),
         ]);
     }
@@ -102,6 +110,13 @@ class MenuItemController extends Controller
         $this->authorize('update-page');
 
         $menuItem = MenuItem::findOrFail($id);
+
+        if (! $this->resource->isNestable($menuItem->menu)) {
+            $request->merge([
+                'allow_parent' => $menuItem->parent_id !== null,
+                'parent_id' => $menuItem->parent_id !== null ? (string) $menuItem->parent_id : null,
+            ]);
+        }
 
         $this->menuItemApplication->update(UpdateMenuItem::fromRequest($id, $request));
 

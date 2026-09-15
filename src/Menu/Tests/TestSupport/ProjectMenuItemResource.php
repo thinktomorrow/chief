@@ -16,6 +16,11 @@ use Thinktomorrow\Chief\Table\Table;
 
 class ProjectMenuItemResource extends DefaultMenuItemResource
 {
+    public function isNestable(Menu $menu): bool
+    {
+        return $menu->type !== 'footer';
+    }
+
     public function fields($model): iterable
     {
         if ($model->menu?->type !== 'main') {

@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Table\Actions\Presets\ReorderAction;
 use Thinktomorrow\Chief\Table\Actions\RowAction;
 use Thinktomorrow\Chief\Table\Columns\ColumnBadge;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
+use Thinktomorrow\Chief\Table\Sorters\ManualSort;
 use Thinktomorrow\Chief\Table\Sorters\TreeSort;
 use Thinktomorrow\Chief\Table\Table;
 
@@ -20,12 +21,13 @@ class GetMenuTable
     public function getTable(string $menuId): Table
     {
         $menu = Menu::findOrFail($menuId);
+        $isNestable = $this->resource->isNestable($menu);
 
         $table = Table::make()->query(function () use ($menuId) {
             return MenuItem::with('assetRelation', 'assetRelation.media')
                 ->where('menu_id', $menuId);
         })->setReordering(MenuItem::class)
-            ->returnResultsAsTree()
+            ->returnResultsAsTree($isNestable)
             ->treeLabelColumn('label')
             ->setTreeResource(new MenuItem)
             ->setTableReference(new Table\References\TableReference(static::class, 'getTable', [$menuId]))
@@ -83,7 +85,8 @@ class GetMenuTable
                     ->iconEdit()
                     ->variant('grey'),
             ])->sorters([
-                TreeSort::default(),
+                $isNestable ? TreeSort::default() : ManualSort::default()
+                    ->query(fn ($query) => $query->orderBy('order')->orderBy('id')),
             ]);
 
         return $this->resource->configureTable($table, $menu);

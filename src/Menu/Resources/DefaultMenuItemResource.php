@@ -32,4 +32,9 @@ class DefaultMenuItemResource implements MenuItemResource
                 ->placeholder('Zoek op label of URL'),
         ]);
     }
+
+    public function isNestable(Menu $menu): bool
+    {
+        return true;
+    }
 }

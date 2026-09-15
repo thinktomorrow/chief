@@ -52,6 +52,8 @@ trait WithReordering
 
     public function moveToParent($itemId, $parentId, array $orderedIds)
     {
+        abort_unless($this->isTreeReorderingAllowed(), 403);
+
         $this->verifyReorderingModelClass();
 
         $modelClass = $this->getTable()->getReorderingModelClass();

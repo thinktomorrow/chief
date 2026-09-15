@@ -17,6 +17,45 @@ use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class GetMenuTableTest extends ChiefTestCase
 {
+    public function test_menu_nesting_is_enabled_by_default_and_configurable_per_menu(): void
+    {
+        $menu = Menu::create(['type' => 'footer']);
+        $this->assertTrue(app(GetMenuTable::class)->getTable((string) $menu->id)->shouldReturnResultsAsTree());
+
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+        $this->assertFalse(app(GetMenuTable::class)->getTable((string) $menu->id)->shouldReturnResultsAsTree());
+
+        $main = Menu::create(['type' => 'main']);
+        $this->assertTrue(app(GetMenuTable::class)->getTable((string) $main->id)->shouldReturnResultsAsTree());
+    }
+
+    public function test_flat_menu_shows_and_reorders_children_without_changing_parents(): void
+    {
+        $this->app->bind(MenuItemResource::class, ProjectMenuItemResource::class);
+        $menu = Menu::create(['type' => 'footer']);
+        $parent = MenuItem::create(['menu_id' => $menu->id, 'type' => 'custom', 'label.nl' => 'Parent item', 'order' => 2]);
+        $child = MenuItem::create(['menu_id' => $menu->id, 'type' => 'custom', 'label.nl' => 'Child item', 'parent_id' => $parent->id, 'order' => 0]);
+
+        $component = Livewire::test(TableComponent::class, [
+            'table' => app(GetMenuTable::class)->getTable((string) $menu->id),
+        ])->assertSeeInOrder(['Child item', 'Parent item']);
+
+        $this->assertFalse($component->instance()->areResultsAsTree());
+        $this->assertFalse($component->instance()->isTreeReorderingAllowed());
+        $this->assertFalse($component->instance()->allowsTreeBreadcrumbColumnSelection());
+
+        $component->call('startReordering')
+            ->call('reorder', [$parent->id, $child->id]);
+
+        $this->assertEquals(0, $parent->fresh()->order);
+        $this->assertEquals(1, $child->fresh()->order);
+        $this->assertEquals($parent->id, $child->fresh()->parent_id);
+
+        $component->call('moveToParent', $child->id, null, [$child->id, $parent->id])->assertForbidden();
+        $this->assertEquals($parent->id, $child->fresh()->parent_id);
+        $this->assertEquals(1, $child->fresh()->order);
+    }
+
     public function test_default_search_finds_labels_and_urls_across_locales(): void
     {
         $menu = Menu::create(['type' => 'main']);

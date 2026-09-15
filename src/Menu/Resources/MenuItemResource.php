@@ -10,5 +10,7 @@ use Thinktomorrow\Chief\Table\Table;
 
 interface MenuItemResource extends Resource
 {
+    public function isNestable(Menu $menu): bool;
+
     public function configureTable(Table $table, Menu $menu): Table;
 }
