@@ -113,6 +113,7 @@ class Action extends Component implements Htmlable
         $action->variant($this->variant);
         $action->ordinalLevel($this->ordinalLevel);
         $action->closeDialog($this->closeDialog);
+        $action->openInNewTab($this->shouldOpenInNewTab());
 
         return $action;
     }

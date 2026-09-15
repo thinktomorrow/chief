@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: shouldOpenInNewTab() on Table action button was not persisted between livewire updates
+
 ## [0.10.32] - 2026-09-08
 
 - Added: Squanto section headings can use the `section_label` line metadata.

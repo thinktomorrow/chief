@@ -5,6 +5,11 @@
 @php
     if ($action->hasLink()) {
         $attributes = $attributes->merge(['href' => $action->getLink(), 'title' => $action->getLabel()]);
+        $attributes = $attributes->filter(fn ($value, $key) => ! str_starts_with($key, 'wire:click'));
+
+        if ($action->shouldOpenInNewTab()) {
+            $attributes = $attributes->merge(['target' => '_blank', 'rel' => 'noopener']);
+        }
     }
 
     if ($action->getVariant()) {
