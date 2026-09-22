@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Filters;
 
+use Closure;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasGroupedOptions;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
 use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
@@ -13,9 +14,32 @@ class SelectFilter extends Filter
 {
     use HasGroupedOptions;
     use HasMultiple;
-    use HasOptions;
+    use HasOptions {
+        getOptions as private resolveOptions;
+        options as private setOptions;
+    }
+
+    private array $memoizedOptions = [];
 
     protected string $view = 'chief-table::filters.select';
+
+    public function options(array|Closure $options, bool $sanitize = true): static
+    {
+        $this->memoizedOptions = [];
+
+        return $this->setOptions($options, $sanitize);
+    }
+
+    public function getOptions(?string $locale = null): array
+    {
+        $key = serialize([
+            $locale,
+            app()->getLocale(),
+            $this->getTableFilters(),
+        ]);
+
+        return $this->memoizedOptions[$key] ??= $this->resolveOptions($locale);
+    }
 
     public function getMultiSelectFieldOptions(?string $locale = null): array
     {

@@ -284,6 +284,58 @@ class TableComponentTest extends TestCase
         ], $titleFilter->getOptions());
     }
 
+    public function test_dynamic_select_filter_options_are_resolved_once_across_render_paths(): void
+    {
+        $optionCalls = 0;
+
+        $filter = SelectFilter::make('tree')
+            ->tertiary()
+            ->options(function () use (&$optionCalls): array {
+                $optionCalls++;
+
+                return ['root' => 'Root title'];
+            });
+
+        $this->assertTrue($filter->shouldInitiallyRender());
+        $this->assertSame([['value' => 'root', 'label' => 'Root title']], $filter->getMultiSelectFieldOptions());
+        $this->assertFalse($filter->hasOptionGroups());
+        $this->assertSame('Root title', $filter->findLabelByValue('root'));
+
+        $this->assertSame(1, $optionCalls);
+    }
+
+    public function test_dynamic_select_filter_options_are_refreshed_for_changed_filter_state(): void
+    {
+        $optionCalls = 0;
+
+        $filter = SelectFilter::make('title')->options(
+            function (SelectFilter $filter, ?string $locale, array $filters) use (&$optionCalls): array {
+                $optionCalls++;
+
+                return [$filters['period'] => ucfirst($filters['period'])];
+            }
+        );
+
+        $filter->withTableFilters(['period' => 'current']);
+        $this->assertSame([['value' => 'current', 'label' => 'Current']], $filter->getOptions());
+        $this->assertSame([['value' => 'current', 'label' => 'Current']], $filter->getOptions());
+
+        $filter->withTableFilters(['period' => 'archived']);
+        $this->assertSame([['value' => 'archived', 'label' => 'Archived']], $filter->getOptions());
+        $this->assertSame(2, $optionCalls);
+    }
+
+    public function test_setting_select_filter_options_clears_memoized_options(): void
+    {
+        $filter = SelectFilter::make('status')->options(['current' => 'Current']);
+
+        $this->assertSame([['value' => 'current', 'label' => 'Current']], $filter->getOptions());
+
+        $filter->options(['archived' => 'Archived']);
+
+        $this->assertSame([['value' => 'archived', 'label' => 'Archived']], $filter->getOptions());
+    }
+
     public function test_it_closes_action_dialog_after_action_effect_is_applied(): void
     {
         $table = DialogActionTableFixture::makeTable();

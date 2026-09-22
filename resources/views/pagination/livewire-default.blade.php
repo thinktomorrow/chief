@@ -116,7 +116,7 @@
                                         @else
                                             <x-chief::button
                                                 wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
-                                                aria-label="{{ __('Go to page :page', ['page' => $page]) }}"
+                                                aria-label="Go to page {{ $page }}"
                                                 size="sm"
                                                 variant="outline-white"
                                                 class="min-w-[1.875rem] justify-center rounded-l-none rounded-r-none font-normal hover:relative"

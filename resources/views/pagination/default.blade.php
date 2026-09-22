@@ -110,7 +110,7 @@
                                     <a
                                         href="{{ $url }}"
                                         class="border-grey-200 text-grey-700 ring-grey-300 hover:text-grey-500 active:bg-grey-100 active:text-grey-700 relative -ml-px inline-flex items-center border bg-white px-4 py-2 text-sm leading-5 font-medium transition duration-150 ease-in-out focus:z-10 focus:border-blue-300 focus:ring-3 focus:outline-hidden"
-                                        aria-label="{{ __('Go to page :page', ['page' => $page]) }}"
+                                        aria-label="Go to page {{ $page }}"
                                     >
                                         {{ $page }}
                                     </a>
