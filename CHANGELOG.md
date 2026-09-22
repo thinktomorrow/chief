@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.33] - 2026-09-22
+
 - Fixed: Resource authorization no longer performs an uncached permission existence query for every check and now uses
   Spatie's cached permission lookup directly.
 - Fixed: Eloquent select options are memoized within the current request or job lifecycle, preventing repeated option
@@ -13,10 +15,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   render.
 - Fixed: Pagination page labels no longer trigger repeated Squanto database lookups for a raw translation string.
 - Added: Configure menu nesting per menu through `MenuItemResource::isNestable(Menu $menu)`. Non-nestable menus use a
-  flat, reorderable table and hide parent selection in create/edit forms, while preserving existing parent relationships.
+  flat, reorderable table and hide parent selection in create/edit forms, while preserving existing parent
+  relationships.
 - **Breaking change**: Resources implementing `MenuItemResource` directly must add `isNestable(Menu $menu): bool`.
   Resources extending `DefaultMenuItemResource` inherit the default nestable behavior.
-- Fixed: shouldOpenInNewTab() on Table action button was not persisted between livewire updates
+- Fixed: shouldOpenInNewTab () on Table action button was not persisted between livewire updates
 
 ## [0.10.32] - 2026-09-08
 
