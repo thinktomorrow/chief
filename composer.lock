@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6bf41a84d7b9e2f87f39f761d5bffe7",
+    "content-hash": "6350e3b21d6c7f60f87e5a23610d5e23",
     "packages": [
         {
             "name": "brick/math",
@@ -6966,16 +6966,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "0e0bd88f17ebecb54b7fe0583b0c53a516ff2f14"
+                "reference": "acfbd40c1a1d89694fd225dd88c97176c012859c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/0e0bd88f17ebecb54b7fe0583b0c53a516ff2f14",
-                "reference": "0e0bd88f17ebecb54b7fe0583b0c53a516ff2f14",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/acfbd40c1a1d89694fd225dd88c97176c012859c",
+                "reference": "acfbd40c1a1d89694fd225dd88c97176c012859c",
                 "shasum": ""
             },
             "require": {
@@ -7040,9 +7040,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thinktomorrow/assetlibrary/issues",
-                "source": "https://github.com/thinktomorrow/assetlibrary/tree/1.0.3"
+                "source": "https://github.com/thinktomorrow/assetlibrary/tree/1.0.4"
             },
-            "time": "2026-06-08T14:11:23+00:00"
+            "time": "2026-09-10T17:18:02+00:00"
         },
         {
             "name": "thinktomorrow/dynamic-attributes",
