@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Authorization;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
@@ -141,6 +142,30 @@ final class ResourcePermissionTest extends ChiefTestCase
         $admin->assignRole($role);
 
         $this->assertTrue(ChiefResourcePermissions::adminCanResource($admin, ArticlePageResource::class, 'view'));
+    }
+
+    public function test_repeated_resource_permission_checks_do_not_query_permission_existence(): void
+    {
+        Permission::create(['name' => 'view-page']);
+
+        $role = Role::create(['name' => 'admin']);
+        $role->givePermissionTo('view-page');
+
+        $admin = $this->fakeUser();
+        $admin->assignRole($role);
+
+        DB::flushQueryLog();
+        DB::enableQueryLog();
+
+        $this->assertTrue(ChiefResourcePermissions::adminCanResource($admin, ArticlePageResource::class, 'view'));
+        $this->assertTrue(ChiefResourcePermissions::adminCanResource($admin, ArticlePageResource::class, 'view'));
+
+        $permissionExistenceQueries = collect(DB::getQueryLog())->filter(
+            fn (array $query): bool => str_contains($query['query'], 'permissions')
+                && str_contains(strtolower($query['query']), 'exists')
+        );
+
+        $this->assertCount(0, $permissionExistenceQueries);
     }
 
     public function test_custom_resource_permission_scope_is_used_when_defined(): void

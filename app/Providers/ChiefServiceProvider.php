@@ -26,6 +26,7 @@ use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
 use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Assets\AssetsServiceProvider;
 use Thinktomorrow\Chief\Forms\Events\FormUpdated;
+use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\MemoizedEloquentOptions;
 use Thinktomorrow\Chief\Forms\FormsServiceProvider;
 use Thinktomorrow\Chief\Fragments\App\Actions\CreateFirstContextForPage;
 use Thinktomorrow\Chief\Fragments\App\Actions\DeleteFragment;
@@ -248,6 +249,8 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app->singleton(Settings::class, function () {
             return new Settings;
         });
+
+        $this->app->scoped(MemoizedEloquentOptions::class);
 
         (new SitesServiceProvider($this->app))->register();
         (new StatesServiceProvider($this->app))->register();

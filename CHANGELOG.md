@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Resource authorization no longer performs an uncached permission existence query for every check and now uses
+  Spatie's cached permission lookup directly.
+- Fixed: Eloquent select options are memoized within the current request or job lifecycle, preventing repeated option
+  queries when Chief rebuilds the same form multiple times.
 - Added: Configure menu nesting per menu through `MenuItemResource::isNestable(Menu $menu)`. Non-nestable menus use a
   flat, reorderable table and hide parent selection in create/edit forms, while preserving existing parent relationships.
 - **Breaking change**: Resources implementing `MenuItemResource` directly must add `isNestable(Menu $menu): bool`.

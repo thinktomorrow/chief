@@ -17,7 +17,7 @@ trait HasEloquentOptionsSync
             $relationModel = $model->{$relation}()->getModel();
             $options = ($relationModel instanceof Nestable)
                 ? app(MemoizedSelectOptions::class)->getOptions($relationModel::class)
-                : $relationModel::all()->pluck($labelKey, $valueKey)->toArray();
+                : app(MemoizedEloquentOptions::class)->getOptions($relationModel, $valueKey, $labelKey);
 
             $this->options($options)
                 ->value($model->{$relation}->pluck($valueKey)->toArray())

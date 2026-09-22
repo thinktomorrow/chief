@@ -62,16 +62,6 @@ final class ChiefResourcePermissions
             return false;
         }
 
-        if (! self::permissionExists($permission)) {
-            self::reportMissing($permission);
-
-            if (config('chief.permissions.strict_missing', false)) {
-                throw PermissionDoesNotExist::create($permission, self::guardName());
-            }
-
-            return false;
-        }
-
         try {
             return $admin->hasPermissionTo($permission, self::guardName());
         } catch (PermissionDoesNotExist $e) {
@@ -92,16 +82,6 @@ final class ChiefResourcePermissions
         }
 
         $permission = self::permissionFor($resource, $ability);
-
-        if (! self::permissionExists($permission)) {
-            self::reportMissing($permission);
-
-            if (config('chief.permissions.strict_missing', false)) {
-                throw PermissionDoesNotExist::create($permission, self::guardName());
-            }
-
-            return false;
-        }
 
         try {
             return $admin->hasPermissionTo($permission, self::guardName());
@@ -147,12 +127,5 @@ final class ChiefResourcePermissions
         Log::warning('Missing Chief permission checked.', [
             'permission' => $permission,
         ]);
-    }
-
-    private static function permissionExists(string $permission): bool
-    {
-        return Permission::where('name', $permission)
-            ->where('guard_name', self::guardName())
-            ->exists();
     }
 }
