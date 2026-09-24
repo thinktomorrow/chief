@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Forms\Concerns\HasComponents;
 use Thinktomorrow\Chief\Forms\Fields\Checkbox;
 use Thinktomorrow\Chief\Forms\Fields\Field;
+use Thinktomorrow\Chief\Forms\Fields\FieldName\FieldNameHelpers;
 use Thinktomorrow\Chief\Forms\Fields\Repeat;
 use Thinktomorrow\Chief\Forms\Fields\SelectList;
 
@@ -28,6 +29,30 @@ trait InteractsWithFields
 
             if ($component instanceof HasComponents && ! $component instanceof Repeat) {
                 $this->injectFormValues($component->getComponents());
+            }
+        }
+    }
+
+    protected function applyFieldDependencies(iterable $components): iterable
+    {
+        $this->resolveFieldDependencies($components);
+
+        return $components;
+    }
+
+    private function resolveFieldDependencies(iterable $components): void
+    {
+        foreach ($components as $component) {
+            if ($component instanceof Field) {
+                foreach ($component->getFieldDependencies() as $fieldName => $callback) {
+                    $state = data_get($this->form ?? [], FieldNameHelpers::replaceBracketsByDots($fieldName));
+
+                    $callback($component, $state);
+                }
+            }
+
+            if ($component instanceof HasComponents && ! $component instanceof Repeat) {
+                $this->resolveFieldDependencies($component->getComponents());
             }
         }
     }
