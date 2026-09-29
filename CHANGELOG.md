@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Boolean field toggles now support `toggleField('field', false)` to show dependent fields when the checkbox is
+  unchecked, without changing the behavior of checked or non-boolean toggles.
+
 ## [0.10.33] - 2026-09-22
 
 - Fixed: Resource authorization no longer performs an uncached permission existence query for every check and now uses

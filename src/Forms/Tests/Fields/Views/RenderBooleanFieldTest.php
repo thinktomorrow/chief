@@ -39,4 +39,18 @@ class RenderBooleanFieldTest extends ChiefTestCase
         $component = Boolean::make('xxx')->optionLabel('positieve keuze')->value(true);
         $this->assertStringContainsString(1, $component->renderPreview());
     }
+
+    public function test_it_can_toggle_fields_when_a_boolean_is_off()
+    {
+        $component = Boolean::make('manually_composed')
+            ->toggleField('odoo_id', false)
+            ->toggleField('preserve_non_odoo_variants', false)
+            ->toggleField('other_field', true);
+
+        $this->assertSame([
+            'odoo_id' => ['0'],
+            'preserve_non_odoo_variants' => ['0'],
+            'other_field' => ['1'],
+        ], $component->getFieldToggles());
+    }
 }

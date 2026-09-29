@@ -20,7 +20,7 @@ trait HasFieldToggle
 
         // Sanitize each value to a string for js compatibility - also converts boolean to 0 and 1.
         foreach ($values as $key => $value) {
-            $values[$key] = (string) $value;
+            $values[$key] = is_bool($value) ? ($value ? '1' : '0') : (string) $value;
         }
 
         $this->fieldToggles[$fieldName] = $values;
