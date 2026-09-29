@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.34] - 2026-09-29
+
 - Fixed: Boolean field toggles now support `toggleField('field', false)` to show dependent fields when the checkbox is
   unchecked, without changing the behavior of checked or non-boolean toggles.
 
