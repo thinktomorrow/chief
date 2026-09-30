@@ -2,6 +2,20 @@
 
 Guide for agentic coding assistants working in `thinktomorrow/chief`.
 
+## Agent skills
+
+### Issue tracker
+
+Issues and specs are tracked in GitHub Issues. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the five default triage labels. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Use a single root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
+
 ## 1) Repository At A Glance
 
 - Framework: Laravel package (PHP) with Livewire + Blade.
