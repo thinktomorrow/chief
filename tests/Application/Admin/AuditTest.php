@@ -16,10 +16,7 @@ final class AuditTest extends ChiefTestCase
         $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
         $this->assertCount(0, Audit::getAllActivityFor($article));
-        $this->assertNull(History::log([
-            'type' => 'project.test', 'category' => 'content', 'summary' => 'Test',
-            'actor_type' => 'system', 'actor_snapshot' => ['name' => 'System'],
-        ]));
+        $this->assertNull(History::log(type: 'project.test', actorType: 'system', actorSnapshot: ['name' => 'System']));
         $this->assertNull(app('router')->getRoutes()->getByName('chief.audit.index'));
         $this->asAdmin()->get('/admin/audit')->assertNotFound();
     }

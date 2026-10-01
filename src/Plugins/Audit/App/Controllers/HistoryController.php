@@ -12,6 +12,7 @@ final class HistoryController extends Controller
 {
     public function index(): View
     {
+        $this->authorize('view-audit');
         $this->authorize('view-full-audit');
 
         return view('chief-audit::index', [

@@ -7,14 +7,36 @@ namespace Thinktomorrow\Chief\Plugins\Audit;
 final class History
 {
     /**
-     * @param  array{type: string, category: string, summary: string, actor_type: string, actor_snapshot: array{name: string, id?: string}, outcome?: string, occurred_at?: string, model_type?: string, model_id?: string, model_snapshot?: array{name: string}}  $event
+     * @param  array{name: string, id?: string}  $actorSnapshot
+     * @param  array{name: string}|null  $modelSnapshot
      */
-    public static function log(array $event): ?AuditEvent
-    {
+    public static function log(
+        string $type,
+        string $actorType,
+        array $actorSnapshot,
+        ?string $occurredAt = null,
+        string $category = 'general',
+        ?string $summary = null,
+        ?string $outcome = null,
+        ?string $modelType = null,
+        ?string $modelId = null,
+        ?array $modelSnapshot = null,
+    ): ?AuditEvent {
         if (! app()->bound(AuditRecorder::class)) {
             return null;
         }
 
-        return app(AuditRecorder::class)->log($event);
+        return app(AuditRecorder::class)->log(
+            type: $type,
+            actorType: $actorType,
+            actorSnapshot: $actorSnapshot,
+            occurredAt: $occurredAt,
+            category: $category,
+            summary: $summary,
+            outcome: $outcome,
+            modelType: $modelType,
+            modelId: $modelId,
+            modelSnapshot: $modelSnapshot,
+        );
     }
 }

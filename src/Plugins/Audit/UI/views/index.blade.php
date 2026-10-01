@@ -10,7 +10,9 @@
                 >
                 <span>{{ $event->actor_snapshot['name'] }}</span>
                 <span>{{ $event->type }}</span>
-                <span>{{ $event->summary }}</span>
+                @if ($event->summary)
+                    <span>{{ $event->summary }}</span>
+                @endif
                 @if ($event->outcome)
                     <span>{{ $event->outcome }}</span>
                 @endif
