@@ -2,7 +2,7 @@
     $items = collect([
         ...(\Illuminate\Support\Facades\Gate::check('update-setting') ? [new \Thinktomorrow\Chief\Admin\Nav\NavItem('Algemeen', route('chief.back.settings.edit'), [], '')] : []),
         ...(\Illuminate\Support\Facades\Gate::check('update-setting') ? [new \Thinktomorrow\Chief\Admin\Nav\NavItem('Sitemap', route('chief.back.sitemap.show'), [], '')] : []),
-        ...(app()->bound(\Thinktomorrow\Chief\Plugins\Audit\AuditRecorder::class) && \Illuminate\Support\Facades\Gate::check('view-audit') && \Illuminate\Support\Facades\Gate::check('view-full-audit') ? [new \Thinktomorrow\Chief\Admin\Nav\NavItem('Historiek', route('chief.audit.index'), [], '')] : []),
+        ...(app()->bound(\Thinktomorrow\Chief\Plugins\Audit\AuditRecorder::class) && \Illuminate\Support\Facades\Gate::check('view-audit') ? [new \Thinktomorrow\Chief\Admin\Nav\NavItem('Historiek', route('chief.audit.index'), [], '')] : []),
         ...(\Illuminate\Support\Facades\Gate::check('view-user') ? [new \Thinktomorrow\Chief\Admin\Nav\NavItem('Admins', route('chief.back.users.index'), [], '')] : []),
         ...(\Illuminate\Support\Facades\Gate::check('view-role') ? [new \Thinktomorrow\Chief\Admin\Nav\NavItem('Rollen', route('chief.back.roles.index'), [], '')] : []),
         ...(\Illuminate\Support\Facades\Gate::check('update-setting') ? resolve(\Thinktomorrow\Chief\Admin\Nav\Nav::class)->tagged(['nav-settings'])->all() : []),

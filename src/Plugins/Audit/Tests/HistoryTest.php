@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
@@ -73,12 +73,15 @@ final class HistoryTest extends ChiefTestCase
         $this->assertDatabaseCount('chief_audit_events', 0);
     }
 
-    public function test_audit_access_requires_both_entry_permission_and_full_scope(): void
+    public function test_audit_entry_permission_opens_a_neutral_index_without_exposing_full_history(): void
     {
         History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Private export');
 
         $this->actingAs($this->admin(), 'chief')->get(route('chief.audit.index'))
-            ->assertRedirect(route('chief.back.dashboard'));
+            ->assertSuccessful()
+            ->assertSee('Geen historiek.')
+            ->assertSee('href="'.route('chief.audit.index').'"', false)
+            ->assertDontSee('Private export');
 
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-full-audit');
@@ -92,7 +95,7 @@ final class HistoryTest extends ChiefTestCase
 
     public function test_only_explicit_snapshot_fields_are_accepted(): void
     {
-        $this->expectException(ValidationException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler', 'password' => 'secret']);
     }
@@ -124,14 +127,10 @@ final class HistoryTest extends ChiefTestCase
             ->assertSuccessful()->assertSee('project.export');
     }
 
-    public function test_rolling_back_optional_summaries_keeps_existing_events(): void
+    public function test_incomplete_model_context_is_rejected_before_it_can_be_saved(): void
     {
-        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler']);
+        $this->expectException(InvalidArgumentException::class);
 
-        $this->artisan('migrate:rollback', ['--step' => 1])->assertExitCode(0);
-
-        $this->assertDatabaseHas('chief_audit_events', [
-            'type' => 'project.export', 'summary' => 'project.export',
-        ]);
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], modelType: 'article');
     }
 }

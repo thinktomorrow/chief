@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('outcome', 100)->nullable();
             $table->dateTime('occurred_at')->index();
             $table->dateTime('recorded_at');
-            $table->string('summary', 500);
+            $table->string('summary', 500)->nullable();
             $table->string('actor_type', 20);
             $table->json('actor_snapshot');
             $table->string('model_type', 190)->nullable();
