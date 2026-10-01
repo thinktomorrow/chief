@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
+use Illuminate\Support\Facades\Artisan;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -12,6 +15,10 @@ final class AuditTest extends ChiefTestCase
 {
     public function test_audit_is_disabled_without_the_plugin(): void
     {
+        $this->assertArrayNotHasKey('chief-audit:permissions', Artisan::all());
+        $this->assertNotContains('view-audit', AuthorizationDefaults::permissions()->all());
+        $this->assertFalse(Permission::where('name', 'view-audit')->exists());
+
         $article = $this->setupAndCreateArticle();
         $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 

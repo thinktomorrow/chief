@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Admin\Authorization;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Plugins\Audit\AuditRecorder;
 
 class AuthorizationDefaults
 {
@@ -26,7 +25,6 @@ class AuthorizationDefaults
                 'disable-user',
                 'update-you',
                 'squanto',
-                'view-audit',
                 'update-setting',
             ],
 
@@ -38,7 +36,6 @@ class AuthorizationDefaults
                 'update-you',
                 'view-squanto',
                 'update-squanto',
-                'view-audit',
                 'update-setting',
             ],
 
@@ -72,9 +69,7 @@ class AuthorizationDefaults
             'update-squanto',
             'delete-squanto',
 
-            'view-audit',
             'update-setting',
-            ...(app()->bound(AuditRecorder::class) ? ['view-full-audit'] : []),
         ]);
     }
 }

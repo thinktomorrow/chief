@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Admin\Authorization\Console\AuditPermissionsCommand;
+use Thinktomorrow\Chief\Admin\Authorization\Console\CheckPermissionsCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
 use Thinktomorrow\Chief\Admin\Setup\CreateFragmentCommand;
@@ -46,7 +46,7 @@ class ConsoleServiceProvider extends ServiceProvider
 
             // Project setup tools
             'command.chief:permission',
-            'command.chief:permissions:audit',
+            'command.chief:permissions:check',
             'command.chief:role',
 
             'command.chief:admin',
@@ -66,7 +66,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->app->bind('command.chief:refresh', RefreshDatabase::class);
         $this->app->bind('command.chief:seed', Seed::class);
         $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
-        $this->app->bind('command.chief:permissions:audit', AuditPermissionsCommand::class);
+        $this->app->bind('command.chief:permissions:check', CheckPermissionsCommand::class);
         $this->app->bind('command.chief:role', GenerateRoleCommand::class);
 
         $this->app->bind('command.chief:page', CreatePageCommand::class);

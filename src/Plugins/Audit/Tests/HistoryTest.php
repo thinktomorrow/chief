@@ -7,12 +7,22 @@ namespace Thinktomorrow\Chief\Plugins\Audit\Tests;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class HistoryTest extends ChiefTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        Role::findByName('admin', 'chief')->givePermissionTo('view-audit');
+    }
+
     protected function getPackageProviders($app)
     {
         return [...parent::getPackageProviders($app), AuditServiceProvider::class];
