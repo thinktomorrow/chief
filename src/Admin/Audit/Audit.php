@@ -36,7 +36,7 @@ class Audit extends Activity
     {
         $defaultLogName = config('activitylog.default_log_name');
 
-        $activity = app(ActivityLogger::class)->useLog($logName ?? $defaultLogName);
+        $activity = app(DisabledChiefActivityLogger::class)->useLog($logName ?? $defaultLogName);
         $causer = auth()->guard('chief')->user();
 
         if (! $causer instanceof User) {
