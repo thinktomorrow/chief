@@ -26,7 +26,7 @@ final class History
             return null;
         }
 
-        return app(AuditRecorder::class)->log(
+        return app(AuditRecorder::class)->record(new AuditEventDTO(
             type: $type,
             actorType: $actorType,
             actorSnapshot: $actorSnapshot,
@@ -37,6 +37,6 @@ final class History
             modelType: $modelType,
             modelId: $modelId,
             modelSnapshot: $modelSnapshot,
-        );
+        ));
     }
 }
