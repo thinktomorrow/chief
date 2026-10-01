@@ -190,12 +190,12 @@ final class ResourcePermissionTest extends ChiefTestCase
         $this->assertFalse(ChiefResourcePermissions::adminCanResource($admin, $resource, 'view'));
     }
 
-    public function test_audit_command_can_sync_registered_resource_permissions(): void
+    public function test_check_command_can_sync_registered_resource_permissions(): void
     {
         ArticlePage::migrateUp();
         chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
-        $this->artisan('chief:permissions:audit', ['--sync' => true])
+        $this->artisan('chief:permissions:check', ['--sync' => true])
             ->assertExitCode(0);
 
         $permissionNames = Permission::pluck('name')->all();
@@ -207,44 +207,44 @@ final class ResourcePermissionTest extends ChiefTestCase
         $this->assertContains('view-role', $permissionNames);
     }
 
-    public function test_audit_command_without_sync_reports_missing_permissions_without_creating_them(): void
+    public function test_check_command_without_sync_reports_missing_permissions_without_creating_them(): void
     {
         ArticlePage::migrateUp();
         chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
-        $this->artisan('chief:permissions:audit')
-            ->expectsOutput('Expected permissions: 20')
-            ->expectsOutput('Missing permissions: 20')
+        $this->artisan('chief:permissions:check')
+            ->expectsOutput('Expected permissions: 19')
+            ->expectsOutput('Missing permissions: 19')
             ->expectsOutput('- create-page')
             ->assertExitCode(0);
 
         $this->assertCount(0, Permission::all());
     }
 
-    public function test_audit_command_sync_is_idempotent(): void
+    public function test_check_command_sync_is_idempotent(): void
     {
         ArticlePage::migrateUp();
         chiefRegister()->resource(ArticlePageResource::class, PageManager::class);
 
-        $this->artisan('chief:permissions:audit', ['--sync' => true])
-            ->expectsOutput('20 missing permission(s) created.')
+        $this->artisan('chief:permissions:check', ['--sync' => true])
+            ->expectsOutput('19 missing permission(s) created.')
             ->assertExitCode(0);
 
-        $this->assertCount(20, Permission::all());
+        $this->assertCount(19, Permission::all());
 
-        $this->artisan('chief:permissions:audit', ['--sync' => true])
+        $this->artisan('chief:permissions:check', ['--sync' => true])
             ->expectsOutput('0 missing permission(s) created.')
             ->assertExitCode(0);
 
-        $this->assertCount(20, Permission::all());
+        $this->assertCount(19, Permission::all());
     }
 
-    public function test_audit_command_reports_unused_permissions(): void
+    public function test_check_command_reports_unused_permissions(): void
     {
         Permission::create(['name' => 'old-custom-permission']);
 
-        $this->artisan('chief:permissions:audit')
-            ->expectsOutput('Expected permissions: 20')
+        $this->artisan('chief:permissions:check')
+            ->expectsOutput('Expected permissions: 19')
             ->expectsOutput('Unused permissions: 1')
             ->expectsOutput('- old-custom-permission')
             ->assertExitCode(0);

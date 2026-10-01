@@ -11,12 +11,12 @@ use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Resource\PermissionScopedResource;
 
-final class AuditPermissionsCommand extends Command
+final class CheckPermissionsCommand extends Command
 {
-    protected $signature = 'chief:permissions:audit
+    protected $signature = 'chief:permissions:check
                                 {--sync : Create missing permissions for registered resources.}';
 
-    protected $description = 'Audit Chief resource permissions';
+    protected $description = 'Check Chief permissions';
 
     public function handle(Registry $registry): int
     {
@@ -54,7 +54,7 @@ final class AuditPermissionsCommand extends Command
      */
     private function expectedPermissions(Registry $registry): array
     {
-        $permissions = AuthorizationDefaults::permissions()->all();
+        $permissions = array_merge(AuthorizationDefaults::permissions()->all(), config('chief.permissions.extra', []));
 
         foreach ($registry->resources() as $resource) {
             if (! $resource instanceof PermissionScopedResource) {
