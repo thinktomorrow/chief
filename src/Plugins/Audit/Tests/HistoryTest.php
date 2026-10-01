@@ -24,18 +24,18 @@ final class HistoryTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         $originalName = $actor->fullname;
 
-        History::log([
-            'type' => 'project.article.approved',
-            'category' => 'content',
-            'outcome' => 'success',
-            'occurred_at' => '2026-09-01 12:30:00',
-            'summary' => 'Article approved',
-            'actor_type' => 'admin',
-            'actor_snapshot' => ['id' => (string) $actor->id, 'name' => $originalName],
-            'model_type' => $article->getMorphClass(),
-            'model_id' => (string) $article->getKey(),
-            'model_snapshot' => ['name' => 'Original article'],
-        ]);
+        History::log(
+            type: 'project.article.approved',
+            actorType: 'admin',
+            actorSnapshot: ['id' => (string) $actor->id, 'name' => $originalName],
+            category: 'content',
+            outcome: 'success',
+            occurredAt: '2026-09-01 12:30:00',
+            summary: 'Article approved',
+            modelType: $article->getMorphClass(),
+            modelId: (string) $article->getKey(),
+            modelSnapshot: ['name' => 'Original article'],
+        );
 
         $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
@@ -66,28 +66,26 @@ final class HistoryTest extends ChiefTestCase
     {
         DB::beginTransaction();
 
-        History::log([
-            'type' => 'project.export', 'category' => 'system', 'summary' => 'Exported',
-            'actor_type' => 'system', 'actor_snapshot' => ['name' => 'Scheduler'],
-        ]);
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Exported');
 
         DB::rollBack();
 
         $this->assertDatabaseCount('chief_audit_events', 0);
     }
 
-    public function test_old_audit_permission_does_not_grant_access_to_the_new_timeline(): void
+    public function test_audit_access_requires_both_entry_permission_and_full_scope(): void
     {
-        History::log([
-            'type' => 'project.export', 'category' => 'system', 'summary' => 'Private export',
-            'actor_type' => 'system', 'actor_snapshot' => ['name' => 'Scheduler'],
-        ]);
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Private export');
 
         $this->actingAs($this->admin(), 'chief')->get(route('chief.audit.index'))
             ->assertRedirect(route('chief.back.dashboard'));
 
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-full-audit');
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
+            ->assertRedirect(route('chief.back.dashboard'));
+
+        $viewer->givePermissionTo('view-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('Private export');
     }
@@ -96,24 +94,44 @@ final class HistoryTest extends ChiefTestCase
     {
         $this->expectException(ValidationException::class);
 
-        History::log([
-            'type' => 'project.export', 'category' => 'system', 'summary' => 'Export',
-            'actor_type' => 'system', 'actor_snapshot' => ['name' => 'Scheduler', 'password' => 'secret'],
-        ]);
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler', 'password' => 'secret']);
     }
 
     public function test_summary_is_escaped_in_the_timeline(): void
     {
-        History::log([
-            'type' => 'project.export', 'category' => 'system', 'summary' => '<script>alert(1)</script>',
-            'actor_type' => 'system', 'actor_snapshot' => ['name' => 'Scheduler'],
-        ]);
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: '<script>alert(1)</script>');
 
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
             ->assertDontSee('<script>alert(1)</script>', false);
+    }
+
+    public function test_type_alone_can_describe_an_event_with_a_general_category(): void
+    {
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler']);
+
+        $this->assertDatabaseHas('chief_audit_events', [
+            'type' => 'project.export', 'category' => 'general', 'summary' => null,
+        ]);
+
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
+            ->assertSuccessful()->assertSee('project.export');
+    }
+
+    public function test_rolling_back_optional_summaries_keeps_existing_events(): void
+    {
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler']);
+
+        $this->artisan('migrate:rollback', ['--step' => 1])->assertExitCode(0);
+
+        $this->assertDatabaseHas('chief_audit_events', [
+            'type' => 'project.export', 'summary' => 'project.export',
+        ]);
     }
 }
