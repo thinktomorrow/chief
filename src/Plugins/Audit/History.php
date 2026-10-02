@@ -6,13 +6,13 @@ namespace Thinktomorrow\Chief\Plugins\Audit;
 
 final class History
 {
-    public static function logEvent(AuditableEvent $event): ?AuditEvent
-    {
-        if (! app()->bound(AuditRecorder::class)) {
-            return null;
-        }
+    public const BINDING = 'chief.audit.history';
 
-        return app(AuditRecorder::class)->record($event->auditEvent());
+    public function __construct(private AuditRecorder $recorder) {}
+
+    public static function logEvent(AuditableEvent $event): AuditEvent
+    {
+        return self::instance()->recorder->record($event->auditEvent());
     }
 
     /**
@@ -30,12 +30,8 @@ final class History
         ?string $outcome = null,
         array $context = [],
         array $models = [],
-    ): ?AuditEvent {
-        if (! app()->bound(AuditRecorder::class)) {
-            return null;
-        }
-
-        return app(AuditRecorder::class)->record(new AuditEventDTO(
+    ): AuditEvent {
+        return self::instance()->recorder->record(new AuditEventDTO(
             type: $type,
             actorType: $actorType,
             actorSnapshot: $actorSnapshot,
@@ -46,5 +42,10 @@ final class History
             context: $context,
             models: $models,
         ));
+    }
+
+    private static function instance(): self
+    {
+        return app(self::BINDING);
     }
 }

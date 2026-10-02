@@ -15,7 +15,7 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
     {
         parent::register();
 
-        $this->app->bind(AuditRecorder::class);
+        $this->app->bind(History::BINDING, History::class);
 
         $this->app['config']->set('chief.permissions.extra', array_unique(array_merge(
             config('chief.permissions.extra', []),
