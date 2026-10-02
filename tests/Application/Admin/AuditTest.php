@@ -1,85 +1,71 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
+use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
+use Thinktomorrow\Chief\Plugins\Audit\History;
+use Thinktomorrow\Chief\Plugins\Audit\Tests\Fixtures\ProjectOrderApproved;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
-class AuditTest extends ChiefTestCase
+final class AuditTest extends ChiefTestCase
 {
-    public function test_it_logs_edit_events_on_pages()
+    public function test_audit_is_disabled_without_the_plugin(): void
     {
-        $user = $this->admin();
-        $article = $this->setupAndCreateArticle();
+        $this->assertArrayNotHasKey('chief-audit:permissions', Artisan::all());
+        $this->assertNotContains('view-audit', AuthorizationDefaults::permissions()->all());
+        $this->assertFalse(Permission::where('name', 'view-audit')->exists());
 
-        $this->actingAs($user, 'chief');
+        $article = $this->setupAndCreateArticle();
         $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
-        $audit = Audit::getAllActivityFor($article);
-
-        $this->assertCount(1, $audit);
-        $this->assertEquals('archived', $audit->first()->description);
-        $this->assertEquals($user->id, $audit->first()->causer_id);
-        $this->assertEquals($article->getMorphClass(), $audit->last()->subject_type);
+        $this->assertCount(0, Audit::getAllActivityFor($article));
+        $this->assertNull(app('router')->getRoutes()->getByName('chief.audit.index'));
+        $this->asAdmin()->get('/admin/audit')->assertNotFound();
     }
 
-    public function test_it_show_events()
+    public function test_history_called_without_the_plugin_fails_fast(): void
     {
-        $article = $this->setupAndCreateArticle();
+        $this->expectException(BindingResolutionException::class);
 
-        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
-
-        $response = $this->asAdmin()->get(route('chief.back.audit.index'));
-        $response->assertSuccessful();
-
-        $this->assertCount(1, $response->viewData('audit'));
+        History::log(type: 'project.test', actorType: 'system', actorSnapshot: ['name' => 'System']);
     }
 
-    public function test_it_can_show_events_per_user()
+    public function test_existing_audit_permission_does_not_show_navigation_without_the_plugin(): void
     {
-        $user = $this->admin();
-        $article = $this->setupAndCreateArticle();
+        Permission::findOrCreate('view-audit', 'chief');
+        $admin = $this->fakeUser();
+        $admin->givePermissionTo('view-audit');
 
-        $this->actingAs($user, 'chief');
-        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
-
-        $response = $this->get(route('chief.back.audit.show', $user->id));
-        $response->assertSuccessful();
-
-        $causerSnapshot = $response->viewData('causerSnapshot');
-        $this->assertEquals($user->fullname, $causerSnapshot['fullname']);
+        $this->actingAs($admin, 'chief')->get(route('chief.back.dashboard'))
+            ->assertSuccessful()
+            ->assertDontSee('href="'.url('/admin/audit').'"', false);
     }
 
-    public function test_it_uses_an_immutable_causer_snapshot(): void
+    public function test_chief_legacy_writes_do_not_disable_project_spatie_logging(): void
     {
-        $user = $this->admin();
-        $originalName = $user->fullname;
-        $article = $this->setupAndCreateArticle();
+        Audit::activity()->log('Ignored Chief event');
 
-        $this->actingAs($user, 'chief');
-        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
+        activity()->log('Project event');
 
-        $user->update(['firstname' => 'Changed']);
-
-        $audit = Audit::firstOrFail();
-
-        $this->assertSame($originalName, $audit->causerName());
+        $this->assertSame(['Project event'], Audit::query()->pluck('description')->all());
     }
 
-    public function test_it_can_show_audit_for_a_deleted_user(): void
+    public function test_no_audit_listener_is_registered_without_the_plugin(): void
     {
-        $user = $this->admin();
-        $userId = $user->id;
-        $userName = $user->fullname;
-        $article = $this->setupAndCreateArticle();
+        $event = new ProjectOrderApproved(new AuditEventDTO(
+            type: 'project.order.approved', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'],
+        ));
 
-        $this->actingAs($user, 'chief');
-        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
-        $user->delete();
-
-        $response = $this->asAdmin()->get(route('chief.back.audit.show', $userId));
-
-        $response->assertSuccessful()->assertSee($userName);
-        $this->assertSame($userName, $response->viewData('causerSnapshot')['fullname']);
+        Event::dispatch($event);
+        $this->assertFalse(Schema::hasTable('chief_audit_events'));
     }
 }

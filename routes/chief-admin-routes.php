@@ -112,14 +112,6 @@ Route::get('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\Set
 
 /**
  * -----------------------------------------------------------------
- * AUDIT LOG
- * -----------------------------------------------------------------
- */
-Route::get('audit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@index')->name('chief.back.audit.index');
-Route::get('audit/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@show')->name('chief.back.audit.show');
-
-/**
- * -----------------------------------------------------------------
  * SQUANTO TRANSLATION ROUTES
  * -----------------------------------------------------------------
  */

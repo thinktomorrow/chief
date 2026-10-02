@@ -25,7 +25,6 @@ class AuthorizationDefaults
                 'disable-user',
                 'update-you',
                 'squanto',
-                'view-audit',
                 'update-setting',
             ],
 
@@ -37,7 +36,6 @@ class AuthorizationDefaults
                 'update-you',
                 'view-squanto',
                 'update-squanto',
-                'view-audit',
                 'update-setting',
             ],
 
@@ -70,8 +68,6 @@ class AuthorizationDefaults
             'create-squanto',
             'update-squanto',
             'delete-squanto',
-
-            'view-audit',
 
             'update-setting',
         ]);
