@@ -16,15 +16,10 @@ final readonly class AuditEventDTO
 
     public DateTimeImmutable $occurredAt;
 
-    /** @var list<AuditModelDTO> */
-    public array $relatedModels;
-
     /**
      * @param  array{name: string, id?: string}  $actorSnapshot
-     * @param  array{name: string}|null  $modelSnapshot
      * @param  array<string, mixed>  $context
-     * @param  list<array{modelType: string, modelId: string, modelSnapshot: array{name: string}, context?: array<string, mixed>}>  $relatedModels
-     * @param  array<string, mixed>  $modelContext
+     * @param  list<AuditModelDTO>  $models  The first model is the primary model.
      */
     public function __construct(
         public string $type,
@@ -34,12 +29,8 @@ final readonly class AuditEventDTO
         public string $category = 'general',
         public ?string $summary = null,
         public ?string $outcome = null,
-        public ?string $modelType = null,
-        public ?string $modelId = null,
-        public ?array $modelSnapshot = null,
         public array $context = [],
-        array $relatedModels = [],
-        array $modelContext = [],
+        public array $models = [],
     ) {
         self::assertKey($type, 190, 'type');
         self::assertKey($category, 100, 'category');
@@ -59,33 +50,14 @@ final readonly class AuditEventDTO
             throw new InvalidArgumentException('Audit outcome exceeds 100 characters.');
         }
 
-        if ($modelType !== null || $modelId !== null || $modelSnapshot !== null || $modelContext !== []) {
-            if ($modelType === null || $modelId === null || $modelSnapshot === null) {
-                throw new InvalidArgumentException('Audit model context requires type, id and snapshot.');
-            }
-
-            $primaryModel = new AuditModelDTO($modelType, $modelId, $modelSnapshot, $modelContext);
+        if (! array_is_list($models)) {
+            throw new InvalidArgumentException('Audit models must be an ordered list.');
         }
 
-        $models = isset($primaryModel) ? [$primaryModel] : [];
-
-        foreach ($relatedModels as $relatedModel) {
-            if (! is_array($relatedModel)
-                || array_diff(['modelType', 'modelId', 'modelSnapshot'], array_keys($relatedModel))
-                || array_diff(array_keys($relatedModel), ['modelType', 'modelId', 'modelSnapshot', 'context'])
-                || ! is_string($relatedModel['modelType'])
-                || ! is_string($relatedModel['modelId'])
-                || ! is_array($relatedModel['modelSnapshot'])
-                || (isset($relatedModel['context']) && ! is_array($relatedModel['context']))) {
-                throw new InvalidArgumentException('Invalid audit related model context.');
+        foreach ($models as $model) {
+            if (! $model instanceof AuditModelDTO) {
+                throw new InvalidArgumentException('Audit models must be AuditModelDTO values.');
             }
-
-            $models[] = new AuditModelDTO(
-                modelType: $relatedModel['modelType'],
-                modelId: $relatedModel['modelId'],
-                modelSnapshot: $relatedModel['modelSnapshot'],
-                context: $relatedModel['context'] ?? [],
-            );
         }
 
         $modelKeys = array_map(fn (AuditModelDTO $model): string => $model->modelType."\0".$model->modelId, $models);
@@ -93,8 +65,6 @@ final readonly class AuditEventDTO
         if (count($modelKeys) !== count(array_unique($modelKeys))) {
             throw new InvalidArgumentException('Duplicate audit model reference.');
         }
-
-        $this->relatedModels = $models;
 
         try {
             $this->occurredAt = (new DateTimeImmutable($occurredAt ?? now()->toIso8601String()))->setTimezone(new DateTimeZone('UTC'));
@@ -108,6 +78,8 @@ final readonly class AuditEventDTO
      */
     public function toRecord(): array
     {
+        $primaryModel = $this->models[0] ?? null;
+
         return [
             'type' => $this->type,
             'category' => $this->category,
@@ -116,9 +88,9 @@ final readonly class AuditEventDTO
             'summary' => $this->summary,
             'actor_type' => $this->actorType,
             'actor_snapshot' => $this->actorSnapshot,
-            'model_type' => $this->modelType,
-            'model_id' => $this->modelId,
-            'model_snapshot' => $this->modelSnapshot,
+            'model_type' => $primaryModel?->modelType,
+            'model_id' => $primaryModel?->modelId,
+            'model_snapshot' => $primaryModel?->modelSnapshot,
             'context' => $this->context,
         ];
     }
