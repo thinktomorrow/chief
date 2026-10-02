@@ -27,7 +27,7 @@ final class AuditPermissionsCommand extends Command
             $selected = $this->choice(
                 'Welke rollen krijgen '.$permission.'? (meerdere keuzes gescheiden door komma’s)',
                 $choices,
-                $defaults ? implode(',', $defaults) : '(geen rollen)',
+                $defaults ? implode(',', array_keys(array_intersect($choices, $defaults))) : (string) array_key_last($choices),
                 null,
                 true
             );

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests;
 
 use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Console\Tester\CommandTester;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
@@ -75,5 +76,16 @@ final class AuditPermissionsCommandTest extends ChiefTestCase
         foreach (Role::all() as $role) {
             $this->assertFalse($role->hasPermissionTo('view-full-audit'));
         }
+    }
+
+    public function test_accepting_interactive_defaults_assigns_basic_audit_to_admin_and_developer(): void
+    {
+        $tester = new CommandTester(Artisan::all()['chief-audit:permissions']);
+        $tester->setInputs(['', '']);
+
+        $this->assertSame(0, $tester->execute([]));
+        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-audit'));
+        $this->assertTrue(Role::findByName('developer', 'chief')->hasPermissionTo('view-audit'));
+        $this->assertFalse(Role::findByName('author', 'chief')->hasPermissionTo('view-full-audit'));
     }
 }
