@@ -17,10 +17,8 @@ final class History
 
     /**
      * @param  array{name: string, id?: string}  $actorSnapshot
-     * @param  array{name: string}|null  $modelSnapshot
      * @param  array<string, mixed>  $context
-     * @param  array<string, mixed>  $modelContext
-     * @param  list<array{modelType: string, modelId: string, modelSnapshot: array{name: string}, context?: array<string, mixed>}>  $relatedModels
+     * @param  list<AuditModelDTO>  $models  The first model is the primary model.
      */
     public static function log(
         string $type,
@@ -30,12 +28,8 @@ final class History
         string $category = 'general',
         ?string $summary = null,
         ?string $outcome = null,
-        ?string $modelType = null,
-        ?string $modelId = null,
-        ?array $modelSnapshot = null,
         array $context = [],
-        array $relatedModels = [],
-        array $modelContext = [],
+        array $models = [],
     ): ?AuditEvent {
         if (! app()->bound(AuditRecorder::class)) {
             return null;
@@ -49,12 +43,8 @@ final class History
             category: $category,
             summary: $summary,
             outcome: $outcome,
-            modelType: $modelType,
-            modelId: $modelId,
-            modelSnapshot: $modelSnapshot,
             context: $context,
-            relatedModels: $relatedModels,
-            modelContext: $modelContext,
+            models: $models,
         ));
     }
 }

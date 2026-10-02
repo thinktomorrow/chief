@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
+use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -42,9 +43,11 @@ final class HistoryTest extends ChiefTestCase
             outcome: 'success',
             occurredAt: '2026-09-01 12:30:00',
             summary: 'Article approved',
-            modelType: $article->getMorphClass(),
-            modelId: (string) $article->getKey(),
-            modelSnapshot: ['name' => 'Original article'],
+            models: [new AuditModelDTO(
+                modelType: $article->getMorphClass(),
+                modelId: (string) $article->getKey(),
+                modelSnapshot: ['name' => 'Original article'],
+            )],
         );
 
         $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
@@ -137,10 +140,18 @@ final class HistoryTest extends ChiefTestCase
             ->assertSuccessful()->assertSee('project.export');
     }
 
-    public function test_incomplete_model_context_is_rejected_before_it_can_be_saved(): void
+    public function test_duplicate_model_links_are_rejected_before_the_event_is_saved(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], modelType: 'article');
+        History::log(
+            type: 'project.export',
+            actorType: 'system',
+            actorSnapshot: ['name' => 'Scheduler'],
+            models: [
+                new AuditModelDTO('article', '12', ['name' => 'Article']),
+                new AuditModelDTO('article', '12', ['name' => 'Article again']),
+            ],
+        );
     }
 }

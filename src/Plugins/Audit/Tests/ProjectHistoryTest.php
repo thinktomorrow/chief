@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use InvalidArgumentException;
 use stdClass;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
+use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -59,8 +60,10 @@ final class ProjectHistoryTest extends ChiefTestCase
     public function test_one_event_keeps_the_supplied_primary_and_related_model_snapshots_and_context(): void
     {
         $actor = ['name' => 'Operator', 'id' => '7'];
-        $related = [
-            ['modelType' => 'project.order', 'modelId' => '42', 'modelSnapshot' => ['name' => 'Original order'], 'context' => ['action' => 'approved']],
+        $orderSnapshot = ['name' => 'Original order'];
+        $models = [
+            new AuditModelDTO('project.article', '12', ['name' => 'Original article'], ['action' => 'reviewed']),
+            new AuditModelDTO('project.order', '42', $orderSnapshot, ['action' => 'approved']),
         ];
 
         History::log(
@@ -69,39 +72,37 @@ final class ProjectHistoryTest extends ChiefTestCase
             actorSnapshot: $actor,
             summary: 'Bulk action',
             context: ['channel' => 'backoffice'],
-            modelType: 'project.article',
-            modelId: '12',
-            modelSnapshot: ['name' => 'Original article'],
-            modelContext: ['action' => 'reviewed'],
-            relatedModels: $related,
+            models: $models,
         );
 
         $actor['name'] = 'Changed operator';
-        $related[0]['modelSnapshot']['name'] = 'Changed order';
+        $orderSnapshot['name'] = 'Changed order';
 
         $this->assertDatabaseCount('chief_audit_events', 1);
         $this->assertDatabaseCount('chief_audit_event_models', 2);
         $event = DB::table('chief_audit_events')->first();
+        $this->assertSame('project.article', $event->model_type);
+        $this->assertSame('12', $event->model_id);
         $this->assertSame(['channel' => 'backoffice'], json_decode($event->context, true));
         $this->assertSame('Operator', json_decode($event->actor_snapshot, true)['name']);
 
-        $models = DB::table('chief_audit_event_models')->orderBy('id')->get();
-        $this->assertSame('Original article', json_decode($models[0]->model_snapshot, true)['name']);
-        $this->assertSame(['action' => 'reviewed'], json_decode($models[0]->context, true));
-        $this->assertSame('Original order', json_decode($models[1]->model_snapshot, true)['name']);
-        $this->assertSame(['action' => 'approved'], json_decode($models[1]->context, true));
+        $storedModels = DB::table('chief_audit_event_models')->orderBy('id')->get();
+        $this->assertSame('Original article', json_decode($storedModels[0]->model_snapshot, true)['name']);
+        $this->assertSame(['action' => 'reviewed'], json_decode($storedModels[0]->context, true));
+        $this->assertSame('Original order', json_decode($storedModels[1]->model_snapshot, true)['name']);
+        $this->assertSame(['action' => 'approved'], json_decode($storedModels[1]->context, true));
     }
 
-    public function test_related_models_do_not_require_a_primary_model(): void
+    public function test_first_model_is_primary_when_only_one_model_is_supplied(): void
     {
         History::log(
             type: 'project.batch.started',
             actorType: 'system',
             actorSnapshot: ['name' => 'Scheduler'],
-            relatedModels: [['modelType' => 'project.order', 'modelId' => '42', 'modelSnapshot' => ['name' => 'Order at start']]],
+            models: [new AuditModelDTO('project.order', '42', ['name' => 'Order at start'])],
         );
 
-        $this->assertDatabaseHas('chief_audit_events', ['type' => 'project.batch.started', 'model_type' => null]);
+        $this->assertDatabaseHas('chief_audit_events', ['type' => 'project.batch.started', 'model_type' => 'project.order', 'model_id' => '42']);
         $this->assertDatabaseHas('chief_audit_event_models', ['model_type' => 'project.order', 'model_id' => '42']);
     }
 
@@ -127,18 +128,6 @@ final class ProjectHistoryTest extends ChiefTestCase
         History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], context: $context);
     }
 
-    public function test_incomplete_related_model_is_rejected_before_writing(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        History::log(
-            type: 'project.export',
-            actorType: 'system',
-            actorSnapshot: ['name' => 'Scheduler'],
-            relatedModels: [['modelType' => 'project.order', 'modelId' => '42']],
-        );
-    }
-
     public function test_existing_audit_schema_can_be_upgraded_to_store_context_and_model_links(): void
     {
         $this->artisan('migrate:rollback', ['--step' => 1])->assertExitCode(0);
@@ -153,7 +142,7 @@ final class ProjectHistoryTest extends ChiefTestCase
             actorType: 'system',
             actorSnapshot: ['name' => 'Scheduler'],
             context: ['source' => 'project'],
-            relatedModels: [['modelType' => 'project.order', 'modelId' => '42', 'modelSnapshot' => ['name' => 'Order at creation']]],
+            models: [new AuditModelDTO('project.order', '42', ['name' => 'Order at creation'])],
         );
 
         $this->assertDatabaseCount('chief_audit_events', 1);
