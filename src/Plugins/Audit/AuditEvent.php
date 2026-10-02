@@ -19,6 +19,7 @@ final class AuditEvent extends Model
         return [
             'actor_snapshot' => 'array',
             'model_snapshot' => 'array',
+            'context' => 'array',
             'occurred_at' => 'immutable_datetime',
             'recorded_at' => 'immutable_datetime',
         ];

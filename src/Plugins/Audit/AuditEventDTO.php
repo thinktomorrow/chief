@@ -8,14 +8,23 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 use InvalidArgumentException;
+use JsonException;
 
 final readonly class AuditEventDTO
 {
+    private const MAX_CONTEXT_DEPTH = 64;
+
     public DateTimeImmutable $occurredAt;
+
+    /** @var list<AuditModelDTO> */
+    public array $relatedModels;
 
     /**
      * @param  array{name: string, id?: string}  $actorSnapshot
      * @param  array{name: string}|null  $modelSnapshot
+     * @param  array<string, mixed>  $context
+     * @param  list<array{modelType: string, modelId: string, modelSnapshot: array{name: string}, context?: array<string, mixed>}>  $relatedModels
+     * @param  array<string, mixed>  $modelContext
      */
     public function __construct(
         public string $type,
@@ -28,6 +37,9 @@ final readonly class AuditEventDTO
         public ?string $modelType = null,
         public ?string $modelId = null,
         public ?array $modelSnapshot = null,
+        public array $context = [],
+        array $relatedModels = [],
+        array $modelContext = [],
     ) {
         self::assertKey($type, 190, 'type');
         self::assertKey($category, 100, 'category');
@@ -37,6 +49,7 @@ final readonly class AuditEventDTO
         }
 
         self::assertSnapshot($actorSnapshot, ['name', 'id'], 'actor');
+        self::assertContext($context);
 
         if ($summary !== null && mb_strlen($summary) > 500) {
             throw new InvalidArgumentException('Audit summary exceeds 500 characters.');
@@ -46,25 +59,52 @@ final readonly class AuditEventDTO
             throw new InvalidArgumentException('Audit outcome exceeds 100 characters.');
         }
 
-        if ($modelType !== null || $modelId !== null || $modelSnapshot !== null) {
+        if ($modelType !== null || $modelId !== null || $modelSnapshot !== null || $modelContext !== []) {
             if ($modelType === null || $modelId === null || $modelSnapshot === null) {
                 throw new InvalidArgumentException('Audit model context requires type, id and snapshot.');
             }
 
-            self::assertText($modelType, 190, 'model type');
-            self::assertText($modelId, 190, 'model id');
-            self::assertSnapshot($modelSnapshot, ['name'], 'model');
+            $primaryModel = new AuditModelDTO($modelType, $modelId, $modelSnapshot, $modelContext);
         }
 
+        $models = isset($primaryModel) ? [$primaryModel] : [];
+
+        foreach ($relatedModels as $relatedModel) {
+            if (! is_array($relatedModel)
+                || array_diff(['modelType', 'modelId', 'modelSnapshot'], array_keys($relatedModel))
+                || array_diff(array_keys($relatedModel), ['modelType', 'modelId', 'modelSnapshot', 'context'])
+                || ! is_string($relatedModel['modelType'])
+                || ! is_string($relatedModel['modelId'])
+                || ! is_array($relatedModel['modelSnapshot'])
+                || (isset($relatedModel['context']) && ! is_array($relatedModel['context']))) {
+                throw new InvalidArgumentException('Invalid audit related model context.');
+            }
+
+            $models[] = new AuditModelDTO(
+                modelType: $relatedModel['modelType'],
+                modelId: $relatedModel['modelId'],
+                modelSnapshot: $relatedModel['modelSnapshot'],
+                context: $relatedModel['context'] ?? [],
+            );
+        }
+
+        $modelKeys = array_map(fn (AuditModelDTO $model): string => $model->modelType."\0".$model->modelId, $models);
+
+        if (count($modelKeys) !== count(array_unique($modelKeys))) {
+            throw new InvalidArgumentException('Duplicate audit model reference.');
+        }
+
+        $this->relatedModels = $models;
+
         try {
-            $this->occurredAt = (new DateTimeImmutable($occurredAt ?? 'now'))->setTimezone(new DateTimeZone('UTC'));
+            $this->occurredAt = (new DateTimeImmutable($occurredAt ?? now()->toIso8601String()))->setTimezone(new DateTimeZone('UTC'));
         } catch (Exception $exception) {
             throw new InvalidArgumentException('Invalid audit event time.', previous: $exception);
         }
     }
 
     /**
-     * @return array{type: string, category: string, outcome: ?string, occurred_at: DateTimeImmutable, summary: ?string, actor_type: string, actor_snapshot: array{name: string, id?: string}, model_type: ?string, model_id: ?string, model_snapshot: array{name: string}|null}
+     * @return array{type: string, category: string, outcome: ?string, occurred_at: DateTimeImmutable, summary: ?string, actor_type: string, actor_snapshot: array{name: string, id?: string}, model_type: ?string, model_id: ?string, model_snapshot: array{name: string}|null, context: array<string, mixed>}
      */
     public function toRecord(): array
     {
@@ -79,7 +119,37 @@ final readonly class AuditEventDTO
             'model_type' => $this->modelType,
             'model_id' => $this->modelId,
             'model_snapshot' => $this->modelSnapshot,
+            'context' => $this->context,
         ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $context
+     */
+    public static function assertContext(array $context): void
+    {
+        self::assertContextValues($context);
+
+        try {
+            json_encode($context, JSON_THROW_ON_ERROR);
+        } catch (JsonException $exception) {
+            throw new InvalidArgumentException('Invalid audit context.', previous: $exception);
+        }
+    }
+
+    private static function assertContextValues(array $values, int $depth = 0): void
+    {
+        if ($depth > self::MAX_CONTEXT_DEPTH) {
+            throw new InvalidArgumentException('Audit context is too deeply nested.');
+        }
+
+        foreach ($values as $value) {
+            if (is_array($value)) {
+                self::assertContextValues($value, $depth + 1);
+            } elseif (! is_scalar($value) && $value !== null) {
+                throw new InvalidArgumentException('Audit context must contain only safe scalar or array values.');
+            }
+        }
     }
 
     private static function assertKey(string $value, int $maxLength, string $field): void

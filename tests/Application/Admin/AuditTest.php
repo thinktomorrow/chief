@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
 use Thinktomorrow\Chief\Plugins\Audit\History;
+use Thinktomorrow\Chief\Plugins\Audit\RecordAuditableEvent;
+use Thinktomorrow\Chief\Plugins\Audit\Tests\Fixtures\ProjectOrderApproved;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class AuditTest extends ChiefTestCase
@@ -35,5 +40,18 @@ final class AuditTest extends ChiefTestCase
         activity()->log('Project event');
 
         $this->assertSame(['Project event'], Audit::query()->pluck('description')->all());
+    }
+
+    public function test_explicit_audit_event_listener_is_inert_without_the_plugin(): void
+    {
+        $event = new ProjectOrderApproved(new AuditEventDTO(
+            type: 'project.order.approved', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'],
+        ));
+
+        Event::listen(ProjectOrderApproved::class, RecordAuditableEvent::class);
+
+        $this->assertNull(History::logEvent($event));
+        Event::dispatch($event);
+        $this->assertFalse(Schema::hasTable('chief_audit_events'));
     }
 }
