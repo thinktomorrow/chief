@@ -19,7 +19,6 @@ final readonly class AuditEventDTO
     /**
      * @param  array{name: string, id?: string}  $actorSnapshot
      * @param  array<string, mixed>  $context
-     * @param  list<AuditModelDTO>  $models  The first model is the primary model.
      */
     public function __construct(
         public string $type,
@@ -30,7 +29,7 @@ final readonly class AuditEventDTO
         public ?string $summary = null,
         public ?string $outcome = null,
         public array $context = [],
-        public array $models = [],
+        public AuditModelCollectionDTO $models = new AuditModelCollectionDTO([]),
     ) {
         self::assertKey($type, 190, 'type');
         self::assertKey($category, 100, 'category');
@@ -50,22 +49,6 @@ final readonly class AuditEventDTO
             throw new InvalidArgumentException('Audit outcome exceeds 100 characters.');
         }
 
-        if (! array_is_list($models)) {
-            throw new InvalidArgumentException('Audit models must be an ordered list.');
-        }
-
-        foreach ($models as $model) {
-            if (! $model instanceof AuditModelDTO) {
-                throw new InvalidArgumentException('Audit models must be AuditModelDTO values.');
-            }
-        }
-
-        $modelKeys = array_map(fn (AuditModelDTO $model): string => $model->modelType."\0".$model->modelId, $models);
-
-        if (count($modelKeys) !== count(array_unique($modelKeys))) {
-            throw new InvalidArgumentException('Duplicate audit model reference.');
-        }
-
         try {
             $this->occurredAt = (new DateTimeImmutable($occurredAt ?? now()->toIso8601String()))->setTimezone(new DateTimeZone('UTC'));
         } catch (Exception $exception) {
@@ -78,7 +61,7 @@ final readonly class AuditEventDTO
      */
     public function toRecord(): array
     {
-        $primaryModel = $this->models[0] ?? null;
+        $primaryModel = $this->models->primary();
 
         return [
             'type' => $this->type,
