@@ -40,7 +40,7 @@ final class History
             summary: $summary,
             outcome: $outcome,
             context: $context,
-            models: $models,
+            models: new AuditModelCollectionDTO($models),
         ));
     }
 

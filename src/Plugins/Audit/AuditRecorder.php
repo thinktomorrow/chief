@@ -16,7 +16,7 @@ final class AuditRecorder
                 'recorded_at' => now()->utc(),
             ]);
 
-            foreach ($event->models as $model) {
+            foreach ($event->models->all() as $model) {
                 AuditEventModel::query()->create([
                     ...$model->toRecord(),
                     'event_id' => $record->getKey(),

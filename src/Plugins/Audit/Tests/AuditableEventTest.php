@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use RuntimeException;
 use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
+use Thinktomorrow\Chief\Plugins\Audit\AuditModelCollectionDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
@@ -27,7 +28,7 @@ final class AuditableEventTest extends ChiefTestCase
             type: 'project.order.approved',
             actorType: 'external',
             actorSnapshot: ['name' => 'Partner at approval', 'id' => 'partner-4'],
-            models: [new AuditModelDTO('project.order', '42', ['name' => 'Order at approval'])],
+            models: new AuditModelCollectionDTO([new AuditModelDTO('project.order', '42', ['name' => 'Order at approval'])]),
         ));
 
         Event::dispatch($event);
@@ -65,7 +66,7 @@ final class AuditableEventTest extends ChiefTestCase
                     type: 'project.order.approved',
                     actorType: 'system',
                     actorSnapshot: ['name' => 'Scheduler'],
-                    models: [new AuditModelDTO('project.order', '42', ['name' => 'Order at approval'])],
+                    models: new AuditModelCollectionDTO([new AuditModelDTO('project.order', '42', ['name' => 'Order at approval'])]),
                 )));
 
                 throw new RuntimeException('Transaction failed.');
