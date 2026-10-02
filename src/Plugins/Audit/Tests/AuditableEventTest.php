@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
-use Thinktomorrow\Chief\Plugins\Audit\RecordAuditableEvent;
 use Thinktomorrow\Chief\Plugins\Audit\Tests\Fixtures\ProjectOrderApproved;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -34,7 +33,7 @@ final class AuditableEventTest extends ChiefTestCase
         Event::dispatch($event);
         $this->assertDatabaseCount('chief_audit_events', 0);
 
-        Event::listen(ProjectOrderApproved::class, RecordAuditableEvent::class);
+        Event::listen(ProjectOrderApproved::class, History::logEvent(...));
         Event::dispatch($event);
 
         $this->assertDatabaseCount('chief_audit_events', 1);
@@ -58,7 +57,7 @@ final class AuditableEventTest extends ChiefTestCase
 
     public function test_rolled_back_success_disappears_but_an_explicit_failure_can_be_recorded_separately(): void
     {
-        Event::listen(ProjectOrderApproved::class, RecordAuditableEvent::class);
+        Event::listen(ProjectOrderApproved::class, History::logEvent(...));
 
         try {
             DB::transaction(function (): void {
