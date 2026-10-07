@@ -23,11 +23,39 @@ return new class extends Migration
             $table->string('model_type', 190)->nullable();
             $table->string('model_id', 190)->nullable();
             $table->json('model_snapshot')->nullable();
+            $table->json('context')->nullable();
+            $table->boolean('has_rich_data')->default(false);
+        });
+
+        Schema::create('chief_audit_event_models', function (Blueprint $table): void {
+            $table->id();
+            $table->foreignId('event_id')->constrained('chief_audit_events')->cascadeOnDelete();
+            $table->string('model_type', 190);
+            $table->string('model_id', 190);
+            $table->json('model_snapshot');
+            $table->json('context');
+            $table->json('changes')->nullable();
+            $table->boolean('has_rich_data')->default(false);
+            $table->index(['model_type', 'model_id']);
+        });
+
+        Schema::create('chief_audit_rich_data', function (Blueprint $table): void {
+            $table->id();
+            $table->foreignId('event_id')->constrained('chief_audit_events')->cascadeOnDelete();
+            $table->foreignId('model_link_id')->nullable()->constrained('chief_audit_event_models')->cascadeOnDelete();
+            $table->string('type', 20);
+            $table->string('status', 20);
+            $table->longText('content')->nullable();
+            $table->json('metadata')->nullable();
+            $table->string('disk')->nullable();
+            $table->string('path')->nullable();
         });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('chief_audit_rich_data');
+        Schema::dropIfExists('chief_audit_event_models');
         Schema::dropIfExists('chief_audit_events');
     }
 };

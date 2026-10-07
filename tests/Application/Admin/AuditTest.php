@@ -12,8 +12,8 @@ use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicatePage;
-use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
 use Thinktomorrow\Chief\Plugins\Audit\History;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditEventDTO;
 use Thinktomorrow\Chief\Plugins\Audit\Tests\Fixtures\ProjectOrderApproved;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
@@ -56,7 +56,7 @@ final class AuditTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
-        $this->assertDatabaseCount('activity_log', 0);
+        $this->assertFalse(Schema::hasTable('activity_log'));
     }
 
     public function test_chief_actions_work_without_the_plugin(): void
@@ -68,7 +68,7 @@ final class AuditTest extends ChiefTestCase
         $this->assertNotNull($article->fresh());
         $this->assertTrue($copy->fresh()->trashed());
         $this->assertFalse(Schema::hasTable('chief_audit_events'));
-        $this->assertDatabaseCount('activity_log', 0);
+        $this->assertFalse(Schema::hasTable('activity_log'));
     }
 
     public function test_no_audit_listener_is_registered_without_the_plugin(): void

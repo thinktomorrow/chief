@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests\Fixtures;
 
-use Thinktomorrow\Chief\Plugins\Audit\AuditableEvent;
-use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditableEvent;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditEventDTO;
 
 final readonly class ProjectOrderApproved implements AuditableEvent
 {
