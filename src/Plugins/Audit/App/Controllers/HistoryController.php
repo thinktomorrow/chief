@@ -26,12 +26,21 @@ final class HistoryController extends Controller
             'to' => 'sometimes|nullable|date_format:Y-m-d',
             'per_page' => 'sometimes|integer|min:1|max:100',
             'page' => 'sometimes|integer|min:1',
+            'show_all' => 'sometimes|boolean',
         ]);
 
         return view('chief-audit::index', [
             'events' => $history->paginate($filters, (int) ($filters['per_page'] ?? 50), (int) ($filters['page'] ?? 1)),
             'options' => $history->filterOptions(),
+            'timezone' => $history->timezone(),
+            'history' => $history,
+            'activeFilters' => $history->hasActiveFilters($filters),
         ]);
+    }
+
+    public function eventDetails(VisibleHistory $history, string $event): View
+    {
+        return view('chief-audit::event-details', ['event' => $history->eventDetail($event), 'timezone' => $history->timezone()]);
     }
 
     public function details(VisibleHistory $history, string $event, string $model): View
