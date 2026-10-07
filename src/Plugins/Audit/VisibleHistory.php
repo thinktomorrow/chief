@@ -22,7 +22,7 @@ final class VisibleHistory
     /** @var array<string, class-string<Model>> */
     private array $visibleModels = [];
 
-    public function __construct(Registry $registry)
+    public function __construct(Registry $registry, private AuditPresentations $presentations)
     {
         abort_unless(Gate::allows('view-full-audit') || Gate::allows('view-related-audit'), 403);
 
@@ -152,18 +152,31 @@ final class VisibleHistory
             'actor_types' => $events->pluck('actor_type')->unique()->values()->all(),
             'actors' => $events->filter(fn (AuditEvent $event) => isset($event->actor_snapshot['id']))->mapWithKeys(fn (AuditEvent $event) => [$event->actor_snapshot['id'] => $event->actor_snapshot['name']])->all(),
             'models' => $events->flatMap(fn (AuditEvent $event) => $event->models->mapWithKeys(fn (AuditEventModel $model) => [$model->model_id => $model->model_snapshot['name']]))->all(),
+            'filters' => $this->presentations->filters(),
         ];
+    }
+
+    public function presentation(AuditEvent $event): AuditType
+    {
+        return $this->presentations->presentation(VisibleAuditEvent::fromEvent($event));
+    }
+
+    public function categoryLabel(string $category): string
+    {
+        return $this->presentations->categoryLabel($category);
     }
 
     public function priority(AuditEvent $event): string
     {
-        return config('chief.audit.types.'.$event->type.'.priority') === 'secondary' ? 'secondary' : 'primary';
+        return $this->presentation($event)->priority() === 'secondary' ? 'secondary' : 'primary';
     }
 
     /** @param array<string, mixed> $filters */
     public function hasActiveFilters(array $filters): bool
     {
-        return collect($filters)->except(['page', 'per_page', 'show_all'])->contains(fn ($value) => $value !== null && $value !== '');
+        return collect($filters)->except(['page', 'per_page', 'show_all'])->contains(fn ($value) => is_array($value)
+            ? collect($value)->contains(fn ($entry) => $entry !== null && $entry !== '')
+            : $value !== null && $value !== '');
     }
 
     public function timezone(): string
@@ -224,7 +237,15 @@ final class VisibleHistory
         if (isset($filters['search']) && trim((string) $filters['search']) !== '') {
             $text = implode(' ', array_filter([$event->summary, $event->actor_snapshot['name'] ?? null, ...$event->models->map(fn (AuditEventModel $link) => $link->model_snapshot['name'])->all()]));
 
-            return mb_stripos($text, (string) $filters['search']) !== false;
+            if (mb_stripos($text, (string) $filters['search']) === false) {
+                return false;
+            }
+        }
+
+        foreach ($filters['filter'] ?? [] as $key => $value) {
+            if ($value !== null && $value !== '' && ! $this->presentations->filters()[$key]->matches(VisibleAuditEvent::fromEvent($event), (string) $value)) {
+                return false;
+            }
         }
 
         return true;
