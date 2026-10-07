@@ -8,14 +8,20 @@
 
 <x-chief::window title="Historiek">
     @forelse ($events->groupBy(fn ($event) => $event->occurred_at->setTimezone($history->timezone())->toDateString()) as $day => $dayEvents)
-        <section class="space-y-2 border-b border-grey-100 py-3">
-            <h3 class="text-sm font-semibold text-grey-700">{{ $dayEvents->first()->occurred_at->setTimezone($history->timezone())->format('d/m/Y') }}</h3>
+        <section class="border-grey-100 space-y-2 border-b py-3">
+            <h3 class="text-grey-700 text-sm font-semibold">
+                {{ $dayEvents->first()->occurred_at->setTimezone($history->timezone())->format('d/m/Y') }}
+            </h3>
             @foreach ($dayEvents as $event)
-                @php ($presentation = config('chief.audit.types.' . $event->type, []))
-                <article class="text-sm {{ $history->priority($event) === 'secondary' ? 'text-grey-500' : 'text-grey-900' }}">
-                    <time datetime="{{ $event->occurred_at->toIso8601String() }}">{{ $event->occurred_at->setTimezone($history->timezone())->format('H:i') }}</time>
+                <article
+                    class="text-sm {{ $history->priority($event) === 'secondary' ? 'text-grey-500' : 'text-grey-900' }}"
+                >
+                    <time
+                        datetime="{{ $event->occurred_at->toIso8601String() }}"
+                        >{{ $event->occurred_at->setTimezone($history->timezone())->format('H:i') }}</time
+                    >
                     <span>{{ $event->actor_snapshot['name'] ?? 'Actor' }}</span>
-                    <span>{{ $presentation['label'] ?? $event->type }}</span>
+                    <span>{{ $history->presentation($event)->label() }}</span>
                     @if ($event->summary)
                         <span>{{ $event->summary }}</span>
                     @endif
