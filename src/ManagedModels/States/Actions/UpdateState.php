@@ -5,8 +5,6 @@ namespace Thinktomorrow\Chief\ManagedModels\States\Actions;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
-use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\States\Events\ModelStateUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -60,18 +58,6 @@ class UpdateState
             $newState = $model->getState($stateKey)->getValueAsString();
 
             event(new ModelStateUpdated($modelReference->get(), $stateKey, $formerState, $newState, $transitionKey));
-
-            event(new PageChanged($model->modelReference()));
-
-            if ($transitionKey !== 'delete') {
-                event(ChiefActionCompleted::forModels(match ($transitionKey) {
-                    'publish' => 'published',
-                    'unpublish' => 'unpublished',
-                    'archive' => 'archived',
-                    'unarchive' => 'unarchived',
-                    default => $transitionKey,
-                }, $model));
-            }
         });
     }
 
