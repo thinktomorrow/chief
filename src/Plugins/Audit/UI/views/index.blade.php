@@ -8,7 +8,11 @@
             <input name="to" type="date" value="{{ request('to') }}" aria-label="Tot" />
             <input name="model_id" value="{{ request('model_id') }}" list="audit-models" aria-label="Model-ID" />
             @foreach ($options['filters'] as $key => $filter)
-                <input name="filter[{{ $key }}]" value="{{ request('filter.' . $key) }}" aria-label="{{ $filter->label() }}" />
+                <input
+                    name="filter[{{ $key }}]"
+                    value="{{ request('filter.' . $key) }}"
+                    aria-label="{{ $filter->label() }}"
+                />
             @endforeach
             <datalist id="audit-models">
                 @foreach ($options['models'] as $modelId => $name)
@@ -71,7 +75,9 @@
                             <span>{{ $event->summary }}</span>
                         @endif
                         @if ($event->type === 'legacy.spatie' && $event->context)
-                            <pre>{{ json_encode($event->context['legacy'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE) }}</pre>
+                            <pre
+                                >{{ json_encode($event->context['legacy'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE) }}</pre
+                            >
                         @endif
                         @if ($event->outcome)
                             <span>{{ $event->outcome }}</span>
