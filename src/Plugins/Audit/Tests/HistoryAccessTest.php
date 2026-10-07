@@ -90,7 +90,7 @@ final class HistoryAccessTest extends ChiefTestCase
         $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
-            ->assertSuccessful()->assertSee('Neutral bulk action')->assertSee('Visible related')
+            ->assertSuccessful()->assertDontSee('Neutral bulk action')->assertSee('Visible related')
             ->assertDontSee('Hidden primary');
     }
 
@@ -134,6 +134,63 @@ final class HistoryAccessTest extends ChiefTestCase
 
         $article->delete();
         $this->get($visibleUrl)->assertNotFound();
+    }
+
+    public function test_partial_bulk_projection_filters_search_counts_and_pages_without_exposing_shared_text(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+
+        History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Secret order and two records', context: ['secret' => 'Secret context'], models: [
+            new AuditModelDTO('project.hidden', '1', ['name' => 'Secret order'], ['secret' => 'Hidden context']),
+            new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Visible article'], ['note' => 'Visible context']),
+        ]);
+        History::log(type: 'project.visible', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Visible later', models: [
+            new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Second article']),
+        ]);
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index', ['search' => 'Secret order']))
+            ->assertOk()->assertDontSee('project.bulk')->assertSee('0 resultaten');
+        $this->get(route('chief.audit.index', ['model_type' => 'project.hidden']))
+            ->assertOk()->assertDontSee('project.bulk')->assertDontSee('project.visible');
+        $this->get(route('chief.audit.index', ['per_page' => 1]))
+            ->assertOk()->assertSee('Visible later')->assertDontSee('Secret order')->assertDontSee('Secret context')
+            ->assertDontSee('project.bulk')->assertSee('2 resultaten');
+        $this->get(route('chief.audit.index', ['per_page' => 1, 'page' => 2]))
+            ->assertOk()->assertSee('project.bulk')->assertSee('Visible article')
+            ->assertDontSee('Secret order')->assertDontSee('Secret context')->assertDontSee('Hidden context')
+            ->assertDontSee('two records')->assertSee('2 resultaten');
+        $this->get(route('chief.audit.index', ['search' => 'Visible article']))
+            ->assertOk()->assertSee('project.bulk')->assertSee('1 resultaten');
+        $this->get(route('chief.audit.index', ['model_type' => $article->getMorphClass()]))
+            ->assertOk()->assertSee('project.bulk')->assertSee('2 resultaten')
+            ->assertDontSee('project.hidden');
+
+        $fullViewer = $this->fakeUser();
+        $fullViewer->givePermissionTo('view-full-audit');
+        $this->actingAs($fullViewer, 'chief')->get(route('chief.audit.index'))
+            ->assertOk()->assertSee('Secret order and two records')->assertSee('Secret order')
+            ->assertSee('Visible article');
+        $this->assertDatabaseHas('chief_audit_events', ['type' => 'project.bulk', 'summary' => 'Secret order and two records']);
+    }
+
+    public function test_actor_only_path_never_exposes_model_bearing_actor_or_shared_context(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-related-audit');
+        History::log(type: 'project.actor', actorType: 'admin', actorSnapshot: ['id' => (string) $viewer->id, 'name' => 'Secret model actor'], summary: 'Secret summary', context: ['name' => 'Secret context'], models: [
+            new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Secret model']),
+        ]);
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
+            ->assertOk()->assertSee('project.actor')->assertDontSee('Secret model actor')
+            ->assertDontSee('Secret summary')->assertDontSee('Secret model');
+        $this->get(route('chief.audit.index', ['search' => 'Secret model']))
+            ->assertOk()->assertDontSee('project.actor')->assertSee('0 resultaten');
     }
 
     public function test_old_right_grants_neither_page_nor_navigation(): void
