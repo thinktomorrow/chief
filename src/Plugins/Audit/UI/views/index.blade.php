@@ -79,6 +79,9 @@
                         @if ($event->context || ! $event->recorded_at->equalTo($event->occurred_at))
                             <a href="{{ route('chief.audit.event-details', $event->getKey()) }}">Details</a>
                         @endif
+                        @if ($event->visible_rich_data)
+                            <a href="{{ route('chief.audit.rich-data', $event->getKey()) }}">Historische inhoud</a>
+                        @endif
                         @foreach ($event->models as $model)
                             @if ($model->changes || $model->context)
                                 <a href="{{ route('chief.audit.details', [$event->getKey(), $model->getKey()]) }}"
