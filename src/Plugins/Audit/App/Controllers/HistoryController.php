@@ -58,7 +58,9 @@ final class HistoryController extends Controller
 
     public function eventDetails(VisibleHistory $history, string $event): View
     {
-        return view('chief-audit::event-details', ['event' => $history->eventDetail($event), 'timezone' => $history->timezone()]);
+        $detail = $history->eventDetail($event);
+
+        return view('chief-audit::event-details', ['event' => $detail, 'timezone' => $history->timezone(), 'missingMailPreview' => $history->missingMailPreview($detail)]);
     }
 
     public function details(VisibleHistory $history, string $event, string $model): View
