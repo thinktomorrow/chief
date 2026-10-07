@@ -15,7 +15,7 @@ final class RecordChiefAction
             actorType: $event->actorType,
             actorSnapshot: $event->actorSnapshot,
             occurredAt: $event->occurredAt,
-            category: 'content',
+            category: str_starts_with($event->action, 'user.') ? 'users' : 'content',
             outcome: 'success',
             summary: 'Model '.$event->action,
             models: array_map(static fn (array $model): AuditModelDTO => new AuditModelDTO(

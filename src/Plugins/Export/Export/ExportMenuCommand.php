@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Plugins\Export\Export;
 use Illuminate\Database\Eloquent\Collection;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
 class ExportMenuCommand extends BaseCommand
@@ -30,6 +31,8 @@ class ExportMenuCommand extends BaseCommand
 
         (new ExportMenuDocument($models, ChiefSites::locales()))
             ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-menu-'.date('Y-m-d').'.xlsx');
+
+        event(new ChiefExportCompleted('menu', null, now()->toIso8601String()));
 
         $this->info('Finished export. File available at: storage/app/'.$filepath);
     }

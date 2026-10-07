@@ -29,7 +29,10 @@ class InviteUser
             $stateMachine = StateMachine::fromConfig($invitation, $invitation->getStateConfig(InvitationState::KEY));
             $stateMachine->apply('invite');
 
-            event(new UserInvited($invitation->id));
+            event(new UserInvited($invitation->id, [
+                'name' => $inviter->fullname,
+                'id' => (string) $inviter->getKey(),
+            ], $invitee->email, now()->toIso8601String()));
 
             DB::commit();
 
