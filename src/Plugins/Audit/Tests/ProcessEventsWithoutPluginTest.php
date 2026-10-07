@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\ExcelServiceProvider;
@@ -31,5 +32,10 @@ final class ProcessEventsWithoutPluginTest extends ChiefTestCase
         $this->artisan('chief:export-text')->assertExitCode(0);
 
         $this->assertFalse(Schema::hasTable('chief_audit_events'));
+    }
+
+    public function test_cleanup_is_not_registered_when_the_plugin_is_disabled(): void
+    {
+        $this->assertArrayNotHasKey('chief-audit:cleanup', Artisan::all());
     }
 }
