@@ -9,9 +9,11 @@ use Thinktomorrow\Chief\Plugins\Audit\AuditEventPresentation;
 use Thinktomorrow\Chief\Plugins\Audit\AuditFilter;
 use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditPresentations;
+use Thinktomorrow\Chief\Plugins\Audit\AuditPresets;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\AuditType;
 use Thinktomorrow\Chief\Plugins\Audit\History;
+use Thinktomorrow\Chief\Plugins\Audit\UI\RecentHistoryWidget;
 use Thinktomorrow\Chief\Plugins\Audit\VisibleAuditEvent;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -73,6 +75,25 @@ final class PresentationTest extends ChiefTestCase
             ->assertOk()->assertSee('1 resultaten')->assertSee('Visible article')->assertSee('Goedkeuring')
             ->assertDontSee('Hidden summary')->assertDontSee('Hidden actor')->assertDontSee('Hidden order')->assertDontSee('Hidden context');
         $this->get(route('chief.audit.index', ['filter' => ['not_registered' => 'anything']]))->assertSessionHasErrors('filter');
+    }
+
+    public function test_project_presentations_are_used_in_widget_and_model_history(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        ArticlePageResource::setFieldsDefinition(fn ($model) => AuditPresets::modelHistoryWindow($model));
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'), ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
+        app(AuditPresentations::class)->type('project.order', OrderType::class);
+        app(AuditPresentations::class)->bind('project.approved', 'project.order', ApprovedPresentation::class);
+        config()->set('chief.widgets', [RecentHistoryWidget::class]);
+
+        History::log(type: 'project.approved', actorType: 'system', actorSnapshot: ['name' => 'Worker'], models: [
+            new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Visible article']),
+        ]);
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))->assertOk()->assertSee('Goedkeuring');
+        $this->get($this->manager($article)->route('edit', $article))->assertOk()->assertSee('Goedkeuring');
     }
 }
 

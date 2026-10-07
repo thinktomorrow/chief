@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Plugins\Audit\UI;
 use Illuminate\Support\Facades\Gate;
 use Thinktomorrow\Chief\Admin\Widgets\Widget;
 use Thinktomorrow\Chief\Plugins\Audit\RecentHistory;
+use Thinktomorrow\Chief\Plugins\Audit\VisibleHistory;
 
 final class RecentHistoryWidget implements Widget
 {
@@ -17,12 +18,13 @@ final class RecentHistoryWidget implements Widget
         }
 
         $filters = array_intersect_key(config('chief.audit.widget.filters', []), array_flip(['type', 'category', 'actor', 'model_type', 'model_id', 'from', 'to']));
-        $history = app(RecentHistory::class);
+        $history = app(VisibleHistory::class);
 
         return view('chief-audit::widget', [
-            'events' => $history->select($filters, (int) config('chief.audit.widget.limit', 5)),
+            'events' => app(RecentHistory::class)->select($filters, (int) config('chief.audit.widget.limit', 5)),
+            'history' => $history,
             'filters' => $filters,
-            'timezone' => config('chief.audit.timezone', config('app.timezone', 'UTC')),
+            'timezone' => $history->timezone(),
         ])->render();
     }
 }

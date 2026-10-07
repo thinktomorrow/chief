@@ -8,7 +8,9 @@
                     ? route('chief.audit.details', [$event->getKey(), $detail->getKey()])
                     : ($event->context || ! $event->recorded_at->equalTo($event->occurred_at)
                         ? route('chief.audit.event-details', $event->getKey())
-                        : route('chief.audit.index', $filters));
+                        : ($event->visible_rich_data
+                            ? route('chief.audit.rich-data', $event->getKey())
+                            : route('chief.audit.index', $filters)));
             @endphp
             <div class="border-grey-100 border-b py-2">
                 <a href="{{ $url }}">
@@ -17,7 +19,7 @@
                         >{{ $event->occurred_at->setTimezone($timezone)->format('d/m H:i') }}</time
                     >
                     <span>{{ $event->actor_snapshot['name'] }}</span>
-                    <span>{{ config('chief.audit.types.' . $event->type . '.label', $event->type) }}</span>
+                    <span>{{ $history->presentation($event)->label() }}</span>
                     @if ($event->summary)
                         <span>{{ $event->summary }}</span>
                     @endif

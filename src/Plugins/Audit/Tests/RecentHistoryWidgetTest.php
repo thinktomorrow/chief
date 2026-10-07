@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
+use Thinktomorrow\Chief\Plugins\Audit\RichData;
 use Thinktomorrow\Chief\Plugins\Audit\UI\RecentHistoryWidget;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -101,5 +102,18 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
             ->assertDontSee('Allowed details');
         $this->get($allowed)->assertOk()->assertSee('Allowed details')->assertDontSee('Hidden details');
         $this->get($hidden)->assertNotFound();
+    }
+
+    public function test_widget_links_to_authorized_rich_data_when_it_is_the_only_detail(): void
+    {
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-full-audit');
+        config()->set('chief.widgets', [RecentHistoryWidget::class]);
+        $event = History::log(type: 'project.mail', actorType: 'system', actorSnapshot: ['name' => 'Worker'], richData: [RichData::text('Historical body')]);
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))
+            ->assertOk()->assertSee(route('chief.audit.rich-data', $event->getKey()))->assertDontSee('Historical body');
+        $this->get(route('chief.audit.rich-data', $event->getKey()))->assertOk()->assertSee('Historical body');
     }
 }
