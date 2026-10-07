@@ -1,6 +1,10 @@
 <x-chief::page.template title="Wijzigingsdetails" container="md">
-    <aside aria-label="Wijzigingsdetails">
+    <aside
+        aria-label="Wijzigingsdetails"
+        class="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto bg-white p-6 shadow-xl"
+    >
         <x-chief::window>
+            <a href="{{ route('chief.audit.index') }}">Terug naar historiek</a>
             <h1>{{ $model->model_snapshot['name'] }}</h1>
             @foreach ($model->context ?? [] as $key => $value)
                 <p>{{ $key }}: {{ is_scalar($value) ? $value : json_encode($value) }}</p>
