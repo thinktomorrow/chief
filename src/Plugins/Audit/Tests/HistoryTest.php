@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Plugins\Audit\Tests;
 
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
-use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
@@ -62,7 +61,7 @@ final class HistoryTest extends ChiefTestCase
             'occurred_at' => '2026-09-01 12:30:00',
         ]);
         $this->assertDatabaseCount('chief_audit_events', 1);
-        $this->assertCount(0, Audit::getAllActivityFor($article));
+        $this->assertDatabaseCount('activity_log', 0);
 
         $viewer = $this->admin();
         $viewer->givePermissionTo('view-full-audit');

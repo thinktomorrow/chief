@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit;
 
+use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\AuditPermissionsCommand;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
 
@@ -25,6 +27,8 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
 
     public function boot(): void
     {
+        Event::listen(ChiefActionCompleted::class, [RecordChiefAction::class, 'handle']);
+
         $this->commands([AuditPermissionsCommand::class]);
 
         $this->loadMigrationsFrom(__DIR__.'/Infrastructure/migrations');

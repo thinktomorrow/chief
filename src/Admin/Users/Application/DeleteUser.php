@@ -6,17 +6,20 @@ namespace Thinktomorrow\Chief\Admin\Users\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 
 final class DeleteUser
 {
     public function handle(User $user): void
     {
         DB::transaction(function () use ($user): void {
+            $auditEvent = ChiefActionCompleted::forModels('user.deleted', $user);
             DB::table('chief_password_resets')
                 ->where('email', $user->email)
                 ->delete();
 
             $user->delete();
+            event($auditEvent);
         });
     }
 }
