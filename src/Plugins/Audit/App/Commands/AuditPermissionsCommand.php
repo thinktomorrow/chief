@@ -23,7 +23,7 @@ final class AuditPermissionsCommand extends Command
         $assignments = [];
 
         foreach (AuditServiceProvider::PERMISSIONS as $permission) {
-            $defaults = $permission === 'view-audit' ? array_intersect(['admin', 'developer'], $roles) : [];
+            $defaults = $permission === 'view-related-audit' ? array_intersect(['admin', 'developer'], $roles) : [];
             $selected = $this->choice(
                 'Welke rollen krijgen '.$permission.'? (meerdere keuzes gescheiden door komma’s)',
                 $choices,

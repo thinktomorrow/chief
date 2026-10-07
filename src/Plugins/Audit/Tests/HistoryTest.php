@@ -21,7 +21,7 @@ final class HistoryTest extends ChiefTestCase
         parent::setUp();
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
-        Role::findByName('admin', 'chief')->givePermissionTo('view-audit');
+        Role::findByName('admin', 'chief')->givePermissionTo('view-related-audit');
     }
 
     protected function getPackageProviders($app)
@@ -86,7 +86,7 @@ final class HistoryTest extends ChiefTestCase
         $this->assertDatabaseCount('chief_audit_events', 0);
     }
 
-    public function test_audit_entry_permission_opens_a_neutral_index_without_exposing_full_history(): void
+    public function test_related_permission_opens_a_neutral_index_without_exposing_full_history(): void
     {
         History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Private export');
 
@@ -99,9 +99,9 @@ final class HistoryTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
-            ->assertRedirect(route('chief.back.dashboard'));
+            ->assertSuccessful()->assertSee('Private export');
 
-        $viewer->givePermissionTo('view-audit');
+        $viewer->givePermissionTo('view-related-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('Private export');
     }
@@ -118,7 +118,7 @@ final class HistoryTest extends ChiefTestCase
         History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: '<script>alert(1)</script>');
 
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-audit', 'view-full-audit');
+        $viewer->givePermissionTo('view-full-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
@@ -134,7 +134,7 @@ final class HistoryTest extends ChiefTestCase
         ]);
 
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-audit', 'view-full-audit');
+        $viewer->givePermissionTo('view-full-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('project.export');
