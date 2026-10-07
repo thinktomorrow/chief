@@ -2,7 +2,10 @@
     <aside aria-label="Wijzigingsdetails">
         <x-chief::window>
             <h1>{{ $model->model_snapshot['name'] }}</h1>
-            @foreach ($model->changes as $path => $change)
+            @foreach ($model->context ?? [] as $key => $value)
+                <p>{{ $key }}: {{ is_scalar($value) ? $value : json_encode($value) }}</p>
+            @endforeach
+            @foreach ($model->changes ?? [] as $path => $change)
                 <section>
                     <h2>{{ $path }}</h2>
                     <div>
