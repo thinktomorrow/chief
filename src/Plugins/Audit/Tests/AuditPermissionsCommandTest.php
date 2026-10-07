@@ -21,36 +21,37 @@ final class AuditPermissionsCommandTest extends ChiefTestCase
 
     public function test_audit_permissions_are_created_only_by_explicit_command_and_roles_are_chosen_separately(): void
     {
-        $this->assertFalse(AuthorizationDefaults::permissions()->contains('view-audit'));
+        $this->assertFalse(AuthorizationDefaults::permissions()->contains('view-related-audit'));
         $this->assertFalse(AuthorizationDefaults::permissions()->contains('view-full-audit'));
-        $this->assertNotContains('view-audit', AuthorizationDefaults::roles()->get('admin'));
+        $this->assertNotContains('view-related-audit', AuthorizationDefaults::roles()->get('admin'));
 
-        $this->assertDatabaseMissing('permissions', ['name' => 'view-audit']);
+        $this->assertDatabaseMissing('permissions', ['name' => 'view-related-audit']);
         $this->assertDatabaseMissing('permissions', ['name' => 'view-full-audit']);
 
         $choices = ['admin', 'author', 'developer', '(geen rollen)'];
 
         $this->artisan('chief-audit:permissions')
-            ->expectsChoice('Welke rollen krijgen view-audit? (meerdere keuzes gescheiden door komma’s)', ['admin', 'developer'], $choices)
             ->expectsChoice('Welke rollen krijgen view-full-audit? (meerdere keuzes gescheiden door komma’s)', ['author'], $choices)
+            ->expectsChoice('Welke rollen krijgen view-related-audit? (meerdere keuzes gescheiden door komma’s)', ['admin', 'developer'], $choices)
             ->assertExitCode(0);
 
-        $this->assertEquals('chief', Permission::findByName('view-audit', 'chief')->guard_name);
+        $this->assertEquals('chief', Permission::findByName('view-related-audit', 'chief')->guard_name);
         $this->assertEquals('chief', Permission::findByName('view-full-audit', 'chief')->guard_name);
-        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-audit'));
-        $this->assertTrue(Role::findByName('developer', 'chief')->hasPermissionTo('view-audit'));
-        $this->assertFalse(Role::findByName('author', 'chief')->hasPermissionTo('view-audit'));
+        $this->assertDatabaseMissing('permissions', ['name' => 'view-audit']);
+        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-related-audit'));
+        $this->assertTrue(Role::findByName('developer', 'chief')->hasPermissionTo('view-related-audit'));
+        $this->assertFalse(Role::findByName('author', 'chief')->hasPermissionTo('view-related-audit'));
         $this->assertTrue(Role::findByName('author', 'chief')->hasPermissionTo('view-full-audit'));
         $this->assertFalse(Role::findByName('admin', 'chief')->hasPermissionTo('view-full-audit'));
 
         $this->artisan('chief-audit:permissions')
-            ->expectsChoice('Welke rollen krijgen view-audit? (meerdere keuzes gescheiden door komma’s)', ['(geen rollen)'], $choices)
             ->expectsChoice('Welke rollen krijgen view-full-audit? (meerdere keuzes gescheiden door komma’s)', ['(geen rollen)'], $choices)
+            ->expectsChoice('Welke rollen krijgen view-related-audit? (meerdere keuzes gescheiden door komma’s)', ['(geen rollen)'], $choices)
             ->assertExitCode(0);
 
-        $this->assertEquals(1, Permission::where('name', 'view-audit')->count());
+        $this->assertEquals(1, Permission::where('name', 'view-related-audit')->count());
         $this->assertEquals(1, Permission::where('name', 'view-full-audit')->count());
-        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-audit'));
+        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-related-audit'));
         $this->assertTrue(Role::findByName('author', 'chief')->hasPermissionTo('view-full-audit'));
     }
 
@@ -58,20 +59,20 @@ final class AuditPermissionsCommandTest extends ChiefTestCase
     {
         $this->artisan('chief:permissions:check')
             ->expectsOutput('Expected permissions: 21')
-            ->expectsOutput('- view-audit')
             ->expectsOutput('- view-full-audit')
+            ->expectsOutput('- view-related-audit')
             ->assertExitCode(0);
 
-        $this->assertDatabaseMissing('permissions', ['name' => 'view-audit']);
+        $this->assertDatabaseMissing('permissions', ['name' => 'view-related-audit']);
     }
 
     public function test_default_selections_grant_basic_access_to_admin_and_developer_only(): void
     {
         $this->assertSame(0, Artisan::call('chief-audit:permissions', ['--no-interaction' => true]));
 
-        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-audit'));
-        $this->assertTrue(Role::findByName('developer', 'chief')->hasPermissionTo('view-audit'));
-        $this->assertFalse(Role::findByName('author', 'chief')->hasPermissionTo('view-audit'));
+        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-related-audit'));
+        $this->assertTrue(Role::findByName('developer', 'chief')->hasPermissionTo('view-related-audit'));
+        $this->assertFalse(Role::findByName('author', 'chief')->hasPermissionTo('view-related-audit'));
 
         foreach (Role::all() as $role) {
             $this->assertFalse($role->hasPermissionTo('view-full-audit'));
@@ -84,8 +85,8 @@ final class AuditPermissionsCommandTest extends ChiefTestCase
         $tester->setInputs(['', '']);
 
         $this->assertSame(0, $tester->execute([]));
-        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-audit'));
-        $this->assertTrue(Role::findByName('developer', 'chief')->hasPermissionTo('view-audit'));
+        $this->assertTrue(Role::findByName('admin', 'chief')->hasPermissionTo('view-related-audit'));
+        $this->assertTrue(Role::findByName('developer', 'chief')->hasPermissionTo('view-related-audit'));
         $this->assertFalse(Role::findByName('author', 'chief')->hasPermissionTo('view-full-audit'));
     }
 }

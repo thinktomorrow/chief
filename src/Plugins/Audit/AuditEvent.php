@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class AuditEvent extends Model
 {
@@ -13,6 +14,11 @@ final class AuditEvent extends Model
     public $timestamps = false;
 
     protected $guarded = [];
+
+    public function models(): HasMany
+    {
+        return $this->hasMany(AuditEventModel::class, 'event_id');
+    }
 
     protected function casts(): array
     {
