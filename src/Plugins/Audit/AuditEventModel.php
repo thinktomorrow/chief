@@ -17,8 +17,10 @@ final class AuditEventModel extends Model
     protected function casts(): array
     {
         return [
+            'event_id' => 'integer',
             'model_snapshot' => 'array',
             'context' => 'array',
+            'changes' => 'array',
         ];
     }
 }
