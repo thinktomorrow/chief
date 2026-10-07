@@ -58,7 +58,7 @@ final class ImportLegacyActivitiesTest extends ChiefTestCase
         $imported = AuditEvent::query()->where('summary', 'Changed secret draft')->firstOrFail();
         $this->assertSame('legacy.spatie', $imported->type);
         $this->assertSame('2020-01-02 03:04:05', $imported->occurred_at->format('Y-m-d H:i:s'));
-        $this->assertSame(['name' => 'Onbekende admin', 'id' => '987654'], $imported->actor_snapshot);
+        $this->assertSame(['name' => 'Old name', 'id' => '987654'], $imported->actor_snapshot);
         $this->assertSame('Old name', $imported->context['legacy']['properties']['causer_snapshot']['fullname']);
         $this->assertSame('chief', $imported->context['legacy']['log_name']);
         $this->assertSame('updated', $imported->context['legacy']['event']);
@@ -71,14 +71,17 @@ final class ImportLegacyActivitiesTest extends ChiefTestCase
         $limited = $this->fakeUser();
         $limited->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $this->actingAs($limited, 'chief')->get(route('chief.audit.index'))
-            ->assertOk()->assertSee('legacy.spatie')->assertSee('1 resultaten')
+            ->assertOk()->assertSee('Historische activiteit')->assertDontSee('<span>legacy.spatie</span>', false)->assertSee('1 resultaten')
             ->assertDontSee('Changed secret draft')->assertDontSee('legacy secret')->assertDontSee('Old name')->assertDontSee('No known subject');
         $this->get(route('chief.audit.index', ['search' => 'Changed secret draft']))->assertOk()->assertSee('0 resultaten');
 
         $full = $this->fakeUser();
         $full->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($full, 'chief')->get(route('chief.audit.index'))
-            ->assertOk()->assertSee('Changed secret draft')->assertSee('legacy secret')->assertSee('No known subject');
+            ->assertOk()->assertSee('Bijgewerkt')->assertSee('Changed secret draft')->assertDontSee('<span>legacy.spatie</span>', false)
+            ->assertDontSee('legacy secret')->assertSee('No known subject');
+        $this->get(route('chief.audit.event-details', $imported->getKey()))
+            ->assertOk()->assertSee('Brongegevens')->assertDontSee('legacy.spatie');
 
         DB::table('chief_audit_events')->where('id', $imported->getKey())->delete();
         $this->assertSame(1, Artisan::call('chief-audit:import-spatie', ['--cleanup-registry' => true]));
@@ -118,12 +121,45 @@ final class ImportLegacyActivitiesTest extends ChiefTestCase
         $this->assertSame(['name' => 'Onbekende admin', 'id' => '456'], $event->actor_snapshot);
         $this->assertSame('legacy.spatie', $event->type);
         $this->assertSame($article->getMorphClass(), $event->models->firstOrFail()->model_type);
+        $this->assertSame('ArticlePage #'.$article->getKey(), $event->model_snapshot['name']);
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertDontSee('Deleted model fact')->assertSee('0 resultaten');
+    }
+
+    public function test_import_uses_source_actor_name_or_current_user_and_existing_resource_title(): void
+    {
+        $article = $this->setupAndCreateArticle(['title.nl' => 'Historische pagina']);
+        $admin = $this->fakeUser();
+        $this->activity(301, [
+            'event' => 'published', 'description' => 'Page went live',
+            'subject_type' => $article::class, 'subject_id' => $article->getKey(),
+            'causer_type' => 'chiefuser', 'causer_id' => $admin->id,
+            'properties' => json_encode(['causer_snapshot' => ['id' => $admin->id, 'fullname' => 'Naam destijds']], JSON_THROW_ON_ERROR),
+        ]);
+        $this->activity(302, [
+            'event' => 'updated', 'description' => 'Another edit',
+            'subject_type' => $article->getMorphClass(), 'subject_id' => $article->getKey(),
+            'causer_type' => 'chiefuser', 'causer_id' => $admin->id,
+        ]);
+
+        $this->assertSame(0, Artisan::call('chief-audit:import-spatie'));
+
+        $published = AuditEvent::query()->where('summary', 'Page went live')->firstOrFail();
+        $this->assertSame(['name' => 'Naam destijds', 'id' => (string) $admin->id], $published->actor_snapshot);
+        $this->assertSame($article->title, $published->model_snapshot['name']);
+        $this->assertSame($article->title, $published->models->firstOrFail()->model_snapshot['name']);
+        $this->assertSame(['name' => $admin->fullname, 'id' => (string) $admin->id], AuditEvent::query()->where('summary', 'Another edit')->firstOrFail()->actor_snapshot);
+
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
+            ->assertOk()->assertSee('Gepubliceerd')->assertSee('Bijgewerkt')->assertSee('Naam destijds')
+            ->assertSee($article->title)->assertDontSee('<span>legacy.spatie</span>', false)->assertDontSee('Legacy model');
     }
 
     public function test_legacy_actor_path_does_not_expose_a_deleted_subject_to_its_current_actor(): void

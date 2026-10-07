@@ -200,6 +200,7 @@ final class HistoryAccessTest extends ChiefTestCase
         $viewer->givePermissionTo('view-full-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))->assertForbidden();
+        $this->get(route('chief.audit.index', ['search' => ['invalid']]))->assertForbidden();
         $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))
             ->assertSuccessful()->assertDontSee('href="'.route('chief.audit.index').'"', false);
     }

@@ -5,7 +5,7 @@
     >
         <x-chief::window>
             <a href="{{ route('chief.audit.index') }}">Terug naar historiek</a>
-            <h1>{{ $event->type }}</h1>
+            <h1>{{ $history->presentation($event)->label }}</h1>
             @if ($missingMailPreview)
                 <p>Mailpreview: Nooit vastgelegd</p>
             @endif
@@ -13,7 +13,7 @@
                 <p>Geregistreerd: {{ $event->recorded_at->setTimezone($timezone)->format('d/m/Y H:i') }}</p>
             @endif
             @foreach ($event->context as $key => $value)
-                <p>{{ $key }}: {{ is_scalar($value) ? $value : json_encode($value) }}</p>
+                <p>{{ $key === 'legacy' ? 'Brongegevens' : $key }}: {{ is_scalar($value) ? $value : json_encode($value) }}</p>
             @endforeach
         </x-chief::window>
     </aside>

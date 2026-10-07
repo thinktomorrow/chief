@@ -15,7 +15,7 @@
 @endif
 <span>{{ $event->actor_snapshot['name'] ?? 'Actor' }}</span>
 <span>{{ $presentation->label }}</span>
-@if ($event->summary)
+@if ($event->summary && $event->summary !== $presentation->label)
     <span>{{ $event->summary }}</span>
 @endif
 @if (($showOutcome ?? false) && $event->outcome)

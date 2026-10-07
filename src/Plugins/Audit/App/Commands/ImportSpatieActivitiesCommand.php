@@ -14,6 +14,8 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditEventDTO;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
+use Thinktomorrow\Chief\Resource\PageResource;
+use Thinktomorrow\Chief\Resource\Resource as ChiefResource;
 
 final class ImportSpatieActivitiesCommand extends Command
 {
@@ -70,8 +72,8 @@ final class ImportSpatieActivitiesCommand extends Command
         foreach ($resources->resources() as $resource) {
             $class = $resource::modelClassName();
             $morphType = (new $class)->getMorphClass();
-            $modelTypes[$morphType] = $morphType;
-            $modelTypes[$class] = $morphType;
+            $modelTypes[$morphType] = $resource;
+            $modelTypes[$class] = $resource;
         }
 
         try {
@@ -104,7 +106,7 @@ final class ImportSpatieActivitiesCommand extends Command
         return self::SUCCESS;
     }
 
-    /** @param array<string, string> $modelTypes */
+    /** @param array<string, ChiefResource> $modelTypes */
     private function import(object $activity, array $modelTypes): int
     {
         if ($activity->created_at === null) {
@@ -122,14 +124,32 @@ final class ImportSpatieActivitiesCommand extends Command
         $name = match ($actorType) {
             'admin' => 'Onbekende admin', 'system' => 'Systeem', default => 'Onbekende actor',
         };
-        $actor = ['name' => $name];
+        $sourceName = $properties['causer_snapshot']['fullname'] ?? null;
+        if (is_string($sourceName) && trim($sourceName) !== '') {
+            $name = trim($sourceName);
+        } elseif ($admin && $activity->causer_id !== null) {
+            $user = User::query()->find($activity->causer_id);
+            if ($user && trim($user->fullname) !== '') {
+                $name = $user->fullname;
+            }
+        }
+        $actor = ['name' => mb_substr($name, 0, 190)];
         if ($activity->causer_id !== null) {
             $actor['id'] = (string) $activity->causer_id;
         }
 
         $models = [];
         if ($activity->subject_id !== null && isset($modelTypes[$activity->subject_type])) {
-            $models[] = new AuditModelDTO($modelTypes[$activity->subject_type], (string) $activity->subject_id, ['name' => 'Legacy model']);
+            $resource = $modelTypes[$activity->subject_type];
+            $class = $resource::modelClassName();
+            $model = $class::query()->find($activity->subject_id);
+            $fallback = class_basename($class).' #'.$activity->subject_id;
+            $name = $model
+                ? ($resource instanceof PageResource ? $resource->getPageTitle($model) : ($model->title ?? $resource->getLabel()))
+                : $fallback;
+            $models[] = new AuditModelDTO((new $class)->getMorphClass(), (string) $activity->subject_id, [
+                'name' => mb_substr(trim((string) $name) ?: $fallback, 0, 190),
+            ]);
         }
 
         $legacy = [
