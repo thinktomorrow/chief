@@ -22,7 +22,7 @@ final class TimelineTest extends ChiefTestCase
     {
         $viewer = $this->fakeUser();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         config()->set('chief.audit.timezone', 'Europe/Brussels');
 
         $this->log('Earlier timezone entry', '2026-01-01T22:30:00Z');
@@ -38,7 +38,7 @@ final class TimelineTest extends ChiefTestCase
     {
         $viewer = $this->fakeUser();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         config()->set('chief.audit.types.project.secondary', ['priority' => 'secondary', 'label' => 'Bijzaak', 'icon' => 'clock', 'color' => 'blue']);
 
         $this->log('Old primary entry', '2026-01-01T10:00:00Z');
@@ -60,7 +60,7 @@ final class TimelineTest extends ChiefTestCase
     {
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         config()->set('chief.audit.types.project.secondary', ['priority' => 'secondary']);
         $this->log('Secondary-only event', '2026-01-01T13:00:00Z', 'project.secondary');
 
@@ -74,7 +74,7 @@ final class TimelineTest extends ChiefTestCase
     {
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         History::log(type: 'project.context', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Safe entry', context: ['content' => 'Private needle']);
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index', ['search' => 'Private needle']))
@@ -88,7 +88,7 @@ final class TimelineTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $event = History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Secret actor', 'id' => 'secret-actor-123'], summary: 'Secret summary', category: 'content', outcome: 'success', context: ['secret' => 'Secret context'], models: [
             new AuditModelDTO('project.hidden', '1', ['name' => 'Secret model']),
             new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Visible model']),
@@ -109,7 +109,7 @@ final class TimelineTest extends ChiefTestCase
     {
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->travelTo('2026-01-03 12:00:00');
         $plain = History::log(type: 'project.plain', actorType: 'system', actorSnapshot: ['name' => 'System']);
         $delayed = History::log(type: 'project.delayed', actorType: 'system', actorSnapshot: ['name' => 'System'], occurredAt: '2026-01-02T12:00:00Z');
@@ -127,7 +127,7 @@ final class TimelineTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
 
         for ($i = 0; $i < 205; $i++) {
             History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Private '.$i, models: [
@@ -152,7 +152,7 @@ final class TimelineTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $event = History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], models: [
             new AuditModelDTO('project.hidden', '42', ['name' => 'Hidden'], ['note' => 'Private detail']),
             new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Allowed'], ['note' => 'Approved detail']),

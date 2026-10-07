@@ -185,7 +185,7 @@ final class ChangeDetailsTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->admin();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [
             DB::table('chief_audit_events')->value('id'), DB::table('chief_audit_event_models')->value('id'),
         ]))->assertOk()->assertSee('OLD')->assertSee('WAS')->assertSee('NEW')->assertSee('NOW')

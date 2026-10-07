@@ -26,7 +26,7 @@ use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 
 final class AuditServiceProvider extends ChiefPluginServiceProvider
 {
-    public const PERMISSIONS = ['view-full-audit', 'view-related-audit'];
+    public const PERMISSIONS = ['view-audit', 'view-full-audit'];
 
     public function register(): void
     {

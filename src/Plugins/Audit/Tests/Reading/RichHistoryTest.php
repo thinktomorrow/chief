@@ -38,7 +38,7 @@ final class RichHistoryTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $url = route('chief.audit.rich-data', $event->getKey());
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
@@ -52,7 +52,7 @@ final class RichHistoryTest extends ChiefTestCase
         $this->get($url)->assertNotFound();
 
         $full = $this->fakeUser();
-        $full->givePermissionTo('view-full-audit');
+        $full->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($full, 'chief')->get($url)->assertOk()->assertSee('Hidden text')->assertSee('Shared secret');
     }
 
@@ -61,7 +61,7 @@ final class RichHistoryTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit');
+        $viewer->givePermissionTo('view-audit');
         $event = History::log(type: 'project.own', actorType: 'admin', actorSnapshot: ['name' => 'Actor', 'id' => (string) $viewer->id], models: [
             new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Secret']),
         ], richData: [RichData::text('Secret content', model: 0)]);
@@ -81,14 +81,14 @@ final class RichHistoryTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertSee('project.partial')->assertDontSee('Historische inhoud')->assertDontSee('Niet vastgelegd');
         $this->get(route('chief.audit.rich-data', $event->getKey()))->assertNotFound();
         $this->get(route('chief.audit.rich-reference', [$event->getKey(), 1]))->assertNotFound();
 
         $full = $this->fakeUser();
-        $full->givePermissionTo('view-full-audit');
+        $full->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($full, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout');
     }
 
@@ -102,7 +102,7 @@ final class RichHistoryTest extends ChiefTestCase
         ]);
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($viewer, 'chief');
         $details = $this->get(route('chief.audit.rich-data', $event->getKey()))->assertOk()
             ->assertSee('sandbox=""', false)->assertDontSee('<script>alert(1)</script>', false);
@@ -113,8 +113,8 @@ final class RichHistoryTest extends ChiefTestCase
         $this->get(route('chief.audit.rich-reference', [$event->getKey(), 2]))->assertNotFound();
         $this->get(route('chief.audit.rich-data', $event->getKey()))->assertSee('Referentie onbeschikbaar')->assertDontSee('example.txt');
         $viewer->revokePermissionTo('view-full-audit');
-        $this->get(route('chief.audit.rich-html', [$event->getKey(), 1]))->assertForbidden();
-        $this->get(route('chief.audit.rich-reference', [$event->getKey(), 2]))->assertForbidden();
+        $this->get(route('chief.audit.rich-html', [$event->getKey(), 1]))->assertNotFound();
+        $this->get(route('chief.audit.rich-reference', [$event->getKey(), 2]))->assertNotFound();
     }
 
     public function test_a_partial_viewer_can_download_only_references_on_visible_links(): void
@@ -133,7 +133,7 @@ final class RichHistoryTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))
             ->assertOk()->assertSee('visible.txt')->assertDontSee('hidden.txt');
         $this->get(route('chief.audit.rich-reference', [$event->getKey(), 1]))->assertNotFound();
@@ -151,7 +151,7 @@ final class RichHistoryTest extends ChiefTestCase
         $this->assertDatabaseCount('chief_audit_rich_data', 1);
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))
             ->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('too long');
     }
@@ -167,7 +167,7 @@ final class RichHistoryTest extends ChiefTestCase
         $event = History::log(type: 'project.error', actorType: 'system', actorSnapshot: ['name' => 'System'], richData: [RichData::text('Private data')]);
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))
             ->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('Sensitive capture failure')->assertDontSee('Private data');
 

@@ -25,7 +25,7 @@ final class ModelHistoryWindowTest extends ChiefTestCase
         ArticlePageResource::setFieldsDefinition(fn ($model) => AuditPresets::modelHistoryWindow($model));
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
+        $viewer->givePermissionTo('view-audit', 'view-full-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
         config()->set('chief.audit.types.project.secondary', ['priority' => 'secondary']);
 
         for ($i = 1; $i <= 6; $i++) {
@@ -55,8 +55,24 @@ final class ModelHistoryWindowTest extends ChiefTestCase
         $this->log($article, 'Hidden history', '2026-01-01T12:00:00Z');
         $this->actingAs($viewer, 'chief')->get($url)->assertOk()->assertDontSee('Historiek')->assertDontSee('Hidden history');
 
-        $viewer->givePermissionTo('view-related-audit');
+        $viewer->givePermissionTo('view-audit');
         $this->get($url)->assertOk()->assertSee('Geen historiek.')->assertDontSee('Hidden history')->assertDontSee('Toon alle historiek');
+    }
+
+    public function test_full_right_alone_does_not_show_model_history(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        ArticlePageResource::setFieldsDefinition(fn ($model) => AuditPresets::modelHistoryWindow($model));
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-full-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
+        $this->log($article, 'Hidden history', '2026-01-01T12:00:00Z');
+
+        $url = $this->manager($article)->route('edit', $article);
+        $this->actingAs($viewer, 'chief')->get($url)->assertOk()->assertDontSee('Historiek')->assertDontSee('Hidden history');
+
+        $viewer->givePermissionTo('view-audit');
+        $this->get($url)->assertOk()->assertSee('Hidden history');
     }
 
     public function test_related_access_only_shows_projected_links_and_own_actor_path_does_not_reveal_hidden_details(): void
@@ -65,7 +81,7 @@ final class ModelHistoryWindowTest extends ChiefTestCase
         ArticlePageResource::setFieldsDefinition(fn ($model) => AuditPresets::modelHistoryWindow($model));
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'), ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'), ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
 
         History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Secret actor'], summary: 'Secret summary', models: [
             new AuditModelDTO('project.hidden', '12', ['name' => 'Secret model']),

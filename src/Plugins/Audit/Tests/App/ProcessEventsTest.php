@@ -42,7 +42,7 @@ final class ProcessEventsTest extends ChiefTestCase
         $this->assertNotNull($success->occurred_at);
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
-        $admin->givePermissionTo('view-related-audit');
+        $admin->givePermissionTo('view-audit');
         $this->actingAs($admin, 'chief')->get(route('chief.audit.index'))->assertOk()->assertDontSee('Admin login failed')->assertDontSee('Admin logged in');
         $admin->givePermissionTo('view-full-audit');
         $this->get(route('chief.audit.index'))->assertOk()->assertSee('Admin login failed')->assertSee('Admin logged in');

@@ -52,12 +52,12 @@ final class SentMailHistoryTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $limited = $this->fakeUser();
-        $limited->givePermissionTo('view-related-audit');
+        $limited->givePermissionTo('view-audit');
         $this->actingAs($limited, 'chief')->get(route('chief.audit.index'))->assertOk()->assertDontSee('chief.mail.invitation.sent');
         $this->get(route('chief.audit.rich-data', $event->id))->assertNotFound();
         $this->get(route('chief.audit.event-details', $event->id))->assertNotFound();
 
-        $admin->givePermissionTo('view-full-audit');
+        $admin->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($admin, 'chief')->get(route('chief.audit.index'))->assertOk()->assertSee('chief.mail.invitation.sent')->assertDontSee('invite@example.com');
         $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Uitnodiging tot Chief')->assertDontSee('accept_url');
         $this->get(route('chief.audit.event-details', $event->id))->assertOk()->assertSee($invitationId);
@@ -104,7 +104,7 @@ final class SentMailHistoryTest extends ChiefTestCase
         $this->assertNull($piece->content);
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
-        $admin->givePermissionTo('view-full-audit');
+        $admin->givePermissionTo('view-audit', 'view-full-audit');
         $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('invite@example.com');
         $this->get(route('chief.audit.rich-html', [$event->id, $piece->id]))->assertNotFound();
     }
@@ -114,11 +114,11 @@ final class SentMailHistoryTest extends ChiefTestCase
         $event = History::log(type: 'chief.mail.invitation.sent', actorType: 'system', actorSnapshot: ['name' => 'Chief'], outcome: 'success');
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $limited = $this->fakeUser();
-        $limited->givePermissionTo('view-related-audit');
+        $limited->givePermissionTo('view-audit');
         $this->actingAs($limited, 'chief')->get(route('chief.audit.event-details', $event->getKey()))->assertNotFound();
 
         $full = $this->fakeUser();
-        $full->givePermissionTo('view-full-audit');
+        $full->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($full, 'chief')->get(route('chief.audit.event-details', $event->getKey()))->assertOk()->assertSee('Nooit vastgelegd');
     }
 
@@ -146,11 +146,11 @@ final class SentMailHistoryTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $limited = $this->fakeUser();
-        $limited->givePermissionTo('view-related-audit');
+        $limited->givePermissionTo('view-audit');
         $this->actingAs($limited, 'chief')->get(route('chief.audit.index'))->assertOk()->assertDontSee('chief.mail.invitation.sent');
         $this->get(route('chief.audit.rich-data', $event->id))->assertNotFound();
 
-        $admin->givePermissionTo('view-full-audit');
+        $admin->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($admin, 'chief')->get(route('chief.audit.index'))->assertOk()->assertSee('chief.mail.invitation.sent');
         $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Verwijderd door bewaring')->assertDontSee('invite@example.com');
         $this->get(route('chief.audit.rich-html', [$event->id, $piece->id]))->assertNotFound();
