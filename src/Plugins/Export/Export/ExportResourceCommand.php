@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Plugins\Export\Export;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 use Thinktomorrow\Chief\Resource\Resource;
 use Thinktomorrow\Chief\Sites\ChiefSites;
 
@@ -42,6 +43,8 @@ class ExportResourceCommand extends BaseCommand
         (new ExportResourceDocument($resource, $models, $locales, ! $this->option('include-static'), $this->option('hive')))
             ->setOutput($this->output)
             ->store($filepath = 'exports/'.date('Ymd').'/'.config('app.name').'-'.$resource::resourceKey().'-'.date('Y-m-d').'.xlsx');
+
+        event(new ChiefExportCompleted('resource', $resource::resourceKey(), now()->toIso8601String()));
 
         $this->info('Finished '.$resource::resourceKey().' export. File available at: storage/app/'.$filepath);
     }
