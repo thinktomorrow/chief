@@ -23,6 +23,6 @@ final class RecordManagedModel
 
     private function record(string $action, Model $model): void
     {
-        app(RecordChiefAction::class)->handle(ChiefActionCompleted::forModels($action, $model));
+        event(ChiefActionCompleted::forModels($action, $model));
     }
 }

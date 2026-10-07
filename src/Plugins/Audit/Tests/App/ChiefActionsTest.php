@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests\App;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use RuntimeException;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Admin\Users\Application\DeleteUser;
@@ -14,6 +15,7 @@ use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicatePage;
+use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\Models\App\Actions\CreateModel;
@@ -66,6 +68,18 @@ final class ChiefActionsTest extends ChiefTestCase
         $this->assertDatabaseCount('chief_audit_events', 1);
         $this->assertDatabaseHas('chief_audit_events', ['type' => 'chief.model.deleted', 'model_id' => (string) $page->id]);
         $this->assertDatabaseCount('chief_audit_event_models', 1);
+    }
+
+    public function test_archiving_and_unarchiving_record_their_respective_actions_once(): void
+    {
+        $page = ArticlePage::create();
+
+        app(UpdateState::class)->handle(ArticlePageResource::resourceKey(), $page->modelReference(), PageState::KEY, 'archive');
+        app(UpdateState::class)->handle(ArticlePageResource::resourceKey(), $page->modelReference(), PageState::KEY, 'unarchive');
+
+        $this->assertDatabaseCount('chief_audit_events', 2);
+        $this->assertDatabaseHas('chief_audit_events', ['type' => 'chief.model.archived', 'model_id' => (string) $page->id]);
+        $this->assertDatabaseHas('chief_audit_events', ['type' => 'chief.model.unarchived', 'model_id' => (string) $page->id]);
     }
 
     public function test_state_delete_does_not_double_log_the_deletion(): void
@@ -124,6 +138,10 @@ final class ChiefActionsTest extends ChiefTestCase
         ArticlePageResource::setFieldsDefinition(fn () => [Form::make('main')->items([Text::make('title_trans')->locales()->required()])]);
         $admin = $this->admin();
         $this->actingAs($admin, 'chief');
+        $completedActions = [];
+        Event::listen(ChiefActionCompleted::class, function (ChiefActionCompleted $event) use (&$completedActions): void {
+            $completedActions[] = $event->action;
+        });
         $modelId = app(ModelApplication::class)->create(new CreateModel(ArticlePage::class, ['nl'], ['title_trans' => ['nl' => 'First']], []));
 
         $created = DB::table('chief_audit_events')->first();
@@ -136,6 +154,7 @@ final class ChiefActionsTest extends ChiefTestCase
         app(ModelApplication::class)->updateModel(new UpdateModel(ArticlePage::findOrFail($modelId)->modelReference(), ['nl'], ['title_trans' => ['nl' => 'Second']], []));
         $this->assertDatabaseCount('chief_audit_events', 2);
         $this->assertDatabaseHas('chief_audit_events', ['type' => 'chief.model.updated', 'model_id' => (string) $modelId]);
+        $this->assertSame(['created', 'updated'], $completedActions);
         $this->assertSame($admin->fullname, json_decode(DB::table('chief_audit_events')->where('type', 'chief.model.updated')->first()->actor_snapshot, true)['name']);
         $this->assertNotSame($admin->fullname, json_decode($created->actor_snapshot, true)['name']);
 
