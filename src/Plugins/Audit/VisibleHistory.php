@@ -214,6 +214,14 @@ final class VisibleHistory
         }
 
         foreach (['type', 'category', 'outcome', 'actor_type'] as $key) {
+            if ($key === 'type' && isset($filters[$key]) && is_array($filters[$key])) {
+                if (! in_array($event->type, $filters[$key], true)) {
+                    return false;
+                }
+
+                continue;
+            }
+
             if (isset($filters[$key]) && $filters[$key] !== '' && (string) $event->$key !== (string) $filters[$key]) {
                 return false;
             }
