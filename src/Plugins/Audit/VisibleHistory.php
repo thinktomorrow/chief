@@ -41,11 +41,31 @@ final class VisibleHistory
     /** @param array<string, mixed> $filters */
     public function paginate(array $filters = [], int $perPage = 50, int $page = 1): LengthAwarePaginator
     {
-        $results = $this->select($filters);
         $perPage = max(1, min(100, $perPage));
         $page = max(1, $page);
+        $active = $this->hasActiveFilters($filters);
+        $results = $this->select($filters);
 
-        return new LengthAwarePaginator($results->slice(($page - 1) * $perPage, $perPage)->values(), $results->count(), $perPage, $page, [
+        if ($active) {
+            $pageItems = $results->slice(($page - 1) * $perPage, $perPage)->values();
+            $total = $results->count();
+        } else {
+            $primaries = $results->filter(fn (AuditEvent $event) => $this->priority($event) !== 'secondary')->values();
+            $pageItems = $primaries->slice(($page - 1) * $perPage, $perPage)->values();
+            $total = $primaries->count();
+
+            if (($filters['show_all'] ?? false) && $primaries->isEmpty()) {
+                $pageItems = $results->slice(($page - 1) * $perPage, $perPage)->values();
+                $total = $results->count();
+            } elseif (($filters['show_all'] ?? false) && $pageItems->isNotEmpty()) {
+                $newest = $pageItems->first();
+                $oldest = $pageItems->last();
+                $pageItems = $results->filter(fn (AuditEvent $event) => $this->priority($event) !== 'secondary' && $pageItems->contains($event)
+                    || $this->priority($event) === 'secondary' && $this->notLaterThan($event, $newest) && $this->notLaterThan($oldest, $event))->values();
+            }
+        }
+
+        return new LengthAwarePaginator($pageItems, $total, $perPage, $page, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
             'query' => request()->query(),
         ]);
@@ -107,7 +127,6 @@ final class VisibleHistory
                         'name' => match ($event->actor_type) {
                             'admin' => 'Admin', 'system' => 'Systeem', default => 'Externe actor',
                         },
-                        'id' => $event->actor_snapshot['id'] ?? null,
                     ], fn ($value) => $value !== null);
                 }
 
@@ -130,7 +149,34 @@ final class VisibleHistory
             'categories' => $events->pluck('category')->unique()->values()->all(),
             'outcomes' => $events->pluck('outcome')->filter()->unique()->values()->all(),
             'model_types' => $events->flatMap(fn (AuditEvent $event) => $event->models->pluck('model_type'))->unique()->values()->all(),
+            'actor_types' => $events->pluck('actor_type')->unique()->values()->all(),
+            'actors' => $events->filter(fn (AuditEvent $event) => isset($event->actor_snapshot['id']))->mapWithKeys(fn (AuditEvent $event) => [$event->actor_snapshot['id'] => $event->actor_snapshot['name']])->all(),
+            'models' => $events->flatMap(fn (AuditEvent $event) => $event->models->mapWithKeys(fn (AuditEventModel $model) => [$model->model_id => $model->model_snapshot['name']]))->all(),
         ];
+    }
+
+    public function priority(AuditEvent $event): string
+    {
+        return config('chief.audit.types.'.$event->type.'.priority') === 'secondary' ? 'secondary' : 'primary';
+    }
+
+    /** @param array<string, mixed> $filters */
+    public function hasActiveFilters(array $filters): bool
+    {
+        return collect($filters)->except(['page', 'per_page', 'show_all'])->contains(fn ($value) => $value !== null && $value !== '');
+    }
+
+    public function timezone(): string
+    {
+        return config('chief.audit.timezone', config('app.timezone', 'UTC'));
+    }
+
+    public function eventDetail(string $eventId): AuditEvent
+    {
+        $event = $this->select(['event_id' => $eventId])->first();
+        abort_unless($event && ($event->context || ! $event->recorded_at->equalTo($event->occurred_at)), 404);
+
+        return $event;
     }
 
     public function detail(string $eventId, string $linkId): AuditEventModel
@@ -150,6 +196,10 @@ final class VisibleHistory
     /** @param array<string, mixed> $filters */
     private function matches(AuditEvent $event, array $filters): bool
     {
+        if (isset($filters['event_id']) && (string) $event->getKey() !== (string) $filters['event_id']) {
+            return false;
+        }
+
         foreach (['type', 'category', 'outcome', 'actor_type'] as $key) {
             if (isset($filters[$key]) && $filters[$key] !== '' && (string) $event->$key !== (string) $filters[$key]) {
                 return false;
@@ -166,7 +216,8 @@ final class VisibleHistory
             return false;
         }
 
-        if (isset($filters['from']) && $event->occurred_at->toDateString() < $filters['from'] || isset($filters['to']) && $event->occurred_at->toDateString() > $filters['to']) {
+        $day = $event->occurred_at->setTimezone($this->timezone())->toDateString();
+        if (isset($filters['from']) && $day < $filters['from'] || isset($filters['to']) && $day > $filters['to']) {
             return false;
         }
 
@@ -177,5 +228,10 @@ final class VisibleHistory
         }
 
         return true;
+    }
+
+    private function notLaterThan(AuditEvent $left, AuditEvent $right): bool
+    {
+        return $left->occurred_at < $right->occurred_at || $left->occurred_at == $right->occurred_at && $left->getKey() <= $right->getKey();
     }
 }

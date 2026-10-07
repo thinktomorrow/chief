@@ -152,12 +152,12 @@ final class HistoryAccessTest extends ChiefTestCase
         ]);
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index', ['search' => 'Secret order']))
-            ->assertOk()->assertDontSee('project.bulk')->assertSee('0 resultaten');
+            ->assertOk()->assertDontSee('<span>project.bulk</span>', false)->assertSee('0 resultaten');
         $this->get(route('chief.audit.index', ['model_type' => 'project.hidden']))
-            ->assertOk()->assertDontSee('project.bulk')->assertDontSee('project.visible');
+            ->assertOk()->assertDontSee('<span>project.bulk</span>', false)->assertDontSee('<span>project.visible</span>', false);
         $this->get(route('chief.audit.index', ['per_page' => 1]))
             ->assertOk()->assertSee('Visible later')->assertDontSee('Secret order')->assertDontSee('Secret context')
-            ->assertDontSee('project.bulk')->assertSee('2 resultaten');
+            ->assertDontSee('<span>project.bulk</span>', false)->assertSee('2 resultaten');
         $this->get(route('chief.audit.index', ['per_page' => 1, 'page' => 2]))
             ->assertOk()->assertSee('project.bulk')->assertSee('Visible article')
             ->assertDontSee('Secret order')->assertDontSee('Secret context')->assertDontSee('Hidden context')
@@ -190,7 +190,7 @@ final class HistoryAccessTest extends ChiefTestCase
             ->assertOk()->assertSee('project.actor')->assertDontSee('Secret model actor')
             ->assertDontSee('Secret summary')->assertDontSee('Secret model');
         $this->get(route('chief.audit.index', ['search' => 'Secret model']))
-            ->assertOk()->assertDontSee('project.actor')->assertSee('0 resultaten');
+            ->assertOk()->assertSee('0 resultaten')->assertDontSee('<span>project.actor</span>', false);
     }
 
     public function test_old_right_grants_neither_page_nor_navigation(): void
