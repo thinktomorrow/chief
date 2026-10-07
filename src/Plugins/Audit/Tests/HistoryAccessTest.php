@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests;
 
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
+use Thinktomorrow\Chief\Plugins\Audit\AuditEvent;
 use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
@@ -108,6 +109,31 @@ final class HistoryAccessTest extends ChiefTestCase
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('Visible older event')->assertDontSee('Hidden export');
+    }
+
+    public function test_related_details_only_show_changes_for_currently_accessible_links(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        $article->order = 27;
+        $event = History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Bulk action', models: [
+            (new AuditModelDTO('project.unknown', '12', ['name' => 'Hidden model']))->withChangesFrom($article, ['order']),
+            (new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Visible model']))->withChangesFrom($article, ['order']),
+        ]);
+
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $links = AuditEvent::query()->findOrFail($event->getKey())->models()->orderBy('id')->get();
+        $hiddenUrl = route('chief.audit.details', [$event->getKey(), $links[0]->getKey()]);
+        $visibleUrl = route('chief.audit.details', [$event->getKey(), $links[1]->getKey()]);
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
+            ->assertOk()->assertSee($visibleUrl)->assertDontSee($hiddenUrl)->assertDontSee('Hidden model');
+        $this->get($hiddenUrl)->assertNotFound();
+        $this->get($visibleUrl)->assertOk()->assertSee('Visible model')->assertSee('27');
+
+        $article->delete();
+        $this->get($visibleUrl)->assertNotFound();
     }
 
     public function test_old_right_grants_neither_page_nor_navigation(): void
