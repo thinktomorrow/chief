@@ -89,7 +89,7 @@ final class RichHistoryTest extends ChiefTestCase
 
         $full = $this->fakeUser();
         $full->givePermissionTo('view-full-audit');
-        $this->actingAs($full, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))->assertOk()->assertSee('Niet vastgelegd');
+        $this->actingAs($full, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout');
     }
 
     public function test_html_and_file_references_are_isolated_and_reauthorized(): void
@@ -153,7 +153,7 @@ final class RichHistoryTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))
-            ->assertOk()->assertSee('Niet vastgelegd')->assertDontSee('too long');
+            ->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('too long');
     }
 
     public function test_failed_capture_does_not_leave_partial_content_and_caller_rollback_removes_both(): void
@@ -169,7 +169,7 @@ final class RichHistoryTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.rich-data', $event->getKey()))
-            ->assertOk()->assertSee('Niet vastgelegd')->assertDontSee('Sensitive capture failure')->assertDontSee('Private data');
+            ->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('Sensitive capture failure')->assertDontSee('Private data');
 
         DB::beginTransaction();
         History::log(type: 'project.rollback', actorType: 'system', actorSnapshot: ['name' => 'System'], richData: [RichData::metadata(['safe' => 'value'])]);

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Admin\Authentication\Events\ChiefLoginCompleted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
+use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\AuditPermissionsCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\CleanupAuditCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\ImportSpatieActivitiesCommand;
@@ -37,6 +39,8 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
     public function boot(): void
     {
         Event::listen(ChiefActionCompleted::class, [RecordChiefAction::class, 'handle']);
+        Event::listen(ManagedModelCreated::class, [RecordManagedModel::class, 'created']);
+        Event::listen(ManagedModelUpdated::class, [RecordManagedModel::class, 'updated']);
         Event::listen(ChiefLoginCompleted::class, [RecordChiefLogin::class, 'handle']);
         Event::listen(UserInvited::class, [RecordUserInvitation::class, 'handle']);
         Event::listen(MessageSent::class, [RecordSentInvitationMail::class, 'handle']);

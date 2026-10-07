@@ -18,7 +18,7 @@ final class RecordUserInvitation
             category: 'users',
             outcome: 'success',
             summary: 'User invited',
-            context: ['invitee_email' => $event->inviteeEmail],
+            context: ['invitee_email' => $event->inviteeEmail, 'invitation_id' => (string) $event->invitation_id],
         );
     }
 }
