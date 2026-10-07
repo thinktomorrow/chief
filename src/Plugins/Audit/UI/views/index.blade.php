@@ -85,7 +85,7 @@
                         @if ($event->model_snapshot)
                             <span>{{ $event->model_snapshot['name'] }}</span>
                         @endif
-                        @if ($event->context || ! $event->recorded_at->equalTo($event->occurred_at))
+                        @if ($event->context || ! $event->recorded_at->equalTo($event->occurred_at) || $history->missingMailPreview($event))
                             <a href="{{ route('chief.audit.event-details', $event->getKey()) }}">Details</a>
                         @endif
                         @if ($event->visible_rich_data)

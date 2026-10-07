@@ -6,6 +6,9 @@
         <x-chief::window>
             <a href="{{ route('chief.audit.index') }}">Terug naar historiek</a>
             <h1>{{ $event->type }}</h1>
+            @if ($missingMailPreview)
+                <p>Mailpreview: Nooit vastgelegd</p>
+            @endif
             @if (! $event->recorded_at->equalTo($event->occurred_at))
                 <p>Geregistreerd: {{ $event->recorded_at->setTimezone($timezone)->format('d/m/Y H:i') }}</p>
             @endif
