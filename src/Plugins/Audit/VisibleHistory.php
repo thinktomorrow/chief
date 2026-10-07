@@ -66,7 +66,7 @@ final class VisibleHistory
                     foreach ($this->visibleModels as $type => $class) {
                         $query->orWhereHas('models', fn (Builder $links) => $links->where('model_type', $type)->whereIn('model_id', $class::query()->select((new $class)->getKeyName())));
                     }
-                })->orWhere(fn (Builder $query) => $query->where('actor_type', 'admin')->where('actor_snapshot->id', $actorId)->whereHas('models'));
+                })->orWhere(fn (Builder $query) => $query->where('type', '!=', 'legacy.spatie')->where('actor_type', 'admin')->where('actor_snapshot->id', $actorId)->whereHas('models'));
             });
         }
 
@@ -87,7 +87,7 @@ final class VisibleHistory
             foreach ($events as $event) {
                 $allLinks = $links->get($event->getKey(), collect());
                 $allowed = $this->fullAccess ? $allLinks : $allLinks->filter(fn (AuditEventModel $link) => isset($existing[$link->model_type][$link->model_id]))->values();
-                $own = ! $this->fullAccess && $event->actor_type === 'admin' && ($event->actor_snapshot['id'] ?? null) === (string) auth('chief')->id() && $allLinks->isNotEmpty();
+                $own = ! $this->fullAccess && $event->type !== 'legacy.spatie' && $event->actor_type === 'admin' && ($event->actor_snapshot['id'] ?? null) === (string) auth('chief')->id() && $allLinks->isNotEmpty();
 
                 if (! $this->fullAccess && $allowed->isEmpty() && ! $own) {
                     continue;
@@ -100,7 +100,7 @@ final class VisibleHistory
                     $event->model_id = $allowed->first()?->model_id;
                 }
 
-                if (! $this->fullAccess && $allowed->count() !== $allLinks->count()) {
+                if (! $this->fullAccess && ($event->type === 'legacy.spatie' || $allowed->count() !== $allLinks->count())) {
                     $event->summary = null;
                     $event->context = [];
                     $event->actor_snapshot = array_filter([

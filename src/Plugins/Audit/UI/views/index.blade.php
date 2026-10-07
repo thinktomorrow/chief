@@ -24,6 +24,9 @@
                 @if ($event->summary)
                     <span>{{ $event->summary }}</span>
                 @endif
+                @if ($event->type === 'legacy.spatie' && $event->context)
+                    <pre>{{ json_encode($event->context['legacy'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE) }}</pre>
+                @endif
                 @if ($event->outcome)
                     <span>{{ $event->outcome }}</span>
                 @endif
