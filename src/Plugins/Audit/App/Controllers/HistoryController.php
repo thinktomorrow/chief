@@ -17,7 +17,12 @@ final class HistoryController extends Controller
     {
         $filters = $request->validate([
             'search' => 'sometimes|nullable|string|max:190',
-            'type' => 'sometimes|nullable|string|max:190',
+            'type' => ['sometimes', 'nullable', function (string $attribute, mixed $value, \Closure $fail): void {
+                if (! is_string($value) && ! is_array($value) || is_string($value) && mb_strlen($value) > 190 || is_array($value) && count($value) > 20) {
+                    $fail('Ongeldige typesleutel.');
+                }
+            }],
+            'type.*' => 'string|max:190',
             'category' => 'sometimes|nullable|string|max:100',
             'outcome' => 'sometimes|nullable|string|max:100',
             'actor' => 'sometimes|nullable|string|max:190',
