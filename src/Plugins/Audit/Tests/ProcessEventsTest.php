@@ -60,7 +60,8 @@ final class ProcessEventsTest extends ChiefTestCase
         $this->assertDatabaseHas('chief_audit_events', ['type' => 'chief.user.invited', 'actor_type' => 'admin', 'outcome' => 'success']);
         $invitation = DB::table('chief_audit_events')->first();
         $this->assertSame(['name' => $inviter->fullname, 'id' => (string) $inviter->id], json_decode($invitation->actor_snapshot, true));
-        $this->assertSame(['invitee_email' => $invitee->email], json_decode($invitation->context, true));
+        $this->assertSame($invitee->email, json_decode($invitation->context, true)['invitee_email']);
+        $this->assertNotEmpty(json_decode($invitation->context, true)['invitation_id']);
 
         try {
             DB::transaction(function () use ($invitee): void {

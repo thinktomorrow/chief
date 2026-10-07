@@ -16,12 +16,6 @@ final class RecentHistory
      */
     public function select(array $filters = [], int $limit = 5, bool $includeSecondary = false): Collection
     {
-        $events = $this->history->select($filters);
-
-        if (! $includeSecondary) {
-            $events = $events->filter(fn (AuditEvent $event) => $this->history->priority($event) !== 'secondary');
-        }
-
-        return $events->take(max(1, min(20, $limit)))->values();
+        return $this->history->recent($filters, max(1, min(20, $limit)), $includeSecondary);
     }
 }

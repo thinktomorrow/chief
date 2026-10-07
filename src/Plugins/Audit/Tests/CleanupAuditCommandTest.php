@@ -94,6 +94,34 @@ final class CleanupAuditCommandTest extends ChiefTestCase
         $this->assertDatabaseMissing('chief_audit_rich_data', ['event_id' => $event]);
     }
 
+    public function test_dry_run_counts_all_pieces_cascaded_by_expired_events_without_double_counting(): void
+    {
+        Carbon::setTestNow('2026-10-07 12:00:00');
+        $old = $this->event('2020-01-01 00:00:00');
+        $fresh = $this->event('2026-10-07 00:00:00');
+        DB::table('chief_audit_rich_data')->where('event_id', $old)->update(['status' => 'removed']);
+        config()->set('chief-audit.rich_data_days', null);
+
+        Artisan::call('chief-audit:cleanup', ['--dry-run' => true]);
+        $output = Artisan::output();
+        $this->assertStringContainsString('Events: 1', $output);
+        $this->assertStringContainsString('Rich data: 1', $output);
+        $this->assertDatabaseHas('chief_audit_rich_data', ['event_id' => $old, 'status' => 'removed']);
+        $this->assertDatabaseHas('chief_audit_rich_data', ['event_id' => $fresh, 'status' => 'available']);
+
+        config()->set('chief-audit.rich_data_days', 0);
+        Artisan::call('chief-audit:cleanup', ['--dry-run' => true]);
+        $this->assertStringContainsString('Rich data: 2', Artisan::output());
+        $this->assertDatabaseCount('chief_audit_rich_data', 2);
+
+        config()->set('chief-audit.events_days', null);
+        config()->set('chief-audit.rich_data_days', null);
+        Artisan::call('chief-audit:cleanup', ['--dry-run' => true]);
+        $output = Artisan::output();
+        $this->assertStringContainsString('Events: 0', $output);
+        $this->assertStringContainsString('Rich data: 0', $output);
+    }
+
     private function event(string $occurredAt): int
     {
         return (int) History::log(

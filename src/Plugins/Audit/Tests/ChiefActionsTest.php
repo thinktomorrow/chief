@@ -10,10 +10,15 @@ use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Admin\Users\Application\DeleteUser;
 use Thinktomorrow\Chief\Admin\Users\Application\DisableUser;
 use Thinktomorrow\Chief\Admin\Users\Application\EnableUser;
+use Thinktomorrow\Chief\Forms\Fields\Text;
+use Thinktomorrow\Chief\Forms\Layouts\Form;
 use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicatePage;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Models\App\Actions\CreateModel;
+use Thinktomorrow\Chief\Models\App\Actions\ModelApplication;
+use Thinktomorrow\Chief\Models\App\Actions\UpdateModel;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -112,5 +117,37 @@ final class ChiefActionsTest extends ChiefTestCase
         foreach (['disabled', 'enabled', 'deleted'] as $action) {
             $this->assertDatabaseHas('chief_audit_events', ['type' => 'chief.user.'.$action, 'model_id' => (string) $user->id]);
         }
+    }
+
+    public function test_real_create_and_edit_each_record_one_historical_model_event_and_rollback_together(): void
+    {
+        ArticlePageResource::setFieldsDefinition(fn () => [Form::make('main')->items([Text::make('title_trans')->locales()->required()])]);
+        $admin = $this->admin();
+        $this->actingAs($admin, 'chief');
+        $modelId = app(ModelApplication::class)->create(new CreateModel(ArticlePage::class, ['nl'], ['title_trans' => ['nl' => 'First']], []));
+
+        $created = DB::table('chief_audit_events')->first();
+        $this->assertDatabaseCount('chief_audit_events', 1);
+        $this->assertSame('chief.model.created', $created->type);
+        $this->assertSame((string) $modelId, $created->model_id);
+        $this->assertSame($admin->fullname, json_decode($created->actor_snapshot, true)['name']);
+
+        $admin->update(['firstname' => 'Renamed']);
+        app(ModelApplication::class)->updateModel(new UpdateModel(ArticlePage::findOrFail($modelId)->modelReference(), ['nl'], ['title_trans' => ['nl' => 'Second']], []));
+        $this->assertDatabaseCount('chief_audit_events', 2);
+        $this->assertDatabaseHas('chief_audit_events', ['type' => 'chief.model.updated', 'model_id' => (string) $modelId]);
+        $this->assertSame($admin->fullname, json_decode(DB::table('chief_audit_events')->where('type', 'chief.model.updated')->first()->actor_snapshot, true)['name']);
+        $this->assertNotSame($admin->fullname, json_decode($created->actor_snapshot, true)['name']);
+
+        try {
+            DB::transaction(function () use ($modelId): void {
+                app(ModelApplication::class)->updateModel(new UpdateModel(ArticlePage::findOrFail($modelId)->modelReference(), ['nl'], ['title_trans' => ['nl' => 'Rolled back']], []));
+                throw new RuntimeException('rollback');
+            });
+        } catch (RuntimeException $exception) {
+            $this->assertSame('rollback', $exception->getMessage());
+        }
+
+        $this->assertDatabaseCount('chief_audit_events', 2);
     }
 }

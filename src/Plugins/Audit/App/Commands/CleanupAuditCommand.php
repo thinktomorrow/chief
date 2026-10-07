@@ -32,10 +32,20 @@ final class CleanupAuditCommand extends Command
         $richBefore = $richDays === null ? null : $now->copy()->subDays($richDays);
 
         $events = $eventsBefore === null ? 0 : DB::table('chief_audit_events')->where('occurred_at', '<', $eventsBefore)->count();
-        $pieces = $richBefore === null ? 0 : DB::table('chief_audit_rich_data as rich')
+        $pieces = DB::table('chief_audit_rich_data as rich')
             ->join('chief_audit_events as events', 'events.id', '=', 'rich.event_id')
-            ->where('events.occurred_at', '<', $richBefore)
-            ->where('rich.status', 'available')->count();
+            ->where(function ($query) use ($eventsBefore, $richBefore): void {
+                if ($eventsBefore !== null) {
+                    $query->orWhere('events.occurred_at', '<', $eventsBefore);
+                }
+                if ($richBefore !== null) {
+                    $query->orWhere(function ($query) use ($richBefore): void {
+                        $query->where('events.occurred_at', '<', $richBefore)->where('rich.status', 'available');
+                    });
+                }
+            })
+            ->when($eventsBefore === null && $richBefore === null, fn ($query) => $query->whereRaw('1 = 0'))
+            ->count();
 
         $this->info('Events: '.$events);
         $this->info('Rich data: '.$pieces);

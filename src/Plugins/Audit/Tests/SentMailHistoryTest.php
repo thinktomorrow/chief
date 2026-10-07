@@ -45,16 +45,22 @@ final class SentMailHistoryTest extends ChiefTestCase
         $this->assertDatabaseCount('chief_audit_events', 2);
         $piece = DB::table('chief_audit_rich_data')->where('event_id', $event->id)->first();
         $this->assertSame('available', $piece->status);
+        $invited = DB::table('chief_audit_events')->where('type', 'chief.user.invited')->first();
+        $invitationId = json_decode($invited->context, true)['invitation_id'];
+        $this->assertNotEmpty($invitationId);
+        $this->assertSame($invitationId, json_decode($event->context, true)['invitation_id']);
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $limited = $this->fakeUser();
         $limited->givePermissionTo('view-related-audit');
         $this->actingAs($limited, 'chief')->get(route('chief.audit.index'))->assertOk()->assertDontSee('chief.mail.invitation.sent');
         $this->get(route('chief.audit.rich-data', $event->id))->assertNotFound();
+        $this->get(route('chief.audit.event-details', $event->id))->assertNotFound();
 
         $admin->givePermissionTo('view-full-audit');
         $this->actingAs($admin, 'chief')->get(route('chief.audit.index'))->assertOk()->assertSee('chief.mail.invitation.sent')->assertDontSee('invite@example.com');
         $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Uitnodiging tot Chief')->assertDontSee('accept_url');
+        $this->get(route('chief.audit.event-details', $event->id))->assertOk()->assertSee($invitationId);
         $previewUrl = route('chief.audit.rich-html', [$event->id, $piece->id]);
         $original = $this->get($previewUrl)->assertOk()->assertSee('invite', false)
             ->assertHeader('Content-Security-Policy', "sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:");
@@ -99,7 +105,7 @@ final class SentMailHistoryTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $admin->givePermissionTo('view-full-audit');
-        $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Niet vastgelegd')->assertDontSee('invite@example.com');
+        $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('invite@example.com');
         $this->get(route('chief.audit.rich-html', [$event->id, $piece->id]))->assertNotFound();
     }
 

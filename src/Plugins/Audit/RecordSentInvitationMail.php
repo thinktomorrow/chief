@@ -15,6 +15,8 @@ final class RecordSentInvitationMail
             return;
         }
 
+        $invitationId = $event->data['chief_audit_invitation_id'] ?? null;
+
         $html = $event->message->getHtmlBody();
         $subject = $event->message->getSubject();
 
@@ -25,6 +27,7 @@ final class RecordSentInvitationMail
             category: 'users',
             outcome: 'success',
             summary: 'Invitation email sent',
+            context: is_string($invitationId) && $invitationId !== '' ? ['invitation_id' => $invitationId] : [],
             richData: $html === null ? [] : [RichData::mailPreview($html, $subject === 'Uitnodiging tot Chief' ? ['subject' => $subject] : [])],
         );
     }
