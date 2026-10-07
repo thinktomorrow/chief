@@ -6,12 +6,14 @@ namespace Thinktomorrow\Chief\Plugins\Audit\App\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Plugins\Audit\AuditPresentations;
 use Thinktomorrow\Chief\Plugins\Audit\VisibleHistory;
 
 final class HistoryController extends Controller
 {
-    public function index(Request $request, VisibleHistory $history): View
+    public function index(Request $request, VisibleHistory $history, AuditPresentations $presentations): View
     {
         $filters = $request->validate([
             'search' => 'sometimes|nullable|string|max:190',
@@ -27,7 +29,15 @@ final class HistoryController extends Controller
             'per_page' => 'sometimes|integer|min:1|max:100',
             'page' => 'sometimes|integer|min:1',
             'show_all' => 'sometimes|boolean',
+            'filter' => 'sometimes|array',
+            'filter.*' => 'nullable|string|max:190',
         ]);
+
+        foreach (array_keys($filters['filter'] ?? []) as $key) {
+            if (! array_key_exists($key, $presentations->filters())) {
+                throw ValidationException::withMessages(['filter' => 'Unknown audit filter.']);
+            }
+        }
 
         return view('chief-audit::index', [
             'events' => $history->paginate($filters, (int) ($filters['per_page'] ?? 50), (int) ($filters['page'] ?? 1)),
