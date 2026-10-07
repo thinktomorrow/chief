@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Admin\Authentication\Events\ChiefLoginCompleted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\AuditPermissionsCommand;
+use Thinktomorrow\Chief\Plugins\Audit\App\Commands\ImportSpatieActivitiesCommand;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
 use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 
@@ -35,7 +36,7 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
         Event::listen(UserInvited::class, [RecordUserInvitation::class, 'handle']);
         Event::listen(ChiefExportCompleted::class, [RecordChiefExport::class, 'handle']);
 
-        $this->commands([AuditPermissionsCommand::class]);
+        $this->commands([AuditPermissionsCommand::class, ImportSpatieActivitiesCommand::class]);
 
         $this->loadMigrationsFrom(__DIR__.'/Infrastructure/migrations');
         $this->app['view']->addNamespace('chief-audit', __DIR__.'/UI/views');
