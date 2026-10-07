@@ -19,6 +19,11 @@
                 @if ($event->model_snapshot)
                     <span>{{ $event->model_snapshot['name'] }}</span>
                 @endif
+                @foreach ($event->models as $model)
+                    @if ($model->changes)
+                        <a href="{{ route('chief.audit.details', [$event->getKey(), $model->getKey()]) }}">Wijzigingen: {{ $model->model_snapshot['name'] }}</a>
+                    @endif
+                @endforeach
             </article>
         @empty
             <p>Geen historiek.</p>

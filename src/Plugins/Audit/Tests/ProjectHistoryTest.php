@@ -130,7 +130,7 @@ final class ProjectHistoryTest extends ChiefTestCase
 
     public function test_existing_audit_schema_can_be_upgraded_to_store_context_and_model_links(): void
     {
-        $this->artisan('migrate:rollback', ['--step' => 1])->assertExitCode(0);
+        $this->artisan('migrate:rollback', ['--step' => 2])->assertExitCode(0);
 
         $this->assertTrue(Schema::hasTable('chief_audit_events'));
         $this->assertFalse(Schema::hasColumn('chief_audit_events', 'context'));

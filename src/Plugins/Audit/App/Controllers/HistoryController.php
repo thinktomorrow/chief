@@ -48,7 +48,9 @@ final class HistoryController extends Controller
 
         $events = $query->paginate(50);
 
-        if (! Gate::allows('view-full-audit')) {
+        if (Gate::allows('view-full-audit')) {
+            $events->getCollection()->load('models');
+        } else {
             $eventIds = $events->getCollection()->modelKeys();
             $links = AuditEventModel::query()->whereIn('event_id', $eventIds)->where(function (Builder $query) use ($visibleModels): void {
                 $query->whereIn('id', []);
@@ -60,6 +62,7 @@ final class HistoryController extends Controller
             $events->getCollection()->each(function (AuditEvent $event) use ($links): void {
                 $visible = $links->get($event->getKey())?->first();
                 $event->model_snapshot = $visible?->model_snapshot;
+                $event->setRelation('models', collect());
 
                 if (! $visible) {
                     $event->summary = null;
@@ -68,5 +71,17 @@ final class HistoryController extends Controller
         }
 
         return view('chief-audit::index', ['events' => $events]);
+    }
+
+    public function details(string $event, string $model): View
+    {
+        $this->authorize('view-audit');
+        $this->authorize('view-full-audit');
+
+        $event = AuditEvent::query()->findOrFail($event);
+        $model = AuditEventModel::query()->where('event_id', $event->getKey())->findOrFail($model);
+        abort_unless($model->changes, 404);
+
+        return view('chief-audit::details', ['event' => $event, 'model' => $model]);
     }
 }
