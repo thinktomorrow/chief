@@ -5,44 +5,28 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit\App\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Plugins\Audit\App\HistoryIndexRequest;
+use Thinktomorrow\Chief\Plugins\Audit\Reading\HistoryFilters;
+use Thinktomorrow\Chief\Plugins\Audit\Reading\HistoryTimeline;
 use Thinktomorrow\Chief\Plugins\Audit\Reading\VisibleHistory;
 
 final class HistoryController extends Controller
 {
-    public function index(Request $request, VisibleHistory $history): View
+    public function index(HistoryIndexRequest $request, HistoryTimeline $timeline, VisibleHistory $history): View
     {
-        $filters = $request->validate([
-            'search' => 'sometimes|nullable|string|max:190',
-            'type' => ['sometimes', 'nullable', function (string $attribute, mixed $value, \Closure $fail): void {
-                if (! is_string($value) && ! is_array($value) || is_string($value) && mb_strlen($value) > 190 || is_array($value) && count($value) > 20) {
-                    $fail('Ongeldige typesleutel.');
-                }
-            }],
-            'type.*' => 'string|max:190',
-            'category' => 'sometimes|nullable|string|max:100',
-            'outcome' => 'sometimes|nullable|string|max:100',
-            'actor' => 'sometimes|nullable|string|max:190',
-            'actor_type' => 'sometimes|nullable|string|max:20',
-            'model_type' => 'sometimes|nullable|string|max:190',
-            'model_id' => 'sometimes|nullable|string|max:190',
-            'from' => 'sometimes|nullable|date_format:Y-m-d',
-            'to' => 'sometimes|nullable|date_format:Y-m-d',
-            'per_page' => 'sometimes|integer|min:1|max:100',
-            'page' => 'sometimes|integer|min:1',
-            'show_all' => 'sometimes|boolean',
-        ]);
+        $values = $request->validated();
+        $filters = new HistoryFilters($values);
 
         return view('chief-audit::index', [
-            'events' => $history->paginate($filters, (int) ($filters['per_page'] ?? 50), (int) ($filters['page'] ?? 1)),
-            'options' => $history->filterOptions(),
+            'events' => $timeline->paginate($filters, (int) ($values['per_page'] ?? 50), (int) ($values['page'] ?? 1), (bool) ($values['show_all'] ?? false)),
+            'options' => $timeline->filterOptions(),
             'timezone' => $history->timezone(),
             'history' => $history,
-            'activeFilters' => $history->hasActiveFilters($filters),
+            'activeFilters' => $filters->isActive(),
         ]);
     }
 
@@ -50,7 +34,7 @@ final class HistoryController extends Controller
     {
         $detail = $history->eventDetail($event);
 
-        return view('chief-audit::event-details', ['event' => $detail, 'timezone' => $history->timezone(), 'missingMailPreview' => $history->missingMailPreview($detail)]);
+        return view('chief-audit::event-details', ['event' => $detail, 'history' => $history, 'timezone' => $history->timezone(), 'missingMailPreview' => $history->missingMailPreview($detail)]);
     }
 
     public function details(VisibleHistory $history, string $event, string $model): View

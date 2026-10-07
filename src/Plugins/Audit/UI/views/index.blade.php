@@ -18,7 +18,7 @@
                     @foreach ($options[$option] as $key => $value)
                         @php ($choice = in_array($option, ['actors'], true) ? $key : $value)
                         <option value="{{ $choice }}" @selected (request($field) === (string) $choice)>
-                            {{ $option === 'categories' ? $history->categoryLabel($value) : $value }}
+                            {{ match ($option) { 'categories' => $history->categoryLabel($value), 'types' => $history->typeLabel($value), default => $value } }}
                         </option>
                     @endforeach
                 </select>
@@ -48,11 +48,6 @@
                         class="space-y-1 border-b border-grey-100 py-3 {{ $history->priority($event) === 'secondary' ? 'text-grey-500' : 'text-grey-900' }}"
                     >
                         @include ('chief-audit::event-line', ['showIcon' => true, 'showOutcome' => true])
-                        @if ($event->type === 'legacy.spatie' && $event->context)
-                            <pre
-                                >{{ json_encode($event->context['legacy'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE) }}</pre
-                            >
-                        @endif
                         @if ($event->context || ! $event->recorded_at->equalTo($event->occurred_at) || $history->missingMailPreview($event))
                             <a href="{{ route('chief.audit.event-details', $event->getKey()) }}">Details</a>
                         @endif

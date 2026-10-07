@@ -63,11 +63,14 @@ final class TimelineTest extends ChiefTestCase
         $viewer->givePermissionTo('view-audit', 'view-full-audit');
         config()->set('chief-audit.types', ['project.secondary' => ['priority' => 'secondary']]);
         $this->log('Secondary-only event', '2026-01-01T13:00:00Z', 'project.secondary');
+        $this->log('Older secondary-only event', '2026-01-01T12:00:00Z', 'project.secondary');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertSee('0 resultaten')->assertDontSee('Secondary-only event');
-        $this->get(route('chief.audit.index', ['show_all' => 1]))
-            ->assertOk()->assertSee('1 resultaten')->assertSee('Secondary-only event');
+        $this->get(route('chief.audit.index', ['show_all' => 1, 'per_page' => 1]))
+            ->assertOk()->assertSee('2 resultaten')->assertSee('Secondary-only event')->assertDontSee('Older secondary-only event');
+        $this->get(route('chief.audit.index', ['show_all' => 1, 'per_page' => 1, 'page' => 2]))
+            ->assertOk()->assertSee('2 resultaten')->assertSee('Older secondary-only event');
     }
 
     public function test_search_ignores_rich_context_even_with_full_audit_access(): void
