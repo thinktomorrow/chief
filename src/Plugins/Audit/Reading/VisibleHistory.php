@@ -15,8 +15,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Plugins\Audit\Persistence\AuditEvent;
 use Thinktomorrow\Chief\Plugins\Audit\Persistence\AuditEventModel;
 use Thinktomorrow\Chief\Plugins\Audit\Persistence\AuditRichData;
-use Thinktomorrow\Chief\Plugins\Audit\Presentation\AuditPresentations;
-use Thinktomorrow\Chief\Plugins\Audit\Presentation\AuditType;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditAppearance;
 
 /**
  * Projects historical facts into the current viewer's permitted reading before applying selectors.
@@ -28,7 +27,7 @@ final class VisibleHistory
     /** @var array<string, class-string<Model>> */
     private array $visibleModels = [];
 
-    public function __construct(Registry $registry, private AuditPresentations $presentations)
+    public function __construct(Registry $registry)
     {
         abort_unless(Gate::allows('view-audit'), 403);
 
@@ -121,6 +120,32 @@ final class VisibleHistory
         });
 
         return $results;
+    }
+
+    /**
+     * @return array{events: Collection<int, AuditEvent>, hasMore: bool}
+     */
+    public function modelHistory(string $modelType, string $modelId, bool $expanded): array
+    {
+        $filters = ['model_type' => $modelType, 'model_id' => $modelId];
+
+        if ($expanded) {
+            return ['events' => $this->select($filters), 'hasMore' => true];
+        }
+
+        $events = collect();
+        $visibleCount = 0;
+        $this->eachVisible($filters, function (AuditEvent $event) use ($events, &$visibleCount): bool {
+            $visibleCount++;
+
+            if ($this->priority($event) !== 'secondary' && $events->count() < 5) {
+                $events->push($event);
+            }
+
+            return $visibleCount > 5 && $events->count() === 5;
+        });
+
+        return ['events' => $events, 'hasMore' => $visibleCount > $events->count()];
     }
 
     /** @param array<string, mixed> $filters */
@@ -234,24 +259,23 @@ final class VisibleHistory
         foreach (['types', 'categories', 'outcomes', 'model_types', 'actor_types'] as $key) {
             $options[$key] = array_values($options[$key]);
         }
-        $options['filters'] = $this->presentations->filters();
 
         return $options;
     }
 
-    public function presentation(AuditEvent $event): AuditType
+    public function presentation(AuditEvent $event): AuditAppearance
     {
-        return $this->presentations->presentation(VisibleAuditEvent::fromEvent($event));
+        return AuditAppearance::forType($event->type);
     }
 
     public function categoryLabel(string $category): string
     {
-        return $this->presentations->categoryLabel($category);
+        return config('chief-audit.categories', [])[$category] ?? $category;
     }
 
     public function priority(AuditEvent $event): string
     {
-        return $this->presentation($event)->priority() === 'secondary' ? 'secondary' : 'primary';
+        return $this->presentation($event)->priority;
     }
 
     /** @param array<string, mixed> $filters */
@@ -264,7 +288,7 @@ final class VisibleHistory
 
     public function timezone(): string
     {
-        return config('chief.audit.timezone', config('app.timezone', 'UTC'));
+        return config('chief-audit.timezone') ?? config('app.timezone', 'UTC');
     }
 
     public function eventDetail(string $eventId): AuditEvent
@@ -368,12 +392,6 @@ final class VisibleHistory
             $text = implode(' ', array_filter([$event->summary, $event->actor_snapshot['name'] ?? null, ...$event->models->map(fn (AuditEventModel $link) => $link->model_snapshot['name'])->all()]));
 
             if (mb_stripos($text, (string) $filters['search']) === false) {
-                return false;
-            }
-        }
-
-        foreach ($filters['filter'] ?? [] as $key => $value) {
-            if ($value !== null && $value !== '' && ! $this->presentations->filters()[$key]->matches(VisibleAuditEvent::fromEvent($event), (string) $value)) {
                 return false;
             }
         }

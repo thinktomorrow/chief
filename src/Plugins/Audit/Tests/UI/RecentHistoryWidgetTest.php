@@ -44,7 +44,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         config()->set('chief.widgets', [RecentHistoryWidget::class]);
-        config()->set('chief.audit.widget', ['filters' => [
+        config()->set('chief-audit.widget', ['filters' => [
             'type' => ['project.order', 'project.other'], 'category' => 'content', 'actor' => 'system-1',
             'model_type' => $article->getMorphClass(), 'model_id' => (string) $article->getKey(),
             'from' => '2026-01-01', 'to' => '2026-01-31',
@@ -58,7 +58,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         History::log(type: 'project.other', actorType: 'system', actorSnapshot: ['id' => 'system-1', 'name' => 'Scheduler'], category: 'content', summary: 'Older allowed', occurredAt: '2026-01-18T12:00:00Z', models: [new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Allowed model'])]);
         History::log(type: 'project.order', actorType: 'system', actorSnapshot: ['id' => 'system-1', 'name' => 'Scheduler'], category: 'other', summary: 'Wrong category', occurredAt: '2026-01-21T12:00:00Z', models: [new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Allowed model'])]);
 
-        $filters = config('chief.audit.widget.filters');
+        $filters = config('chief-audit.widget.filters');
         $url = route('chief.audit.index', $filters);
         $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))
             ->assertOk()->assertSee('Allowed model')->assertSee('Historiek')->assertSee($url)
@@ -88,7 +88,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         config()->set('chief.widgets', [RecentHistoryWidget::class]);
-        config()->set('chief.audit.types.project.secondary.priority', 'secondary');
+        config()->set('chief-audit.types', ['project.secondary' => ['priority' => 'secondary']]);
 
         History::log(type: 'project.secondary', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Secondary event', models: [new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Article'])]);
         $event = History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Hidden bulk summary', models: [
