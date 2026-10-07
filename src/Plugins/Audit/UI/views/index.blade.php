@@ -77,9 +77,9 @@
                             <a href="{{ route('chief.audit.event-details', $event->getKey()) }}">Details</a>
                         @endif
                         @foreach ($event->models as $model)
-                            @if ($model->changes)
+                            @if ($model->changes || $model->context)
                                 <a href="{{ route('chief.audit.details', [$event->getKey(), $model->getKey()]) }}"
-                                    >Wijzigingen: {{ $model->model_snapshot['name'] }}</a
+                                    >{{ $model->changes ? 'Wijzigingen' : 'Details' }}: {{ $model->model_snapshot['name'] }}</a
                                 >
                             @elseif ($model->getKey() !== $event->models->first()?->getKey())
                                 <span>{{ $model->model_snapshot['name'] }}</span>

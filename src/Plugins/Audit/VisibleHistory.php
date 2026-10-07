@@ -183,7 +183,7 @@ final class VisibleHistory
     {
         $event = AuditEvent::query()->findOrFail($eventId);
         $link = AuditEventModel::query()->where('event_id', $event->getKey())->findOrFail($linkId);
-        abort_unless($link->changes, 404);
+        abort_unless($link->changes || $link->context, 404);
 
         if (! $this->fullAccess) {
             $class = $this->visibleModels[$link->model_type] ?? null;

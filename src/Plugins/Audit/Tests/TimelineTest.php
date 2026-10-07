@@ -122,6 +122,26 @@ final class TimelineTest extends ChiefTestCase
             ->assertOk()->assertSee('Geregistreerd: 03/01/2026 12:00');
     }
 
+    public function test_visible_model_context_opens_details_without_exposing_hidden_link_context(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $event = History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], models: [
+            new AuditModelDTO('project.hidden', '42', ['name' => 'Hidden'], ['note' => 'Private detail']),
+            new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Allowed'], ['note' => 'Approved detail']),
+        ]);
+        $links = $event->models()->orderBy('id')->get();
+        $hidden = route('chief.audit.details', [$event->getKey(), $links[0]->getKey()]);
+        $allowed = route('chief.audit.details', [$event->getKey(), $links[1]->getKey()]);
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
+            ->assertOk()->assertSee($allowed)->assertDontSee($hidden)->assertDontSee('Private detail');
+        $this->get($hidden)->assertNotFound();
+        $this->get($allowed)->assertOk()->assertSee('Approved detail')->assertDontSee('Private detail');
+    }
+
     private function log(string $summary, string $occurredAt, string $type = 'project.primary'): void
     {
         History::log(type: $type, actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: $summary, occurredAt: $occurredAt);
