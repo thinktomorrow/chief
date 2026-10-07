@@ -19,6 +19,7 @@ final class History
      * @param  array{name: string, id?: string}  $actorSnapshot
      * @param  array<string, mixed>  $context
      * @param  list<AuditModelDTO>  $models  The first model is the primary model.
+     * @param  list<RichData>  $richData
      */
     public static function log(
         string $type,
@@ -30,6 +31,7 @@ final class History
         ?string $outcome = null,
         array $context = [],
         array $models = [],
+        array $richData = [],
     ): AuditEvent {
         return self::instance()->recorder->record(new AuditEventDTO(
             type: $type,
@@ -41,6 +43,7 @@ final class History
             outcome: $outcome,
             context: $context,
             models: new AuditModelCollectionDTO($models),
+            richData: $richData,
         ));
     }
 

@@ -19,6 +19,7 @@ final readonly class AuditEventDTO
     /**
      * @param  array{name: string, id?: string}  $actorSnapshot
      * @param  array<string, mixed>  $context
+     * @param  list<RichData>  $richData
      */
     public function __construct(
         public string $type,
@@ -30,6 +31,7 @@ final readonly class AuditEventDTO
         public ?string $outcome = null,
         public array $context = [],
         public AuditModelCollectionDTO $models = new AuditModelCollectionDTO([]),
+        public array $richData = [],
     ) {
         self::assertKey($type, 190, 'type');
         self::assertKey($category, 100, 'category');
@@ -40,6 +42,12 @@ final readonly class AuditEventDTO
 
         self::assertSnapshot($actorSnapshot, ['name', 'id'], 'actor');
         self::assertContext($context);
+
+        foreach ($richData as $piece) {
+            if (! $piece instanceof RichData || ($piece->model !== null && ! isset($models->all()[$piece->model]))) {
+                throw new InvalidArgumentException('Invalid audit rich data model.');
+            }
+        }
 
         if ($summary !== null && mb_strlen($summary) > 500) {
             throw new InvalidArgumentException('Audit summary exceeds 500 characters.');
