@@ -23,7 +23,7 @@ final class TimelineTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer->givePermissionTo('view-audit', 'view-full-audit');
-        config()->set('chief.audit.timezone', 'Europe/Brussels');
+        config()->set('chief-audit.timezone', 'Europe/Brussels');
 
         $this->log('Earlier timezone entry', '2026-01-01T22:30:00Z');
         $this->log('Later timezone entry', '2026-01-01T23:30:00Z');
@@ -39,7 +39,7 @@ final class TimelineTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer->givePermissionTo('view-audit', 'view-full-audit');
-        config()->set('chief.audit.types.project.secondary', ['priority' => 'secondary', 'label' => 'Bijzaak', 'icon' => 'clock', 'color' => 'blue']);
+        config()->set('chief-audit.types', ['project.secondary' => ['priority' => 'secondary', 'label' => 'Bijzaak', 'icon' => 'clock', 'color' => 'blue']]);
 
         $this->log('Old primary entry', '2026-01-01T10:00:00Z');
         $this->log('Middle secondary entry', '2026-01-01T11:00:00Z', 'project.secondary');
@@ -61,7 +61,7 @@ final class TimelineTest extends ChiefTestCase
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-audit', 'view-full-audit');
-        config()->set('chief.audit.types.project.secondary', ['priority' => 'secondary']);
+        config()->set('chief-audit.types', ['project.secondary' => ['priority' => 'secondary']]);
         $this->log('Secondary-only event', '2026-01-01T13:00:00Z', 'project.secondary');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))

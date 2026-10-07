@@ -26,7 +26,7 @@ final class ModelHistoryWindowTest extends ChiefTestCase
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-audit', 'view-full-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
-        config()->set('chief.audit.types.project.secondary', ['priority' => 'secondary']);
+        config()->set('chief-audit.types', ['project.secondary' => ['priority' => 'secondary']]);
 
         for ($i = 1; $i <= 6; $i++) {
             $this->log($article, 'Primary '.$i, '2026-01-0'.$i.'T12:00:00Z');

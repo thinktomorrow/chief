@@ -20,7 +20,6 @@ use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordUserInvitation;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\AuditPermissionsCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\CleanupAuditCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\ImportSpatieActivitiesCommand;
-use Thinktomorrow\Chief\Plugins\Audit\Presentation\AuditPresentations;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
 use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 
@@ -35,7 +34,6 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config.php', 'chief-audit');
 
         $this->app->bind(History::BINDING, History::class);
-        $this->app->singleton(AuditPresentations::class);
 
         $this->app['config']->set('chief.permissions.extra', array_unique(array_merge(
             config('chief.permissions.extra', []),

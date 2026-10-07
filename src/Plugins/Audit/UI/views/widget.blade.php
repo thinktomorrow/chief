@@ -14,18 +14,7 @@
             @endphp
             <div class="border-grey-100 border-b py-2">
                 <a href="{{ $url }}">
-                    <time
-                        datetime="{{ $event->occurred_at->toIso8601String() }}"
-                        >{{ $event->occurred_at->setTimezone($timezone)->format('d/m H:i') }}</time
-                    >
-                    <span>{{ $event->actor_snapshot['name'] }}</span>
-                    <span>{{ $history->presentation($event)->label() }}</span>
-                    @if ($event->summary)
-                        <span>{{ $event->summary }}</span>
-                    @endif
-                    @if ($event->model_snapshot)
-                        <span>{{ $event->model_snapshot['name'] }}</span>
-                    @endif
+                    @include ('chief-audit::event-line', ['compact' => true])
                 </a>
             </div>
         @empty
