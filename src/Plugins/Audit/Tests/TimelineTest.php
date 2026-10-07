@@ -122,6 +122,31 @@ final class TimelineTest extends ChiefTestCase
             ->assertOk()->assertSee('Geregistreerd: 03/01/2026 12:00');
     }
 
+    public function test_paging_across_batches_counts_only_projected_matches(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+
+        for ($i = 0; $i < 205; $i++) {
+            History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Private '.$i, models: [
+                new AuditModelDTO('project.hidden', (string) $i, ['name' => 'Private model']),
+            ]);
+        }
+        History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Safe first', models: [
+            new AuditModelDTO($article->getMorphClass(), (string) $article->id, ['name' => 'Visible']),
+        ]);
+        History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'Scheduler'], summary: 'Safe second', models: [
+            new AuditModelDTO($article->getMorphClass(), (string) $article->id, ['name' => 'Visible']),
+        ]);
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index', ['page' => 2, 'per_page' => 1]))
+            ->assertOk()->assertSee('2 resultaten')->assertSee('Safe first')->assertDontSee('Safe second')->assertDontSee('Private model');
+        $this->get(route('chief.audit.index', ['search' => 'Private', 'per_page' => 1]))
+            ->assertOk()->assertSee('0 resultaten')->assertDontSee('Private model');
+    }
+
     public function test_visible_model_context_opens_details_without_exposing_hidden_link_context(): void
     {
         $article = $this->setupAndCreateArticle();

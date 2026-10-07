@@ -46,6 +46,7 @@ class InvitationMail extends Notification implements ShouldQueue
                 'inviterFirstname' => $this->invitation->inviterFirstname(),
                 'accept_url' => $this->invitation->acceptUrl(),
                 'deny_url' => $this->invitation->denyUrl(),
+                'chief_audit_invitation_id' => (string) $this->invitation->getKey(),
             ]);
     }
 

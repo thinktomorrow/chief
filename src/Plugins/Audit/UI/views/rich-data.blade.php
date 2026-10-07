@@ -10,7 +10,7 @@
                 <section>
                     <h2>{{ $piece->type }}</h2>
                     @if ($piece->status !== 'available')
-                        <p>{{ match ($piece->status) { 'removed' => 'Verwijderd door bewaring', 'unavailable' => 'Referentie onbeschikbaar', default => 'Niet vastgelegd' } }}</p>
+                        <p>{{ match ($piece->status) { 'removed' => 'Verwijderd door bewaring', 'unavailable' => 'Referentie onbeschikbaar', 'limit', 'error' => 'Niet beschikbaar door limiet of vastlegfout', default => 'Niet vastgelegd' } }}</p>
                     @elseif ($piece->type === 'text')
                         <pre>{{ $piece->content }}</pre>
                     @elseif (in_array($piece->type, ['html', 'mailpreview'], true))

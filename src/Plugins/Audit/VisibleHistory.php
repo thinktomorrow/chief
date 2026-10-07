@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Plugins\Audit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
@@ -44,24 +45,40 @@ final class VisibleHistory
         $perPage = max(1, min(100, $perPage));
         $page = max(1, $page);
         $active = $this->hasActiveFilters($filters);
-        $results = $this->select($filters);
+        $pageItems = collect();
+        $secondaryPage = collect();
+        $total = 0;
+        $secondaryTotal = 0;
+        $offset = ($page - 1) * $perPage;
 
-        if ($active) {
-            $pageItems = $results->slice(($page - 1) * $perPage, $perPage)->values();
-            $total = $results->count();
-        } else {
-            $primaries = $results->filter(fn (AuditEvent $event) => $this->priority($event) !== 'secondary')->values();
-            $pageItems = $primaries->slice(($page - 1) * $perPage, $perPage)->values();
-            $total = $primaries->count();
+        $this->eachVisible($filters, function (AuditEvent $event) use ($active, $offset, $perPage, &$total, &$secondaryTotal, $pageItems, $secondaryPage): void {
+            if ($active || $this->priority($event) !== 'secondary') {
+                if ($total >= $offset && $total < $offset + $perPage) {
+                    $pageItems->push($event);
+                }
+                $total++;
+            } else {
+                if ($secondaryTotal >= $offset && $secondaryTotal < $offset + $perPage) {
+                    $secondaryPage->push($event);
+                }
+                $secondaryTotal++;
+            }
+        });
 
-            if (($filters['show_all'] ?? false) && $primaries->isEmpty()) {
-                $pageItems = $results->slice(($page - 1) * $perPage, $perPage)->values();
-                $total = $results->count();
-            } elseif (($filters['show_all'] ?? false) && $pageItems->isNotEmpty()) {
+        if (! $active && ($filters['show_all'] ?? false)) {
+            if ($total === 0) {
+                $pageItems = $secondaryPage;
+                $total = $secondaryTotal;
+            } elseif ($pageItems->isNotEmpty()) {
                 $newest = $pageItems->first();
                 $oldest = $pageItems->last();
-                $pageItems = $results->filter(fn (AuditEvent $event) => $this->priority($event) !== 'secondary' && $pageItems->contains($event)
-                    || $this->priority($event) === 'secondary' && $this->notLaterThan($event, $newest) && $this->notLaterThan($oldest, $event))->values();
+                $secondaries = collect();
+                $this->eachVisible($filters, function (AuditEvent $event) use ($newest, $oldest, $secondaries): void {
+                    if ($this->priority($event) === 'secondary' && $this->notLaterThan($event, $newest) && $this->notLaterThan($oldest, $event)) {
+                        $secondaries->push($event);
+                    }
+                });
+                $pageItems = $pageItems->concat($secondaries)->sort(fn (AuditEvent $a, AuditEvent $b) => $this->notLaterThan($a, $b) ? 1 : -1)->values();
             }
         }
 
@@ -77,7 +94,56 @@ final class VisibleHistory
     public function select(array $filters = []): Collection
     {
         $results = collect();
+        $this->eachVisible($filters, static function (AuditEvent $event) use ($results): void {
+            $results->push($event);
+        });
+
+        return $results;
+    }
+
+    /** @param array<string, mixed> $filters
+     * @return Collection<int, AuditEvent>
+     */
+    public function recent(array $filters, int $limit, bool $includeSecondary): Collection
+    {
+        $results = collect();
+        $this->eachVisible($filters, function (AuditEvent $event) use ($results, $limit, $includeSecondary): bool {
+            if ($includeSecondary || $this->priority($event) !== 'secondary') {
+                $results->push($event);
+            }
+
+            return $results->count() >= $limit;
+        });
+
+        return $results;
+    }
+
+    /** @param array<string, mixed> $filters */
+    private function eachVisible(array $filters, callable $consume): void
+    {
         $query = AuditEvent::query()->orderByDesc('occurred_at')->orderByDesc('id');
+
+        foreach (['event_id' => 'id', 'category' => 'category', 'outcome' => 'outcome', 'actor_type' => 'actor_type'] as $filter => $column) {
+            if (isset($filters[$filter]) && $filters[$filter] !== '') {
+                $query->where($column, $filters[$filter]);
+            }
+        }
+        if (isset($filters['type']) && $filters['type'] !== '') {
+            if (is_array($filters['type'])) {
+                $query->whereIn('type', $filters['type']);
+            } else {
+                $query->where('type', $filters['type']);
+            }
+        }
+        if (isset($filters['from'])) {
+            $query->where('occurred_at', '>=', Carbon::parse($filters['from'], $this->timezone())->startOfDay()->utc());
+        }
+        if (isset($filters['to'])) {
+            $query->where('occurred_at', '<', Carbon::parse($filters['to'], $this->timezone())->addDay()->startOfDay()->utc());
+        }
+        if ($this->fullAccess && isset($filters['model_type']) && $filters['model_type'] !== '' && isset($filters['model_id']) && $filters['model_id'] !== '') {
+            $query->whereHas('models', fn (Builder $links) => $links->where('model_type', $filters['model_type'])->where('model_id', $filters['model_id']));
+        }
 
         if (! $this->fullAccess) {
             $actorId = (string) auth('chief')->id();
@@ -133,29 +199,39 @@ final class VisibleHistory
                 }
 
                 if ($this->matches($event, $filters)) {
-                    $results->push($event);
+                    if ($consume($event) === true) {
+                        return;
+                    }
                 }
             }
         }
-
-        return $results;
     }
 
     /** @return array<string, list<string>> */
     public function filterOptions(): array
     {
-        $events = $this->select();
+        $options = ['types' => [], 'categories' => [], 'outcomes' => [], 'model_types' => [], 'actor_types' => [], 'actors' => [], 'models' => []];
+        $this->eachVisible([], static function (AuditEvent $event) use (&$options): void {
+            foreach (['types' => 'type', 'categories' => 'category', 'outcomes' => 'outcome', 'actor_types' => 'actor_type'] as $key => $field) {
+                if ($event->$field !== null) {
+                    $options[$key][$event->$field] = $event->$field;
+                }
+            }
+            if (isset($event->actor_snapshot['id'])) {
+                $options['actors'][$event->actor_snapshot['id']] = $event->actor_snapshot['name'];
+            }
+            foreach ($event->models as $model) {
+                $options['model_types'][$model->model_type] = $model->model_type;
+                $options['models'][$model->model_id] = $model->model_snapshot['name'];
+            }
+        });
 
-        return [
-            'types' => $events->pluck('type')->unique()->values()->all(),
-            'categories' => $events->pluck('category')->unique()->values()->all(),
-            'outcomes' => $events->pluck('outcome')->filter()->unique()->values()->all(),
-            'model_types' => $events->flatMap(fn (AuditEvent $event) => $event->models->pluck('model_type'))->unique()->values()->all(),
-            'actor_types' => $events->pluck('actor_type')->unique()->values()->all(),
-            'actors' => $events->filter(fn (AuditEvent $event) => isset($event->actor_snapshot['id']))->mapWithKeys(fn (AuditEvent $event) => [$event->actor_snapshot['id'] => $event->actor_snapshot['name']])->all(),
-            'models' => $events->flatMap(fn (AuditEvent $event) => $event->models->mapWithKeys(fn (AuditEventModel $model) => [$model->model_id => $model->model_snapshot['name']]))->all(),
-            'filters' => $this->presentations->filters(),
-        ];
+        foreach (['types', 'categories', 'outcomes', 'model_types', 'actor_types'] as $key) {
+            $options[$key] = array_values($options[$key]);
+        }
+        $options['filters'] = $this->presentations->filters();
+
+        return $options;
     }
 
     public function presentation(AuditEvent $event): AuditType
