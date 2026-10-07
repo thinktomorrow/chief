@@ -29,7 +29,7 @@ final class PresentationTest extends ChiefTestCase
     {
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $registry = app(AuditPresentations::class);
         History::log(type: 'project.approved', category: 'orders', actorType: 'system', actorSnapshot: ['name' => 'Worker'], summary: 'Approved now');
         History::log(type: 'chief.login', actorType: 'system', actorSnapshot: ['name' => 'Worker'], summary: 'Chief binding replaced');
@@ -59,7 +59,7 @@ final class PresentationTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $registry = app(AuditPresentations::class);
         $registry->type('project.bulk', OrderType::class);
         $registry->bind('project.bulk', 'project.bulk', ApprovedPresentation::class);
@@ -83,7 +83,7 @@ final class PresentationTest extends ChiefTestCase
         ArticlePageResource::setFieldsDefinition(fn ($model) => AuditPresets::modelHistoryWindow($model));
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'), ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'), ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
         app(AuditPresentations::class)->type('project.order', OrderType::class);
         app(AuditPresentations::class)->bind('project.approved', 'project.order', ApprovedPresentation::class);
         config()->set('chief.widgets', [RecentHistoryWidget::class]);

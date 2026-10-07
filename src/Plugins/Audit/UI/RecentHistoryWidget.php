@@ -13,7 +13,7 @@ final class RecentHistoryWidget implements Widget
 {
     public function renderAdminWidget($loop, $widgets): string
     {
-        if (! Gate::allows('view-full-audit') && ! Gate::allows('view-related-audit')) {
+        if (! Gate::allows('view-audit')) {
             return '';
         }
 

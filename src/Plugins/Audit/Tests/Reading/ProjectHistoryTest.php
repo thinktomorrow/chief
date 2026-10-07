@@ -52,7 +52,7 @@ final class ProjectHistoryTest extends ChiefTestCase
         $this->assertSame('2026-09-02 09:00:00', DB::table('chief_audit_events')->where('type', 'project.webhook.failed')->value('occurred_at'));
 
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('project.export')->assertSee('project.webhook.failed');
     }

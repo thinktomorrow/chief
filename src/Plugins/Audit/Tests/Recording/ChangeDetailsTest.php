@@ -79,7 +79,7 @@ final class ChangeDetailsTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->admin();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [
             DB::table('chief_audit_events')->value('id'), DB::table('chief_audit_event_models')->value('id'),
         ]))->assertOk()->assertSee('Ontbreekt')->assertSee('null');
@@ -97,7 +97,7 @@ final class ChangeDetailsTest extends ChiefTestCase
         $linkId = DB::table('chief_audit_event_models')->value('id');
         $this->assertNotNull(DB::table('chief_audit_event_models')->value('changes'));
         $viewer = $this->admin();
-        $viewer->givePermissionTo('view-related-audit');
+        $viewer->givePermissionTo('view-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [$eventId, $linkId]))->assertNotFound();
         $viewer->givePermissionTo('view-full-audit');
@@ -185,7 +185,7 @@ final class ChangeDetailsTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->admin();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [
             DB::table('chief_audit_events')->value('id'), DB::table('chief_audit_event_models')->value('id'),
         ]))->assertOk()->assertSee('OLD')->assertSee('WAS')->assertSee('NEW')->assertSee('NOW')

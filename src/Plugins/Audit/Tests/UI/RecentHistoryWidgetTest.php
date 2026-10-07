@@ -31,6 +31,9 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         $this->get(route('chief.back.dashboard'))->assertOk()->assertDontSee('Historiek')->assertDontSee('Recent fact');
 
         $viewer->givePermissionTo('view-full-audit');
+        $this->get(route('chief.back.dashboard'))->assertOk()->assertDontSee('Historiek')->assertDontSee('Recent fact');
+
+        $viewer->givePermissionTo('view-audit');
         $this->get(route('chief.back.dashboard'))->assertOk()->assertSee('Recent fact');
     }
 
@@ -39,7 +42,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         config()->set('chief.widgets', [RecentHistoryWidget::class]);
         config()->set('chief.audit.widget', ['filters' => [
             'type' => ['project.order', 'project.other'], 'category' => 'content', 'actor' => 'system-1',
@@ -70,7 +73,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit');
+        $viewer->givePermissionTo('view-audit');
         config()->set('chief.widgets', [RecentHistoryWidget::class]);
         History::log(type: 'project.private', actorType: 'system', actorSnapshot: ['name' => 'Private actor'], summary: 'Private history');
 
@@ -83,7 +86,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         config()->set('chief.widgets', [RecentHistoryWidget::class]);
         config()->set('chief.audit.types.project.secondary.priority', 'secondary');
 
@@ -108,7 +111,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
     {
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
         config()->set('chief.widgets', [RecentHistoryWidget::class]);
         $event = History::log(type: 'project.mail', actorType: 'system', actorSnapshot: ['name' => 'Worker'], richData: [RichData::text('Historical body')]);
 

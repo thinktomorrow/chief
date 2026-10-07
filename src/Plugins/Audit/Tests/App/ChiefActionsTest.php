@@ -51,7 +51,7 @@ final class ChiefActionsTest extends ChiefTestCase
         $this->assertSame($admin->fullname, json_decode(DB::table('chief_audit_events')->first()->actor_snapshot, true)['name']);
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
-        $admin->givePermissionTo('view-full-audit');
+        $admin->givePermissionTo('view-audit', 'view-full-audit');
         $originalName = $admin->fullname;
         $admin->update(['firstname' => 'Renamed']);
         $this->get(route('chief.audit.index'))->assertSuccessful()

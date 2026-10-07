@@ -12,7 +12,7 @@ final class AuditPresets
 {
     public static function modelHistoryWindow(Model $model): iterable
     {
-        if (! $model->exists || ! (Gate::allows('view-full-audit') || Gate::allows('view-related-audit'))) {
+        if (! $model->exists || ! Gate::allows('view-audit')) {
             return [];
         }
 

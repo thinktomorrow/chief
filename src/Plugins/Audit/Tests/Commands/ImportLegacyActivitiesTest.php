@@ -69,14 +69,14 @@ final class ImportLegacyActivitiesTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $limited = $this->fakeUser();
-        $limited->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $limited->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $this->actingAs($limited, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertSee('legacy.spatie')->assertSee('1 resultaten')
             ->assertDontSee('Changed secret draft')->assertDontSee('legacy secret')->assertDontSee('Old name')->assertDontSee('No known subject');
         $this->get(route('chief.audit.index', ['search' => 'Changed secret draft']))->assertOk()->assertSee('0 resultaten');
 
         $full = $this->fakeUser();
-        $full->givePermissionTo('view-full-audit');
+        $full->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($full, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertSee('Changed secret draft')->assertSee('legacy secret')->assertSee('No known subject');
 
@@ -121,7 +121,7 @@ final class ImportLegacyActivitiesTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertDontSee('Deleted model fact')->assertSee('0 resultaten');
     }
@@ -131,7 +131,7 @@ final class ImportLegacyActivitiesTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $this->activity(104, [
             'subject_type' => $article->getMorphClass(), 'subject_id' => $article->getKey(),
             'causer_type' => 'chiefuser', 'causer_id' => $viewer->id, 'description' => 'Own deleted legacy fact',

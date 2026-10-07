@@ -20,7 +20,7 @@ final class HistoryAccessTest extends ChiefTestCase
         return [...parent::getPackageProviders($app), AuditServiceProvider::class];
     }
 
-    public function test_full_right_alone_shows_model_free_and_deleted_model_history(): void
+    public function test_full_right_with_basic_access_shows_model_free_and_deleted_model_history(): void
     {
         $article = $this->setupAndCreateArticle();
         History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Free event');
@@ -29,7 +29,7 @@ final class HistoryAccessTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-full-audit');
+        $viewer->givePermissionTo('view-audit', 'view-full-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('Free event')->assertSee('Deleted history')
@@ -45,7 +45,7 @@ final class HistoryAccessTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit');
+        $viewer->givePermissionTo('view-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('Geen historiek.')
@@ -66,7 +66,7 @@ final class HistoryAccessTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit');
+        $viewer->givePermissionTo('view-audit');
 
         History::log(type: 'project.own', actorType: 'admin', actorSnapshot: ['id' => (string) $viewer->id, 'name' => 'Actor'], summary: 'Own action', models: [new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Hidden article'])]);
         History::log(type: 'project.other', actorType: 'admin', actorSnapshot: ['id' => '999999', 'name' => 'Other'], summary: 'Other action', models: [new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Other hidden article'])]);
@@ -87,7 +87,7 @@ final class HistoryAccessTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertDontSee('Neutral bulk action')->assertSee('Visible related')
@@ -105,7 +105,7 @@ final class HistoryAccessTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertSuccessful()->assertSee('Visible older event')->assertDontSee('Hidden export');
@@ -122,7 +122,7 @@ final class HistoryAccessTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $links = AuditEvent::query()->findOrFail($event->getKey())->models()->orderBy('id')->get();
         $hiddenUrl = route('chief.audit.details', [$event->getKey(), $links[0]->getKey()]);
         $visibleUrl = route('chief.audit.details', [$event->getKey(), $links[1]->getKey()]);
@@ -141,7 +141,7 @@ final class HistoryAccessTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
 
         History::log(type: 'project.bulk', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Secret order and two records', context: ['secret' => 'Secret context'], models: [
             new AuditModelDTO('project.hidden', '1', ['name' => 'Secret order'], ['secret' => 'Hidden context']),
@@ -169,7 +169,7 @@ final class HistoryAccessTest extends ChiefTestCase
             ->assertDontSee('project.hidden');
 
         $fullViewer = $this->fakeUser();
-        $fullViewer->givePermissionTo('view-full-audit');
+        $fullViewer->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($fullViewer, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertSee('Secret order and two records')->assertSee('Secret order')
             ->assertSee('Visible article');
@@ -181,7 +181,7 @@ final class HistoryAccessTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-related-audit');
+        $viewer->givePermissionTo('view-audit');
         History::log(type: 'project.actor', actorType: 'admin', actorSnapshot: ['id' => (string) $viewer->id, 'name' => 'Secret model actor'], summary: 'Secret summary', context: ['name' => 'Secret context'], models: [
             new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Secret model']),
         ]);
@@ -193,15 +193,31 @@ final class HistoryAccessTest extends ChiefTestCase
             ->assertOk()->assertSee('0 resultaten')->assertDontSee('<span>project.actor</span>', false);
     }
 
-    public function test_old_right_grants_neither_page_nor_navigation(): void
+    public function test_full_right_without_basic_access_grants_neither_page_nor_navigation(): void
     {
-        ChiefResourcePermissions::syncMissingPermissions(['view-audit']);
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->fakeUser();
-        $viewer->givePermissionTo('view-audit');
+        $viewer->givePermissionTo('view-full-audit');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))->assertForbidden();
         $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))
             ->assertSuccessful()->assertDontSee('href="'.route('chief.audit.index').'"', false);
+    }
+
+    public function test_basic_access_shows_navigation_and_only_permitted_history(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        $this->logArticle($article, 'Visible history');
+        History::log(type: 'project.export', actorType: 'system', actorSnapshot: ['name' => 'System'], summary: 'Private export');
+
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
+
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
+            ->assertOk()->assertSee('Visible history')->assertDontSee('Private export');
+        $this->get(route('chief.back.dashboard'))
+            ->assertOk()->assertSee('href="'.route('chief.audit.index').'"', false);
     }
 
     private function logArticle(ArticlePage $article, string $summary): void

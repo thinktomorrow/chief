@@ -30,7 +30,7 @@ final class VisibleHistory
 
     public function __construct(Registry $registry, private AuditPresentations $presentations)
     {
-        abort_unless(Gate::allows('view-full-audit') || Gate::allows('view-related-audit'), 403);
+        abort_unless(Gate::allows('view-audit'), 403);
 
         $this->fullAccess = Gate::allows('view-full-audit');
 
