@@ -73,18 +73,6 @@ final class ModelChanges
 
         $old = is_string($before) ? $before : '';
         $new = is_string($after) ? $after : '';
-        $prefix = 0;
-        $limit = min(mb_strlen($old), mb_strlen($new));
-
-        while ($prefix < $limit && mb_substr($old, $prefix, 1) === mb_substr($new, $prefix, 1)) {
-            $prefix++;
-        }
-
-        $suffix = 0;
-        while ($suffix < $limit - $prefix && mb_substr($old, -$suffix - 1, 1) === mb_substr($new, -$suffix - 1, 1)) {
-            $suffix++;
-        }
-
         $context = max(0, min(200, (int) config('chief.audit.change_context_length', 40)));
 
         if (! is_string($before) || ! is_string($after)) {
@@ -94,10 +82,9 @@ final class ModelChanges
             ];
         }
 
-        return [
-            'before' => ['excerpt' => self::excerpt($old, $prefix, $suffix, $context)],
-            'after' => ['excerpt' => self::excerpt($new, $prefix, $suffix, $context)],
-        ];
+        [$beforeExcerpt, $afterExcerpt] = self::excerpts($old, $new, $context);
+
+        return ['before' => ['excerpt' => $beforeExcerpt], 'after' => ['excerpt' => $afterExcerpt]];
     }
 
     private static function beginning(string $text, int $context): string
@@ -107,17 +94,137 @@ final class ModelChanges
         return 'Begin: '.mb_substr($text, 0, $length).($length < mb_strlen($text) ? '…' : '');
     }
 
-    private static function excerpt(string $text, int $prefix, int $suffix, int $context): string
+    /** @return array{string, string} */
+    private static function excerpts(string $old, string $new, int $context): array
     {
-        $length = mb_strlen($text);
-        $start = max(0, $prefix - $context);
-        $end = min($length, $length - $suffix + $context);
-
-        if ($end - $start <= 2 * $context + 100) {
-            return ($start ? '…' : '').mb_substr($text, $start, $end - $start).($end < $length ? '…' : '');
+        $before = mb_str_split($old);
+        $after = mb_str_split($new);
+        $prefix = 0;
+        while (isset($before[$prefix], $after[$prefix]) && $before[$prefix] === $after[$prefix]) {
+            $prefix++;
+        }
+        $suffix = 0;
+        while ($suffix < min(count($before), count($after)) - $prefix && $before[count($before) - $suffix - 1] === $after[count($after) - $suffix - 1]) {
+            $suffix++;
         }
 
-        return ($start ? '…' : '').mb_substr($text, $start, $context + 50).'…'.mb_substr($text, $end - $context - 50, $context + 50).($end < $length ? '…' : '');
+        $left = array_slice($before, $prefix, count($before) - $prefix - $suffix);
+        $right = array_slice($after, $prefix, count($after) - $prefix - $suffix);
+        $matches = self::matchingCharacters($left, $right);
+        if ($matches === [] && (count($left) > 2 * $context + 100 || count($right) > 2 * $context + 100)) {
+            return [
+                self::largeReplacementExcerpt($before, $prefix, $suffix, $context),
+                self::largeReplacementExcerpt($after, $prefix, $suffix, $context),
+            ];
+        }
+        $ranges = [];
+        $oldAt = $newAt = $prefix;
+        foreach ([...$matches, [count($left), count($right)]] as [$oldMatch, $newMatch]) {
+            $oldMatch += $prefix;
+            $newMatch += $prefix;
+            if ($oldAt !== $oldMatch || $newAt !== $newMatch) {
+                $range = [
+                    [max(0, $oldAt - $context), min(count($before), $oldMatch + $context)],
+                    [max(0, $newAt - $context), min(count($after), $newMatch + $context)],
+                ];
+                $last = count($ranges) - 1;
+                if ($last >= 0 && ($range[0][0] <= $ranges[$last][0][1] || $range[1][0] <= $ranges[$last][1][1])) {
+                    $ranges[$last][0][1] = max($ranges[$last][0][1], $range[0][1]);
+                    $ranges[$last][1][1] = max($ranges[$last][1][1], $range[1][1]);
+                } else {
+                    $ranges[] = $range;
+                }
+            }
+            $oldAt = $oldMatch + 1;
+            $newAt = $newMatch + 1;
+        }
+
+        return [self::renderExcerpt($before, $ranges, 0), self::renderExcerpt($after, $ranges, 1)];
+    }
+
+    /** @param list<string> $characters */
+    private static function largeReplacementExcerpt(array $characters, int $prefix, int $suffix, int $context): string
+    {
+        $length = count($characters);
+        $start = max(0, $prefix - $context);
+        $end = min($length, $length - $suffix + $context);
+        $slice = $context + 50;
+        if ($end - $start <= 2 * $slice) {
+            return ($start > 0 ? '…' : '').implode('', array_slice($characters, $start, $end - $start)).($end < $length ? '…' : '');
+        }
+
+        return ($start > 0 ? '…' : '').implode('', array_slice($characters, $start, $slice)).'…'
+            .implode('', array_slice($characters, $end - $slice, $slice)).($end < $length ? '…' : '');
+    }
+
+    /**
+     * Find unchanged characters with a bounded edit search. A wholesale rewrite is one changed region.
+     *
+     * @param  list<string>  $old
+     * @param  list<string>  $new
+     * @return list<array{int, int}>
+     */
+    private static function matchingCharacters(array $old, array $new): array
+    {
+        $n = count($old);
+        $m = count($new);
+        $frontier = [1 => 0];
+        $trace = [];
+        for ($distance = 0; $distance <= min($n + $m, 200); $distance++) {
+            $trace[$distance] = $frontier;
+            for ($diagonal = -$distance; $diagonal <= $distance; $diagonal += 2) {
+                $x = ($diagonal === -$distance || ($diagonal !== $distance && ($frontier[$diagonal - 1] ?? -1) < ($frontier[$diagonal + 1] ?? -1)))
+                    ? ($frontier[$diagonal + 1] ?? 0) : ($frontier[$diagonal - 1] ?? 0) + 1;
+                $y = $x - $diagonal;
+                while ($x < $n && $y < $m && $old[$x] === $new[$y]) {
+                    $x++;
+                    $y++;
+                }
+                $frontier[$diagonal] = $x;
+                if ($x < $n || $y < $m) {
+                    continue;
+                }
+
+                $matches = [];
+                for ($step = $distance; $step >= 0; $step--) {
+                    $previous = $trace[$step];
+                    $diagonal = $x - $y;
+                    if ($step === 0) {
+                        $previousX = $previousY = 0;
+                    } else {
+                        $previousDiagonal = ($diagonal === -$step || ($diagonal !== $step && ($previous[$diagonal - 1] ?? -1) < ($previous[$diagonal + 1] ?? -1))) ? $diagonal + 1 : $diagonal - 1;
+                        $previousX = $previous[$previousDiagonal] ?? 0;
+                        $previousY = $previousX - $previousDiagonal;
+                    }
+                    while ($x > $previousX && $y > $previousY) {
+                        $matches[] = [--$x, --$y];
+                    }
+                    $x = $previousX;
+                    $y = $previousY;
+                }
+
+                return array_reverse($matches);
+            }
+        }
+
+        return [];
+    }
+
+    /** @param list<array{array{int, int}, array{int, int}}> $ranges */
+    private static function renderExcerpt(array $characters, array $ranges, int $side): string
+    {
+        $excerpt = '';
+        $end = 0;
+        foreach ($ranges as $range) {
+            [$start, $next] = $range[$side];
+            if ($start > $end) {
+                $excerpt .= '…';
+            }
+            $excerpt .= implode('', array_slice($characters, $start, $next - $start));
+            $end = $next;
+        }
+
+        return $excerpt.($end < count($characters) ? '…' : '');
     }
 
     /** @return array<string, scalar|null> */

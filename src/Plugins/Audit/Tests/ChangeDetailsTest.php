@@ -169,6 +169,75 @@ final class ChangeDetailsTest extends ChiefTestCase
         $this->assertStringNotContainsString('private-end', $changes['body']['after']['excerpt']);
     }
 
+    public function test_separated_edits_are_readable_with_configured_context_without_storing_the_middle(): void
+    {
+        config()->set('chief.audit.change_context_length', 4);
+        $model = new ChangeDetailsModel;
+        $before = str_repeat('a', 550).'OLD'.str_repeat('x', 200).'WAS'.str_repeat('z', 550);
+        $model->setRawAttributes(['body' => $before], true);
+        $model->body = str_repeat('a', 550).'NEW'.str_repeat('x', 200).'NOW'.str_repeat('z', 550);
+
+        $this->log($model, (new AuditModelDTO('article', '1', ['name' => 'Article']))->withChangesFrom($model, ['body']));
+
+        $changes = json_decode(DB::table('chief_audit_event_models')->value('changes'), true);
+        $this->assertSame('…aaaaOLDxxxx…xxxxWASzzzz…', $changes['body']['before']['excerpt']);
+        $this->assertSame('…aaaaNEWxxxx…xxxxNOWzzzz…', $changes['body']['after']['excerpt']);
+
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->admin();
+        $viewer->givePermissionTo('view-full-audit');
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [
+            DB::table('chief_audit_events')->value('id'), DB::table('chief_audit_event_models')->value('id'),
+        ]))->assertOk()->assertSee('OLD')->assertSee('WAS')->assertSee('NEW')->assertSee('NOW')
+            ->assertDontSee(str_repeat('x', 200));
+    }
+
+    public function test_whole_long_removal_keeps_only_the_marked_beginning_and_unchanged_text_has_no_details(): void
+    {
+        config()->set('chief.audit.change_context_length', 3);
+        $model = new ChangeDetailsModel;
+        $model->setRawAttributes(['body' => str_repeat('start', 120).str_repeat('private-end', 120)], true);
+        unset($model->body);
+        $this->log($model, (new AuditModelDTO('article', '1', ['name' => 'Article']))->withChangesFrom($model, ['body']));
+
+        $changes = json_decode(DB::table('chief_audit_event_models')->value('changes'), true);
+        $this->assertSame(['missing' => true], $changes['body']['after']);
+        $this->assertStringStartsWith('Begin:', $changes['body']['before']['excerpt']);
+        $this->assertStringNotContainsString('private-end', $changes['body']['before']['excerpt']);
+
+        $unchanged = new ChangeDetailsModel;
+        $unchanged->setRawAttributes(['body' => str_repeat('same', 300)], true);
+        $this->log($unchanged, (new AuditModelDTO('article', '2', ['name' => 'Article']))->withChangesFrom($unchanged, ['body']));
+        $this->assertNull(DB::table('chief_audit_event_models')->where('model_id', '2')->value('changes'));
+    }
+
+    public function test_nearby_edits_merge_their_context_and_keep_unicode_characters_intact(): void
+    {
+        config()->set('chief.audit.change_context_length', 3);
+        $model = new ChangeDetailsModel;
+        $model->setRawAttributes(['body' => str_repeat('🌿', 550).'OLD'.str_repeat('é', 4).'WAS'.str_repeat('🌿', 550)], true);
+        $model->body = str_repeat('🌿', 550).'NEW'.str_repeat('é', 4).'NOW'.str_repeat('🌿', 550);
+
+        $this->log($model, (new AuditModelDTO('article', '1', ['name' => 'Article']))->withChangesFrom($model, ['body']));
+
+        $changes = json_decode(DB::table('chief_audit_event_models')->value('changes'), true);
+        $this->assertSame('…🌿🌿🌿OLDééééWAS🌿🌿🌿…', $changes['body']['before']['excerpt']);
+        $this->assertSame('…🌿🌿🌿NEWééééNOW🌿🌿🌿…', $changes['body']['after']['excerpt']);
+    }
+
+    public function test_wholesale_replacement_does_not_store_the_complete_long_text(): void
+    {
+        $model = new ChangeDetailsModel;
+        $model->setRawAttributes(['body' => str_repeat('a', 1000)], true);
+        $model->body = str_repeat('b', 1000);
+
+        $this->log($model, (new AuditModelDTO('article', '1', ['name' => 'Article']))->withChangesFrom($model, ['body']));
+
+        $changes = json_decode(DB::table('chief_audit_event_models')->value('changes'), true);
+        $this->assertLessThan(200, mb_strlen($changes['body']['before']['excerpt']));
+        $this->assertLessThan(200, mb_strlen($changes['body']['after']['excerpt']));
+    }
+
     private function log(ChangeDetailsModel $model, AuditModelDTO $link): void
     {
         History::log(type: 'project.article.updated', actorType: 'system', actorSnapshot: ['name' => 'System'], models: [$link]);
