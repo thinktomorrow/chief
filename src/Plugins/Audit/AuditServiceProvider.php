@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit;
 
+use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Event;
 use Thinktomorrow\Chief\Admin\Authentication\Events\ChiefLoginCompleted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
@@ -35,6 +36,7 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
         Event::listen(ChiefActionCompleted::class, [RecordChiefAction::class, 'handle']);
         Event::listen(ChiefLoginCompleted::class, [RecordChiefLogin::class, 'handle']);
         Event::listen(UserInvited::class, [RecordUserInvitation::class, 'handle']);
+        Event::listen(MessageSent::class, [RecordSentInvitationMail::class, 'handle']);
         Event::listen(ChiefExportCompleted::class, [RecordChiefExport::class, 'handle']);
 
         $this->commands([AuditPermissionsCommand::class, ImportSpatieActivitiesCommand::class]);

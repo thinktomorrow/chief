@@ -189,9 +189,14 @@ final class VisibleHistory
     public function eventDetail(string $eventId): AuditEvent
     {
         $event = $this->select(['event_id' => $eventId])->first();
-        abort_unless($event && ($event->context || ! $event->recorded_at->equalTo($event->occurred_at)), 404);
+        abort_unless($event && ($event->context || ! $event->recorded_at->equalTo($event->occurred_at) || $this->missingMailPreview($event)), 404);
 
         return $event;
+    }
+
+    public function missingMailPreview(AuditEvent $event): bool
+    {
+        return $this->fullAccess && $event->type === 'chief.mail.invitation.sent' && ! $event->has_rich_data;
     }
 
     /** @return Collection<int, AuditRichData> */

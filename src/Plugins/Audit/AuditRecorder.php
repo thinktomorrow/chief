@@ -29,7 +29,7 @@ final class AuditRecorder
 
             foreach ($event->richData as $piece) {
                 $limit = (int) config('chief.audit.rich_limits.'.$piece->type, match ($piece->type) {
-                    'metadata', 'reference' => 8192, default => 262144,
+                    'metadata', 'reference' => 8192, 'mailpreview' => 5242880, default => 262144,
                 });
                 $size = strlen($piece->content ?? '').strlen(json_encode($piece->metadata) ?: '');
                 $base = [
