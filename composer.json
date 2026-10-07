@@ -79,7 +79,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
+        "test": "php -d memory_limit=256M vendor/bin/phpunit",
         "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html build/html-coverage",
         "format": "vendor/bin/pint"
     },

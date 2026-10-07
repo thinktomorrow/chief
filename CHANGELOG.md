@@ -7,6 +7,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 - Fixed: Explicit table action labels remain visible with icons regardless of call order, including after conversion to
   row or bulk actions; actions without an explicit label remain icon-only.
+- Fixed: File fields pass the correct Livewire mount parameters, restoring file uploads in model, form, and fragment
+  dialogs.
+- Fixed: `composer test` provides enough PHP memory for the full test suite.
 
 ## [0.10.34] - 2026-09-29
 
