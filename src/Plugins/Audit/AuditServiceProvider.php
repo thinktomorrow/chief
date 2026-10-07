@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit;
 
 use Illuminate\Support\Facades\Event;
+use Thinktomorrow\Chief\Admin\Authentication\Events\ChiefLoginCompleted;
+use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\AuditPermissionsCommand;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
+use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 
 final class AuditServiceProvider extends ChiefPluginServiceProvider
 {
@@ -28,6 +31,9 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
     public function boot(): void
     {
         Event::listen(ChiefActionCompleted::class, [RecordChiefAction::class, 'handle']);
+        Event::listen(ChiefLoginCompleted::class, [RecordChiefLogin::class, 'handle']);
+        Event::listen(UserInvited::class, [RecordUserInvitation::class, 'handle']);
+        Event::listen(ChiefExportCompleted::class, [RecordChiefExport::class, 'handle']);
 
         $this->commands([AuditPermissionsCommand::class]);
 
