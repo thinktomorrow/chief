@@ -86,7 +86,7 @@ return new class extends Migration
 
     private function backfillAuditCauserSnapshots(): void
     {
-        $activityTable = config('activitylog.table_name');
+        $activityTable = config('activitylog.table_name', 'activity_log');
 
         DB::table($activityTable)
             ->whereIn('causer_type', $this->userMorphTypes())
@@ -127,7 +127,7 @@ return new class extends Migration
 
     private function normalizeAuditCauserTypes(): void
     {
-        DB::table(config('activitylog.table_name'))
+        DB::table(config('activitylog.table_name', 'activity_log'))
             ->whereIn('causer_type', $this->userMorphTypes())
             ->update(['causer_type' => self::USER_MORPH_TYPE]);
     }

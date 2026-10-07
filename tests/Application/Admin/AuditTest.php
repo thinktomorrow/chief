@@ -8,9 +8,10 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\ManagedModels\Actions\DeleteModel;
+use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicatePage;
 use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Plugins\Audit\Tests\Fixtures\ProjectOrderApproved;
@@ -27,7 +28,7 @@ final class AuditTest extends ChiefTestCase
         $article = $this->setupAndCreateArticle();
         $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
-        $this->assertCount(0, Audit::getAllActivityFor($article));
+        $this->assertFalse(Schema::hasTable('chief_audit_events'));
         $this->assertNull(app('router')->getRoutes()->getByName('chief.audit.index'));
         $this->asAdmin()->get('/admin/audit')->assertNotFound();
     }
@@ -50,13 +51,24 @@ final class AuditTest extends ChiefTestCase
             ->assertDontSee('href="'.url('/admin/audit').'"', false);
     }
 
-    public function test_chief_legacy_writes_do_not_disable_project_spatie_logging(): void
+    public function test_chief_actions_do_not_write_to_the_legacy_table(): void
     {
-        Audit::activity()->log('Ignored Chief event');
+        $article = $this->setupAndCreateArticle();
+        $article->getStateConfig('current_state')->emitEvent($article, 'archive', []);
 
-        activity()->log('Project event');
+        $this->assertDatabaseCount('activity_log', 0);
+    }
 
-        $this->assertSame(['Project event'], Audit::query()->pluck('description')->all());
+    public function test_chief_actions_work_without_the_plugin(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        $copy = app(DuplicatePage::class)->handle($article, 'order');
+        app(DeleteModel::class)->handle($copy);
+
+        $this->assertNotNull($article->fresh());
+        $this->assertTrue($copy->fresh()->trashed());
+        $this->assertFalse(Schema::hasTable('chief_audit_events'));
+        $this->assertDatabaseCount('activity_log', 0);
     }
 
     public function test_no_audit_listener_is_registered_without_the_plugin(): void

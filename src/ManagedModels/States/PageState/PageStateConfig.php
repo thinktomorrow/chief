@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\States\PageState;
 
-use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelArchived;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelPublished;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
@@ -79,12 +78,10 @@ class PageStateConfig implements StateAdminConfig, StateTransitionGuard
     {
         if ($transition == 'publish') {
             event(new ManagedModelPublished($statefulContract->modelReference()));
-            Audit::activity()->performedOn($statefulContract)->log('published');
         }
 
         if ($transition == 'unpublish') {
             event(new ManagedModelUnPublished($statefulContract->modelReference()));
-            Audit::activity()->performedOn($statefulContract)->log('unpublished');
         }
 
         if ($transition == 'archive') {
@@ -95,16 +92,10 @@ class PageStateConfig implements StateAdminConfig, StateTransitionGuard
                 )
             );
 
-            Audit::activity()->performedOn($statefulContract)->log('archived');
-        }
-
-        if ($transition == 'unarchive') {
-            Audit::activity()->performedOn($statefulContract)->log('unarchived');
         }
 
         if ($transition == 'delete') {
             event(new ManagedModelQueuedForDeletion($statefulContract->modelReference()));
-            Audit::activity()->performedOn($statefulContract)->log('deleted');
         }
     }
 
