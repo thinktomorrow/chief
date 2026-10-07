@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicatePage;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -49,8 +48,6 @@ trait DuplicateAssistant
 
         // $model = Duplicate ...
         $copiedModel = app(DuplicatePage::class)->handle($model, $this->resource->getTitleAttributeKey());
-
-        Audit::activity()->performedOn($model)->log('duplicated');
 
         return redirect()->to($this->route('edit', $copiedModel))->with('messages.success', $this->resource->getPageTitle($model).' is gekopieerd.');
     }

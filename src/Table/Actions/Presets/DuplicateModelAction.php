@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Table\Actions\Presets;
 
-use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\Actions\Duplicate\DuplicatePage;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -30,8 +29,6 @@ class DuplicateModelAction extends Action
 
                     return false;
                 }
-
-                Audit::activity()->performedOn($model)->log('duplicated');
 
                 return true;
             })->redirectOnSuccess(function ($formData, $data) use ($manager) {
