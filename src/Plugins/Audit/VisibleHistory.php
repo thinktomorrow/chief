@@ -114,6 +114,8 @@ final class VisibleHistory
                 }
 
                 $event->setRelation('models', $allowed);
+                $event->visible_rich_data = $allowed->contains(fn (AuditEventModel $link) => $link->has_rich_data)
+                    || ($event->has_rich_data && ($this->fullAccess || $allLinks->isNotEmpty() && $allowed->count() === $allLinks->count()));
                 if (! $this->fullAccess || $allowed->isNotEmpty()) {
                     $event->model_snapshot = $allowed->first()?->model_snapshot;
                     $event->model_type = $allowed->first()?->model_type;
@@ -190,6 +192,40 @@ final class VisibleHistory
         abort_unless($event && ($event->context || ! $event->recorded_at->equalTo($event->occurred_at)), 404);
 
         return $event;
+    }
+
+    /** @return Collection<int, AuditRichData> */
+    public function richData(string $eventId): Collection
+    {
+        $event = $this->select(['event_id' => $eventId])->first();
+        abort_unless($event, 404);
+
+        $visibleLinkIds = $event->models->pluck('id')->all();
+        $allLinkCount = AuditEventModel::query()->where('event_id', $eventId)->count();
+        $wholeEvent = $this->fullAccess || ($allLinkCount > 0 && count($visibleLinkIds) === $allLinkCount);
+        abort_if(! $wholeEvent && $visibleLinkIds === [], 404);
+
+        $pieces = AuditRichData::query()->where('event_id', $eventId)
+            ->where(function (Builder $query) use ($wholeEvent, $visibleLinkIds): void {
+                if ($wholeEvent) {
+                    $query->whereNull('model_link_id');
+                }
+                if ($visibleLinkIds !== []) {
+                    $query->orWhereIn('model_link_id', $visibleLinkIds);
+                }
+            })->orderBy('id')->get();
+
+        abort_if($pieces->isEmpty(), 404);
+
+        return $pieces;
+    }
+
+    public function richPiece(string $eventId, string $pieceId, string $type): AuditRichData
+    {
+        $piece = $this->richData($eventId)->first(fn (AuditRichData $piece) => (string) $piece->getKey() === $pieceId && ($piece->type === $type || $type === 'html' && $piece->type === 'mailpreview') && $piece->status === 'available');
+        abort_unless($piece, 404);
+
+        return $piece;
     }
 
     public function detail(string $eventId, string $linkId): AuditEventModel
