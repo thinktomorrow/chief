@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\Plugins\Audit\UI;
 
 use Illuminate\Support\Facades\Gate;
 use Thinktomorrow\Chief\Admin\Widgets\Widget;
-use Thinktomorrow\Chief\Plugins\Audit\RecentHistory;
-use Thinktomorrow\Chief\Plugins\Audit\VisibleHistory;
+use Thinktomorrow\Chief\Plugins\Audit\Reading\RecentHistory;
+use Thinktomorrow\Chief\Plugins\Audit\Reading\VisibleHistory;
 
 final class RecentHistoryWidget implements Widget
 {

@@ -1,5 +1,5 @@
 @php
-    $history = app(\Thinktomorrow\Chief\Plugins\Audit\VisibleHistory::class);
+    $history = app(\Thinktomorrow\Chief\Plugins\Audit\Reading\VisibleHistory::class);
     $allEvents = $history->select(['model_type' => $auditModel->getMorphClass(), 'model_id' => (string) $auditModel->getKey()]);
     $recent = $allEvents->filter(fn ($event) => $history->priority($event) !== 'secondary')->take(5);
     $expanded = request()->query('audit_history') === 'all';

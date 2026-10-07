@@ -35,17 +35,6 @@ return new class extends Migration
             $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
         });
 
-        Schema::create(config('activitylog.table_name', 'activity_log'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('log_name')->nullable();
-            $table->text('description');
-            $table->nullableMorphs('subject', 'subject');
-            $table->nullableMorphs('causer', 'causer');
-            $table->json('properties')->nullable();
-            $table->timestamps();
-            $table->index('log_name');
-        });
-
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key')->index();
@@ -91,7 +80,6 @@ return new class extends Migration
         Schema::dropIfExists('menu_items');
         Schema::dropIfExists('menu_item_translations');
 
-        Schema::dropIfExists(config('activitylog.table_name', 'activity_log'));
         Schema::dropIfExists('settings');
         Schema::dropIfExists('chief_urls');
     }

@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit;
 
+use Thinktomorrow\Chief\Plugins\Audit\Persistence\AuditEvent;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditableEvent;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditEventDTO;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelCollectionDTO;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditRecorder;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\RichData;
+
 final class History
 {
     public const BINDING = 'chief.audit.history';

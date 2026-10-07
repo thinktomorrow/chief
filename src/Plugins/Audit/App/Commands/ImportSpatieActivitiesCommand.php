@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Schema;
 use JsonException;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Plugins\Audit\AuditEventDTO;
-use Thinktomorrow\Chief\Plugins\Audit\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\History;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditEventDTO;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
 
 final class ImportSpatieActivitiesCommand extends Command
 {

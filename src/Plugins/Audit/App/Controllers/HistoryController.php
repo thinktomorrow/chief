@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Plugins\Audit\AuditPresentations;
-use Thinktomorrow\Chief\Plugins\Audit\VisibleHistory;
+use Thinktomorrow\Chief\Plugins\Audit\Presentation\AuditPresentations;
+use Thinktomorrow\Chief\Plugins\Audit\Reading\VisibleHistory;
 
 final class HistoryController extends Controller
 {

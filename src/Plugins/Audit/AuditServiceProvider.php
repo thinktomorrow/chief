@@ -11,9 +11,16 @@ use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelCreated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
+use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordChiefAction;
+use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordChiefExport;
+use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordChiefLogin;
+use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordManagedModel;
+use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordSentInvitationMail;
+use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordUserInvitation;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\AuditPermissionsCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\CleanupAuditCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\ImportSpatieActivitiesCommand;
+use Thinktomorrow\Chief\Plugins\Audit\Presentation\AuditPresentations;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
 use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 
@@ -25,7 +32,7 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
     {
         parent::register();
 
-        $this->mergeConfigFrom(__DIR__.'/config/chief-audit.php', 'chief-audit');
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'chief-audit');
 
         $this->app->bind(History::BINDING, History::class);
         $this->app->singleton(AuditPresentations::class);
