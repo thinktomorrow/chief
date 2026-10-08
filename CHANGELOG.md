@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: File fields pass the correct Livewire mount parameters, restoring file uploads in model, form, and fragment
+  dialogs.
+- Fixed: `composer test` provides enough PHP memory for the full test suite.
+
 ## [0.10.34] - 2026-09-29
 
 - Fixed: Boolean field toggles now support `toggleField('field', false)` to show dependent fields when the checkbox is

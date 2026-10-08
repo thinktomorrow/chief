@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\ManagedModels\States\Actions;
 
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
 use Thinktomorrow\Chief\Forms\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\States\Events\ModelStateUpdated;
 use Thinktomorrow\Chief\ManagedModels\States\State\StateAdminConfig;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -41,24 +41,24 @@ class UpdateState
             $stateConfig->assertCanTransition($model, $transitionKey, $data);
         }
 
-        if ($stateConfig instanceof StateAdminConfig) {
-            $this->saveTransitionFields($resource, $model, $stateConfig->getConfirmationFields($model, $transitionKey), $data, $files);
-        }
+        DB::transaction(function () use ($resource, $model, $stateConfig, $transitionKey, $data, $files, $stateKey, $modelReference): void {
+            if ($stateConfig instanceof StateAdminConfig) {
+                $this->saveTransitionFields($resource, $model, $stateConfig->getConfirmationFields($model, $transitionKey), $data, $files);
+            }
 
-        $formerState = $model->getState($stateKey)->getValueAsString();
+            $formerState = $model->getState($stateKey)->getValueAsString();
 
-        $machine = StateMachine::fromConfig($model, $stateConfig);
-        $machine->apply($transitionKey);
+            $machine = StateMachine::fromConfig($model, $stateConfig);
+            $machine->apply($transitionKey);
 
-        $model->save();
+            $model->save();
 
-        $stateConfig->emitEvent($model, $transitionKey, $data);
+            $stateConfig->emitEvent($model, $transitionKey, $data);
 
-        $newState = $model->getState($stateKey)->getValueAsString();
+            $newState = $model->getState($stateKey)->getValueAsString();
 
-        event(new ModelStateUpdated($modelReference->get(), $stateKey, $formerState, $newState, $transitionKey));
-
-        event(new PageChanged($model->modelReference()));
+            event(new ModelStateUpdated($modelReference->get(), $stateKey, $formerState, $newState, $transitionKey));
+        });
     }
 
     private function saveTransitionFields(Resource $resource, $model, iterable $fields, array $data, array $files)

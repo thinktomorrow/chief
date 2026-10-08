@@ -15,6 +15,8 @@ use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelUrlUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
+use Thinktomorrow\Chief\ManagedModels\States\Events\ModelStateUpdated;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 class TriggerPageChangedEvent
 {
@@ -38,6 +40,15 @@ class TriggerPageChangedEvent
     public function onManagedModelDeleted(ManagedModelDeleted $e): void
     {
         event(new PageChanged($e->modelReference));
+    }
+
+    public function onModelStateUpdated(ModelStateUpdated $e): void
+    {
+        if ($e->transition === 'delete') {
+            return;
+        }
+
+        event(new PageChanged(ModelReference::fromString($e->modelReference)));
     }
 
     public function onFragmentUpdated(FragmentUpdated $e): void

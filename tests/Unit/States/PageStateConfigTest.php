@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\States;
 
+use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
+use Thinktomorrow\Chief\ManagedModels\Events\PageChanged;
 use Thinktomorrow\Chief\ManagedModels\States\Actions\UpdateState;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\UI\Livewire\EditState;
@@ -111,6 +113,20 @@ final class PageStateConfigTest extends ChiefTestCase
         );
 
         $this->assertSame(PageState::draft, $page->fresh()->getState(PageState::KEY));
+    }
+
+    public function test_archiving_and_deleting_a_page_each_notify_page_changed_once(): void
+    {
+        $page = ArticlePage::create();
+        $changedPages = [];
+        Event::listen(PageChanged::class, function (PageChanged $event) use (&$changedPages): void {
+            $changedPages[] = $event->modelReference->get();
+        });
+
+        app(UpdateState::class)->handle(ArticlePageResource::resourceKey(), $page->modelReference(), PageState::KEY, 'archive');
+        app(UpdateState::class)->handle(ArticlePageResource::resourceKey(), $page->modelReference(), PageState::KEY, 'delete');
+
+        $this->assertSame([$page->modelReference()->get(), $page->modelReference()->get()], $changedPages);
     }
 
     private function createUrl(ArticlePage $page): UrlRecord
