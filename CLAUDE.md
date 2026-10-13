@@ -98,3 +98,8 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
 </laravel-boost-guidelines>
+
+## Project Rules
+
+- Read `.ai/rules/index.md` and the matching rule files before planning or editing.
+- Chief is a public repo: never publish client-project-specific information (names, paths, databases, domains, brand assets, real content) in commits, branches, issues, comments or PRs. Use neutral aliases such as "Project A" and synthetic examples. See `.ai/rules/general.md`.

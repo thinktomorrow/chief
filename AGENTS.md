@@ -157,6 +157,7 @@ Guide for agentic coding assistants working in `thinktomorrow/chief`.
 - Run focused tests first, then broader suites when needed.
 - Run formatter/linter for changed languages before finishing.
 - Do not commit secrets or modify `.env` values as part of routine changes.
+- Chief is a public repo: never publish client-project-specific information (names, paths, databases, domains, brand assets, real content) in commits, branches, issues, comments or PRs. Use neutral aliases such as "Project A" and synthetic examples. See `.ai/rules/general.md`.
 
 ## 10) Cursor/Copilot Rule Files Check
 
