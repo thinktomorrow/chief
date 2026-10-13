@@ -8,7 +8,7 @@ class DocsServiceProvider extends ChiefPluginServiceProvider
 {
     public function boot(): void
     {
-        $this->app['view']->addNamespace('chief-docs', __DIR__.'/App/resources/views');
+        $this->loadViewsFrom(__DIR__.'/App/resources/views', 'chief-docs');
 
         $this->loadPluginAdminRoutes(__DIR__.'/App/chief-admin-routes.php');
     }

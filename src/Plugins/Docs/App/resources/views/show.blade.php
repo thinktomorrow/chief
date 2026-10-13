@@ -1,7 +1,9 @@
 <x-chief::page.template title="Documentatie" container="lg">
-    <a href="{{ url('/admin/docs') }}" class="text-sky-600 hover:underline">&larr; Terug</a>
+    <x-slot name="header">
+        @include ('chief-docs::breadcrumbs', ['page' => $page])
+    </x-slot>
 
-    <div class="prose prose-sky max-w-none mt-6">
-        {!! $html !!}
-    </div>
+    <x-chief::window>
+        <div class="prose prose-dark prose-spacing max-w-none">{!! $html !!}</div>
+    </x-chief::window>
 </x-chief::page.template>

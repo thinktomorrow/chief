@@ -21,3 +21,16 @@ A Chief plugin to add user docs to your Chief admin.
 
 In the project's `resources/docs` folder, you can add markdown files.
 These will be automatically available in the Chief admin under "Documentatie".
+
+Optionally, add `config/chief-docs.php` to set a readable title and a parent page for breadcrumbs:
+
+```php
+return [
+    'pages' => [
+        'guide' => ['title' => 'Guide'],
+        'registrations' => ['title' => 'Registrations', 'parent' => 'guide'],
+    ],
+];
+```
+
+The keys refer to `resources/docs/{key}.md`. A parent breadcrumb is linked only when its Markdown file exists. Pages without configuration use their filename as a readable title and link directly back to the docs overview.

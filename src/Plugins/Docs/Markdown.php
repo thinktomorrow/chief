@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Plugins\Docs;
 
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class Markdown
 {
@@ -12,7 +14,7 @@ class Markdown
             return null;
         }
 
-        $converter = new CommonMarkConverter([
+        $converter = new GithubFlavoredMarkdownConverter([
             'html_input' => 'strip',
             'allow_unsafe_links' => false,
         ]);
