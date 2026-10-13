@@ -14,13 +14,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Spatie\Activitylog\ActivitylogServiceProvider;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Image;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Svg;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Video;
 use Spatie\MediaLibrary\Conversions\ImageGenerators\Webp;
 use Spatie\Permission\PermissionServiceProvider;
-use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
@@ -60,7 +58,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
         return [
             PermissionServiceProvider::class,
             TranslatableServiceProvider::class,
-            ActivitylogServiceProvider::class,
             ChiefServiceProvider::class,
             LivewireServiceProvider::class,
             TableServiceProvider::class,
@@ -195,10 +192,6 @@ abstract class ChiefTestCase extends OrchestraTestCase
         $app['config']->set('app.locale', 'nl'); // Default locale is considered nl
         $app['config']->set('chief.locales.admin', ['nl', 'en']);
         $app['config']->set('squanto', require $this->getTempDirectory('config/squanto.php'));
-
-        $app['config']->set('activitylog.default_log_name', 'default');
-        $app['config']->set('activitylog.default_auth_driver', 'chief');
-        $app['config']->set('activitylog.activity_model', Audit::class);
 
         $app['config']->set('filesystems.disks.public', [
             'driver' => 'local',

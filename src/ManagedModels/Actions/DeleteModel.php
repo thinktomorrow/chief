@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\DeleteContext;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
+use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelQueuedForDeletion;
 use Thinktomorrow\Chief\Site\Visitable\Visitable;
@@ -58,13 +58,12 @@ class DeleteModel
                 UrlRecord::getByModel($model)->each->delete();
             }
 
-            Audit::activity()
-                ->performedOn($model)
-                ->log('deleted');
+            $auditEvent = ChiefActionCompleted::forModels('deleted', $model);
 
             $model->delete();
 
             event(new ManagedModelDeleted($model->modelReference()));
+            event($auditEvent);
 
             DB::commit();
         } catch (\Throwable $e) {

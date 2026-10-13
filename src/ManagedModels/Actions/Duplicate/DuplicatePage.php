@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Actions\Duplicate;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\ContextApplication;
 use Thinktomorrow\Chief\Fragments\App\ContextActions\DuplicateContext;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextRepository;
+use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
 
@@ -28,17 +30,21 @@ class DuplicatePage
 
     public function handle(Model&ReferableModel $model, string $titleKey = 'title'): Model
     {
-        $stateKeys = $model instanceof StatefulContract ? $model->getStateKeys() : [];
-        $copiedModel = $this->duplicateModel->handle($model, $titleKey, $stateKeys);
+        return DB::transaction(function () use ($model, $titleKey): Model {
+            $stateKeys = $model instanceof StatefulContract ? $model->getStateKeys() : [];
+            $copiedModel = $this->duplicateModel->handle($model, $titleKey, $stateKeys);
 
-        if ($stateKeys !== []) {
-            $copiedModel->refresh();
-        }
+            if ($stateKeys !== []) {
+                $copiedModel->refresh();
+            }
 
-        foreach ($this->contextRepository->getByOwner($model->modelReference()) as $context) {
-            $this->contextApplication->duplicate(new DuplicateContext($context->id, $copiedModel));
-        }
+            foreach ($this->contextRepository->getByOwner($model->modelReference()) as $context) {
+                $this->contextApplication->duplicate(new DuplicateContext($context->id, $copiedModel));
+            }
 
-        return $copiedModel;
+            event(ChiefActionCompleted::forModels('duplicated', $copiedModel, $model));
+
+            return $copiedModel;
+        });
     }
 }

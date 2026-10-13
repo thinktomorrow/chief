@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Admin\Authentication\ChiefLogoutService;
+use Thinktomorrow\Chief\Admin\Authentication\Events\ChiefLoginCompleted;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class LoginController extends Controller
@@ -34,8 +36,15 @@ class LoginController extends Controller
         ]);
 
         if (Auth::guard('chief')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            $admin = Auth::guard('chief')->user();
+            if ($admin instanceof User) {
+                event(ChiefLoginCompleted::succeeded($admin));
+            }
+
             return redirect()->intended(route('chief.back.dashboard'));
         }
+
+        event(ChiefLoginCompleted::failed($request->email));
 
         $failedAttempt = ['email' => 'Jouw gegevens zijn onjuist of jouw account is nog niet actief.'];
 
