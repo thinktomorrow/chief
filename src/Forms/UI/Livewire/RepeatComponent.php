@@ -51,7 +51,7 @@ class RepeatComponent extends Component
 
     public function getFormComponents(): array
     {
-        return $this->field->getComponents();
+        return $this->applyFieldDependencies($this->field->getComponents());
     }
 
     public function prepareFormComponent($component, string $index): void
