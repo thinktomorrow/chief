@@ -36,7 +36,14 @@ trait HasIcon
 
     public function icon(string $icon): static
     {
-        return $this->prependIcon($icon)->label('');
+        $this->prependIcon($icon);
+
+        // Removes any default label
+        if (method_exists($this, 'getLabel') && method_exists($this, 'hasExplicitLabel') && ! $this->hasExplicitLabel()) {
+            $this->label = '';
+        }
+
+        return $this;
     }
 
     public function iconEdit(): static

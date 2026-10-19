@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Explicit table action labels remain visible with icons regardless of call order, including after conversion to
+  row or bulk actions; actions without an explicit label remain icon-only.
+
 ## [0.10.34] - 2026-09-29
 
 - Fixed: Boolean field toggles now support `toggleField('field', false)` to show dependent fields when the checkbox is
