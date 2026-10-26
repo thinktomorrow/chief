@@ -99,7 +99,7 @@ final class ChangeDetailsTest extends ChiefTestCase
         $viewer = $this->admin();
         $viewer->givePermissionTo('view-audit');
 
-        $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [$eventId, $linkId]))->assertRedirect(route('chief.back.dashboard'));
+        $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [$eventId, $linkId]))->assertNotFound();
         $viewer->givePermissionTo('view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertSee(route('chief.audit.details', [$eventId, $linkId]));
