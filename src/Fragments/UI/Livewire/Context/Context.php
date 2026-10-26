@@ -37,6 +37,7 @@ class Context extends Component
             $this->getListenersWithFragments(),
             [
                 'allowed-sites-updated' => 'onAllowedSitesUpdated',
+                'fragment-moved-'.$this->context->id => 'onFragmentMoved',
             ]
         );
     }
@@ -46,6 +47,13 @@ class Context extends Component
         $this->scopedLocale = $locale;
 
         $this->refreshFragments();
+    }
+
+    public function onFragmentMoved(string $contextId): void
+    {
+        if ($contextId === $this->context->id) {
+            $this->refreshFragments();
+        }
     }
 
     public function onAllowedSitesUpdated(array $allowedSites): void

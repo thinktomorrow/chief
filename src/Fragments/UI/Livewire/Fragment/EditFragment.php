@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragment;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\ContextOwner;
+use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\MovesFragments;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\_partials\WithFragments;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
@@ -26,6 +27,7 @@ class EditFragment extends Component
 {
     use HasForm;
     use InteractsWithFields;
+    use MovesFragments;
     use ShowsAsDialog;
     use WithFragments;
     use WithLocaleToggle;
@@ -53,6 +55,7 @@ class EditFragment extends Component
     {
         return array_merge(
             $this->getListenersWithFragments(),
+            $this->getListenersForMovingFragments(),
             [
                 'open-'.$this->parentComponentId => 'open',
                 'request-refresh' => '$refresh',
@@ -79,6 +82,7 @@ class EditFragment extends Component
     public function open($values = [])
     {
         $this->fragment = $this->composeFragmentDto($values['fragmentId']);
+        $this->resetMoveSelection();
 
         $this->isOpen = true;
 
@@ -118,6 +122,7 @@ class EditFragment extends Component
     public function close()
     {
         $this->reset(['fragment', 'form', 'locales', 'scopedLocale']);
+        $this->resetMoveSelection();
         $this->resetErrorBag();
 
         $this->isOpen = false;

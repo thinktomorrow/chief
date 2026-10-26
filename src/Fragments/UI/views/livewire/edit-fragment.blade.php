@@ -25,6 +25,7 @@
 
                     <x-chief::dialog.dropdown id="fragment-actions-{{ $fragment->getId() }}">
                         @include ('chief-fragments::livewire._partials.status-fragment-actions')
+                        @include ('chief-fragments::livewire._partials.move-fragment-action')
                         @include ('chief-fragments::livewire._partials.delete-fragment-action')
                     </x-chief::dialog.dropdown>
                 </div>
