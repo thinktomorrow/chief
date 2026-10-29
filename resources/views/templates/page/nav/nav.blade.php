@@ -14,7 +14,7 @@
     data-mobile-navigation
     @class ([
         'fixed inset-0 hidden animate-slide-in-nav max-lg:z-10 max-lg:bg-white lg:static lg:flex lg:h-screen lg:animate-none',
-        'select-none flex-col justify-between gap-y-9 overflow-y-auto py-6 pl-6 lg:sticky lg:top-0',
+        'select-none flex-col justify-between gap-y-9 overflow-y-auto [scrollbar-gutter:stable] [scrollbar-width:thin] py-6 pl-6 lg:sticky lg:top-0',
     ])
 >
     <div class="space-y-6">

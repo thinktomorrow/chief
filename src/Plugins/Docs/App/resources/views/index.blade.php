@@ -3,11 +3,11 @@
 @endphp
 
 <x-chief::page.template title="Handleiding" container="full">
-    <x-slot name="nav" class="lg:w-80">
+    <x-slot name="nav">
         <x-chief-docs::sidebar :tree="$tree" />
     </x-slot>
 
-    <article class="border-grey-100 grow bg-white lg:border-l">
+    <article class="grow bg-white">
         <div class="mx-auto max-w-4xl space-y-4 px-6 py-10 lg:px-12 lg:py-16">
             <p class="text-primary-500 text-sm/6 font-medium">Handleiding</p>
 

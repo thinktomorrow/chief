@@ -16,13 +16,13 @@
 <x-chief::page.layout :title="$title">
     <div class="flex max-lg:flex-col lg:min-h-screen lg:items-stretch">
         {{-- Navigation --}}
-        @if ($nav)
-            <div {{ $nav->attributes->class('w-full shrink-0') }}>{{ $nav }}</div>
-        @else
-            <div class="w-full shrink-0 lg:w-64">
+        <div class="border-grey-100 w-full shrink-0 lg:w-80 lg:border-r">
+            @if ($nav)
+                {{ $nav }}
+            @else
                 @include ('chief::templates.page.nav.nav')
-            </div>
-        @endif
+            @endif
+        </div>
 
         @if ($container === 'full')
             {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}

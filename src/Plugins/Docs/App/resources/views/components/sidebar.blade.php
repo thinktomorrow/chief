@@ -24,7 +24,7 @@
     data-mobile-navigation
     @class ([
         'fixed inset-0 hidden animate-slide-in-nav max-lg:z-10 max-lg:bg-white lg:static lg:flex lg:h-screen lg:animate-none',
-        'select-none flex-col justify-between gap-y-9 overflow-y-auto py-6 pr-4 pl-6 lg:sticky lg:top-0',
+        'select-none flex-col justify-between gap-y-9 overflow-y-auto [scrollbar-gutter:stable] [scrollbar-width:thin] py-6 pr-2 pl-6 lg:sticky lg:top-0',
     ])
 >
     <div class="space-y-6">
@@ -36,7 +36,6 @@
             </div>
 
             <x-chief::nav.item
-                compact
                 label="Terug naar Chief"
                 :url="route('chief.back.dashboard')"
                 :icon="\Illuminate\Support\Facades\Blade::render('<x-chief::icon.arrow-left />')"
@@ -56,7 +55,6 @@
 
         <div>
             <x-chief::nav.item
-                compact
                 label="Handleiding"
                 :url="route('chief.docs.index')"
                 :icon="\Illuminate\Support\Facades\Blade::render('<x-chief::icon.book-open />')"

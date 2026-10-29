@@ -58,7 +58,7 @@ class DocsNavTest extends TestCase
     #[DataProvider('docsPaths')]
     public function test_handleiding_is_active_on_the_docs_pages(string $path): void
     {
-        $this->assertStringContainsString('rounded-lg bg-grey-100"', $this->renderHelpNavAt($path));
+        $this->assertStringContainsString('rounded-lg bg-grey-100 before:bg-primary-500', $this->renderHelpNavAt($path));
     }
 
     /**
@@ -78,7 +78,7 @@ class DocsNavTest extends TestCase
         $navigation = $this->renderHelpNavAt('/admin');
 
         $this->assertStringContainsString('title="Handleiding"', $navigation);
-        $this->assertStringNotContainsString('rounded-lg bg-grey-100"', $navigation);
+        $this->assertStringNotContainsString('rounded-lg bg-grey-100', $navigation);
     }
 
     private function renderHelpNavAt(string $path): string

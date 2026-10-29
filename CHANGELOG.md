@@ -20,6 +20,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - **Breaking change** Removed: The nav item pasted into the project's nav. The plugin adds a "Handleiding" item itself
   as soon as the admin may see a guide, so a pasted item shows twice.
 - Removed: The Docs plugin no longer creates `resources/docs/welcome.md` when the folder is missing.
+- Changed: The Chief nav is wider with a border on its right, its items are more compact with a smaller nested indent,
+  and the active item shows a primary-coloured line on its left, as in the docs sidebar.
 - Fixed: Explicit table action labels remain visible with icons regardless of call order, including after conversion to
   row or bulk actions; actions without an explicit label remain icon-only.
 - Fixed: Livewire re-renders no longer replace field elements whose random element id changes per render. The external

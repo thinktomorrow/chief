@@ -24,20 +24,19 @@ final class PageTemplateTest extends ChiefTestCase
         $html = Blade::render('<x-chief::page.template title="Pagina">Inhoud</x-chief::page.template>');
 
         $this->assertStringContainsString('Je gebruikt momenteel Chief versie', $html);
-        $this->assertStringContainsString('lg:w-64', $html);
+        $this->assertStringContainsString('lg:w-80', $html);
         $this->assertStringContainsString('container min-w-0 grow space-y-6 py-8 max-w-screen-2xl', $html);
         $this->assertStringContainsString('<h1 class="h1 h1-dark text-pretty">Pagina</h1>', $html);
         $this->assertStringContainsString('Inhoud', $html);
     }
 
-    public function test_the_nav_slot_replaces_the_chief_nav(): void
+    public function test_the_nav_slot_replaces_the_chief_nav_at_the_same_width(): void
     {
-        $html = Blade::render("<x-chief::page.template><x-slot name=\"nav\" class=\"lg:w-72\"><p>Eigen navigatie</p></x-slot>\nInhoud</x-chief::page.template>");
+        $html = Blade::render("<x-chief::page.template><x-slot name=\"nav\"><p>Eigen navigatie</p></x-slot>\nInhoud</x-chief::page.template>");
 
         $this->assertStringContainsString('<p>Eigen navigatie</p>', $html);
-        $this->assertStringContainsString('lg:w-72', $html);
+        $this->assertStringContainsString('lg:w-80', $html);
         $this->assertStringNotContainsString('Je gebruikt momenteel Chief versie', $html);
-        $this->assertStringNotContainsString('lg:w-64', $html);
     }
 
     public function test_a_full_container_leaves_width_padding_and_header_to_the_page(): void

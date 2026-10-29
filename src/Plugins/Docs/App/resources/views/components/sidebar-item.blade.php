@@ -10,7 +10,6 @@
 
 {{-- The active guide opens to its headings and child guides; its ancestors are open as well. --}}
 <x-chief::nav.item
-    compact
     :label="e($label)"
     :url="$node->hasPage() ? route('chief.docs.show', $node->id) : null"
     :is-active="$node->id === $guide?->id"
@@ -18,7 +17,7 @@
 >
     @if ($node->id === $guide?->id)
         @foreach ($headings as $heading)
-            <x-chief::nav.item compact :label="e($heading->title)" :url="'#'.$heading->id" />
+            <x-chief::nav.item :label="e($heading->title)" :url="'#'.$heading->id" />
         @endforeach
     @endif
 

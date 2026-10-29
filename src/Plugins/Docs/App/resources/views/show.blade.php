@@ -3,12 +3,12 @@
 @endphp
 
 <x-chief::page.template :title="$guide->title" container="full">
-    <x-slot name="nav" class="lg:w-80">
+    <x-slot name="nav">
         <x-chief-docs::sidebar :tree="$tree" :guide="$guide" :headings="$renderedGuide->headings" />
     </x-slot>
 
     <article
-        class="border-grey-100 grow bg-white lg:border-l"
+        class="grow bg-white"
         x-data="{
             lightbox: { src: '', alt: '' },
             openLightbox(image) {
