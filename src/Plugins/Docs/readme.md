@@ -66,6 +66,20 @@ A package or project plugin whose provider does not extend `ChiefPluginServicePr
 app(\Thinktomorrow\Chief\Plugins\Docs\DocSources::class)->add('acme', __DIR__.'/../resources/docs');
 ```
 
+### Links between guides
+
+Link to another guide the way you would in an IDE or on GitHub:
+
+```markdown
+[Inschrijvingen](inschrijvingen.md)          <!-- relative to this file, within the same source -->
+[Status](chief::paginas/status#publiceren)   <!-- a guide ID of any source -->
+```
+
+- A target ending in `.md` is a file relative to the current guide's file in the same source. A link in an override resolves against the location of the guide it replaces, so an override can keep the original's links.
+- A target containing `::` is a namespaced guide ID.
+- `#…` anchors are kept. Any other link, such as a full URL or `mailto:`, is left as written.
+- A link to a guide that doesn't exist, or that the admin can't see because it is hidden or restricted by `roles`, renders as plain text.
+
 ### Rendering
 
 Guides are GitHub-flavoured Markdown. Raw HTML is stripped and unsafe links are blocked. The page shows the guide's title itself, so the body's first `# H1` is left out.

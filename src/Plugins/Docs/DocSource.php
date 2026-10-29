@@ -18,6 +18,17 @@ final class DocSource
         public readonly ?string $overridePath = null,
     ) {}
 
+    /**
+     * The ID of a Markdown file within the source, without namespace: its path
+     * without `.md`, and a section's `index.md` at the folder's path.
+     */
+    public function relativeIdOf(string $relativePath): string
+    {
+        $relativeId = preg_replace('/\.md$/i', '', $relativePath);
+
+        return basename($relativeId) === 'index' && str_contains($relativeId, '/') ? dirname($relativeId) : $relativeId;
+    }
+
     public function guideId(string $relativeId): string
     {
         return $this->namespace === null ? $relativeId : $this->namespace.'::'.$relativeId;

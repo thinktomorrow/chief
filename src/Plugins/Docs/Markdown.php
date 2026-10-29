@@ -17,6 +17,7 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\MarkdownConverter;
 use Thinktomorrow\Chief\Plugins\Docs\Callouts\CalloutExtension;
+use Thinktomorrow\Chief\Plugins\Docs\Links\GuideLinkExtension;
 
 class Markdown
 {
@@ -44,6 +45,26 @@ class Markdown
             return null;
         }
 
+        return $this->render($value, $this->environment());
+    }
+
+    /**
+     * Render a guide's body, pointing its links to other guides at those the current admin may see.
+     */
+    public function convertGuide(GuideNode $guide, GuideTree $tree): ?string
+    {
+        if (! $guide->markdown) {
+            return null;
+        }
+
+        $environment = $this->environment();
+        $environment->addExtension(new GuideLinkExtension($guide, $tree));
+
+        return $this->render($guide->markdown, $environment);
+    }
+
+    private function environment(): Environment
+    {
         $environment = new Environment([
             'html_input' => 'strip',
             'allow_unsafe_links' => false,
@@ -81,7 +102,12 @@ class Markdown
             $callback($environment);
         }
 
-        return (new MarkdownConverter($environment))->convert($value)->getContent();
+        return $environment;
+    }
+
+    private function render(string $markdown, Environment $environment): string
+    {
+        return (new MarkdownConverter($environment))->convert($markdown)->getContent();
     }
 
     /**

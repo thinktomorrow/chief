@@ -58,11 +58,7 @@ final class GuideTreeBuilder
                 continue;
             }
 
-            $relativeId = Str::beforeLast($relativePath, '.md');
-
-            if (basename($relativeId) === 'index' && str_contains($relativeId, '/')) {
-                $relativeId = dirname($relativeId);
-            }
+            $relativeId = $source->relativeIdOf($relativePath);
 
             foreach ($this->foldersOf($relativeId) as $folder) {
                 $folders[$folder] = true;
@@ -83,6 +79,7 @@ final class GuideTreeBuilder
                 order: is_int($frontMatter['order'] ?? null) ? $frontMatter['order'] : null,
                 markdown: $markdown,
                 roles: $this->roles($frontMatter),
+                location: new GuideLocation($source, $relativePath),
             );
 
             $parentIds[$id] = $this->stringValue($frontMatter, 'parent') ?? $this->folderId($source, $relativeId);

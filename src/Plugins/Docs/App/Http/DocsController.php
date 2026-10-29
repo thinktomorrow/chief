@@ -28,7 +28,7 @@ class DocsController
         return view('chief-docs::show', [
             'tree' => $tree,
             'guide' => $guide,
-            'content' => $this->markdown->convert($guide->markdown),
+            'content' => $this->markdown->convertGuide($guide, $tree),
         ]);
     }
 }
