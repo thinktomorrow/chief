@@ -53,4 +53,30 @@ final class DocSource
 
         return $this->path.'/'.$relativePath;
     }
+
+    /**
+     * The file an asset is served from: the project's override at the same path when there
+     * is one, otherwise the source's own file. Null when neither exists.
+     */
+    public function assetFile(string $relativePath): ?string
+    {
+        foreach ([$this->overridePath, $this->path] as $folder) {
+            if ($folder !== null && is_file($folder.'/'.$relativePath)) {
+                return $folder.'/'.$relativePath;
+            }
+        }
+
+        return null;
+    }
+
+    public function isExcluded(string $relativePath): bool
+    {
+        foreach ($this->excludedFolders as $folder) {
+            if (str_starts_with($relativePath, $folder.'/')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

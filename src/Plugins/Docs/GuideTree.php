@@ -13,11 +13,13 @@ final class GuideTree
      * @param  array<string, GuideNode>  $nodes  Keyed by node ID.
      * @param  array<string, null|string>  $parentIds  Parent ID per node ID, null for the top level.
      * @param  array<string, list<string>>  $childIds  Sorted child IDs per parent ID, '' for the top level.
+     * @param  array<string, true>  $withheldIds  IDs of the nodes left out of this visible part of the tree.
      */
     public function __construct(
         private readonly array $nodes,
         private readonly array $parentIds,
         private readonly array $childIds,
+        private readonly array $withheldIds = [],
     ) {}
 
     /**
@@ -52,12 +54,22 @@ final class GuideTree
             array_intersect_key($this->nodes, $isVisible),
             array_intersect_key($this->parentIds, $isVisible),
             $visibleChildIds,
+            $this->withheldIds + array_fill_keys(array_keys(array_diff_key($this->nodes, $isVisible)), true),
         );
     }
 
     public function find(string $id): ?GuideNode
     {
         return $this->nodes[$id] ?? null;
+    }
+
+    /**
+     * Whether the node exists but was left out of this visible part of the tree,
+     * because it is hidden or restricted to other roles.
+     */
+    public function isWithheld(string $id): bool
+    {
+        return isset($this->withheldIds[$id]);
     }
 
     /** @return list<GuideNode> */

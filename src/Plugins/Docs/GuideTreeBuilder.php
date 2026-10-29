@@ -54,7 +54,7 @@ final class GuideTreeBuilder
         foreach (File::allFiles($source->path) as $file) {
             $relativePath = str_replace('\\', '/', $file->getRelativePathname());
 
-            if ($file->getExtension() !== 'md' || $this->isExcluded($source, $relativePath)) {
+            if ($file->getExtension() !== 'md' || $source->isExcluded($relativePath)) {
                 continue;
             }
 
@@ -95,17 +95,6 @@ final class GuideTreeBuilder
             $nodes[$id] = new GuideNode(id: $id, title: Str::headline(basename($folder)));
             $parentIds[$id] = $this->folderId($source, $folder);
         }
-    }
-
-    private function isExcluded(DocSource $source, string $relativePath): bool
-    {
-        foreach ($source->excludedFolders as $folder) {
-            if (str_starts_with($relativePath, $folder.'/')) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

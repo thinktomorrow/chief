@@ -80,6 +80,22 @@ Link to another guide the way you would in an IDE or on GitHub:
 - `#…` anchors are kept. Any other link, such as a full URL or `mailto:`, is left as written.
 - A link to a guide that doesn't exist, or that the admin can't see because it is hidden or restricted by `roles`, renders as plain text.
 
+### Images and video
+
+Screenshots and short videos live next to the guides, anywhere inside the source folder, and are referenced by a path relative to the guide, like a `.md` link:
+
+```markdown
+![De statusknop](status-knop.png)
+![Een pagina publiceren](schermen/publiceren.mp4)
+```
+
+- Allowed types are png, jpg/jpeg, gif, webp, avif, svg, mp4 and webm. An SVG is served with `Content-Security-Policy: sandbox`.
+- An asset is served to admins at a URL that mirrors its location, such as `/admin/docs/chief::paginas/status-knop.png`, with `?v=<mtime>` appended when a guide renders it.
+- An asset follows the visibility of its section, the nearest folder holding it that is a section, so assets of a hidden or role-restricted section return a 404. An asset in a folder without guides, such as `paginas/schermen/`, belongs to the section around it.
+- The project replaces a shipped asset with a file at the same path in `resources/docs/vendor/<namespace>/`.
+- An image on a line of its own renders at full width with its alt text as caption, and opens in a lightbox when clicked. A path ending in `.mp4` or `.webm` renders as a muted video with controls, and its alt text as fallback.
+- Full URLs and root-relative paths are left as written. A relative image that doesn't exist, lies outside the source or isn't visible to the admin renders as its alt text.
+
 ### Rendering
 
 Guides are GitHub-flavoured Markdown. Raw HTML is stripped and unsafe links are blocked. The page shows the guide's title itself, so the body's first `# H1` is left out.

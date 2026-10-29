@@ -41,6 +41,14 @@ final class DocSources
         return isset($this->sources[$namespace]);
     }
 
+    /**
+     * @param  null|string  $namespace  Null for the project's own source.
+     */
+    public function find(?string $namespace): ?DocSource
+    {
+        return $namespace === null ? $this->projectSource : $this->sources[$namespace] ?? null;
+    }
+
     /** @return list<DocSource> */
     public function all(): array
     {
