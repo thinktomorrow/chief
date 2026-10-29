@@ -37,6 +37,8 @@ Without `roles`, or with an empty list, every admin sees the guide. A restrictio
 
 Resolve `GuideTree` from the container to get the guides the current admin may see. Every docs surface reads from it instead of filtering on its own.
 
+`/admin/docs` is an overview with a card per guide, grouped like the sidebar. A guide with child guides ends with cards for them, and every guide ends with links to the previous and next guide in the sidebar's order, skipping sections without a page. Without any visible guide, the overview shows an empty state.
+
 A Chief plugin adds its own namespaced guides from its service provider with `loadDocsFrom()`:
 
 ```php

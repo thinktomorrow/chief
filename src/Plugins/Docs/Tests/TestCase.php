@@ -35,6 +35,15 @@ abstract class TestCase extends ChiefTestCase
         $this->app->singleton(DocSources::class, fn () => new DocSources($path));
     }
 
+    /**
+     * Read guides from the given project folder alone, without Chief's or any
+     * plugin's guides. Resolving callbacks don't run for a bound instance.
+     */
+    protected function useOnlyProjectGuides(string $path): void
+    {
+        $this->app->instance(DocSources::class, new DocSources($path));
+    }
+
     protected function guideTree(): GuideTree
     {
         return $this->asAdmin()->get('/admin/docs')->assertOk()->viewData('tree');

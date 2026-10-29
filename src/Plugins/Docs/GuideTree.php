@@ -118,6 +118,53 @@ final class GuideTree
     }
 
     /**
+     * The guides with a page in the order the sidebar lists them: group by
+     * group, each node followed by its descendants.
+     *
+     * @return list<GuideNode>
+     */
+    public function readingOrder(): array
+    {
+        $guides = [];
+
+        foreach ($this->groups() as $group) {
+            foreach ($group->nodes as $node) {
+                $guides = [...$guides, ...$this->pagesFrom($node, $node !== $group->section)];
+            }
+        }
+
+        return $guides;
+    }
+
+    /**
+     * The given nodes that have a page, with each section without a page
+     * replaced by the guides beneath it, as the docs list them as cards.
+     *
+     * @param  list<GuideNode>  $nodes
+     * @return list<GuideNode>
+     */
+    public function guidesAmong(array $nodes): array
+    {
+        $guides = [];
+
+        foreach ($nodes as $node) {
+            $guides = [...$guides, ...($node->hasPage() ? [$node] : $this->guidesAmong($this->children($node)))];
+        }
+
+        return $guides;
+    }
+
+    public function previous(GuideNode $guide): ?GuideNode
+    {
+        return $this->neighbour($guide, -1);
+    }
+
+    public function next(GuideNode $guide): ?GuideNode
+    {
+        return $this->neighbour($guide, 1);
+    }
+
+    /**
      * @return list<GuideNode> From the top level down to the node's parent.
      */
     public function ancestors(GuideNode $node): array
@@ -139,6 +186,36 @@ final class GuideTree
     public function pathIds(GuideNode $node): array
     {
         return [...array_map(fn (GuideNode $ancestor) => $ancestor->id, $this->ancestors($node)), $node->id];
+    }
+
+    /**
+     * @return list<GuideNode> The node if it has a page, followed by the pages beneath it when descending.
+     */
+    private function pagesFrom(GuideNode $node, bool $descends): array
+    {
+        $pages = $node->hasPage() ? [$node] : [];
+
+        if (! $descends) {
+            return $pages;
+        }
+
+        foreach ($this->children($node) as $child) {
+            $pages = [...$pages, ...$this->pagesFrom($child, true)];
+        }
+
+        return $pages;
+    }
+
+    private function neighbour(GuideNode $guide, int $offset): ?GuideNode
+    {
+        $guides = $this->readingOrder();
+        $position = array_search($guide->id, array_map(fn (GuideNode $node) => $node->id, $guides), true);
+
+        if ($position === false) {
+            return null;
+        }
+
+        return $guides[$position + $offset] ?? null;
     }
 
     /**

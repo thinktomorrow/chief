@@ -17,7 +17,7 @@
             },
         }"
     >
-        <div class="mx-auto max-w-3xl space-y-4 px-6 py-10 lg:px-12 lg:py-16">
+        <div class="mx-auto max-w-4xl space-y-4 px-6 py-10 lg:px-12 lg:py-16">
             @if ($section)
                 <p class="text-primary-500 text-sm/6 font-medium">{{ $section->title }}</p>
             @endif
@@ -42,6 +42,26 @@
                 ])
             >
                 {!! $renderedGuide->content !!}
+            </div>
+
+            @php
+                $childGuides = $tree->guidesAmong($tree->children($guide));
+            @endphp
+
+            @if ($childGuides)
+                <section class="mt-16 space-y-6">
+                    <h2 class="h3 h3-dark">In dit onderdeel</h2>
+
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        @foreach ($childGuides as $childGuide)
+                            <x-chief-docs::guide-card :guide="$childGuide" />
+                        @endforeach
+                    </div>
+                </section>
+            @endif
+
+            <div class="mt-16">
+                <x-chief-docs::pager :previous="$tree->previous($guide)" :next="$tree->next($guide)" />
             </div>
         </div>
 
