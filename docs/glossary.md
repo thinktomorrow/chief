@@ -15,7 +15,8 @@ The user guide is the help that explains to admin editors how to work with Chief
 - made up of guides.
 - shown inside the Chief admin, not on the frontend site.
 - not to be confused with developer documentation (the `docs/` folder and plugin readmes).
-- _Avoid_: docs, documentation (reserved for developer documentation).
+- in code it is called docs: the Docs plugin, `DocSources`, `chief.docs.*` routes, `resources/docs` folders.
+- _Avoid_: documentation (reserved for developer documentation).
 
 ## Guide
 A guide is a single Markdown page of the user guide.
