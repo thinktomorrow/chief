@@ -5,6 +5,22 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Added: The Docs plugin builds one user guide from the project's `resources/docs` and the Dutch guides shipped by
+  Chief and its plugins, with sections, front matter, links between guides, images and video, role visibility, search
+  and a "Handleiding" nav item. Projects can override or hide shipped guides. See the Docs plugin readme, including its
+  "Upgraden" section.
+- **Breaking change** Changed: The `chief-docs::index` and `chief-docs::show` views are rewritten and no longer receive
+  `$files`, `$page` or `$html`. They receive the visible `GuideTree` as `$tree`, and the show view also receives
+  `$guide` and `$renderedGuide`. The `chief-docs::breadcrumbs` view is gone. Delete project overrides of these views.
+- **Breaking change** Changed: Rebinding `Thinktomorrow\Chief\Plugins\Docs\Markdown` in the container to customise
+  rendering is superseded by `Markdown::configureUsing()`, which receives the CommonMark environment. A rebind replaces
+  Chief's guide rendering as a whole, including links, images and callouts.
+- **Breaking change** Removed: The `chief-docs.pages` config. Set a guide's `title` and `parent` in its front matter
+  instead. The `chief-docs` config now only holds `hidden`.
+- **Breaking change** Removed: The nav item pasted into the project's nav. The plugin adds a "Handleiding" item itself
+  as soon as the admin may see a guide, so a pasted item shows twice.
+- Removed: The Docs plugin no longer creates `resources/docs/welcome.md` when the folder is missing.
+
 ## [0.10.34] - 2026-09-29
 
 - Fixed: Boolean field toggles now support `toggleField('field', false)` to show dependent fields when the checkbox is

@@ -123,3 +123,31 @@ Markdown::configureUsing(fn (Environment $environment) => $environment->addExten
 ```
 
 Prefer this over rebinding `Markdown` in the container, which replaces Chief's rendering as a whole.
+
+## Upgraden
+
+Upgrading from the earlier Docs plugin, which read `resources/docs/*.md` with titles from the `chief-docs.pages` config:
+
+1. Remove the "Documentatie" `<x-chief::nav.item>` from the project's nav. The plugin adds the "Handleiding" item itself.
+2. Remove any container binding that replaces `Thinktomorrow\Chief\Plugins\Docs\Markdown`. Move its customisation to `Markdown::configureUsing()`, see [Rendering](#rendering).
+3. Delete the project's overrides of the `chief-docs` views in `resources/views/vendor/chief-docs`. The views are new and no longer receive `$page`, `$html` or `$files`.
+4. Delete project guides that copy Chief's generic guides, such as pages, fragments, menus or media. Chief ships those now. To change one, override it in `resources/docs/vendor/chief/`; to drop one, list it in `chief-docs.hidden`. See [Overriding and hiding shipped guides](#overriding-and-hiding-shipped-guides).
+5. Move each entry of the `chief-docs.pages` config into the front matter of its guide, and delete the `pages` key:
+
+```php
+// Before: config/chief-docs.php
+'pages' => [
+    'registrations' => ['title' => 'Inschrijvingen', 'parent' => 'guide'],
+],
+```
+
+```yaml
+# After: resources/docs/registrations.md
+---
+title: Inschrijvingen
+description: Inschrijvingen opvolgen.
+parent: guide
+---
+```
+
+A folder is a section now, so a guide can also move under its parent's folder instead of setting `parent`. The previous `welcome.md` that the plugin created in an empty `resources/docs` is no longer created; delete it if it was never edited.
