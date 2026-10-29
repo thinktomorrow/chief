@@ -32,7 +32,15 @@ parent: opleidingen             # the absolute ID of another guide or section
 ---
 ```
 
-A package can add its own namespaced guides from any service provider:
+A Chief plugin adds its own namespaced guides from its service provider with `loadDocsFrom()`:
+
+```php
+$this->loadDocsFrom(__DIR__.'/resources/docs', 'acme');
+```
+
+Chief's plugins ship their guides this way under the `admin-toast`, `tags`, `time-table`, `hot-spots`, `seo` and `external-files` namespaces. A plugin guide can attach under a Chief section with `parent` (`parent: chief::media`).
+
+A package or project plugin whose provider does not extend `ChiefPluginServiceProvider` adds its guides from any service provider:
 
 ```php
 app(\Thinktomorrow\Chief\Plugins\Docs\DocSources::class)->add('acme', __DIR__.'/../resources/docs');

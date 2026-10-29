@@ -31,6 +31,11 @@ final class DocSources
         $this->sources[$namespace] = new DocSource($namespace, $path);
     }
 
+    public function has(string $namespace): bool
+    {
+        return isset($this->sources[$namespace]);
+    }
+
     /** @return list<DocSource> */
     public function all(): array
     {

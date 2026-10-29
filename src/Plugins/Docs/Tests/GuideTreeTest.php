@@ -18,7 +18,7 @@ class GuideTreeTest extends TestCase
 
         $this->useProjectGuides($this->fixture('project'));
 
-        $this->tree = $this->asAdmin()->get('/admin/docs')->assertOk()->viewData('tree');
+        $this->tree = $this->guideTree();
     }
 
     public function test_title_falls_back_to_the_first_heading_then_the_filename(): void

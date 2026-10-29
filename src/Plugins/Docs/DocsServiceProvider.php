@@ -10,11 +10,7 @@ class DocsServiceProvider extends ChiefPluginServiceProvider
     {
         parent::register();
 
-        $this->app->extend(DocSources::class, function (DocSources $sources) {
-            $sources->add('chief', __DIR__.'/resources/docs');
-
-            return $sources;
-        });
+        $this->loadDocsFrom(__DIR__.'/resources/docs', 'chief');
     }
 
     public function boot(): void
