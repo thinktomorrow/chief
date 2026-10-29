@@ -2,8 +2,11 @@
 
 namespace Thinktomorrow\Chief\Plugins\Docs;
 
+use Illuminate\Support\Facades\Blade;
 use InvalidArgumentException;
 use Livewire\Livewire;
+use Thinktomorrow\Chief\Admin\Nav\Nav;
+use Thinktomorrow\Chief\Admin\Nav\NavItem;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
 use Thinktomorrow\Chief\Plugins\Docs\App\Livewire\GuideSearchComponent;
@@ -36,9 +39,23 @@ class DocsServiceProvider extends ChiefPluginServiceProvider
 
         Livewire::component('chief-docs::guide-search', GuideSearchComponent::class);
 
+        $this->callAfterResolving(Nav::class, fn (Nav $nav) => $this->addHelpNavItem($nav));
+
         $this->publishes([
             __DIR__.'/config/chief-docs.php' => config_path('chief-docs.php'),
         ], 'chief-docs-config');
+    }
+
+    /**
+     * Show the user guide in the Chief nav once the current admin may see at least one guide.
+     */
+    private function addHelpNavItem(Nav $nav): void
+    {
+        if (! chiefAdmin() || $this->app->make(GuideTree::class)->readingOrder() === []) {
+            return;
+        }
+
+        $nav->add(new NavItem('Handleiding', route('chief.docs.index'), ['nav-help'], Blade::render('<x-chief::icon.book-open />')));
     }
 
     /**

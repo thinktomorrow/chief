@@ -55,6 +55,7 @@
     </div>
 
     <div>
+        @include ('chief::templates.page.nav.nav-help')
         @include ('chief::templates.page.nav.nav-settings')
         @include ('chief::templates.page.nav.nav-user')
 

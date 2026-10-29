@@ -51,7 +51,9 @@ final class NavItem
 
     public function detectActive(): self
     {
-        $this->isActive = request()->fullUrlIs($this->url) || request()->is($this->url) || request()->is($this->url.'/*');
+        $path = trim(parse_url($this->url, PHP_URL_PATH) ?? '', '/');
+
+        $this->isActive = request()->fullUrlIs($this->url) || ($path !== '' && (request()->is($path) || request()->is($path.'/*')));
 
         return $this;
     }
