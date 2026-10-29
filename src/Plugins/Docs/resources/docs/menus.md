@@ -1,6 +1,6 @@
 ---
 title: Menu's beheren
-description: Hoe je de menu's van je website aanpast: items toevoegen, ordenen, aanpassen en verwijderen.
+description: "Hoe je de menu's van je website aanpast: items toevoegen, ordenen, aanpassen en verwijderen."
 order: 4
 ---
 

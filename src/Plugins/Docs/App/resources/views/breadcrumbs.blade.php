@@ -1,16 +1,13 @@
 @php
-    $title = config('chief-docs.pages.'.$page.'.title') ?: Str::headline($page);
-    $parent = config('chief-docs.pages.'.$page.'.parent');
     $breadcrumbs = [['label' => 'Documentatie', 'url' => route('chief.docs.index')]];
 
-    if ($parent && $parent !== $page && is_file(resource_path('docs/'.$parent.'.md'))) {
-        $breadcrumbs[] = [
-            'label' => config('chief-docs.pages.'.$parent.'.title') ?: Str::headline($parent),
-            'url' => route('chief.docs.show', $parent),
-        ];
+    foreach ($tree->ancestors($guide) as $ancestor) {
+        $breadcrumbs[] = $ancestor->hasPage()
+            ? ['label' => $ancestor->title, 'url' => route('chief.docs.show', $ancestor->id)]
+            : $ancestor->title;
     }
 
-    $breadcrumbs[] = $title;
+    $breadcrumbs[] = $guide->title;
 @endphp
 
-<x-chief::page.header title="Documentatie" :breadcrumbs="$breadcrumbs" />
+<x-chief::page.header :title="$guide->title" :breadcrumbs="$breadcrumbs" />

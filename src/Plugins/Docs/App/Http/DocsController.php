@@ -2,47 +2,37 @@
 
 namespace Thinktomorrow\Chief\Plugins\Docs\App\Http;
 
-use Illuminate\Support\Facades\File;
+use Illuminate\Contracts\View\View;
+use Thinktomorrow\Chief\Plugins\Docs\DocSources;
+use Thinktomorrow\Chief\Plugins\Docs\GuideTreeBuilder;
 use Thinktomorrow\Chief\Plugins\Docs\Markdown;
 
 class DocsController
 {
-    public function __construct(private Markdown $markdown) {}
+    public function __construct(
+        private Markdown $markdown,
+        private DocSources $sources,
+        private GuideTreeBuilder $treeBuilder,
+    ) {}
 
-    public function index()
+    public function index(): View
     {
-        $this->assertDocsViewFolderExists();
-
-        $files = collect(File::files(resource_path('docs')))
-            ->map(fn ($file) => pathinfo($file, PATHINFO_FILENAME));
-
-        return view('chief-docs::index', compact('files'));
-    }
-
-    public function show($page)
-    {
-        $this->assertDocsViewFolderExists();
-
-        $path = resource_path("docs/$page.md");
-
-        abort_unless(File::exists($path), 404);
-
-        $markdown = File::get($path);
-        $html = $this->markdown->convert($markdown);
-
-        return view('chief-docs::show', [
-            'page' => $page,
-            'html' => $html,
+        return view('chief-docs::index', [
+            'tree' => $this->treeBuilder->build($this->sources),
         ]);
     }
 
-    private function assertDocsViewFolderExists()
+    public function show(string $guideId): View
     {
-        $docsPath = resource_path('docs');
+        $tree = $this->treeBuilder->build($this->sources);
+        $guide = $tree->find($guideId);
 
-        if (! File::exists($docsPath)) {
-            File::makeDirectory($docsPath, 0755, true);
-            File::put($docsPath.'/welcome.md', "# Welcome to the Docs\n\nAdd your markdown files in this folder to document your Chief setup.");
-        }
+        abort_unless($guide && $guide->hasPage(), 404);
+
+        return view('chief-docs::show', [
+            'tree' => $tree,
+            'guide' => $guide,
+            'content' => $this->markdown->convert($guide->markdown),
+        ]);
     }
 }

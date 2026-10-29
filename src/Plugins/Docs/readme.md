@@ -19,18 +19,21 @@ A Chief plugin to add user docs to your Chief admin.
 
 ## Usage
 
-In the project's `resources/docs` folder, you can add markdown files.
-These will be automatically available in the Chief admin under "Documentatie".
+Add guides as Markdown files to the project's `resources/docs` folder. Each guide is available in the Chief admin at `/admin/docs/{id}`, where the ID is its path without `.md` (`opleidingen/inschrijvingen`). Chief's own guides use the `chief::` prefix (`chief::paginas/status`). The `resources/docs/vendor` folder is reserved and not read as project guides.
 
-Optionally, add `config/chief-docs.php` to set a readable title and a parent page for breadcrumbs:
+A folder is a section. Its `index.md` is the section's page, served at the folder path. A guide can set these front matter keys:
 
-```php
-return [
-    'pages' => [
-        'guide' => ['title' => 'Guide'],
-        'registrations' => ['title' => 'Registrations', 'parent' => 'guide'],
-    ],
-];
+```yaml
+---
+title: Inschrijvingen beheren   # defaults to the first H1, then the filename
+description: Inschrijvingen opvolgen.
+order: 1                        # siblings sort by order, then by title
+parent: opleidingen             # the absolute ID of another guide or section
+---
 ```
 
-The keys refer to `resources/docs/{key}.md`. A parent breadcrumb is linked only when its Markdown file exists. Pages without configuration use their filename as a readable title and link directly back to the docs overview.
+A package can add its own namespaced guides from any service provider:
+
+```php
+app(\Thinktomorrow\Chief\Plugins\Docs\DocSources::class)->add('acme', __DIR__.'/../resources/docs');
+```
