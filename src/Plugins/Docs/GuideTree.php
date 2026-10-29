@@ -21,14 +21,17 @@ final class GuideTree
     ) {}
 
     /**
-     * The part of the tree that an admin with the given roles may see. The walk
-     * only descends into visible nodes, so a section's restriction covers its
-     * whole subtree and a child can only narrow it.
+     * The part of the tree that an admin with the given roles may see, without
+     * the hidden nodes. The walk only descends into visible nodes, so a
+     * section's restriction or hiding covers its whole subtree and a child
+     * can only narrow it.
      *
      * @param  list<string>  $roleNames
+     * @param  list<string>  $hiddenIds
      */
-    public function visibleTo(array $roleNames): self
+    public function visibleTo(array $roleNames, array $hiddenIds): self
     {
+        $isHidden = array_fill_keys($hiddenIds, true);
         $visibleChildIds = [];
         $pendingParentIds = [''];
 
@@ -36,7 +39,7 @@ final class GuideTree
             $parentId = array_shift($pendingParentIds);
 
             foreach ($this->childIds[$parentId] ?? [] as $id) {
-                if ($this->nodes[$id]->isVisibleTo($roleNames)) {
+                if (! isset($isHidden[$id]) && $this->nodes[$id]->isVisibleTo($roleNames)) {
                     $visibleChildIds[$parentId][] = $id;
                     $pendingParentIds[] = $id;
                 }

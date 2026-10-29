@@ -68,7 +68,7 @@ final class GuideTreeBuilder
                 $folders[$folder] = true;
             }
 
-            $input = $this->frontMatterParser->parse(File::get($file->getPathname()));
+            $input = $this->frontMatterParser->parse(File::get($source->guideFile($relativeId, $relativePath)));
             $frontMatter = is_array($input->getFrontMatter()) ? $input->getFrontMatter() : [];
             $markdown = $input->getContent();
 

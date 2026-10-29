@@ -45,6 +45,21 @@ $this->loadDocsFrom(__DIR__.'/resources/docs', 'acme');
 
 Chief's plugins ship their guides this way under the `admin-toast`, `tags`, `time-table`, `hot-spots`, `seo` and `external-files` namespaces. A plugin guide can attach under a Chief section with `parent` (`parent: chief::media`).
 
+### Overriding and hiding shipped guides
+
+The project replaces a guide shipped by Chief or a plugin with a file at `resources/docs/vendor/<namespace>/<path>.md`. The file `resources/docs/vendor/chief/paginas/status.md` replaces `chief::paginas/status`. A section page is overridden at its ID like any guide: `vendor/chief/paginas.md` or `vendor/chief/paginas/index.md` replaces `chief::paginas`. A section folder without a page of its own has nothing to override. The override replaces the guide entirely, front matter and body, so it sets its own title, description, order, parent and roles. Nothing is merged with the original. An override without a matching shipped guide is ignored. Only the project can override; a plugin adds its own guides and attaches them with `parent`.
+
+The project removes shipped or project guides by listing their IDs in the `hidden` key of the `chief-docs` config. Publish the config with `php artisan vendor:publish --tag=chief-docs-config`. An entry that is not a guide ID throws an `InvalidArgumentException`.
+
+```php
+// config/chief-docs.php
+return [
+    'hidden' => ['chief::menus', 'seo::alt-teksten'],
+];
+```
+
+A hidden guide and every guide beneath it, including guides attached through `parent`, disappear from every docs surface and return a 404. Hiding is applied by the same visible tree as `roles`.
+
 A package or project plugin whose provider does not extend `ChiefPluginServiceProvider` adds its guides from any service provider:
 
 ```php

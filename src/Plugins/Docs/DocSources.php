@@ -8,18 +8,23 @@ use InvalidArgumentException;
 
 /**
  * Registry of the folders the user guide is read from. The project's own
- * guides form the un-namespaced source; packages add namespaced ones.
+ * guides form the un-namespaced source; packages add namespaced ones. The
+ * project overrides a namespaced guide with a file at the same path in
+ * its vendor/<namespace> folder.
  */
 final class DocSources
 {
+    /** The project folder that holds overrides and is not read as project guides. */
+    private const OVERRIDES_FOLDER = 'vendor';
+
     /** @var array<string, DocSource> */
     private array $sources = [];
 
     private DocSource $projectSource;
 
-    public function __construct(string $projectPath)
+    public function __construct(private readonly string $projectPath)
     {
-        $this->projectSource = new DocSource(null, $projectPath, ['vendor']);
+        $this->projectSource = new DocSource(null, $projectPath, [self::OVERRIDES_FOLDER]);
     }
 
     public function add(string $namespace, string $path): void
@@ -28,7 +33,7 @@ final class DocSources
             throw new InvalidArgumentException('Doc source namespace ['.$namespace.'] is already registered.');
         }
 
-        $this->sources[$namespace] = new DocSource($namespace, $path);
+        $this->sources[$namespace] = new DocSource($namespace, $path, overridePath: $this->projectPath.'/'.self::OVERRIDES_FOLDER.'/'.$namespace);
     }
 
     public function has(string $namespace): bool

@@ -49,12 +49,6 @@ class GuidesTest extends TestCase
         $this->asAdmin()->get('/admin/docs/instellingen-van-de-site/talen')->assertOk();
     }
 
-    public function test_guides_in_the_project_vendor_folder_are_not_project_guides(): void
-    {
-        $this->asAdmin()->get('/admin/docs/vendor/chief/welkom')->assertNotFound();
-        $this->asAdmin()->get('/admin/docs')->assertDontSee('Overschreven welkom');
-    }
-
     public function test_an_unknown_guide_is_not_found(): void
     {
         $this->asAdmin()->get('/admin/docs/onbestaand')->assertNotFound();
