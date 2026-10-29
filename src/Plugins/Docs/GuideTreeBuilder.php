@@ -82,6 +82,7 @@ final class GuideTreeBuilder
                 description: $this->stringValue($frontMatter, 'description'),
                 order: is_int($frontMatter['order'] ?? null) ? $frontMatter['order'] : null,
                 markdown: $markdown,
+                roles: $this->roles($frontMatter),
             );
 
             $parentIds[$id] = $this->stringValue($frontMatter, 'parent') ?? $this->folderId($source, $relativeId);
@@ -152,6 +153,24 @@ final class GuideTreeBuilder
         $value = $frontMatter[$key] ?? null;
 
         return is_scalar($value) && (string) $value !== '' ? (string) $value : null;
+    }
+
+    /**
+     * A single role may be written as text. A role that is not a non-empty text
+     * becomes an empty role name, which no admin has, so a malformed value
+     * restricts the guide instead of opening it to everyone.
+     *
+     * @param  array<string, mixed>  $frontMatter
+     * @return list<string>
+     */
+    private function roles(array $frontMatter): array
+    {
+        $value = $frontMatter['roles'] ?? [];
+
+        return array_map(
+            fn (mixed $role) => is_scalar($role) ? (string) $role : '',
+            is_array($value) ? array_values($value) : [$value],
+        );
     }
 
     /**

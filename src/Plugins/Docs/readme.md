@@ -29,8 +29,13 @@ title: Inschrijvingen beheren   # defaults to the first H1, then the filename
 description: Inschrijvingen opvolgen.
 order: 1                        # siblings sort by order, then by title
 parent: opleidingen             # the absolute ID of another guide or section
+roles: [admin, author]          # admin roles that may see the guide, any-of
 ---
 ```
+
+Without `roles`, or with an empty list, every admin sees the guide. A restriction on a section covers its whole subtree, and a guide beneath it can only narrow it further. A single role can be written as text (`roles: admin`). An unknown or malformed role matches nobody, and `developer` is an ordinary role without a bypass. A guide an admin may not see returns a 404.
+
+Resolve `GuideTree` from the container to get the guides the current admin may see. Every docs surface reads from it instead of filtering on its own.
 
 A Chief plugin adds its own namespaced guides from its service provider with `loadDocsFrom()`:
 

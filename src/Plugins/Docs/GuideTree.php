@@ -20,6 +20,38 @@ final class GuideTree
         private readonly array $childIds,
     ) {}
 
+    /**
+     * The part of the tree that an admin with the given roles may see. The walk
+     * only descends into visible nodes, so a section's restriction covers its
+     * whole subtree and a child can only narrow it.
+     *
+     * @param  list<string>  $roleNames
+     */
+    public function visibleTo(array $roleNames): self
+    {
+        $visibleChildIds = [];
+        $pendingParentIds = [''];
+
+        while ($pendingParentIds !== []) {
+            $parentId = array_shift($pendingParentIds);
+
+            foreach ($this->childIds[$parentId] ?? [] as $id) {
+                if ($this->nodes[$id]->isVisibleTo($roleNames)) {
+                    $visibleChildIds[$parentId][] = $id;
+                    $pendingParentIds[] = $id;
+                }
+            }
+        }
+
+        $isVisible = array_fill_keys(array_merge(...array_values($visibleChildIds)), true);
+
+        return new self(
+            array_intersect_key($this->nodes, $isVisible),
+            array_intersect_key($this->parentIds, $isVisible),
+            $visibleChildIds,
+        );
+    }
+
     public function find(string $id): ?GuideNode
     {
         return $this->nodes[$id] ?? null;

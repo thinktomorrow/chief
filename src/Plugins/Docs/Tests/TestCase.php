@@ -19,6 +19,17 @@ abstract class TestCase extends ChiefTestCase
         ];
     }
 
+    /**
+     * Start each test request without the previous request's scoped instances,
+     * such as the visible guide tree, as a real request would.
+     */
+    public function call($method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null)
+    {
+        $this->app->forgetScopedInstances();
+
+        return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
+    }
+
     protected function useProjectGuides(string $path): void
     {
         $this->app->singleton(DocSources::class, fn () => new DocSources($path));
