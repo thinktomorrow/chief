@@ -20,6 +20,16 @@
                     <x-chief::button variant="blue" :href="route('chief.docs.show', $firstGuide->id)">
                         Aan de slag
                     </x-chief::button>
+
+                    <x-chief::button
+                        type="button"
+                        variant="outline-white"
+                        x-data
+                        x-on:click="$dispatch('open-dialog', { id: 'guide-search' })"
+                    >
+                        <x-chief::icon.search />
+                        Zoeken
+                    </x-chief::button>
                 </div>
 
                 @foreach ($tree->groups() as $group)
@@ -48,5 +58,7 @@
                 </x-chief::empty-state>
             @endif
         </div>
+
+        <livewire:chief-docs::guide-search />
     </article>
 </x-chief::page.template>

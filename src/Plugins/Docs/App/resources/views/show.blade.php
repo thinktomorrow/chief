@@ -76,5 +76,7 @@
 
             <img x-bind:src="lightbox.src" x-bind:alt="lightbox.alt" class="mx-auto max-h-[calc(100vh-12rem)] w-auto" />
         </x-chief::dialog.modal>
+
+        <livewire:chief-docs::guide-search />
     </article>
 </x-chief::page.template>

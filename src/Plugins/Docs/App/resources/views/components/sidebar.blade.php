@@ -2,7 +2,6 @@
     'tree',
     'guide' => null,
     'headings' => [],
-    'search' => null,
 ])
 
 @php
@@ -53,7 +52,16 @@
             />
         </div>
 
-        {{ $search }}
+        <button
+            type="button"
+            x-data
+            x-on:click="$dispatch('open-dialog', { id: 'guide-search' })"
+            class="form-input-field text-grey-500 hover:text-grey-700 flex w-full cursor-pointer items-center gap-2 py-1.5 text-left"
+        >
+            <x-chief::icon.search class="size-5 shrink-0" />
+            <span class="grow truncate">Zoek in de handleiding…</span>
+            <kbd class="badge badge-xs badge-grey font-sans">⌘K</kbd>
+        </button>
 
         <div>
             @foreach ($tree->groups() as $group)

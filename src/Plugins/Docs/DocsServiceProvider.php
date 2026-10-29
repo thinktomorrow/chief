@@ -3,8 +3,10 @@
 namespace Thinktomorrow\Chief\Plugins\Docs;
 
 use InvalidArgumentException;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
+use Thinktomorrow\Chief\Plugins\Docs\App\Livewire\GuideSearchComponent;
 
 class DocsServiceProvider extends ChiefPluginServiceProvider
 {
@@ -31,6 +33,8 @@ class DocsServiceProvider extends ChiefPluginServiceProvider
         $this->loadViewsFrom(__DIR__.'/App/resources/views', 'chief-docs');
 
         $this->loadPluginAdminRoutes(__DIR__.'/App/chief-admin-routes.php');
+
+        Livewire::component('chief-docs::guide-search', GuideSearchComponent::class);
 
         $this->publishes([
             __DIR__.'/config/chief-docs.php' => config_path('chief-docs.php'),

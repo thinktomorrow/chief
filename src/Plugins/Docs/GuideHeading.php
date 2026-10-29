@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Docs;
 
 /**
- * A `##` heading of a rendered guide, linkable by its anchor.
+ * A `##` or `###` heading of a guide, linkable by its anchor.
  */
 final class GuideHeading
 {

@@ -39,6 +39,14 @@ Resolve `GuideTree` from the container to get the guides the current admin may s
 
 `/admin/docs` is an overview with a card per guide, grouped like the sidebar. A guide with child guides ends with cards for them, and every guide ends with links to the previous and next guide in the sidebar's order, skipping sections without a page. Without any visible guide, the overview shows an empty state.
 
+### Search
+
+The search bar in the sidebar, the overview's "Zoeken" button and ⌘K / Ctrl+K open a search dialog. It searches the title, description, headings and body text of the guides the admin may see, on every request, without an index.
+
+- Every word of the query must appear somewhere in the guide, as a case- and diacritic-insensitive substring: "pagina" finds "Pagina's" and "publ" finds "publiceren". There is no stemming, and queries under 2 characters return nothing.
+- Guides whose title contains every word come first, then the others, each in the sidebar's order. At most 8 results are shown.
+- A result shows a snippet around the first match in the body with the matched words marked, or the description when only the title or description matched. It links to the heading with the most matched words, if any.
+
 A Chief plugin adds its own namespaced guides from its service provider with `loadDocsFrom()`:
 
 ```php

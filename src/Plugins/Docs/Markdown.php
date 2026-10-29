@@ -17,13 +17,18 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\Inline\Newline;
+use League\CommonMark\Node\RawMarkupContainerInterface;
 use League\CommonMark\Node\StringContainerHelper;
+use League\CommonMark\Node\StringContainerInterface;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
 use Thinktomorrow\Chief\Plugins\Docs\Callouts\CalloutExtension;
 use Thinktomorrow\Chief\Plugins\Docs\Links\GuideLinkExtension;
 use Thinktomorrow\Chief\Plugins\Docs\Media\GuideMediaExtension;
+use Thinktomorrow\Chief\Plugins\Docs\Search\GuideText;
 
 class Markdown
 {
@@ -76,6 +81,29 @@ class Markdown
         );
     }
 
+    /**
+     * The plain text of a guide's body without raw HTML, with its `##` and `###` headings, as search reads it.
+     */
+    public function guideText(GuideNode $guide): GuideText
+    {
+        if (! $guide->markdown) {
+            return new GuideText('', []);
+        }
+
+        $document = (new MarkdownParser($this->environment()))->parse($guide->markdown);
+        $body = '';
+
+        foreach ($document->iterator() as $node) {
+            if ($node instanceof StringContainerInterface && ! $node instanceof RawMarkupContainerInterface) {
+                $body .= $node->getLiteral();
+            } elseif ($node instanceof AbstractBlock || $node instanceof Newline) {
+                $body .= ' ';
+            }
+        }
+
+        return new GuideText(trim((string) preg_replace('/\s+/u', ' ', $body)), $this->headings($document, maxLevel: 3));
+    }
+
     private function environment(): Environment
     {
         $environment = new Environment([
@@ -124,14 +152,14 @@ class Markdown
     }
 
     /**
-     * @return list<GuideHeading>
+     * @return list<GuideHeading> The headings from `##` down to the given level, in document order.
      */
-    private function headings(Document $document): array
+    private function headings(Document $document, int $maxLevel = 2): array
     {
         $headings = [];
 
         foreach ($document->iterator() as $node) {
-            if ($node instanceof Heading && $node->getLevel() === 2 && $node->data->has('attributes/id')) {
+            if ($node instanceof Heading && $node->getLevel() >= 2 && $node->getLevel() <= $maxLevel && $node->data->has('attributes/id')) {
                 $headings[] = new GuideHeading(
                     $node->data->get('attributes/id'),
                     StringContainerHelper::getChildText($node, [HeadingPermalink::class]),
