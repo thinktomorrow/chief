@@ -23,8 +23,8 @@
 <div
     data-mobile-navigation
     @class ([
-        'fixed inset-0 hidden animate-slide-in-nav max-lg:z-10 max-lg:bg-white lg:static lg:flex lg:h-screen lg:animate-none',
-        'select-none flex-col justify-between gap-y-9 overflow-y-auto [scrollbar-gutter:stable] [scrollbar-width:thin] py-6 pr-2 pl-6 lg:sticky lg:top-0',
+        'fixed inset-0 hidden animate-slide-in-nav max-lg:z-10 max-lg:bg-white lg:static lg:flex lg:h-[calc(100vh-2rem)] lg:animate-none',
+        'select-none flex-col justify-between gap-y-9 scrollbar-thumb-grey-300 scrollbar-thin scrollbar-track-transparent scrollbar-gutter-stable overflow-y-auto py-6 pr-2 pl-6 lg:sticky lg:top-0 lg:my-4 lg:mr-2 lg:py-2',
     ])
 >
     <div class="space-y-6">
