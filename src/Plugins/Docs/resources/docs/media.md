@@ -34,7 +34,7 @@ Bij elk bestand zie je de naam, de grootte en (voor afbeeldingen) de afmetingen.
 
 Afhankelijk van je project zie je in dit venster nog andere velden, zoals een alt-tekst of een titel. Heeft je website meerdere sites, dan wissel je met de tabs boven die velden tussen de sites, zodat je per site een eigen waarde kan invullen.
 
-Gebruikt je project extra functies voor afbeeldingen, dan vind je die als knoppen in hetzelfde venster. Lees dan [Hotspots op afbeeldingen](hotspots::hotspots) of [Alt-teksten beheren](seo::alt-teksten).
+Gebruikt je project extra functies voor afbeeldingen, dan vind je die als knoppen in hetzelfde venster. Lees dan [Hotspots op afbeeldingen](hot-spots::hotspots) of [Alt-teksten beheren](seo::alt-teksten).
 
 ## Waar wordt een bestand gebruikt?
 
@@ -54,7 +54,7 @@ Een nieuw toegevoegd bestand toont **Sla op om te bewaren**. Bewaar de pagina of
 
 Klik je op het prullenbakje naast een bestand in een veld, dan verdwijnt het enkel uit dat veld. Het blijft in de mediabibliotheek staan. Met **Ongedaan maken** zet je het terug zolang je nog niet bewaard hebt.
 
-Gebruikt je project externe bestanden, zoals video's van een videoplatform? Lees dan [Externe bestanden](externalfiles::externe-bestanden).
+Gebruikt je project externe bestanden, zoals video's van een videoplatform? Lees dan [Externe bestanden](external-files::externe-bestanden).
 
 ## Hoe pas ik een gedeelde afbeelding alleen op deze pagina aan?
 
