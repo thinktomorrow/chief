@@ -8,7 +8,7 @@
     </x-slot>
 
     <article
-        class="grow bg-white"
+        class="grow"
         x-data="{
             lightbox: { src: '', alt: '' },
             openLightbox(image) {

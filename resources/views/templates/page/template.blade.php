@@ -14,9 +14,9 @@
     Dev sessions saved by this comment: 2.
 --}}
 <x-chief::page.layout :title="$title">
-    <div class="flex max-lg:flex-col lg:min-h-screen lg:items-stretch">
+    <div class="flex max-lg:flex-col lg:h-screen">
         {{-- Navigation --}}
-        <div class="border-grey-100 w-full shrink-0 lg:w-80 lg:border-r">
+        <div class="w-full shrink-0 lg:w-80">
             @if ($nav)
                 {{ $nav }}
             @else
@@ -24,49 +24,56 @@
             @endif
         </div>
 
-        @if ($container === 'full')
-            {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-            <div class="flex min-w-0 grow flex-col">{{ $slot }}</div>
-        @else
+        {{-- Window: on large screens the content scrolls inside a rounded white window next to the nav. --}}
+        <div class="min-w-0 grow lg:py-4 lg:pr-4">
             <div
-                {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-                @class ([
-                    'container min-w-0 grow space-y-6 py-8',
-                    'max-w-screen-sm' => $container === 'sm',
-                    'max-w-screen-md' => $container === 'md',
-                    'max-w-screen-lg' => $container === 'lg',
-                    'max-w-screen-xl' => $container === 'xl',
-                    'max-w-screen-2xl' => $container === '2xl',
-                ])
+                class="lg:shadow-grey-50 lg:border-grey-100/50 scrollbar-thin scrollbar-gutter-stable bg-white/75 lg:h-full lg:overflow-y-auto lg:rounded-3xl lg:border lg:shadow-lg"
             >
-                {{-- Header --}}
-                @if ($header)
-                    <div {{ $header->attributes }}>{{ $header }}</div>
-                @else
-                    <x-chief::page.header />
-                @endif
-
-                <div class="flex gap-6 max-md:flex-col">
-                    {{-- Main content --}}
+                @if ($container === 'full')
                     {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-                    <div class="min-w-0 grow">{{ $slot }}</div>
+                    <div class="flex min-w-0 grow flex-col">{{ $slot }}</div>
+                @else
+                    <div
+                        {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
+                        @class ([
+                            'container min-w-0 grow space-y-6 py-8',
+                            'max-w-screen-sm' => $container === 'sm',
+                            'max-w-screen-md' => $container === 'md',
+                            'max-w-screen-lg' => $container === 'lg',
+                            'max-w-screen-xl' => $container === 'xl',
+                            'max-w-screen-2xl' => $container === '2xl',
+                        ])
+                    >
+                        {{-- Header --}}
+                        @if ($header)
+                            <div {{ $header->attributes }}>{{ $header }}</div>
+                        @else
+                            <x-chief::page.header />
+                        @endif
 
-                    {{-- Sidebar --}}
-                    @if ($sidebar)
-                        <section
-                            {{
-                                $sidebar->attributes->merge([
-                                    'role' => 'sidebar',
-                                    'class' => 'w-full shrink-0 md:w-80 xl:w-96 2xl:w-[26rem]',
-                                ])
-                            }}
-                        >
-                            {{ $sidebar }}
-                        </section>
-                    @endif
-                </div>
+                        <div class="flex gap-6 max-md:flex-col">
+                            {{-- Main content --}}
+                            {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
+                            <div class="min-w-0 grow">{{ $slot }}</div>
+
+                            {{-- Sidebar --}}
+                            @if ($sidebar)
+                                <section
+                                    {{
+                                        $sidebar->attributes->merge([
+                                            'role' => 'sidebar',
+                                            'class' => 'w-full shrink-0 md:w-80 xl:w-96 2xl:w-[26rem]',
+                                        ])
+                                    }}
+                                >
+                                    {{ $sidebar }}
+                                </section>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
-        @endif
+        </div>
     </div>
 
     @include ('chief::templates.page._partials.editor-script')

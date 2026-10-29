@@ -7,7 +7,7 @@
         <x-chief-docs::sidebar :tree="$tree" />
     </x-slot>
 
-    <article class="grow bg-white">
+    <article class="grow">
         <div class="mx-auto max-w-4xl space-y-4 px-6 py-10 lg:px-12 lg:py-16">
             <p class="text-primary-500 text-sm/6 font-medium">Handleiding</p>
 
