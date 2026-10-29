@@ -49,7 +49,9 @@ class Action extends Component implements Htmlable
     public function __construct(string $key)
     {
         $this->key($key);
-        $this->label($key);
+
+        // Set key as fallback label
+        $this->label = $key;
     }
 
     public static function make(string|int|null $key)
@@ -71,7 +73,8 @@ class Action extends Component implements Htmlable
     {
         $action = $class::make($this->key);
 
-        $action->label($this->label);
+        $action->label = $this->label;
+        $action->hasExplicitLabel = $this->hasExplicitLabel;
 
         if ($this->description) {
             $action->description($this->description);
