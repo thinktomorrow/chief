@@ -65,3 +65,30 @@ A package or project plugin whose provider does not extend `ChiefPluginServicePr
 ```php
 app(\Thinktomorrow\Chief\Plugins\Docs\DocSources::class)->add('acme', __DIR__.'/../resources/docs');
 ```
+
+### Rendering
+
+Guides are GitHub-flavoured Markdown. Raw HTML is stripped and unsafe links are blocked. The page shows the guide's title itself, so the body's first `# H1` is left out.
+
+- `##` and `###` headings get an ID slugged to ASCII (`## Hoe publiceer ik?` becomes `#hoe-publiceer-ik`) and a `#` permalink that shows on hover.
+- Links to another host open in a new window with `rel="noopener"`. Links within the admin don't.
+- GitHub alerts render as Chief callouts:
+
+```markdown
+> [!TIP]
+> Kies waar mogelijk een interne pagina.
+```
+
+`[!TIP]` is labelled "Tip", `[!NOTE]` "Goed om te weten" and `[!WARNING]` "Let op". The marker sits on its own line; a plain `> Tip:` stays an ordinary blockquote.
+
+A project extends the rendering from a service provider with `Markdown::configureUsing()`, which receives the CommonMark environment before each guide is converted:
+
+```php
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use Thinktomorrow\Chief\Plugins\Docs\Markdown;
+
+Markdown::configureUsing(fn (Environment $environment) => $environment->addExtension(new SmartPunctExtension));
+```
+
+Prefer this over rebinding `Markdown` in the container, which replaces Chief's rendering as a whole.

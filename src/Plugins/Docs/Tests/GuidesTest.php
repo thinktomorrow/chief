@@ -22,6 +22,13 @@ class GuidesTest extends TestCase
             ->assertDontSee('description:');
     }
 
+    public function test_a_guide_shows_its_title_once(): void
+    {
+        $response = $this->asAdmin()->get('/admin/docs/opleidingen/inschrijvingen')->assertOk();
+
+        $this->assertSame(1, substr_count($response->getContent(), 'Inschrijvingen beheren</h1>'));
+    }
+
     public function test_a_chief_guide_is_shown_at_its_namespaced_id(): void
     {
         $this->asAdmin()->get('/admin/docs/chief::paginas/status')
