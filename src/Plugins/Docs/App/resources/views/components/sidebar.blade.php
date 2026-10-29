@@ -6,7 +6,6 @@
 
 @php
     $openIds = $guide ? $tree->pathIds($guide) : [];
-    $client = config('app.client', 'Chief');
 @endphp
 
 {{-- Mobile navigation toggle --}}
@@ -38,17 +37,9 @@
 
             <x-chief::nav.item
                 compact
-                :label="e('Terug naar '.$client)"
+                label="Terug naar Chief"
                 :url="route('chief.back.dashboard')"
                 :icon="\Illuminate\Support\Facades\Blade::render('<x-chief::icon.arrow-left />')"
-            />
-
-            <x-chief::nav.item
-                compact
-                label="Handleiding"
-                :url="route('chief.docs.index')"
-                :icon="\Illuminate\Support\Facades\Blade::render('<x-chief::icon.book-open />')"
-                :is-active="! $guide"
             />
         </div>
 
@@ -64,6 +55,14 @@
         </button>
 
         <div>
+            <x-chief::nav.item
+                compact
+                label="Handleiding"
+                :url="route('chief.docs.index')"
+                :icon="\Illuminate\Support\Facades\Blade::render('<x-chief::icon.book-open />')"
+                :is-active="! $guide"
+            />
+
             @foreach ($tree->groups() as $group)
             <div class="mt-6 mb-2 px-2 first:mt-0">
                 <span class="body text-grey-500 text-xs">{{ $group->title }}</span>

@@ -11,15 +11,13 @@ class DocsModeTest extends TestCase
         parent::setUp();
 
         $this->useProjectGuides($this->fixture('sidebar'));
-
-        config()->set('app.client', 'Acme');
     }
 
     public function test_a_guide_shows_the_guide_sidebar_instead_of_the_chief_nav(): void
     {
         $this->asAdmin()->get('/admin/docs/welkom')
             ->assertOk()
-            ->assertSee('Terug naar Acme')
+            ->assertSee('Terug naar Chief')
             ->assertSee('href="'.route('chief.back.dashboard').'"', false)
             ->assertSee('href="'.route('chief.docs.index').'"', false)
             ->assertSee('Handleiding bij Chief versie')
