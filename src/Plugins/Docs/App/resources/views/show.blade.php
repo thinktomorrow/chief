@@ -1,9 +1,14 @@
-<x-chief::page.template :title="$guide->title" container="lg">
-    <x-slot name="header">
-        @include ('chief-docs::breadcrumbs')
+@php
+    $section = \Illuminate\Support\Arr::last($tree->ancestors($guide));
+@endphp
+
+<x-chief::page.template :title="$guide->title" container="full">
+    <x-slot name="nav" class="lg:w-80">
+        <x-chief-docs::sidebar :tree="$tree" :guide="$guide" :headings="$renderedGuide->headings" />
     </x-slot>
 
-    <div
+    <article
+        class="border-grey-100 grow bg-white lg:border-l"
         x-data="{
             lightbox: { src: '', alt: '' },
             openLightbox(image) {
@@ -12,11 +17,22 @@
             },
         }"
     >
-        <x-chief::window>
+        <div class="mx-auto max-w-3xl space-y-4 px-6 py-10 lg:px-12 lg:py-16">
+            @if ($section)
+                <p class="text-primary-500 text-sm/6 font-medium">{{ $section->title }}</p>
+            @endif
+
+            <h1 class="h1 h1-dark text-pretty">{{ $guide->title }}</h1>
+
+            @if ($guide->description)
+                <p class="body text-grey-500 text-lg">{{ $guide->description }}</p>
+            @endif
+
             <div
                 x-on:click="$event.target.matches('img[data-guide-media]') && openLightbox($event.target)"
                 @class ([
-                    'prose prose-dark prose-spacing max-w-none',
+                    'prose prose-dark prose-spacing mt-10 max-w-none',
+                    '[&_h2]:border-grey-100 [&_h2]:border-t [&_h2]:pt-8',
                     '[&_.heading-permalink]:badge [&_.heading-permalink]:badge-xs [&_.heading-permalink]:badge-grey',
                     '[&_.heading-permalink]:ml-2 [&_.heading-permalink]:align-middle [&_.heading-permalink]:no-underline',
                     '[&_.heading-permalink]:opacity-0 [&_.heading-permalink]:transition-opacity',
@@ -25,9 +41,9 @@
                     '[&_img[data-guide-media]]:cursor-zoom-in',
                 ])
             >
-                {!! $content !!}
+                {!! $renderedGuide->content !!}
             </div>
-        </x-chief::window>
+        </div>
 
         <x-chief::dialog.modal id="guide-lightbox" size="2xl" x-on:keydown.escape.window="close()">
             <x-slot name="header" class="flex items-start justify-between gap-4 p-4">
@@ -40,5 +56,5 @@
 
             <img x-bind:src="lightbox.src" x-bind:alt="lightbox.alt" class="mx-auto max-h-[calc(100vh-12rem)] w-auto" />
         </x-chief::dialog.modal>
-    </div>
+    </article>
 </x-chief::page.template>

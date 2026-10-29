@@ -85,6 +85,39 @@ final class GuideTree
     }
 
     /**
+     * The top-level guides without children under "Aan de slag", followed by
+     * a group per top-level section with the section's own page first. A
+     * section without page or children has nothing to list and no group.
+     *
+     * @return list<GuideGroup>
+     */
+    public function groups(): array
+    {
+        $startingGuides = [];
+        $sectionGroups = [];
+
+        foreach ($this->roots() as $root) {
+            $children = $this->children($root);
+
+            if ($children === []) {
+                if ($root->hasPage()) {
+                    $startingGuides[] = $root;
+                }
+
+                continue;
+            }
+
+            $sectionGroups[] = new GuideGroup($root->title, $root, $root->hasPage() ? [$root, ...$children] : $children);
+        }
+
+        if ($startingGuides === []) {
+            return $sectionGroups;
+        }
+
+        return [new GuideGroup('Aan de slag', null, $startingGuides), ...$sectionGroups];
+    }
+
+    /**
      * @return list<GuideNode> From the top level down to the node's parent.
      */
     public function ancestors(GuideNode $node): array
@@ -98,6 +131,14 @@ final class GuideTree
         }
 
         return $ancestors;
+    }
+
+    /**
+     * @return list<string> IDs from the top level down to the node itself.
+     */
+    public function pathIds(GuideNode $node): array
+    {
+        return [...array_map(fn (GuideNode $ancestor) => $ancestor->id, $this->ancestors($node)), $node->id];
     }
 
     /**

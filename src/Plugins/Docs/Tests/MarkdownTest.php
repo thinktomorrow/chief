@@ -6,6 +6,9 @@ namespace Thinktomorrow\Chief\Plugins\Docs\Tests;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use Thinktomorrow\Chief\Plugins\Docs\GuideHeading;
+use Thinktomorrow\Chief\Plugins\Docs\GuideNode;
+use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 use Thinktomorrow\Chief\Plugins\Docs\Markdown;
 
 class MarkdownTest extends TestCase
@@ -54,6 +57,36 @@ class MarkdownTest extends TestCase
         $this->assertMatchesRegularExpression('#<h3[^>]* id="wat-is-een-fragment"[^>]*>.*?<a [^>]*href="\#wat-is-een-fragment"[^>]*>\#</a>#s', $html);
         $this->assertStringContainsString('id="mail-redactie"', $html);
         $this->assertStringContainsString('<h4>Diepere kop</h4>', $html);
+    }
+
+    public function test_a_rendered_guide_lists_its_h2_headings_by_their_anchors(): void
+    {
+        $guide = new GuideNode('gids', 'Gids', markdown: "# Gids\n\n## Hoe publiceer ik?\n\n### Diepere kop\n\n## Wat is **één** fragment?\n\n## Hoe publiceer ik?");
+        $tree = new GuideTree(['gids' => $guide], ['gids' => null], ['' => ['gids']]);
+
+        $renderedGuide = $this->app->make(Markdown::class)->renderGuide($guide, $tree);
+
+        $this->assertSame(
+            [
+                ['hoe-publiceer-ik', 'Hoe publiceer ik?'],
+                ['wat-is-een-fragment', 'Wat is één fragment?'],
+                ['hoe-publiceer-ik-1', 'Hoe publiceer ik?'],
+            ],
+            array_map(fn (GuideHeading $heading) => [$heading->id, $heading->title], $renderedGuide->headings),
+        );
+        $this->assertStringContainsString('id="hoe-publiceer-ik-1"', $renderedGuide->content);
+        $this->assertStringContainsString('<strong>één</strong>', $renderedGuide->content);
+    }
+
+    public function test_a_guide_without_body_renders_empty(): void
+    {
+        $guide = new GuideNode('gids', 'Gids', markdown: '');
+        $tree = new GuideTree(['gids' => $guide], ['gids' => null], ['' => ['gids']]);
+
+        $renderedGuide = $this->app->make(Markdown::class)->renderGuide($guide, $tree);
+
+        $this->assertSame('', $renderedGuide->content);
+        $this->assertSame([], $renderedGuide->headings);
     }
 
     public function test_external_links_open_in_a_new_window_and_admin_links_do_not(): void

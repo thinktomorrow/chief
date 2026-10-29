@@ -33,7 +33,7 @@ class DocsController
         return view('chief-docs::show', [
             'tree' => $tree,
             'guide' => $guide,
-            'content' => $this->markdown->convertGuide($guide, $tree),
+            'renderedGuide' => $this->markdown->renderGuide($guide, $tree),
         ]);
     }
 

@@ -56,6 +56,12 @@ class GuideTreeTest extends TestCase
         $this->assertSame(['opleidingen'], $this->ids($this->tree->ancestors($this->tree->find('verplaatst'))));
     }
 
+    public function test_the_path_of_a_guide_runs_from_the_top_level_down_to_the_guide_itself(): void
+    {
+        $this->assertSame(['opleidingen', 'verplaatst'], $this->tree->pathIds($this->tree->find('verplaatst')));
+        $this->assertSame(['losse_gids'], $this->tree->pathIds($this->tree->find('losse_gids')));
+    }
+
     public function test_a_missing_parent_falls_back_to_the_top_level(): void
     {
         $this->assertContains('weesje', $this->ids($this->tree->roots()));

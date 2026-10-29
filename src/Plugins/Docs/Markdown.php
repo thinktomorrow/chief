@@ -13,9 +13,14 @@ use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkProcessor;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Node\Block\Document;
+use League\CommonMark\Node\StringContainerHelper;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Renderer\HtmlRenderer;
 use Thinktomorrow\Chief\Plugins\Docs\Callouts\CalloutExtension;
 use Thinktomorrow\Chief\Plugins\Docs\Links\GuideLinkExtension;
 use Thinktomorrow\Chief\Plugins\Docs\Media\GuideMediaExtension;
@@ -53,17 +58,22 @@ class Markdown
      * Render a guide's body, pointing its links to other guides and its images and videos
      * at those the current admin may see.
      */
-    public function convertGuide(GuideNode $guide, GuideTree $tree): ?string
+    public function renderGuide(GuideNode $guide, GuideTree $tree): RenderedGuide
     {
         if (! $guide->markdown) {
-            return null;
+            return new RenderedGuide('', []);
         }
 
         $environment = $this->environment();
         $environment->addExtension(new GuideLinkExtension($guide, $tree));
         $environment->addExtension(new GuideMediaExtension($guide, $tree));
 
-        return $this->render($guide->markdown, $environment);
+        $document = (new MarkdownParser($environment))->parse($guide->markdown);
+
+        return new RenderedGuide(
+            (new HtmlRenderer($environment))->renderDocument($document)->getContent(),
+            $this->headings($document),
+        );
     }
 
     private function environment(): Environment
@@ -111,6 +121,25 @@ class Markdown
     private function render(string $markdown, Environment $environment): string
     {
         return (new MarkdownConverter($environment))->convert($markdown)->getContent();
+    }
+
+    /**
+     * @return list<GuideHeading>
+     */
+    private function headings(Document $document): array
+    {
+        $headings = [];
+
+        foreach ($document->iterator() as $node) {
+            if ($node instanceof Heading && $node->getLevel() === 2 && $node->data->has('attributes/id')) {
+                $headings[] = new GuideHeading(
+                    $node->data->get('attributes/id'),
+                    StringContainerHelper::getChildText($node, [HeadingPermalink::class]),
+                );
+            }
+        }
+
+        return $headings;
     }
 
     /**
