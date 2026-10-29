@@ -1,4 +1,4 @@
-@props([
+@props ([
     'container' => '2xl',
     'title' => null,
     'header' => null,
@@ -14,12 +14,12 @@
     <div class="flex max-lg:flex-col lg:min-h-screen lg:items-stretch">
         {{-- Navigation --}}
         <div class="w-full shrink-0 lg:w-64">
-            @include('chief::templates.page.nav.nav')
+            @include ('chief::templates.page.nav.nav')
         </div>
 
         <div
             {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-            @class([
+            @class ([
                 'container min-w-0 grow space-y-6 py-8',
                 'max-w-screen-sm' => $container === 'sm',
                 'max-w-screen-md' => $container === 'md',
@@ -30,9 +30,7 @@
         >
             {{-- Header --}}
             @if ($header)
-                <div {{ $header->attributes }}>
-                    {{ $header }}
-                </div>
+                <div {{ $header->attributes }}>{{ $header }}</div>
             @else
                 <x-chief::page.header />
             @endif
@@ -40,9 +38,7 @@
             <div class="flex gap-6 max-md:flex-col">
                 {{-- Main content --}}
                 {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-                <div class="min-w-0 grow">
-                    {{ $slot }}
-                </div>
+                <div class="min-w-0 grow">{{ $slot }}</div>
 
                 {{-- Sidebar --}}
                 @if ($sidebar)
@@ -61,5 +57,5 @@
         </div>
     </div>
 
-    @include('chief::templates.page._partials.editor-script')
+    @include ('chief::templates.page._partials.editor-script')
 </x-chief::page.layout>
