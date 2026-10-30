@@ -18,7 +18,7 @@
         @class ([
             'hover:bg-grey-100 cursor-pointer rounded-lg',
             'bg-grey-100' => $isActive ?? false,
-            'before:bg-primary-500 relative before:absolute before:inset-y-1.5 before:-left-1.5 before:w-0.5 before:rounded-full' => $isActive,
+            'before:bg-primary-500 relative before:absolute before:inset-y-1.5 before:left-[var(--nav-active-offset,-0.375rem)] before:w-0.5 before:rounded-full' => $isActive,
         ])
     >
         <div class="flex items-start justify-between gap-3 px-2">
@@ -53,7 +53,7 @@
                         href="{{ $url }}"
                         title="{!! $label !!}"
                         @class ([
-                            'text-grey-700 group-hover:text-grey-950 inline-block w-full py-1 text-sm/6',
+                            'text-grey-700 group-hover:text-grey-950 inline-block w-full py-1.5 text-sm/5',
                             'text-grey-950' => $isActive ?? false,
                         ])
                         {!! $blank ? 'target="_blank" rel="noopener"' : null !!}
@@ -63,7 +63,7 @@
                 @else
                     <span
                         @class ([
-                            'text-grey-700 group-hover:text-grey-950 inline-block w-full py-1 text-sm/6',
+                            'text-grey-700 group-hover:text-grey-950 inline-block w-full py-1.5 text-sm/5',
                             'text-grey-950' => $isActive ?? false,
                         ])
                     >
@@ -75,23 +75,23 @@
             @if (! $slot->isEmpty())
                 <x-chief::button
                     type="button"
-                    size="sm"
+                    size="xs"
                     variant="transparent"
                     x-show="!isOpen"
                     x-on:click="isOpen = true"
-                    class="mt-px shrink-0"
+                    class="mt-1 -mr-1 shrink-0"
                 >
                     <x-chief::icon.chevron-left />
                 </x-chief::button>
 
                 <x-chief::button
                     type="button"
-                    size="sm"
+                    size="xs"
                     variant="transparent"
                     x-cloak
                     x-show="isOpen"
                     x-on:click="isOpen = false"
-                    class="mt-px shrink-0"
+                    class="mt-1 -mr-1 shrink-0"
                 >
                     <x-chief::icon.chevron-down />
                 </x-chief::button>
@@ -100,6 +100,17 @@
     </div>
 
     @if (! $slot->isEmpty())
-        <div x-cloak x-show="isOpen" class="ml-4">{!! $slot !!}</div>
+        {{-- The guide line hangs from the parent's icon, or from its label when it has none; nested active bars sit on it. --}}
+        <div
+            x-cloak
+            x-show="isOpen"
+            @class ([
+                'border-grey-200 border-l',
+                'ml-5 pl-2.75 [--nav-active-offset:-12.5px]' => filled($icon),
+                'ml-2 pl-2 [--nav-active-offset:-9.5px]' => ! filled($icon),
+            ])
+        >
+            {!! $slot !!}
+        </div>
     @endif
 </div>
