@@ -1,65 +1,84 @@
-@props([
+@props ([
     'container' => '2xl',
     'title' => null,
     'header' => null,
     'sidebar' => null,
+    'nav' => null,
 ])
 
 {{--
+    A "full" container leaves width, padding, page header and sidebar to the page itself.
+
     Explanation "min-w-0" class:
     If the min-width property isn't set on these flex items, they will overflow their parent flex container if they happen to contain a table (go figure).
     Dev sessions saved by this comment: 2.
 --}}
 <x-chief::page.layout :title="$title">
-    <div class="flex max-lg:flex-col lg:min-h-screen lg:items-stretch">
+    <div class="flex max-lg:flex-col lg:h-screen">
         {{-- Navigation --}}
-        <div class="w-full shrink-0 lg:w-64">
-            @include('chief::templates.page.nav.nav')
+        <div class="w-full shrink-0 lg:w-80">
+            @if ($nav)
+                {{ $nav }}
+            @else
+                @include ('chief::templates.page.nav.nav')
+            @endif
         </div>
 
-        <div
-            {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-            @class([
-                'container min-w-0 grow space-y-6 py-8',
-                'max-w-screen-sm' => $container === 'sm',
-                'max-w-screen-md' => $container === 'md',
-                'max-w-screen-lg' => $container === 'lg',
-                'max-w-screen-xl' => $container === 'xl',
-                'max-w-screen-2xl' => $container === '2xl',
-            ])
-        >
-            {{-- Header --}}
-            @if ($header)
-                <div {{ $header->attributes }}>
-                    {{ $header }}
-                </div>
-            @else
-                <x-chief::page.header />
-            @endif
-
-            <div class="flex gap-6 max-md:flex-col">
-                {{-- Main content --}}
-                {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
-                <div class="min-w-0 grow">
-                    {{ $slot }}
-                </div>
-
-                {{-- Sidebar --}}
-                @if ($sidebar)
-                    <section
-                        {{
-                            $sidebar->attributes->merge([
-                                'role' => 'sidebar',
-                                'class' => 'w-full shrink-0 md:w-80 xl:w-96 2xl:w-[26rem]',
+        {{-- Window: on large screens the content scrolls inside a rounded white window next to the nav. --}}
+        <div class="min-w-0 grow lg:py-4 lg:pr-4">
+            <div
+                class="lg:shadow-grey-50 lg:border-grey-100/50 bg-white/75 lg:h-full lg:overflow-hidden lg:rounded-3xl lg:border lg:shadow-lg"
+            >
+                <div
+                    class="scrollbar-thumb-grey-300 scrollbar-thin scrollbar-track-transparent [scrollbar-gutter:stable_both-edges] lg:mx-1 lg:my-6 lg:h-[calc(100%-3rem)] lg:overflow-y-auto"
+                >
+                    @if ($container === 'full')
+                        {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
+                        <div class="flex min-w-0 grow flex-col">{{ $slot }}</div>
+                    @else
+                        <div
+                            {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
+                            @class ([
+                                'container min-w-0 grow space-y-6 py-8',
+                                'max-w-screen-sm' => $container === 'sm',
+                                'max-w-screen-md' => $container === 'md',
+                                'max-w-screen-lg' => $container === 'lg',
+                                'max-w-screen-xl' => $container === 'xl',
+                                'max-w-screen-2xl' => $container === '2xl',
                             ])
-                        }}
-                    >
-                        {{ $sidebar }}
-                    </section>
-                @endif
+                        >
+                            {{-- Header --}}
+                            @if ($header)
+                                <div {{ $header->attributes }}>{{ $header }}</div>
+                            @else
+                                <x-chief::page.header />
+                            @endif
+
+                            <div class="flex gap-6 max-md:flex-col">
+                                {{-- Main content --}}
+                                {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
+                                <div class="min-w-0 grow">{{ $slot }}</div>
+
+                                {{-- Sidebar --}}
+                                @if ($sidebar)
+                                    <section
+                                        {{
+                                            $sidebar->attributes->merge([
+                                                'role' => 'sidebar',
+                                                'class' => 'w-full shrink-0 md:w-80 xl:w-96 2xl:w-[26rem]',
+                                            ])
+                                        }}
+                                    >
+                                        {{ $sidebar }}
+                                    </section>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
 
-    @include('chief::templates.page._partials.editor-script')
+    @include ('chief::templates.page._partials.editor-script')
 </x-chief::page.layout>

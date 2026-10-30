@@ -4,33 +4,150 @@ A Chief plugin to add user docs to your Chief admin.
 
 ## Install
 
-1. Add the DocsServiceProvider to your list of providers
-2. Add the docs to the Chief navigation. This can be done by adding the following code to your nav-project file
+Add the DocsServiceProvider to your list of providers.
 
-```php
-<x-chief::nav.item
-    label="Documentatie"
-    url="{{ route('chief.docs.index') }}"
-    :is-active="request()->routeIs('chief.docs.*')"
-    icon='<svg viewBox="0 0 24 24" color="currentColor" fill="none"> <path d="M18.058 8.53645L17.058 7.92286C16.0553 7.30762 15.554 7 15 7C14.446 7 13.9447 7.30762 12.942 7.92286L11.942 8.53645C10.9935 9.11848 10.5192 9.40949 10.2596 9.87838C10 10.3473 10 10.9129 10 12.0442V17.9094C10 19.8377 10 20.8019 10.5858 21.4009C11.1716 22 12.1144 22 14 22H16C17.8856 22 18.8284 22 19.4142 21.4009C20 20.8019 20 19.8377 20 17.9094V12.0442C20 10.9129 20 10.3473 19.7404 9.87838C19.4808 9.40949 19.0065 9.11848 18.058 8.53645Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 7.10809C13.3612 6.4951 12.9791 6.17285 12.4974 6.05178C11.9374 5.91102 11.3491 6.06888 10.1725 6.3846L8.99908 6.69947C7.88602 6.99814 7.32949 7.14748 6.94287 7.5163C6.55624 7.88513 6.40642 8.40961 6.10679 9.45857L4.55327 14.8971C4.0425 16.6852 3.78712 17.5792 4.22063 18.2836C4.59336 18.8892 6.0835 19.6339 7.5 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14.4947 10C15.336 9.44058 16.0828 8.54291 16.5468 7.42653C17.5048 5.12162 16.8944 2.75724 15.1836 2.14554C13.4727 1.53383 11.3091 2.90644 10.3512 5.21135C10.191 5.59667 10.0747 5.98366 10 6.36383" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /> </svg>'
-    collapsible
-/>
-```
+A "Handleiding" item appears in the Chief navigation, above Instellingen, as soon as the current admin may see at least one guide. There is nothing to configure.
 
 ## Usage
 
-In the project's `resources/docs` folder, you can add markdown files.
-These will be automatically available in the Chief admin under "Documentatie".
+Add guides as Markdown files to the project's `resources/docs` folder. Each guide is available in the Chief admin at `/admin/docs/{id}`, where the ID is its path without `.md` (`opleidingen/inschrijvingen`). Chief's own guides use the `chief::` prefix (`chief::paginas/status`). The `resources/docs/vendor` folder is reserved and not read as project guides.
 
-Optionally, add `config/chief-docs.php` to set a readable title and a parent page for breadcrumbs:
+A folder is a section. Its `index.md` is the section's page, served at the folder path. A guide can set these front matter keys:
+
+```yaml
+---
+title: Inschrijvingen beheren   # defaults to the first H1, then the filename
+description: Inschrijvingen opvolgen.
+order: 1                        # siblings sort by order, then by title
+parent: opleidingen             # the absolute ID of another guide or section
+roles: [admin, author]          # admin roles that may see the guide, any-of
+---
+```
+
+Without `roles`, or with an empty list, every admin sees the guide. A restriction on a section covers its whole subtree, and a guide beneath it can only narrow it further. A single role can be written as text (`roles: admin`). An unknown or malformed role matches nobody, and `developer` is an ordinary role without a bypass. A guide an admin may not see returns a 404.
+
+Resolve `GuideTree` from the container to get the guides the current admin may see. Every docs surface reads from it instead of filtering on its own.
+
+`/admin/docs` is an overview with a card per guide, grouped like the sidebar. A guide with child guides ends with cards for them, and every guide ends with links to the previous and next guide in the sidebar's order, skipping sections without a page. Without any visible guide, the overview shows an empty state.
+
+### Search
+
+The search bar in the sidebar, the overview's "Zoeken" button and ⌘K / Ctrl+K open a search dialog. It searches the title, description, headings and body text of the guides the admin may see, on every request, without an index.
+
+- Every word of the query must appear somewhere in the guide, as a case- and diacritic-insensitive substring: "pagina" finds "Pagina's" and "publ" finds "publiceren". There is no stemming, and queries under 2 characters return nothing.
+- Guides whose title contains every word come first, then the others, each in the sidebar's order. At most 8 results are shown.
+- A result shows a snippet around the first match in the body with the matched words marked, or the description when only the title or description matched. It links to the heading with the most matched words, if any.
+
+A Chief plugin adds its own namespaced guides from its service provider with `loadDocsFrom()`:
 
 ```php
+$this->loadDocsFrom(__DIR__.'/resources/docs', 'acme');
+```
+
+Chief's plugins ship their guides this way under the `admin-toast`, `tags`, `time-table`, `hot-spots`, `seo` and `external-files` namespaces. A plugin guide can attach under a Chief section with `parent` (`parent: chief::media`).
+
+### Overriding and hiding shipped guides
+
+The project replaces a guide shipped by Chief or a plugin with a file at `resources/docs/vendor/<namespace>/<path>.md`. The file `resources/docs/vendor/chief/paginas/status.md` replaces `chief::paginas/status`. A section page is overridden at its ID like any guide: `vendor/chief/paginas.md` or `vendor/chief/paginas/index.md` replaces `chief::paginas`. A section folder without a page of its own has nothing to override. The override replaces the guide entirely, front matter and body, so it sets its own title, description, order, parent and roles. Nothing is merged with the original. An override without a matching shipped guide is ignored. Only the project can override; a plugin adds its own guides and attaches them with `parent`.
+
+The project removes shipped or project guides by listing their IDs in the `hidden` key of the `chief-docs` config. Publish the config with `php artisan vendor:publish --tag=chief-docs-config`. An entry that is not a guide ID throws an `InvalidArgumentException`.
+
+```php
+// config/chief-docs.php
 return [
-    'pages' => [
-        'guide' => ['title' => 'Guide'],
-        'registrations' => ['title' => 'Registrations', 'parent' => 'guide'],
-    ],
+    'hidden' => ['chief::menus', 'seo::alt-teksten'],
 ];
 ```
 
-The keys refer to `resources/docs/{key}.md`. A parent breadcrumb is linked only when its Markdown file exists. Pages without configuration use their filename as a readable title and link directly back to the docs overview.
+A hidden guide and every guide beneath it, including guides attached through `parent`, disappear from every docs surface and return a 404. Hiding is applied by the same visible tree as `roles`.
+
+A package or project plugin whose provider does not extend `ChiefPluginServiceProvider` adds its guides from any service provider:
+
+```php
+app(\Thinktomorrow\Chief\Plugins\Docs\DocSources::class)->add('acme', __DIR__.'/../resources/docs');
+```
+
+### Links between guides
+
+Link to another guide the way you would in an IDE or on GitHub:
+
+```markdown
+[Inschrijvingen](inschrijvingen.md)          <!-- relative to this file, within the same source -->
+[Status](chief::paginas/status#publiceren)   <!-- a guide ID of any source -->
+```
+
+- A target ending in `.md` is a file relative to the current guide's file in the same source. A link in an override resolves against the location of the guide it replaces, so an override can keep the original's links.
+- A target containing `::` is a namespaced guide ID.
+- `#…` anchors are kept. Any other link, such as a full URL or `mailto:`, is left as written.
+- A link to a guide that doesn't exist, or that the admin can't see because it is hidden or restricted by `roles`, renders as plain text.
+
+### Images and video
+
+Screenshots and short videos live next to the guides, anywhere inside the source folder, and are referenced by a path relative to the guide, like a `.md` link:
+
+```markdown
+![De statusknop](status-knop.png)
+![Een pagina publiceren](schermen/publiceren.mp4)
+```
+
+- Allowed types are png, jpg/jpeg, gif, webp, avif, svg, mp4 and webm. An SVG is served with `Content-Security-Policy: sandbox`.
+- An asset is served to admins at a URL that mirrors its location, such as `/admin/docs/chief::paginas/status-knop.png`, with `?v=<mtime>` appended when a guide renders it.
+- An asset follows the visibility of its section, the nearest folder holding it that is a section, so assets of a hidden or role-restricted section return a 404. An asset in a folder without guides, such as `paginas/schermen/`, belongs to the section around it.
+- The project replaces a shipped asset with a file at the same path in `resources/docs/vendor/<namespace>/`.
+- An image on a line of its own renders at full width with its alt text as caption, and opens in a lightbox when clicked. A path ending in `.mp4` or `.webm` renders as a muted video with controls, and its alt text as fallback.
+- Full URLs and root-relative paths are left as written. A relative image that doesn't exist, lies outside the source or isn't visible to the admin renders as its alt text.
+
+### Rendering
+
+Guides are GitHub-flavoured Markdown. Raw HTML is stripped and unsafe links are blocked. The page shows the guide's title itself, so the body's first `# H1` is left out.
+
+- `##` and `###` headings get an ID slugged to ASCII (`## Hoe publiceer ik?` becomes `#hoe-publiceer-ik`) and a `#` permalink that shows on hover.
+- Links to another host open in a new window with `rel="noopener"`. Links within the admin don't.
+- GitHub alerts render as Chief callouts:
+
+```markdown
+> [!TIP]
+> Kies waar mogelijk een interne pagina.
+```
+
+`[!TIP]` is labelled "Tip", `[!NOTE]` "Goed om te weten" and `[!WARNING]` "Let op". The marker sits on its own line; a plain `> Tip:` stays an ordinary blockquote.
+
+A project extends the rendering from a service provider with `Markdown::configureUsing()`, which receives the CommonMark environment before each guide is converted:
+
+```php
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use Thinktomorrow\Chief\Plugins\Docs\Markdown;
+
+Markdown::configureUsing(fn (Environment $environment) => $environment->addExtension(new SmartPunctExtension));
+```
+
+Prefer this over rebinding `Markdown` in the container, which replaces Chief's rendering as a whole.
+
+## Upgraden
+
+Upgrading from the earlier Docs plugin, which read `resources/docs/*.md` with titles from the `chief-docs.pages` config:
+
+1. Remove the "Documentatie" `<x-chief::nav.item>` from the project's nav. The plugin adds the "Handleiding" item itself.
+2. Remove any container binding that replaces `Thinktomorrow\Chief\Plugins\Docs\Markdown`. Move its customisation to `Markdown::configureUsing()`, see [Rendering](#rendering).
+3. Delete the project's overrides of the `chief-docs` views in `resources/views/vendor/chief-docs`. The views are new and no longer receive `$page`, `$html` or `$files`.
+4. Delete project guides that copy Chief's generic guides, such as pages, fragments, menus or media. Chief ships those now. To change one, override it in `resources/docs/vendor/chief/`; to drop one, list it in `chief-docs.hidden`. See [Overriding and hiding shipped guides](#overriding-and-hiding-shipped-guides).
+5. Move each entry of the `chief-docs.pages` config into the front matter of its guide, and delete the `pages` key:
+
+```php
+// Before: config/chief-docs.php
+'pages' => [
+    'registrations' => ['title' => 'Inschrijvingen', 'parent' => 'guide'],
+],
+```
+
+```yaml
+# After: resources/docs/registrations.md
+---
+title: Inschrijvingen
+description: Inschrijvingen opvolgen.
+parent: guide
+---
+```
+
+A folder is a section now, so a guide can also move under its parent's folder instead of setting `parent`. The previous `welcome.md` that the plugin created in an empty `resources/docs` is no longer created; delete it if it was never edited.

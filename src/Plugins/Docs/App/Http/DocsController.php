@@ -2,47 +2,65 @@
 
 namespace Thinktomorrow\Chief\Plugins\Docs\App\Http;
 
-use Illuminate\Support\Facades\File;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Thinktomorrow\Chief\Plugins\Docs\DocSources;
+use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 use Thinktomorrow\Chief\Plugins\Docs\Markdown;
+use Thinktomorrow\Chief\Plugins\Docs\Media\AssetType;
+use Thinktomorrow\Chief\Plugins\Docs\Media\GuideAsset;
 
 class DocsController
 {
-    public function __construct(private Markdown $markdown) {}
+    public function __construct(
+        private Markdown $markdown,
+    ) {}
 
-    public function index()
+    public function index(GuideTree $tree): View
     {
-        $this->assertDocsViewFolderExists();
-
-        $files = collect(File::files(resource_path('docs')))
-            ->map(fn ($file) => pathinfo($file, PATHINFO_FILENAME));
-
-        return view('chief-docs::index', compact('files'));
-    }
-
-    public function show($page)
-    {
-        $this->assertDocsViewFolderExists();
-
-        $path = resource_path("docs/$page.md");
-
-        abort_unless(File::exists($path), 404);
-
-        $markdown = File::get($path);
-        $html = $this->markdown->convert($markdown);
-
-        return view('chief-docs::show', [
-            'page' => $page,
-            'html' => $html,
+        return view('chief-docs::index', [
+            'tree' => $tree,
         ]);
     }
 
-    private function assertDocsViewFolderExists()
+    public function show(GuideTree $tree, string $guideId): View
     {
-        $docsPath = resource_path('docs');
+        $guide = $tree->find($guideId);
 
-        if (! File::exists($docsPath)) {
-            File::makeDirectory($docsPath, 0755, true);
-            File::put($docsPath.'/welcome.md', "# Welcome to the Docs\n\nAdd your markdown files in this folder to document your Chief setup.");
+        abort_unless($guide && $guide->hasPage(), 404);
+
+        return view('chief-docs::show', [
+            'tree' => $tree,
+            'guide' => $guide,
+            'renderedGuide' => $this->markdown->renderGuide($guide, $tree),
+        ]);
+    }
+
+    /**
+     * Stream an image or video of a guide source. An SVG is sandboxed so it can't run scripts in the admin.
+     */
+    public function asset(Request $request, DocSources $sources, GuideTree $tree, string $assetId): BinaryFileResponse
+    {
+        $asset = GuideAsset::fromId($sources, $assetId);
+        $file = $asset?->file();
+
+        abort_unless($asset && $file && $asset->isVisibleIn($tree), 404);
+
+        $response = new BinaryFileResponse($file, 200, [
+            'Content-Type' => $asset->type->contentType(),
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+
+        if ($asset->type === AssetType::Svg) {
+            $response->headers->set('Content-Security-Policy', 'sandbox');
         }
+
+        $response->setPrivate();
+        $response->setAutoLastModified();
+        $response->setEtag(hash('xxh128', $file.'|'.filemtime($file).'|'.filesize($file)));
+        $response->isNotModified($request);
+
+        return $response;
     }
 }

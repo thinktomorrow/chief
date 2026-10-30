@@ -2,14 +2,79 @@
 
 namespace Thinktomorrow\Chief\Plugins\Docs;
 
+use Illuminate\Support\Facades\Blade;
+use InvalidArgumentException;
+use Livewire\Livewire;
+use Thinktomorrow\Chief\Admin\Nav\Nav;
+use Thinktomorrow\Chief\Admin\Nav\NavItem;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
+use Thinktomorrow\Chief\Plugins\Docs\App\Livewire\GuideSearchComponent;
 
 class DocsServiceProvider extends ChiefPluginServiceProvider
 {
+    public function register(): void
+    {
+        parent::register();
+
+        $this->mergeConfigFrom(__DIR__.'/config/chief-docs.php', 'chief-docs');
+
+        $this->loadDocsFrom(__DIR__.'/resources/docs', 'chief');
+
+        $this->app->scoped(GuideTree::class, function () {
+            $admin = chiefAdmin();
+            $roleNames = $admin instanceof User ? $admin->getRoleNames()->all() : [];
+
+            return $this->app->make(GuideTreeBuilder::class)
+                ->build($this->app->make(DocSources::class))
+                ->visibleTo($roleNames, $this->hiddenGuideIds());
+        });
+    }
+
     public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/App/resources/views', 'chief-docs');
 
         $this->loadPluginAdminRoutes(__DIR__.'/App/chief-admin-routes.php');
+
+        Livewire::component('chief-docs::guide-search', GuideSearchComponent::class);
+
+        $this->callAfterResolving(Nav::class, fn (Nav $nav) => $this->addHelpNavItem($nav));
+
+        $this->publishes([
+            __DIR__.'/config/chief-docs.php' => config_path('chief-docs.php'),
+        ], 'chief-docs-config');
+    }
+
+    /**
+     * Show the user guide in the Chief nav once the current admin may see at least one guide.
+     */
+    private function addHelpNavItem(Nav $nav): void
+    {
+        if (! chiefAdmin() || $this->app->make(GuideTree::class)->readingOrder() === []) {
+            return;
+        }
+
+        $nav->add(new NavItem('Handleiding', route('chief.docs.index'), ['nav-help'], Blade::render('<x-chief::icon.book-open />')));
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function hiddenGuideIds(): array
+    {
+        $hiddenIds = config('chief-docs.hidden');
+
+        if (! is_array($hiddenIds) || ! array_is_list($hiddenIds)) {
+            throw new InvalidArgumentException('Config [chief-docs.hidden] must be a list of guide IDs.');
+        }
+
+        foreach ($hiddenIds as $hiddenId) {
+            if (! is_string($hiddenId)) {
+                throw new InvalidArgumentException('Config [chief-docs.hidden] must only contain guide IDs, got ['.get_debug_type($hiddenId).'].');
+            }
+        }
+
+        return $hiddenIds;
     }
 }

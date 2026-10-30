@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Plugins\ExternalFiles\Cloudinary;
 
-use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
+use Thinktomorrow\Chief\Plugins\ExternalFiles\ExternalFileDriverServiceProvider;
 
-class CloudinaryServiceProvider extends ChiefPluginServiceProvider
+class CloudinaryServiceProvider extends ExternalFileDriverServiceProvider
 {
     public function boot(): void
     {
