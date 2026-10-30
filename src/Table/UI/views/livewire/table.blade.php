@@ -14,11 +14,11 @@
             class="space-y-4"
             wire:loading.delay.class="animate-pulse"
         >
-            @include('chief-table::livewire._partials.table-actions')
+            @include ('chief-table::livewire._partials.table-actions')
 
             <x-chief::table :variant="$variant">
                 <x-slot name="header">
-                    @include('chief-table::livewire._partials.table-container-header')
+                    @include ('chief-table::livewire._partials.table-container-header')
                 </x-slot>
 
                 <x-chief::table.header>
@@ -46,7 +46,7 @@
                         class="text-left font-normal"
                     >
                         <div class="flex min-h-6 items-center">
-                            @include('chief-table::livewire._partials.bulk-actions')
+                            @include ('chief-table::livewire._partials.bulk-actions')
                         </div>
                     </th>
                 </x-chief::table.header>
@@ -54,24 +54,24 @@
                 <x-chief::table.body
                     class="[&>*:last-child_[data-slot=actions]]:rounded-br-xl [&>*:last-child_[data-slot=actions]]:before:bottom-0"
                 >
-                    @includeWhen($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table::rows.ancestor', ['ancestors' => $this->getAncestors()])
+                    @includeWhen ($this->areResultsAsTree() && count($this->getAncestors()) > 0, 'chief-table::rows.ancestor', ['ancestors' => $this->getAncestors()])
 
                     @if ($this->resultPageCount > 0)
                         @foreach ($results as $item)
-                            @include($this->getRowView(), ['item' => $item])
+                            @include ($this->getRowView(), ['item' => $item])
                         @endforeach
                     @else
-                        @include('chief-table::rows.no-results')
+                        @include ('chief-table::rows.no-results')
                     @endif
                 </x-chief::table.body>
 
                 <x-slot name="footer">
-                    @include('chief-table::livewire._partials.table-container-footer')
+                    @include ('chief-table::livewire._partials.table-container-footer')
                 </x-slot>
             </x-chief::table>
         </div>
     @else
-        @include('chief-table::index-no-records')
+        @include ('chief-table::index-no-records')
     @endif
 
     <template x-teleport="body">
