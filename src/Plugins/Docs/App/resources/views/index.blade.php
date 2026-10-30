@@ -8,7 +8,7 @@
     </x-slot>
 
     <article class="grow">
-        <div class="mx-auto max-w-4xl space-y-4 px-6 py-10 lg:px-12 lg:py-16">
+        <div class="mx-auto max-w-4xl space-y-4 px-6 py-8 lg:px-12">
             <p class="text-primary-500 text-sm/6 font-medium">Handleiding</p>
 
             <h1 class="h1 h1-dark text-pretty">Hoe werkt Chief?</h1>
@@ -18,7 +18,7 @@
             @if ($firstGuide)
                 <div class="flex flex-wrap gap-2 pt-4">
                     <x-chief::button variant="blue" :href="route('chief.docs.show', $firstGuide->id)">
-                        Aan de slag
+                        <span> Aan de slag </span>
                     </x-chief::button>
 
                     <x-chief::button
@@ -28,7 +28,7 @@
                         x-on:click="$dispatch('open-dialog', { id: 'guide-search' })"
                     >
                         <x-chief::icon.search />
-                        Zoeken
+                        <span> Zoek in de handleiding… </span>
                     </x-chief::button>
                 </div>
 
@@ -38,7 +38,7 @@
                     @endphp
 
                     @if ($guides)
-                        <section class="space-y-6 pt-12">
+                        <section class="space-y-6 pt-8">
                             <h2 class="h3 h3-dark">{{ $group->title }}</h2>
 
                             <div class="grid gap-4 sm:grid-cols-2">

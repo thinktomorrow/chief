@@ -86,7 +86,9 @@ class GuideEndingsTest extends TestCase
     private function pagerLinkPattern(string $id, string $direction, string $title): string
     {
         $href = preg_quote('href="'.route('chief.docs.show', $id).'"', '#');
+        $direction = preg_quote($direction, '#');
+        $title = preg_quote($title, '#');
 
-        return '#<a[^>]*'.$href.'[^>]*>(?:(?!</a>).)*'.$direction.'(?:(?!</a>).)*'.preg_quote($title, '#').'(?:(?!</a>).)*</a>#s';
+        return '#<a[^>]*'.$href.'[^>]*>(?:(?!</a>).)*(?:'.$direction.'(?:(?!</a>).)*'.$title.'|'.$title.'(?:(?!</a>).)*'.$direction.')(?:(?!</a>).)*</a>#s';
     }
 }

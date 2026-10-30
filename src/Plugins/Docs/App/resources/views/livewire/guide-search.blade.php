@@ -48,7 +48,7 @@
         @elseif ($results === [])
             <p class="body text-grey-500 text-center">Niets gevonden voor “{{ trim($query) }}”.</p>
         @else
-            <ul class="-my-2 space-y-1">
+            <ul class="-mx-2 -mb-2">
                 @foreach ($results as $result)
                     <li wire:key="{{ $result->url }}">
                         <a
@@ -60,7 +60,7 @@
                             class="block space-y-1 rounded-lg px-3 py-2"
                         >
                             @if ($result->section)
-                                <span class="text-primary-500 block text-xs font-medium">{{ $result->section }}</span>
+                                <span class="text-grey-500 block text-xs font-medium">{{ $result->section }}</span>
                             @endif
 
                             <span class="text-grey-950 block font-medium">{{ $result->title }}</span>

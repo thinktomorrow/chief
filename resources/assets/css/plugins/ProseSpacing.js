@@ -8,7 +8,7 @@ const plugin = require('tailwindcss/plugin');
 const ProseSpacing = plugin(({ addComponents, theme }) => {
     const elementsLoose = ['h1', 'h2', 'h3'];
     const elementsRelaxed = ['h4', 'h5', 'h6'];
-    const elementsNormal = ['p', 'ol', 'ul', 'blockquote', 'code', 'img', 'iframe', 'form', 'table'];
+    const elementsNormal = ['p', 'ol', 'ul', 'blockquote', 'code', 'img', 'iframe', 'form', 'table', '.callout'];
     const elementsTight = ['figcaption', 'cite', 'li'];
 
     const output = {};

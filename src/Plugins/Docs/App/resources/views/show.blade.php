@@ -17,7 +17,7 @@
             },
         }"
     >
-        <div class="mx-auto max-w-4xl space-y-4 px-6 py-10 lg:px-12 lg:py-16">
+        <div class="mx-auto max-w-4xl space-y-4 px-6 py-8 lg:px-12">
             @if ($section)
                 <p class="text-primary-500 text-sm/6 font-medium">{{ $section->title }}</p>
             @endif
