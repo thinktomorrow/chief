@@ -8,6 +8,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Redirect now respects the target locale in case of redirect from one locale to another
 - Fixed: Explicit table action labels remain visible with icons regardless of call order, including after conversion to
   row or bulk actions; actions without an explicit label remain icon-only.
+- Fixed: Livewire re-renders no longer replace field elements whose random element id changes per render. The external
+  Redactor toolbar of a text field with custom redactor options no longer disappears after typing, and the character
+  count of a textarea field keeps updating.
 
 ## [0.10.34] - 2026-09-29
 

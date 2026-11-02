@@ -1,4 +1,5 @@
 <x-chief::form.input.textarea
+    wire:key="textarea-{{ $getKey() }}-{{ $locale ?? 'default' }}"
     wire:ignore
     id="{{ $getElementId($locale ?? null) }}"
     name="{{ $getName($locale ?? null) }}"
