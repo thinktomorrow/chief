@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: Redirect now respects the target locale in case of redirect from one locale to another
 - Fixed: Explicit table action labels remain visible with icons regardless of call order, including after conversion to
   row or bulk actions; actions without an explicit label remain icon-only.
 

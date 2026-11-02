@@ -36,8 +36,10 @@ final class ChiefResponse
             $urlRecord = UrlRecord::findBySlug($slug, $locale);
 
             if ($urlRecord->isRedirect()) {
+                $targetRecord = $urlRecord->getRedirectTo();
+
                 return self::createRedirect(
-                    self::findModel($urlRecord->getRedirectTo())->url($locale)
+                    self::findModel($targetRecord)->url($targetRecord->site)
                 );
             }
 

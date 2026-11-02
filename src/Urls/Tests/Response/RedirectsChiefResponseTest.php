@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Urls\Tests\Response;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\ManagedModels\States\PageState\PageState;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Urls\App\Actions\CreateUrl;
@@ -58,5 +59,31 @@ class RedirectsChiefResponseTest extends ChiefTestCase
 
         $this->assertEquals(301, $response->getStatusCode());
         $this->assertTrue($response->isRedirect('http://localhost/nl-base/foo/bar/new'));
+    }
+
+    public function test_it_redirects_to_the_site_of_the_target_url(): void
+    {
+        config()->set('chief.sites', [
+            ['locale' => 'nl', 'primary' => true],
+            ['locale' => 'fr'],
+        ]);
+        ChiefSites::clearCache();
+
+        $model = ArticlePage::create(['current_state' => PageState::published]);
+        $originId = $this->application->create(new CreateUrl($model->modelReference(), 'nl', 'xander_FR', 'online'));
+        $targetId = $this->application->create(new CreateUrl($model->modelReference(), 'fr', 'xander', 'online'));
+
+        $this->redirectApplication->addRedirect(new AddRedirect($originId, $targetId));
+
+        ArticlePage::setRouteResolver(fn ($name, $parameters, $locale) => 'http://localhost/'.$locale.'/'.$parameters[0]);
+
+        try {
+            $response = ChiefResponse::fromSlug('nl-base/xander_FR', 'nl');
+
+            $this->assertEquals(301, $response->getStatusCode());
+            $this->assertTrue($response->isRedirect('http://localhost/fr/fr-base/xander'));
+        } finally {
+            ArticlePage::setRouteResolver();
+        }
     }
 }
