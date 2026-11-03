@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Plugins\Audit\Reading\VisibleHistory;
 
 final class AuditPresets
 {
-    public static function modelHistoryWindow(Model $model): iterable
+    public static function modelHistoryWindow(Model $model, int $limit = 5): iterable
     {
         if (! $model->exists || ! Gate::allows('view-audit')) {
             return [];
@@ -19,7 +19,7 @@ final class AuditPresets
 
         $history = app(VisibleHistory::class);
         $expanded = request()->query('audit_history') === 'all';
-        $selection = $history->modelHistory($model->getMorphClass(), (string) $model->getKey(), $expanded);
+        $selection = $history->modelHistory($model->getMorphClass(), (string) $model->getKey(), $expanded, $limit);
 
         return [Window::make('audit_model_history')
             ->position('aside')
@@ -29,6 +29,8 @@ final class AuditPresets
                 'events' => $selection['events'],
                 'hasMore' => $selection['hasMore'],
                 'expanded' => $expanded,
+                'limit' => $limit,
+                'modelType' => $model->getMorphClass(),
             ])];
     }
 }

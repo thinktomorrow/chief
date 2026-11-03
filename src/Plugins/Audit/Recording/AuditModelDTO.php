@@ -44,6 +44,23 @@ final class AuditModelDTO
         return $captured;
     }
 
+    /** @param array<string, array{before: mixed, after: mixed}> $changes */
+    public function withChanges(array $changes): self
+    {
+        foreach ($changes as $path => $change) {
+            if (! is_string($path) || $path === '' || ! is_array($change) || array_keys($change) !== ['before', 'after']) {
+                throw new InvalidArgumentException('Invalid audit model changes.');
+            }
+        }
+
+        AuditEventDTO::assertContext($changes);
+
+        $captured = clone $this;
+        $captured->changes = $changes;
+
+        return $captured;
+    }
+
     /**
      * @return array{model_type: string, model_id: string, model_snapshot: array{name: string}, context: array<string, mixed>, changes: ?array}
      */

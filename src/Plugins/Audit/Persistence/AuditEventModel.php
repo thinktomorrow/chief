@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Audit\Persistence;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class AuditEventModel extends Model
 {
@@ -13,6 +14,11 @@ final class AuditEventModel extends Model
     public $timestamps = false;
 
     protected $guarded = [];
+
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(AuditEvent::class, 'event_id');
+    }
 
     protected function casts(): array
     {

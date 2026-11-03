@@ -75,6 +75,25 @@ final class ModelHistoryWindowTest extends ChiefTestCase
         $this->get($url)->assertOk()->assertSee('Hidden history');
     }
 
+    public function test_model_history_supports_a_ten_item_timeline_with_inline_changes(): void
+    {
+        $article = $this->setupAndCreateArticle();
+        ArticlePageResource::setFieldsDefinition(fn ($model) => AuditPresets::modelHistoryWindow($model, 10));
+        ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
+        $viewer = $this->fakeUser();
+        $viewer->givePermissionTo('view-audit', 'view-full-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'update'));
+
+        for ($i = 1; $i <= 11; $i++) {
+            History::log(type: 'project.updated', actorType: 'admin', actorSnapshot: ['name' => 'Redacteur'], summary: 'Wijziging '.$i,
+                models: [(new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Artikel']))
+                    ->withChanges(['title' => ['before' => 'Oud', 'after' => 'Nieuw']])]);
+        }
+
+        $url = $this->manager($article)->route('edit', $article);
+        $this->actingAs($viewer, 'chief')->get($url)->assertOk()->assertSee('Wijziging 11')
+            ->assertSee('Wijziging 2')->assertDontSee('<p>Wijziging 1</p>', false)->assertSee('Oud')->assertSee('Nieuw');
+    }
+
     public function test_related_access_only_shows_projected_links_and_own_actor_path_does_not_reveal_hidden_details(): void
     {
         $article = $this->setupAndCreateArticle();

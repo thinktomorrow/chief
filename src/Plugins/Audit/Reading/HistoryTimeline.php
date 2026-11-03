@@ -51,9 +51,10 @@ final class HistoryTimeline
     }
 
     /** @return array{events: Collection<int, AuditEvent>, hasMore: bool} */
-    public function modelHistory(string $modelType, string $modelId, bool $expanded): array
+    public function modelHistory(string $modelType, string $modelId, bool $expanded, int $limit = 5): array
     {
         $filters = HistoryFilters::forModel($modelType, $modelId);
+        $limit = max(1, min(100, $limit));
 
         if ($expanded) {
             return ['events' => $this->read->select($filters), 'hasMore' => true];
@@ -61,14 +62,14 @@ final class HistoryTimeline
 
         $events = collect();
         $visibleCount = 0;
-        $this->read->each($filters, function (AuditEvent $event) use ($events, &$visibleCount): bool {
+        $this->read->each($filters, function (AuditEvent $event) use ($events, &$visibleCount, $limit): bool {
             $visibleCount++;
 
-            if ($this->priority($event) !== 'secondary' && $events->count() < 5) {
+            if ($this->priority($event) !== 'secondary' && $events->count() < $limit) {
                 $events->push($event);
             }
 
-            return $visibleCount > 5 && $events->count() === 5;
+            return $visibleCount > $limit && $events->count() === $limit;
         });
 
         return ['events' => $events, 'hasMore' => $visibleCount > $events->count()];

@@ -45,9 +45,9 @@ final class VisibleHistory
     }
 
     /** @return array{events: Collection<int, AuditEvent>, hasMore: bool} */
-    public function modelHistory(string $modelType, string $modelId, bool $expanded): array
+    public function modelHistory(string $modelType, string $modelId, bool $expanded, int $limit = 5): array
     {
-        return $this->timeline->modelHistory($modelType, $modelId, $expanded);
+        return $this->timeline->modelHistory($modelType, $modelId, $expanded, $limit);
     }
 
     /** @return array<string, list<string>> */
