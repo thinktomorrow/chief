@@ -11,6 +11,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Fixed: Livewire re-renders no longer replace field elements whose random element id changes per render. The external
   Redactor toolbar of a text field with custom redactor options no longer disappears after typing, and the character
   count of a textarea field keeps updating.
+- Fixed: The hotspots dialog now initializes its fields when it opens and when a hotspot is added, so Html fields load
+  the Redactor editor instead of showing a plain textarea, and conditional fields work inside the dialog.
 
 ## [0.10.34] - 2026-09-29
 

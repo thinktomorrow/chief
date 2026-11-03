@@ -40,3 +40,6 @@ jobs:
 
             - name: Execute Export tests
               run: vendor/bin/phpunit --no-coverage src/Plugins/Export
+
+            - name: Execute HotSpots tests
+              run: vendor/bin/phpunit --no-coverage src/Plugins/HotSpots
