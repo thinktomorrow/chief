@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\App\Queries\ComposeLivewireDto;
 use Thinktomorrow\Chief\Fragments\Tests\FragmentTestHelpers;
 use Thinktomorrow\Chief\Fragments\UI\Livewire\Context\ContextDto;
+use Thinktomorrow\Chief\Sites\ChiefSites;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Hero;
@@ -79,6 +80,27 @@ class ContextDtoTest extends ChiefTestCase
             [$context1->id, $context2->id],
             $dtos->map(fn ($dto) => $dto->id)->all()
         );
+    }
+
+    public function test_contexts_follow_configured_site_order_instead_of_creation_order()
+    {
+        config()->set('chief.sites', [
+            ['locale' => 'nl'],
+            ['locale' => 'fr'],
+            ['locale' => 'en'],
+        ]);
+        ChiefSites::clearCache();
+
+        $this->owner->setAllowedSites(['nl', 'fr', 'en']);
+        $this->owner->save();
+
+        $english = FragmentTestHelpers::createContext($this->owner, ['en'], ['en']);
+        $french = FragmentTestHelpers::createContext($this->owner, ['fr'], ['fr']);
+        $dutch = FragmentTestHelpers::createContext($this->owner, ['nl'], ['nl']);
+
+        $contexts = $this->composer->getContextsByOwner($this->owner);
+
+        $this->assertSame([$dutch->id, $french->id, $english->id], $contexts->pluck('id')->all());
     }
 
     public function test_it_can_compose_empty_context_dto()
