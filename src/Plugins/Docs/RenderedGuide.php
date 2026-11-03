@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Plugins\Docs;
 
 /**
- * A guide's body rendered to HTML, with the `##` headings it links to.
+ * A guide's body rendered to HTML, with the `##` and `###` headings it links to.
  */
 final class RenderedGuide
 {

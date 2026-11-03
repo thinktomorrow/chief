@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Plugins\Docs\App\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Thinktomorrow\Chief\Plugins\Docs\AdminSurface;
 use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 use Thinktomorrow\Chief\Plugins\Docs\Search\GuideSearch;
 
@@ -19,7 +20,7 @@ class GuideSearchComponent extends Component
     public function render(): View
     {
         return view('chief-docs::livewire.guide-search', [
-            'results' => app(GuideSearch::class)->search(app(GuideTree::class), $this->query),
+            'results' => app(GuideSearch::class)->search(app(GuideTree::class), $this->query, app(AdminSurface::class)),
             'isTooShort' => GuideSearch::isTooShort($this->query),
         ]);
     }

@@ -9,10 +9,11 @@ use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\ExtensionInterface;
 use Thinktomorrow\Chief\Plugins\Docs\GuideNode;
+use Thinktomorrow\Chief\Plugins\Docs\GuideSurface;
 use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 
 /**
- * Points links between guides at their page in the admin. A target ending in
+ * Points links between guides at their page on the surface. A target ending in
  * `.md` is a file relative to the current guide's file in the same source, and
  * a target with `::` is a namespaced guide ID. Any other link is left alone.
  * A link to a guide outside the visible tree is rendered as plain text.
@@ -22,6 +23,7 @@ final class GuideLinkExtension implements ExtensionInterface
     public function __construct(
         private readonly GuideNode $guide,
         private readonly GuideTree $tree,
+        private readonly GuideSurface $surface,
     ) {}
 
     public function register(EnvironmentBuilderInterface $environment): void
@@ -55,7 +57,7 @@ final class GuideLinkExtension implements ExtensionInterface
                 continue;
             }
 
-            $link->setUrl(route('chief.docs.show', $guide->id).$target->fragment);
+            $link->setUrl($this->surface->guideUrl($guide, $target->fragment === '' ? null : substr($target->fragment, 1)));
         }
     }
 

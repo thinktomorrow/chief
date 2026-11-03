@@ -5,16 +5,18 @@ namespace Thinktomorrow\Chief\Plugins\Docs\App\Http;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Thinktomorrow\Chief\Plugins\Docs\AdminSurface;
 use Thinktomorrow\Chief\Plugins\Docs\DocSources;
 use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 use Thinktomorrow\Chief\Plugins\Docs\Markdown;
-use Thinktomorrow\Chief\Plugins\Docs\Media\AssetType;
 use Thinktomorrow\Chief\Plugins\Docs\Media\GuideAsset;
+use Thinktomorrow\Chief\Plugins\Docs\Media\GuideAssetResponse;
 
 class DocsController
 {
     public function __construct(
         private Markdown $markdown,
+        private AdminSurface $surface,
     ) {}
 
     public function index(GuideTree $tree): View
@@ -33,7 +35,7 @@ class DocsController
         return view('chief-docs::show', [
             'tree' => $tree,
             'guide' => $guide,
-            'renderedGuide' => $this->markdown->renderGuide($guide, $tree),
+            'renderedGuide' => $this->markdown->renderGuide($guide, $tree, $this->surface),
         ]);
     }
 
@@ -47,20 +49,6 @@ class DocsController
 
         abort_unless($asset && $file && $asset->isVisibleIn($tree), 404);
 
-        $response = new BinaryFileResponse($file, 200, [
-            'Content-Type' => $asset->type->contentType(),
-            'X-Content-Type-Options' => 'nosniff',
-        ]);
-
-        if ($asset->type === AssetType::Svg) {
-            $response->headers->set('Content-Security-Policy', 'sandbox');
-        }
-
-        $response->setPrivate();
-        $response->setAutoLastModified();
-        $response->setEtag(hash('xxh128', $file.'|'.filemtime($file).'|'.filesize($file)));
-        $response->isNotModified($request);
-
-        return $response;
+        return GuideAssetResponse::make($asset, $request);
     }
 }

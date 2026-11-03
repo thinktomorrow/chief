@@ -70,6 +70,7 @@ class DocsModeTest extends TestCase
         $this->assertStringContainsString('href="#een-sessie-toevoegen"', $html);
         $this->assertStringContainsString('href="#een-sessie-verplaatsen"', $html);
         $this->assertStringNotContainsString('href="#een-opleiding-aanmaken"', $html);
+        $this->assertSame(1, substr_count($html, 'href="#een-locatie-kiezen"'), 'An h3 is only linked from its own permalink.');
     }
 
     public function test_the_active_guide_opens_to_list_its_child_guides(): void

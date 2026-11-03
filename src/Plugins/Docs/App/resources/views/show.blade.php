@@ -4,7 +4,11 @@
 
 <x-chief::page.template :title="$guide->title" container="full">
     <x-slot name="nav">
-        <x-chief-docs::sidebar :tree="$tree" :guide="$guide" :headings="$renderedGuide->headings" />
+        <x-chief-docs::sidebar
+            :tree="$tree"
+            :guide="$guide"
+            :headings="array_values(array_filter($renderedGuide->headings, fn ($heading) => $heading->level === 2))"
+        />
     </x-slot>
 
     <article

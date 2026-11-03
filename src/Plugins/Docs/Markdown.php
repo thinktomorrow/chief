@@ -60,18 +60,19 @@ class Markdown
     }
 
     /**
-     * Render a guide's body, pointing its links to other guides and its images and videos
-     * at those the current admin may see.
+     * Render a guide's body for a surface, pointing its links to other guides and its
+     * images and videos at those in the visible tree, on the surface's URLs.
      */
-    public function renderGuide(GuideNode $guide, GuideTree $tree): RenderedGuide
+    public function renderGuide(GuideNode $guide, GuideTree $tree, GuideSurface $surface): RenderedGuide
     {
         if (! $guide->markdown) {
             return new RenderedGuide('', []);
         }
 
         $environment = $this->environment();
-        $environment->addExtension(new GuideLinkExtension($guide, $tree));
-        $environment->addExtension(new GuideMediaExtension($guide, $tree));
+        $environment->addExtension(new GuideLinkExtension($guide, $tree, $surface));
+        $environment->addExtension(new GuideMediaExtension($guide, $tree, $surface));
+        $surface->configure($environment);
 
         $document = (new MarkdownParser($environment))->parse($guide->markdown);
 
@@ -101,7 +102,7 @@ class Markdown
             }
         }
 
-        return new GuideText(trim((string) preg_replace('/\s+/u', ' ', $body)), $this->headings($document, maxLevel: 3));
+        return new GuideText(trim((string) preg_replace('/\s+/u', ' ', $body)), $this->headings($document));
     }
 
     private function environment(): Environment
@@ -152,17 +153,18 @@ class Markdown
     }
 
     /**
-     * @return list<GuideHeading> The headings from `##` down to the given level, in document order.
+     * @return list<GuideHeading> The `##` and `###` headings, in document order.
      */
-    private function headings(Document $document, int $maxLevel = 2): array
+    private function headings(Document $document): array
     {
         $headings = [];
 
         foreach ($document->iterator() as $node) {
-            if ($node instanceof Heading && $node->getLevel() >= 2 && $node->getLevel() <= $maxLevel && $node->data->has('attributes/id')) {
+            if ($node instanceof Heading && $node->getLevel() >= 2 && $node->getLevel() <= 3 && $node->data->has('attributes/id')) {
                 $headings[] = new GuideHeading(
                     $node->data->get('attributes/id'),
                     StringContainerHelper::getChildText($node, [HeadingPermalink::class]),
+                    $node->getLevel(),
                 );
             }
         }

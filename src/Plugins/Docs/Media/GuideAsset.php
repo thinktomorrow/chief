@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Plugins\Docs\Media;
 use Thinktomorrow\Chief\Plugins\Docs\DocSource;
 use Thinktomorrow\Chief\Plugins\Docs\DocSources;
 use Thinktomorrow\Chief\Plugins\Docs\GuideLocation;
+use Thinktomorrow\Chief\Plugins\Docs\GuideSurface;
 use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 
 /**
@@ -72,13 +73,13 @@ final class GuideAsset
     }
 
     /**
-     * The asset's admin URL, versioned by the file's modification time, or null when it doesn't exist.
+     * The asset's URL on the surface, versioned by the file's modification time, or null when it doesn't exist.
      */
-    public function url(): ?string
+    public function url(GuideSurface $surface): ?string
     {
         $file = $this->file();
 
-        return $file === null ? null : route('chief.docs.asset', $this->id()).'?v='.filemtime($file);
+        return $file === null ? null : $surface->assetUrl($this).'?v='.filemtime($file);
     }
 
     /**

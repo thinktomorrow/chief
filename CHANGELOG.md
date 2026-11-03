@@ -5,6 +5,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Changed: Admin pages show their content in a rounded white window on a grey background, next to a wider Chief nav
+  whose items are more compact with a smaller nested indent. The active item shows a primary-coloured line on its left,
+  as in the docs sidebar.
 - Added: The Docs plugin builds one user guide from the project's `resources/docs` and the Dutch guides shipped by
   Chief and its plugins, with sections, front matter, links between guides, images and video, role visibility, search
   and a "Handleiding" nav item. Projects can override or hide shipped guides. See the Docs plugin readme, including its
@@ -20,9 +23,11 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - **Breaking change** Removed: The nav item pasted into the project's nav. The plugin adds a "Handleiding" item itself
   as soon as the admin may see a guide, so a pasted item shows twice.
 - Removed: The Docs plugin no longer creates `resources/docs/welcome.md` when the folder is missing.
-- Changed: Admin pages show their content in a rounded white window on a grey background, next to a wider Chief nav
-  whose items are more compact with a smaller nested indent. The active item shows a primary-coloured line on its left,
-  as in the docs sidebar.
+- **Breaking change** Changed: `Markdown::renderGuide()` and `GuideSearch::search()` take a required `GuideSurface`.
+  Callers pass `AdminSurface` for admin behaviour.
+- Added: `GuideSurface` to show guides outside the admin, with `AdminSurface` for the admin, `GuideAssetResponse` to
+  serve guide assets with private or public caching, and `GuideHeading::$level`. `RenderedGuide::$headings` now holds
+  `###` headings as well. Callouts render as plain `guide-callout` markup on surfaces other than the admin.
 - Fixed: Explicit table action labels remain visible with icons regardless of call order, including after conversion to
   row or bulk actions; actions without an explicit label remain icon-only.
 - Fixed: Livewire re-renders no longer replace field elements whose random element id changes per render. The external

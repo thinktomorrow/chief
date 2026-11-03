@@ -8,6 +8,10 @@ order: 1
 
 Tekst.
 
+### Een locatie kiezen
+
+Tekst.
+
 ## Een sessie verplaatsen
 
 Tekst.

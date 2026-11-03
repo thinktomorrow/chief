@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Plugins\Docs\Search;
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Plugins\Docs\GuideHeading;
 use Thinktomorrow\Chief\Plugins\Docs\GuideNode;
+use Thinktomorrow\Chief\Plugins\Docs\GuideSurface;
 use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 use Thinktomorrow\Chief\Plugins\Docs\Markdown;
 
@@ -27,11 +28,11 @@ final class GuideSearch
 
     /**
      * Guides whose title matches the whole query come first, then the others,
-     * each in the sidebar's order.
+     * each in the sidebar's order. Each result links to the guide on the surface.
      *
      * @return list<GuideSearchResult>
      */
-    public function search(GuideTree $tree, string $query): array
+    public function search(GuideTree $tree, string $query, GuideSurface $surface): array
     {
         $words = $this->words($query);
 
@@ -63,7 +64,7 @@ final class GuideSearch
         }
 
         return array_map(
-            fn (array $match) => $this->result($tree, $match['guide'], $match['text'], $words),
+            fn (array $match) => $this->result($tree, $surface, $match['guide'], $match['text'], $words),
             array_slice([...$titleMatches, ...$otherMatches], 0, self::MAX_RESULTS),
         );
     }
@@ -88,7 +89,7 @@ final class GuideSearch
     /**
      * @param  list<string>  $words
      */
-    private function result(GuideTree $tree, GuideNode $guide, GuideText $text, array $words): GuideSearchResult
+    private function result(GuideTree $tree, GuideSurface $surface, GuideNode $guide, GuideText $text, array $words): GuideSearchResult
     {
         $body = new FoldedText($text->body);
         $heading = $this->bestMatchingHeading($text->headings, $words);
@@ -99,7 +100,7 @@ final class GuideSearch
             snippet: $guide->description && $body->countMatching($words) === 0
                 ? (new FoldedText($guide->description))->excerpt($words)
                 : $body->excerpt($words),
-            url: route('chief.docs.show', $guide->id).($heading ? '#'.$heading->id : ''),
+            url: $surface->guideUrl($guide, $heading?->id),
         );
     }
 

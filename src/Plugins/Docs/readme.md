@@ -112,7 +112,7 @@ Guides are GitHub-flavoured Markdown. Raw HTML is stripped and unsafe links are 
 
 `[!TIP]` is labelled "Tip", `[!NOTE]` "Goed om te weten" and `[!WARNING]` "Let op". The marker sits on its own line; a plain `> Tip:` stays an ordinary blockquote.
 
-A project extends the rendering from a service provider with `Markdown::configureUsing()`, which receives the CommonMark environment before each guide is converted:
+A project extends the rendering from a service provider with `Markdown::configureUsing()`, which receives the CommonMark environment before each guide is converted, on every surface:
 
 ```php
 use League\CommonMark\Environment\Environment;
@@ -123,6 +123,29 @@ Markdown::configureUsing(fn (Environment $environment) => $environment->addExten
 ```
 
 Prefer this over rebinding `Markdown` in the container, which replaces Chief's rendering as a whole.
+
+### Surfaces
+
+A surface is where guides are shown. The admin is one; a project can show the same guides elsewhere, such as on its public site. `Markdown::renderGuide()` and `GuideSearch::search()` take the surface as a required argument, and the admin passes `AdminSurface`.
+
+A surface implements `GuideSurface`:
+
+- `guideUrl($guide, $fragment)` returns a guide's URL, with `#$fragment` for a heading anchor. Links between guides and search results use it.
+- `assetUrl($asset)` returns an asset's bare URL. Chief appends `?v=<mtime>`.
+- `configure($environment)` registers renderers of its own on the CommonMark environment, after `Markdown::configureUsing()` callbacks.
+
+The surface picks its own visible tree, for instance with `GuideTreeBuilder::build()` and `GuideTree::visibleTo()`, and checks `$asset->isVisibleIn($tree)` before serving an asset with `GuideAssetResponse::make($asset, $request, public: true)`. A public response is cached for a year when the URL has `?v=`, and revalidated on every request otherwise. The admin caches assets privately.
+
+Outside the admin, a callout renders as plain HTML for the surface to style. `data-callout` is `tip`, `note` or `warning`:
+
+```html
+<aside class="guide-callout" data-callout="tip">
+<p class="guide-callout-title">Tip</p>
+<p>Kies waar mogelijk een interne pagina.</p>
+</aside>
+```
+
+`AdminSurface` renders callouts with Chief's callout component instead. Images and videos carry `data-guide-media` on every surface. `RenderedGuide::$headings` holds the `##` and `###` headings, each with its `level`.
 
 ## Upgraden
 

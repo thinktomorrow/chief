@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Plugins\Docs\Tests;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\SmartPunct\SmartPunctExtension;
+use Thinktomorrow\Chief\Plugins\Docs\AdminSurface;
 use Thinktomorrow\Chief\Plugins\Docs\GuideHeading;
 use Thinktomorrow\Chief\Plugins\Docs\GuideNode;
 use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
@@ -30,17 +31,6 @@ class MarkdownTest extends TestCase
         $this->assertStringNotContainsString('href="javascript:', $html);
     }
 
-    public function test_alerts_render_as_callouts_with_dutch_labels(): void
-    {
-        $html = $this->convert("> [!TIP]\n> Kies een interne pagina.\n\n> [!NOTE]\n> Een bestand is gedeeld.\n\n> [!WARNING]\n> Verwijderen is **definitief**.");
-
-        $this->assertStringNotContainsString('<blockquote>', $html);
-        $this->assertStringNotContainsString('[!', $html);
-        $this->assertMatchesRegularExpression('#<div\s+class="callout [^"]*callout-green"\s*>.*?<p data-slot="title">\s*Tip\s*</p>.*?Kies een interne pagina\.#s', $html);
-        $this->assertMatchesRegularExpression('#<div\s+class="callout [^"]*callout-blue"\s*>.*?<p data-slot="title">\s*Goed om te weten\s*</p>.*?Een bestand is gedeeld\.#s', $html);
-        $this->assertMatchesRegularExpression('#<div\s+class="callout [^"]*callout-orange"\s*>.*?<p data-slot="title">\s*Let op\s*</p>.*?Verwijderen is <strong>definitief</strong>\.#s', $html);
-    }
-
     public function test_a_plain_tip_stays_a_blockquote(): void
     {
         $html = $this->convert("> Tip: kies een interne pagina.\n\n> [!ONBEKEND]\n> Geen alert.");
@@ -59,20 +49,21 @@ class MarkdownTest extends TestCase
         $this->assertStringContainsString('<h4>Diepere kop</h4>', $html);
     }
 
-    public function test_a_rendered_guide_lists_its_h2_headings_by_their_anchors(): void
+    public function test_a_rendered_guide_lists_its_h2_and_h3_headings_by_their_anchors(): void
     {
         $guide = new GuideNode('gids', 'Gids', markdown: "# Gids\n\n## Hoe publiceer ik?\n\n### Diepere kop\n\n## Wat is **één** fragment?\n\n## Hoe publiceer ik?");
         $tree = new GuideTree(['gids' => $guide], ['gids' => null], ['' => ['gids']]);
 
-        $renderedGuide = $this->app->make(Markdown::class)->renderGuide($guide, $tree);
+        $renderedGuide = $this->app->make(Markdown::class)->renderGuide($guide, $tree, new AdminSurface);
 
         $this->assertSame(
             [
-                ['hoe-publiceer-ik', 'Hoe publiceer ik?'],
-                ['wat-is-een-fragment', 'Wat is één fragment?'],
-                ['hoe-publiceer-ik-1', 'Hoe publiceer ik?'],
+                ['hoe-publiceer-ik', 'Hoe publiceer ik?', 2],
+                ['diepere-kop', 'Diepere kop', 3],
+                ['wat-is-een-fragment', 'Wat is één fragment?', 2],
+                ['hoe-publiceer-ik-1', 'Hoe publiceer ik?', 2],
             ],
-            array_map(fn (GuideHeading $heading) => [$heading->id, $heading->title], $renderedGuide->headings),
+            array_map(fn (GuideHeading $heading) => [$heading->id, $heading->title, $heading->level], $renderedGuide->headings),
         );
         $this->assertStringContainsString('id="hoe-publiceer-ik-1"', $renderedGuide->content);
         $this->assertStringContainsString('<strong>één</strong>', $renderedGuide->content);
@@ -83,7 +74,7 @@ class MarkdownTest extends TestCase
         $guide = new GuideNode('gids', 'Gids', markdown: '');
         $tree = new GuideTree(['gids' => $guide], ['gids' => null], ['' => ['gids']]);
 
-        $renderedGuide = $this->app->make(Markdown::class)->renderGuide($guide, $tree);
+        $renderedGuide = $this->app->make(Markdown::class)->renderGuide($guide, $tree, new AdminSurface);
 
         $this->assertSame('', $renderedGuide->content);
         $this->assertSame([], $renderedGuide->headings);

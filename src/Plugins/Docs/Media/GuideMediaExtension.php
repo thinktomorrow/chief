@@ -11,11 +11,12 @@ use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Text;
 use Thinktomorrow\Chief\Plugins\Docs\GuideNode;
+use Thinktomorrow\Chief\Plugins\Docs\GuideSurface;
 use Thinktomorrow\Chief\Plugins\Docs\GuideTree;
 
 /**
  * Shows the images and videos of a guide. A relative path is an asset next to the
- * guide's file in the same source, pointed at its admin URL. One that doesn't
+ * guide's file in the same source, pointed at its URL on the surface. One that doesn't
  * exist, lies outside the source or isn't visible renders as its alt text. URLs
  * with a scheme and absolute paths are left as written. An image on a line of its
  * own becomes a figure.
@@ -25,6 +26,7 @@ final class GuideMediaExtension implements ExtensionInterface
     public function __construct(
         private readonly GuideNode $guide,
         private readonly GuideTree $tree,
+        private readonly GuideSurface $surface,
     ) {}
 
     public function register(EnvironmentBuilderInterface $environment): void
@@ -76,6 +78,6 @@ final class GuideMediaExtension implements ExtensionInterface
         $relativeFile = rawurldecode((string) preg_replace('/[?#].*$/s', '', $relativeUrl));
         $asset = $this->guide->location === null ? null : GuideAsset::referencedFrom($this->guide->location, $relativeFile);
 
-        return $asset !== null && $asset->isVisibleIn($this->tree) ? $asset->url() : null;
+        return $asset !== null && $asset->isVisibleIn($this->tree) ? $asset->url($this->surface) : null;
     }
 }
