@@ -28,6 +28,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 - Added: `GuideSurface` to show guides outside the admin, with `AdminSurface` for the admin, `GuideAssetResponse` to
   serve guide assets with private or public caching, and `GuideHeading::$level`. `RenderedGuide::$headings` now holds
   `###` headings as well. Callouts render as plain `guide-callout` markup on surfaces other than the admin.
+- Fixed: Redirect now respects the target locale in case of redirect from one locale to another
 - Fixed: Explicit table action labels remain visible with icons regardless of call order, including after conversion to
   row or bulk actions; actions without an explicit label remain icon-only.
 - Fixed: Livewire re-renders no longer replace field elements whose random element id changes per render. The external
