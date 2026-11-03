@@ -14,6 +14,8 @@ class AdminToastServiceProvider extends ChiefPluginServiceProvider
 
         $this->app['view']->addNamespace('chief-admin-toast', __DIR__.'/views');
 
+        $this->loadDocsFrom(__DIR__.'/resources/docs', 'admin-toast');
+
         // These routes are loaded without admin middleware. They should be available on frontend.
         $this->loadRoutesFrom(__DIR__.'/routes.php');
     }

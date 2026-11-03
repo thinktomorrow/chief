@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Plugins\ExternalFiles\Youtube;
 
 use Thinktomorrow\Chief\Assets\App\ExternalFiles\DriverFactory;
-use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
+use Thinktomorrow\Chief\Plugins\ExternalFiles\ExternalFileDriverServiceProvider;
 
-class YoutubeServiceProvider extends ChiefPluginServiceProvider
+class YoutubeServiceProvider extends ExternalFileDriverServiceProvider
 {
     public function boot(): void
     {

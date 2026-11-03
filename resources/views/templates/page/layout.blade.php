@@ -48,7 +48,7 @@
 
         @stack('custom-styles')
     </head>
-    <body class="bg-grey-50/50 min-h-screen">
+    <body class="lg:bg-grey-50 min-h-screen bg-white">
         <main>
             {{ $slot }}
             @stack('portals')

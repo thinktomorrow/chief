@@ -14,6 +14,8 @@ class TimeTableServiceProvider extends ChiefPluginServiceProvider
     {
         $this->app['view']->addNamespace('chief-timetable', __DIR__.'/App/resources/views');
 
+        $this->loadDocsFrom(__DIR__.'/resources/docs', 'time-table');
+
         $this->loadMigrationsFrom(__DIR__.'/Infrastructure/migrations');
 
         $this->loadPluginAdminRoutes(__DIR__.'/App/routes/chief-admin-routes.php');

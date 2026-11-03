@@ -12,6 +12,8 @@ class HotSpotsServiceProvider extends ChiefPluginServiceProvider
     {
         $this->app['view']->addNamespace('chief-hotspots', __DIR__.'/views');
 
+        $this->loadDocsFrom(__DIR__.'/resources/docs', 'hot-spots');
+
         Livewire::component('chief-wire::hotspots', HotSpotComponent::class);
 
         $this->app->make(ChiefPluginSections::class)

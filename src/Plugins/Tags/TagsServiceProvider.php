@@ -18,6 +18,8 @@ class TagsServiceProvider extends ChiefPluginServiceProvider
     {
         $this->app['view']->addNamespace('chief-tags', __DIR__.'/App/resources/views');
 
+        $this->loadDocsFrom(__DIR__.'/resources/docs', 'tags');
+
         $this->loadMigrationsFrom(__DIR__.'/Infrastructure/migrations');
 
         $this->loadPluginAdminRoutes(__DIR__.'/App/routes/chief-admin-routes.php');

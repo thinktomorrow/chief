@@ -53,6 +53,7 @@ use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Menu\App\Actions\ProjectModelData;
 use Thinktomorrow\Chief\Menu\MenuServiceProvider;
 use Thinktomorrow\Chief\Models\ModelsServiceProvider;
+use Thinktomorrow\Chief\Plugins\Docs\DocSources;
 use Thinktomorrow\Chief\Shared\AdminEnvironment;
 use Thinktomorrow\Chief\Sites\SitesServiceProvider;
 use Thinktomorrow\Chief\Table\TableServiceProvider;
@@ -251,6 +252,8 @@ class ChiefServiceProvider extends ServiceProvider
         });
 
         $this->app->scoped(MemoizedEloquentOptions::class);
+
+        $this->app->singleton(DocSources::class, fn () => new DocSources(resource_path('docs')));
 
         (new SitesServiceProvider($this->app))->register();
         (new StatesServiceProvider($this->app))->register();

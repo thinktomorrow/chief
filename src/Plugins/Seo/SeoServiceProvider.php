@@ -10,6 +10,8 @@ class SeoServiceProvider extends ChiefPluginServiceProvider
     {
         $this->app['view']->addNamespace('chief-seo', __DIR__.'/UI/views');
 
+        $this->loadDocsFrom(__DIR__.'/resources/docs', 'seo');
+
         $this->loadPluginAdminRoutes(__DIR__.'/App/routes/chief-admin-routes.php');
     }
 
