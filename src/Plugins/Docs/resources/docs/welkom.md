@@ -32,14 +32,14 @@ Na het inloggen kom je op het dashboard, met de begroeting "Welkom op je dashboa
 
 De navigatie staat links. Op een smal scherm of gsm open je ze met **Menu** bovenaan.
 
-| Onderdeel | Wat je er doet |
-| --- | --- |
+| Onderdeel           | Wat je er doet                                                                                                             |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | Je eigen onderdelen | Bovenaan staan de onderdelen van je website, zoals het overzicht van je pagina's. Welke dat zijn, hangt af van je project. |
-| **Menus** | De navigatiemenu's van je website beheren. |
-| **Media** | Alle afbeeldingen en bestanden in de mediabibliotheek. |
-| **Teksten** | Vaste teksten op de website, zoals knoppen en labels. |
-| **Instellingen** | Algemene instellingen, de sitemap, de log, admins en rollen. |
-| Je voornaam | Je eigen profiel, je wachtwoord en **Uitloggen**. |
+| **Menus**           | De navigatiemenu's van je website beheren.                                                                                 |
+| **Media**           | Alle afbeeldingen en bestanden in de mediabibliotheek.                                                                     |
+| **Teksten**         | Vaste teksten op de website, zoals knoppen en labels.                                                                      |
+| **Instellingen**    | Algemene instellingen, de sitemap, de log, admins en rollen.                                                               |
+| Je voornaam         | Je eigen profiel, je wachtwoord en **Uitloggen**.                                                                          |
 
 Je ziet alleen de onderdelen waarvoor je rechten hebt. Mis je een onderdeel dat je nodig hebt, vraag dan een admin om je rechten aan te passen.
 

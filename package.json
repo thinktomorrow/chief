@@ -19,7 +19,7 @@
         "@eslint/js": "^9.39.5",
         "@tailwindcss/vite": "^4.3.3",
         "dotenv": "^16.6.1",
-        "eslint": "^10.13.0",
+        "eslint": "^10.14.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-unicorn": "^65.0.1",
         "husky": "^9.1.7",
