@@ -9,10 +9,12 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditDetails;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class SentMailHistoryTest extends ChiefTestCase
@@ -54,13 +56,13 @@ final class SentMailHistoryTest extends ChiefTestCase
         $limited = $this->fakeUser();
         $limited->givePermissionTo('view-audit');
         $this->actingAs($limited, 'chief')->get(route('chief.audit.index'))->assertOk()->assertDontSee('chief.mail.invitation.sent');
-        $this->get(route('chief.audit.rich-data', $event->id))->assertNotFound();
-        $this->get(route('chief.audit.event-details', $event->id))->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'rich', (string) $event->id)->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'event', (string) $event->id)->assertNotFound();
 
         $admin->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($admin, 'chief')->get(route('chief.audit.index'))->assertOk()->assertSee('chief.mail.invitation.sent')->assertDontSee('invite@example.com');
-        $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Uitnodiging tot Chief')->assertDontSee('accept_url');
-        $this->get(route('chief.audit.event-details', $event->id))->assertOk()->assertSee($invitationId);
+        Livewire::test(AuditDetails::class)->call('open', 'rich', (string) $event->id)->assertSee('Uitnodiging tot Chief')->assertDontSee('accept_url');
+        Livewire::test(AuditDetails::class)->call('open', 'event', (string) $event->id)->assertSee($invitationId);
         $previewUrl = route('chief.audit.rich-html', [$event->id, $piece->id]);
         $original = $this->get($previewUrl)->assertOk()->assertSee('invite', false)
             ->assertHeader('Content-Security-Policy', "sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:");
@@ -105,7 +107,7 @@ final class SentMailHistoryTest extends ChiefTestCase
 
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $admin->givePermissionTo('view-audit', 'view-full-audit');
-        $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('invite@example.com');
+        Livewire::test(AuditDetails::class)->call('open', 'rich', (string) $event->id)->assertSee('Niet beschikbaar door limiet of vastlegfout')->assertDontSee('invite@example.com');
         $this->get(route('chief.audit.rich-html', [$event->id, $piece->id]))->assertNotFound();
     }
 
@@ -115,11 +117,13 @@ final class SentMailHistoryTest extends ChiefTestCase
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $limited = $this->fakeUser();
         $limited->givePermissionTo('view-audit');
-        $this->actingAs($limited, 'chief')->get(route('chief.audit.event-details', $event->getKey()))->assertNotFound();
+        $this->actingAs($limited, 'chief');
+        Livewire::test(AuditDetails::class)->call('open', 'event', (string) $event->getKey())->assertNotFound();
 
         $full = $this->fakeUser();
         $full->givePermissionTo('view-audit', 'view-full-audit');
-        $this->actingAs($full, 'chief')->get(route('chief.audit.event-details', $event->getKey()))->assertOk()->assertSee('Nooit vastgelegd');
+        $this->actingAs($full, 'chief');
+        Livewire::test(AuditDetails::class)->call('open', 'event', (string) $event->getKey())->assertSee('Nooit vastgelegd');
     }
 
     public function test_expired_invitation_preview_retains_the_event_and_its_restricted_removed_status(): void
@@ -148,11 +152,11 @@ final class SentMailHistoryTest extends ChiefTestCase
         $limited = $this->fakeUser();
         $limited->givePermissionTo('view-audit');
         $this->actingAs($limited, 'chief')->get(route('chief.audit.index'))->assertOk()->assertDontSee('chief.mail.invitation.sent');
-        $this->get(route('chief.audit.rich-data', $event->id))->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'rich', (string) $event->id)->assertNotFound();
 
         $admin->givePermissionTo('view-audit', 'view-full-audit');
         $this->actingAs($admin, 'chief')->get(route('chief.audit.index'))->assertOk()->assertSee('chief.mail.invitation.sent');
-        $this->get(route('chief.audit.rich-data', $event->id))->assertOk()->assertSee('Verwijderd door bewaring')->assertDontSee('invite@example.com');
+        Livewire::test(AuditDetails::class)->call('open', 'rich', (string) $event->id)->assertSee('Verwijderd door bewaring')->assertDontSee('invite@example.com');
         $this->get(route('chief.audit.rich-html', [$event->id, $piece->id]))->assertNotFound();
     }
 }

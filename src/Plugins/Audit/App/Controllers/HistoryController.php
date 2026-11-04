@@ -30,31 +30,6 @@ final class HistoryController extends Controller
         ]);
     }
 
-    public function eventDetails(VisibleHistory $history, string $event): View
-    {
-        $detail = $history->eventDetail($event);
-
-        return view('chief-audit::event-details', ['event' => $detail, 'history' => $history, 'timezone' => $history->timezone(), 'missingMailPreview' => $history->missingMailPreview($detail)]);
-    }
-
-    public function details(VisibleHistory $history, string $event, string $model): View
-    {
-        return view('chief-audit::details', ['model' => $history->detail($event, $model)]);
-    }
-
-    public function richData(VisibleHistory $history, string $event): View
-    {
-        $pieces = $history->richData($event);
-        foreach ($pieces as $piece) {
-            if ($piece->type === 'reference' && $piece->status === 'available' && ! Storage::disk($piece->disk)->exists($piece->path)) {
-                $piece->status = 'unavailable';
-                $piece->metadata = [];
-            }
-        }
-
-        return view('chief-audit::rich-data', ['eventId' => $event, 'pieces' => $pieces]);
-    }
-
     public function richHtml(VisibleHistory $history, string $event, string $piece): Response
     {
         $data = $history->richPiece($event, $piece, 'html');

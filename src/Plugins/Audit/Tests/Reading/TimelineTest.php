@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests\Reading;
 
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditDetails;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
@@ -105,7 +107,7 @@ final class TimelineTest extends ChiefTestCase
         $this->get(route('chief.audit.index', ['model_type' => 'project.hidden']))->assertOk()->assertSee('0 resultaten');
         $this->get(route('chief.audit.index', ['model_type' => $article->getMorphClass(), 'model_id' => (string) $article->getKey()]))
             ->assertOk()->assertSee('1 resultaten');
-        $this->get(route('chief.audit.event-details', $event->getKey()))->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'event', (string) $event->getKey())->assertNotFound();
     }
 
     public function test_only_additional_content_opens_details_and_recorded_time_is_read_on_demand(): void
@@ -118,11 +120,11 @@ final class TimelineTest extends ChiefTestCase
         $delayed = History::log(type: 'project.delayed', actorType: 'system', actorSnapshot: ['name' => 'System'], occurredAt: '2026-01-02T12:00:00Z');
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
-            ->assertOk()->assertDontSee(route('chief.audit.event-details', $plain->getKey()))
-            ->assertSee(route('chief.audit.event-details', $delayed->getKey()));
-        $this->get(route('chief.audit.event-details', $plain->getKey()))->assertNotFound();
-        $this->get(route('chief.audit.event-details', $delayed->getKey()))
-            ->assertOk()->assertSee('Geregistreerd: 03/01/2026 12:00');
+            ->assertOk()->assertDontSee("kind: 'event', eventId: '".$plain->getKey()."'", false)
+            ->assertSee("kind: 'event', eventId: '".$delayed->getKey()."'", false);
+        Livewire::test(AuditDetails::class)->call('open', 'event', (string) $plain->getKey())->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'event', (string) $delayed->getKey())
+            ->assertSee('Geregistreerd: 03/01/2026 12:00');
     }
 
     public function test_paging_across_batches_counts_only_projected_matches(): void
@@ -161,13 +163,13 @@ final class TimelineTest extends ChiefTestCase
             new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Allowed'], ['note' => 'Approved detail']),
         ]);
         $links = $event->models()->orderBy('id')->get();
-        $hidden = route('chief.audit.details', [$event->getKey(), $links[0]->getKey()]);
-        $allowed = route('chief.audit.details', [$event->getKey(), $links[1]->getKey()]);
+        $hidden = "modelId: '".$links[0]->getKey()."'";
+        $allowed = "modelId: '".$links[1]->getKey()."'";
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
-            ->assertOk()->assertSee($allowed)->assertDontSee($hidden)->assertDontSee('Private detail');
-        $this->get($hidden)->assertNotFound();
-        $this->get($allowed)->assertOk()->assertSee('Approved detail')->assertDontSee('Private detail');
+            ->assertOk()->assertSee($allowed, false)->assertDontSee($hidden, false)->assertDontSee('Private detail');
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $event->getKey(), (string) $links[0]->getKey())->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $event->getKey(), (string) $links[1]->getKey())->assertSee('Approved detail')->assertDontSee('Private detail');
     }
 
     private function log(string $summary, string $occurredAt, string $type = 'project.primary'): void

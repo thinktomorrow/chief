@@ -6,12 +6,14 @@ namespace Thinktomorrow\Chief\Plugins\Audit\Tests\Recording;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Forms\Tests\TestSupport\ModelWithAstrotomicTranslations;
 use Thinktomorrow\Chief\Forms\Tests\TestSupport\ModelWithAstrotomicTranslationsTranslation;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditDetails;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class ChangeDetailsTest extends ChiefTestCase
@@ -80,9 +82,9 @@ final class ChangeDetailsTest extends ChiefTestCase
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->admin();
         $viewer->givePermissionTo('view-audit', 'view-full-audit');
-        $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [
-            DB::table('chief_audit_events')->value('id'), DB::table('chief_audit_event_models')->value('id'),
-        ]))->assertOk()->assertSee('Ontbreekt')->assertSee('null');
+        $this->actingAs($viewer, 'chief');
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) DB::table('chief_audit_events')->value('id'), (string) DB::table('chief_audit_event_models')->value('id'))
+            ->assertSee('Ontbreekt')->assertSee('null');
     }
 
     public function test_only_full_audit_admins_can_read_model_specific_changes(): void
@@ -99,13 +101,14 @@ final class ChangeDetailsTest extends ChiefTestCase
         $viewer = $this->admin();
         $viewer->givePermissionTo('view-audit');
 
-        $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [$eventId, $linkId]))->assertNotFound();
+        $this->actingAs($viewer, 'chief');
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $eventId, (string) $linkId)->assertNotFound();
         $viewer->givePermissionTo('view-full-audit');
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
-            ->assertOk()->assertSee(route('chief.audit.details', [$eventId, $linkId]));
-        $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [$eventId, $linkId]))
-            ->assertOk()->assertSee('Old')->assertSee('New');
-        $this->get(route('chief.audit.details', [$eventId + 1, $linkId]))->assertNotFound();
+            ->assertOk()->assertSee("modelId: '".$linkId."'", false);
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $eventId, (string) $linkId)
+            ->assertSee('Old')->assertSee('New');
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) ($eventId + 1), (string) $linkId)->assertNotFound();
     }
 
     public function test_long_text_stores_change_context_instead_of_entire_content(): void
@@ -186,9 +189,9 @@ final class ChangeDetailsTest extends ChiefTestCase
         ChiefResourcePermissions::syncMissingPermissions(AuditServiceProvider::PERMISSIONS);
         $viewer = $this->admin();
         $viewer->givePermissionTo('view-audit', 'view-full-audit');
-        $this->actingAs($viewer, 'chief')->get(route('chief.audit.details', [
-            DB::table('chief_audit_events')->value('id'), DB::table('chief_audit_event_models')->value('id'),
-        ]))->assertOk()->assertSee('OLD')->assertSee('WAS')->assertSee('NEW')->assertSee('NOW')
+        $this->actingAs($viewer, 'chief');
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) DB::table('chief_audit_events')->value('id'), (string) DB::table('chief_audit_event_models')->value('id'))
+            ->assertSee('OLD')->assertSee('WAS')->assertSee('NEW')->assertSee('NOW')
             ->assertDontSee(str_repeat('x', 200));
     }
 

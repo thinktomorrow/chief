@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests\UI;
 
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\RichData;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditDetails;
 use Thinktomorrow\Chief\Plugins\Audit\UI\RecentHistoryWidget;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -96,15 +98,15 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
             new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Allowed'], ['note' => 'Allowed details']),
         ]);
         $links = $event->models()->orderBy('id')->get();
-        $hidden = route('chief.audit.details', [$event->getKey(), $links[0]->getKey()]);
-        $allowed = route('chief.audit.details', [$event->getKey(), $links[1]->getKey()]);
+        $hidden = "modelId: '".$links[0]->getKey()."'";
+        $allowed = "modelId: '".$links[1]->getKey()."'";
 
         $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))
-            ->assertOk()->assertSee($allowed)->assertDontSee($hidden)->assertSee('Allowed')
+            ->assertOk()->assertSee($allowed, false)->assertDontSee($hidden, false)->assertSee('Allowed')
             ->assertDontSee('Secondary event')->assertDontSee('Hidden bulk summary')->assertDontSee('Hidden details')
             ->assertDontSee('Allowed details');
-        $this->get($allowed)->assertOk()->assertSee('Allowed details')->assertDontSee('Hidden details');
-        $this->get($hidden)->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $event->getKey(), (string) $links[1]->getKey())->assertSee('Allowed details')->assertDontSee('Hidden details');
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $event->getKey(), (string) $links[0]->getKey())->assertNotFound();
     }
 
     public function test_widget_links_to_authorized_rich_data_when_it_is_the_only_detail(): void
@@ -116,7 +118,7 @@ final class RecentHistoryWidgetTest extends ChiefTestCase
         $event = History::log(type: 'project.mail', actorType: 'system', actorSnapshot: ['name' => 'Worker'], richData: [RichData::text('Historical body')]);
 
         $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))
-            ->assertOk()->assertSee(route('chief.audit.rich-data', $event->getKey()))->assertDontSee('Historical body');
-        $this->get(route('chief.audit.rich-data', $event->getKey()))->assertOk()->assertSee('Historical body');
+            ->assertOk()->assertSee("kind: 'rich'", false)->assertDontSee('Historical body');
+        Livewire::test(AuditDetails::class)->call('open', 'rich', (string) $event->getKey())->assertSee('Historical body');
     }
 }

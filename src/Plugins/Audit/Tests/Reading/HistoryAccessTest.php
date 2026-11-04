@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Plugins\Audit\Tests\Reading;
 
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Plugins\Audit\Persistence\AuditEvent;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditDetails;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
@@ -124,16 +126,16 @@ final class HistoryAccessTest extends ChiefTestCase
         $viewer = $this->fakeUser();
         $viewer->givePermissionTo('view-audit', ChiefResourcePermissions::permissionFor(ArticlePageResource::class, 'view'));
         $links = AuditEvent::query()->findOrFail($event->getKey())->models()->orderBy('id')->get();
-        $hiddenUrl = route('chief.audit.details', [$event->getKey(), $links[0]->getKey()]);
-        $visibleUrl = route('chief.audit.details', [$event->getKey(), $links[1]->getKey()]);
+        $hidden = "modelId: '".$links[0]->getKey()."'";
+        $visible = "modelId: '".$links[1]->getKey()."'";
 
         $this->actingAs($viewer, 'chief')->get(route('chief.audit.index'))
-            ->assertOk()->assertSee($visibleUrl)->assertDontSee($hiddenUrl)->assertDontSee('Hidden model');
-        $this->get($hiddenUrl)->assertNotFound();
-        $this->get($visibleUrl)->assertOk()->assertSee('Visible model')->assertSee('27');
+            ->assertOk()->assertSee($visible, false)->assertDontSee($hidden, false)->assertDontSee('Hidden model');
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $event->getKey(), (string) $links[0]->getKey())->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $event->getKey(), (string) $links[1]->getKey())->assertSee('Visible model')->assertSee('27');
 
         $article->delete();
-        $this->get($visibleUrl)->assertNotFound();
+        Livewire::test(AuditDetails::class)->call('open', 'model', (string) $event->getKey(), (string) $links[1]->getKey())->assertNotFound();
     }
 
     public function test_partial_bulk_projection_filters_search_counts_and_pages_without_exposing_shared_text(): void

@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\History;
 use Thinktomorrow\Chief\Plugins\Audit\Recording\AuditModelDTO;
+use Thinktomorrow\Chief\Plugins\Audit\Recording\RichData;
 use Thinktomorrow\Chief\Plugins\Audit\UI\AuditPresets;
 use Thinktomorrow\Chief\Plugins\Audit\UI\RecentHistoryWidget;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -63,11 +64,13 @@ final class PresentationTest extends ChiefTestCase
         config()->set('chief.widgets', [RecentHistoryWidget::class]);
         config()->set('chief-audit.types', ['project.approved' => ['label' => 'Goedkeuring']]);
 
-        History::log(type: 'project.approved', actorType: 'system', actorSnapshot: ['name' => 'Worker'], models: [
-            new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Visible article']),
-        ]);
+        History::log(type: 'project.approved', actorType: 'system', actorSnapshot: ['name' => 'Worker'], context: ['note' => 'More details'], models: [
+            new AuditModelDTO($article->getMorphClass(), (string) $article->getKey(), ['name' => 'Visible article'], ['note' => 'Model details']),
+        ], richData: [RichData::text('Previous content')]);
 
         $this->actingAs($viewer, 'chief')->get(route('chief.back.dashboard'))->assertOk()->assertSee('Goedkeuring');
-        $this->get($this->manager($article)->route('edit', $article))->assertOk()->assertSee('Goedkeuring');
+        $this->get($this->manager($article)->route('edit', $article))->assertOk()->assertSee('Goedkeuring')
+            ->assertSee('chief-audit::details')->assertSee("kind: 'event'", false)
+            ->assertSee("kind: 'model'", false)->assertSee("kind: 'rich'", false)->assertDontSee('Previous content');
     }
 }

@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Plugins\Audit;
 
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Event;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Authentication\Events\ChiefLoginCompleted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\ManagedModels\Events\ChiefActionCompleted;
@@ -20,6 +21,7 @@ use Thinktomorrow\Chief\Plugins\Audit\App\Actions\RecordUserInvitation;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\AuditPermissionsCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\CleanupAuditCommand;
 use Thinktomorrow\Chief\Plugins\Audit\App\Commands\ImportSpatieActivitiesCommand;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditDetails;
 use Thinktomorrow\Chief\Plugins\ChiefPluginServiceProvider;
 use Thinktomorrow\Chief\Plugins\Export\Events\ChiefExportCompleted;
 
@@ -55,6 +57,7 @@ final class AuditServiceProvider extends ChiefPluginServiceProvider
 
         $this->loadMigrationsFrom(__DIR__.'/Infrastructure/migrations');
         $this->app['view']->addNamespace('chief-audit', __DIR__.'/UI/views');
+        Livewire::component('chief-audit::details', AuditDetails::class);
         $this->loadPluginAdminRoutes(__DIR__.'/App/routes/chief-admin-routes.php');
     }
 }

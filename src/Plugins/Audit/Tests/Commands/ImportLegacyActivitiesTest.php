@@ -8,9 +8,11 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Livewire\Livewire;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefResourcePermissions;
 use Thinktomorrow\Chief\Plugins\Audit\AuditServiceProvider;
 use Thinktomorrow\Chief\Plugins\Audit\Persistence\AuditEvent;
+use Thinktomorrow\Chief\Plugins\Audit\UI\AuditDetails;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageResource;
 
@@ -80,8 +82,8 @@ final class ImportLegacyActivitiesTest extends ChiefTestCase
         $this->actingAs($full, 'chief')->get(route('chief.audit.index'))
             ->assertOk()->assertSee('Bijgewerkt')->assertSee('Changed secret draft')->assertDontSee('<span>legacy.spatie</span>', false)
             ->assertDontSee('legacy secret')->assertSee('No known subject');
-        $this->get(route('chief.audit.event-details', $imported->getKey()))
-            ->assertOk()->assertSee('Brongegevens')->assertDontSee('legacy.spatie');
+        Livewire::test(AuditDetails::class)
+            ->call('open', 'event', (string) $imported->getKey())->assertSee('Brongegevens')->assertDontSee('legacy.spatie');
 
         DB::table('chief_audit_events')->where('id', $imported->getKey())->delete();
         $this->assertSame(1, Artisan::call('chief-audit:import-spatie', ['--cleanup-registry' => true]));

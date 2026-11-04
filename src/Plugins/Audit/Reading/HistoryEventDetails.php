@@ -63,8 +63,10 @@ final class HistoryEventDetails
 
     public function detail(string $eventId, string $linkId): AuditEventModel
     {
-        $event = AuditEvent::query()->findOrFail($eventId);
-        $link = AuditEventModel::query()->where('event_id', $event->getKey())->findOrFail($linkId);
+        $event = AuditEvent::query()->find($eventId);
+        abort_unless($event, 404);
+        $link = AuditEventModel::query()->where('event_id', $event->getKey())->find($linkId);
+        abort_unless($link, 404);
         abort_unless($link->changes || $link->context, 404);
         abort_unless($this->read->canViewModel($link->model_type, $link->model_id), 404);
 
