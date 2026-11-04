@@ -15,6 +15,9 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
   count of a textarea field keeps updating.
 - Fixed: The hotspots dialog now initializes its fields when it opens and when a hotspot is added, so Html fields load
   the Redactor editor instead of showing a plain textarea, and conditional fields work inside the dialog.
+- Fixed: `php artisan view:cache` no longer fails on a default install. The unused `fragment-context-selection` view is
+  removed, and the tag component moved from the Tags plugin to core, so the tag column no longer depends on the plugin.
+- Changed: `<x-chief-tags::tag>` is now `<x-chief::tag>`. Rename it in project views that use the component directly.
 
 ## [0.10.34] - 2026-09-29
 
