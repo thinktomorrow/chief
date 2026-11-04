@@ -194,8 +194,79 @@ class EditFragmentTest extends ChiefTestCase
 
         $english = collect($this->component->instance()->getMoveDestinations())->firstWhere('id', $candidate->getFragmentId());
 
-        $this->assertSame('snippet stub — Nederlandse titel', $dutch['label']);
-        $this->assertSame('snippet stub — English title', $english['label']);
+        $this->assertSame('[Snippet stub] Nederlandse titel', $dutch['label']);
+        $this->assertSame('[Snippet stub] English title', $english['label']);
+    }
+
+    public function test_move_destination_options_are_formatted_for_the_multiselect(): void
+    {
+        chiefRegister()->fragment(MoveContainerStub::class);
+        chiefRegister()->fragment(SnippetStub::class);
+
+        $contextId = ContextModel::first()->id;
+        $container = FragmentTestHelpers::createAndAttachFragment(MoveContainerStub::class, $contextId);
+        $nested = FragmentTestHelpers::createAndAttachFragment(MoveContainerStub::class, $contextId, $container->getFragmentId());
+        $leaf = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $contextId);
+
+        $this->component->call('open', [
+            'fragmentId' => $leaf->getFragmentId(),
+            'locales' => ['nl', 'en'],
+            'scopedLocale' => 'nl',
+        ]);
+
+        $options = collect($this->component->instance()->getMoveDestinationOptions())->keyBy('value');
+
+        $this->assertSame(['value' => 'root', 'label' => 'Hoofdniveau van de pagina (huidige locatie)', 'disabled' => true], $options['root']);
+        $this->assertFalse($options[$container->getFragmentId()]['disabled']);
+        $this->assertStringStartsWith('— ', $options[$nested->getFragmentId()]['label']);
+        $this->assertFalse($options[$nested->getFragmentId()]['disabled']);
+        $this->assertStringEndsWith(' (niet mogelijk)', $options[$this->fragment->getFragmentId()]['label']);
+        $this->assertTrue($options[$this->fragment->getFragmentId()]['disabled']);
+        $this->assertStringEndsWith(' (niet mogelijk)', $options[$leaf->getFragmentId()]['label']);
+    }
+
+    public function test_move_destinations_are_only_loaded_when_the_move_dialog_opens(): void
+    {
+        $this->component->call('open', [
+            'fragmentId' => $this->fragment->getFragmentId(),
+            'locales' => ['nl', 'en'],
+            'scopedLocale' => 'nl',
+        ])
+            ->assertSet('moveDestinationOptions', null)
+            ->assertSee('Locaties laden...')
+            ->call('loadMoveDestinationOptions')
+            ->assertNotSet('moveDestinationOptions', null);
+    }
+
+    public function test_move_dialog_explains_when_no_destination_is_available(): void
+    {
+        $this->component->call('open', [
+            'fragmentId' => $this->fragment->getFragmentId(),
+            'locales' => ['nl', 'en'],
+            'scopedLocale' => 'nl',
+        ])
+            ->call('loadMoveDestinationOptions')
+            ->assertSee('Geen andere locaties beschikbaar voor dit fragment.')
+            ->assertDontSee('Nieuwe locatie');
+    }
+
+    public function test_move_dialog_shows_destinations_when_one_is_available(): void
+    {
+        chiefRegister()->fragment(MoveContainerStub::class);
+        chiefRegister()->fragment(SnippetStub::class);
+
+        $contextId = ContextModel::first()->id;
+        FragmentTestHelpers::createAndAttachFragment(MoveContainerStub::class, $contextId);
+        $leaf = FragmentTestHelpers::createAndAttachFragment(SnippetStub::class, $contextId);
+
+        $this->component->call('open', [
+            'fragmentId' => $leaf->getFragmentId(),
+            'locales' => ['nl', 'en'],
+            'scopedLocale' => 'nl',
+        ])
+            ->call('loadMoveDestinationOptions')
+            ->assertDontSee('Geen andere locaties beschikbaar voor dit fragment.')
+            ->assertSee('Nieuwe locatie');
     }
 
     public function test_moving_fragment_notifies_and_requests_context_refresh_only_after_success(): void
@@ -217,14 +288,14 @@ class EditFragmentTest extends ChiefTestCase
             ->assertNotDispatched('create-notification');
 
         $this->component
-            ->set('moveParentId', $invalidParent->getFragmentId())
+            ->set('moveParentId', [$invalidParent->getFragmentId()])
             ->call('moveFragment')
             ->assertHasErrors('moveParentId')
             ->assertSet('isOpen', true)
             ->assertNotDispatched('create-notification');
 
         $this->component
-            ->set('moveParentId', $container->getFragmentId())
+            ->set('moveParentId', [$container->getFragmentId()])
             ->call('moveFragment')
             ->assertHasNoErrors()
             ->assertSet('isOpen', false)

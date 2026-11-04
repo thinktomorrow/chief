@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Forms\Layouts\PageLayout;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\App\Repositories\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Vine\NodeCollection;
 
 final class GetMoveDestinations
 {
@@ -29,14 +30,14 @@ final class GetMoveDestinations
 
         $destinations = [[
             'id' => 'root',
-            'label' => 'Als topfragment',
+            'label' => 'Hoofdniveau van de pagina',
             'depth' => 0,
             'reason' => $currentParentId === null
                 ? 'current-location'
                 : (! in_array($fragmentClass, $owner->allowedFragments(), true) ? 'not-allowed-at-root' : null),
         ]];
 
-        $append = function ($nodes, int $depth, bool $belowMovingFragment) use (&$append, &$destinations, $fragmentId, $fragmentClass, $currentParentId, $locale, $owner): ?string {
+        $append = function (NodeCollection $nodes, int $depth, bool $belowMovingFragment) use (&$append, &$destinations, $fragmentId, $fragmentClass, $currentParentId, $locale, $owner): ?string {
             $firstDescription = null;
 
             foreach ($nodes as $candidate) {
@@ -54,7 +55,7 @@ final class GetMoveDestinations
                 $index = count($destinations);
                 $destinations[] = [
                     'id' => $id,
-                    'label' => $candidate->getLabel(),
+                    'label' => '['.ucfirst($candidate->getLabel()).']',
                     'depth' => $depth,
                     'reason' => $reason,
                 ];
@@ -65,7 +66,7 @@ final class GetMoveDestinations
                 $description = $ownDescription ?? $childDescription;
 
                 if ($description !== null) {
-                    $destinations[$index]['label'] .= ' — '.Str::limit($description, 72);
+                    $destinations[$index]['label'] .= ' '.Str::limit($description, 72);
                 }
 
                 $firstDescription ??= $description;

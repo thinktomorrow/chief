@@ -48,8 +48,8 @@ class GetMoveDestinationsTest extends ChiefTestCase
         $english = collect(app(GetMoveDestinations::class)->handle($context->id, $moving->getFragmentId(), 'en'))
             ->firstWhere('id', $candidate->getFragmentId());
 
-        $this->assertSame('snippet stub — Nederlandse titel', $dutch['label']);
-        $this->assertSame('snippet stub — English title', $english['label']);
+        $this->assertSame('[Snippet stub] Nederlandse titel', $dutch['label']);
+        $this->assertSame('[Snippet stub] English title', $english['label']);
     }
 
     public function test_it_uses_the_first_text_field_when_there_is_no_title(): void
@@ -70,7 +70,7 @@ class GetMoveDestinationsTest extends ChiefTestCase
         $destination = collect(app(GetMoveDestinations::class)->handle($context->id, $moving->getFragmentId(), 'nl'))
             ->firstWhere('id', $candidate->getFragmentId());
 
-        $this->assertSame('snippet stub — Hallo wereld! Nog een zin.', $destination['label']);
+        $this->assertSame('[Snippet stub] Hallo wereld! Nog een zin.', $destination['label']);
     }
 
     public function test_it_uses_a_child_description_for_a_container_without_own_text(): void
@@ -89,8 +89,8 @@ class GetMoveDestinationsTest extends ChiefTestCase
         $destinations = collect(app(GetMoveDestinations::class)->handle($context->id, $moving->getFragmentId(), 'nl'))
             ->keyBy('id');
 
-        $this->assertSame('move container stub — Eerste kindtekst', $destinations[$container->getFragmentId()]['label']);
-        $this->assertSame('move container stub — Eerste kindtekst', $destinations[$nested->getFragmentId()]['label']);
+        $this->assertSame('[Move container stub] Eerste kindtekst', $destinations[$container->getFragmentId()]['label']);
+        $this->assertSame('[Move container stub] Eerste kindtekst', $destinations[$nested->getFragmentId()]['label']);
     }
 
     public function test_it_keeps_the_type_label_when_no_text_is_available(): void
@@ -102,7 +102,7 @@ class GetMoveDestinationsTest extends ChiefTestCase
         $destination = collect(app(GetMoveDestinations::class)->handle($context->id, $moving->getFragmentId(), 'nl'))
             ->firstWhere('id', $empty->getFragmentId());
 
-        $this->assertSame('move container stub', $destination['label']);
+        $this->assertSame('[Move container stub]', $destination['label']);
     }
 
     public function test_it_shortens_long_text_descriptions(): void
@@ -118,7 +118,7 @@ class GetMoveDestinationsTest extends ChiefTestCase
         $destination = collect(app(GetMoveDestinations::class)->handle($context->id, $moving->getFragmentId(), 'nl'))
             ->firstWhere('id', $candidate->getFragmentId());
 
-        $this->assertSame('snippet stub — '.str_repeat('a', 72).'...', $destination['label']);
+        $this->assertSame('[Snippet stub] '.str_repeat('a', 72).'...', $destination['label']);
     }
 
     public function test_it_marks_the_current_root_location_even_if_the_type_is_no_longer_allowed_there(): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\App\Actions;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
@@ -48,19 +49,7 @@ final class MoveFragment
                     throw new InvalidArgumentException('The selected parent does not exist in this context.');
                 }
 
-                // Walk up the destination branch to prevent cycles.
-                $visited = [];
-                for ($id = $newParentId; $id !== null; $id = $byId->get($id)?->parent_id) {
-                    if ($id === $fragmentId || isset($visited[$id])) {
-                        throw new InvalidArgumentException('A fragment cannot be moved below itself or one of its descendants.');
-                    }
-
-                    if (! $byId->has($id)) {
-                        throw new InvalidArgumentException('The selected parent has an invalid parent chain.');
-                    }
-
-                    $visited[$id] = true;
-                }
+                $this->guardAgainstCycles($byId, $fragmentId, $newParentId);
 
                 $allowed = $this->fragments->findInContext($newParentId, $contextId)->allowedFragments();
             }
@@ -75,13 +64,13 @@ final class MoveFragment
                 return false;
             }
 
-            $siblings = fn (?string $parentId) => $rows
-                ->filter(fn ($row) => $row->parent_id === $parentId)
+            $siblings = fn (?string $parentId): array => $rows
+                ->filter(fn (object $row): bool => $row->parent_id === $parentId)
                 ->pluck('child_id')
                 ->values()
                 ->all();
 
-            $targetIds = array_values(array_filter($siblings($newParentId), fn ($id) => $id !== $fragmentId));
+            $targetIds = array_values(array_filter($siblings($newParentId), fn (string $id): bool => $id !== $fragmentId));
             $insertAt = $order === null ? count($targetIds) : min($order, count($targetIds));
             array_splice($targetIds, $insertAt, 0, [$fragmentId]);
 
@@ -97,7 +86,7 @@ final class MoveFragment
             $this->reindex($contextId, $targetIds);
 
             if ($oldParentId !== $newParentId) {
-                $oldIds = array_values(array_filter($siblings($oldParentId), fn ($id) => $id !== $fragmentId));
+                $oldIds = array_values(array_filter($siblings($oldParentId), fn (string $id): bool => $id !== $fragmentId));
                 $this->reindex($contextId, $oldIds);
             }
 
@@ -111,6 +100,30 @@ final class MoveFragment
         return $moved;
     }
 
+    /**
+     * Walk up the destination branch so a fragment can never end up
+     * below itself or one of its descendants.
+     *
+     * @param  Collection<string, object>  $rowsByChildId
+     */
+    private function guardAgainstCycles(Collection $rowsByChildId, string $fragmentId, string $newParentId): void
+    {
+        $visited = [];
+
+        for ($id = $newParentId; $id !== null; $id = $rowsByChildId->get($id)?->parent_id) {
+            if ($id === $fragmentId || isset($visited[$id])) {
+                throw new InvalidArgumentException('A fragment cannot be moved below itself or one of its descendants.');
+            }
+
+            if (! $rowsByChildId->has($id)) {
+                throw new InvalidArgumentException('The selected parent has an invalid parent chain.');
+            }
+
+            $visited[$id] = true;
+        }
+    }
+
+    /** @param  list<string>  $fragmentIds */
     private function reindex(string $contextId, array $fragmentIds): void
     {
         foreach ($fragmentIds as $order => $fragmentId) {
