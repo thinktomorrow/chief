@@ -40,6 +40,7 @@ class ComposeLivewireDto
     public function getContextsByOwner(ContextOwner|ModelReference $modelReference): Collection
     {
         $owner = $modelReference instanceof ContextOwner ? $modelReference : $modelReference->instance();
+        $locales = ChiefSites::locales();
 
         $collection = $this->contextRepository->getByOwner($owner->modelReference())
             ->map(function ($context) use ($owner) {
@@ -51,9 +52,19 @@ class ComposeLivewireDto
                     $ownerResource->getPageTitle($owner),
                     $this->registry->findManagerByModel($owner::class)->route('edit', $owner),
                 );
-            });
+            })
+            ->sortBy(function (ContextDto $context) use ($locales) {
+                foreach ($locales as $index => $locale) {
+                    if (in_array($locale, $context->getAllowedSites(), true)) {
+                        return $index;
+                    }
+                }
 
-        $modelLocales = $owner instanceof HasAllowedSites ? $owner->getAllowedSites() : ChiefSites::locales();
+                return count($locales);
+            })
+            ->values();
+
+        $modelLocales = $owner instanceof HasAllowedSites ? $owner->getAllowedSites() : $locales;
 
         $this->setUnassignedActiveSitesToPrimaryContext($collection, $modelLocales);
 

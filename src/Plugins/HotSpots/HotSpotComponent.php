@@ -63,6 +63,8 @@ class HotSpotComponent extends Component
         $this->extractGroupedFormComponents();
 
         $this->initializeLocales($value, $this->getComponents());
+
+        $this->dispatchFormDialogOpened();
     }
 
     public function onScopedToLocale(string $locale): void
@@ -105,6 +107,20 @@ class HotSpotComponent extends Component
         $this->activeHotSpotId = $id;
 
         $this->extractGroupedFormComponents();
+
+        $this->dispatchFormDialogOpened();
+    }
+
+    /**
+     * Let the admin scripts (e.g. the redactor editor and conditional fields)
+     * initialize the fields that were just rendered in this dialog.
+     */
+    private function dispatchFormDialogOpened(): void
+    {
+        $this->dispatch('form-dialog-opened', ...[
+            'componentId' => $this->getId(),
+            'parentComponentId' => $this->parentId,
+        ]);
     }
 
     public function removeHotSpot(string $id)

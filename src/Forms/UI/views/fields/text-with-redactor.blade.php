@@ -1,4 +1,6 @@
 <div
+    wire:key="external-editor-toolbar-{{ $getKey() }}-{{ $locale ?? 'default' }}"
+    wire:ignore
     class="external-editor-toolbar mb-1 w-full"
     id="js-external-editor-toolbar-{{ str_replace('.', '_', $getElementId($locale ?? null)) }}"
 ></div>
