@@ -30,7 +30,7 @@
                 class="lg:shadow-grey-50 lg:border-grey-100/50 bg-white/75 lg:h-full lg:overflow-hidden lg:rounded-3xl lg:border lg:shadow-lg"
             >
                 <div
-                    class="scrollbar-thumb-grey-300 scrollbar-thin scrollbar-track-transparent [scrollbar-gutter:stable_both-edges] lg:mx-1 lg:my-6 lg:h-[calc(100%-3rem)] lg:overflow-y-auto"
+                    class="scrollbar-thumb-grey-300 scrollbar-thin scrollbar-track-transparent scrollbar-gutter-both lg:mx-1 lg:h-full lg:overflow-y-auto lg:py-6"
                 >
                     @if ($container === 'full')
                         {{-- DO NOT DELETE min-w-0 (cfr. comment above) --}}
