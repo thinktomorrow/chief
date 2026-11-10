@@ -8,6 +8,7 @@ use Livewire\Attributes\Url;
 use Thinktomorrow\Chief\Table\Filters\Filter;
 use Thinktomorrow\Chief\Table\Filters\Presets\SiteFilter;
 use Thinktomorrow\Chief\Table\Filters\SelectFilter;
+use Thinktomorrow\Chief\Table\Filters\ToggleFilter;
 
 trait WithFilters
 {
@@ -43,7 +44,11 @@ trait WithFilters
 
     public function getActiveFilters(): array
     {
-        return array_filter($this->filters, fn ($filterValue) => ! $this->isEmptyFilterValue($filterValue));
+        return array_filter(
+            $this->filters,
+            fn ($filterValue, $filterKey) => ! $this->isEmptyFilterValue($filterValue) && ! $this->isSwitchedOffToggle($filterKey, $filterValue),
+            ARRAY_FILTER_USE_BOTH
+        );
     }
 
     /**
@@ -90,10 +95,40 @@ trait WithFilters
     public function removeEmptyFilters(): void
     {
         foreach ($this->filters as $key => $filterValue) {
-            if ($this->isEmptyFilterValue($filterValue)) {
+            if ($this->isEmptyFilterValue($filterValue) || $this->isRedundantSwitchedOffToggle($key, $filterValue)) {
                 unset($this->filters[$key]);
             }
         }
+    }
+
+    /**
+     * Toggle values restored from the url arrive as strings such as 'false'. Cast them
+     * to booleans so the switch state in the browser matches the applied filter.
+     */
+    private function castToggleFilterValues(): void
+    {
+        foreach ($this->getFilters() as $filter) {
+            if ($filter instanceof ToggleFilter && isset($this->filters[$filter->getKey()])) {
+                $this->filters[$filter->getKey()] = $filter->isOn($this->filters[$filter->getKey()]);
+            }
+        }
+    }
+
+    private function isSwitchedOffToggle(string|int $filterKey, mixed $filterValue): bool
+    {
+        $filter = $this->findFilterOrNull((string) $filterKey);
+
+        return $filter instanceof ToggleFilter && ! $filter->isOn($filterValue);
+    }
+
+    /**
+     * A switched-off toggle is only kept when it overrides a toggle that is on by default.
+     */
+    private function isRedundantSwitchedOffToggle(string|int $filterKey, mixed $filterValue): bool
+    {
+        $filter = $this->findFilterOrNull((string) $filterKey);
+
+        return $filter instanceof ToggleFilter && ! $filter->isOn($filterValue) && ! $filter->isOnByDefault();
     }
 
     private function applyQueryFilters(Builder $builder): void
@@ -231,7 +266,7 @@ trait WithFilters
     private function isEmptyFilterValue($value): bool
     {
         if (is_array($value)) {
-            return count($value) == 1 && $this->isEmptyFilterValue(reset($value));
+            return count($value) == 0 || (count($value) == 1 && $this->isEmptyFilterValue(reset($value)));
         }
 
         return is_null($value) || $value === '' || (is_array($value) && empty($value));

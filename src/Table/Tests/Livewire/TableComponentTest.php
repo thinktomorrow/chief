@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Forms\Dialogs\Dialog;
 use Thinktomorrow\Chief\Table\Actions\Action;
 use Thinktomorrow\Chief\Table\Columns\ColumnText;
 use Thinktomorrow\Chief\Table\Filters\ButtonGroupFilter;
-use Thinktomorrow\Chief\Table\Filters\OptionFilter;
+use Thinktomorrow\Chief\Table\Filters\CheckboxFilter;
 use Thinktomorrow\Chief\Table\Filters\RadioFilter;
 use Thinktomorrow\Chief\Table\Filters\SelectFilter;
 use Thinktomorrow\Chief\Table\Filters\TextFilter;
@@ -91,7 +91,7 @@ class TableComponentTest extends TestCase
                 SelectFilter::make('select')->options([]),
                 RadioFilter::make('radio')->options([]),
                 ButtonGroupFilter::make('button-group')->options([]),
-                OptionFilter::make('option')->options([]),
+                CheckboxFilter::make('checkbox')->options([]),
                 TextFilter::make('text'),
             ])
             ->columns([

@@ -361,24 +361,6 @@ parameters:
 			path: src/Table/Filters/ButtonGroupFilter.php
 
 		-
-			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\CheckboxFilter\:\:getModel\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Table/Filters/CheckboxFilter.php
-
-		-
-			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\CheckboxFilter\:\:prepForSaving\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Table/Filters/CheckboxFilter.php
-
-		-
-			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\RadioFilter\:\:getModel\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Table/Filters/RadioFilter.php
-
-		-
 			message: '#^Call to an undefined method Thinktomorrow\\Chief\\Table\\Filters\\SelectFilter\:\:prepForSaving\(\)\.$#'
 			identifier: method.notFound
 			count: 1

@@ -49,3 +49,23 @@ input:checked:disabled + .form-input-toggle {
         @apply bg-grey-400;
     }
 }
+
+/**
+ * Compact toggle that matches the line height of base buttons, e.g. the toggle filter in the table header.
+ * Defined outside of @utility so it overrides the sizing of the layered form-input-toggle utility.
+ */
+.form-input-toggle-sm {
+    width: 2.25rem;
+    height: 1.25rem;
+
+    &:after {
+        width: 0.875rem;
+        height: 0.875rem;
+        top: 0.1875rem;
+        left: 0.1875rem;
+    }
+}
+
+input:checked + .form-input-toggle-sm:after {
+    transform: translateX(1rem);
+}
