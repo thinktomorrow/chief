@@ -5,6 +5,8 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+## [0.10.35] - 2026-11-10
+
 - Added: `ToggleFilter`, `CheckboxFilter` and `RadioFilter` table filters now render in the table header, the filters
   drawer and the actions bar, consistent with the select filter. The toggle filter follows the Boolean field API
   (`optionLabel()`, `optionDescription()`, `defaultOn()`, `defaultOff()`), applies on change and is removed from the
