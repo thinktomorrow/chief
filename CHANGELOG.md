@@ -5,6 +5,10 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Changed: Boolean fields now save checked and unchecked values as `true` and `false` by default, including values
+  submitted by Livewire. Existing stored values are not converted; fields that need the previous `['1']` / `null`
+  format can override `prepForSaving()`.
+
 ## [0.10.35] - 2026-11-10
 
 - Added: `ToggleFilter`, `CheckboxFilter` and `RadioFilter` table filters now render in the table header, the filters
