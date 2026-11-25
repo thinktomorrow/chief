@@ -354,6 +354,10 @@ trait WithFilters
                 session($this->getSortersSessionKey(), []),
                 $this->sortersWithoutScopedTableState($this->sorters),
             );
+
+            if ($this->sorters === []) {
+                $this->applyDefaultSorters();
+            }
         }
     }
 

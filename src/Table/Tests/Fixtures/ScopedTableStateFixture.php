@@ -80,6 +80,22 @@ class ScopedTableStateFixture
             ]);
     }
 
+    public static function scopedDefaultSorters(): Table
+    {
+        return static::base('scopedDefaultSorters')
+            ->filters([
+                SelectFilter::make('period')
+                    ->options(['current' => 'Current', 'archived' => 'Archived'])
+                    ->value('current')
+                    ->query(function (): void {})
+                    ->scoped(),
+            ])
+            ->sorters([
+                Sort::make('title_desc')->query(fn ($builder) => $builder->orderBy('title', 'desc'))->actAsDefault(),
+                Sort::make('title_asc')->query(fn ($builder) => $builder->orderBy('title', 'asc')),
+            ]);
+    }
+
     private static function base(string $method): Table
     {
         return Table::make()

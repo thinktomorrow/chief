@@ -5,6 +5,7 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: default table sorting was not persisted when using scoped filters
 - Changed: Boolean fields now save checked and unchecked values as `true` and `false` by default, including values
   submitted by Livewire. Existing stored values are not converted; fields that need the previous `['1']` / `null`
   format can override `prepForSaving()`.

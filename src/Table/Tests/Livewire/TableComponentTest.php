@@ -271,6 +271,33 @@ class TableComponentTest extends TestCase
             ->assertSet('sorters.title_desc', 'asc');
     }
 
+    public function test_it_applies_default_sorting_when_switching_to_scopes_without_a_saved_sorter(): void
+    {
+        $component = Livewire::test(TableComponent::class, ['table' => ScopedTableStateFixture::scopedDefaultSorters()]);
+
+        $this->assertSame(['root title', 'grandchild title', 'child2 title', 'child1 title'], $component->instance()->getResultsAsCollection()->pluck('title')->all());
+
+        $component->set('filters.period', 'archived');
+        $this->assertSame(['root title', 'grandchild title', 'child2 title', 'child1 title'], $component->instance()->getResultsAsCollection()->pluck('title')->all());
+
+        $component->set('filters.period', 'current');
+        $this->assertSame(['root title', 'grandchild title', 'child2 title', 'child1 title'], $component->instance()->getResultsAsCollection()->pluck('title')->all());
+    }
+
+    public function test_it_restores_a_selected_sorter_after_switching_scopes(): void
+    {
+        $component = Livewire::test(TableComponent::class, ['table' => ScopedTableStateFixture::scopedDefaultSorters()])
+            ->set('sorters.title_asc', 'asc');
+
+        $this->assertSame(['child1 title', 'child2 title', 'grandchild title', 'root title'], $component->instance()->getResultsAsCollection()->pluck('title')->all());
+
+        $component->set('filters.period', 'archived');
+        $this->assertSame(['root title', 'grandchild title', 'child2 title', 'child1 title'], $component->instance()->getResultsAsCollection()->pluck('title')->all());
+
+        $component->set('filters.period', 'current');
+        $this->assertSame(['child1 title', 'child2 title', 'grandchild title', 'root title'], $component->instance()->getResultsAsCollection()->pluck('title')->all());
+    }
+
     public function test_select_filter_options_receive_active_table_filters(): void
     {
         $component = Livewire::test(TableComponent::class, ['table' => ScopedTableStateFixture::optionsFromActiveFilters()])
