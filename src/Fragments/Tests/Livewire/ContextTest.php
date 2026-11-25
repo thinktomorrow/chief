@@ -122,4 +122,20 @@ class ContextTest extends ChiefTestCase
             'order' => 0,
         ]);
     }
+
+    public function test_it_refreshes_fragments_after_a_move(): void
+    {
+        $component = $this->mountComponent();
+        $contextId = ContextModel::first()->id;
+
+        $this->assertCount(1, $component->instance()->fragments);
+
+        $second = FragmentTestHelpers::createAndAttachFragment(Hero::class, $contextId, null, 1);
+
+        $component->call('onFragmentMoved', $contextId)
+            ->assertStatus(200);
+
+        $this->assertCount(2, $component->instance()->fragments);
+        $this->assertSame($second->getFragmentId(), $component->instance()->fragments->last()->fragmentId);
+    }
 }

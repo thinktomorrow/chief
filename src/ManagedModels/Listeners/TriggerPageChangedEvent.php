@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Fragments\App\Repositories\ContextOwnerRepository;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentMoved;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\ManagedModels\Events\ManagedModelDeleted;
@@ -55,6 +56,13 @@ class TriggerPageChangedEvent
     }
 
     public function onFragmentsReordered(FragmentsReordered $e): void
+    {
+        $model = $this->contextOwnerRepository->findOwner($e->contextId);
+
+        event(new PageChanged($model->modelReference()));
+    }
+
+    public function onFragmentMoved(FragmentMoved $e): void
     {
         $model = $this->contextOwnerRepository->findOwner($e->contextId);
 

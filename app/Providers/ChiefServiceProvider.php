@@ -34,6 +34,7 @@ use Thinktomorrow\Chief\Fragments\App\Actions\UpdateFragmentMetadata;
 use Thinktomorrow\Chief\Fragments\Events\FragmentAttached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDetached;
 use Thinktomorrow\Chief\Fragments\Events\FragmentDuplicated;
+use Thinktomorrow\Chief\Fragments\Events\FragmentMoved;
 use Thinktomorrow\Chief\Fragments\Events\FragmentsReordered;
 use Thinktomorrow\Chief\Fragments\Events\FragmentUpdated;
 use Thinktomorrow\Chief\Fragments\FragmentsServiceProvider;
@@ -227,6 +228,7 @@ class ChiefServiceProvider extends ServiceProvider
         Event::listen(FragmentDuplicated::class, [TriggerPageChangedEvent::class, 'onFragmentDuplicated']);
         Event::listen(FragmentDuplicated::class, [UpdateFragmentMetadata::class, 'onFragmentDuplicated']);
         Event::listen(FragmentsReordered::class, [TriggerPageChangedEvent::class, 'onFragmentsReordered']);
+        Event::listen(FragmentMoved::class, [TriggerPageChangedEvent::class, 'onFragmentMoved']);
 
         // Form events
         Event::listen(FormUpdated::class, [TriggerPageChangedEvent::class, 'onFormUpdated']);
