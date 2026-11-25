@@ -156,7 +156,7 @@ class EditFragmentTest extends ChiefTestCase
 
         $destinations = collect($this->component->instance()->getMoveDestinations())->keyBy('id');
 
-        $this->assertSame('Het fragment staat al op deze locatie.', $destinations['root']['disabledReason']);
+        $this->assertSame('Huidige locatie van dit fragment.', $destinations['root']['disabledReason']);
         $this->assertTrue($destinations['root']['isCurrentLocation']);
         $this->assertNull($destinations[$container->getFragmentId()]['disabledReason']);
         $this->assertSame(1, $destinations[$nested->getFragmentId()]['depth']);
@@ -165,7 +165,7 @@ class EditFragmentTest extends ChiefTestCase
         $this->assertSame(1, $destinations[$validDescendant->getFragmentId()]['depth']);
         $this->assertNull($destinations[$validDescendant->getFragmentId()]['disabledReason']);
         $this->assertSame('Dit fragmenttype is hier niet toegestaan.', $destinations[$this->fragment->getFragmentId()]['disabledReason']);
-        $this->component->assertSee('disabled', false);
+        $this->component->call('loadMoveDestinationOptions')->assertSee('disabled', false);
         $this->component->assertSee('(huidige locatie)')
             ->assertSee('(niet mogelijk)');
     }
