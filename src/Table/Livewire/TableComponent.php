@@ -67,6 +67,7 @@ class TableComponent extends Component
         $this->table = $table;
         $this->tableReference = $table->getTableReference();
         $this->setDefaultFilters();
+        $this->castToggleFilterValues();
         $this->initializeVisibleFilters();
         $this->resetTertiaryFilters();
 

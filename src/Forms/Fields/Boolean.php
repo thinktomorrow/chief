@@ -21,6 +21,7 @@ class Boolean extends Component implements Field
         parent::__construct($key);
 
         $this->defaultOff();
+        $this->prepForSaving(fn ($field, $value): bool => (bool) $value);
     }
 
     public function default(int|bool|array|string|Closure|null $default): static

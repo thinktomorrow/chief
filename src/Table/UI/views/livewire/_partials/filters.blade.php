@@ -1,3 +1,5 @@
+@use ('Thinktomorrow\Chief\Table\Filters\ToggleFilter')
+
 <div x-data="tableFilters" class="flex items-start gap-2">
     @foreach ($this->getSecondaryFilters() as $filter)
         <div data-filter-key="{{ $filter->getKey() }}">{!! $filter->render() !!}</div>
@@ -26,9 +28,13 @@
                 <div class="space-y-6">
                     {{-- TODO: these filters shouldn't auto update on change, but use the submit button in drawer footer instead --}}
                     @foreach ($this->getTertiaryFilters() as $filter)
+                        @php
+                            $labelRepeatsSwitchLabel = $filter instanceof ToggleFilter && $filter->getSwitchLabel() === $filter->getLabel();
+                        @endphp
+
                         <div class="space-y-2">
                             <div>
-                                @if ($filter->getLabel())
+                                @if ($filter->getLabel() && ! $labelRepeatsSwitchLabel)
                                     <x-chief::form.label> {{ $filter->getLabel() }} </x-chief::form.label>
                                 @endif
 
@@ -40,6 +46,12 @@
                             </div>
 
                             {!! $filter->render() !!}
+
+                            @if ($filter instanceof ToggleFilter && $filter->getOptionDescription())
+                                <x-chief::form.description>
+                                    {!! $filter->getOptionDescription() !!}
+                                </x-chief::form.description>
+                            @endif
                         </div>
                     @endforeach
                 </div>

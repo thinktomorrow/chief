@@ -4,23 +4,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Filters;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasMultiple;
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
-
 class CheckboxFilter extends SelectFilter
 {
-    use HasMultiple;
-    use HasOptions;
-
     protected string $view = 'chief-table::filters.checkbox';
 
-    //    public static function make(string $queryKey, \Closure $query): self
-    //    {
-    //        $filter = new static($queryKey, $query);
-    //        $filter->view('chief-table::filters.checkbox')
-    //               ->value([]);
-    //
-    //        return $filter;
-    //    }
+    public function __construct(string $key)
+    {
+        parent::__construct($key);
 
+        $this->multiple();
+    }
 }

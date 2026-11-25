@@ -5,6 +5,21 @@ the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
 
+- Fixed: default table sorting was not persisted when using scoped filters
+- Changed: Boolean fields now save checked and unchecked values as `true` and `false` by default, including values
+  submitted by Livewire. Existing stored values are not converted; fields that need the previous `['1']` / `null`
+  format can override `prepForSaving()`.
+
+## [0.10.35] - 2026-11-10
+
+- Added: `ToggleFilter`, `CheckboxFilter` and `RadioFilter` table filters now render in the table header, the filters
+  drawer and the actions bar, consistent with the select filter. The toggle filter follows the Boolean field API
+  (`optionLabel()`, `optionDescription()`, `defaultOn()`, `defaultOff()`), applies on change and is removed from the
+  active filters when switched off. Checkbox and radio filters show the selected option labels in the header, apply on
+  "Pas filter toe" and can be cleared individually with "Wis selectie". The radio filter matches on the exact value.
+- Removed: The unused `OptionFilter` table filter. Use `SelectFilter`, `CheckboxFilter`, `RadioFilter` or
+  `ToggleFilter` instead.
+- Fixed: An empty array table filter value is no longer counted as an active filter.
 - Fixed: Context tabs now follow the configured site order instead of context creation order, so the primary locale
   appears first when it has its own context.
 - Fixed: Redirect now respects the target locale in case of redirect from one locale to another

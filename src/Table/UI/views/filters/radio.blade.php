@@ -1,45 +1,83 @@
-<button type="button" x-on:click="$dispatch('open-dialog', { 'id': '{{ $id }}-select' })">
-    <x-chief-table::filter.select :id="$id" :value="$value">
-        {{ $label }}
+@php
+    $id = 'radio-filter-' . $this->getId() . '-' . $getKey();
+    $activeValue = $this->filters[$getKey()] ?? null;
+@endphp
 
-        @if ($value)
-            <span class="text-grey-200">|</span>
+<div
+    x-data="{
+        selection: @js(is_null($activeValue) ? null : (string) $activeValue),
+        syncSelection() {
+            const value = $wire.filters[@js($getKey())] ?? null
+            this.selection = value === null ? null : String(value)
+        },
+    }"
+    x-on:{{ $this->getFiltersUpdatedEvent() }}.window="syncSelection()"
+>
+    <button
+        type="button"
+        x-on:click="() => {
+            syncSelection()
+            $dispatch('open-dialog', { 'id': '{{ $id }}' })
+        }"
+    >
+        <x-chief-table::filter.select>
+            {{ $getLabel() ?? $getKey() }}
 
-            <span class="text-nowrap text-primary-500">{{ $value }}</span>
-        @endif
-    </x-chief-table::filter.select>
-</button>
+            @if ($this->getActiveFilterValue($getKey()))
+                <div class="flex max-w-64 scrollbar-none items-start gap-1 overflow-x-auto">
+                    <span class="text-grey-200">|</span>
 
-<x-chief::dialog.dropdown id="#{{ $id }}-select" placement="bottom-start">
-    <div class="space-y-3.5 p-3.5">
-        <div class="space-y-2">
-            @foreach ($options as $value => $label)
-                <label for="{{ $id }}-{{ $value }}" class="flex items-start gap-2">
-                    <x-chief::form.input.radio
-                        wire:model.live.debounce.300ms="filters.{{ $name }}"
-                        id="{{ $id }}-{{ $value }}"
-                        name="{{ $name }}"
-                        value="{{ $value }}"
-                        :checked="in_array($value, (array) $value)"
-                    />
+                    <span class="text-primary-500 text-nowrap">{{ $this->getActiveFilterValue($getKey()) }}</span>
+                </div>
+            @endif
+        </x-chief-table::filter.select>
+    </button>
 
-                    <span class="body body-dark leading-5">{!! $label !!}</span>
-                </label>
-            @endforeach
+    <x-chief::dialog.dropdown id="{{ $id }}" placement="bottom-start">
+        <div class="space-y-3.5 p-3">
+            <div class="max-h-80 min-w-56 space-y-2 overflow-y-auto p-0.5">
+                @foreach ($getOptions() as $option)
+                    <label
+                        wire:key="{{ $id }}-{{ $option['value'] }}"
+                        for="{{ $id }}-{{ $option['value'] }}"
+                        class="flex items-start gap-2"
+                    >
+                        <x-chief::form.input.radio
+                            x-model="selection"
+                            id="{{ $id }}-{{ $option['value'] }}"
+                            name="{{ $id }}"
+                            value="{{ $option['value'] }}"
+                            :checked="! is_null($activeValue) && (string) $option['value'] === (string) $activeValue"
+                        />
+
+                        <span class="body body-dark leading-5">{!! $option['label'] !!}</span>
+                    </label>
+                @endforeach
+            </div>
+
+            <div class="flex items-start justify-between gap-2">
+                <x-chief::button
+                    x-on:click="() => {
+                        selection = null
+                        close()
+                        $wire.set('filters.{{ $getKey() }}', null)
+                    }"
+                    size="sm"
+                    variant="grey"
+                >
+                    Wis selectie
+                </x-chief::button>
+                <x-chief::button
+                    x-on:click="() => {
+                        close()
+                        $wire.set('filters.{{ $getKey() }}', selection)
+                    }"
+                    size="sm"
+                    variant="blue"
+                >
+                    Pas filter toe
+                </x-chief::button>
+            </div>
         </div>
-
-        <div class="flex items-start justify-between gap-2">
-            <x-chief::button x-on:click="close()" size="sm" variant="grey">Annuleer</x-chief::button>
-            <x-chief::button
-                x-on:click="() => {
-                    close()
-                    $wire.addFilter()
-                }"
-                size="sm"
-                variant="blue"
-            >
-                Pas filter toe
-            </x-chief::button>
-        </div>
-    </div>
-</x-chief::dialog.dropdown>
+    </x-chief::dialog.dropdown>
+</div>

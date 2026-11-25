@@ -4,27 +4,24 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Table\Filters;
 
-use Thinktomorrow\Chief\Forms\Fields\Concerns\Select\HasOptions;
+use Illuminate\Database\Eloquent\Builder;
 
-class RadioFilter extends Filter
+class RadioFilter extends SelectFilter
 {
-    use HasOptions;
+    protected string $view = 'chief-table::filters.radio';
 
-    //    protected string $view = 'chief-table::filters.radio';
-    protected string $view = 'chief-table::filters.radio-slider';
-
-    //    public static function make(string $queryKey, \Closure $query): self
-    //    {
-    //        $filter = new static($queryKey, $query);
-    //
-    //        // $filter->view('chief-table::filters.radio');
-    //        $filter->view('chief-table::filters.radio-slider');
-    //
-    //        return $filter->value([]);
-    //    }
-
-    public function shouldInitiallyRender(): bool
+    public function __construct(string $key)
     {
-        return $this->getOptions() !== [];
+        parent::__construct($key);
+
+        $this->query(function ($query, $value) {
+            if ($query instanceof Builder) {
+                $query->where($this->key, $value);
+
+                return;
+            }
+
+            return $query->filter(fn ($item) => $item[$this->key] == $value);
+        });
     }
 }

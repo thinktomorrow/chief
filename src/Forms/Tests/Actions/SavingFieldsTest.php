@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Forms\Tests\Actions;
 
 use Thinktomorrow\Chief\Forms\App\Actions\SaveFields;
 use Thinktomorrow\Chief\Forms\App\Queries\Fields;
+use Thinktomorrow\Chief\Forms\Fields\Boolean;
 use Thinktomorrow\Chief\Forms\Fields\Text;
 use Thinktomorrow\Chief\Forms\Tests\FormsTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -27,6 +28,27 @@ class SavingFieldsTest extends FormsTestCase
         ], []);
 
         $this->assertEquals('Hello World', $article->fresh()->title);
+    }
+
+    public function test_it_saves_boolean_fields_as_booleans_for_http_and_livewire_values(): void
+    {
+        foreach ([[['1'], true], [true, true], [[], false], [false, false], [null, false]] as [$input, $expected]) {
+            $article = new ArticlePage;
+
+            (new SaveFields)->save($article, Fields::make([Boolean::make('custom')]), ['custom' => $input], []);
+
+            $this->assertSame($expected, $article->fresh()->custom);
+        }
+    }
+
+    public function test_it_allows_a_boolean_field_to_override_its_saved_value(): void
+    {
+        $article = new ArticlePage;
+        $field = Boolean::make('custom')->prepForSaving(fn ($field, $value): ?array => $value ? ['1'] : null);
+
+        (new SaveFields)->save($article, Fields::make([$field]), ['custom' => true], []);
+
+        $this->assertSame(['1'], $article->fresh()->custom);
     }
 
     public function test_it_skips_custom_setters()
